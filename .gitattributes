@@ -1,2 +1,4 @@
 * text=auto !eol
 /README.TXT -text
+common/Utils.cpp -text
+common/Utils.hpp -text
