@@ -238,8 +238,8 @@ bool ExtractGGAData(const CXStringASCII &Line, double & rLon, double & rLat, int
 
 //-------------------------------------
 CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar) {
-    CXStringASCII result;
-    // find first occurence of token delimiter
+	CXStringASCII result;
+	// find first occurence of token delimiter
 	size_t pos = rString.Find(cTokenChar);
 	if(pos == CXStringASCII::NPOS) {
 		// Not found. Take complete string.
@@ -258,11 +258,11 @@ CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar) {
 //-------------------------------------
 void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdLat) {
 	// convert latitude
-    long lDeg = static_cast<long>(dLat/100);
-    double dMinute = dLat - (lDeg * 100);
-    rdLat = lDeg + (dMinute / 60); 
+	long lDeg = static_cast<long>(dLat/100);
+	double dMinute = dLat - (lDeg * 100);
+	rdLat = lDeg + (dMinute / 60); 
 	// convert longitude
-    lDeg = static_cast<long>(dLon/100);
-    dMinute = dLon - (lDeg * 100);
-    rdLon = lDeg + (dMinute / 60); 
+	lDeg = static_cast<long>(dLon/100);
+	dMinute = dLon - (lDeg * 100);
+	rdLon = lDeg + (dMinute / 60); 
 }
