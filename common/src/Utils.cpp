@@ -252,7 +252,7 @@ CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar) {
 		// delete from rString including delimiter
 		rString.DeleteFirst(pos+1);
 	}
-    return result;
+	return result;
 }
 
 //-------------------------------------
