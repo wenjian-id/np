@@ -1,4 +1,13 @@
 * text=auto !eol
+Qt/MinGW/NaviPOWM.mdsp -text
+Qt/MinGW/NaviPOWM.rc -text
 /README.TXT -text
+Windows/MinGW/NaviPOWM.mdsp -text
+Windows/MinGW/NaviPOWM.rc -text
+Windows/MinGW/resource.h -text
+Windows/VisualStudio6/NaviPOWM.dsp -text
+Windows/VisualStudio6/NaviPOWM.dsw -text
+Windows/VisualStudio6/NaviPOWM.rc -text
+Windows/VisualStudio6/resource.h -text
 common/src/Utils.cpp -text
 common/src/Utils.hpp -text
