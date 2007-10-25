@@ -517,10 +517,6 @@ SOURCE=..\..\common\src\IBitmap.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IDeviceContext.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\src\IMainWindow.cpp
 # End Source File
 # Begin Source File
