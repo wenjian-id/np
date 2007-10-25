@@ -1,0 +1,161 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Doru-Julian Bugariu                             *
+ *   bugariu@users.sourceforge.net                                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation                                              *
+ *   51 Franklin Street, Fifth Floor                                       *
+ *   Boston, MA 02110-1301, USA                                            *
+ *   http://www.fsf.org/about/contact.html                                 *
+ ***************************************************************************/
+
+#ifndef __CXBITMAP_HPP__
+#define __CXBITMAP_HPP__
+
+#include <IBitmap.hpp>
+#include "TargetIncludes.hpp"
+
+//---------------------------------------------------------------------
+/*
+ * \brief Windows implementation of the IBitmap interface.
+ *
+ * This class ist the windows implementation of the IBitmap interface.
+ */
+class CXBitmap : public IBitmap {
+private:
+	HDC			m_DC;		///< oiu
+	HBITMAP		m_BMP;		///< oiu
+	HFONT		m_hFont;	///< oiu
+	//-------------------------------------
+	CXBitmap(const CXBitmap &);							///< Not used.
+	const CXBitmap & operator = (const CXBitmap &);		///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXBitmap();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXBitmap();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual bool Create(CXDeviceContext *pDC, int Width, int Height);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void Destroy();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual bool IsNull();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	HDC GetDC() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual tIRect CalcTextRectASCII(const CXStringASCII & Text, int AddWidth, int AddHeight);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & BgColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect, const CXRGB & FgColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual tIRect CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int AddHeight);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & BgColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawLine(int x0, int y0, int x1, int y1);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void MoveTo(int x, int y);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void LineTo(int x, int y);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void SetPen(CXPen *pPen);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void SetFontHeight(int FontHeight);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual bool LoadFromFile(const CXStringASCII & FileName);
+};
+
+#endif // __IBITMAP_HPP__

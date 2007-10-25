@@ -1,0 +1,70 @@
+/***************************************************************************
+ *   Copyright (C) 2005 by Doru-Julian Bugariu                             *
+ *   bugariu@users.sourceforge.net                                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation                                              *
+ *   51 Franklin Street, Fifth Floor                                       *
+ *   Boston, MA 02110-1301, USA                                            *
+ *   http://www.fsf.org/about/contact.html                                 *
+ ***************************************************************************/
+
+#include "CXInfoBarBottom.hpp"
+#include "CXDeviceContext.hpp"
+#include "CXBitmap.hpp"
+#include "CXStringASCII.hpp"
+#include "CXStringUTF8.hpp"
+
+
+//-------------------------------------
+CXInfoBarBottom::CXInfoBarBottom() {
+}
+
+//-------------------------------------
+CXInfoBarBottom::~CXInfoBarBottom() {
+}
+
+//-------------------------------------
+void CXInfoBarBottom::PositionChanged(const CXNaviData & NewData) {
+	m_NaviData = NewData;
+}
+
+//-------------------------------------
+void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
+	CXBitmap Bmp;
+	int Width = GetWidth();
+	int Height = GetHeight();
+
+	// create bitmap
+	Bmp.Create(pDC, Width, Height);
+	CXRGB BgColor(0x00, 0x00, 0x00);
+
+	// set new font size
+	Bmp.SetFontHeight(Height -2);
+
+	// get client rect
+	tIRect ClientRect(0,0,Width,Height);
+
+	// draw backgound
+	Bmp.DrawRect(ClientRect, BgColor, BgColor);
+	if(!m_NaviData.ShowLogo()) {
+		// draw street name
+		CXStringUTF8 Name = m_NaviData.GetStreetName();
+		tIRect NameRect(0, 0, Width, Height);
+		Bmp.DrawTextUTF8(Name, NameRect, CXRGB(0xff, 0xff, 0xff), BgColor);
+	}
+
+	// draw data
+	pDC->Draw(&Bmp, OffsetX, OffsetY);
+}
