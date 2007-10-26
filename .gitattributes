@@ -90,6 +90,12 @@ WindowsMobile/src/Main.cpp -text
 WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
+common/Images/Icons20x20.xcf -text
+common/Images/InfoIcon20x20.bmp -text
+common/Images/MainIcon.ico -text
+common/Images/QuitIcon20x20.bmp -text
+common/Images/SaveOffIcon20x20.bmp -text
+common/Images/SaveOnIcon20x20.bmp -text
 common/src/CXBuffer.hpp -text
 common/src/CXFile.cpp -text
 common/src/CXFile.hpp -text
@@ -151,6 +157,9 @@ common/src/CXUTMSpeed.cpp -text
 common/src/CXUTMSpeed.hpp -text
 common/src/CXWriteLocker.cpp -text
 common/src/CXWriteLocker.hpp -text
+common/src/CoordConstants.h -text
+common/src/CoordConversion.cpp -text
+common/src/CoordConversion.h -text
 common/src/IBitmap.cpp -text
 common/src/IBitmap.hpp -text
 common/src/IDeviceContext.hpp -text
