@@ -26,22 +26,27 @@
  *   conversion between different coordinate systems                       *
  ***************************************************************************/
 
-/// \todo check correctness of trnasformations
+/// \todo check correctness of transformations
 
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
 #include "CoordConversion.h"
 
-const double UTMPI = 3.14159265;
-const double FOURTHPI = UTMPI / 4;
-const double deg2rad = UTMPI / 180;
-const double rad2deg = 180.0 / UTMPI;
+const double UTMPI = 3.14159265;		///< oiu
+const double FOURTHPI = UTMPI / 4;		///< oiu
+const double deg2rad = UTMPI / 180;		///< oiu
+const double rad2deg = 180.0 / UTMPI;	///< oiu
 
-const int UTMZoneNone = -1;
-const char UTMLetterNone = 'Z';
-const int WGS84 = 23;
+const int UTMZoneNone = -1;				///< oiu
+const char UTMLetterNone = 'Z';			///< oiu
+const int WGS84 = 23;					///< oiu
 
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 static Ellipsoid ellipsoid[] = {//  id, Ellipsoid name, Equatorial Radius, square of eccentricity
 	Ellipsoid( -1, "Placeholder", 0, 0),//placeholder only, To allow array indices to match id numbers
 	Ellipsoid( 1, "Airy", 6377563, 0.00667054),

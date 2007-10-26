@@ -64,6 +64,10 @@ Windows/src/Main.cpp -text
 Windows/src/OSSpecific.hpp -text
 Windows/src/TargetIncludes.cpp -text
 Windows/src/TargetIncludes.hpp -text
+WindowsMobile/eVC4/NaviPOWM.rc -text
+WindowsMobile/eVC4/NaviPOWM.vcp -text
+WindowsMobile/eVC4/NaviPOWM.vcw -text
+WindowsMobile/eVC4/resource.h -text
 WindowsMobile/src/CXBitmap.cpp -text
 WindowsMobile/src/CXBitmap.hpp -text
 WindowsMobile/src/CXDeviceContext.cpp -text

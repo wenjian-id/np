@@ -26,7 +26,7 @@
  *   conversion between different coordinate systems                       *
  ***************************************************************************/
 
-/// \todo check correctness of trnasformations
+/// \todo check correctness of transformations
 
 #include "CoordConstants.h"
 
@@ -34,17 +34,45 @@
 #define LATLONGCONV
 
 //-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 void LLtoUTM(int ReferenceEllipsoid, const double Long, const double Lat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
+
 //-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& Lon,  double& Lat);
+
 //-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 char UTMLetterDesignator(double Lat);
+
 //-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 void LLtoSwissGrid(const double Lat, const double Long, double &SwissNorthing, double &SwissEasting);
+
 //-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 void SwissGridtoLL(const double SwissNorthing, const double SwissEasting, double& Lat, double& Long);
 
 //-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 class Ellipsoid {
 public:
 	Ellipsoid(){};

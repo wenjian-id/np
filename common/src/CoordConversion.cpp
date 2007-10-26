@@ -26,7 +26,7 @@
  *   conversion between different coordinate systems                       *
  ***************************************************************************/
 
-/// \todo check correctness of trnasformations
+/// \todo check correctness of transformations
 
 #include <math.h>
 #include <stdio.h>
