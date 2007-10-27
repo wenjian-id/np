@@ -1,4 +1,5 @@
 * text=auto !eol
+/LICENCE.TXT -text
 Qt/KDevelop/NaviPOWM.pro -text
 Qt/KDevelop/src/CXSerial.cpp -text
 Qt/KDevelop/src/CXSerial.hpp -text
