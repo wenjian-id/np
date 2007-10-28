@@ -102,6 +102,7 @@ WindowsMobile/src/Main.cpp -text
 WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
+common/Config/NAVIPOWM.INI -text
 common/Images/Icons20x20.xcf -text
 common/Images/InfoIcon20x20.bmp -text
 common/Images/MainIcon.ico -text
