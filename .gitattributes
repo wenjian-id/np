@@ -66,6 +66,12 @@ Windows/src/Main.cpp -text
 Windows/src/OSSpecific.hpp -text
 Windows/src/TargetIncludes.cpp -text
 Windows/src/TargetIncludes.hpp -text
+WindowsMobile/Install/DELETEME.TXT -text
+WindowsMobile/Install/InstReadMe.txt -text
+WindowsMobile/Install/NaviPOWM.inf -text
+WindowsMobile/Install/NaviPOWM.ini -text
+WindowsMobile/Install/README.TXT -text
+WindowsMobile/Install/make.bat -text
 WindowsMobile/eVC4/NaviPOWM.rc -text
 WindowsMobile/eVC4/NaviPOWM.vcp -text
 WindowsMobile/eVC4/NaviPOWM.vcw -text

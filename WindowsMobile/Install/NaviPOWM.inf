@@ -1,0 +1,73 @@
+;==================================================
+; NaviPOWM.inf adapted from 
+; http://www.sundialsoft.freeserve.co.uk/sddocs013.htm
+;==================================================
+
+[Version]
+Signature = "$Windows NT$"
+Provider = "NaviPOWM"
+CESignature = "$Windows CE$"
+
+[CEStrings]
+AppName = "NaviPOWM"
+InstallDir = %CE1%\%AppName%
+
+[Strings]
+
+;==================================================
+
+[DefaultInstall]
+CopyFiles = CommonFiles, Icons, Save, Maps
+CEShortcuts = Startmenu
+Addreg = Regkeys
+
+;==================================================
+; Input directories and files
+
+[SourceDisksNames]
+1 =, "Current",, .
+2 =, "Common",, Common
+3 =, "Icons",, Icons
+
+[SourceDisksFiles]
+DELETEME.TXT = 1
+NaviPOWM.exe = 2
+NAVIPOWM.TXT = 2
+Info.bmp = 3
+Quit.bmp = 3
+SaveOn.bmp = 3
+SaveOff.bmp = 3
+Logo.bmp = 3
+
+;==================================================
+; Ouput directories for files & shortcuts
+
+[DestinationDirs]
+CommonFiles = 0, %InstallDir%
+Icons = 0, %InstallDir%\Icons
+Save = 0, %InstallDir%\Save
+Maps = 0, %InstallDir%\Maps
+Startmenu = 0,  %CE11%
+DefaultDestDir = 0, %InstallDir%
+
+[CommonFiles]
+"NaviPOWM.exe"
+"NAVIPOWM.TXT"
+
+[Icons]
+Info.bmp
+Quit.bmp
+SaveOn.bmp
+SaveOff.bmp
+Logo.bmp
+
+[Save]
+DELETEME.TXT
+
+[Maps]
+DELETEME.TXT
+
+[Startmenu]
+"NaviPOWM", 0, "NaviPOWM.exe"
+
+[Regkeys]
