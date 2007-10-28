@@ -33,6 +33,8 @@ Qt/src/Main.cpp -text
 Qt/src/TargetIncludes.cpp -text
 Qt/src/TargetIncludes.hpp -text
 /README.TXT -text
+Windows/Install/NaviPOWM.nsi -text
+Windows/Install/README.TXT -text
 Windows/MinGW/NaviPOWM.mdsp -text
 Windows/MinGW/NaviPOWM.rc -text
 Windows/MinGW/resource.h -text
