@@ -55,6 +55,13 @@ void DoOutputDebugString(const char *pcBuf);
  * \brief oiu
  *
  */
+void DoOutputErrorMessage(const char *pcBuf);
+
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 QColor CXRGB2QColor(const CXRGB & Color);
 
 //-------------------------------------

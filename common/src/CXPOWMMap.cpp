@@ -238,37 +238,55 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	CXFile InFile;
 	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg("Error opening file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 
 	unsigned long MagicCode = 0;
 	unsigned long ReqMagicCode = ('P' << 24) + ('O' << 16) + ('W' << 8) + 'M';
 	if(!ReadUL(InFile, MagicCode)) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	if(MagicCode != ReqMagicCode) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg(FileName);
+		ErrorMsg += " is not a NaviPOWM map";
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 
 	// check version
 	unsigned long Version = 0;
-	unsigned long ReqVersion = 0x0000000A;
+	unsigned long ReqVersion = 0x00000100;
 	if(!ReadUL(InFile, Version)) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg("Error reading Version from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	if(Version != ReqVersion) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg(FileName);
+		ErrorMsg += " has wrong Version: ";
+		char buf[10];
+		snprintf(	buf, 10, "%d.%d.%d", 
+					static_cast<unsigned char>((Version & 0xff0000) >> 16),
+					static_cast<unsigned char>((Version & 0xff00) >> 8),
+					static_cast<unsigned char>(Version & 0xff));
+		ErrorMsg += buf;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 
 	// node count
 	unsigned long NodeCount = 0;
 	if(!ReadUL(InFile, NodeCount)) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read nodes
@@ -291,7 +309,9 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 	// way count
 	unsigned long WayCount = 0;
 	if(!ReadUL(InFile, WayCount)) {
-		/// \todo Error message
+		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read ways

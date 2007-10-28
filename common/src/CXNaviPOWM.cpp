@@ -33,7 +33,7 @@
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.1.0";
+const char * VERSIONSTRING ="NaviPOWM 0.1.0 - RC1";
 
 //-------------------------------------
 CXNaviPOWM::CXNaviPOWM() :

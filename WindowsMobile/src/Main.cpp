@@ -111,8 +111,9 @@ int WINAPI WinMain(	HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	CXStringASCII IniFileName = Path;
 	IniFileName += "NAVIPOWM.TXT";
 	if(!CXOptions::Instance()->ReadFromFile(IniFileName.c_str())) {
-		/// \todo implement
-		// error message
+		CXStringASCII ErrorMsg("Error reading from file: ");
+		ErrorMsg += IniFileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
 	}
 
 	CXMainWindow *pMainWnd = new CXMainWindow();

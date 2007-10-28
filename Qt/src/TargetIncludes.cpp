@@ -25,10 +25,16 @@
 #include <stdio.h>
 
 #include <qcolor.h>
+#include <qmessagebox.h>
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
 	printf(pcBuf);
+}
+
+//-------------------------------------
+void DoOutputErrorMessage(const char *pcBuf) {
+	QMessageBox::critical(NULL, "NaviPOWM error", pcBuf);
 }
 
 //-------------------------------------

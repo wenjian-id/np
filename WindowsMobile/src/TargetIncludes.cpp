@@ -36,6 +36,11 @@ void DoOutputDebugString(const char *pcBuf) {
 }
 
 //-------------------------------------
+void DoOutputErrorMessage(const char *pcBuf) {
+	::MessageBox(NULL, pcBuf, "NaviPOWM error", MB_OK | MB_ICONERROR);
+}
+
+//-------------------------------------
 CXRGB COLORREF2CXRGB(const COLORREF & Color) {
 	return CXRGB(GetRValue(Color), GetGValue(Color), GetBValue(Color));
 }

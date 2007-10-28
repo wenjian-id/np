@@ -1918,10 +1918,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
@@ -1938,10 +1940,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
@@ -1958,10 +1962,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
@@ -1998,10 +2004,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
@@ -2018,10 +2026,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
@@ -2038,10 +2048,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
@@ -2078,10 +2090,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
@@ -2098,10 +2112,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
@@ -2118,10 +2134,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
@@ -2138,10 +2156,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
@@ -2218,10 +2238,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
@@ -2238,10 +2260,12 @@ DEP_CPP_CXMAI=\
 	"..\src\CXMutex.hpp"\
 	"..\src\CXWindow.hpp"\
 	"..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXMAI=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ENDIF 
@@ -18160,5 +18184,64 @@ DEP_CPP_UTILS=\
 
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=.\NaviPOWM.rc
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\resource.h
+# End Source File
 # End Target
 # End Project

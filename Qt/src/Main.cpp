@@ -28,6 +28,8 @@
 #include <qmessagebox.h>
 
 int main( int argc, char ** argv ) {
+	QApplication a(argc, argv);
+	a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
 	int result = 0;
 	try{
 		char * p = argv[0];
@@ -39,14 +41,13 @@ int main( int argc, char ** argv ) {
 	
 		// read configuration file
 		CXStringASCII IniFileName = Path;
-		IniFileName += "NAVI.INI";
+		IniFileName += "NAVIPOWM.INI";
 		if(!CXOptions::Instance()->ReadFromFile(IniFileName.c_str())) {
-			/// \todo implement
-			// error message
+			CXStringASCII ErrorMsg("Error reading from file: ");
+			ErrorMsg += IniFileName;
+			DoOutputErrorMessage(ErrorMsg.c_str());
 		}
 		
-		QApplication a(argc, argv);
-		a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
 		CXMainWindow *pMainWnd = new CXMainWindow();
 		pMainWnd->Init();
 		pMainWnd->StartThreads();
