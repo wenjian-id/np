@@ -140,6 +140,7 @@ private:
 	t_uint64		m_ID;				///< oiu
 	E_KEYHIGHWAY	m_eHighwayType;		///< oiu
 	CXStringUTF8	m_Name;				///< oiu
+	CXStringUTF8	m_Ref;				///< oiu
 	TNodeBuffer		m_Nodes;			///< oiu
 	//-------------------------------------
 	CXWay();									///< Not used.
@@ -152,7 +153,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name);
+	CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -177,6 +178,12 @@ public:
 	 *
 	 */
 	CXStringUTF8 GetName() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringUTF8 GetRef() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu

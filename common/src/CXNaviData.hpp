@@ -49,6 +49,7 @@ private:
 	CXUTMSpeed			m_UTMSpeed;			///< UTM speed
 
 	CXStringUTF8		m_StreetName;		///< name of street
+	CXStringUTF8		m_Ref;				///< ref
 	t_uint64			m_WayID;			///< id of last located way
 	bool				m_oLocated;			///< is located on a way or not
 	bool				m_oTimeout;			///< timeout occured
@@ -165,6 +166,18 @@ public:
 	 *
 	 */
 	void SetStreetName(const CXStringUTF8 & StreetName);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringUTF8 GetRef() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetRef(const CXStringUTF8 & Ref);
 	//-------------------------------------
 	/*
 	 * \brief oiu

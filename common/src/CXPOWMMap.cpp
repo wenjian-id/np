@@ -74,10 +74,11 @@ void CXNode::SetY(double Y) {
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXWay::CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name):
+CXWay::CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref):
 	m_ID(ID),
 	m_eHighwayType(eHighwayType),
-	m_Name(Name)
+	m_Name(Name),
+	m_Ref(Ref)
 {
 }
 
@@ -98,6 +99,11 @@ CXWay::E_KEYHIGHWAY CXWay::GetHighwayType() const {
 //-------------------------------------
 CXStringUTF8 CXWay::GetName() const {
 	return m_Name;
+}
+
+//-------------------------------------
+CXStringUTF8 CXWay::GetRef() const {
+	return m_Ref;
 }
 
 //-------------------------------------
@@ -238,9 +244,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	CXFile InFile;
 	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
-		CXStringASCII ErrorMsg("Error opening file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
+		// no error message
 		return false;
 	}
 
@@ -320,11 +324,13 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		t_uint64 ID = 0;
 		unsigned char HighwayType = 0;
 		CXStringUTF8 Name;
+		CXStringUTF8 Ref;
 		ReadI64(InFile, ID);
 		ReadB(InFile, HighwayType);
 		ReadStringUTF8(InFile, Name);
+		ReadStringUTF8(InFile, Ref);
 		// create way
-		CXWay *pWay = new CXWay(ID, static_cast<CXWay::E_KEYHIGHWAY>(HighwayType), Name);
+		CXWay *pWay = new CXWay(ID, static_cast<CXWay::E_KEYHIGHWAY>(HighwayType), Name, Ref);
 		// add node
 		m_WayMap.SetAt(ID, pWay);
 		// 

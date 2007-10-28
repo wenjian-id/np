@@ -64,6 +64,7 @@ void CXNaviData::_CopyFrom(const CXNaviData &rOther) {
 	m_UTMCoor		= rOther.m_UTMCoor;
 	m_UTMSpeed		= rOther.m_UTMSpeed;
 	m_StreetName	= rOther.m_StreetName;
+	m_Ref			= rOther.m_Ref;
 	m_WayID			= rOther.m_WayID;
 	m_oLocated		= rOther.m_oLocated;
 	m_oTimeout		= rOther.m_oTimeout;
@@ -154,9 +155,23 @@ CXStringUTF8 CXNaviData::GetStreetName() const {
 //-------------------------------------
 void CXNaviData::SetStreetName(const CXStringUTF8 & StreetName) {
 	CXMutexLocker L(&m_Mutex);
-	if(m_StreetName == StreetName)
+	if(m_StreetName != StreetName)
 		SetChangedFlag();
 	m_StreetName = StreetName;
+}
+
+//-------------------------------------
+CXStringUTF8 CXNaviData::GetRef() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_Ref;
+}
+
+//-------------------------------------
+void CXNaviData::SetRef(const CXStringUTF8 & Ref) {
+	CXMutexLocker L(&m_Mutex);
+	if(m_Ref != Ref)
+		SetChangedFlag();
+	m_Ref = Ref;
 }
 
 //-------------------------------------

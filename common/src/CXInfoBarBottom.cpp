@@ -59,9 +59,14 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	// draw backgound
 	Bmp.DrawRect(ClientRect, BgColor, BgColor);
 	if(!m_NaviData.ShowLogo()) {
-		// draw street name
 		CXStringUTF8 Name = m_NaviData.GetStreetName();
-		tIRect NameRect(0, 0, Width, Height);
+		CXStringUTF8 Ref = m_NaviData.GetRef();
+		// draw ref
+		tIRect RefRect = Bmp.CalcTextRectUTF8(Ref, 4, 0);
+		RefRect.OffsetRect(-RefRect.GetLeft() + Width -RefRect.GetWidth() , -RefRect.GetTop());
+		Bmp.DrawTextUTF8(Ref, RefRect, CXRGB(0xff, 0xff, 0x00), BgColor);
+		// draw name
+		tIRect NameRect(0, 0, RefRect.GetLeft(), Height);
 		Bmp.DrawTextUTF8(Name, NameRect, CXRGB(0xff, 0xff, 0xff), BgColor);
 	}
 

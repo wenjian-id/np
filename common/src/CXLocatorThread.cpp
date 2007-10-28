@@ -147,15 +147,19 @@ void CXLocatorThread::OnThreadLoop() {
 				m_NaviData.SetWayID(ID);
 				pPOWMMap->LockMap();
 				CXStringUTF8 Name;
+				CXStringUTF8 Ref;
 				CXWay *pWay = pPOWMMap->GetWay(ID);
 				if(pWay != NULL) {
 					Name = pWay->GetName();
+					Ref = pWay->GetRef();
 				}
 				m_NaviData.SetStreetName(Name);
+				m_NaviData.SetRef(Ref);
 				pPOWMMap->UnlockMap();
 			} else {
 				m_NaviData.SetLocated(false);
 				m_NaviData.SetStreetName("");
+				m_NaviData.SetRef("");
 			}
 
 		}
