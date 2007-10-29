@@ -108,6 +108,7 @@ common/Config/NAVIPOWM.INI -text
 common/Images/Icons20x20.xcf -text
 common/Images/InfoIcon20x20.bmp -text
 common/Images/MainIcon.ico -text
+common/Images/NaviPOWM.xcf -text
 common/Images/QuitIcon20x20.bmp -text
 common/Images/SaveOffIcon20x20.bmp -text
 common/Images/SaveOnIcon20x20.bmp -text
