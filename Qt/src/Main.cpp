@@ -53,9 +53,9 @@ int main( int argc, char ** argv ) {
 		pMainWnd->StartThreads();
 		pMainWnd->setWindowTitle("NaviPOWM");
 
-		// check if we must show it maximized
+		// check if we must show it full screen
 		if(CXOptions::Instance()->FullScreen()) {
-			pMainWnd->ShowMaximized();
+			pMainWnd->showFullScreen();
 		} else {
 			pMainWnd->ShowNormal();
 		}
