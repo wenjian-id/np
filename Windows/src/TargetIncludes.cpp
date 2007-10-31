@@ -25,11 +25,13 @@
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
+	/// \todo tests
 	OutputDebugString(pcBuf);
 }
 
 //-------------------------------------
 void DoOutputErrorMessage(const char *pcBuf) {
+	/// \todo tests
 	::MessageBox(NULL, pcBuf, "NaviPOWM error", MB_OK | MB_ICONERROR);
 }
 

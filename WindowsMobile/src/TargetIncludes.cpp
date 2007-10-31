@@ -29,6 +29,7 @@ static TCHAR buf[1024];
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
+	/// \todo tests
 	for(size_t i=0; i<strlen(pcBuf); i++) {
 		wsprintf(buf, _T("%c"), pcBuf[i]);
 		OutputDebugString(buf);
@@ -37,7 +38,8 @@ void DoOutputDebugString(const char *pcBuf) {
 
 //-------------------------------------
 void DoOutputErrorMessage(const char *pcBuf) {
-	::MessageBox(NULL, pcBuf, "NaviPOWM error", MB_OK | MB_ICONERROR);
+	/// \todo tests
+	::MessageBox(NULL, ASCII2UCS2(pcBuf, strlen(pcBuf), buf, 1024) , _T("NaviPOWM error"), MB_OK | MB_ICONERROR);
 }
 
 //-------------------------------------
