@@ -76,3 +76,15 @@ void CXWindow::ShowNormal() {
 }
 
 
+//-------------------------------------
+void CXWindow::ShowFullScreen() {
+	if(m_hWnd != NULL) {
+		// hide windows stuff
+		SHFullScreen(m_hWnd, SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
+		// resize to full screen
+		int width = GetDeviceCaps(NULL, HORZRES);
+		int height = GetDeviceCaps(NULL, VERTRES);
+		MoveWindow(m_hWnd, 0, 0, width, height, TRUE);
+	}
+}
+

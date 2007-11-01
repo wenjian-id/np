@@ -106,6 +106,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void ShowFullScreen();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void RequestRepaint();
 };
 

@@ -55,7 +55,7 @@ int main( int argc, char ** argv ) {
 
 		// check if we must show it full screen
 		if(CXOptions::Instance()->FullScreen()) {
-			pMainWnd->showFullScreen();
+			pMainWnd->ShowFullScreen();
 		} else {
 			pMainWnd->ShowNormal();
 		}

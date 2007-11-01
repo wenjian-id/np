@@ -80,6 +80,10 @@ void CXWindow::ShowNormal() {
 	update();
 }
 
+//-------------------------------------
+void CXWindow::ShowFullScreen() {
+	showFullScreen();
+}
 
 //-------------------------------------
 void CXWindow::OnPaint() {

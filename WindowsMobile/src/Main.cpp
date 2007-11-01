@@ -130,11 +130,11 @@ int WINAPI WinMain(	HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 
 	// check if we must show it maximized
 	if(CXOptions::Instance()->FullScreen()) {
-		pMainWnd->ShowMaximized();
+		pMainWnd->ShowFullScreen();
 	} else {
 		pMainWnd->ShowNormal();
 	}
-	pMainWnd->MakeFullScreen();
+	pMainWnd->ShowFullScreen();
 
 	// Main message loop:
 	while (GetMessage(&msg, NULL, 0, 0)) {

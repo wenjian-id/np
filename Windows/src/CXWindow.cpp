@@ -75,4 +75,10 @@ void CXWindow::ShowNormal() {
 	}
 }
 
-
+//-------------------------------------
+void CXWindow::ShowFullScreen() {
+	if(m_hWnd != NULL) {
+		SetWindowLong(m_hWnd, GWL_STYLE, WS_VISIBLE | WS_BORDER | WS_CLIPCHILDREN);
+		ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
+	}
+}

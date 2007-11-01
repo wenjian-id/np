@@ -74,18 +74,6 @@ void CXMainWindow::OnPaint() {
 }
 
 //-------------------------------------
-void CXMainWindow::MakeFullScreen() {
-#ifndef DEBUG
-	// hide windows stuff
-	SHFullScreen(GetHWND(), SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
-	// resize to full screen
-	int width = GetDeviceCaps(NULL, HORZRES);
-	int height = GetDeviceCaps(NULL, VERTRES);
-	MoveWindow(GetHWND(), 0, 0, width, height, TRUE);
-#endif
-}
-
-//-------------------------------------
 void CXMainWindow::RequestTermination() {
 	PostQuitMessage(0);
 }
@@ -138,7 +126,7 @@ LRESULT CALLBACK CXMainWindow::TheWndProc(HWND hWnd, UINT message, WPARAM wParam
 				DefWindowProc(hWnd, message, wParam, lParam);
 				// now do own stuff
 				if(LOWORD(wParam) != WA_INACTIVE) {
-					MakeFullScreen();
+					ShowFullScreen();
 				}
 				break;
 			}

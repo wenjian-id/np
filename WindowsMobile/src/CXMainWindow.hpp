@@ -75,12 +75,6 @@ public:
 	 *
 	 */
 	LRESULT CALLBACK TheWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void MakeFullScreen();
 };
 
 
