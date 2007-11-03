@@ -66,4 +66,9 @@ To work properly, NaviPOWM needs the following subdirectories (case sensitive!):
 3. Save
 
 The following files must be copied:
-1. todo description
+1. common/Images/info.bmp to Icons/info.bmp
+2. common/Images/quit.bmp to Icons/quit.bmp
+3. common/Images/saveon.bmp to Icons/saveon.bmp
+4. common/Images/saveoff.bmp to Icons/saveoff.bmp
+5. common/Images/logo.bmp to Icons/logo.bmp
+6. common/Config/navipowm.ini to navipowm.ini

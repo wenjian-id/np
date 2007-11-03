@@ -12,12 +12,12 @@ OutFile "Install\InstPOWM.exe"
 ; default install directory
 InstallDir C:\NaviPOWM
 
-LicenseData "..\..\LICENCE.TXT"
+LicenseData "..\..\LICENSE.TXT"
 ;--------------------------------
 ; Pages
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "..\..\LICENCE.TXT"
+!insertmacro MUI_PAGE_LICENSE "..\..\LICENSE.TXT"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
@@ -39,15 +39,16 @@ Section "" ;start with this
     ; Main path
     File "Common\NaviPOWM.exe"
     File "Common\NaviPOWM.INI"
+    File "..\..\LICENSE.TXT"
 
     ; Icons
     CreateDirectory $INSTDIR\Icons
     SetOutPath $INSTDIR\Icons 
-    File "Icons\Info.bmp"
-    File "Icons\Logo.bmp"
-    File "Icons\Quit.bmp"
-    File "Icons\SaveOff.bmp"
-    File "Icons\SaveOn.bmp"
+    File "Icons\info.bmp"
+    File "Icons\logo.bmp"
+    File "Icons\quit.bmp"
+    File "Icons\saveoff.bmp"
+    File "Icons\saveon.bmp"
     SetOutPath Icons 
 
     ; Maps
@@ -82,16 +83,17 @@ Section "Uninstall"
     RmDir $INSTDIR\Maps ; will be deleted only if empty
 
     ; Icons
-    Delete "$INSTDIR\Icons\Info.bmp"
-    Delete "$INSTDIR\Icons\Logo.bmp"
-    Delete "$INSTDIR\Icons\Quit.bmp"
-    Delete "$INSTDIR\Icons\SaveOff.bmp"
-    Delete "$INSTDIR\Icons\SaveOn.bmp"
+    Delete "$INSTDIR\Icons\info.bmp"
+    Delete "$INSTDIR\Icons\logo.bmp"
+    Delete "$INSTDIR\Icons\quit.bmp"
+    Delete "$INSTDIR\Icons\saveoff.bmp"
+    Delete "$INSTDIR\Icons\saveon.bmp"
     RmDir $INSTDIR\Icons ; will be deleted only if empty
 
     ; Main path
     Delete "$INSTDIR\NaviPOWM.exe"
     Delete "$INSTDIR\NaviPOWM.INI"
+    Delete "$INSTDIR\LICENSE.TXT"
     RmDir $INSTDIR ; will be deleted only if empty
 
 SectionEnd

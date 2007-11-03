@@ -1,5 +1,5 @@
 * text=auto !eol
-/LICENCE.TXT -text
+/LICENSE.TXT -text
 Qt/KDevelop/NaviPOWM.pro -text
 Qt/KDevelop/src/CXSerial.cpp -text
 Qt/KDevelop/src/CXSerial.hpp -text
@@ -104,14 +104,16 @@ WindowsMobile/src/Main.cpp -text
 WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
-common/Config/NAVIPOWM.INI -text
+common/Config/navipowm.ini -text
 common/Images/Icons20x20.xcf -text
-common/Images/InfoIcon20x20.bmp -text
 common/Images/MainIcon.ico -text
 common/Images/NaviPOWM.xcf -text
-common/Images/QuitIcon20x20.bmp -text
-common/Images/SaveOffIcon20x20.bmp -text
-common/Images/SaveOnIcon20x20.bmp -text
+common/Images/info.bmp -text
+common/Images/logo.bmp -text
+common/Images/logosmall.bmp -text
+common/Images/quit.bmp -text
+common/Images/saveoff.bmp -text
+common/Images/saveon.bmp -text
 common/src/CXBuffer.hpp -text
 common/src/CXFile.cpp -text
 common/src/CXFile.hpp -text

@@ -41,7 +41,7 @@ int main( int argc, char ** argv ) {
 	
 		// read configuration file
 		CXStringASCII IniFileName = Path;
-		IniFileName += "NAVIPOWM.INI";
+		IniFileName += "navipowm.ini";
 		if(!CXOptions::Instance()->ReadFromFile(IniFileName.c_str())) {
 			CXStringASCII ErrorMsg("Error reading from file: ");
 			ErrorMsg += IniFileName;
