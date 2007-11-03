@@ -178,8 +178,8 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		tIRect R3 = Bmp.CalcTextRectASCII(INFOSTRING2, 2, 2);
 		int Height = R1.GetHeight() + R2.GetHeight() + R3.GetHeight();
 		int Width = Max(R1.GetWidth(), Max(R2.GetWidth(), R3.GetWidth()));
-		int x0 = (GetWidth() - Width)/2;
-		int y0 = (GetHeight() - Height)/2;
+		int x0 = (rect.GetWidth() - Width)/2;
+		int y0 = (rect.GetHeight() - Height)/2;
 		int y1 = y0 + R1.GetHeight();
 		R1.SetLeft(x0); R1.SetRight(x0+Width); R1.SetTop(y0); R1.SetBottom(y1);
 		Bmp.DrawTextASCII(VERSIONSTRING, R1, CXRGB(0xff, 0xff, 0x00), CXRGB(0,0,0));
