@@ -28,18 +28,17 @@ Addreg = Regkeys
 1 =, "Current",, .
 2 =, "Common",, Common
 3 =, "Icons",, Icons
-4 =, "..\..\",, Main
 
 [SourceDisksFiles]
 DELETEME.TXT = 1
 NaviPOWM.exe = 2
 NAVIPOWM.TXT = 2
+LICENSE.TXT = 2
 info.bmp = 3
 quit.bmp = 3
 saveon.bmp = 3
 saveoff.bmp = 3
 logo.bmp = 3
-LICENSE.TXT = 4
 
 ;==================================================
 ; Ouput directories for files & shortcuts
