@@ -29,11 +29,13 @@
 #include "CXMutexLocker.hpp"
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
-
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
+#include "Utils.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.1.0 - RC1";
+const char * VERSIONSTRING ="NaviPOWM 0.1.0";
+const char * INFOSTRING1 ="(C) Doru-Julian Bugariu";
+const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 
 //-------------------------------------
 CXNaviPOWM::CXNaviPOWM() :
@@ -171,7 +173,22 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		tIRect rect(0, 0, GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
 		Bmp.Create(pDC, rect.GetWidth(), rect.GetHeight());
 		Bmp.DrawRect(rect, CXRGB(0,0,0), CXRGB(0,0,0));
-		Bmp.DrawTextASCII(VERSIONSTRING, rect, CXRGB(0xff, 0xff, 0x00), CXRGB(0,0,0));
+		tIRect R1 = Bmp.CalcTextRectASCII(VERSIONSTRING, 2, 2);
+		tIRect R2 = Bmp.CalcTextRectASCII(INFOSTRING1, 2, 2);
+		tIRect R3 = Bmp.CalcTextRectASCII(INFOSTRING2, 2, 2);
+		int Height = R1.GetHeight() + R2.GetHeight() + R3.GetHeight();
+		int Width = Max(R1.GetWidth(), Max(R2.GetWidth(), R3.GetWidth()));
+		int x0 = (GetWidth() - Width)/2;
+		int y0 = (GetHeight() - Height)/2;
+		int y1 = y0 + R1.GetHeight();
+		R1.SetLeft(x0); R1.SetRight(x0+Width); R1.SetTop(y0); R1.SetBottom(y1);
+		Bmp.DrawTextASCII(VERSIONSTRING, R1, CXRGB(0xff, 0xff, 0x00), CXRGB(0,0,0));
+		y0 = y1; y1 = y0 + R2.GetHeight();
+		R2.SetLeft(x0); R2.SetRight(x0+Width); R2.SetTop(y0); R2.SetBottom(y1);
+		Bmp.DrawTextASCII(INFOSTRING1, R2, CXRGB(0xff, 0xff, 0x00), CXRGB(0,0,0));
+		y0 = y1; y1 = y0 + R3.GetHeight();
+		R3.SetLeft(x0); R3.SetRight(x0+Width); R3.SetTop(y0); R3.SetBottom(y1);
+		Bmp.DrawTextASCII(INFOSTRING2, R3, CXRGB(0xff, 0xff, 0x00), CXRGB(0,0,0));
 		pDC->Draw(&Bmp, 0, m_InfoBarTopPos.GetBottom());
 	}
 }

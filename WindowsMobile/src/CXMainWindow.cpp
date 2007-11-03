@@ -24,8 +24,6 @@
 #include "CXNaviPOWM.hpp"
 #include "CXDeviceContext.hpp"
 
-#include <aygshell.h>
-
 CXMainWindow *CXMainWindow::m_pInstance = NULL;
 
 //-------------------------------------

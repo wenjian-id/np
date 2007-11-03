@@ -27,6 +27,24 @@
 #include "CXStringUTF8.hpp"
 #include "CXFile.hpp"
 
+template <class t> t Max(const t &a, const t&b) {
+	if(a < b)
+		return b;
+	return a;
+}
+
+template <class t> t Min(const t &a, const t&b) {
+	if(a < b)
+		return a;
+	return b;
+}
+
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
+
+
+
 //-------------------------------------
 /*
  * \brief Possible command.

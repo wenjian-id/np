@@ -22,6 +22,8 @@
 
 #include "CXWindow.hpp"
 
+#include <aygshell.h>
+
 //-------------------------------------
 CXWindow::CXWindow() :
 	m_hWnd(NULL)

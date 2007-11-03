@@ -111,7 +111,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR /*lp
 
 	// read configuration file
 	CXStringASCII IniFileName = Path;
-	IniFileName += "naviopwm.ini";
+	IniFileName += "navipowm.ini";
 	if(!CXOptions::Instance()->ReadFromFile(IniFileName.c_str())) {
 		CXStringASCII ErrorMsg("Error reading from file: ");
 		ErrorMsg += IniFileName;
