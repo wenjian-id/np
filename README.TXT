@@ -1,8 +1,10 @@
 ======================
       NaviPOWM
 ======================
-
-todo: brief description
+NaviPOWM is a car navigation system capable of running on a variety of operating 
+systems. At the time, only OSM based map data is supported. Realtime routing engine
+is planned in a later version. Geocaching and city guide functionality are also
+planned.
 
 ======================
 Compiling NaviPOWM
@@ -72,3 +74,4 @@ The following files must be copied:
 4. common/Images/saveoff.bmp to Icons/saveoff.bmp
 5. common/Images/logo.bmp to Icons/logo.bmp
 6. common/Config/navipowm.ini to navipowm.ini
+7. and finally the executable itself
