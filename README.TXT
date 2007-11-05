@@ -75,3 +75,50 @@ The following files must be copied:
 5. common/Images/logo.bmp to Icons/logo.bmp
 6. common/Config/navipowm.ini to navipowm.ini
 7. and finally the executable itself
+
+
+---------
+INI file:
+---------
+[directories]
+DirectoryIcons -> Subdirectory with icons
+DirectoryMaps -> Subdirectory from which maps are loaded
+DirectorySave -> Subdirectory in which GPS data is saved
+
+[icons]
+LogoName -> icon for start logo
+InfoName -> icon for info button
+QuitName -> icon for quit button
+SaveOnName -> icon for save active state
+SaveOffName -> icon for save inactive state
+
+[config]
+LogoTime -> time in ms for displaying logo when starting
+FullScreen ->If on, a frameless maximized window is used, when off a normal window is used [on/off]
+Northing -> If on, north is alway on top, else heading is on top [on/off]
+InfoBarBottomHeight -> please don't touch [20]
+InfoBarTopHeight -> please don't touch [20]
+
+[Serial port for GPS input]
+SerialPort -> serial port from which NMEA data is read.
+Here some examples:
+Windows: SerialPort = COM1
+Windows Mobile (with trailing ':'): SerialPort = COM5:
+Linux: SerialPort = /dev/ttyS1
+DEMO mode: SerialPort = DEMO;2005042301.txt;1
+When using DEMO mode, th first part is DEMO, followed by the filename and the
+timeout (in seconds) between two GGA packets. Please take a closer look at the
+used file.
+
+
+-------------------
+Operating NaviPOWM:
+-------------------
+1. Zooming is done by keys "<-" (left) and "->" (right) on Windows and Linux and 
+   with the corresponding hard keys on PDFAs
+2. An info screen is displayed when typing on the NaviPOWM icon in the top left
+   corner of the screen.
+3. A red floppy disk indicates "NO SAVING", a green one indicates that NaviPOWM 
+   is saving all received NMEA data.
+4. The exit button terminates NaviPOWM.
+ 
