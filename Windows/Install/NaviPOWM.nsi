@@ -7,7 +7,8 @@
 Name "NaviPOWM"
 
 ; Result of compiler
-OutFile "Install\InstPOWM.exe"
+; OutFile "Install\NaviPOWM-Qt-MinGW-Setup-0.1.0.exe"
+OutFile "Install\NaviPOWM-MinGW-Setup-0.1.0.exe"
 
 ; default install directory
 InstallDir C:\NaviPOWM
@@ -40,6 +41,7 @@ Section "" ;start with this
     File "Common\NaviPOWM.exe"
     File "Common\NaviPOWM.INI"
     File "..\..\LICENSE.TXT"
+    File "..\..\README.TXT"
 
     ; Icons
     CreateDirectory $INSTDIR\Icons
@@ -94,6 +96,7 @@ Section "Uninstall"
     Delete "$INSTDIR\NaviPOWM.exe"
     Delete "$INSTDIR\NaviPOWM.INI"
     Delete "$INSTDIR\LICENSE.TXT"
+    Delete "$INSTDIR\README.TXT"
     RmDir $INSTDIR ; will be deleted only if empty
 
 SectionEnd

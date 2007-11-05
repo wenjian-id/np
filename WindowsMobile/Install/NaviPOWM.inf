@@ -32,8 +32,9 @@ Addreg = Regkeys
 [SourceDisksFiles]
 DELETEME.TXT = 1
 NaviPOWM.exe = 2
-NAVIPOWM.TXT = 2
+navipowm.txt = 2
 LICENSE.TXT = 2
+README.TXT = 2
 info.bmp = 3
 quit.bmp = 3
 saveon.bmp = 3
@@ -53,8 +54,9 @@ DefaultDestDir = 0, %InstallDir%
 
 [CommonFiles]
 "NaviPOWM.exe"
-"NAVIPOWM.TXT"
+"navipowm.txt"
 "LICENSE.TXT"
+"README.TXT"
 
 [Icons]
 info.bmp

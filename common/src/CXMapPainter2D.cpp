@@ -386,7 +386,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	ttt = buf;
 	TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 	TextRect.OffsetRect(Width - TextRect.GetRight(), -TextRect.GetTop());
-	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+//	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 }
 
 //-------------------------------------
