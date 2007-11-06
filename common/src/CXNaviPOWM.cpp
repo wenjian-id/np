@@ -33,7 +33,7 @@
 #include "CXBitmap.hpp"
 #include "Utils.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.1.0";
+const char * VERSIONSTRING ="NaviPOWM 0.1.1-dev";
 const char * INFOSTRING1 ="(C) Doru-Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 
