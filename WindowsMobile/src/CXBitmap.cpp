@@ -111,6 +111,9 @@ tIRect CXBitmap::CalcTextRectASCII(const CXStringASCII & Text, int AddWidth, int
 	if(IsNull())
 		return Result;
 
+	if(Text.IsEmpty())
+		return Result;
+
 	// calc text rect
 	RECT Rect;
 	Rect.left = 0;
@@ -156,6 +159,9 @@ tIRect CXBitmap::CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int A
 	tIRect Result(0,0,0,0);
 
 	if(IsNull())
+		return Result;
+
+	if(Text.IsEmpty())
 		return Result;
 
 	// calc text rect

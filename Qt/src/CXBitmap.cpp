@@ -156,12 +156,23 @@ void CXBitmap::DrawTextQString(const QString & Text, const tIRect & TheRect, con
 
 //-------------------------------------
 tIRect CXBitmap::CalcTextRectASCII(const CXStringASCII & Text, int AddWidth, int AddHeight) {
+	tIRect Result(0,0,0,0);
+
+	if(IsNull())
+		return Result;
+
+	if(Text.IsEmpty())
+		return Result;
+
 	QString S(Text.c_str());
-	return CalcTextRectQString(S, AddWidth, AddHeight);
+	Result = CalcTextRectQString(S, AddWidth, AddHeight);
+	return Result;
 }
 
 //-------------------------------------
 void CXBitmap::DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & BgColor) {
+	if(IsNull())
+		return;
 	QString S(Text.c_str());
 	DrawTextQString(S, TheRect, FgColor, BgColor);
 }
@@ -173,12 +184,23 @@ void CXBitmap::DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect,
 
 //-------------------------------------
 tIRect CXBitmap::CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int AddHeight) {
+	tIRect Result(0,0,0,0);
+
+	if(IsNull())
+		return Result;
+
+	if(Text.IsEmpty())
+		return Result;
+
 	QString S = QString::fromUtf8(reinterpret_cast<const char *>(Text.uc_str()));
-	return CalcTextRectQString(S, AddWidth, AddHeight);
+	Result = CalcTextRectQString(S, AddWidth, AddHeight);
+	return Result;
 }
 
 //-------------------------------------
 void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & BgColor) {
+	if(IsNull())
+		return;
 	QString S = QString::fromUtf8(reinterpret_cast<const char *>(Text.uc_str()));
 	DrawTextQString(S, TheRect, FgColor, BgColor);
 }
