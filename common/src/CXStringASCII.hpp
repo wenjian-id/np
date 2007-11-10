@@ -143,6 +143,18 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	CXStringASCII ToUpper() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII ToLower() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	const char *c_str() const;
 };
 

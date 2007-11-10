@@ -63,9 +63,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// serial port
 	SetSerialPort(F.Get("SerialPort", "COM5") );
 	// northing
-	SetNorthing(F.Get("Northing", "off") == "on");
+	SetNorthing(F.Get("Northing", "off").ToUpper() == "ON");
 	// fullscreen
-	SetFullScreen(F.Get("FullScreen", "off") == "on");
+	SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
 	// InfoBar Bottom Height
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height

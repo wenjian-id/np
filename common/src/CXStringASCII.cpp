@@ -126,6 +126,31 @@ void CXStringASCII::Empty() {
 }
 
 //-------------------------------------
+CXStringASCII CXStringASCII::ToUpper() const {
+	CXStringASCII Result(*this);
+	size_t Len = Result.GetSize();
+	char * pBuffer = Result.GetBufferWritable();
+	for(size_t i=0; i< Len; i++) {
+		if((pBuffer[i] >= 'a') && (pBuffer[i] <= 'z'))
+			pBuffer[i] = pBuffer[i] - 'a' + 'A';
+	}
+	return Result;
+}
+
+
+//-------------------------------------
+CXStringASCII CXStringASCII::ToLower() const {
+	CXStringASCII Result(*this);
+	size_t Len = Result.GetSize();
+	char * pBuffer = Result.GetBufferWritable();
+	for(size_t i=0; i< Len; i++) {
+		if((pBuffer[i] >= 'A') && (pBuffer[i] <= 'Z'))
+			pBuffer[i] = pBuffer[i] - 'A' + 'a';
+	}
+	return Result;
+}
+
+//-------------------------------------
 const char *CXStringASCII::c_str() const {
 	delete [] m_pcstr;
 	size_t Len = GetSize() + 1;

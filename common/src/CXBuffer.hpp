@@ -104,6 +104,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	tClass *GetBufferWritable();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	size_t GetSize() const;
 	//-------------------------------------
 	/*
@@ -244,6 +250,11 @@ template<class tClass> size_t CXBuffer<tClass> ::GetMultipleOfGrowSize(size_t Ne
 
 //-------------------------------------
 template<class tClass> const tClass * CXBuffer<tClass> ::GetBuffer() const {
+	return m_pBuffer;
+}
+
+//-------------------------------------
+template<class tClass> tClass * CXBuffer<tClass> ::GetBufferWritable() {
 	return m_pBuffer;
 }
 

@@ -69,7 +69,7 @@ bool CXFileIni::Read(const CXStringASCII & FileName) {
 			Value.TrimLeft();
 			Value.TrimRight();
 			// add to m_Content;
-			m_Content.SetAt(Key, Value);
+			m_Content.SetAt(Key.ToUpper(), Value);
 		}
 	}
 	return true;
@@ -80,7 +80,7 @@ bool CXFileIni::Read(const CXStringASCII & FileName) {
 CXStringASCII CXFileIni::Get(const CXStringASCII & Key, const CXStringASCII & Default) {
 	/// \todo implement
 	CXStringASCII Result;
-	if(m_Content.Lookup(Key, Result))
+	if(m_Content.Lookup(Key.ToUpper(), Result))
 		// found something
 		return Result;
 	return Default;
