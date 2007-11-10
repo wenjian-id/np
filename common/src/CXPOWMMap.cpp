@@ -250,7 +250,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	unsigned long MagicCode = 0;
 	unsigned long ReqMagicCode = ('P' << 24) + ('O' << 16) + ('W' << 8) + 'M';
-	if(!ReadUL(InFile, MagicCode)) {
+	if(!ReadUL32(InFile, MagicCode)) {
 		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
@@ -266,7 +266,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 	// check version
 	unsigned long Version = 0;
 	unsigned long ReqVersion = 0x00000100;
-	if(!ReadUL(InFile, Version)) {
+	if(!ReadUL32(InFile, Version)) {
 		CXStringASCII ErrorMsg("Error reading Version from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
@@ -287,7 +287,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	// node count
 	unsigned long NodeCount = 0;
-	if(!ReadUL(InFile, NodeCount)) {
+	if(!ReadUL32(InFile, NodeCount)) {
 		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
@@ -300,8 +300,8 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		unsigned long Lon = 0; 
 		unsigned long Lat = 0;
 		ReadI64(InFile, ID);
-		ReadUL(InFile, Lon);
-		ReadUL(InFile, Lat);
+		ReadUL32(InFile, Lon);
+		ReadUL32(InFile, Lat);
 		double dLon = 1.0*Lon/1000000.0;
 		double dLat = 1.0*Lat/1000000.0;
 		// create node
@@ -312,7 +312,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	// way count
 	unsigned long WayCount = 0;
-	if(!ReadUL(InFile, WayCount)) {
+	if(!ReadUL32(InFile, WayCount)) {
 		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
@@ -335,7 +335,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		m_WayMap.SetAt(ID, pWay);
 		// 
 		unsigned long NodeCount = 0;
-		ReadUL(InFile, NodeCount);
+		ReadUL32(InFile, NodeCount);
 		for(unsigned long ul=0; ul<NodeCount; ul++) {
 			t_uint64 SegID = 0;
 			ReadI64(InFile, SegID);
