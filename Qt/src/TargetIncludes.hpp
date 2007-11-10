@@ -30,10 +30,6 @@
 class CXRGB;
 class QColor;
 
-#ifndef size_t
-typedef unsigned int size_t;
-#endif
-
 #ifndef t_uint64
 typedef quint64 t_uint64;
 #endif

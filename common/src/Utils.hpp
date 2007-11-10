@@ -94,7 +94,7 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue);
  * \param	rValue		Value to fill with data.
  * \return				true if successfull.
  */
-bool ReadUL(CXFile & rInFile, unsigned long & rValue);
+bool ReadUL32(CXFile & rInFile, unsigned long & rValue);
 
 //-------------------------------------
 /*

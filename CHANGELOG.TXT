@@ -1,0 +1,7 @@
+Version 0.1.1:
+ - Fixed bugs:
+   - 1828290: Medion P4410: Street name in DEMO not visible
+   - 1829024: redefinition of size_t (compile error on 64 bit)
+
+Version 0.1.0:
+ - initial release
