@@ -122,17 +122,17 @@ void CXLocatorThread::OnThreadLoop() {
 
 			// check if new map has to be loaded
 			char buf[100];
-			int lon = int(m_NaviData.GetLon()*10);
-			int lat = int(m_NaviData.GetLat()*10);
-			int alon = abs(lon);
-			int alat = abs(lat);
+			double dLon = m_NaviData.GetLon();
+			double dLat = m_NaviData.GetLat();
+			int NameLon = static_cast<int>(floor(fabs(dLon*10)));
+			int NameLat = static_cast<int>(floor(fabs(dLat*10)));
 			char EW = 'E';
-			if(lon < 0 )
+			if(dLon < 0 )
 				EW = 'W';
 			char NS = 'N';
-			if(lat < 0 )
+			if(dLat < 0 )
 				NS = 'S';
-			snprintf(buf, 100, "%c%04d%c%03d.map", EW, alon, NS, alat);
+			snprintf(buf, 100, "%c%04d%c%03d.map", EW, NameLon, NS, NameLat);
 			CXStringASCII FileName=CXOptions::Instance()->GetDirectoryMaps();
 			FileName+=buf;
 			if(pPOWMMap->GetFileName() != FileName) {

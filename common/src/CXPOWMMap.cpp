@@ -302,8 +302,27 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		ReadI64(InFile, ID);
 		ReadUL32(InFile, Lon);
 		ReadUL32(InFile, Lat);
-		double dLon = 1.0*Lon/1000000.0;
-		double dLat = 1.0*Lat/1000000.0;
+
+		// compute lon
+		double dLon = 1.0;
+		if((Lon & 0x80000000) != 0) {
+			// negative coordinate
+			dLon = -1;
+			Lon &= 0x7FFFFFFF;
+		}
+		// now scale back
+		dLon = dLon*Lon/1000000.0;
+
+		// compute lat
+		double dLat = 1.0;
+		if((Lat & 0x80000000) != 0) {
+			// negative coordinate
+			dLat = -1;
+			Lat &= 0x7FFFFFFF;
+		}
+		// now scale back
+		dLat = dLat*Lat/1000000.0;
+
 		// create node
 		CXNode *pNode = new CXNode(ID, dLon, dLat);
 		// add node
