@@ -40,7 +40,9 @@ private:
 	CXStringASCII		m_SerialPort;			///< oiu
 	bool				m_oNorthing;			///< oiu
 	bool				m_oFullScreen;			///< oiu
+	bool				m_oShowLogo;			///< show logo
 	bool				m_oSaving;				///< oiu
+	bool				m_oShowZoomButtons;		///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
 	CXStringASCII		m_DirectoryMaps;		///< oiu
@@ -52,6 +54,8 @@ private:
 	CXStringASCII		m_QuitFileName;			///< oiu
 	CXStringASCII		m_SavingOnFileName;		///< oiu
 	CXStringASCII		m_SavingOffFileName;	///< oiu
+	CXStringASCII		m_ZoomInFileName;		///< oiu
+	CXStringASCII		m_ZoomOutFileName;		///< oiu
 	mutable CXMutex		m_Mutex;				///< oiu
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -267,6 +271,30 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	CXStringASCII GetZoomInFileName() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetZoomInFileName(const CXStringASCII & Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetZoomOutFileName() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetZoomOutFileName(const CXStringASCII & Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	bool IsSaving() const;
 	//-------------------------------------
 	/*
@@ -274,6 +302,36 @@ public:
 	 *
 	 */
 	void ToggleSaving();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void ClearShowLogoFlag();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowLogoFlag();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool ShowLogo() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool ShowZoomButtons() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowZoomButtonsFlag(bool NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

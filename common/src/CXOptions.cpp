@@ -35,7 +35,9 @@ static const int TO = 2000;
 CXOptions::CXOptions() :
 	m_oNorthing(false),
 	m_oFullScreen(false),
+	m_oShowLogo(true),
 	m_oSaving(false),
+	m_oShowZoomButtons(false),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
 	m_LogoTime(5000)
@@ -66,6 +68,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetNorthing(F.Get("Northing", "off").ToUpper() == "ON");
 	// fullscreen
 	SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
+	// showzoom
+	SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
 	// InfoBar Bottom Height
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
@@ -111,6 +115,13 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	CXStringASCII SaveOff=DirIcons;
 	SaveOff+=F.Get("SaveOffName", "saveoff.bmp");
 	SetSaveOffFileName(SaveOff);
+	// zoom bmps
+	CXStringASCII ZoomIn=DirIcons;
+	ZoomIn+=F.Get("ZoomInName", "zoomin.bmp");
+	SetZoomInFileName(ZoomIn);
+	CXStringASCII ZoomOut=DirIcons;
+	ZoomOut+=F.Get("ZoomOutName", "zoomout.bmp");
+	SetZoomOutFileName(ZoomOut);
 	return true;
 }
 
@@ -295,6 +306,30 @@ void CXOptions::SetSaveOffFileName(const CXStringASCII & Value) {
 }
 
 //-------------------------------------
+CXStringASCII CXOptions::GetZoomInFileName() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_ZoomInFileName;
+}
+
+//-------------------------------------
+void CXOptions::SetZoomInFileName(const CXStringASCII & Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_ZoomInFileName = Value;
+}
+
+//-------------------------------------
+CXStringASCII CXOptions::GetZoomOutFileName() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_ZoomOutFileName;
+}
+
+//-------------------------------------
+void CXOptions::SetZoomOutFileName(const CXStringASCII & Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_ZoomOutFileName = Value;
+}
+
+//-------------------------------------
 bool CXOptions::IsSaving() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oSaving;
@@ -304,4 +339,34 @@ bool CXOptions::IsSaving() const {
 void CXOptions::ToggleSaving() {
 	CXMutexLocker L(&m_Mutex);
 	m_oSaving = ! m_oSaving;
+}
+
+//-------------------------------------
+void CXOptions::ClearShowLogoFlag() {
+	CXMutexLocker L(&m_Mutex);
+	m_oShowLogo = false;
+}
+
+//-------------------------------------
+void CXOptions::SetShowLogoFlag() {
+	CXMutexLocker L(&m_Mutex);
+	m_oShowLogo = true;
+}
+
+//-------------------------------------
+bool CXOptions::ShowLogo() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_oShowLogo;
+}
+
+//-------------------------------------
+bool CXOptions::ShowZoomButtons() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_oShowZoomButtons;
+}
+
+//-------------------------------------
+void CXOptions::SetShowZoomButtonsFlag(bool NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_oShowZoomButtons = NewValue;
 }

@@ -26,6 +26,10 @@
 #include "CXRect.hpp"
 #include "CXMutex.hpp"
 
+
+#include "CXInfoBar.hpp"
+#include "CXBitmap.hpp"
+
 class CXGPSRecvThread;
 class CXLocatorThread;
 class CXMapThread;
@@ -34,6 +38,51 @@ class CXDeviceContext;
 class CXNaviData;
 class CXInfoBarBottom;
 class CXInfoBarTop;
+
+
+//----------------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ * \todo THIS IS A QUICK AND DIRTY HACK TO FIX 1828282 : Implement zoom buttons
+ *
+ */
+class CXZoomBtn  : public CXInfoBar {
+private:
+	CXBitmap		m_Bmp;		///< oiu
+	E_COMMAND		m_eCommand;	///< oiu
+	//-------------------------------------
+	CXZoomBtn();										///< Not used.
+	CXZoomBtn(const CXZoomBtn &);						///< Not used.
+	const CXZoomBtn & operator = (const CXZoomBtn &);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+protected:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual E_COMMAND OnInternalMouseDown(int X, int Y);
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXZoomBtn(E_COMMAND eCommand);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXZoomBtn();
+};
+
 
 //---------------------------------------------------------------------
 /*
@@ -52,7 +101,11 @@ private:
 	int					m_iHeight;					///< oiu
 	tIRect				m_InfoBarTopPos;			///< oiu
 	tIRect				m_InfoBarBottomPos;			///< oiu
+	tIRect				m_ZoomInPos;				///< oiu
+	tIRect				m_ZoomOutPos;				///< oiu
 	bool				m_oShowInfo;				///< oiu
+	CXZoomBtn			m_ZoomInBtn;				///< oiu
+	CXZoomBtn			m_ZoomOutBtn;				///< oiu
 	mutable CXMutex		m_Mutex;					///< oiu
 	//-------------------------------------
 	CXNaviPOWM(const CXNaviPOWM &);						///< Not used.

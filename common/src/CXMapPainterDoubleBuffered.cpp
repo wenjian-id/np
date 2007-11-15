@@ -59,8 +59,8 @@ void CXMapPainterDoubleBuffered::OnDoWork() {
 	if(m_pDrawBitmap != NULL) {
 		if(!m_Bitmap1.IsNull()) {
 			CXNaviData Data = GetPosition();
-			if(!Data.ShowLogo()) {
-				// call internal painting routine, since we must not display log
+			if(!CXOptions::Instance()->ShowLogo()) {
+				// call internal painting routine, since we must not display logo
 				OnInternalPaint(m_pDrawBitmap, m_Width, m_Height);
 			}
 			// now switch buffers
@@ -103,7 +103,7 @@ void CXMapPainterDoubleBuffered::Paint(CXDeviceContext *pDC, int OffsetX, int Of
 		// no internal buffers. create them
 		CreateBuffers(pDC, m_Width, m_Height);
 		CXNaviData Data = GetPosition();
-		if(Data.ShowLogo()) {
+		if(CXOptions::Instance()->ShowLogo()) {
 			// load logo
 			m_pFinishedBitmap->LoadFromFile(CXOptions::Instance()->GetLogoFileName());
 			m_pDrawBitmap->LoadFromFile(CXOptions::Instance()->GetLogoFileName());

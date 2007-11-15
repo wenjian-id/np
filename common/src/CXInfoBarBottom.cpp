@@ -23,6 +23,7 @@
 #include "CXInfoBarBottom.hpp"
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
+#include "CXOptions.hpp"
 #include "CXStringASCII.hpp"
 #include "CXStringUTF8.hpp"
 
@@ -58,7 +59,7 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 	// draw backgound
 	Bmp.DrawRect(ClientRect, BgColor, BgColor);
-	if(!m_NaviData.ShowLogo()) {
+	if(!CXOptions::Instance()->ShowLogo()) {
 		CXStringUTF8 Name = m_NaviData.GetStreetName();
 		CXStringUTF8 Ref = m_NaviData.GetRef();
 		// draw ref

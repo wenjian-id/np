@@ -37,6 +37,38 @@ const char * VERSIONSTRING ="NaviPOWM 0.1.1-dev";
 const char * INFOSTRING1 ="(C) Doru-Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 
+
+//-------------------------------------
+CXZoomBtn::CXZoomBtn(E_COMMAND eCommand) :
+	m_eCommand(eCommand)
+{
+}
+
+//-------------------------------------
+CXZoomBtn::~CXZoomBtn() {
+}
+
+//-------------------------------------
+E_COMMAND CXZoomBtn::OnInternalMouseDown(int X, int Y) {
+	if((X >= 0) && (X <= GetWidth()) && (Y >= 0) && (Y <= GetHeight()))
+		return m_eCommand;
+	return e_None;
+}
+
+//-------------------------------------
+void CXZoomBtn::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
+	if(SizeChanged()) {
+		m_Bmp.Create(pDC, GetWidth(), GetHeight());
+		if(m_eCommand == e_ZoomIn)
+			m_Bmp.LoadFromFile(CXOptions::Instance()->GetZoomInFileName());
+		else
+			m_Bmp.LoadFromFile(CXOptions::Instance()->GetZoomOutFileName());
+	}
+	if(!CXOptions::Instance()->ShowLogo()) {
+		pDC->Draw(&m_Bmp, OffsetX, OffsetY);
+	}
+}
+
 //-------------------------------------
 CXNaviPOWM::CXNaviPOWM() :
 	m_pMainWindow(NULL),
@@ -49,7 +81,11 @@ CXNaviPOWM::CXNaviPOWM() :
 	m_iHeight(0),
 	m_InfoBarTopPos(0,0,1,1),
 	m_InfoBarBottomPos(0,0,1,1),
-	m_oShowInfo(false)
+	m_ZoomInPos(0,0,1,1),
+	m_ZoomOutPos(0,0,1,1),
+	m_oShowInfo(false),
+	m_ZoomInBtn(e_ZoomIn),
+	m_ZoomOutBtn(e_ZoomOut)
 {
 }
 
@@ -167,6 +203,12 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	m_pMapThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
+	// paint zoom buttons
+	if(CXOptions::Instance()->ShowZoomButtons()) {
+		m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
+		m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
+	}
+
 	if(m_oShowInfo) {
 		// show info
 		CXBitmap Bmp;
@@ -215,9 +257,21 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_InfoBarBottomPos.SetRight(Width);
 	m_InfoBarBottomPos.SetBottom(Height);
 
+	m_ZoomInPos.SetBottom(m_InfoBarBottomPos.GetTop());
+	m_ZoomInPos.SetTop(m_ZoomInPos.GetBottom() - 25);
+	m_ZoomInPos.SetRight(Width);
+	m_ZoomInPos.SetLeft(m_ZoomInPos.GetRight() - 25);
+
+	m_ZoomOutPos.SetBottom(m_InfoBarBottomPos.GetTop());
+	m_ZoomOutPos.SetTop(m_ZoomOutPos.GetBottom() - 25);
+	m_ZoomOutPos.SetLeft(0);
+	m_ZoomOutPos.SetRight(25);
+
 	m_pMapThread->Resize(Width, Height - IBBH - IBTH);
 	m_pInfoBarBottom->Resize(Width, IBBH);
 	m_pInfoBarTop->Resize(Width, IBTH);
+	m_ZoomInBtn.Resize(25, 25);
+	m_ZoomOutBtn.Resize(25, 25);
 	RequestRepaint();
 }
 
@@ -258,7 +312,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		return;
 	if(m_pInfoBarTop == NULL)
 		return;
-	if(!m_InfoBarTopPos.Contains(X, Y)) {
+	if(m_oShowInfo && !m_InfoBarTopPos.Contains(X, Y)) {
 		// turn off showing info when clicking outside InfoBarTop
 		m_oShowInfo = false;
 		RequestRepaint();
@@ -266,7 +320,15 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 	}
 	// turn off showing info
 	// get command
-	E_COMMAND Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
+	E_COMMAND Cmd = e_None;
+	// check Info bar buttons
+	Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
+	// check for zoom buttons
+	if(!m_oShowInfo && (CXOptions::Instance()->ShowZoomButtons()) && (Cmd == e_None)) {
+		Cmd = m_ZoomInBtn.OnMouseDown(X - m_ZoomInPos.GetLeft(), Y - m_ZoomInPos.GetTop());
+		if(Cmd == e_None)
+			Cmd = m_ZoomOutBtn.OnMouseDown(X - m_ZoomOutPos.GetLeft(), Y - m_ZoomOutPos.GetTop());
+	}
 	// turn off showing info when clicking outside info button
 	if(m_oShowInfo && (Cmd != e_Info))
 		m_oShowInfo = false;
@@ -274,6 +336,16 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		case e_Quit:	m_pMainWindow->RequestTermination(); break;
 		case e_Info:	m_oShowInfo = !m_oShowInfo; RequestRepaint(); break;
 		case e_Save:	CXOptions::Instance()->ToggleSaving(); RequestRepaint(); break;
+		case e_ZoomIn:	{
+							if(m_pMapThread != NULL)
+								m_pMapThread->ZoomIn();
+							break;
+						}
+		case e_ZoomOut:	{
+							if(m_pMapThread != NULL)
+								m_pMapThread->ZoomOut();
+							break;
+						}
 		default:		break;
 	}
 }

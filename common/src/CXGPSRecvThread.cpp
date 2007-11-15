@@ -98,18 +98,16 @@ void CXGPSRecvThread::OnThreadStarted() {
 
 //-------------------------------------
 bool CXGPSRecvThread::CheckGGA() {
-	/// \todo reactivate code
-
-    // Laenge muss groesser 11 sein $ G P G G A * x x CR LF
+    // length must be at least 11 : $ G P G G A * x x CR LF
     if(m_LastPacket.GetSize() < 11)
     	return false;
     
-    // die ersten 6 Zeichen muessen "$CPGGA" sein
+    // must start with "$GPGGA"
     if(!m_LastPacket.CompareBegin(GGABEGIN, sizeof(GGABEGIN))) {
     	return false;
     }
 
-	// OK, ist ein GGA-Paket
+	// OK, it is a GGA packet
 	return true;
 }
 
@@ -160,7 +158,7 @@ bool CXGPSRecvThread::ReceiveData() {
 				// no GGA packet
 				// do nothing
 			}
-			// appen Data to m_Buffer
+			// append data to m_Buffer
 			m_Buffer.Append(reinterpret_cast<const unsigned char *>(NewLine.GetBuffer()), NewLine.GetSize());
 			m_Buffer.Append(0x0d);
 			m_Buffer.Append(0x0a);

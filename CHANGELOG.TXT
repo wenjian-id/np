@@ -3,6 +3,8 @@ Version 0.1.1:
    - 1828290: Medion P4410: Street name in DEMO not visible
    - 1829024: redefinition of size_t (compile error on 64 bit)
    - 1829056: Problems with negative lat and lon
+ - implemented feature requests:
+   - 1828282: Show zoom buttons
 
  - other:
    - turned off case sensitivity for keys in INI file

@@ -109,12 +109,15 @@ void CXLocatorThread::OnThreadLoop() {
 			// oiu m_SpeedCalculator
 		}
 	}
-	// check if we must show logo
+	// check if we must hide logo
+	bool LogoHidden = false;
 	if(Now - m_StartTime > CXOptions::Instance()->GetLogoTime()) {
-		m_NaviData.ClearShowLogoFlag();
+		if(CXOptions::Instance()->ShowLogo())
+			LogoHidden = true;
+		CXOptions::Instance()->ClearShowLogoFlag();
 	}
-	if(m_NaviData.Changed()) {
-		// data has been changed
+	if(m_NaviData.Changed() || LogoHidden) {
+		// data has been changed or logo hidden
 		CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
 		// notify listeners
 		if((pPOWMMap != NULL)&& (m_NaviData.GetnSat() != 0)) {

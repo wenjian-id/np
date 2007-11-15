@@ -59,7 +59,6 @@ private:
 	//-------------
 	// general stuff
 	//-------------
-	bool				m_oShowLogo;		///< show logo
 	bool				m_oChanged;			///< data has been changed
 	mutable CXMutex		m_Mutex;		
 	//-------------------------------------
@@ -268,24 +267,6 @@ public:
 	 *
 	 */
 	bool Changed() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void ClearShowLogoFlag();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetShowLogoFlag();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool ShowLogo() const;
 };
 
 #endif // __CXNAVIDATA_H_

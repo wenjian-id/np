@@ -33,7 +33,6 @@ CXNaviData::CXNaviData() :
 	m_TargetDist(0.0),
 	m_TargetCos(0.0),
 	m_TargetSin(0.0),
-	m_oShowLogo(true),
 	m_oChanged(false)
 {
 }
@@ -71,7 +70,6 @@ void CXNaviData::_CopyFrom(const CXNaviData &rOther) {
 	m_TargetDist	= rOther.m_TargetDist;
 	m_TargetCos		= rOther.m_TargetCos;
 	m_TargetSin		= rOther.m_TargetSin;
-	m_oShowLogo		= rOther.m_oShowLogo;
 	SetChangedFlag();
 }
 
@@ -276,24 +274,3 @@ bool CXNaviData::Changed() const {
 	return m_oChanged;
 }
 
-//-------------------------------------
-void CXNaviData::ClearShowLogoFlag() {
-	CXMutexLocker L(&m_Mutex);
-	if(m_oShowLogo)
-		SetChangedFlag();
-	m_oShowLogo = false;
-}
-
-//-------------------------------------
-void CXNaviData::SetShowLogoFlag() {
-	CXMutexLocker L(&m_Mutex);
-	if(!m_oShowLogo)
-		SetChangedFlag();
-	m_oShowLogo = true;
-}
-
-//-------------------------------------
-bool CXNaviData::ShowLogo() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_oShowLogo;
-}

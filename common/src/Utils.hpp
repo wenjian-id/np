@@ -56,6 +56,8 @@ enum E_COMMAND {
 	e_Quit,		///< Quit.
 	e_Info,		///< Info.
 	e_Save,		///< Toggle save.
+	e_ZoomIn,	///< Zoom in
+	e_ZoomOut,	///< Zoom out
 };
 
 
