@@ -401,7 +401,7 @@ template<class tClass> size_t CXBuffer<tClass> ::Find(const tClass * pc, size_t 
 	/// \todo implement fast search
 	if(Len > m_ulBufferSize)
 		return NPOS;
-	for(size_t i = 0; i<m_ulBufferSize-Len; i++) {
+	for(size_t i = 0; i <= m_ulBufferSize-Len; i++) {
 		if(memcmp(m_pBuffer+i, pc, Len) == 0)
 			return i;
 	}
