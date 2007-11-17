@@ -27,12 +27,11 @@
 #include "Utils.hpp"
 
 static unsigned char GGABEGIN[6] = {'$', 'G', 'P', 'G', 'G', 'A'};
-static const char *pcGGABEGIN = "$GPGGA";
 
 //-------------------------------------
 CXGPSRecvThread::CXGPSRecvThread() :
 	m_oDemoMode(false),
-	m_DemoTimeout(1),
+	m_DemoTimeout(1000),
 	m_pLocator(NULL),
 	m_oSaving(false)
 {
@@ -57,11 +56,20 @@ void CXGPSRecvThread::OpenSerial() {
 		CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
 		FileName += ExtractFirstToken(Port, ';');
 		// extract timeout
-		m_DemoTimeout = atoi(Port.c_str());
+		// check if "ms" is found.
+		size_t PosMS = Port.Find("ms");
+		if(PosMS == CXStringASCII::NPOS) {
+			// timeout is given in seconds
+			m_DemoTimeout = 1000*atoi(Port.c_str());
+		} else {
+			// timeout is given in milliseconds
+			Port = Port.Left(PosMS);
+			m_DemoTimeout = atoi(Port.c_str());
+		}
 		if(m_DemoTimeout == 0)
-			m_DemoTimeout = 1;
-		if(m_DemoTimeout > 10)
-			m_DemoTimeout = 10;
+			m_DemoTimeout = 1000;
+		if(m_DemoTimeout > 10000)
+			m_DemoTimeout = 10000;
 		// open file
 		m_DemoFile.Open(FileName.c_str(), CXFile::E_READ);
 	} else {
@@ -122,6 +130,18 @@ void CXGPSRecvThread::OnThreadLoop() {
 			Save(m_LastPacket);
 			// check GGA packet
 			if(CheckGGA()) {
+				// check if demo mode
+				if(m_oDemoMode) {
+					CXExactTime Now;
+					size_t TO = Now - m_LastDemoGGA;
+					// check if sleep necessary
+					if(TO < m_DemoTimeout) {
+						// yes, sleep some time
+						DoSleep(m_DemoTimeout - TO);
+					}
+					// now set last received time
+					m_LastDemoGGA.SetNow();
+				}
 				// tell the locator that data is ready
 				if(m_pLocator != NULL)
 					m_pLocator->SetGPSDataGGA(m_LastPacket);
@@ -139,29 +159,12 @@ void CXGPSRecvThread::OnThreadStopped() {
 //-------------------------------------
 bool CXGPSRecvThread::ReceiveData() {
 	bool Result = false;
+	unsigned char buf[500];
 	if(m_oDemoMode) {
-		CXStringASCII NewLine;
-		if(ReadLineASCII(m_DemoFile, NewLine)) {
-			// check if new GGA packet
-			if(NewLine.Find(pcGGABEGIN) == 0) {
-				// it is a new GGA packet
-				// check if we must wait some time
-				CXExactTime Now;
-				size_t TO = Now - m_LastDemoGGA;
-				if(TO < 1000*m_DemoTimeout) {
-					// yes, sleep some time
-					DoSleep(1000*m_DemoTimeout - TO);
-				}
-				// now set last received time
-				m_LastDemoGGA.SetNow();
-			} else {
-				// no GGA packet
-				// do nothing
-			}
+		size_t ReadSize = 0;
+		if((m_DemoFile.Read(buf, 500, ReadSize) == CXFile::E_OK) && (ReadSize != 0)) {
 			// append data to m_Buffer
-			m_Buffer.Append(reinterpret_cast<const unsigned char *>(NewLine.GetBuffer()), NewLine.GetSize());
-			m_Buffer.Append(0x0d);
-			m_Buffer.Append(0x0a);
+			m_Buffer.Append(buf, ReadSize);
 			Result = true;
 		} else {
 			// restart demo
@@ -169,9 +172,8 @@ bool CXGPSRecvThread::ReceiveData() {
 		}
 	} else {
 		// synchronisation has to be done in calling function
-		unsigned char buf[200];
 		unsigned long ulReceived = 0;
-		m_Serial.Receive(200, buf, ulReceived);
+		m_Serial.Receive(500, buf, ulReceived);
 		if(ulReceived > 0) {
 			m_Buffer.Append(buf, ulReceived);
 		}
