@@ -40,6 +40,8 @@ quit.bmp = 3
 saveon.bmp = 3
 saveoff.bmp = 3
 logo.bmp = 3
+zoomin.bmp = 3
+zoomout.bmp = 3
 
 ;==================================================
 ; Ouput directories for files & shortcuts
@@ -64,6 +66,8 @@ quit.bmp
 saveon.bmp
 saveoff.bmp
 logo.bmp
+zoomin.bmp
+zoomout.bmp
 
 [Save]
 DELETEME.TXT

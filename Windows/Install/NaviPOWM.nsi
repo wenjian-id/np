@@ -6,9 +6,11 @@
 ; The name of the installer
 Name "NaviPOWM"
 
+!define Version "0.1.1-dev"             ; version string
+
 ; Result of compiler
-; OutFile "Install\NaviPOWM-Qt-MinGW-Setup-0.1.0.exe"
-OutFile "Install\NaviPOWM-MinGW-Setup-0.1.0.exe"
+; OutFile "Install\NaviPOWM-Qt-MinGW-${Version}-Setup.exe"
+OutFile "Install\NaviPOWM-MinGW-${Version}-Setup.exe"
 
 ; default install directory
 InstallDir C:\NaviPOWM
@@ -51,6 +53,8 @@ Section "" ;start with this
     File "Icons\quit.bmp"
     File "Icons\saveoff.bmp"
     File "Icons\saveon.bmp"
+    File "Icons\zoomin.bmp"
+    File "Icons\zoomout.bmp"
     SetOutPath Icons 
 
     ; Maps
@@ -90,6 +94,8 @@ Section "Uninstall"
     Delete "$INSTDIR\Icons\quit.bmp"
     Delete "$INSTDIR\Icons\saveoff.bmp"
     Delete "$INSTDIR\Icons\saveon.bmp"
+    Delete "$INSTDIR\Icons\zoomin.bmp"
+    Delete "$INSTDIR\Icons\zoomout.bmp"
     RmDir $INSTDIR\Icons ; will be deleted only if empty
 
     ; Main path
