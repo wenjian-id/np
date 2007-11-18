@@ -30,7 +30,6 @@
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
 #include "CXDeviceContext.hpp"
-#include "CXBitmap.hpp"
 #include "Utils.hpp"
 
 const char * VERSIONSTRING ="NaviPOWM 0.1.1-dev";

@@ -23,12 +23,11 @@
 #ifndef __CXNAVIPOWM_HPP__
 #define __CXNAVIPOWM_HPP__
 
+#include "CXInfoBar.hpp"
+#include "CXBitmap.hpp"
 #include "CXRect.hpp"
 #include "CXMutex.hpp"
 
-
-#include "CXInfoBar.hpp"
-#include "CXBitmap.hpp"
 
 class CXGPSRecvThread;
 class CXLocatorThread;
