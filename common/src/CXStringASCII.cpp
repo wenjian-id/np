@@ -72,12 +72,12 @@ const CXStringASCII & CXStringASCII::operator = (const tCBuffer &rOther) {
 }
 
 //-------------------------------------
-bool CXStringASCII::operator == (const CXStringASCII &rOther) {
+bool CXStringASCII::operator == (const CXStringASCII &rOther) const {
 	return tCBuffer::operator == (rOther);
 }
 
 //-------------------------------------
-bool CXStringASCII::operator != (const CXStringASCII &rOther) {
+bool CXStringASCII::operator != (const CXStringASCII &rOther) const {
 	return !(tCBuffer::operator == (rOther));
 }
 

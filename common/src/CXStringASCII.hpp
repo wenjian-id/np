@@ -83,13 +83,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool operator == (const CXStringASCII &rOther);
+	bool operator == (const CXStringASCII &rOther) const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	bool operator != (const CXStringASCII &rOther);
+	bool operator != (const CXStringASCII &rOther) const;
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -23,7 +23,139 @@
 #ifndef __ISERIAL_HPP__
 #define __ISERIAL_HPP__
 
-class CXStringASCII;
+#include "CXStringASCII.hpp"
+
+
+class CXSerialPortConfig {
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_SERCOMMPARITY {
+		SCP_NONE,		///< No parity
+		SCP_EVEN,		///< Even parity
+		SCP_ODD,		///< Odd parity
+		SCP_MARK,		///< Mark parity
+	};
+
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_SERCOMMSTOPBITS {
+		SCS_ONE,		///< 1 stop bits
+		SCS_ONEFIVE,	///< 1.5 stop bits
+		SCS_TWO,		///< 2 stop bits
+	};
+private:
+	CXStringASCII		m_Port;
+	unsigned long		m_ulBaudrate;
+	unsigned char		m_ucDataBits;
+	E_SERCOMMPARITY		m_eParity;
+	E_SERCOMMSTOPBITS	m_eStopBits;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void CopyFrom(const CXSerialPortConfig & rOther);
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXSerialPortConfig();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXSerialPortConfig(const CXStringASCII &SerialPort, unsigned long  ulBaudrate, unsigned char  ucDataBits, E_SERCOMMPARITY  eParity, E_SERCOMMSTOPBITS  eStopBits);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXSerialPortConfig(const CXSerialPortConfig &rOther);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXSerialPortConfig();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	const CXSerialPortConfig & operator = (const CXSerialPortConfig & rOther);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetPort() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetPort(const CXStringASCII & Port);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	unsigned long GetBaudrate() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetBaudrate(unsigned long Baudrate);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	unsigned char GetDataBits() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetDataBits(unsigned char DataBits);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	E_SERCOMMPARITY GetParity() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetParity(const CXStringASCII & ParityString);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	E_SERCOMMSTOPBITS GetStopBits() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetStopBits(const CXStringASCII & StopBitsString);
+};
+
 
 //---------------------------------------------------------------------
 /*
@@ -49,28 +181,6 @@ public:
 		RC_WRONG_ARGUMENT,			///< Wrong argument
 	};
 
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	enum E_SERCOMMPARITY {
-		SCP_NONE,		///< No parity
-		SCP_EVEN,		///< Even parity
-		SCP_ODD,		///< Odd parity
-		SCP_MARK,		///< Mark parity
-	};
-
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	enum E_SERCOMMSTOPBITS {
-		SCS_ONE,		///< 1 stop bits
-		SCS_ONEFIVE,	///< 1.5 stop bits
-		SCS_TWO,		///< 2 stop bits
-	};
 private:
 	//-------------------------------------
 	ISerial(const ISerial&);						///< Not used.
@@ -96,7 +206,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-    virtual E_RESULTCODE Open(const CXStringASCII &SerialPort, unsigned long  ulBaudrate, unsigned char  ucDataBits, E_SERCOMMPARITY  eParity, E_SERCOMMSTOPBITS  eStopBits) = 0;
+    virtual E_RESULTCODE Open(const CXSerialPortConfig & Config) = 0;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -122,6 +232,5 @@ public:
 	 */
 	virtual bool IsOpen() const = 0;
 };
-
 
 #endif // __ISERIAL_HPP__

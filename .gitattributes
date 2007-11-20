@@ -106,6 +106,7 @@ WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
 common/Config/navipowm.ini -text
+common/Demo/demo01.txt -text
 common/Images/Icons20x20.xcf -text
 common/Images/MainIcon.ico -text
 common/Images/NaviPOWM.xcf -text
@@ -192,6 +193,7 @@ common/src/IMutex.hpp -text
 common/src/IRWLock.hpp -text
 common/src/ISemaphore.cpp -text
 common/src/ISemaphore.hpp -text
+common/src/ISerial.cpp -text
 common/src/ISerial.hpp -text
 common/src/IThread.cpp -text
 common/src/IThread.hpp -text

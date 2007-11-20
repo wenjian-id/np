@@ -28,6 +28,7 @@
 
 //-------------------------------------
 CXWindow::CXWindow() {
+	setAutoFillBackground(false);
 }
 
 //-------------------------------------
@@ -36,6 +37,8 @@ CXWindow::~CXWindow() {
 
 //-------------------------------------
 void CXWindow::RequestRepaint() {
+	update();
+	/// \todo Check why a second update is needed to fix bug #1826737
 	update();
 }
 

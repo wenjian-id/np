@@ -23,6 +23,7 @@
 #include "CXOptions.hpp"
 #include "CXFileIni.hpp"
 #include "CXMutexLocker.hpp"
+#include "Utils.hpp"
 #include <OSSpecific.hpp>
 
 #include  <stdlib.h>
@@ -63,7 +64,25 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 		return false;
 	// now extract options
 	// serial port
-	SetSerialPort(F.Get("SerialPort", "COM5") );
+	CXSerialPortConfig SPC;
+	CXStringASCII SPCStr = F.Get("SerialPort", "COM5:;8;N;1");
+	// check if DEMO
+	if(SPCStr.Find("DEMO") == 0) {
+		// DEMO, don't change anything
+		SPC.SetPort(SPCStr);
+	} else {
+		// Port
+		SPC.SetPort(ExtractFirstToken(SPCStr, ';'));
+		// Baudrate
+		SPC.SetBaudrate(atoi(ExtractFirstToken(SPCStr, ';').c_str()));
+		// data bits
+		SPC.SetDataBits(atoi(ExtractFirstToken(SPCStr, ';').c_str()));
+		// parity
+		SPC.SetParity(ExtractFirstToken(SPCStr, ';'));
+		// stop bits
+		SPC.SetStopBits(SPCStr);
+	}
+	SetSerialPortConfig(SPC);
 	// northing
 	SetNorthing(F.Get("Northing", "off").ToUpper() == "ON");
 	// fullscreen
@@ -138,15 +157,15 @@ void CXOptions::SetStartPath(const CXStringASCII & Value) {
 }
 
 //-------------------------------------
-CXStringASCII CXOptions::GetSerialPort() const {
+CXSerialPortConfig CXOptions::GetSerialPortConfig() const {
 	CXMutexLocker L(&m_Mutex);
-	return m_SerialPort;
+	return m_SerialPortConfig;
 }
 
 //-------------------------------------
-void CXOptions::SetSerialPort(const CXStringASCII & Value) {
+void CXOptions::SetSerialPortConfig(const CXSerialPortConfig & Value) {
 	CXMutexLocker L(&m_Mutex);
-	m_SerialPort = Value;
+	m_SerialPortConfig = Value;
 }
 
 //-------------------------------------

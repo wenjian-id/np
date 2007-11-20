@@ -92,7 +92,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool operator == (const CXBuffer &rOther);
+	bool operator == (const CXBuffer &rOther) const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -295,7 +295,7 @@ template<class tClass> void CXBuffer<tClass> ::ShrinkTo(size_t ulNewSize) {
 }
 
 //-------------------------------------
-template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer &rOther) {
+template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer &rOther) const {
 	// check if buffer allocated
 	if((m_pBuffer == NULL) || (rOther.m_pBuffer == NULL))
 		return false;

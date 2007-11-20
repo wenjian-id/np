@@ -525,6 +525,10 @@ SOURCE=..\..\common\src\ISemaphore.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\ISerial.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\IThread.cpp
 # End Source File
 # Begin Source File

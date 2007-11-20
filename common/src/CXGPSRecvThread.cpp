@@ -47,7 +47,8 @@ CXGPSRecvThread::~CXGPSRecvThread() {
 //-------------------------------------
 void CXGPSRecvThread::OpenSerial() {
 	CXMutexLocker L(&m_Mutex);
-	CXStringASCII Port = CXOptions::Instance()->GetSerialPort();
+	CXSerialPortConfig Cfg = CXOptions::Instance()->GetSerialPortConfig();
+	CXStringASCII Port = Cfg.GetPort();
 	// look for "DEMO:"
 	m_oDemoMode = Port.Find("DEMO;") == 0;
 	if(m_oDemoMode) {
@@ -74,7 +75,7 @@ void CXGPSRecvThread::OpenSerial() {
 		m_DemoFile.Open(FileName.c_str(), CXFile::E_READ);
 	} else {
 		// open serial port
-		m_Serial.Open(Port, 4800, 8, CXSerial::SCP_NONE, CXSerial::SCS_ONE);
+		m_Serial.Open(Cfg);
 	}
 }
 

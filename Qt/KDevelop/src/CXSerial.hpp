@@ -57,7 +57,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-    E_RESULTCODE Open(const CXStringASCII &SerialPort, unsigned long  ulBaudrate, unsigned char  ucDataBits, E_SERCOMMPARITY  eParity, E_SERCOMMSTOPBITS  eStopBits);
+    E_RESULTCODE Open(const CXSerialPortConfig & Config);
 	//-------------------------------------
 	/*
 	 * \brief oiu

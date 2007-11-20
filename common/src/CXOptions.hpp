@@ -25,8 +25,7 @@
 
 #include "CXStringASCII.hpp"
 #include "CXMutex.hpp"
-
-#include "CXExactTime.hpp"
+#include "ISerial.hpp"
 
 //---------------------------------------------------------------------
 /*
@@ -37,7 +36,7 @@ class CXOptions {
 private:
 	static CXOptions	*m_pInstance;			///< oiu
 	CXStringASCII		m_StartPath;			///< oiu
-	CXStringASCII		m_SerialPort;			///< oiu
+	CXSerialPortConfig	m_SerialPortConfig;		///< oiu
 	bool				m_oNorthing;			///< oiu
 	bool				m_oFullScreen;			///< oiu
 	bool				m_oShowLogo;			///< show logo
@@ -103,13 +102,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXStringASCII GetSerialPort() const;
+	CXSerialPortConfig GetSerialPortConfig() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetSerialPort(const CXStringASCII & Value);
+	void SetSerialPortConfig(const CXSerialPortConfig & Value);
 	//-------------------------------------
 	/*
 	 * \brief oiu

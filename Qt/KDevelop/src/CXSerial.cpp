@@ -38,7 +38,7 @@ CXSerial::~CXSerial() {
 }
 
 //-------------------------------------
-CXSerial::E_RESULTCODE CXSerial::Open(const CXStringASCII &SerialPort, unsigned long  ulBaudrate, unsigned char  ucDataBits, E_SERCOMMPARITY  eParity, E_SERCOMMSTOPBITS  eStopBits) {
+CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
 	// check if channel already open
 	if(m_iComm != -1)
 		return RC_CHANNEL_ALREADY_OPEN;

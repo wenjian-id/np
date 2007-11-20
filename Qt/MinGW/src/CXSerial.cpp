@@ -35,11 +35,11 @@ CXSerial::~CXSerial() {
 }
 
 //-------------------------------------
-CXSerial::E_RESULTCODE CXSerial::Open(const CXStringASCII &SerialPort, unsigned long  ulBaudrate, unsigned char  ucDataBits, E_SERCOMMPARITY  eParity, E_SERCOMMSTOPBITS  eStopBits) {
+CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     if(m_hComm != INVALID_HANDLE_VALUE)
     	return RC_CHANNEL_ALREADY_OPEN;
 
-    m_hComm = CreateFile(SerialPort.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, 0);
+    m_hComm = CreateFile(Config.GetPort().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, 0);
     if(m_hComm == INVALID_HANDLE_VALUE)
     	return RC_CHANNEL_OPEN_ERROR;
     
@@ -51,26 +51,26 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXStringASCII &SerialPort, unsigned 
     dcb.fParity = TRUE;
     
     // baud rate
-    dcb.BaudRate = ulBaudrate;
+    dcb.BaudRate = Config.GetBaudrate();
     // data bits
-    dcb.ByteSize = ucDataBits;
+    dcb.ByteSize = Config.GetDataBits();
     // parity
     unsigned char ucParity = 0;
-    switch(eParity) {
-    	case SCP_NONE:	ucParity = NOPARITY; break;
-    	case SCP_EVEN:	ucParity = EVENPARITY; break;
-    	case SCP_ODD:	ucParity = ODDPARITY; break;
-    	case SCP_MARK:	ucParity = MARKPARITY; break;
-		default :		Close(); return RC_WRONG_ARGUMENT; break;
+    switch(Config.GetParity()) {
+    	case CXSerialPortConfig::SCP_NONE:	ucParity = NOPARITY; break;
+    	case CXSerialPortConfig::SCP_EVEN:	ucParity = EVENPARITY; break;
+    	case CXSerialPortConfig::SCP_ODD:	ucParity = ODDPARITY; break;
+    	case CXSerialPortConfig::SCP_MARK:	ucParity = MARKPARITY; break;
+		default :							Close(); return RC_WRONG_ARGUMENT; break;
     }
     dcb.Parity = ucParity;
     // stop bits
     unsigned char ucStopBits = 0;
-    	switch(eStopBits) {
-    	case SCS_ONE:		ucStopBits = ONESTOPBIT; break;
-    	case SCS_ONEFIVE:	ucStopBits = ONE5STOPBITS; break;
-    	case SCS_TWO:		ucStopBits = TWOSTOPBITS; break;
-		default :			Close(); return RC_WRONG_ARGUMENT; break;
+    	switch(Config.GetStopBits()) {
+    	case CXSerialPortConfig::SCS_ONE:		ucStopBits = ONESTOPBIT; break;
+    	case CXSerialPortConfig::SCS_ONEFIVE:	ucStopBits = ONE5STOPBITS; break;
+    	case CXSerialPortConfig::SCS_TWO:		ucStopBits = TWOSTOPBITS; break;
+		default :								Close(); return RC_WRONG_ARGUMENT; break;
     }
     dcb.StopBits = ucStopBits;
     
