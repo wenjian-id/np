@@ -44,7 +44,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
 		return RC_CHANNEL_ALREADY_OPEN;
 
 	// try to open
-    m_iComm = open(SerialPort.c_str(), O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
+    m_iComm = open(Config.GetPort().c_str(), O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if(m_iComm < 0) {
     	return RC_CHANNEL_OPEN_ERROR;
     }
@@ -59,6 +59,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     t.c_cflag = CLOCAL | CREAD | HUPCL;
     
     // set data bits
+    unsigned char ucDataBits = Config.GetDataBits();
     if(ucDataBits == 7) {
     	t.c_cflag |= CS7;
     } else if(ucDataBits == 8) {
@@ -70,6 +71,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
 
 	// set baud rate
 	speed_t SerSpeed = B0;
+	unsigned long ulBaudrate = Config.GetBaudrate();
 	switch(ulBaudrate) {
 		case 2400:		SerSpeed = B2400; break;
 		case 4800:		SerSpeed = B4800; break;
@@ -85,34 +87,31 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
 	}
 
     // parity
-	switch(eParity) {
-		case SCP_NONE:	{
-							t.c_cflag &= ~PARENB;
-							break;
-						}
-		case SCP_EVEN:	{
-							t.c_cflag |= PARENB;
-							t.c_cflag &= ~PARODD;
-							break;
-						}
-		case SCP_ODD:	{
-							t.c_cflag |= PARENB;
-							t.c_cflag |= PARODD;
-							break;
-						}
-		default:		{
-							Close();
-							return RC_WRONG_ARGUMENT;
-						}
+	switch(Config.GetParity()) {
+		case CXSerialPortConfig::SCP_NONE:	{
+												t.c_cflag &= ~PARENB;
+												break;
+											}
+		case CXSerialPortConfig::SCP_EVEN:	{
+												t.c_cflag |= PARENB;
+												t.c_cflag &= ~PARODD;
+												break;
+											}
+		case CXSerialPortConfig::SCP_ODD:	{
+												t.c_cflag |= PARENB;
+												t.c_cflag |= PARODD;
+												break;
+											}
+		default:							{
+												Close();
+												return RC_WRONG_ARGUMENT;
+											}
 	}
     // stop bits
-	switch(eStopBits) {
-    	case SCS_ONE:		t.c_cflag &= ~CSTOPB; break;
-    	case SCS_TWO:		t.c_cflag |= CSTOPB; break;
-		default:		{
-							Close();
-							return RC_WRONG_ARGUMENT;
-						}
+	switch(Config.GetStopBits()) {
+    	case CXSerialPortConfig::SCS_ONE:		t.c_cflag &= ~CSTOPB; break;
+    	case CXSerialPortConfig::SCS_TWO:		t.c_cflag |= CSTOPB; break;
+		default:								Close(); return RC_WRONG_ARGUMENT;
 	}
         
     if(cfsetispeed(&t, SerSpeed) == -1) {

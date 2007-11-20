@@ -58,7 +58,8 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/ISemaphore.cpp \
  ../../common/src/IThread.cpp \
  ../../common/src/IWorkRequestThread.cpp \
- ../../common/src/Utils.cpp
+ ../../common/src/Utils.cpp \
+ ../../common/src/ISerial.cpp
 
 HEADERS += src/CXSerial.hpp \
 src/OSSpecific.hpp \

@@ -21,12 +21,12 @@
  ***************************************************************************/
 
 #include "CXPOWMMap.hpp"
+#include "CXExactTime.hpp"
 #include "CXFile.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
 #include "Utils.hpp"
 #include "CoordConversion.h"
-#include "CXExactTime.hpp"
 
 //----------------------------------------------------------------------------
 //-------------------------------------
