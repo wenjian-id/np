@@ -134,7 +134,6 @@ int WINAPI WinMain(	HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLi
 	} else {
 		pMainWnd->ShowNormal();
 	}
-	pMainWnd->ShowFullScreen();
 
 	// Main message loop:
 	while (GetMessage(&msg, NULL, 0, 0)) {

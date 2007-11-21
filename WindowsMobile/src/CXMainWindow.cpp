@@ -23,6 +23,7 @@
 #include "CXMainWindow.hpp"
 #include "CXNaviPOWM.hpp"
 #include "CXDeviceContext.hpp"
+#include "CXOptions.hpp"
 
 CXMainWindow *CXMainWindow::m_pInstance = NULL;
 
@@ -124,7 +125,11 @@ LRESULT CALLBACK CXMainWindow::TheWndProc(HWND hWnd, UINT message, WPARAM wParam
 				DefWindowProc(hWnd, message, wParam, lParam);
 				// now do own stuff
 				if(LOWORD(wParam) != WA_INACTIVE) {
-					ShowFullScreen();
+					if(CXOptions::Instance()->FullScreen()) {
+						ShowFullScreen();
+					} else {
+						ShowNormal();
+					}
 				}
 				break;
 			}
