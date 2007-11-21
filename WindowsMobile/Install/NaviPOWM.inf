@@ -35,6 +35,9 @@ NaviPOWM.exe = 2
 navipowm.txt = 2
 LICENSE.TXT = 2
 README.TXT = 2
+CHANGELOG.TXT = 2
+demo01.txt = 2
+E0071N509.map = 2
 info.bmp = 3
 quit.bmp = 3
 saveon.bmp = 3
@@ -59,6 +62,9 @@ DefaultDestDir = 0, %InstallDir%
 "navipowm.txt"
 "LICENSE.TXT"
 "README.TXT"
+"CHANGELOG.TXT"
+"demo01.txt"
+"E0071N509.map"
 
 [Icons]
 info.bmp

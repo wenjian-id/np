@@ -6,11 +6,11 @@
 ; The name of the installer
 Name "NaviPOWM"
 
-!define Version "0.1.1-dev"             ; version string
+!define Version "0.1.1"             ; version string
 
 ; Result of compiler
-; OutFile "Install\NaviPOWM-Qt-MinGW-${Version}-Setup.exe"
 OutFile "Install\NaviPOWM-MinGW-${Version}-Setup.exe"
+; OutFile "Install\NaviPOWM-Qt-MinGW-${Version}-Setup.exe"
 
 ; default install directory
 InstallDir C:\NaviPOWM
@@ -42,8 +42,11 @@ Section "" ;start with this
     ; Main path
     File "Common\NaviPOWM.exe"
     File "Common\NaviPOWM.INI"
+    File "Common\demo01.txt"
+    File "Common\E0071N509.map"
     File "..\..\LICENSE.TXT"
     File "..\..\README.TXT"
+    File "..\..\CHANGELOG.TXT"
 
     ; Icons
     CreateDirectory $INSTDIR\Icons
@@ -101,8 +104,11 @@ Section "Uninstall"
     ; Main path
     Delete "$INSTDIR\NaviPOWM.exe"
     Delete "$INSTDIR\NaviPOWM.INI"
+    Delete "$INSTDIR\demo01.txt"
+    Delete "$INSTDIR\E0071N509.map"
     Delete "$INSTDIR\LICENSE.TXT"
     Delete "$INSTDIR\README.TXT"
+    Delete "$INSTDIR\CHANGELOG.TXT"
     RmDir $INSTDIR ; will be deleted only if empty
 
 SectionEnd

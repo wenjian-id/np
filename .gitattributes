@@ -36,6 +36,8 @@ Qt/src/TargetIncludes.hpp -text
 /README.TXT -text
 Windows/Install/NaviPOWM.nsi -text
 Windows/Install/README.TXT -text
+Windows/Install/update.bat -text
+Windows/Install/updateqt.bat -text
 Windows/MinGW/NaviPOWM.mdsp -text
 Windows/MinGW/NaviPOWM.rc -text
 Windows/MinGW/resource.h -text
@@ -75,6 +77,7 @@ WindowsMobile/Install/NaviPOWM.inf -text
 WindowsMobile/Install/NaviPOWM.ini -text
 WindowsMobile/Install/README.TXT -text
 WindowsMobile/Install/make.bat -text
+WindowsMobile/Install/update.bat -text
 WindowsMobile/eVC4/NaviPOWM.rc -text
 WindowsMobile/eVC4/NaviPOWM.vcp -text
 WindowsMobile/eVC4/NaviPOWM.vcw -text
@@ -106,6 +109,7 @@ WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
 common/Config/navipowm.ini -text
+common/Demo/E0071N509.map -text
 common/Demo/demo01.txt -text
 common/Images/Icons20x20.xcf -text
 common/Images/MainIcon.ico -text
