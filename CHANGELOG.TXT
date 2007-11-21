@@ -7,6 +7,7 @@ Version 0.1.1:
    - 1829491: DEMO mode doesn't allow timeouts of less than 1 second
  - implemented feature requests:
    - 1828282: Show zoom buttons
+   - 1834978: Make baud rate configurable
 
  - other:
    - turned off case sensitivity for keys in INI file
