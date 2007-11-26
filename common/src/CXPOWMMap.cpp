@@ -79,7 +79,8 @@ CXWay::CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, 
 	m_ID(ID),
 	m_eHighwayType(eHighwayType),
 	m_Name(Name),
-	m_Ref(Ref)
+	m_Ref(Ref),
+	m_MaxSpeed(0)
 {
 }
 
@@ -105,6 +106,16 @@ CXStringUTF8 CXWay::GetName() const {
 //-------------------------------------
 CXStringUTF8 CXWay::GetRef() const {
 	return m_Ref;
+}
+
+//-------------------------------------
+void CXWay::SetMaxSpeed(unsigned char MaxSpeed) {
+	m_MaxSpeed = MaxSpeed;
+}
+
+//-------------------------------------
+unsigned char CXWay::GetMaxSpeed() const {
+	return m_MaxSpeed;
 }
 
 //-------------------------------------
@@ -238,8 +249,6 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	Clear();
 
-	CXExactTime StartTime;
-
 	m_FileName = FileName;
 	m_iCurrentZone = UTMZoneNone;
 
@@ -266,14 +275,16 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	// check version
 	unsigned long Version = 0;
-	unsigned long ReqVersion = 0x00000100;
+	unsigned long ReqVersion = 0x01000102;
 	if(!ReadUL32(InFile, Version)) {
 		CXStringASCII ErrorMsg("Error reading Version from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
-	if(Version != ReqVersion) {
+	if(Version == 0x00000100) {
+		return LoadMap0_1_1(InFile, FileName);
+	} else if(Version != ReqVersion) {
 		CXStringASCII ErrorMsg(FileName);
 		ErrorMsg += " has wrong Version: ";
 		char buf[10];
@@ -286,6 +297,93 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		return false;
 	}
 
+	// node count
+	unsigned long NodeCount = 0;
+	if(!ReadUL32(InFile, NodeCount)) {
+		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+	// read nodes
+	for(unsigned long ulNode=0; ulNode<NodeCount; ulNode++) {
+		// read node: IDX, LON, LAT
+		t_uint64 ID = 0;
+		unsigned long Lon = 0; 
+		unsigned long Lat = 0;
+		ReadI64(InFile, ID);
+		ReadUL32(InFile, Lon);
+		ReadUL32(InFile, Lat);
+
+		// compute lon
+		double dLon = 1.0;
+		if((Lon & 0x80000000) != 0) {
+			// negative coordinate
+			dLon = -1;
+			Lon &= 0x7FFFFFFF;
+		}
+		// now scale back
+		dLon = dLon*Lon/1000000.0;
+
+		// compute lat
+		double dLat = 1.0;
+		if((Lat & 0x80000000) != 0) {
+			// negative coordinate
+			dLat = -1;
+			Lat &= 0x7FFFFFFF;
+		}
+		// now scale back
+		dLat = dLat*Lat/1000000.0;
+
+		// create node
+		CXNode *pNode = new CXNode(ID, dLon, dLat);
+		// add node
+		m_NodeMap.SetAt(ID, pNode);
+	}
+
+	// way count
+	unsigned long WayCount = 0;
+	if(!ReadUL32(InFile, WayCount)) {
+		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+	// read ways
+	for(unsigned long ulWay=0; ulWay<WayCount; ulWay++) {
+		// read Way: Idx, Name, node count, node ids
+		t_uint64 ID = 0;
+		unsigned char HighwayType = 0;
+		CXStringUTF8 Name;
+		CXStringUTF8 Ref;
+		unsigned char MaxSpeed = 0;
+		ReadI64(InFile, ID);
+		ReadB(InFile, HighwayType);
+		ReadStringUTF8(InFile, Name);
+		ReadStringUTF8(InFile, Ref);
+		ReadB(InFile, MaxSpeed);
+		// create way
+		CXWay *pWay = new CXWay(ID, static_cast<CXWay::E_KEYHIGHWAY>(HighwayType), Name, Ref);
+		pWay->SetMaxSpeed(MaxSpeed);
+		// add node
+		m_WayMap.SetAt(ID, pWay);
+		// 
+		unsigned long NodeCount = 0;
+		ReadUL32(InFile, NodeCount);
+		for(unsigned long ul=0; ul<NodeCount; ul++) {
+			t_uint64 SegID = 0;
+			ReadI64(InFile, SegID);
+			CXNode *pNode = NULL;
+			if(!m_NodeMap.Lookup(SegID, pNode))
+				continue;
+			pWay->AddNode(pNode);
+		}
+	}
+	return true;
+}
+
+//-------------------------------------
+bool CXPOWMMap::LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName) {
 	// node count
 	unsigned long NodeCount = 0;
 	if(!ReadUL32(InFile, NodeCount)) {
@@ -365,9 +463,5 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 			pWay->AddNode(pNode);
 		}
 	}
-	CXExactTime StopTime;
-	unsigned long diff = StopTime - StartTime;
-	diff = 42;
 	return true;
 }
-

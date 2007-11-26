@@ -29,6 +29,7 @@
 #include "CXStringASCII.hpp"
 #include "CXMapHashSimple.hpp"
 #include "TargetIncludes.hpp"
+#include "CXFile.hpp"
 
 class CXWay;
 
@@ -141,6 +142,7 @@ private:
 	E_KEYHIGHWAY	m_eHighwayType;		///< oiu
 	CXStringUTF8	m_Name;				///< oiu
 	CXStringUTF8	m_Ref;				///< oiu
+	unsigned char	m_MaxSpeed;			///< oiu 0 means no max speed
 	TNodeBuffer		m_Nodes;			///< oiu
 	//-------------------------------------
 	CXWay();									///< Not used.
@@ -189,6 +191,18 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void SetMaxSpeed(unsigned char MaxSpeed);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	unsigned char GetMaxSpeed() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	void AddNode(CXNode *pNode);
 	//-------------------------------------
 	/*
@@ -227,6 +241,12 @@ private:
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName);
 protected:
 public:
 	//-------------------------------------
