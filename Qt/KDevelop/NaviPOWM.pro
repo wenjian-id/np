@@ -59,7 +59,9 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/IThread.cpp \
  ../../common/src/IWorkRequestThread.cpp \
  ../../common/src/Utils.cpp \
- ../../common/src/ISerial.cpp
+ ../../common/src/ISerial.cpp \
+ ../../common/src/CXInfoBarCommon.cpp \
+ ../../common/src/CXInfoBarSpeed.cpp
 
 HEADERS += src/CXSerial.hpp \
 src/OSSpecific.hpp \
@@ -120,4 +122,6 @@ src/OSSpecific.hpp \
  ../../common/src/IThread.hpp \
  ../../common/src/IWindow.hpp \
  ../../common/src/IWorkRequestThread.hpp \
- ../../common/src/Utils.hpp
+ ../../common/src/Utils.hpp \
+ ../../common/src/CXInfoBarCommon.hpp \
+ ../../common/src/CXInfoBarSpeed.hpp
