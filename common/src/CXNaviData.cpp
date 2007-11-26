@@ -28,6 +28,7 @@
 CXNaviData::CXNaviData() :
 	m_dLon(0.0), m_dLat(0.0),
 	m_nSat(0),
+	m_MaxSpeed(0),
 	m_WayID(0), m_oLocated(false),
 	m_oTimeout(false),
 	m_TargetDist(0.0),
@@ -64,6 +65,7 @@ void CXNaviData::_CopyFrom(const CXNaviData &rOther) {
 	m_UTMSpeed		= rOther.m_UTMSpeed;
 	m_StreetName	= rOther.m_StreetName;
 	m_Ref			= rOther.m_Ref;
+	m_MaxSpeed		= rOther.m_MaxSpeed;
 	m_WayID			= rOther.m_WayID;
 	m_oLocated		= rOther.m_oLocated;
 	m_oTimeout		= rOther.m_oTimeout;
@@ -170,6 +172,20 @@ void CXNaviData::SetRef(const CXStringUTF8 & Ref) {
 	if(m_Ref != Ref)
 		SetChangedFlag();
 	m_Ref = Ref;
+}
+
+//-------------------------------------
+unsigned char CXNaviData::GetMaxSpeed() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_MaxSpeed;
+}
+
+//-------------------------------------
+void CXNaviData::SetMaxSpeed(unsigned char MaxSpeed) {
+	CXMutexLocker L(&m_Mutex);
+	if(m_MaxSpeed != MaxSpeed)
+		SetChangedFlag();
+	m_MaxSpeed = MaxSpeed;
 }
 
 //-------------------------------------

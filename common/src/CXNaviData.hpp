@@ -50,6 +50,7 @@ private:
 
 	CXStringUTF8		m_StreetName;		///< name of street
 	CXStringUTF8		m_Ref;				///< ref
+	unsigned char		m_MaxSpeed;			///< max. speed
 	t_uint64			m_WayID;			///< id of last located way
 	bool				m_oLocated;			///< is located on a way or not
 	bool				m_oTimeout;			///< timeout occured
@@ -177,6 +178,18 @@ public:
 	 *
 	 */
 	void SetRef(const CXStringUTF8 & Ref);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	unsigned char GetMaxSpeed() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetMaxSpeed(unsigned char MaxSpeed);
 	//-------------------------------------
 	/*
 	 * \brief oiu

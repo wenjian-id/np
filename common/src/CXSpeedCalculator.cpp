@@ -23,7 +23,6 @@
 #include "CXSpeedCalculator.hpp"
 #include "CXMutexLocker.hpp"
 #include "CoordConversion.h"
-
 #include "TargetIncludes.hpp"
 #include <stdio.h>
 
@@ -35,8 +34,8 @@ const double EPSILON = 0.01;
 CXSpeedCalculator::CXSpeedCalculator(size_t BufferSize) :
 	m_iBufferSize(BufferSize),
 	m_pBuffer(NULL),
-	m_oValid(false),
-	m_iUTMZone(UTMZoneNone)
+	m_iCurrentUTMZone(UTMZoneNone),
+	m_oValidSpeed(false)
 {
 	m_pBuffer = new CXData*[m_iBufferSize];
 	for(size_t i=0; i<m_iBufferSize; i++)
@@ -54,18 +53,48 @@ CXSpeedCalculator::~CXSpeedCalculator() {
 //-------------------------------------
 void CXSpeedCalculator::ClearBuffer() {
 	// delete single data
-	for(size_t i=0; i<m_iBufferSize; i++)
-		if(m_pBuffer[i] != NULL)
+	for(size_t i=0; i<m_iBufferSize; i++) {
+		if(m_pBuffer[i] != NULL) {
 			delete m_pBuffer[i];
+		}
+	}
 }
 
 //-------------------------------------
-void CXSpeedCalculator::SetData(double Lon, double Lat, const CXUTMCoor & Coor, const CXExactTime & Time) {
+void CXSpeedCalculator::SetData(const CXUTMCoor & Coor, const CXExactTime & TimeStamp) {
 	CXMutexLocker L(&m_Mutex);
-	// check if m_iUTMZone changes
-	if(m_iUTMZone != Coor.GetUTMZone()) {
-		/// \todo implement
-		// yes. recompute all UTMN and UTME in m_pBuffer
+	// check if m_iCurrentUTMZone changes
+	if(m_iCurrentUTMZone != Coor.GetUTMZone()) {
+		/// yes it cahnged. Recompute all UTM coords and force them to m_iCurrentUTMZone
+		for(size_t i=0; i<m_iBufferSize; i++) {
+			if(m_pBuffer[i] != NULL) {
+				double Lon = 0;
+				double Lat = 0;
+				// compute lon / lat
+				UTMtoLL(	WGS84,
+							m_pBuffer[i]->m_UTMCoor.GetUTMEasting(), 
+							m_pBuffer[i]->m_UTMCoor.GetUTMNorthing(),
+							m_pBuffer[i]->m_UTMCoor.GetUTMZone(),
+							m_pBuffer[i]->m_UTMCoor.GetUTMLetter(),
+							Lon,Lat);
+				// recompute UTM
+				int ZoneNumber = UTMZoneNone;
+				char UTMLetter = 0;
+				double UTME = 0;
+				double UTMN = 0;
+				LLtoUTM(	WGS84,
+							Lon, Lat, 
+							m_iCurrentUTMZone,
+							ZoneNumber,
+							UTMLetter,
+							UTME, UTMN);
+				// and set it
+				m_pBuffer[i]->m_UTMCoor.SetUTMEasting(UTME);
+				m_pBuffer[i]->m_UTMCoor.SetUTMNorthing(UTMN);
+				m_pBuffer[i]->m_UTMCoor.SetUTMLetter(UTMLetter);
+				m_pBuffer[i]->m_UTMCoor.SetUTMZone(ZoneNumber);
+			}
+		}
 	}
 	// check, if we must delete last Value in m_pBuffer
 	if(m_pBuffer[m_iBufferSize-1] != NULL) {
@@ -77,7 +106,7 @@ void CXSpeedCalculator::SetData(double Lon, double Lat, const CXUTMCoor & Coor, 
 	for(size_t i=m_iBufferSize-1; i>0; i--)
 		m_pBuffer[i] = m_pBuffer[i-1];
 	// set first value
-	m_pBuffer[0] = new CXData(Lon, Lat, Coor.GetUTMEasting(), Coor.GetUTMNorthing(), Time);
+	m_pBuffer[0] = new CXData(Coor, TimeStamp);
 	// now calculate speed
 	size_t count = 0;
 	for(size_t j=0; j<m_iBufferSize; j++)
@@ -88,17 +117,17 @@ void CXSpeedCalculator::SetData(double Lon, double Lat, const CXUTMCoor & Coor, 
 	if(count > 1) {
 		// compute speed
 		// take care, when more than one second between measurements
-		CXExactTime StartTime = m_pBuffer[count-1]->m_Time;
+		CXExactTime StartTime = m_pBuffer[count-1]->m_TimeStamp;
 		for(size_t i=0; i<count; i++) {
 			if(i != count-1) {
-				x1 = x1 + m_pBuffer[i]->m_UTME;
-				y1 = y1 + m_pBuffer[i]->m_UTMN;
-				dt1 = dt1 + (m_pBuffer[i]->m_Time-StartTime);
+				x1 = x1 + m_pBuffer[i]->m_UTMCoor.GetUTMEasting();
+				y1 = y1 + m_pBuffer[i]->m_UTMCoor.GetUTMNorthing();
+				dt1 = dt1 + (m_pBuffer[i]->m_TimeStamp-StartTime);
 			}
 			if(i != 0) {
-				x2 = x2 + m_pBuffer[i]->m_UTME;
-				y2 = y2 + m_pBuffer[i]->m_UTMN;
-				dt2 = dt2 + (m_pBuffer[i]->m_Time-StartTime);
+				x2 = x2 + m_pBuffer[i]->m_UTMCoor.GetUTMEasting();
+				y2 = y2 + m_pBuffer[i]->m_UTMCoor.GetUTMNorthing();
+				dt2 = dt2 + (m_pBuffer[i]->m_TimeStamp-StartTime);
 			}
 		}
 		x1 = x1/(count-1);
@@ -113,8 +142,12 @@ void CXSpeedCalculator::SetData(double Lon, double Lat, const CXUTMCoor & Coor, 
 		size_t  dt = dt1 - dt2;
 		// compute speed
 		double dSpeed = 0;
-		if(fabs(dt) >= EPSILON)
-			dSpeed = sqrt(dx*dx+dy*dy);
+		double dUnnormedSpeed = 0;
+		if(fabs(dt) >= EPSILON) {
+			dUnnormedSpeed = sqrt(dx*dx+dy*dy);
+			// nor to m/s
+			dSpeed = dUnnormedSpeed*1000/dt;
+		}
 		if(dSpeed < 1) {
 			// standstill
 			// do not touch direction to avoid turning map around
@@ -123,14 +156,14 @@ void CXSpeedCalculator::SetData(double Lon, double Lat, const CXUTMCoor & Coor, 
 			// moving
 			// cos, sin
 			// 0 is east, so use dx and dy
-			double dCos = dx / dSpeed;
-			double dSin = dy / dSpeed;
+			double dCos = dx / dUnnormedSpeed;
+			double dSin = dy / dUnnormedSpeed;
 			m_Speed.SetSpeed(dSpeed);
 			m_Speed.SetCos(dCos);
 			m_Speed.SetSin(dSin);
 		}
 		m_LastValidSpeed = m_Speed;
-		m_oValid = true;
+		m_oValidSpeed = true;
 	} else {
 		// not enaugh data
 	}
@@ -140,24 +173,15 @@ void CXSpeedCalculator::SetData(double Lon, double Lat, const CXUTMCoor & Coor, 
 void CXSpeedCalculator::ResetData() {
 	CXMutexLocker L(&m_Mutex);
 	ClearBuffer();
-	m_oValid = false;
+	m_oValidSpeed = false;
 	m_Speed.Reset();
 	m_LastValidSpeed.Reset();
 }
 
 //-------------------------------------
-void CXSpeedCalculator::Timeout() {
-	CXMutexLocker L(&m_Mutex);
-	ClearBuffer();
-	m_oValid = false;
-	m_Speed.Reset();
-	// do not touch last valid speed
-}
-
-//-------------------------------------
 bool CXSpeedCalculator::HasValidSpeed() {
 	CXMutexLocker L(&m_Mutex);
-	return m_oValid;
+	return m_oValidSpeed;
 }
 
 //-------------------------------------

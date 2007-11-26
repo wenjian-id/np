@@ -38,7 +38,7 @@
  * \brief oiu
  *
  */
-void LLtoUTM(int ReferenceEllipsoid, const double Long, const double Lat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
+void LLtoUTM(int ReferenceEllipsoid, const double Lon, const double Lat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
 
 //-------------------------------------
 /*

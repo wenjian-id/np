@@ -30,45 +30,49 @@
 
 //---------------------------------------------------------------------
 /*
- * \brief oiu
+ * \brief Calculate speed from a bunch of UTM coordinates with timestamp.
  *
+ * This class calculates a speed from a bunch of UTM coordinates with time stamp.
+ * If there are N available coordinates a mean position and time stamp for the first
+ * N-1 and the last N-1 values is computed. From this two values the current speed
+ * is computed. The coordinates are kept in FIFO.
  */
 class CXSpeedCalculator {
 private:
 
 	//---------------------------------------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Helper class for the speed calculator.
 	 *
+	 * Helper class for the speed calculator.
 	 */
 	class CXData {
 	private:
+		//-------------------------------------
 		CXData();									///< Not used.
 		CXData(const CXData &);						///< Not used.
 		const CXData & operator = (const CXData &);	///< Not used.
 		//-------------------------------------
 	public:
-		double			m_Lon;		///< oiu
-		double			m_Lat;		///< oiu
-		double			m_UTME;		///< oiu
-		double			m_UTMN;		///< oiu
-		CXExactTime		m_Time;		///< oiu
+		CXUTMCoor		m_UTMCoor;		///< UTM coordinate.
+		CXExactTime		m_TimeStamp;	///< Time stamp for coordinate.
 		//-------------------------------------
 		/*
-		 * \brief oiu
+		 * \brief Constructor.
 		 *
+		 * Constructor.
+		 * \param	UTMCoor		UTM coordinate
+		 * \param	TimeStamp	TimeStamp for coordinate.
 		 */
-		CXData(double Lon, double Lat, double UTME, double UTMN, const CXExactTime & Time) {
-			m_Lon = Lon;
-			m_Lat = Lat;
-			m_UTME = UTME;
-			m_UTMN = UTMN;
-			m_Time = Time;
+		CXData(const CXUTMCoor & UTMCoor, const CXExactTime & TimeStamp) {
+			m_UTMCoor = UTMCoor;
+			m_TimeStamp = TimeStamp;
 		}
 		//-------------------------------------
 		/*
-		 * \brief oiu
+		 * \brief Destructor
 		 *
+		 * Destructor.
 		 */
 		virtual ~CXData() {
 		}
@@ -77,73 +81,81 @@ private:
 
 private:
 	// buffer stuff
-	size_t				m_iBufferSize;		///< oiu
-	CXData				**m_pBuffer;		///< oiu
+	size_t				m_iBufferSize;		///< Number of coordinates.
+	CXData				**m_pBuffer;		///< Buffer with coordinates.
 	// speed stuff
-	bool				m_oValid;			///< oiu
-	int					m_iUTMZone;			///< oiu
-	CXUTMSpeed			m_Speed;			///< oiu
-	CXUTMSpeed			m_LastValidSpeed;	///< oiu
+	int					m_iCurrentUTMZone;	///< Current UTM zone
+	CXUTMSpeed			m_Speed;			///< Current speed
+	bool				m_oValidSpeed;		///< Flag indicating if a valid speed exists.
+	CXUTMSpeed			m_LastValidSpeed;	///< last valid computed speed.
 	// sync stuff
-	mutable CXMutex		m_Mutex;			///< oiu
+	mutable CXMutex		m_Mutex;			///< Sync object
 	//-------------------------------------
 	CXSpeedCalculator();												///< Not used.
 	CXSpeedCalculator(const CXSpeedCalculator &);						///< Not used.
 	const CXSpeedCalculator & operator = (const CXSpeedCalculator &);	///< Not used.
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Clear buffer with coordinates.
 	 *
+	 * Clear buffer with coordinates.
 	 */
 	void ClearBuffer();
 protected:
 public:
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Only allowed constructor.
 	 *
+	 * Only allowed constructor.
+	 * \param	BufferSize	Max nunmber of coordinates.
 	 */
 	CXSpeedCalculator(size_t BufferSize);
 	//-------------------------------------
 	/*
-	 * \brief oiu
-	 *
+	 * \brief Destructor.
+	 * 
+	 * Destructor.
 	 */
 	virtual ~CXSpeedCalculator();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Set new data.
 	 *
+	 * Set new data.
+	 * \param	UTMCoor		New UTM coordinate.
+	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetData(double Lon, double Lat, const CXUTMCoor & Coor, const CXExactTime & Time);
+	void SetData(const CXUTMCoor & UTMCoor, const CXExactTime & TimeStamp);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Reset data.
 	 *
+	 * All saved data is resetted.
 	 */
 	void ResetData();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Check if a valid speed is available.
 	 *
-	 */
-	void Timeout();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
+	 * Check if a valid speed is available.
+	 * \return	true	Returns true if a valid speed is available.
 	 */
 	bool HasValidSpeed();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get speed.
 	 *
+	 * Get Speed.
+	 * \return	The speed.
 	 */
 	CXUTMSpeed GetSpeed() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get last valid speed.
 	 *
+	 * Get last Speed.
+	 * \return	Last valid speed.
 	 */
 	CXUTMSpeed GetLastValidSpeed() const;
 };

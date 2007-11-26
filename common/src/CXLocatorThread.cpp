@@ -151,18 +151,22 @@ void CXLocatorThread::OnThreadLoop() {
 				pPOWMMap->LockMap();
 				CXStringUTF8 Name;
 				CXStringUTF8 Ref;
+				unsigned char MaxSpeed = 0;
 				CXWay *pWay = pPOWMMap->GetWay(ID);
 				if(pWay != NULL) {
 					Name = pWay->GetName();
 					Ref = pWay->GetRef();
+					MaxSpeed = pWay->GetMaxSpeed();
 				}
 				m_NaviData.SetStreetName(Name);
 				m_NaviData.SetRef(Ref);
+				m_NaviData.SetMaxSpeed(MaxSpeed);
 				pPOWMMap->UnlockMap();
 			} else {
 				m_NaviData.SetLocated(false);
 				m_NaviData.SetStreetName("");
 				m_NaviData.SetRef("");
+				m_NaviData.SetMaxSpeed(0);
 			}
 
 		}
@@ -195,7 +199,7 @@ void CXLocatorThread::OnNewDataGPS(const tUCBuffer & Buffer) {
 
 	// calculate speed
 	CXUTMSpeed Speed;
-	m_SpeedCalculator.SetData(Lon, Lat, UTMCoor, mLastReceivedGPS);
+	m_SpeedCalculator.SetData(UTMCoor, mLastReceivedGPS);
 
 	if(m_SpeedCalculator.HasValidSpeed()) {
 		// take speed
