@@ -275,7 +275,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	// check version
 	unsigned long Version = 0;
-	unsigned long ReqVersion = 0x01000102;
+	unsigned long ReqVersion = 0x01010201; // 0.1.2 dev1
 	if(!ReadUL32(InFile, Version)) {
 		CXStringASCII ErrorMsg("Error reading Version from file: ");
 		ErrorMsg += FileName;

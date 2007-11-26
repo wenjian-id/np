@@ -50,3 +50,17 @@ void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
 	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
 	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
 }
+
+//-------------------------------------
+void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
+	if(m_pPainter == NULL)
+		return;
+	if(pBmp == NULL)
+		return;
+	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+	qreal Opacity = m_pPainter->opacity();
+	m_pPainter->setOpacity(Alpha/100.0);
+	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+	m_pPainter->setOpacity(Opacity);
+}

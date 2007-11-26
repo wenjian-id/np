@@ -300,7 +300,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXExactTime Start;
 
 	// get copy of navigation data
-	CXNaviData Data = GetPosition();
+	CXNaviData NaviData = GetPosition();
 	CXOptions *pOpt = CXOptions::Instance();
 
 	// draw background
@@ -324,10 +324,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		double x0 = 0;
 		double y0 = 0;
 		int NewZone = UTMZoneNone;
-		LLtoUTM(WGS84, Data.GetLon(), Data.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
+		LLtoUTM(WGS84, NaviData.GetLon(), NaviData.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
 
 		CXTransformationMatrix2D TM;
-		CXUTMSpeed UTMSpeed = Data.GetUTMSpeed();
+		CXUTMSpeed UTMSpeed = NaviData.GetUTMSpeed();
 
 		TM.Translate(-x0, -y0);			// x0, y0 is center of visible universe
 		// rotate
@@ -377,15 +377,16 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXExactTime Stop;
 	char buf[100];
-	snprintf(buf, 100, "%.5f - %.5f", Data.GetLon(), Data.GetLat());
+	snprintf(buf, 100, "%.5f - %.5f", NaviData.GetLon(), NaviData.GetLat());
 	CXStringASCII ttt = buf;
 	tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 	TextRect.OffsetRect(-TextRect.GetLeft(), -TextRect.GetTop());
 	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+	int h = TextRect.GetHeight();
 	snprintf(buf, 100, "%ld - %ld ms", StopPrepare-StopLock, Stop-StopPrepare);
 	ttt = buf;
 	TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-	TextRect.OffsetRect(Width - TextRect.GetRight(), -TextRect.GetTop());
+	TextRect.OffsetRect(TextRect.GetLeft(), h-TextRect.GetTop());
 	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 }
 

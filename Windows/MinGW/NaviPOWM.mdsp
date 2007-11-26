@@ -27,7 +27,7 @@ optimizeLevel=0
 // linker
 libraryPath=
 outputFilename=Debug\NaviPOWM.exe
-libraries=
+libraries=msimg32
 extraLinkerOptions=-mwindows
 ignoreStartupFile=0
 ignoreDefaultLibs=0
@@ -65,7 +65,7 @@ optimizeLevel=3
 // linker
 libraryPath=
 outputFilename=Release\NaviPOWM.exe
-libraries=
+libraries=msimg32
 extraLinkerOptions=-mwindows
 ignoreStartupFile=0
 ignoreDefaultLibs=0
@@ -129,6 +129,8 @@ extraResourceOptions=
 47=..\src\Main.cpp
 48=..\src\TargetIncludes.cpp
 49=..\..\common\src\ISerial.cpp
+50=..\..\common\src\CXInfoBarSpeed.cpp
+51=..\..\common\src\CXInfoBarCommon.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -191,6 +193,8 @@ extraResourceOptions=
 59=..\src\OSSpecific.hpp
 60=..\src\TargetIncludes.hpp
 61=resource.h
+62=..\..\common\src\CXInfoBarSpeed.hpp
+63=..\..\common\src\CXInfoBarCommon.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

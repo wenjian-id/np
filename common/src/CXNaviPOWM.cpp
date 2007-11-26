@@ -26,6 +26,8 @@
 #include "CXMapThread.hpp"
 #include "CXInfoBarBottom.hpp"
 #include "CXInfoBarTop.hpp"
+#include "CXInfoBarSpeed.hpp"
+#include "CXInfoBarCommon.hpp"
 #include "CXMutexLocker.hpp"
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
@@ -76,10 +78,14 @@ CXNaviPOWM::CXNaviPOWM() :
 	m_pMapThread(NULL),
 	m_pInfoBarBottom(NULL),
 	m_pInfoBarTop(NULL),
+	m_pInfoBarSpeed(NULL),
+	m_pInfoBarCommon(NULL),
 	m_iWidth(0),
 	m_iHeight(0),
 	m_InfoBarTopPos(0,0,1,1),
 	m_InfoBarBottomPos(0,0,1,1),
+	m_InfoBarSpeedPos(0,0,1,1),
+	m_InfoBarCommonPos(0,0,1,1),
 	m_ZoomInPos(0,0,1,1),
 	m_ZoomOutPos(0,0,1,1),
 	m_oShowInfo(false),
@@ -101,6 +107,10 @@ CXNaviPOWM::~CXNaviPOWM() {
 	m_pInfoBarBottom =  NULL;
 	delete m_pInfoBarTop;
 	m_pInfoBarTop =  NULL;
+	delete m_pInfoBarSpeed;
+	m_pInfoBarSpeed = NULL;
+	delete m_pInfoBarCommon;
+	m_pInfoBarCommon = NULL;
 }
 
 //-------------------------------------
@@ -132,6 +142,8 @@ bool CXNaviPOWM::Init(IMainWindow *pMainWindow) {
 	m_pMainWindow = pMainWindow;
 	m_pInfoBarBottom = new CXInfoBarBottom();
 	m_pInfoBarTop = new CXInfoBarTop();
+	m_pInfoBarSpeed = new CXInfoBarSpeed();
+	m_pInfoBarCommon = new CXInfoBarCommon();
 	if(m_pGPSRecvThread != NULL)
 		return false;
 	if(m_pLocatorThread != NULL)
@@ -198,10 +210,16 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		return;
 	if(m_pInfoBarTop == NULL)
 		return;
+	if(m_pInfoBarSpeed == NULL)
+		return;
+	if(m_pInfoBarCommon == NULL)
+		return;
 	
 	m_pMapThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
+//oiu	m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
+	m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
 	// paint zoom buttons
 	if(CXOptions::Instance()->ShowZoomButtons()) {
 		m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
@@ -242,6 +260,10 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 		return;
 	if(m_pInfoBarTop == NULL)
 		return;
+	if(m_pInfoBarSpeed == NULL)
+		return;
+	if(m_pInfoBarCommon == NULL)
+		return;
 	SetWidth(Width);
 	SetHeight(Height);
 	int IBBH = CXOptions::Instance()->GetInfoBarBottomHeight();
@@ -271,6 +293,19 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_pInfoBarTop->Resize(Width, IBTH);
 	m_ZoomInBtn.Resize(25, 25);
 	m_ZoomOutBtn.Resize(25, 25);
+
+	int InfoBarCommonWidth = 60;
+	m_InfoBarSpeedPos.SetTop(IBBH);
+	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-60);
+	m_InfoBarSpeedPos.SetRight(Width-InfoBarCommonWidth);
+	m_InfoBarSpeedPos.SetBottom(IBBH+60);
+	m_pInfoBarSpeed->Resize(m_InfoBarSpeedPos.GetWidth(), m_InfoBarSpeedPos.GetHeight());
+
+	m_InfoBarCommonPos.SetTop(IBBH);
+	m_InfoBarCommonPos.SetLeft(Width-InfoBarCommonWidth);
+	m_InfoBarCommonPos.SetRight(Width);
+	m_InfoBarCommonPos.SetBottom(IBBH+20);
+	m_pInfoBarCommon->Resize(m_InfoBarCommonPos.GetWidth(), m_InfoBarCommonPos.GetHeight());
 	RequestRepaint();
 }
 
@@ -282,9 +317,15 @@ void CXNaviPOWM::PositionChanged(const CXNaviData & NewData) {
 		return;
 	if(m_pInfoBarTop == NULL)
 		return;
+	if(m_pInfoBarSpeed == NULL)
+		return;
+	if(m_pInfoBarCommon == NULL)
+		return;
 	m_pInfoBarTop->PositionChanged(NewData);
 	m_pInfoBarBottom->PositionChanged(NewData);
 	m_pMapThread->PositionChanged(NewData);
+	m_pInfoBarSpeed->PositionChanged(NewData);
+	m_pInfoBarCommon->PositionChanged(NewData);
 }
 
 //-------------------------------------

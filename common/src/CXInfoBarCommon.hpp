@@ -20,27 +20,29 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXDEVICECONTEXT_HPP__
-#define __CXDEVICECONTEXT_HPP__
+#ifndef __CXINFOBARCOMMON_HPP__
+#define __CXINFOBARCOMMON_HPP__
 
-#include <IDeviceContext.hpp>
-#include <TargetIncludes.hpp>
+#include "CXInfoBar.hpp"
+#include "CXNaviData.hpp"
 
-class QPainter;
-
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------------
 /*
  * \brief oiu
  *
  */
-class CXDeviceContext : public IDeviceContext {
+class CXInfoBarCommon : public CXInfoBar {
 private:
-	QPainter	*m_pPainter;		///< oiu
+	CXNaviData			m_NaviData;	///< oiu
 	//-------------------------------------
-	CXDeviceContext();													///< Not used.
-	CXDeviceContext(int Width, int Height);								///< Not used.
-	CXDeviceContext(const CXDeviceContext &);							///< Not used.
-	const CXDeviceContext & operator = (const CXDeviceContext &);		///< Not used.
+	CXInfoBarCommon(const CXInfoBarCommon &);						///< Not used.
+	const CXInfoBarCommon & operator = (const CXInfoBarCommon &);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 protected:
 public:
 	//-------------------------------------
@@ -48,31 +50,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXDeviceContext(QPainter *pPainter);
+	CXInfoBarCommon();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	virtual ~CXDeviceContext();
+	virtual ~CXInfoBarCommon();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	QPainter *GetPainter() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
+	void PositionChanged(const CXNaviData & NewData);
 };
 
-#endif // __IDEVICECONTEXT_HPP__
+#endif // __CXINFOBARCOMMON_HPP__

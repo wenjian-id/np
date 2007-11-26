@@ -134,6 +134,10 @@ common/src/CXInfoBar.cpp -text
 common/src/CXInfoBar.hpp -text
 common/src/CXInfoBarBottom.cpp -text
 common/src/CXInfoBarBottom.hpp -text
+common/src/CXInfoBarCommon.cpp -text
+common/src/CXInfoBarCommon.hpp -text
+common/src/CXInfoBarSpeed.cpp -text
+common/src/CXInfoBarSpeed.hpp -text
 common/src/CXInfoBarTop.cpp -text
 common/src/CXInfoBarTop.hpp -text
 common/src/CXKeyVal.hpp -text

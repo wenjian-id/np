@@ -49,3 +49,21 @@ void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
 		return;
 	::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
 }
+
+//-------------------------------------
+void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
+	if(m_hDC == NULL)
+		return;
+	if(pBmp == NULL)
+		return;
+	if(pBmp->GetDC() == NULL)
+		return;
+	BLENDFUNCTION bf;
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.SourceConstantAlpha = static_cast<unsigned char>(256.0*Alpha/100);
+	bf.AlphaFormat = 0;
+	::AlphaBlend(	m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), 
+					pBmp->GetDC(), 0, 0, pBmp->GetWidth(), pBmp->GetHeight(), 
+					bf);
+}

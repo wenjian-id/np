@@ -20,59 +20,48 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXDEVICECONTEXT_HPP__
-#define __CXDEVICECONTEXT_HPP__
+#include "CXInfoBarSpeed.hpp"
+#include "CXDeviceContext.hpp"
+#include "CXBitmap.hpp"
+#include "CXOptions.hpp"
+#include "CXStringASCII.hpp"
+#include "CXStringUTF8.hpp"
 
-#include <IDeviceContext.hpp>
-#include <TargetIncludes.hpp>
+#include <math.h>
 
-class QPainter;
+static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
 
-//---------------------------------------------------------------------
-/*
- * \brief oiu
- *
- */
-class CXDeviceContext : public IDeviceContext {
-private:
-	QPainter	*m_pPainter;		///< oiu
-	//-------------------------------------
-	CXDeviceContext();													///< Not used.
-	CXDeviceContext(int Width, int Height);								///< Not used.
-	CXDeviceContext(const CXDeviceContext &);							///< Not used.
-	const CXDeviceContext & operator = (const CXDeviceContext &);		///< Not used.
-protected:
-public:
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXDeviceContext(QPainter *pPainter);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual ~CXDeviceContext();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	QPainter *GetPainter() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
-};
+//-------------------------------------
+CXInfoBarSpeed::CXInfoBarSpeed() {
+}
 
-#endif // __IDEVICECONTEXT_HPP__
+//-------------------------------------
+CXInfoBarSpeed::~CXInfoBarSpeed() {
+}
+
+//-------------------------------------
+void CXInfoBarSpeed::PositionChanged(const CXNaviData & NewData) {
+	m_NaviData = NewData;
+}
+
+//-------------------------------------
+void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
+	int Width = GetWidth();
+	int Height = GetHeight();
+
+	if(!CXOptions::Instance()->ShowLogo()) {
+
+		// create bitmap
+		CXBitmap Bmp;
+		Bmp.Create(pDC, Width, Height);
+
+		// get client rect
+		tIRect ClientRect(0,0,Width,Height);
+
+		// draw backgound
+		Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
+
+		// draw data
+		pDC->Draw(&Bmp, OffsetX, OffsetY);
+	}
+}

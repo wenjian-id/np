@@ -129,6 +129,8 @@ extraResourceOptions=
 47=..\..\common\src\CXMapPainterDoubleBuffered.cpp
 48=..\..\common\src\CXMapPainterTest.cpp
 49=..\..\common\src\ISerial.cpp
+50=..\..\common\src\CXInfoBarSpeed.cpp
+51=..\..\common\src\CXInfoBarCommon.cpp
 [Header]
 1=..\src\CXMutex.hpp
 2=..\src\CXRWLock.hpp
@@ -190,6 +192,8 @@ extraResourceOptions=
 58=..\..\common\src\CXMapPainterTest.hpp
 59=..\..\common\src\CXKeyVal.hpp
 60=..\..\common\src\CXMapHashSimple.hpp
+61=..\..\common\src\CXInfoBarSpeed.hpp
+62=..\..\common\src\CXInfoBarCommon.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

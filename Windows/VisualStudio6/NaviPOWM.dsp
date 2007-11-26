@@ -54,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib msimg32.lib /nologo /subsystem:windows /machine:I386
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 Debug"
 
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib msimg32.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
 
 !ENDIF 
 
@@ -234,6 +234,14 @@ SOURCE=..\..\common\src\CXInfoBar.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXInfoBarBottom.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXInfoBarCommon.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXInfoBarSpeed.hpp
 # End Source File
 # Begin Source File
 
@@ -418,6 +426,14 @@ SOURCE=..\..\common\src\CXInfoBar.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXInfoBarBottom.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXInfoBarCommon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXInfoBarSpeed.cpp
 # End Source File
 # Begin Source File
 

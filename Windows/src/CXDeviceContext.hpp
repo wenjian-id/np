@@ -64,6 +64,12 @@ public:
 	 *
 	 */
 	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
 };
 
 #endif // __IDEVICECONTEXT_HPP__
