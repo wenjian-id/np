@@ -218,7 +218,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	m_pMapThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
-//oiu	m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
+	m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
 	m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
 	// paint zoom buttons
 	if(CXOptions::Instance()->ShowZoomButtons()) {
@@ -296,9 +296,9 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 
 	int InfoBarCommonWidth = 60;
 	m_InfoBarSpeedPos.SetTop(IBBH);
-	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-60);
+	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-61);
 	m_InfoBarSpeedPos.SetRight(Width-InfoBarCommonWidth);
-	m_InfoBarSpeedPos.SetBottom(IBBH+60);
+	m_InfoBarSpeedPos.SetBottom(IBBH+61);
 	m_pInfoBarSpeed->Resize(m_InfoBarSpeedPos.GetWidth(), m_InfoBarSpeedPos.GetHeight());
 
 	m_InfoBarCommonPos.SetTop(IBBH);

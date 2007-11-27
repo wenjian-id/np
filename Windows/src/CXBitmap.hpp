@@ -143,13 +143,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual bool Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void SetPen(CXPen *pPen);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	virtual void SetFontHeight(int FontHeight);
+	virtual void SetFont(int FontHeight, bool Bold);
 	//-------------------------------------
 	/*
 	 * \brief oiu

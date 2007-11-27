@@ -219,6 +219,40 @@ void CXBitmap::LineTo(int x, int y) {
 }
 
 //-------------------------------------
+bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
+	if(IsNull())
+		return false;
+	// get old colors
+	COLORREF OldTextColor = ::SetTextColor(m_DC, CXRGB2COLORREF(PenColor));
+	COLORREF OldBkColor = ::SetBkColor(m_DC, CXRGB2COLORREF(FillColor));
+
+	// create pen & brush 
+	HPEN hPen = CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
+	HBRUSH hBrush = ::CreateSolidBrush(CXRGB2COLORREF(FillColor));
+
+	// select
+	HPEN OldPen = (HPEN)::SelectObject(m_DC, hPen);
+	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_DC, hBrush);
+
+	// draw circle
+	::Ellipse(m_DC, x-r, y-r, x+r, y+r);
+
+	// restore pen & brush
+	::SelectObject(m_DC, OldPen);
+	::SelectObject(m_DC, OldBrush);
+
+	// delete
+	::DeleteObject(hPen);
+	::DeleteObject(hBrush);
+
+	// restore old colors
+	SetBkColor(m_DC, OldBkColor);
+	SetTextColor(m_DC, OldTextColor);
+
+	return true;
+}
+
+//-------------------------------------
 void CXBitmap::SetPen(CXPen *pPen) {
 	if(IsNull())
 		return;
@@ -237,14 +271,17 @@ void CXBitmap::SetPen(CXPen *pPen) {
 }
 
 //-------------------------------------
-void CXBitmap::SetFontHeight(int FontHeight) {
+void CXBitmap::SetFont(int FontHeight, bool Bold) {
 	if(IsNull())
 		return;
 
 	LOGFONT lf;
 	memset(&lf, 0, sizeof(lf));
 	lf.lfHeight = FontHeight;
-	lf.lfWeight = FW_NORMAL;
+	if(Bold)
+		lf.lfWeight = FW_BOLD;
+	else
+		lf.lfWeight = FW_NORMAL;
 	lf.lfCharSet =  DEFAULT_CHARSET;
 	lf.lfOutPrecision = OUT_DEFAULT_PRECIS;
 	lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;

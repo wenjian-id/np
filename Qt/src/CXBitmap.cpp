@@ -236,6 +236,35 @@ void CXBitmap::LineTo(int x, int y) {
 }
 
 //-------------------------------------
+bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
+	if(IsNull())
+		return false;
+	// get old pen and brush
+	QPen OldPen = m_pPainter->pen();
+	QBrush OldBrush = m_pPainter->brush();
+	
+	// create new pen
+	QPen NewPen(Qt::SolidLine);
+	NewPen.setWidth(1);
+	NewPen.setColor(CXRGB2QColor(PenColor));
+
+	// create new brush
+	QBrush NewBrush(CXRGB2QColor(FillColor), Qt::SolidPattern);
+	
+	// select new pen and brush
+	m_pPainter->setBrush(NewBrush);
+	m_pPainter->setPen(NewPen);
+
+	// draw ellipse
+	m_pPainter->drawEllipse(x-r, y-r, 2*r, 2*r);
+
+	// restore old pen and brush
+	m_pPainter->setPen(OldPen);
+	m_pPainter->setBrush(OldBrush);
+	return true;
+}
+
+//-------------------------------------
 void CXBitmap::SetPen(CXPen *pPen) {
 	if(IsNull())
 		return;
@@ -256,11 +285,12 @@ void CXBitmap::SetPen(CXPen *pPen) {
 }
 
 //-------------------------------------
-void CXBitmap::SetFontHeight(int FontHeight) {
+void CXBitmap::SetFont(int FontHeight, bool Bold) {
 	if(IsNull())
 		return;
 	QFont font = m_pPainter->font();
 	font.setPixelSize(FontHeight);
+	font.setBold(Bold);
 	m_pPainter->setFont(font);
 }
 

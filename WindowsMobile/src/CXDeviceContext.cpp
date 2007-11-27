@@ -71,3 +71,12 @@ void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned c
 */
 	::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
 }
+
+//-------------------------------------
+void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB &TrColor) {
+	::TransparentBlt(	m_hDC, OffsetX, OffsetY, 
+						pBmp->GetWidth(), pBmp->GetHeight(), 
+						pBmp->GetDC(), 0, 0, 
+						pBmp->GetWidth(), pBmp->GetHeight(), 
+						CXRGB2COLORREF(TrColor));
+}

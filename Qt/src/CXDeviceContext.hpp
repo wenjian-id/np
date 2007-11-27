@@ -73,6 +73,12 @@ public:
 	 *
 	 */
 	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB & TrColor);
 };
 
 #endif // __IDEVICECONTEXT_HPP__

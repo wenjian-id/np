@@ -24,6 +24,7 @@
 #include "CXBitmap.hpp"
 
 #include <qpainter.h>
+#include <qbitmap.h>
 
 //-------------------------------------
 CXDeviceContext::CXDeviceContext(QPainter *pPainter) :
@@ -63,4 +64,18 @@ void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned c
 	m_pPainter->setOpacity(Alpha/100.0);
 	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
 	m_pPainter->setOpacity(Opacity);
+}
+
+//-------------------------------------
+void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB & TrColor) {
+	if(m_pPainter == NULL)
+		return;
+	if(pBmp == NULL)
+		return;
+	QPixmap cpy = QPixmap::fromImage(*pBmp->GetImage());
+	QBitmap mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskInColor);
+	cpy.setMask(mask);
+	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+	m_pPainter->drawPixmap(tgt, cpy, src);
 }

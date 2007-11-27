@@ -24,6 +24,7 @@
 #define __IDEVICECONTEXT_HPP__
 
 class CXBitmap;
+class CXRGB;
 
 //---------------------------------------------------------------------
 /*
@@ -63,6 +64,12 @@ public:
 	 *
 	 */
 	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) = 0;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB & TrColor) = 0;
 };
 
 #endif // __IDEVICECONTEXT_HPP__

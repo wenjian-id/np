@@ -52,7 +52,7 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	CXRGB BgColor(0x00, 0x00, 0x00);
 
 	// set new font size
-	Bmp.SetFontHeight(Height -2);
+	Bmp.SetFont(Height -2, false);
 
 	// get client rect
 	tIRect ClientRect(0,0,Width,Height);

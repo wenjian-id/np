@@ -63,13 +63,13 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 		// set new font size
 		int FontHeight = Height - 2;
-		Bmp.SetFontHeight(FontHeight);
+		Bmp.SetFont(FontHeight, false);
 		tIRect Rect(0,0,0,0);
 		do {
 			Rect = Bmp.CalcTextRectASCII("999 kmh", 4, 0);
 			if(Rect.GetWidth() >= Width) {
 				FontHeight--;
-				Bmp.SetFontHeight(FontHeight);
+				Bmp.SetFont(FontHeight, false);
 			}
 
 		} while((Rect.GetWidth() >= Width) && (FontHeight > 2));

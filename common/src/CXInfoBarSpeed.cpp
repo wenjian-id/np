@@ -27,9 +27,11 @@
 #include "CXStringASCII.hpp"
 #include "CXStringUTF8.hpp"
 
+#include "CXPen.hpp"
+
 #include <math.h>
 
-static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
+static const CXRGB TRCOLOR(0xE2, 0xDE, 0xD8);
 
 //-------------------------------------
 CXInfoBarSpeed::CXInfoBarSpeed() {
@@ -49,7 +51,7 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	int Width = GetWidth();
 	int Height = GetHeight();
 
-	if(!CXOptions::Instance()->ShowLogo()) {
+	if(!CXOptions::Instance()->ShowLogo() && (m_NaviData.GetMaxSpeed() != 0)) {
 
 		// create bitmap
 		CXBitmap Bmp;
@@ -59,9 +61,37 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		tIRect ClientRect(0,0,Width,Height);
 
 		// draw backgound
-		Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
+		Bmp.DrawRect(ClientRect, TRCOLOR, TRCOLOR);
 
+		double R = 1.0*Min(Width/2, Height/2);
+		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(R)), CXRGB(0xA0, 0xA0, 0xA0), CXRGB(0xFF, 0xFF, 0xFF));
+		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(0.90*R)), CXRGB(0xFF, 0x00, 0x00), CXRGB(0xFF, 0x00, 0x00));
+		double WhiteRadius = 0.70*R;
+		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(WhiteRadius)), CXRGB(0xFF, 0xFF, 0xFF), CXRGB(0xFF, 0xFF, 0xFF));
+		
+		// draw text
+		char buf[10];
+		sprintf(buf, "%d", static_cast<int>(m_NaviData.GetMaxSpeed()));
+
+		// fit text to white circle
+		double Radius = 1.5*WhiteRadius;
+		int FontSize = static_cast<int>(floor(Radius));
+		for(;;) {
+			Bmp.SetFont(static_cast<int>(floor(FontSize)), true);
+			tIRect Rect = Bmp.CalcTextRectASCII(buf, 2, 2);
+			if(Rect.GetWidth()*Rect.GetWidth() + Rect.GetHeight()*Rect.GetHeight() > 4*WhiteRadius*WhiteRadius) {
+				// does not fit
+				FontSize--;
+			} else {
+				break;
+			}
+			if(FontSize <= 5)
+				break;
+		}
+
+		Bmp.DrawTextASCII(buf, ClientRect, CXRGB(0x00, 0x00, 0x00));
+	
 		// draw data
-		pDC->Draw(&Bmp, OffsetX, OffsetY);
+		pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, TRCOLOR);
 	}
 }
