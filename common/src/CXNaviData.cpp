@@ -26,7 +26,9 @@
 
 //-------------------------------------
 CXNaviData::CXNaviData() :
-	m_dLon(0.0), m_dLat(0.0),
+	m_dLon(0.0),
+	m_dLat(0.0),
+	m_dHeight(0.0),
 	m_nSat(0),
 	m_MaxSpeed(0),
 	m_WayID(0), m_oLocated(false),
@@ -60,6 +62,7 @@ void CXNaviData::_CopyFrom(const CXNaviData &rOther) {
 	CXMutexLocker Lo(&rOther.m_Mutex);
 	m_dLon			= rOther.m_dLon;
 	m_dLat			= rOther.m_dLat;
+	m_dHeight		= rOther.m_dHeight;
 	m_nSat			= rOther.m_nSat;
 	m_UTMCoor		= rOther.m_UTMCoor;
 	m_UTMSpeed		= rOther.m_UTMSpeed;
@@ -101,6 +104,20 @@ void CXNaviData::SetLat(double dLat) {
 	if(m_dLat != dLat)
 		SetChangedFlag();
 	m_dLat = dLat;
+}
+
+//-------------------------------------
+double CXNaviData::GetHeight() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_dHeight;
+}
+
+//-------------------------------------
+void CXNaviData::SetHeight(double dHeight) {
+	CXMutexLocker L(&m_Mutex);
+	if(m_dHeight != dHeight)
+		SetChangedFlag();
+	m_dHeight = dHeight;
 }
 
 //-------------------------------------

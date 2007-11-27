@@ -130,10 +130,11 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
  * \param	NMEAPacket	String containing the NMEA packet includeing CR LF 
  * \param	rLon		Extracted longitude [decimal degrees]
  * \param	rLat		Extracted latitude [decimal degrees]
+ * \param	rHeight		Extracted height [m]
  * \param	rnSat		Extracted number of sattelites.
  * \return				true if successfull.
  */
-bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLat, int &rnSat);
+bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLat, double & rHeight, int &rnSat);
 
 //-------------------------------------
 /*

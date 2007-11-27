@@ -142,7 +142,7 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue) {
 }
 
 //-------------------------------------
-bool ExtractGGAData(const CXStringASCII &Line, double & rLon, double & rLat, int &rnSat) {
+bool ExtractGGAData(const CXStringASCII &Line, double & rLon, double & rLat, double & rHeight, int &rnSat) {
 	// check if this line contains a GGA packet
 
 	// length must be greater than 11 $ G P G G A * x x CR LF
@@ -206,7 +206,7 @@ bool ExtractGGAData(const CXStringASCII &Line, double & rLon, double & rLat, int
 	// HDOP
 	ExtractFirstToken(s, ',');
 	// height
-	ExtractFirstToken(s, ',');
+	sscanf(ExtractFirstToken(s, ',').c_str(), "%lf", &rHeight);
 	// ignore
 	ExtractFirstToken(s, ',');
 	// HOG

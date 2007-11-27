@@ -41,6 +41,7 @@ private:
 	//-------------
 	double				m_dLon;				///< grad.dec
 	double				m_dLat;				///< grad.dec
+	double				m_dHeight;			///< height
 	int					m_nSat;				///< nr satellites
 	CXUTMCoor			m_UTMCoor;			///< UTM coordinate
 	//-------------
@@ -118,6 +119,18 @@ public:
 	 *
 	 */
 	void SetLat(double dLat);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetHeight() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetHeight(double dHeight);
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -25,6 +25,10 @@
 
 #include "CXInfoBar.hpp"
 #include "CXNaviData.hpp"
+#include "CXRect.hpp"
+
+class CXBitmap;
+class CXStringASCII;
 
 //----------------------------------------------------------------------------
 /*
@@ -43,6 +47,12 @@ private:
 	 *
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int SetFontHeight(CXBitmap &Bmp, const CXStringASCII &Str, tIRect &rRect);
 protected:
 public:
 	//-------------------------------------

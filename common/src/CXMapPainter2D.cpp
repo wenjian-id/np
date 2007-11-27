@@ -377,16 +377,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXExactTime Stop;
 	char buf[100];
-	snprintf(buf, 100, "%.5f - %.5f", NaviData.GetLon(), NaviData.GetLat());
+	snprintf(buf, 100, "%ld - %ld ms", StopPrepare-StopLock, Stop-StopPrepare);
 	CXStringASCII ttt = buf;
 	tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 	TextRect.OffsetRect(-TextRect.GetLeft(), -TextRect.GetTop());
-	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
-	int h = TextRect.GetHeight();
-	snprintf(buf, 100, "%ld - %ld ms", StopPrepare-StopLock, Stop-StopPrepare);
-	ttt = buf;
-	TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-	TextRect.OffsetRect(TextRect.GetLeft(), h-TextRect.GetTop());
 	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 }
 

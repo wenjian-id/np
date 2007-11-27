@@ -294,7 +294,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomInBtn.Resize(25, 25);
 	m_ZoomOutBtn.Resize(25, 25);
 
-	int InfoBarCommonWidth = 60;
+	int InfoBarCommonWidth = 65;
 	m_InfoBarSpeedPos.SetTop(IBBH);
 	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-61);
 	m_InfoBarSpeedPos.SetRight(Width-InfoBarCommonWidth);
@@ -304,7 +304,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_InfoBarCommonPos.SetTop(IBBH);
 	m_InfoBarCommonPos.SetLeft(Width-InfoBarCommonWidth);
 	m_InfoBarCommonPos.SetRight(Width);
-	m_InfoBarCommonPos.SetBottom(IBBH+20);
+	m_InfoBarCommonPos.SetBottom(IBBH+4*20);
 	m_pInfoBarCommon->Resize(m_InfoBarCommonPos.GetWidth(), m_InfoBarCommonPos.GetHeight());
 	RequestRepaint();
 }
