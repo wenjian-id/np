@@ -2,6 +2,7 @@ Version 0.1.2:
  - fixed bugs:
 
  - implemented feature requests:
+   - 1829222: compiling for WM2003SE
    - 1834085: Show current speed
    - 1834087: Show current height
    - 1834088: Show permitted speed if any.

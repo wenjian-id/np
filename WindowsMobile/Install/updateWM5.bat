@@ -1,4 +1,4 @@
-copy ..\eVC4\ARMV4IRel\NaviPOWM.exe Common
+copy ..\WM5\eVC4\ARMV4IRel\NaviPOWM.exe Common
 copy ..\..\LICENSE.TXT Common
 copy ..\..\README.TXT Common
 copy ..\..\CHANGELOG.TXT Common
