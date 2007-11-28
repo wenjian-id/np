@@ -24,13 +24,14 @@
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
 #include "CXOptions.hpp"
-#include "CXStringASCII.hpp"
 #include "CXStringUTF8.hpp"
 
 #include <math.h>
 
 static const CXRGB BGCOLOR(0x00, 0x00, 0x00);
 static const CXRGB FGCOLOR(0xff, 0xff, 0x00);
+
+unsigned char DegUTF8[2] = {0xC2, 0xB0};
 
 //-------------------------------------
 CXInfoBarCommon::CXInfoBarCommon() {
@@ -46,13 +47,13 @@ void CXInfoBarCommon::PositionChanged(const CXNaviData & NewData) {
 }
 
 //-------------------------------------
-int CXInfoBarCommon::SetFontHeight(CXBitmap &Bmp, const CXStringASCII &Str, tIRect &rRect) {
+int CXInfoBarCommon::SetFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect) {
 	int Height = rRect.GetHeight();
 	int Width = rRect.GetWidth();
 	int FontHeight = Height;
 	Bmp.SetFont(FontHeight, false);
 	do {
-		rRect = Bmp.CalcTextRectASCII(Str, 2, 2);
+		rRect = Bmp.CalcTextRectUTF8(Str, 2, 2);
 		if(rRect.GetWidth() >= Width) {
 			FontHeight--;
 			Bmp.SetFont(FontHeight, false);
@@ -80,28 +81,35 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		Bmp.DrawRect(ClientRect1, BGCOLOR, BGCOLOR);
 
 		char buf[50];
+		CXStringUTF8 Str;
 
 		// draw lon
 		tIRect LonRect(0, 0, Width, Height);
-		SetFontHeight(Bmp, "-180.99999°", LonRect);
-		sprintf(buf, "%0.5f°", m_NaviData.GetLon());
-		LonRect = Bmp.CalcTextRectASCII(buf, 4, 0);
+		Str = "-180.99999";
+		Str.Append(DegUTF8, 2);
+		SetFontHeight(Bmp, Str, LonRect);
+		sprintf(buf, "%0.5f", m_NaviData.GetLon());
+		Str = buf;
+		Str.Append(DegUTF8, 2);
+		LonRect = Bmp.CalcTextRectUTF8(Str, 4, 0);
 		LonRect.OffsetRect(Width - LonRect.GetRight(), 0*Height-LonRect.GetTop());
-		Bmp.DrawTextASCII(buf, LonRect, FGCOLOR, BGCOLOR);
+		Bmp.DrawTextUTF8(Str, LonRect, FGCOLOR, BGCOLOR);
 
 		// draw lat
 		tIRect LatRect(0, 0, Width, Height);
-		sprintf(buf, "%0.5f°", m_NaviData.GetLat());
-		LatRect = Bmp.CalcTextRectASCII(buf, 4, 0);
+		sprintf(buf, "%0.5f", m_NaviData.GetLat());
+		Str = buf;
+		Str.Append(DegUTF8, 2);
+		LatRect = Bmp.CalcTextRectUTF8(Str, 4, 0);
 		LatRect.OffsetRect(Width - LatRect.GetRight(), 1*Height-LatRect.GetTop());
-		Bmp.DrawTextASCII(buf, LatRect, FGCOLOR, BGCOLOR);
+		Bmp.DrawTextUTF8(Str, LatRect, FGCOLOR, BGCOLOR);
 
 		// draw height
 		tIRect HeightRect(0, 0, Width, Height);
 		sprintf(buf, "%0.0f m", m_NaviData.GetHeight());
-		HeightRect = Bmp.CalcTextRectASCII(buf, 4, 0);
+		HeightRect = Bmp.CalcTextRectUTF8(buf, 4, 0);
 		HeightRect.OffsetRect(Width - HeightRect.GetRight(), 2*Height-HeightRect.GetTop());
-		Bmp.DrawTextASCII(buf, HeightRect, FGCOLOR, BGCOLOR);
+		Bmp.DrawTextUTF8(buf, HeightRect, FGCOLOR, BGCOLOR);
 
 		// draw speed
 		tIRect SpeedRect(0, 0, Width, Height);
@@ -109,9 +117,9 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		CXUTMSpeed UTMSpeed = m_NaviData.GetUTMSpeed();
 		int Speed = static_cast<int>(floor(3.6*UTMSpeed.GetSpeed()));
 		sprintf(buf, "%d kmh", Speed);
-		SpeedRect = Bmp.CalcTextRectASCII(buf, 4, 0);
+		SpeedRect = Bmp.CalcTextRectUTF8(buf, 4, 0);
 		SpeedRect.OffsetRect(Width - SpeedRect.GetRight(), 3*Height-SpeedRect.GetTop());
-		Bmp.DrawTextASCII(buf, SpeedRect, FGCOLOR, BGCOLOR);
+		Bmp.DrawTextUTF8(buf, SpeedRect, FGCOLOR, BGCOLOR);
 
 
 		// draw data

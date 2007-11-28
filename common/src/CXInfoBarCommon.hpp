@@ -28,7 +28,7 @@
 #include "CXRect.hpp"
 
 class CXBitmap;
-class CXStringASCII;
+class CXStringUTF8;
 
 //----------------------------------------------------------------------------
 /*
@@ -52,7 +52,7 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	int SetFontHeight(CXBitmap &Bmp, const CXStringASCII &Str, tIRect &rRect);
+	int SetFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
 protected:
 public:
 	//-------------------------------------
