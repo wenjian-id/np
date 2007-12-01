@@ -39,8 +39,10 @@ CXOptions::CXOptions() :
 	m_oShowLogo(true),
 	m_oSaving(false),
 	m_oShowZoomButtons(false),
+	m_oShowMaxSpeed(true),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
+	m_MaxSpeedSize(61),
 	m_LogoTime(5000)
 {
 }
@@ -89,10 +91,14 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
 	// showzoom
 	SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
+	// MaxSpeed
+	SetShowMaxSpeedFlag(F.Get("ShowMaxSpeed", "on").ToUpper() == "ON");
 	// InfoBar Bottom Height
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
 	SetInfoBarTopHeight(atoi(F.Get("InfoBarTopHeight", "20").c_str()));
+	// MaxSpeed size
+	SetMaxSpeedSize(atoi(F.Get("MaxSpeedSize", "61").c_str()));
 	// maps directory
 	CXStringASCII DirMaps=m_StartPath;
 	DirMaps+=F.Get("DirectoryMaps", "Maps");
@@ -214,6 +220,18 @@ void CXOptions::SetInfoBarBottomHeight(int Value) {
 void CXOptions::SetInfoBarTopHeight(int Value) {
 	CXMutexLocker L(&m_Mutex);
 	m_InfoBarTopHeight = Value;
+}
+
+//-------------------------------------
+int CXOptions::GetMaxSpeedSize() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_MaxSpeedSize;
+}
+
+//-------------------------------------
+void CXOptions::SetMaxSpeedSize(int Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_MaxSpeedSize = Value;
 }
 
 //-------------------------------------
@@ -388,4 +406,16 @@ bool CXOptions::ShowZoomButtons() const {
 void CXOptions::SetShowZoomButtonsFlag(bool NewValue) {
 	CXMutexLocker L(&m_Mutex);
 	m_oShowZoomButtons = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::ShowMaxSpeed() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_oShowMaxSpeed;
+}
+
+//-------------------------------------
+void CXOptions::SetShowMaxSpeedFlag(bool NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_oShowMaxSpeed = NewValue;
 }

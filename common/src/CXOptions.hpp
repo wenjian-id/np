@@ -42,8 +42,10 @@ private:
 	bool				m_oShowLogo;			///< show logo
 	bool				m_oSaving;				///< oiu
 	bool				m_oShowZoomButtons;		///< oiu
+	bool				m_oShowMaxSpeed;		///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
+	int					m_MaxSpeedSize;			///< oiu
 	CXStringASCII		m_DirectoryMaps;		///< oiu
 	CXStringASCII		m_DirectorySave;		///< oiu
 	CXStringASCII		m_DirectoryIcons;		///< oiu
@@ -157,6 +159,18 @@ public:
 	 *
 	 */
 	void SetInfoBarTopHeight(int Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetMaxSpeedSize() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetMaxSpeedSize(int Value);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -331,6 +345,18 @@ public:
 	 *
 	 */
 	void SetShowZoomButtonsFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool ShowMaxSpeed() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowMaxSpeedFlag(bool NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__
