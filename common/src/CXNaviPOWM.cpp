@@ -66,8 +66,7 @@ void CXZoomBtn::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 			m_Bmp.LoadFromFile(CXOptions::Instance()->GetZoomOutFileName());
 	}
 	if(!CXOptions::Instance()->ShowLogo()) {
-//		pDC->DrawTransparent(&m_Bmp, OffsetX, OffsetY, CXRGB(0xE2, 0xDE, 0xD8));
-		pDC->Draw(&m_Bmp, OffsetX, OffsetY);
+		pDC->DrawTransparent(&m_Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
 	}
 }
 
@@ -281,21 +280,22 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_InfoBarBottomPos.SetRight(Width);
 	m_InfoBarBottomPos.SetBottom(Height);
 
+	const int ZoomSize = 40;
 	m_ZoomInPos.SetBottom(m_InfoBarBottomPos.GetTop());
-	m_ZoomInPos.SetTop(m_ZoomInPos.GetBottom() - 25);
+	m_ZoomInPos.SetTop(m_ZoomInPos.GetBottom() - ZoomSize);
 	m_ZoomInPos.SetRight(Width);
-	m_ZoomInPos.SetLeft(m_ZoomInPos.GetRight() - 25);
+	m_ZoomInPos.SetLeft(m_ZoomInPos.GetRight() - ZoomSize);
 
 	m_ZoomOutPos.SetBottom(m_InfoBarBottomPos.GetTop());
-	m_ZoomOutPos.SetTop(m_ZoomOutPos.GetBottom() - 25);
+	m_ZoomOutPos.SetTop(m_ZoomOutPos.GetBottom() - ZoomSize);
 	m_ZoomOutPos.SetLeft(0);
-	m_ZoomOutPos.SetRight(25);
+	m_ZoomOutPos.SetRight(ZoomSize);
 
 	m_pMapThread->Resize(Width, Height - IBBH - IBTH);
 	m_pInfoBarBottom->Resize(Width, IBBH);
 	m_pInfoBarTop->Resize(Width, IBTH);
-	m_ZoomInBtn.Resize(25, 25);
-	m_ZoomOutBtn.Resize(25, 25);
+	m_ZoomInBtn.Resize(ZoomSize, ZoomSize);
+	m_ZoomOutBtn.Resize(ZoomSize, ZoomSize);
 
 	int InfoBarCommonWidth = 65;
 	int MaxSpeedSize = CXOptions::Instance()->GetMaxSpeedSize();

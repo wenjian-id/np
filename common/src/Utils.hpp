@@ -26,6 +26,7 @@
 #include "CXStringASCII.hpp"
 #include "CXStringUTF8.hpp"
 #include "CXFile.hpp"
+#include "CXRGB.hpp"
 
 template <class t> t Max(const t &a, const t&b) {
 	if(a < b)
@@ -43,7 +44,7 @@ template <class t> t Min(const t &a, const t&b) {
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 #endif
 
-
+const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);
 
 //-------------------------------------
 /*

@@ -31,8 +31,6 @@
 
 #include <math.h>
 
-static const CXRGB TRCOLOR(0xE2, 0xDE, 0xD8);
-
 //-------------------------------------
 CXInfoBarSpeed::CXInfoBarSpeed() {
 }
@@ -61,7 +59,7 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		tIRect ClientRect(0,0,Width,Height);
 
 		// draw backgound
-		Bmp.DrawRect(ClientRect, TRCOLOR, TRCOLOR);
+		Bmp.DrawRect(ClientRect, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
 
 		double R = 1.0*Min(Width/2, Height/2);
 		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(R)), CXRGB(0xA0, 0xA0, 0xA0), CXRGB(0xFF, 0xFF, 0xFF));
@@ -92,6 +90,6 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		Bmp.DrawTextASCII(buf, ClientRect, CXRGB(0x00, 0x00, 0x00));
 	
 		// draw data
-		pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, TRCOLOR);
+		pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
 	}
 }
