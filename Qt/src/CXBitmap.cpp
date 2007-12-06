@@ -239,6 +239,7 @@ void CXBitmap::LineTo(int x, int y) {
 bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
 	if(IsNull())
 		return false;
+
 	// get old pen and brush
 	QPen OldPen = m_pPainter->pen();
 	QBrush OldBrush = m_pPainter->brush();
@@ -261,6 +262,51 @@ bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &F
 	// restore old pen and brush
 	m_pPainter->setPen(OldPen);
 	m_pPainter->setBrush(OldBrush);
+	return true;
+}
+
+//-------------------------------------
+bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) {
+	if(IsNull())
+		return false;
+	if(pX == NULL)
+		return false;
+	if(pY == NULL)
+		return false;
+	if(Count == 0)
+		return false;
+
+	// get old pen and brush
+	QPen OldPen = m_pPainter->pen();
+	QBrush OldBrush = m_pPainter->brush();
+	
+	// create new pen
+	QPen NewPen(Qt::SolidLine);
+	NewPen.setWidth(1);
+	NewPen.setColor(CXRGB2QColor(PenColor));
+
+	// create new brush
+	QBrush NewBrush(CXRGB2QColor(FillColor), Qt::SolidPattern);
+	
+	// select new pen and brush
+	m_pPainter->setBrush(NewBrush);
+	m_pPainter->setPen(NewPen);
+
+	QPoint *pPoints = new QPoint[Count];
+	for(size_t i=0; i<Count; i++) {
+		pPoints[i].setX(pX[i]);
+		pPoints[i].setY(pY[i]);
+	}
+
+	// draw polygon
+	m_pPainter->drawPolygon (pPoints, Count);
+
+	delete [] pPoints;
+
+	// restore old pen and brush
+	m_pPainter->setPen(OldPen);
+	m_pPainter->setBrush(OldBrush);
+
 	return true;
 }
 

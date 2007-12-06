@@ -314,6 +314,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXExactTime StopLock;
 	CXExactTime StopPrepare;
 
+	int CompassSize = CXOptions::Instance()->GetCompassSize();
+	tIRect CompassRect(0,0,CompassSize,CompassSize);
+
 	// get zone
 	int CurrentZone = CXPOWMMap::Instance()->GetCurrentZone();
 	if(CurrentZone != UTMZoneNone) {
@@ -326,26 +329,35 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		int NewZone = UTMZoneNone;
 		LLtoUTM(WGS84, NaviData.GetLon(), NaviData.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
 
-		CXTransformationMatrix2D TM;
+		CXTransformationMatrix2D TMMap;
+		CXTransformationMatrix2D TMCompass;
+		CXTransformationMatrix2D TMCurrentPos;
+
 		CXUTMSpeed UTMSpeed = NaviData.GetUTMSpeed();
 
-		TM.Translate(-x0, -y0);			// x0, y0 is center of visible universe
+		TMMap.Translate(-x0, -y0);			// x0, y0 is center of visible universe
 		// rotate
 		if(pOpt->Northing()) {
 			xc = Width/2;
 			yc = Height/2;
+			TMCurrentPos.Rotate(UTMSpeed.GetCos(), UTMSpeed.GetSin());
+			TMCurrentPos.Rotate(-UTMPI/2);
 		} else {
 			xc = Width/2;
 			yc = 3*Height/4;
-			TM.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
+			TMMap.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
+			TMCompass.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
 			// rotate 90 to left, since 0 is east amd we want it point to north
-			TM.Rotate(UTMPI/2);
+			TMMap.Rotate(UTMPI/2);
+			TMCompass.Rotate(UTMPI/2);
 		}
-		TM.Scale(m_Scale, -m_Scale);	// do scaling (negative for y!)
-		TM.Translate(xc, yc);			// display it centered on screen
+
+		TMMap.Scale(m_Scale, -m_Scale);	// do scaling (negative for y!)
+		TMMap.Translate(xc, yc);			// display it centered on screen
+		TMCompass.Scale(1, -1);			// do scaling (negative for y!)
+		TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
 
 		// prepare drawing
-		
 		TWayMap &Ways = CXPOWMMap::Instance()->GetWayMap();
 		POS pos = Ways.GetStart();
 		CXWay *pWay = NULL;
@@ -358,10 +370,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		StopPrepare.SetNow();
 		// ok, now draw bg
 		for(i=0; i< CXWay::eEnumCount; i++) {
-			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], TM, Width, Height);
+			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], TMMap, Width, Height);
 		}
 		for(i=0; i< CXWay::eEnumCount; i++) {
-			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], TM, Width, Height);
+			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], TMMap, Width, Height);
 		}
 
 		// clear arrays
@@ -370,17 +382,62 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pBuffer->Clear();
 		}
 
-		// show caches
-		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
+		int X[4];
+		int Y[4];
+		CXCoorVector v;
+		double ArrowSize = 15.0;
+		v = TMCurrentPos*CXCoorVector(0, ArrowSize);
+		X[0] = xc + v.GetIntX();
+		Y[0] = yc + v.GetIntY();
+		v = TMCurrentPos*CXCoorVector(ArrowSize/2, -0.7*ArrowSize);
+		X[1] = xc + v.GetIntX();
+		Y[1] = yc + v.GetIntY();
+		v = TMCurrentPos*CXCoorVector(0, -0.25*ArrowSize);
+		X[2] = xc + v.GetIntX();
+		Y[2] = yc + v.GetIntY();
+		v = TMCurrentPos*CXCoorVector(-ArrowSize/2, -0.7*ArrowSize);
+		X[3] = xc + v.GetIntX();
+		Y[3] = yc + v.GetIntY();
+
+		// draw current position
+		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+//		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
+
+
+		// draw compass if necessary
+		if(CXOptions::Instance()->ShowCompass()) {
+			int CX = CompassRect.GetLeft() + CompassRect.GetWidth()/2;
+			int CY = CompassRect.GetTop() + CompassRect.GetHeight()/2;
+			double R = 0.8*CompassSize/2;
+
+			CXPen pen(CXPen::e_Solid, 1, CXRGB(0xFF, 0x00, 0x00));
+			pBMP->SetPen(&pen);
+
+			v = TMCompass*CXCoorVector(0, R);
+			X[0] = CX + v.GetIntX();
+			Y[0] = CY + v.GetIntY();
+			v = TMCompass*CXCoorVector(R/2, -0.7*R);
+			X[1] = CX + v.GetIntX();
+			Y[1] = CY + v.GetIntY();
+			v = TMCompass*CXCoorVector(0, -0.25*R);
+			X[2] = CX + v.GetIntX();
+			Y[2] = CY + v.GetIntY();
+			v = TMCompass*CXCoorVector(-R/2, -0.7*R);
+			X[3] = CX + v.GetIntX();
+			Y[3] = CY + v.GetIntY();
+			pBMP->Polygon(X, Y, 4, CXRGB(0xB0, 0xB0, 0x00), CXRGB(0xB0, 0x00, 0x00));
+		}
+
 	}
 	CXPOWMMap::Instance()->UnlockMap();
+
 
 	CXExactTime Stop;
 	char buf[100];
 	snprintf(buf, 100, "%ld - %ld ms", StopPrepare-StopLock, Stop-StopPrepare);
 	CXStringASCII ttt = buf;
 	tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-	TextRect.OffsetRect(-TextRect.GetLeft(), -TextRect.GetTop());
+	TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop());
 	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 }
 

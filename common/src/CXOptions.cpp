@@ -40,9 +40,11 @@ CXOptions::CXOptions() :
 	m_oSaving(false),
 	m_oShowZoomButtons(false),
 	m_oShowMaxSpeed(true),
+	m_oShowCompass(false),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
 	m_MaxSpeedSize(61),
+	m_CompassSize(50),
 	m_LogoTime(5000)
 {
 }
@@ -91,14 +93,18 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
 	// showzoom
 	SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
-	// MaxSpeed
-	SetShowMaxSpeedFlag(F.Get("ShowMaxSpeed", "on").ToUpper() == "ON");
 	// InfoBar Bottom Height
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
 	SetInfoBarTopHeight(atoi(F.Get("InfoBarTopHeight", "20").c_str()));
+	// MaxSpeed
+	SetShowMaxSpeedFlag(F.Get("ShowMaxSpeed", "on").ToUpper() == "ON");
 	// MaxSpeed size
 	SetMaxSpeedSize(atoi(F.Get("MaxSpeedSize", "61").c_str()));
+	// Compass
+	SetShowCompassFlag(F.Get("ShowCompass", "on").ToUpper() == "ON");
+	// Compass size
+	SetCompassSize(atoi(F.Get("CompassSize", "50").c_str()));
 	// maps directory
 	CXStringASCII DirMaps=m_StartPath;
 	DirMaps+=F.Get("DirectoryMaps", "Maps");
@@ -232,6 +238,18 @@ int CXOptions::GetMaxSpeedSize() const {
 void CXOptions::SetMaxSpeedSize(int Value) {
 	CXMutexLocker L(&m_Mutex);
 	m_MaxSpeedSize = Value;
+}
+
+//-------------------------------------
+int CXOptions::GetCompassSize() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_CompassSize;
+}
+
+//-------------------------------------
+void CXOptions::SetCompassSize(int Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_CompassSize = Value;
 }
 
 //-------------------------------------
@@ -418,4 +436,16 @@ bool CXOptions::ShowMaxSpeed() const {
 void CXOptions::SetShowMaxSpeedFlag(bool NewValue) {
 	CXMutexLocker L(&m_Mutex);
 	m_oShowMaxSpeed = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::ShowCompass() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_oShowCompass;
+}
+
+//-------------------------------------
+void CXOptions::SetShowCompassFlag(bool NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_oShowCompass = NewValue;
 }

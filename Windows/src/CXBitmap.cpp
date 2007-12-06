@@ -253,6 +253,55 @@ bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &F
 }
 
 //-------------------------------------
+bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) {
+	if(IsNull())
+		return false;
+	if(pX == NULL)
+		return false;
+	if(pY == NULL)
+		return false;
+	if(Count == 0)
+		return false;
+
+	// get old colors
+	COLORREF OldTextColor = ::SetTextColor(m_DC, CXRGB2COLORREF(PenColor));
+	COLORREF OldBkColor = ::SetBkColor(m_DC, CXRGB2COLORREF(FillColor));
+
+	// create pen & brush 
+	HPEN hPen = CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
+	HBRUSH hBrush = ::CreateSolidBrush(CXRGB2COLORREF(FillColor));
+
+	// select
+	HPEN OldPen = (HPEN)::SelectObject(m_DC, hPen);
+	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_DC, hBrush);
+
+	POINT *pPoints = new POINT[Count];
+	for(size_t i=0; i<Count; i++) {
+		pPoints[i].x = pX[i];
+		pPoints[i].y = pY[i];
+	}
+
+	// draw polygon
+	::Polygon(m_DC, pPoints, Count);
+
+	delete [] pPoints;
+
+	// restore pen & brush
+	::SelectObject(m_DC, OldPen);
+	::SelectObject(m_DC, OldBrush);
+
+	// delete
+	::DeleteObject(hPen);
+	::DeleteObject(hBrush);
+
+	// restore old colors
+	SetBkColor(m_DC, OldBkColor);
+	SetTextColor(m_DC, OldTextColor);
+
+	return true;
+}
+
+//-------------------------------------
 void CXBitmap::SetPen(CXPen *pPen) {
 	if(IsNull())
 		return;

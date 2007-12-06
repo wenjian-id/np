@@ -43,9 +43,11 @@ private:
 	bool				m_oSaving;				///< oiu
 	bool				m_oShowZoomButtons;		///< oiu
 	bool				m_oShowMaxSpeed;		///< oiu
+	bool				m_oShowCompass;			///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
 	int					m_MaxSpeedSize;			///< oiu
+	int					m_CompassSize;			///< oiu
 	CXStringASCII		m_DirectoryMaps;		///< oiu
 	CXStringASCII		m_DirectorySave;		///< oiu
 	CXStringASCII		m_DirectoryIcons;		///< oiu
@@ -171,6 +173,18 @@ public:
 	 *
 	 */
 	void SetMaxSpeedSize(int Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetCompassSize() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetCompassSize(int Value);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -357,6 +371,18 @@ public:
 	 *
 	 */
 	void SetShowMaxSpeedFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool ShowCompass() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowCompassFlag(bool NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

@@ -162,6 +162,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual bool Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void SetPen(CXPen *pPen);
 	//-------------------------------------
 	/*
