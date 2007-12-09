@@ -43,6 +43,7 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/CXNaviPOWM.cpp \
  ../../common/src/CXOptions.cpp \
  ../../common/src/CXPen.cpp \
+ ../../common/src/CXPenHolder.cpp \
  ../../common/src/CXPOWMMap.cpp \
  ../../common/src/CXReadLocker.cpp \
  ../../common/src/CXRGB.cpp \
@@ -100,6 +101,7 @@ src/OSSpecific.hpp \
  ../../common/src/CXNaviPOWM.hpp \
  ../../common/src/CXOptions.hpp \
  ../../common/src/CXPen.hpp \
+ ../../common/src/CXPenHolder.hpp \
  ../../common/src/CXPOWMMap.hpp \
  ../../common/src/CXReadLocker.hpp \
  ../../common/src/CXRect.hpp \
