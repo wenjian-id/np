@@ -90,7 +90,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		m_SaveOffBmp.LoadFromFile(CXOptions::Instance()->GetSaveOffFileName());
 	}
 
-	if(!CXOptions::Instance()->ShowLogo()) {
+	if(!CXOptions::Instance()->MustShowLogo()) {
 
 		char buf[10];
 		// draw satellite count
@@ -125,7 +125,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	// draw
 	pDC->Draw(&Bmp, OffsetX, OffsetY);
 
-	if(!CXOptions::Instance()->ShowLogo()) {
+	if(!CXOptions::Instance()->MustShowLogo()) {
 		// draw info bmp
 		pDC->Draw(&m_InfoBmp, m_InfoRect.GetLeft(), m_InfoRect.GetTop());
 		// draw quit bmp

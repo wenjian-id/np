@@ -41,6 +41,7 @@ CXOptions::CXOptions() :
 	m_oShowZoomButtons(false),
 	m_oShowMaxSpeed(true),
 	m_oShowCompass(false),
+	m_oOSMValiEnabled(false),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
 	m_MaxSpeedSize(61),
@@ -105,6 +106,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetShowCompassFlag(F.Get("ShowCompass", "on").ToUpper() == "ON");
 	// Compass size
 	SetCompassSize(atoi(F.Get("CompassSize", "50").c_str()));
+	// OSMVali
+	SetOSMValiEnabled(F.Get("OSMVali", "off").ToUpper() == "ON");
 	// maps directory
 	CXStringASCII DirMaps=m_StartPath;
 	DirMaps+=F.Get("DirectoryMaps", "Maps");
@@ -181,7 +184,7 @@ void CXOptions::SetSerialPortConfig(const CXSerialPortConfig & Value) {
 }
 
 //-------------------------------------
-bool CXOptions::Northing() const {
+bool CXOptions::IsNorthing() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oNorthing;
 }
@@ -193,7 +196,7 @@ void CXOptions::SetNorthing(bool Value) {
 }
 
 //-------------------------------------
-bool CXOptions::FullScreen() const {
+bool CXOptions::IsFullScreen() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oFullScreen;
 }
@@ -409,13 +412,13 @@ void CXOptions::SetShowLogoFlag() {
 }
 
 //-------------------------------------
-bool CXOptions::ShowLogo() const {
+bool CXOptions::MustShowLogo() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oShowLogo;
 }
 
 //-------------------------------------
-bool CXOptions::ShowZoomButtons() const {
+bool CXOptions::MustShowZoomButtons() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oShowZoomButtons;
 }
@@ -427,7 +430,7 @@ void CXOptions::SetShowZoomButtonsFlag(bool NewValue) {
 }
 
 //-------------------------------------
-bool CXOptions::ShowMaxSpeed() const {
+bool CXOptions::MustShowMaxSpeed() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oShowMaxSpeed;
 }
@@ -439,7 +442,7 @@ void CXOptions::SetShowMaxSpeedFlag(bool NewValue) {
 }
 
 //-------------------------------------
-bool CXOptions::ShowCompass() const {
+bool CXOptions::MustShowCompass() const {
 	CXMutexLocker L(&m_Mutex);
 	return m_oShowCompass;
 }
@@ -448,4 +451,16 @@ bool CXOptions::ShowCompass() const {
 void CXOptions::SetShowCompassFlag(bool NewValue) {
 	CXMutexLocker L(&m_Mutex);
 	m_oShowCompass = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::IsOSMValiEnabled() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_oOSMValiEnabled;
+}
+
+//-------------------------------------
+void CXOptions::SetOSMValiEnabled(bool NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_oOSMValiEnabled = NewValue;
 }

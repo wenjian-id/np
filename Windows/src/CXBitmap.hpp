@@ -155,7 +155,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void SetPen(CXPen *pPen);
+	virtual bool PolyLine(int *pX, int *pY, size_t Count);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void SetPen(const CXPen &Pen);
 	//-------------------------------------
 	/*
 	 * \brief oiu

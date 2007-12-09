@@ -175,6 +175,8 @@ common/src/CXPOWMMap.cpp -text
 common/src/CXPOWMMap.hpp -text
 common/src/CXPen.cpp -text
 common/src/CXPen.hpp -text
+common/src/CXPenHolder.cpp -text
+common/src/CXPenHolder.hpp -text
 common/src/CXRGB.cpp -text
 common/src/CXRGB.hpp -text
 common/src/CXReadLocker.cpp -text

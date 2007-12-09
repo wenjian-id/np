@@ -46,8 +46,12 @@ private:
 	CXRGB		m_Color;	///< oiu
 	//-------------------------------------
 	CXPen();											///< Not used.
-	CXPen(const CXPen&rOther);							///< Not used.
-	const CXPen & operator = (const CXPen & rOther);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void CopyFrom(const CXPen &rOther);
 protected:
 public:
 	//-------------------------------------
@@ -56,6 +60,18 @@ public:
 	 *
 	 */
 	CXPen(E_STYLE eStyle, int Width, const CXRGB & Color);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXPen(const CXPen &rOther);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	const CXPen & operator = (const CXPen & rOther);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -73,13 +89,31 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void SetStyle(E_STYLE NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	int GetWidth() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
+	void SetWidth(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	CXRGB GetColor() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetColor(const CXRGB & NewValue);
 };
 
 #endif //__CXPEN_H__

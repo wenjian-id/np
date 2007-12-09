@@ -31,7 +31,26 @@ CXPen::CXPen(E_STYLE eStyle, int Width, const CXRGB & Color) :
 }
 
 //-------------------------------------
+CXPen::CXPen(const CXPen&rOther) {
+	CopyFrom(rOther);
+}
+
+//-------------------------------------
+const CXPen & CXPen::operator = (const CXPen & rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
+}
+
+//-------------------------------------
 CXPen::~CXPen() {
+}
+
+//-------------------------------------
+void CXPen::CopyFrom(const CXPen &rOther) {
+	m_eStyle = rOther.m_eStyle;
+	m_iWidth = rOther.m_iWidth;
+	m_Color = rOther.m_Color;
 }
 
 //-------------------------------------
@@ -40,11 +59,26 @@ CXPen::E_STYLE CXPen::GetStyle() const {
 }
 
 //-------------------------------------
+void CXPen::SetStyle(E_STYLE NewValue) {
+	m_eStyle = NewValue;
+}
+
+//-------------------------------------
 int CXPen::GetWidth() const {
 	return m_iWidth;
 }
 
 //-------------------------------------
+void CXPen::SetWidth(int NewValue) {
+	m_iWidth = NewValue;
+}
+
+//-------------------------------------
 CXRGB CXPen::GetColor() const {
 	return m_Color;
+}
+
+//-------------------------------------
+void CXPen::SetColor(const CXRGB & NewValue) {
+	m_Color = NewValue;
 }

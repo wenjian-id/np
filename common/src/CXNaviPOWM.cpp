@@ -65,7 +65,7 @@ void CXZoomBtn::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		else
 			m_Bmp.LoadFromFile(CXOptions::Instance()->GetZoomOutFileName());
 	}
-	if(!CXOptions::Instance()->ShowLogo()) {
+	if(!CXOptions::Instance()->MustShowLogo()) {
 		pDC->DrawTransparent(&m_Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
 	}
 }
@@ -218,12 +218,12 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	m_pMapThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
-	if(CXOptions::Instance()->ShowMaxSpeed()) {
+	if(CXOptions::Instance()->MustShowMaxSpeed()) {
 		m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
 	}
 	m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
 	// paint zoom buttons
-	if(CXOptions::Instance()->ShowZoomButtons()) {
+	if(CXOptions::Instance()->MustShowZoomButtons()) {
 		m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
 		m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
 	}
@@ -368,7 +368,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 	// check Info bar buttons
 	Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
 	// check for zoom buttons
-	if(!m_oShowInfo && (CXOptions::Instance()->ShowZoomButtons()) && (Cmd == e_None)) {
+	if(!m_oShowInfo && (CXOptions::Instance()->MustShowZoomButtons()) && (Cmd == e_None)) {
 		Cmd = m_ZoomInBtn.OnMouseDown(X - m_ZoomInPos.GetLeft(), Y - m_ZoomInPos.GetTop());
 		if(Cmd == e_None)
 			Cmd = m_ZoomOutBtn.OnMouseDown(X - m_ZoomOutPos.GetLeft(), Y - m_ZoomOutPos.GetTop());

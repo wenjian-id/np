@@ -112,7 +112,7 @@ void CXLocatorThread::OnThreadLoop() {
 	// check if we must hide logo
 	bool LogoHidden = false;
 	if(Now - m_StartTime > CXOptions::Instance()->GetLogoTime()) {
-		if(CXOptions::Instance()->ShowLogo())
+		if(CXOptions::Instance()->MustShowLogo())
 			LogoHidden = true;
 		CXOptions::Instance()->ClearShowLogoFlag();
 	}

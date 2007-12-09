@@ -68,7 +68,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	int CompleteHeight = GetHeight();
 	int Height = CompleteHeight/4;
 
-	if(!CXOptions::Instance()->ShowLogo()) {
+	if(!CXOptions::Instance()->MustShowLogo()) {
 
 		// create bitmap
 		CXBitmap Bmp;

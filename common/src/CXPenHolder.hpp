@@ -20,57 +20,72 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXInfoBarBottom.hpp"
-#include "CXDeviceContext.hpp"
-#include "CXBitmap.hpp"
-#include "CXOptions.hpp"
-#include "CXStringASCII.hpp"
-#include "CXStringUTF8.hpp"
+#ifndef __CXPENHOLDER_HPP__
+#define __CXPENHOLDER_HPP__
 
+#include "CXBuffer.hpp"
+#include "CXPOWMMap.hpp"
 
-//-------------------------------------
-CXInfoBarBottom::CXInfoBarBottom() {
-}
+class CXPen;
 
-//-------------------------------------
-CXInfoBarBottom::~CXInfoBarBottom() {
-}
+//----------------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+class CXPenHolder {
+private:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	struct SPens {
+		CXPen	*m_pBg;			///< oiu
+		CXPen	*m_pSegm;		///< oiu
+	};
+	CXBuffer<SPens *>		m_Pens;		///< oiu
+	//-------------------------------------
+	CXPenHolder(const CXPenHolder &);						///< Not used.
+	const CXPenHolder & operator = (const CXPenHolder &);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void CreatePens();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void DestroyPens();
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXPenHolder();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXPenHolder();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXPen *GetPenBg(CXWay::E_KEYHIGHWAY HighwayType);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXPen *GetPenFg(CXWay::E_KEYHIGHWAY HighwayType);
+};
 
-//-------------------------------------
-void CXInfoBarBottom::PositionChanged(const CXNaviData & NewData) {
-	m_NaviData = NewData;
-}
-
-//-------------------------------------
-void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
-	CXBitmap Bmp;
-	int Width = GetWidth();
-	int Height = GetHeight();
-
-	// create bitmap
-	Bmp.Create(pDC, Width, Height);
-	CXRGB BgColor(0x00, 0x00, 0x00);
-
-	// set new font size
-	Bmp.SetFont(Height -2, false);
-
-	// get client rect
-	tIRect ClientRect(0,0,Width,Height);
-
-	// draw backgound
-	Bmp.DrawRect(ClientRect, BgColor, BgColor);
-	if(!CXOptions::Instance()->MustShowLogo()) {
-		CXStringUTF8 Name = m_NaviData.GetStreetName();
-		CXStringUTF8 Ref = m_NaviData.GetRef();
-		// draw ref
-		tIRect RefRect = Bmp.CalcTextRectUTF8(Ref, 4, 0);
-		RefRect.OffsetRect(-RefRect.GetLeft() + Width -RefRect.GetWidth() , -RefRect.GetTop());
-		Bmp.DrawTextUTF8(Ref, RefRect, CXRGB(0xff, 0xff, 0x00), BgColor);
-		// draw name
-		tIRect NameRect(0, 0, RefRect.GetLeft(), Height);
-		Bmp.DrawTextUTF8(Name, NameRect, CXRGB(0xff, 0xff, 0xff), BgColor);
-	}
-
-	// draw data
-	pDC->Draw(&Bmp, OffsetX, OffsetY);
-}
+#endif // __CXPENHOLDER_HPP__

@@ -309,6 +309,10 @@ SOURCE=..\..\common\src\CXPen.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXPenHolder.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXPOWMMap.hpp
 # End Source File
 # Begin Source File
@@ -486,6 +490,10 @@ SOURCE=..\..\common\src\CXOptions.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXPen.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXPenHolder.cpp
 # End Source File
 # Begin Source File
 

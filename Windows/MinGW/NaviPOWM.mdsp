@@ -131,6 +131,7 @@ extraResourceOptions=
 49=..\..\common\src\ISerial.cpp
 50=..\..\common\src\CXInfoBarSpeed.cpp
 51=..\..\common\src\CXInfoBarCommon.cpp
+52=..\..\common\src\CXPenHolder.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -195,6 +196,7 @@ extraResourceOptions=
 61=resource.h
 62=..\..\common\src\CXInfoBarSpeed.hpp
 63=..\..\common\src\CXInfoBarCommon.hpp
+64=..\..\common\src\CXPenHolder.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

@@ -44,6 +44,7 @@ private:
 	bool				m_oShowZoomButtons;		///< oiu
 	bool				m_oShowMaxSpeed;		///< oiu
 	bool				m_oShowCompass;			///< oiu
+	bool				m_oOSMValiEnabled;		///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
 	int					m_MaxSpeedSize;			///< oiu
@@ -118,7 +119,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool Northing() const;
+	bool IsNorthing() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -130,7 +131,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool FullScreen() const;
+	bool IsFullScreen() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -346,13 +347,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool ShowLogo() const;
+	bool MustShowLogo() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	bool ShowZoomButtons() const;
+	bool MustShowZoomButtons() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -364,7 +365,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool ShowMaxSpeed() const;
+	bool MustShowMaxSpeed() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -376,13 +377,25 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool ShowCompass() const;
+	bool MustShowCompass() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
 	void SetShowCompassFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool IsOSMValiEnabled() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetOSMValiEnabled(bool NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

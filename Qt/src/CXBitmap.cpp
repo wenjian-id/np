@@ -299,7 +299,7 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
 	}
 
 	// draw polygon
-	m_pPainter->drawPolygon (pPoints, Count);
+	m_pPainter->drawPolygon(pPoints, Count);
 
 	delete [] pPoints;
 
@@ -311,23 +311,46 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
 }
 
 //-------------------------------------
-void CXBitmap::SetPen(CXPen *pPen) {
+bool CXBitmap::PolyLine(int *pX, int *pY, size_t Count) {
 	if(IsNull())
-		return;
-	if(pPen== NULL)
+		return false;
+	if(pX == NULL)
+		return false;
+	if(pY == NULL)
+		return false;
+	if(Count == 0)
+		return false;
+
+	QPoint *pPoints = new QPoint[Count];
+	for(size_t i=0; i<Count; i++) {
+		pPoints[i].setX(pX[i]);
+		pPoints[i].setY(pY[i]);
+	}
+
+	// draw poly line
+	m_pPainter->drawPolyline(pPoints, Count);
+
+	delete [] pPoints;
+
+	return true;
+}
+
+//-------------------------------------
+void CXBitmap::SetPen(const CXPen &Pen) {
+	if(IsNull())
 		return;
 
 	Qt::PenStyle Style =Qt::NoPen;
-	switch(pPen->GetStyle()) {
+	switch(Pen.GetStyle()) {
 		case CXPen::e_Solid:	Style = Qt::SolidLine; break;
 	}
 
-	QPen Pen;
-	Pen.setStyle(Style);
-	Pen.setWidth(pPen->GetWidth());
-	Pen.setColor(CXRGB2QColor(pPen->GetColor()));
+	QPen qPen;
+	qPen.setStyle(Style);
+	qPen.setWidth(Pen.GetWidth());
+	qPen.setColor(CXRGB2QColor(Pen.GetColor()));
 
-	m_pPainter->setPen(Pen);
+	m_pPainter->setPen(qPen);
 }
 
 //-------------------------------------

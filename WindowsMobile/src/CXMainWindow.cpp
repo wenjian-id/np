@@ -125,7 +125,7 @@ LRESULT CALLBACK CXMainWindow::TheWndProc(HWND hWnd, UINT message, WPARAM wParam
 				DefWindowProc(hWnd, message, wParam, lParam);
 				// now do own stuff
 				if(LOWORD(wParam) != WA_INACTIVE) {
-					if(CXOptions::Instance()->FullScreen()) {
+					if(CXOptions::Instance()->IsFullScreen()) {
 						ShowFullScreen();
 					} else {
 						ShowNormal();

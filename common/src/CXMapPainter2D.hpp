@@ -27,75 +27,15 @@
 #include "CXMapPainterDoubleBuffered.hpp"
 #include "CXPOWMMap.hpp"
 #include "CXTransformationMatrix.hpp"
+#include "CXPenHolder.hpp"
 
 class CXCache;
-class CXPen;
 
 //----------------------------------------------------------------------------
-class CXPenHolder {
-private:
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	struct SPens {
-		CXPen	*m_pBg;			///< oiu
-		CXPen	*m_pSegm;		///< oiu
-		CXPen	*m_pSegmSel;	///< oiu
-	};
-	CXBuffer<SPens *>		m_Pens;		///< oiu
-	//-------------------------------------
-	CXPenHolder(const CXPenHolder &);						///< Not used.
-	const CXPenHolder & operator = (const CXPenHolder &);	///< Not used.
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void CreatePens();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void DestroyPens();
-protected:
-public:
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXPenHolder();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual ~CXPenHolder();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXPen *GetPenBg(CXWay::E_KEYHIGHWAY HighwayType);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXPen *GetPenFg(CXWay::E_KEYHIGHWAY HighwayType);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXPen *GetPenFgSelected(CXWay::E_KEYHIGHWAY HighwayType);
-};
-
-
-//----------------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
 	double					m_Scale;		///< oiu
