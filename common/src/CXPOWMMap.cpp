@@ -80,7 +80,8 @@ CXWay::CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, 
 	m_eHighwayType(eHighwayType),
 	m_Name(Name),
 	m_Ref(Ref),
-	m_MaxSpeed(0)
+	m_MaxSpeed(0),
+	m_oOSMValiFailed(false)
 {
 }
 
@@ -133,6 +134,16 @@ size_t CXWay::GetNodeCount() const {
 //-------------------------------------
 CXNode *CXWay::GetNode(size_t Index) const {
 	return m_Nodes[Index];
+}
+
+//-------------------------------------
+bool CXWay::GetOSMValiState() const {
+	return m_oOSMValiFailed;
+}
+
+//-------------------------------------
+void CXWay::SetOSMVali(bool NewValue) {
+	m_oOSMValiFailed = NewValue;
 }
 
 
@@ -283,7 +294,8 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		return false;
 	}
 	if(Version == 0x00000100) {
-		return LoadMap0_1_1(InFile, FileName);
+		if(!LoadMap0_1_1(InFile, FileName))
+			return false;
 	} else if(Version != ReqVersion) {
 		CXStringASCII ErrorMsg(FileName);
 		ErrorMsg += " has wrong Version: ";
@@ -379,6 +391,11 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 			pWay->AddNode(pNode);
 		}
 	}
+	if(CXOptions::Instance()->GetOSMValiFlags() != 0) {
+		// run vali;
+		RunOSMVali();
+	}
+
 	return true;
 }
 
@@ -464,4 +481,36 @@ bool CXPOWMMap::LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName) {
 		}
 	}
 	return true;
+}
+
+//-------------------------------------
+void CXPOWMMap::RunOSMVali() {
+	POS PosW = m_WayMap.GetStart();
+	CXWay *pWay = NULL;
+	t_uint64 eValiFlags = CXOptions::Instance()->GetOSMValiFlags();
+	while (m_WayMap.GetNext(PosW, pWay) != TWayMap::NPOS) {
+		bool Vali = true;
+		if(pWay != NULL) {
+			if((eValiFlags & CXOptions::e_OSMValiName) != 0) {
+				// check name
+				if(pWay->GetName().IsEmpty()) {
+					Vali = false;
+				}
+			}
+			if((eValiFlags & CXOptions::e_OSMValiRef) != 0) {
+				// check ref
+				if(pWay->GetRef().IsEmpty()) {
+					Vali = false;
+				}
+			}
+			if((eValiFlags & CXOptions::e_OSMValiMaxSpeed) != 0) {
+				// check ref
+				if(pWay->GetMaxSpeed() == 0) {
+					Vali = false;
+				}
+			}
+			// set result
+			pWay->SetOSMVali(Vali);
+		}
+	}
 }

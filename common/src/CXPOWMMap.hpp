@@ -143,6 +143,7 @@ private:
 	CXStringUTF8	m_Name;				///< oiu
 	CXStringUTF8	m_Ref;				///< oiu
 	unsigned char	m_MaxSpeed;			///< oiu 0 means no max speed
+	bool			m_oOSMValiFailed;	///< oiu
 	TNodeBuffer		m_Nodes;			///< oiu
 	//-------------------------------------
 	CXWay();									///< Not used.
@@ -216,6 +217,18 @@ public:
 	 *
 	 */
 	CXNode *GetNode(size_t Index) const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool GetOSMValiState() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetOSMVali(bool NewValue);
 };
 
 typedef CXMapHashSimple<t_uint64, CXWay *>		TWayMap;		///< oiu
@@ -229,15 +242,15 @@ typedef CXBuffer<CXWay *>						TWayBuffer;		///< oiu
  */
 class CXPOWMMap {
 private:
-	static CXPOWMMap	*m_pInstance;		///< oiu
+	static CXPOWMMap	*m_pInstance;			///< oiu
 	// stuff
-	CXStringASCII	m_FileName;				///< oiu
-	int				m_iCurrentZone;			///< oiu
+	CXStringASCII		m_FileName;				///< oiu
+	int					m_iCurrentZone;			///< oiu
 	// map
-	TNodeMap		m_NodeMap;				///< oiu
-	TWayMap			m_WayMap;				///< oiu
+	TNodeMap			m_NodeMap;				///< oiu
+	TWayMap				m_WayMap;				///< oiu
 	// synchronisation
-	mutable CXMutex	m_Mutex;				///< oiu
+	mutable CXMutex		m_Mutex;				///< oiu
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
@@ -327,6 +340,12 @@ public:
 	 *
 	 */
 	CXStringASCII GetFileName() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void RunOSMVali();
 	//-------------------------------------
 	/*
 	 * \brief oiu

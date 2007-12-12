@@ -33,6 +33,17 @@
  *
  */
 class CXOptions {
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_OSM_VALI {
+		e_OSMValiName		= 0x0001,		///< oiu
+		e_OSMValiRef		= 0x0002,		///< oiu
+		e_OSMValiMaxSpeed	= 0x0004,		///< oiu
+	};
 private:
 	static CXOptions	*m_pInstance;			///< oiu
 	CXStringASCII		m_StartPath;			///< oiu
@@ -44,7 +55,7 @@ private:
 	bool				m_oShowZoomButtons;		///< oiu
 	bool				m_oShowMaxSpeed;		///< oiu
 	bool				m_oShowCompass;			///< oiu
-	bool				m_oOSMValiEnabled;		///< oiu
+	t_uint64			m_OSMVali;				///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
 	int					m_MaxSpeedSize;			///< oiu
@@ -389,13 +400,25 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool IsOSMValiEnabled() const;
+	t_uint64 GetOSMValiFlags() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetOSMValiEnabled(bool NewValue);
+	bool IsOSMValiFlagSet(E_OSM_VALI eFlag) const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetOSMValiFlag(E_OSM_VALI eFlag);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void ClearOSMValiFlag(E_OSM_VALI eFlag);
 };
 
 #endif // __CXOPTIONS_HPP__

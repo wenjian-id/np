@@ -113,7 +113,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 		return;
 	// get pen for this type of way
 	CXPen *pPen = m_PenHolder.GetPenBg(eHighwayType);
-	bool OSMValiEnabled = CXOptions::Instance()->IsOSMValiEnabled();
+	bool OSMValiEnabled = CXOptions::Instance()->GetOSMValiFlags() != 0;
 	if(pPen != NULL) {
 		// create red pen
 		CXPen RedPen = *pPen;
@@ -124,7 +124,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 		size_t cnt = pWays->GetSize();
 		for(size_t i=0; i<cnt; i++) {
 			CXWay *pWay = (*pWays)[i];
-			bool oUseRedPen = OSMValiEnabled && pWay->GetName().IsEmpty();
+			bool oUseRedPen = OSMValiEnabled && !pWay->GetOSMValiState();
 			// set red pen
 			if(oUseRedPen)
 				pBMP->SetPen(RedPen);
@@ -142,7 +142,7 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 		return;
 	// get pen for this type of way
 	CXPen *pPen = m_PenHolder.GetPenFg(eHighwayType);
-	bool OSMValiEnabled = CXOptions::Instance()->IsOSMValiEnabled();
+	bool OSMValiEnabled = CXOptions::Instance()->GetOSMValiFlags() != 0;
 	if(pPen != NULL) {
 		// create red pen
 		CXPen RedPen = *pPen;
@@ -153,7 +153,7 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 		size_t cnt = pWays->GetSize();
 		for(size_t i=0; i<cnt; i++) {
 			CXWay *pWay = (*pWays)[i];
-			bool oUseRedPen = OSMValiEnabled && pWay->GetName().IsEmpty();
+			bool oUseRedPen = OSMValiEnabled && !pWay->GetOSMValiState();
 			// set red pen
 			if(oUseRedPen)
 				pBMP->SetPen(RedPen);

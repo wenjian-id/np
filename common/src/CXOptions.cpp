@@ -41,7 +41,7 @@ CXOptions::CXOptions() :
 	m_oShowZoomButtons(false),
 	m_oShowMaxSpeed(true),
 	m_oShowCompass(false),
-	m_oOSMValiEnabled(false),
+	m_OSMVali(0),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
 	m_MaxSpeedSize(61),
@@ -106,8 +106,15 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetShowCompassFlag(F.Get("ShowCompass", "on").ToUpper() == "ON");
 	// Compass size
 	SetCompassSize(atoi(F.Get("CompassSize", "50").c_str()));
-	// OSMVali
-	SetOSMValiEnabled(F.Get("OSMVali", "off").ToUpper() == "ON");
+	// OSMVali name
+	if(F.Get("OSMValiName", "off").ToUpper() == "ON")
+		SetOSMValiFlag(e_OSMValiName);
+	// OSMVali ref
+	if(F.Get("OSMValiRef", "off").ToUpper() == "ON")
+		SetOSMValiFlag(e_OSMValiRef);
+	// OSMVali maxspeed
+	if(F.Get("OSMValiMaxSpeed", "off").ToUpper() == "ON")
+		SetOSMValiFlag(e_OSMValiMaxSpeed);
 	// maps directory
 	CXStringASCII DirMaps=m_StartPath;
 	DirMaps+=F.Get("DirectoryMaps", "Maps");
@@ -454,13 +461,25 @@ void CXOptions::SetShowCompassFlag(bool NewValue) {
 }
 
 //-------------------------------------
-bool CXOptions::IsOSMValiEnabled() const {
+t_uint64 CXOptions::GetOSMValiFlags() const {
 	CXMutexLocker L(&m_Mutex);
-	return m_oOSMValiEnabled;
+	return m_OSMVali;
 }
 
 //-------------------------------------
-void CXOptions::SetOSMValiEnabled(bool NewValue) {
+bool CXOptions::IsOSMValiFlagSet(E_OSM_VALI eFlag) const {
 	CXMutexLocker L(&m_Mutex);
-	m_oOSMValiEnabled = NewValue;
+	return (m_OSMVali & eFlag) != 0;
+}
+
+//-------------------------------------
+void CXOptions::SetOSMValiFlag(E_OSM_VALI eFlag) {
+	CXMutexLocker L(&m_Mutex);
+	m_OSMVali |= eFlag;
+}
+
+//-------------------------------------
+void CXOptions::ClearOSMValiFlag(E_OSM_VALI eFlag) {
+	CXMutexLocker L(&m_Mutex);
+	m_OSMVali &= ~eFlag;
 }
