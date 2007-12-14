@@ -25,7 +25,7 @@
 
 #include "CXExactTime.hpp"
 #include "CXUTMSpeed.hpp"
-#include "CXUTMCoor.hpp"
+#include "CXCoor.hpp"
 #include "CXMutex.hpp"
 
 //---------------------------------------------------------------------
@@ -54,18 +54,18 @@ private:
 		const CXData & operator = (const CXData &);	///< Not used.
 		//-------------------------------------
 	public:
-		CXUTMCoor		m_UTMCoor;		///< UTM coordinate.
+		CXCoor			m_Coor;			///< coordinate.
 		CXExactTime		m_TimeStamp;	///< Time stamp for coordinate.
 		//-------------------------------------
 		/*
 		 * \brief Constructor.
 		 *
 		 * Constructor.
-		 * \param	UTMCoor		UTM coordinate
+		 * \param	Coor		coordinate
 		 * \param	TimeStamp	TimeStamp for coordinate.
 		 */
-		CXData(const CXUTMCoor & UTMCoor, const CXExactTime & TimeStamp) {
-			m_UTMCoor = UTMCoor;
+		CXData(const CXCoor & Coor, const CXExactTime & TimeStamp) {
+			m_Coor = Coor;
 			m_TimeStamp = TimeStamp;
 		}
 		//-------------------------------------
@@ -75,6 +75,14 @@ private:
 		 * Destructor.
 		 */
 		virtual ~CXData() {
+		}
+		//-------------------------------------
+		/*
+		 * \brief oiu
+		 *
+		 */
+		void RelocateUTM(int ForceUTMZone) {
+			m_Coor.RelocateUTM(ForceUTMZone);
 		}
 	};
 
@@ -123,10 +131,10 @@ public:
 	 * \brief Set new data.
 	 *
 	 * Set new data.
-	 * \param	UTMCoor		New UTM coordinate.
+	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetData(const CXUTMCoor & UTMCoor, const CXExactTime & TimeStamp);
+	void SetData(const CXCoor & Coor, const CXExactTime & TimeStamp);
 	//-------------------------------------
 	/*
 	 * \brief Reset data.

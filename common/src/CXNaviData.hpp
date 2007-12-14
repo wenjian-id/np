@@ -24,7 +24,7 @@
 #define __CXNAVIDATA_HPP__
 
 #include "CXMutex.hpp"
-#include "CXUTMCoor.hpp"
+#include "CXCoor.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXStringUTF8.hpp"
 #include <TargetIncludes.hpp>
@@ -43,7 +43,7 @@ private:
 	double				m_dLat;				///< grad.dec
 	double				m_dHeight;			///< height
 	int					m_nSat;				///< nr satellites
-	CXUTMCoor			m_UTMCoor;			///< UTM coordinate
+	CXCoor				m_Coor;				///< coordinate
 	//-------------
 	// speed stuff
 	//-------------
@@ -148,13 +148,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXUTMCoor GetUTMCoor() const;
+	CXCoor GetCoor() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetUTMCoor(const CXUTMCoor &UTMCoor);
+	void SetCoor(const CXCoor &Coor);
 	//-------------------------------------
 	/*
 	 * \brief oiu

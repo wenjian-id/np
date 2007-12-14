@@ -30,21 +30,21 @@
 #include "CXMapHashSimple.hpp"
 #include "TargetIncludes.hpp"
 #include "CXFile.hpp"
+#include "CXCoor.hpp"
+#include "CXTrackLog.hpp"
 
 class CXWay;
 
 //---------------------------------------------------------------------
 /*
- * \brief oiu
+ * \brief This class encapsulates data and functionality for a node.
  *
+ * This class encapsulates data and functionality for a node.
  */
 class CXNode {
 private:
-	t_uint64	m_ID;	///< oiu
-	double		m_Lon;	///< oiu
-	double		m_Lat;	///< oiu
-	double		m_X;	///< oiu
-	double		m_Y;	///< oiu
+	t_uint64	m_ID;		///< ID of node.
+	CXCoor		m_Coor;		///< Coordinate of node
 	//-------------------------------------
 	CXNode();										///< Not used.
 	CXNode(const CXNode &);							///< Not used.
@@ -59,8 +59,9 @@ public:
 	CXNode(t_uint64 ID, double Lon, double Lat);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXNode();
 	//-------------------------------------
@@ -80,25 +81,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	double GetX() const;
+	double GetUTME() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetX(double X);
+	double GetUTMN() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	double GetY() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetY(double Y);
+	void RelocateUTM(int ForceUTMZone);
 };
 
 typedef CXMapHashSimple<t_uint64, CXNode *>		TNodeMap;		///< oiu
@@ -249,6 +244,7 @@ private:
 	// map
 	TNodeMap			m_NodeMap;				///< oiu
 	TWayMap				m_WayMap;				///< oiu
+	CXTrackLog			m_TrackLog;				///< oiu
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< oiu
 	//-------------------------------------
@@ -346,6 +342,12 @@ public:
 	 *
 	 */
 	void RunOSMVali();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	const CXTrackLog & GetTrackLog() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu

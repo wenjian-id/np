@@ -217,6 +217,10 @@ SOURCE=..\..\common\src\CXBuffer.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXCoor.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXFile.hpp
 # End Source File
 # Begin Source File
@@ -341,6 +345,10 @@ SOURCE=..\..\common\src\CXStringUTF8.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXTrackLog.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXTransformationMatrix.hpp
 # End Source File
 # Begin Source File
@@ -410,6 +418,10 @@ SOURCE=..\..\common\src\Utils.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CoordConversion.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXCoor.cpp
 # End Source File
 # Begin Source File
 
@@ -518,6 +530,10 @@ SOURCE=..\..\common\src\CXStringASCII.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXStringUTF8.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXTrackLog.cpp
 # End Source File
 # Begin Source File
 

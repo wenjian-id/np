@@ -20,67 +20,94 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXMapPainterTest.hpp"
-#include "TargetIncludes.hpp"
-
-#include <stdio.h>
+#include "CXCoor.hpp"
 
 //-------------------------------------
-CXMapPainterTest::CXMapPainterTest() {
+CXCoor::CXCoor() :
+	m_dLon(0),
+	m_dLat(0)
+{
 }
 
 //-------------------------------------
-CXMapPainterTest::~CXMapPainterTest() {
+CXCoor::CXCoor(double Lon, double Lat) :
+	m_dLon(Lon),
+	m_dLat(Lat)
+{
+	RelocateUTM(UTMZoneNone);
 }
 
 //-------------------------------------
-bool CXMapPainterTest::ZoomIn() {
-	DoOutputDebugString("ZoomIn\n");
-	return true;
+CXCoor::CXCoor(const CXCoor &rOther) {
+	CopyFrom(rOther);
 }
 
 //-------------------------------------
-bool CXMapPainterTest::ZoomOut() {
-	DoOutputDebugString("ZoomOut\n");
-	return true;
+CXCoor::~CXCoor() {
 }
 
 //-------------------------------------
-void CXMapPainterTest::PaintPackground(IBitmap *pBMP, int Width, int Height) {
-	tIRect R0(0, 0, Width, Height);
-	CXRGB C0(128, 42, 42);
-	pBMP->DrawRect(R0, C0, C0);
+void CXCoor::RelocateUTM(int ForceUTMZone) {
+	int NewZone = UTMZoneNone;
+	char UTMLetter = 0;
+	double UTME = 0;
+	double UTMN = 0;
+	LLtoUTM(WGS84, m_dLon, m_dLat, ForceUTMZone, NewZone, UTMLetter, UTME, UTMN);
+	m_UTMCoor.SetUTMZone(NewZone);
+	m_UTMCoor.SetUTMLetter(UTMLetter);
+	m_UTMCoor.SetUTMEasting(UTME);
+	m_UTMCoor.SetUTMNorthing(UTMN);
+}
+//-------------------------------------
+const CXCoor & CXCoor::operator = (const CXCoor &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
 }
 
+//-------------------------------------
+void CXCoor::CopyFrom(const CXCoor &rOther) {
+	m_dLon = rOther.m_dLon;
+	m_dLat = rOther.m_dLat;
+	m_UTMCoor = rOther.m_UTMCoor;
+}
 
 //-------------------------------------
-void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
-	// get copy of navigation data
-	CXNaviData Data = GetPosition();
+bool CXCoor::operator == (const CXCoor &rOther) {
+	return ((m_dLon == rOther.m_dLon) && (m_dLat == rOther.m_dLat));
+}
 
-	PaintPackground(pBMP, Width, Height);
+//-------------------------------------
+bool CXCoor::operator != (const CXCoor &rOther) {
+	return !operator ==(rOther);
+}
 
-	CXRGB C0(128, 42, 42);
+//-------------------------------------
+double CXCoor::GetLon() const {
+	return m_dLon;
+}
 
-	char buf[100];
-	CXRGB C1(0x00, 0x00, 0x00);
-	CXRGB C2(0xff, 0xff, 0xff);
-	
-	tIRect R1(0, 0, 200, 40);
-	sprintf(buf, "%.6f %.6f %d", Data.GetLon(), Data.GetLat(), Data.GetnSat());
-	pBMP->DrawTextASCII(buf, R1, C1, C2);
+//-------------------------------------
+double CXCoor::GetLat() const {
+	return m_dLat;
+}
 
-	tIRect R2(0, 50, 200, 90);
-	sprintf(buf, "%.2f %.2f %d %c", Data.GetCoor().GetUTMEasting(), Data.GetCoor().GetUTMNorthing(), Data.GetCoor().GetUTMZone(), Data.GetCoor().GetUTMLetter());
-	pBMP->DrawTextASCII(buf, R2, C1, C2);
-	
-	tIRect R3(0, 100, 200, 140);
-	sprintf(buf, "%.2f %.2f %.2f", Data.GetUTMSpeed().GetSpeed(), Data.GetUTMSpeed().GetCos(), Data.GetUTMSpeed().GetSin());
-	pBMP->DrawTextASCII(buf, R3, C1, C2);
+//-------------------------------------
+int CXCoor::GetUTMZone() const {
+	return m_UTMCoor.GetUTMZone();
+}
 
-	tIRect R4(0, 150, 200, 190);
-	CXStringUTF8 Name = Data.GetStreetName();
-	pBMP->DrawTextUTF8(Name, R4, C2, C0);
+//-------------------------------------
+char CXCoor::GetUTMLetter() const {
+	return m_UTMCoor.GetUTMLetter();
+}
 
+//-------------------------------------
+double CXCoor::GetUTMEasting() const {
+	return m_UTMCoor.GetUTMEasting();
+}
 
+//-------------------------------------
+double CXCoor::GetUTMNorthing() const {
+	return m_UTMCoor.GetUTMNorthing();
 }

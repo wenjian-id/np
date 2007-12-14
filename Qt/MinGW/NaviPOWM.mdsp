@@ -132,6 +132,8 @@ extraResourceOptions=
 50=..\..\common\src\CXInfoBarSpeed.cpp
 51=..\..\common\src\CXInfoBarCommon.cpp
 52=..\..\common\src\CXPenHolder.cpp
+53=..\..\common\src\CXTrackLog.cpp
+54=..\..\common\src\CXCoor.cpp
 [Header]
 1=..\src\CXMutex.hpp
 2=..\src\CXRWLock.hpp
@@ -196,6 +198,8 @@ extraResourceOptions=
 61=..\..\common\src\CXInfoBarSpeed.hpp
 62=..\..\common\src\CXInfoBarCommon.hpp
 63=..\..\common\src\CXPenHolder.hpp
+64=..\..\common\src\CXTrackLog.hpp
+65=..\..\common\src\CXCoor.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

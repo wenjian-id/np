@@ -32,10 +32,7 @@
 //-------------------------------------
 CXNode::CXNode(t_uint64 ID, double Lon, double Lat) :
 	m_ID(ID),
-	m_Lon(Lon),
-	m_Lat(Lat),
-	m_X(0),
-	m_Y(0)
+	m_Coor(Lon, Lat)
 {
 }
 
@@ -45,32 +42,27 @@ CXNode::~CXNode() {
 
 //-------------------------------------
 double CXNode::GetLon() const {
-	return m_Lon;
+	return m_Coor.GetLon();
 }
 
 //-------------------------------------
 double CXNode::GetLat() const {
-	return m_Lat;
+	return m_Coor.GetLat();
 }
 
 //-------------------------------------
-double CXNode::GetX() const {
-	return m_X;
+double CXNode::GetUTME() const {
+	return m_Coor.GetUTMEasting();
 }
 
 //-------------------------------------
-void CXNode::SetX(double X) {
-	m_X = X;
+double CXNode::GetUTMN() const {
+	return m_Coor.GetUTMNorthing();
 }
 
 //-------------------------------------
-double CXNode::GetY() const {
-	return m_Y;
-}
-
-//-------------------------------------
-void CXNode::SetY(double Y) {
-	m_Y = Y;
+void CXNode::RelocateUTM(int ForceUTMZone) {
+	m_Coor.RelocateUTM(ForceUTMZone);
 }
 
 //----------------------------------------------------------------------------
@@ -197,7 +189,6 @@ int CXPOWMMap::GetCurrentZone() const {
 //-------------------------------------
 void CXPOWMMap::PositionChanged(double dLon, double dLat) {
 	CXMutexLocker L(&m_Mutex);
-	// go through all nodes and recompute xy
 	int NewZone = UTMZoneNone;
 	char UTMLetter = 0;
 	double UTME = 0;
@@ -209,13 +200,14 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat) {
 		// refresh x and y of every node
 		POS Pos = m_NodeMap.GetStart();
 		CXNode *pNode = NULL;
+		// go through all nodes and recompute xy
 		while (m_NodeMap.GetNext(Pos, pNode) != TNodeMap::NPOS) {
 			if(pNode != NULL) {
-				LLtoUTM(WGS84, pNode->GetLon(), pNode->GetLat(), m_iCurrentZone, NewZone, UTMLetter, UTME, UTMN);
-				pNode->SetX(UTME);
-				pNode->SetY(UTMN);
+				pNode->RelocateUTM(m_iCurrentZone);
 			}
 		}
+		// relocate tracklog
+		m_TrackLog.RelocateUTM(m_iCurrentZone);
 	}
 }
 
@@ -504,7 +496,7 @@ void CXPOWMMap::RunOSMVali() {
 				}
 			}
 			if((eValiFlags & CXOptions::e_OSMValiMaxSpeed) != 0) {
-				// check ref
+				// check max speed
 				if(pWay->GetMaxSpeed() == 0) {
 					Vali = false;
 				}
@@ -513,4 +505,9 @@ void CXPOWMMap::RunOSMVali() {
 			pWay->SetOSMVali(Vali);
 		}
 	}
+}
+
+//-------------------------------------
+const CXTrackLog & CXPOWMMap::GetTrackLog() const {
+	return m_TrackLog;
 }

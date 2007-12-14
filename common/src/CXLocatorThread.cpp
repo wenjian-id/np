@@ -24,7 +24,7 @@
 #include "CXMutexLocker.hpp"
 #include "CXStringASCII.hpp"
 #include "Utils.hpp"
-#include "CXUTMCoor.hpp"
+#include "CXCoor.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXNaviPOWM.hpp"
 #include "CXPOWMMap.hpp"
@@ -195,11 +195,11 @@ void CXLocatorThread::OnNewDataGPS(const tUCBuffer & Buffer) {
 
 	// OK, valid GGA data arrived
 	mLastReceivedGPS.SetNow();
-	CXUTMCoor UTMCoor(Lon, Lat);
+	CXCoor Coor(Lon, Lat);
 
 	// calculate speed
 	CXUTMSpeed Speed;
-	m_SpeedCalculator.SetData(UTMCoor, mLastReceivedGPS);
+	m_SpeedCalculator.SetData(Coor, mLastReceivedGPS);
 
 	if(m_SpeedCalculator.HasValidSpeed()) {
 		// take speed
@@ -215,7 +215,7 @@ void CXLocatorThread::OnNewDataGPS(const tUCBuffer & Buffer) {
 	m_NaviData.SetHeight(Height);
 	m_NaviData.SetnSat(nSat);
 	m_NaviData.SetUTMSpeed(Speed);
-	m_NaviData.SetUTMCoor(UTMCoor);
+	m_NaviData.SetCoor(Coor);
 
 }
 
@@ -266,10 +266,10 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 			// get second node
 			pNode2 = pWay->GetNode(i);
     		// get coordinates
-    		Node1x = pNode1->GetX();
-    		Node1y = pNode1->GetY();
-    		Node2x = pNode2->GetX();
-    		Node2y = pNode2->GetY();
+    		Node1x = pNode1->GetUTME();
+    		Node1y = pNode1->GetUTMN();
+    		Node2x = pNode2->GetUTME();
+    		Node2y = pNode2->GetUTMN();
     		// compute SegLen
     		SegLen = sqrt((Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y));
 

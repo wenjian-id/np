@@ -61,38 +61,14 @@ void CXSpeedCalculator::ClearBuffer() {
 }
 
 //-------------------------------------
-void CXSpeedCalculator::SetData(const CXUTMCoor & Coor, const CXExactTime & TimeStamp) {
+void CXSpeedCalculator::SetData(const CXCoor & Coor, const CXExactTime & TimeStamp) {
 	CXMutexLocker L(&m_Mutex);
 	// check if m_iCurrentUTMZone changes
 	if(m_iCurrentUTMZone != Coor.GetUTMZone()) {
 		/// yes it cahnged. Recompute all UTM coords and force them to m_iCurrentUTMZone
 		for(size_t i=0; i<m_iBufferSize; i++) {
 			if(m_pBuffer[i] != NULL) {
-				double Lon = 0;
-				double Lat = 0;
-				// compute lon / lat
-				UTMtoLL(	WGS84,
-							m_pBuffer[i]->m_UTMCoor.GetUTMEasting(), 
-							m_pBuffer[i]->m_UTMCoor.GetUTMNorthing(),
-							m_pBuffer[i]->m_UTMCoor.GetUTMZone(),
-							m_pBuffer[i]->m_UTMCoor.GetUTMLetter(),
-							Lon,Lat);
-				// recompute UTM
-				int ZoneNumber = UTMZoneNone;
-				char UTMLetter = 0;
-				double UTME = 0;
-				double UTMN = 0;
-				LLtoUTM(	WGS84,
-							Lon, Lat, 
-							m_iCurrentUTMZone,
-							ZoneNumber,
-							UTMLetter,
-							UTME, UTMN);
-				// and set it
-				m_pBuffer[i]->m_UTMCoor.SetUTMEasting(UTME);
-				m_pBuffer[i]->m_UTMCoor.SetUTMNorthing(UTMN);
-				m_pBuffer[i]->m_UTMCoor.SetUTMLetter(UTMLetter);
-				m_pBuffer[i]->m_UTMCoor.SetUTMZone(ZoneNumber);
+				m_pBuffer[i]->RelocateUTM(m_iCurrentUTMZone);
 			}
 		}
 	}
@@ -120,13 +96,13 @@ void CXSpeedCalculator::SetData(const CXUTMCoor & Coor, const CXExactTime & Time
 		CXExactTime StartTime = m_pBuffer[count-1]->m_TimeStamp;
 		for(size_t i=0; i<count; i++) {
 			if(i != count-1) {
-				x1 = x1 + m_pBuffer[i]->m_UTMCoor.GetUTMEasting();
-				y1 = y1 + m_pBuffer[i]->m_UTMCoor.GetUTMNorthing();
+				x1 = x1 + m_pBuffer[i]->m_Coor.GetUTMEasting();
+				y1 = y1 + m_pBuffer[i]->m_Coor.GetUTMNorthing();
 				dt1 = dt1 + (m_pBuffer[i]->m_TimeStamp-StartTime);
 			}
 			if(i != 0) {
-				x2 = x2 + m_pBuffer[i]->m_UTMCoor.GetUTMEasting();
-				y2 = y2 + m_pBuffer[i]->m_UTMCoor.GetUTMNorthing();
+				x2 = x2 + m_pBuffer[i]->m_Coor.GetUTMEasting();
+				y2 = y2 + m_pBuffer[i]->m_Coor.GetUTMNorthing();
 				dt2 = dt2 + (m_pBuffer[i]->m_TimeStamp-StartTime);
 			}
 		}

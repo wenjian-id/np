@@ -52,6 +52,7 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/CXStringUTF8.cpp \
  ../../common/src/CXTransformationMatrix.cpp \
  ../../common/src/CXUTMCoor.cpp \
+ ../../common/src/CXCoor.cpp \
  ../../common/src/CXUTMSpeed.cpp \
  ../../common/src/CXWriteLocker.cpp \
  ../../common/src/IBitmap.cpp \
@@ -62,7 +63,8 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/Utils.cpp \
  ../../common/src/ISerial.cpp \
  ../../common/src/CXInfoBarCommon.cpp \
- ../../common/src/CXInfoBarSpeed.cpp
+ ../../common/src/CXInfoBarSpeed.cpp \
+ ../../common/src/CXtrackLog.cpp
 
 HEADERS += src/CXSerial.hpp \
 src/OSSpecific.hpp \

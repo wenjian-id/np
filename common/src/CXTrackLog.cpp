@@ -20,67 +20,27 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXMapPainterTest.hpp"
-#include "TargetIncludes.hpp"
-
-#include <stdio.h>
+#include "CXTrackLog.hpp"
 
 //-------------------------------------
-CXMapPainterTest::CXMapPainterTest() {
+CXTrackLog::CXTrackLog() {
 }
 
 //-------------------------------------
-CXMapPainterTest::~CXMapPainterTest() {
+CXTrackLog::~CXTrackLog() {
 }
 
 //-------------------------------------
-bool CXMapPainterTest::ZoomIn() {
-	DoOutputDebugString("ZoomIn\n");
-	return true;
+void CXTrackLog::RelocateUTM(int ForceUTMZone) {
+	size_t Size = m_Points.GetSize();
+	for(size_t i=0; i<Size; i++) {
+		CXCoor *pCoor = m_Points[i];
+		if(pCoor != NULL)
+			pCoor->RelocateUTM(ForceUTMZone);
+	}
 }
 
 //-------------------------------------
-bool CXMapPainterTest::ZoomOut() {
-	DoOutputDebugString("ZoomOut\n");
-	return true;
-}
-
-//-------------------------------------
-void CXMapPainterTest::PaintPackground(IBitmap *pBMP, int Width, int Height) {
-	tIRect R0(0, 0, Width, Height);
-	CXRGB C0(128, 42, 42);
-	pBMP->DrawRect(R0, C0, C0);
-}
-
-
-//-------------------------------------
-void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
-	// get copy of navigation data
-	CXNaviData Data = GetPosition();
-
-	PaintPackground(pBMP, Width, Height);
-
-	CXRGB C0(128, 42, 42);
-
-	char buf[100];
-	CXRGB C1(0x00, 0x00, 0x00);
-	CXRGB C2(0xff, 0xff, 0xff);
-	
-	tIRect R1(0, 0, 200, 40);
-	sprintf(buf, "%.6f %.6f %d", Data.GetLon(), Data.GetLat(), Data.GetnSat());
-	pBMP->DrawTextASCII(buf, R1, C1, C2);
-
-	tIRect R2(0, 50, 200, 90);
-	sprintf(buf, "%.2f %.2f %d %c", Data.GetCoor().GetUTMEasting(), Data.GetCoor().GetUTMNorthing(), Data.GetCoor().GetUTMZone(), Data.GetCoor().GetUTMLetter());
-	pBMP->DrawTextASCII(buf, R2, C1, C2);
-	
-	tIRect R3(0, 100, 200, 140);
-	sprintf(buf, "%.2f %.2f %.2f", Data.GetUTMSpeed().GetSpeed(), Data.GetUTMSpeed().GetCos(), Data.GetUTMSpeed().GetSin());
-	pBMP->DrawTextASCII(buf, R3, C1, C2);
-
-	tIRect R4(0, 150, 200, 190);
-	CXStringUTF8 Name = Data.GetStreetName();
-	pBMP->DrawTextUTF8(Name, R4, C2, C0);
-
-
+const CXBuffer<CXCoor *> & CXTrackLog::GetPoints() const {
+	return m_Points;
 }

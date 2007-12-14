@@ -3476,10 +3476,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
@@ -3488,10 +3490,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
@@ -3500,10 +3504,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
@@ -3512,10 +3518,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
@@ -3524,10 +3532,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
@@ -3536,10 +3546,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
@@ -3560,10 +3572,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
@@ -3572,10 +3586,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
@@ -3584,10 +3600,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
@@ -3596,10 +3614,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
@@ -3608,10 +3628,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
@@ -3620,10 +3642,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
@@ -3632,10 +3656,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
@@ -3644,10 +3670,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
@@ -3692,10 +3720,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
@@ -3704,10 +3734,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ENDIF 
@@ -4528,6 +4560,10 @@ SOURCE=..\..\..\common\src\CXBuffer.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\src\CXCoor.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\src\CXFile.hpp
 # End Source File
 # Begin Source File
@@ -4649,6 +4685,10 @@ SOURCE=..\..\..\common\src\CXStringASCII.hpp
 # Begin Source File
 
 SOURCE=..\..\..\common\src\CXStringUTF8.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXTrackLog.hpp
 # End Source File
 # Begin Source File
 
@@ -4888,6 +4928,229 @@ DEP_CPP_COORD=\
 DEP_CPP_COORD=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXCoor.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
+
+DEP_CPP_CXCOO=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
 	
 
 !ENDIF 
@@ -18268,149 +18531,444 @@ DEP_CPP_CXSTRI=\
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\src\CXTransformationMatrix.cpp
+SOURCE=..\..\..\common\src\CXTrackLog.cpp
 
 !IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
 
 DEP_CPP_CXTRA=\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_CXTRA=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXTransformationMatrix.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
+
+DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
+
+DEP_CPP_CXTRAN=\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	
 

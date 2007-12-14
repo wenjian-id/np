@@ -130,6 +130,8 @@ common/Images/saveon.bmp -text
 common/Images/zoomin.bmp -text
 common/Images/zoomout.bmp -text
 common/src/CXBuffer.hpp -text
+common/src/CXCoor.cpp -text
+common/src/CXCoor.hpp -text
 common/src/CXFile.cpp -text
 common/src/CXFile.hpp -text
 common/src/CXFileIni.cpp -text
@@ -188,6 +190,8 @@ common/src/CXStringASCII.cpp -text
 common/src/CXStringASCII.hpp -text
 common/src/CXStringUTF8.cpp -text
 common/src/CXStringUTF8.hpp -text
+common/src/CXTrackLog.cpp -text
+common/src/CXTrackLog.hpp -text
 common/src/CXTransformationMatrix.cpp -text
 common/src/CXTransformationMatrix.hpp -text
 common/src/CXUTMCoor.cpp -text

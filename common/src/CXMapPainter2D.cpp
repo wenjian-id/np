@@ -86,7 +86,7 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, const CXTransformationM
 	int y0 = 0;
 	for(size_t i=0; i<NodeCount; i++) {
 		CXNode *pNode = pWay->GetNode(i);
-		CXCoorVector v = TM*CXCoorVector(pNode->GetX(), pNode->GetY());
+		CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
 		int x = v.GetIntX();
 		int y = v.GetIntY();
 		// check if it is worth drawing

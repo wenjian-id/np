@@ -64,7 +64,7 @@ void CXNaviData::_CopyFrom(const CXNaviData &rOther) {
 	m_dLat			= rOther.m_dLat;
 	m_dHeight		= rOther.m_dHeight;
 	m_nSat			= rOther.m_nSat;
-	m_UTMCoor		= rOther.m_UTMCoor;
+	m_Coor			= rOther.m_Coor;
 	m_UTMSpeed		= rOther.m_UTMSpeed;
 	m_StreetName	= rOther.m_StreetName;
 	m_Ref			= rOther.m_Ref;
@@ -135,17 +135,17 @@ void CXNaviData::SetnSat(int nSat) {
 }
 
 //-------------------------------------
-CXUTMCoor CXNaviData::GetUTMCoor() const {
+CXCoor CXNaviData::GetCoor() const {
 	CXMutexLocker L(&m_Mutex);
-	return m_UTMCoor;
+	return m_Coor;
 }
 
 //-------------------------------------
-void CXNaviData::SetUTMCoor(const CXUTMCoor &UTMCoor) {
+void CXNaviData::SetCoor(const CXCoor &Coor) {
 	CXMutexLocker L(&m_Mutex);
-	if(m_UTMCoor != UTMCoor)
+	if(m_Coor != Coor)
 		SetChangedFlag();
-	m_UTMCoor = UTMCoor;
+	m_Coor = Coor;
 }
 
 //-------------------------------------
