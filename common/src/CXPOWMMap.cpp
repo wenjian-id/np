@@ -30,9 +30,9 @@
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXNode::CXNode(t_uint64 ID, double Lon, double Lat) :
+CXNode::CXNode(t_uint64 ID, double dLon, double dLat) :
 	m_ID(ID),
-	m_Coor(Lon, Lat)
+	m_Coor(dLon, dLat)
 {
 }
 
@@ -208,6 +208,9 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat) {
 		}
 		// relocate tracklog
 		m_TrackLog.RelocateUTM(m_iCurrentZone);
+	}
+	if(CXOptions::Instance()->MustShowTrackLog()) {
+		m_TrackLog.AddPoint(dLon, dLat);
 	}
 }
 

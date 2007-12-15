@@ -34,11 +34,11 @@
 #include "CoordConstants.h"
 #include "CoordConversion.h"
 
-void LLtoUTM(int ReferenceEllipsoid, const double Long, const double Lat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing) {
+void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing) {
 	//converts lat/long to UTM coords.  Equations from USGS Bulletin 1532 
 	//East Longitudes are positive, West longitudes are negative. 
 	//North latitudes are positive, South latitudes are negative
-	//Lat and Long are in decimal degrees
+	//dLat and dLon are in decimal degrees
 	//Written by Chuck Gantz- chuck.gantz@globalstar.com
 
 	double a = ellipsoid[ReferenceEllipsoid].EquatorialRadius;
@@ -50,19 +50,19 @@ void LLtoUTM(int ReferenceEllipsoid, const double Long, const double Lat, const 
 	double N, T, C, A, M;
 
 	//Make sure the longitude is between -180.00 .. 179.9
-	double LongTemp = (Long+180)-int((Long+180)/360)*360-180; // -180.00 .. 179.9;
+	double LongTemp = (dLon+180)-int((dLon+180)/360)*360-180; // -180.00 .. 179.9;
 
-	double LatRad = Lat*deg2rad;
+	double LatRad = dLat*deg2rad;
 	double LongRad = LongTemp*deg2rad;
 	double LongOriginRad;
 
 	ZoneNumber = int((LongTemp + 180)/6) + 1;
   
-	if( Lat >= 56.0 && Lat < 64.0 && LongTemp >= 3.0 && LongTemp < 12.0 )
+	if( dLat >= 56.0 && dLat < 64.0 && LongTemp >= 3.0 && LongTemp < 12.0 )
 		ZoneNumber = 32;
 
 	  // Special zones for Svalbard
-	if( Lat >= 72.0 && Lat < 84.0 ) {
+	if( dLat >= 72.0 && dLat < 84.0 ) {
 		if(      LongTemp >= 0.0  && LongTemp <  9.0 )
 			ZoneNumber = 31;
 		else if( LongTemp >= 9.0  && LongTemp < 21.0 )
@@ -79,7 +79,7 @@ void LLtoUTM(int ReferenceEllipsoid, const double Long, const double Lat, const 
 	LongOriginRad = LongOrigin * deg2rad;
 
 	//compute the UTM Zone from the latitude and longitude
-	UTMLetter = UTMLetterDesignator(Lat);
+	UTMLetter = UTMLetterDesignator(dLat);
 
 	eccPrimeSquared = (eccSquared)/(1-eccSquared);
 
@@ -99,56 +99,56 @@ void LLtoUTM(int ReferenceEllipsoid, const double Long, const double Lat, const 
 
 	UTMNorthing = (double)(k0*(M+N*tan(LatRad)*(A*A/2+(5-T+9*C+4*C*C)*A*A*A*A/24
 	 + (61-58*T+T*T+600*C-330*eccPrimeSquared)*A*A*A*A*A*A/720)));
-	if(Lat < 0)
+	if(dLat < 0)
 		UTMNorthing += 10000000.0; //10000000 meter offset for southern hemisphere
 }
 
-char UTMLetterDesignator(double Lat)
+char UTMLetterDesignator(double dLat)
 {
 	//This routine determines the correct UTM letter designator for the given latitude
 	//returns 'Z' if latitude is outside the UTM limits of 84N to 80S
 	//Written by Chuck Gantz- chuck.gantz@globalstar.com
 	char LetterDesignator;
 
-	if((84 >= Lat) && (Lat >= 72))
+	if((84 >= dLat) && (dLat >= 72))
 		LetterDesignator = 'X';
-	else if((72 > Lat) && (Lat >= 64))
+	else if((72 > dLat) && (dLat >= 64))
 		LetterDesignator = 'W';
-	else if((64 > Lat) && (Lat >= 56))
+	else if((64 > dLat) && (dLat >= 56))
 		LetterDesignator = 'V';
-	else if((56 > Lat) && (Lat >= 48))
+	else if((56 > dLat) && (dLat >= 48))
 		LetterDesignator = 'U';
-	else if((48 > Lat) && (Lat >= 40))
+	else if((48 > dLat) && (dLat >= 40))
 		LetterDesignator = 'T';
-	else if((40 > Lat) && (Lat >= 32))
+	else if((40 > dLat) && (dLat >= 32))
 		LetterDesignator = 'S';
-	else if((32 > Lat) && (Lat >= 24))
+	else if((32 > dLat) && (dLat >= 24))
 		LetterDesignator = 'R';
-	else if((24 > Lat) && (Lat >= 16))
+	else if((24 > dLat) && (dLat >= 16))
 		LetterDesignator = 'Q';
-	else if((16 > Lat) && (Lat >= 8))
+	else if((16 > dLat) && (dLat >= 8))
 		LetterDesignator = 'P';
-	else if(( 8 > Lat) && (Lat >= 0))
+	else if(( 8 > dLat) && (dLat >= 0))
 		LetterDesignator = 'N';
-	else if(( 0 > Lat) && (Lat >= -8))
+	else if(( 0 > dLat) && (dLat >= -8))
 		LetterDesignator = 'M';
-	else if((-8> Lat) && (Lat >= -16))
+	else if((-8> dLat) && (dLat >= -16))
 		LetterDesignator = 'L';
-	else if((-16 > Lat) && (Lat >= -24))
+	else if((-16 > dLat) && (dLat >= -24))
 		LetterDesignator = 'K';
-	else if((-24 > Lat) && (Lat >= -32))
+	else if((-24 > dLat) && (dLat >= -32))
 		LetterDesignator = 'J';
-	else if((-32 > Lat) && (Lat >= -40))
+	else if((-32 > dLat) && (dLat >= -40))
 		LetterDesignator = 'H';
-	else if((-40 > Lat) && (Lat >= -48))
+	else if((-40 > dLat) && (dLat >= -48))
 		LetterDesignator = 'G';
-	else if((-48 > Lat) && (Lat >= -56))
+	else if((-48 > dLat) && (dLat >= -56))
 		LetterDesignator = 'F';
-	else if((-56 > Lat) && (Lat >= -64))
+	else if((-56 > dLat) && (dLat >= -64))
 		LetterDesignator = 'E';
-	else if((-64 > Lat) && (Lat >= -72))
+	else if((-64 > dLat) && (dLat >= -72))
 		LetterDesignator = 'D';
-	else if((-72 > Lat) && (Lat >= -80))
+	else if((-72 > dLat) && (dLat >= -80))
 		LetterDesignator = 'C';
 	else
 		LetterDesignator = 'Z'; //This is here as an error flag to show that the Latitude is outside the UTM limits
@@ -157,11 +157,11 @@ char UTMLetterDesignator(double Lat)
 }
 
 
-void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& Lon,  double& Lat) {
+void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& rdLon,  double& rdLat) {
 	//converts UTM coords to lat/long.  Equations from USGS Bulletin 1532 
 	//East Longitudes are positive, West longitudes are negative. 
 	//North latitudes are positive, South latitudes are negative
-	//Lat and Long are in decimal degrees. 
+	//rdLat and rdLon are in decimal degrees. 
 	//Written by Chuck Gantz- chuck.gantz@globalstar.com
 
 	double k0 = 0.9996;
@@ -203,11 +203,11 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
 	R1 = a*(1-eccSquared)/pow(1-eccSquared*sin(phi1Rad)*sin(phi1Rad), 1.5);
 	D = x/(N1*k0);
 
-	Lat = phi1Rad - (N1*tan(phi1Rad)/R1)*(D*D/2-(5+3*T1+10*C1-4*C1*C1-9*eccPrimeSquared)*D*D*D*D/24
+	rdLat = phi1Rad - (N1*tan(phi1Rad)/R1)*(D*D/2-(5+3*T1+10*C1-4*C1*C1-9*eccPrimeSquared)*D*D*D*D/24
 	+(61+90*T1+298*C1+45*T1*T1-252*eccPrimeSquared-3*C1*C1)*D*D*D*D*D*D/720);
-	Lat = Lat * rad2deg;
+	rdLat = rdLat * rad2deg;
 
-	Lon = (D-(1+2*T1+C1)*D*D*D/6+(5-2*C1+28*T1-3*C1*C1+8*eccPrimeSquared+24*T1*T1)
+	rdLon = (D-(1+2*T1+C1)*D*D*D/6+(5-2*C1+28*T1-3*C1*C1+8*eccPrimeSquared+24*T1*T1)
 	*D*D*D*D*D/120)/cos(phi1Rad);
-	Lon = LongOrigin + Lon * rad2deg;
+	rdLon = LongOrigin + rdLon * rad2deg;
 }

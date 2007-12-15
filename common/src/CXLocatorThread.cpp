@@ -189,13 +189,13 @@ void CXLocatorThread::OnNewDataGPS(const tUCBuffer & Buffer) {
 	unsigned long Size = Buffer.GetSize();
 	const char *pBuffer = reinterpret_cast<const char *>(Buffer.GetBuffer());
 	CXStringASCII Line(pBuffer, Size);
-	double Lon = 0, Lat = 0, Height = 0; int nSat = 0;
-	if(!ExtractGGAData(Line, Lon, Lat, Height, nSat))
+	double dLon = 0, dLat = 0, Height = 0; int nSat = 0;
+	if(!ExtractGGAData(Line, dLon, dLat, Height, nSat))
 		return;
 
 	// OK, valid GGA data arrived
 	mLastReceivedGPS.SetNow();
-	CXCoor Coor(Lon, Lat);
+	CXCoor Coor(dLon, dLat);
 
 	// calculate speed
 	CXUTMSpeed Speed;
@@ -210,8 +210,8 @@ void CXLocatorThread::OnNewDataGPS(const tUCBuffer & Buffer) {
 	}
 
 	// set private navigation data
-	m_NaviData.SetLon(Lon);
-	m_NaviData.SetLat(Lat);
+	m_NaviData.SetLon(dLon);
+	m_NaviData.SetLat(dLat);
 	m_NaviData.SetHeight(Height);
 	m_NaviData.SetnSat(nSat);
 	m_NaviData.SetUTMSpeed(Speed);

@@ -61,7 +61,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXUTMCoor(double Lon, double Lat);
+	CXUTMCoor(double dLon, double dLat);
 	//-------------------------------------
 	/*
 	 * \brief oiu

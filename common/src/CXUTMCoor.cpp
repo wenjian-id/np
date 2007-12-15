@@ -41,9 +41,9 @@ CXUTMCoor::CXUTMCoor(int UTMZone, char UTMLetter, double UTMEasting, double UTMN
 }
 
 //-------------------------------------
-CXUTMCoor::CXUTMCoor(double Lon, double Lat) {
+CXUTMCoor::CXUTMCoor(double dLon, double dLat) {
 	m_UTMZone = UTMZoneNone;
-	LLtoUTM(WGS84, Lon, Lat, UTMZoneNone, m_UTMZone, m_UTMLetter, m_UTMEasting, m_UTMNorthing);
+	LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, m_UTMZone, m_UTMLetter, m_UTMEasting, m_UTMNorthing);
 }
 
 //-------------------------------------

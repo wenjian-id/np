@@ -54,7 +54,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXCoor(double Lon, double Lat);
+	CXCoor(double dLon, double dLat);
 	//-------------------------------------
 	/*
 	 * \brief oiu

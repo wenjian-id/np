@@ -265,9 +265,32 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pBuffer->Clear();
 		}
 
+		CXCoorVector v;
+		// draw TrackLog if neccessary
+		if(CXOptions::Instance()->MustShowTrackLog()) {
+			const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetPoints();
+			size_t Size = CoorBuffer.GetSize();
+			CXPen TLPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0xFF));
+			pBMP->SetPen(TLPen);
+			if(Size > 1) {
+				int *pX = new int[Size];
+				int *pY = new int[Size];
+				for(size_t i=0; i<Size; i++) {
+					CXCoor *pCoor = CoorBuffer[i];
+					v = TMMap*CXCoorVector(pCoor->GetUTMEasting(), pCoor->GetUTMNorthing());
+					pX[i] = v.GetIntX();
+					pY[i] = v.GetIntY();
+				}
+
+				pBMP->PolyLine(pX, pY, Size);
+				delete [] pX;
+				delete [] pY;
+			}
+		}
+
+		// draw current position
 		int X[4];
 		int Y[4];
-		CXCoorVector v;
 		double ArrowSize = 15.0;
 		v = TMCurrentPos*CXCoorVector(0, ArrowSize);
 		X[0] = xc + v.GetIntX();

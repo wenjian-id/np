@@ -63,7 +63,16 @@ public:
 	 *
 	 */
 	const CXBuffer<CXCoor *> & GetPoints() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void AddPoint(double dLon, double dLat);
 };
+
+typedef CXBuffer<CXCoor *>	TCoorBuffer;
+
 
 #endif // __CXTRACKLOG_HPP__
 

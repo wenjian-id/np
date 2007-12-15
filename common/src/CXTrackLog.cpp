@@ -44,3 +44,8 @@ void CXTrackLog::RelocateUTM(int ForceUTMZone) {
 const CXBuffer<CXCoor *> & CXTrackLog::GetPoints() const {
 	return m_Points;
 }
+
+//-------------------------------------
+void CXTrackLog::AddPoint(double dLon, double dLat) {
+	m_Points.Append(new CXCoor(dLon, dLat));
+}

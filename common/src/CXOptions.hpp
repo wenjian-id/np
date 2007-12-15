@@ -55,6 +55,7 @@ private:
 	bool				m_oShowZoomButtons;		///< oiu
 	bool				m_oShowMaxSpeed;		///< oiu
 	bool				m_oShowCompass;			///< oiu
+	bool				m_oShowTrackLog;		///< oiu
 	t_uint64			m_OSMVali;				///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
@@ -395,6 +396,18 @@ public:
 	 *
 	 */
 	void SetShowCompassFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowTrackLog() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowTrackLogFlag(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

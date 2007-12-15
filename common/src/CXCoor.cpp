@@ -30,9 +30,9 @@ CXCoor::CXCoor() :
 }
 
 //-------------------------------------
-CXCoor::CXCoor(double Lon, double Lat) :
-	m_dLon(Lon),
-	m_dLat(Lat)
+CXCoor::CXCoor(double dLon, double dLat) :
+	m_dLon(dLon),
+	m_dLat(dLat)
 {
 	RelocateUTM(UTMZoneNone);
 }

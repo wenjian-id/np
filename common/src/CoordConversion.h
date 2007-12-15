@@ -38,35 +38,35 @@
  * \brief oiu
  *
  */
-void LLtoUTM(int ReferenceEllipsoid, const double Lon, const double Lat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
+void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
 
 //-------------------------------------
 /*
  * \brief oiu
  *
  */
-void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& Lon,  double& Lat);
+void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& rdLon,  double& rdLat);
 
 //-------------------------------------
 /*
  * \brief oiu
  *
  */
-char UTMLetterDesignator(double Lat);
+char UTMLetterDesignator(double dLat);
 
 //-------------------------------------
 /*
  * \brief oiu
  *
  */
-void LLtoSwissGrid(const double Lat, const double Long, double &SwissNorthing, double &SwissEasting);
+void LLtoSwissGrid(const double dLat, const double dLon, double &SwissNorthing, double &SwissEasting);
 
 //-------------------------------------
 /*
  * \brief oiu
  *
  */
-void SwissGridtoLL(const double SwissNorthing, const double SwissEasting, double& Lat, double& Long);
+void SwissGridtoLL(const double SwissNorthing, const double SwissEasting, double& rdLat, double& rdLon);
 
 //-------------------------------------
 /*
