@@ -23,11 +23,35 @@
 #include "CXTrackLog.hpp"
 
 //-------------------------------------
-CXTrackLog::CXTrackLog() {
+CXTrackLog::CXTrackLog() :
+	m_MaxSize(0)
+{
 }
 
 //-------------------------------------
 CXTrackLog::~CXTrackLog() {
+}
+
+//-------------------------------------
+void CXTrackLog::DeleteSuperfluous() {
+	if(m_MaxSize != 0) {
+		// check if some data has to be deleted
+		if(m_Points.GetSize() > m_MaxSize) {
+			size_t Diff = m_Points.GetSize() - m_MaxSize;
+			// delete first "Diff" elements
+			for(size_t i=0; i<Diff; i++) {
+				delete m_Points[i];
+				m_Points[i] = NULL;
+			}
+			m_Points.DeleteFirst(Diff);
+		}
+	}
+}
+
+//-------------------------------------
+void CXTrackLog::SetMaxSize(size_t MaxSize) {
+	m_MaxSize = MaxSize;
+	DeleteSuperfluous();
 }
 
 //-------------------------------------
@@ -48,4 +72,5 @@ const CXBuffer<CXCoor *> & CXTrackLog::GetPoints() const {
 //-------------------------------------
 void CXTrackLog::AddPoint(double dLon, double dLat) {
 	m_Points.Append(new CXCoor(dLon, dLat));
+	DeleteSuperfluous();
 }

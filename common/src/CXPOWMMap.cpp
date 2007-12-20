@@ -146,6 +146,7 @@ CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 CXPOWMMap::CXPOWMMap() :
 	m_iCurrentZone(UTMZoneNone)
 {
+		m_TrackLog.SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
 }
 
 //-------------------------------------
@@ -209,6 +210,7 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat) {
 		// relocate tracklog
 		m_TrackLog.RelocateUTM(m_iCurrentZone);
 	}
+	// if neccessary ad new point to tracklog
 	if(CXOptions::Instance()->MustShowTrackLog()) {
 		m_TrackLog.AddPoint(dLon, dLat);
 	}

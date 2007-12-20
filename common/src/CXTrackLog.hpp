@@ -33,10 +33,17 @@
  */
 class CXTrackLog {
 private:
+	size_t				m_MaxSize;		///< oiu
 	CXBuffer<CXCoor *>	m_Points;		///< oiu
 	//-------------------------------------
 	CXTrackLog(const CXTrackLog &);							///< Not used.
 	const CXTrackLog & operator = (const CXTrackLog &);		///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void DeleteSuperfluous();
 protected:
 public:
 	//-------------------------------------
@@ -51,6 +58,12 @@ public:
 	 *
 	 */
 	virtual ~CXTrackLog();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetMaxSize(size_t MaxSize);
 	//-------------------------------------
 	/*
 	 * \brief oiu

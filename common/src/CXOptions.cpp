@@ -42,6 +42,7 @@ CXOptions::CXOptions() :
 	m_oShowMaxSpeed(true),
 	m_oShowCompass(false),
 	m_oShowTrackLog(false),
+	m_TrackLogSize(0),
 	m_OSMVali(0),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
@@ -109,6 +110,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetCompassSize(atoi(F.Get("CompassSize", "50").c_str()));
 	// TrackLog
 	SetShowTrackLogFlag(F.Get("ShowTrackLog", "off").ToUpper() == "ON");
+	// TrackLogSize
+	SetTrackLogSize(static_cast<size_t>(Max(0, atoi(F.Get("TrackLogSize", "0").c_str()))));
 	// OSMVali name
 	if(F.Get("OSMValiName", "off").ToUpper() == "ON")
 		SetOSMValiFlag(e_OSMValiName);
@@ -473,6 +476,18 @@ bool CXOptions::MustShowTrackLog() const {
 void CXOptions::SetShowTrackLogFlag(bool NewValue) {
 	CXMutexLocker L(&m_Mutex);
 	m_oShowTrackLog = NewValue;
+}
+
+//-------------------------------------
+size_t CXOptions::GetTrackLogSize() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_TrackLogSize;
+}
+
+//-------------------------------------
+void CXOptions::SetTrackLogSize(size_t NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_TrackLogSize = NewValue;
 }
 
 //-------------------------------------

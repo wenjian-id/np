@@ -56,6 +56,7 @@ private:
 	bool				m_oShowMaxSpeed;		///< oiu
 	bool				m_oShowCompass;			///< oiu
 	bool				m_oShowTrackLog;		///< oiu
+	int					m_TrackLogSize;			///< oiu
 	t_uint64			m_OSMVali;				///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
@@ -408,6 +409,18 @@ public:
 	 *
 	 */
 	void SetShowTrackLogFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	size_t GetTrackLogSize() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetTrackLogSize(size_t NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
