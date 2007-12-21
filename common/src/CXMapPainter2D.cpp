@@ -352,20 +352,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// draw current position
 		int X[4];
 		int Y[4];
-		double ArrowSize = 15.0;
-		v = TMCurrentPos*CXCoorVector(0, ArrowSize);
-		X[0] = xc + v.GetIntX();
-		Y[0] = yc + v.GetIntY();
-		v = TMCurrentPos*CXCoorVector(ArrowSize/2, -0.7*ArrowSize);
-		X[1] = xc + v.GetIntX();
-		Y[1] = yc + v.GetIntY();
-		v = TMCurrentPos*CXCoorVector(0, -0.25*ArrowSize);
-		X[2] = xc + v.GetIntX();
-		Y[2] = yc + v.GetIntY();
-		v = TMCurrentPos*CXCoorVector(-ArrowSize/2, -0.7*ArrowSize);
-		X[3] = xc + v.GetIntX();
-		Y[3] = yc + v.GetIntY();
-
 		// draw compass if necessary
 		if(CXOptions::Instance()->MustShowCompass()) {
 			int CX = CompassRect.GetLeft() + CompassRect.GetWidth()/2;
@@ -396,6 +382,20 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		}
 
 		// draw current position
+		double ArrowSize = 15.0;
+		v = TMCurrentPos*CXCoorVector(0, ArrowSize);
+		X[0] = xc + v.GetIntX();
+		Y[0] = yc + v.GetIntY();
+		v = TMCurrentPos*CXCoorVector(ArrowSize/2, -0.7*ArrowSize);
+		X[1] = xc + v.GetIntX();
+		Y[1] = yc + v.GetIntY();
+		v = TMCurrentPos*CXCoorVector(0, -0.25*ArrowSize);
+		X[2] = xc + v.GetIntX();
+		Y[2] = yc + v.GetIntY();
+		v = TMCurrentPos*CXCoorVector(-ArrowSize/2, -0.7*ArrowSize);
+		X[3] = xc + v.GetIntX();
+		Y[3] = yc + v.GetIntY();
+
 		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
 //		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
 	}
