@@ -166,6 +166,67 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 }
 
 //-------------------------------------
+void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) {
+	if(pBMP == NULL)
+		return;
+
+	// get scale dimensions
+	int ScaleWidth = CXOptions::Instance()->GetScaleWidth();
+	int ScaleHeight = CXOptions::Instance()->GetScaleHeight();
+	const double EPSILON = 0.000001;
+	if(m_Scale < EPSILON)
+		return;
+	// get optimal scale display
+	int exp = 1;
+	int ScaleX = 1;
+	int expFinal = exp;
+	int ScaleXFinal = ScaleX;
+	while(1.0*ScaleX*exp*m_Scale < ScaleWidth) {
+		expFinal = exp;
+		ScaleXFinal = ScaleX;
+		if(ScaleX == 1) {
+			ScaleX = 2;
+		} else if(ScaleX == 2) {
+			ScaleX = 5;
+		} else {
+			ScaleX = 1;
+			exp = 10*exp;
+		}
+	}
+	exp = expFinal;
+	ScaleX = ScaleXFinal;
+	// compute scale width in pixel
+	int ScaleXPixel = static_cast<int>(1.0*ScaleX*exp*m_Scale);
+	// draw scale
+	// first the black rectangle
+	tIRect ScaleRect(	(ScreenWidth - ScaleXPixel)/2, ScreenHeight - ScaleHeight - 5,
+						(ScreenWidth + ScaleXPixel)/2, ScreenHeight - 5);
+	pBMP->DrawRect(ScaleRect, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0x00, 0x00));
+	// now the left yellow rectangle
+	tIRect ScaleRect1(	(ScreenWidth - ScaleXPixel/2)/2, ScreenHeight - ScaleHeight - 5,
+						ScreenWidth/2, ScreenHeight - 5);
+	pBMP->DrawRect(ScaleRect1, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
+	// now the right yellow rectangle
+	ScaleRect1.OffsetRect(ScaleXPixel/2, 0);
+	pBMP->DrawRect(ScaleRect1, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
+	// draw scale description
+	char buf[100];
+	if(exp < 1000) {
+		sprintf(buf, "%d m", ScaleX*exp);
+	} else {
+		sprintf(buf, "%d km", ScaleX*(exp/1000));
+	}
+	// calculate size of text
+	ScaleRect1 = pBMP->CalcTextRectASCII(buf, 2, 2);
+	// position it
+	ScaleRect1.OffsetRect(	-ScaleRect1.GetLeft() + ScreenWidth/2 - ScaleRect1.GetWidth()/2,
+							-ScaleRect1.GetTop() + ScaleRect.GetTop() - ScaleRect1.GetHeight() - 1);
+	// and draw it
+	pBMP->DrawTextASCII(buf, ScaleRect1, CXRGB(0x00, 0x00, 0x00), BGCOLOR);
+}
+
+
+//-------------------------------------
 void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 	// clear wisible rect
 	pBMP->DrawRect(tIRect(0,0, Width, Height), BGCOLOR, BGCOLOR);
@@ -235,9 +296,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			TMCompass.Rotate(UTMPI/2);
 		}
 
-		TMMap.Scale(m_Scale, -m_Scale);	// do scaling (negative for y!)
+		TMMap.Scale(m_Scale, -m_Scale);		// do scaling (negative for y!)
 		TMMap.Translate(xc, yc);			// display it centered on screen
-		TMCompass.Scale(1, -1);			// do scaling (negative for y!)
+		TMCompass.Scale(1, -1);				// do scaling (negative for y!)
 		TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
 
 		// prepare drawing
@@ -305,11 +366,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		X[3] = xc + v.GetIntX();
 		Y[3] = yc + v.GetIntY();
 
-		// draw current position
-		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
-//		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
-
-
 		// draw compass if necessary
 		if(CXOptions::Instance()->MustShowCompass()) {
 			int CX = CompassRect.GetLeft() + CompassRect.GetWidth()/2;
@@ -334,6 +390,14 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pBMP->Polygon(X, Y, 4, CXRGB(0xB0, 0xB0, 0x00), CXRGB(0xB0, 0x00, 0x00));
 		}
 
+		// draw scale if necessary
+		if(CXOptions::Instance()->MustShowScale()) {
+			DrawScale(pBMP, Width, Height);
+		}
+
+		// draw current position
+		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+//		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
 	}
 	CXPOWMMap::Instance()->UnlockMap();
 

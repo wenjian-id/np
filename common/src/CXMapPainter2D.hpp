@@ -63,6 +63,12 @@ private:
 	 *
 	 */
 	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, const CXTransformationMatrix2D & TM, int Width, int Height);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight);
 protected:
 	//-------------------------------------
 	/*

@@ -42,12 +42,15 @@ CXOptions::CXOptions() :
 	m_oShowMaxSpeed(true),
 	m_oShowCompass(false),
 	m_oShowTrackLog(false),
-	m_TrackLogSize(0),
+	m_oShowScale(false),
 	m_OSMVali(0),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
 	m_MaxSpeedSize(61),
 	m_CompassSize(50),
+	m_TrackLogSize(0),
+	m_ScaleWidth(100),
+	m_ScaleHeight(5),
 	m_LogoTime(5000)
 {
 }
@@ -108,6 +111,12 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetShowCompassFlag(F.Get("ShowCompass", "on").ToUpper() == "ON");
 	// Compass size
 	SetCompassSize(atoi(F.Get("CompassSize", "50").c_str()));
+	// Scale
+	SetShowScaleFlag(F.Get("ShowScale", "on").ToUpper() == "ON");
+	// Scale width
+	SetScaleWidth(atoi(F.Get("ScaleWidth", "100").c_str()));
+	// Scale height
+	SetScaleHeight(atoi(F.Get("ScaleHeight", "5").c_str()));
 	// TrackLog
 	SetShowTrackLogFlag(F.Get("ShowTrackLog", "off").ToUpper() == "ON");
 	// TrackLogSize
@@ -266,6 +275,30 @@ int CXOptions::GetCompassSize() const {
 void CXOptions::SetCompassSize(int Value) {
 	CXMutexLocker L(&m_Mutex);
 	m_CompassSize = Value;
+}
+
+//-------------------------------------
+int CXOptions::GetScaleWidth() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_ScaleWidth;
+}
+
+//-------------------------------------
+void CXOptions::SetScaleWidth(int Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_ScaleWidth = Value;
+}
+
+//-------------------------------------
+int CXOptions::GetScaleHeight() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_ScaleHeight;
+}
+
+//-------------------------------------
+void CXOptions::SetScaleHeight(int Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_ScaleHeight = Value;
 }
 
 //-------------------------------------
@@ -464,6 +497,18 @@ bool CXOptions::MustShowCompass() const {
 void CXOptions::SetShowCompassFlag(bool NewValue) {
 	CXMutexLocker L(&m_Mutex);
 	m_oShowCompass = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowScale() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_oShowScale;
+}
+
+//-------------------------------------
+void CXOptions::SetShowScaleFlag(bool NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_oShowScale = NewValue;
 }
 
 //-------------------------------------

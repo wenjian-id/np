@@ -7,6 +7,7 @@ Version 0.1.2:
    - 1834085: Show current speed
    - 1834087: Show current height
    - 1834088: Show permitted speed if any
+   - 1836283: Display (optional) a map scale
    - 1837396: Show compass.
  - other:
 

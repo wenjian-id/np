@@ -56,12 +56,15 @@ private:
 	bool				m_oShowMaxSpeed;		///< oiu
 	bool				m_oShowCompass;			///< oiu
 	bool				m_oShowTrackLog;		///< oiu
-	int					m_TrackLogSize;			///< oiu
+	bool				m_oShowScale;			///< oiu
 	t_uint64			m_OSMVali;				///< oiu
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
 	int					m_MaxSpeedSize;			///< oiu
 	int					m_CompassSize;			///< oiu
+	int					m_TrackLogSize;			///< oiu
+	int					m_ScaleWidth;			///< oiu
+	int					m_ScaleHeight;			///< oiu
 	CXStringASCII		m_DirectoryMaps;		///< oiu
 	CXStringASCII		m_DirectorySave;		///< oiu
 	CXStringASCII		m_DirectoryIcons;		///< oiu
@@ -199,6 +202,30 @@ public:
 	 *
 	 */
 	void SetCompassSize(int Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetScaleWidth() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetScaleWidth(int Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetScaleHeight() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetScaleHeight(int Value);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -397,6 +424,18 @@ public:
 	 *
 	 */
 	void SetShowCompassFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowScale() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowScaleFlag(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
