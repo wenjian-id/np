@@ -32,45 +32,61 @@ class CXStringUTF8;
 
 //----------------------------------------------------------------------------
 /*
- * \brief oiu
+ * \brief Information bar for common information.
  *
+ * This class encapsulates the functionality for displaying common information:
+ * position and speed.
  */
 class CXInfoBarCommon : public CXInfoBar {
 private:
-	CXNaviData			m_NaviData;	///< oiu
+	CXNaviData			m_NaviData;	///< Navigation data.
 	//-------------------------------------
 	CXInfoBarCommon(const CXInfoBarCommon &);						///< Not used.
 	const CXInfoBarCommon & operator = (const CXInfoBarCommon &);	///< Not used.
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Paint.
 	 *
+	 * Paint position and speed data to a bitmap.
+	 * \param	pDC			Pointer to a device context.
+	 * \param	OffsetX		Offset for painting (X).
+	 * \param	OffsetY		Offset for painting (Y).
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Calculate optimal font height for a rect.
 	 *
+	 * Calculate optimal font height so that a text fits into a rectangle.
+	 * Font height is adjusted when coputing!
+	 * \param	Bmp		Bitmap.
+	 * \param	Str		String.
+	 * \param	rRect	The rectangle.
+	 * \return			Font height.
 	 */
-	int SetFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
+	int CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
 protected:
 public:
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXInfoBarCommon();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXInfoBarCommon();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Position has changed.
 	 *
+	 * Position has changed.
+	 * \param	Newdata		New position.
 	 */
 	void PositionChanged(const CXNaviData & NewData);
 };
