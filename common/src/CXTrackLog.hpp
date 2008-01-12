@@ -28,60 +28,73 @@
 
 //---------------------------------------------------------------------
 /*
- * \brief oiu
+ * \brief Class for keeping track log data.
  *
+ * Class for keeping track log data. Works like a FIFO.
  */
 class CXTrackLog {
 private:
-	size_t				m_MaxSize;		///< oiu
-	CXBuffer<CXCoor *>	m_Points;		///< oiu
+	size_t				m_MaxSize;		///< Max size of coordinates.
+	CXBuffer<CXCoor *>	m_Coordinates;	///< The coordinates.
 	//-------------------------------------
 	CXTrackLog(const CXTrackLog &);							///< Not used.
 	const CXTrackLog & operator = (const CXTrackLog &);		///< Not used.
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Delete superfluous elements.
 	 *
+	 * Delete superfluous elements, so that only m_MaxSize elements remain in list.
 	 */
 	void DeleteSuperfluous();
 protected:
 public:
 	//-------------------------------------
 	/*
-	 * \brief oiu
-	 *
+	 * \brief Default constructor.
+	 * 
+	 * Default constructor.
 	 */
 	CXTrackLog();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXTrackLog();
 	//-------------------------------------
 	/*
-	 * \brief oiu
-	 *
+	 * \brief Set max size of coordinates.
+	 * 
+	 * Set max size of coordinates.
+	 * \param	MaxSize		Max size of coordinates.
 	 */
 	void SetMaxSize(size_t MaxSize);
 	//-------------------------------------
 	/*
-	 * \brief oiu
-	 *
+	 * \brief Relocate coordinates to new UTM zone.
+	 * 
+	 * Relocate coordinates to new UTM zone.
+	 * \param	ForceUTMZone	New UTM Zone.
 	 */
 	void RelocateUTM(int ForceUTMZone);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get coordinates.
 	 *
+	 * Get coordinates.
+	 * \return	const reference to coordinates.
 	 */
-	const CXBuffer<CXCoor *> & GetPoints() const;
+	const CXBuffer<CXCoor *> & GetCoordinates() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Add coordinate.
 	 *
+	 * Add coordinate. If necessary remove older ones.
+	 * \param	dLon	Longitude of new coordinate.
+	 * \param	dLat	Latitude of new coordinate.
 	 */
-	void AddPoint(double dLon, double dLat);
+	void AddCoordinate(double dLon, double dLat);
 };
 
 typedef CXBuffer<CXCoor *>	TCoorBuffer;

@@ -36,14 +36,14 @@ CXTrackLog::~CXTrackLog() {
 void CXTrackLog::DeleteSuperfluous() {
 	if(m_MaxSize != 0) {
 		// check if some data has to be deleted
-		if(m_Points.GetSize() > m_MaxSize) {
-			size_t Diff = m_Points.GetSize() - m_MaxSize;
+		if(m_Coordinates.GetSize() > m_MaxSize) {
+			size_t Diff = m_Coordinates.GetSize() - m_MaxSize;
 			// delete first "Diff" elements
 			for(size_t i=0; i<Diff; i++) {
-				delete m_Points[i];
-				m_Points[i] = NULL;
+				delete m_Coordinates[i];
+				m_Coordinates[i] = NULL;
 			}
-			m_Points.DeleteFirst(Diff);
+			m_Coordinates.DeleteFirst(Diff);
 		}
 	}
 }
@@ -56,21 +56,21 @@ void CXTrackLog::SetMaxSize(size_t MaxSize) {
 
 //-------------------------------------
 void CXTrackLog::RelocateUTM(int ForceUTMZone) {
-	size_t Size = m_Points.GetSize();
+	size_t Size = m_Coordinates.GetSize();
 	for(size_t i=0; i<Size; i++) {
-		CXCoor *pCoor = m_Points[i];
+		CXCoor *pCoor = m_Coordinates[i];
 		if(pCoor != NULL)
 			pCoor->RelocateUTM(ForceUTMZone);
 	}
 }
 
 //-------------------------------------
-const CXBuffer<CXCoor *> & CXTrackLog::GetPoints() const {
-	return m_Points;
+const CXBuffer<CXCoor *> & CXTrackLog::GetCoordinates() const {
+	return m_Coordinates;
 }
 
 //-------------------------------------
-void CXTrackLog::AddPoint(double dLon, double dLat) {
-	m_Points.Append(new CXCoor(dLon, dLat));
+void CXTrackLog::AddCoordinate(double dLon, double dLat) {
+	m_Coordinates.Append(new CXCoor(dLon, dLat));
 	DeleteSuperfluous();
 }

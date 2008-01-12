@@ -212,7 +212,7 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat) {
 	}
 	// if neccessary ad new point to tracklog
 	if(CXOptions::Instance()->MustShowTrackLog()) {
-		m_TrackLog.AddPoint(dLon, dLat);
+		m_TrackLog.AddCoordinate(dLon, dLat);
 	}
 }
 
@@ -290,10 +290,14 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
+	bool Result = false;
+	// decide which load function to call
+	// first of all check older versions
 	if(Version == 0x00000100) {
-		if(!LoadMap0_1_1(InFile, FileName))
-			return false;
+		// v 0.1.1
+		Result = LoadMap0_1_1(InFile, FileName);
 	} else if(Version != ReqVersion) {
+		// not supported version
 		CXStringASCII ErrorMsg(FileName);
 		ErrorMsg += " has wrong Version: ";
 		char buf[10];
@@ -304,8 +308,24 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		ErrorMsg += buf;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
+	} else {
+		// current version
+		Result = LoadMap_CurrentVersion(InFile, FileName);
 	}
 
+	// check return code and do other sutff
+	if(Result) {
+		// check OSMVali
+		if(CXOptions::Instance()->GetOSMValiFlags() != 0) {
+			// run vali;
+			RunOSMVali();
+		}
+	}
+	return Result;
+}
+
+//-------------------------------------
+bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & FileName) {
 	// node count
 	unsigned long NodeCount = 0;
 	if(!ReadUL32(InFile, NodeCount)) {
@@ -388,11 +408,6 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 			pWay->AddNode(pNode);
 		}
 	}
-	if(CXOptions::Instance()->GetOSMValiFlags() != 0) {
-		// run vali;
-		RunOSMVali();
-	}
-
 	return true;
 }
 

@@ -256,6 +256,12 @@ private:
 	 *
 	 */
 	bool LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & FileName);
 protected:
 public:
 	//-------------------------------------

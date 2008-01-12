@@ -257,6 +257,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXPOWMMap::Instance()->LockMap();
 	CXExactTime StopLock;
 	CXExactTime StopPrepare;
+	CXExactTime StopDrawWays;
+	CXExactTime StopTrackLog;
+	CXExactTime StopScale;
+	CXExactTime StopCompass;
 
 	int CompassSize = CXOptions::Instance()->GetCompassSize();
 	tIRect CompassRect(0,0,CompassSize,CompassSize);
@@ -319,6 +323,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		for(i=0; i< CXWay::eEnumCount; i++) {
 			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], TMMap, Width, Height);
 		}
+		StopDrawWays.SetNow();
 
 		// clear arrays
 		for(i=0; i<CXWay::eEnumCount; i++) {
@@ -329,7 +334,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		CXCoorVector v;
 		// draw TrackLog if neccessary
 		if(CXOptions::Instance()->MustShowTrackLog()) {
-			const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetPoints();
+			const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetCoordinates();
 			size_t Size = CoorBuffer.GetSize();
 			CXPen TLPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0xFF));
 			pBMP->SetPen(TLPen);
@@ -348,8 +353,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 				delete [] pY;
 			}
 		}
+		StopTrackLog.SetNow();
 
-		// draw current position
 		int X[4];
 		int Y[4];
 		// draw compass if necessary
@@ -375,11 +380,13 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			Y[3] = CY + v.GetIntY();
 			pBMP->Polygon(X, Y, 4, CXRGB(0xB0, 0xB0, 0x00), CXRGB(0xB0, 0x00, 0x00));
 		}
+		StopCompass.SetNow();
 
 		// draw scale if necessary
 		if(CXOptions::Instance()->MustShowScale()) {
 			DrawScale(pBMP, Width, Height);
 		}
+		StopScale.SetNow();
 
 		// draw current position
 		double ArrowSize = 15.0;
@@ -403,8 +410,12 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 
 	CXExactTime Stop;
-	char buf[100];
-	snprintf(buf, 100, "%ld - %ld ms", StopPrepare-StopLock, Stop-StopPrepare);
+
+	char buf[200];
+	snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld TL:%ld Co:%ld Sc:%ld Ps:%ld",
+				StopPrepare-StopLock, StopDrawWays-StopPrepare, 
+				StopTrackLog-StopDrawWays, StopScale-StopTrackLog, StopCompass-StopScale,
+				Stop-StopCompass);
 	CXStringASCII ttt = buf;
 	tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 	TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop());
