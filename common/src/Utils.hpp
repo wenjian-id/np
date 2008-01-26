@@ -28,6 +28,8 @@
 #include "CXFile.hpp"
 #include "CXRGB.hpp"
 
+class CXCoor;
+
 template <class t> t Max(const t &a, const t&b) {
 	if(a < b)
 		return b;
@@ -162,5 +164,16 @@ CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar);
  * \param	rLat	Converted latitude [decimal degrees]
  */
 void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdLat);
+
+//-------------------------------------
+/*
+ * \brief Compute distance between two coordinates.
+ *
+ * Compute distance between two coordinates.
+ * \param	Coor1	First coordinate.
+ * \param	Coor2	Second coordinate.
+ * \return	Distance between coordinates
+ */
+double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
 
 #endif // __UTILS_HPP__

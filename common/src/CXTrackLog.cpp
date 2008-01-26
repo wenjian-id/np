@@ -21,10 +21,12 @@
  ***************************************************************************/
 
 #include "CXTrackLog.hpp"
+#include "Utils.hpp"
 
 //-------------------------------------
 CXTrackLog::CXTrackLog() :
-	m_MaxSize(0)
+	m_MaxSize(0),
+	m_MinDistance(0)
 {
 }
 
@@ -55,6 +57,11 @@ void CXTrackLog::SetMaxSize(size_t MaxSize) {
 }
 
 //-------------------------------------
+void CXTrackLog::SetMinDistance(unsigned int MinDistance) {
+	m_MinDistance = MinDistance;
+}
+
+//-------------------------------------
 void CXTrackLog::RelocateUTM(int ForceUTMZone) {
 	size_t Size = m_Coordinates.GetSize();
 	for(size_t i=0; i<Size; i++) {
@@ -71,6 +78,22 @@ const CXBuffer<CXCoor *> & CXTrackLog::GetCoordinates() const {
 
 //-------------------------------------
 void CXTrackLog::AddCoordinate(double dLon, double dLat) {
-	m_Coordinates.Append(new CXCoor(dLon, dLat));
+	CXCoor *pCoor = new CXCoor(dLon, dLat);
+	// check for m_MinDistance
+	bool MustAppend = false;
+	if(m_Coordinates.GetSize() > 0) {
+		// get last coordinate
+		CXCoor *pCoorLast = m_Coordinates[m_Coordinates.GetSize()-1];
+		double Dist = CalcDistance(*pCoorLast, *pCoor);
+		MustAppend = Dist > m_MinDistance;
+	} else {
+		// will be first coordinate in array
+		MustAppend = true;
+	}
+	if(MustAppend) {
+		m_Coordinates.Append(pCoor);
+	} else {
+		delete pCoor;
+	}
 	DeleteSuperfluous();
 }

@@ -146,7 +146,8 @@ CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 CXPOWMMap::CXPOWMMap() :
 	m_iCurrentZone(UTMZoneNone)
 {
-		m_TrackLog.SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
+	m_TrackLog.SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
+	m_TrackLog.SetMinDistance(CXOptions::Instance()->GetTrackLogMinDist());
 }
 
 //-------------------------------------

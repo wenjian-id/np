@@ -21,8 +21,10 @@
  ***************************************************************************/
 
 #include "Utils.hpp"
+#include "CXCoor.hpp"
 
 #include  <stdlib.h>
+#include  <math.h>
 
 //-------------------------------------
 bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine) {
@@ -265,4 +267,25 @@ void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdL
 	lDeg = static_cast<long>(dLon/100);
 	dMinute = dLon - (lDeg * 100);
 	rdLon = lDeg + (dMinute / 60); 
+}
+
+//-------------------------------------
+double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2) {
+	// check if in same UTMZone
+	double Result = 0;
+	if(Coor1.GetUTMZone() != Coor2.GetUTMZone()) {
+		// no, so create a temporary coordinate from Coor2
+		CXCoor tmp(Coor2);
+		// and relocate it to UTMZone from Coor1
+		tmp.RelocateUTM(Coor1.GetUTMZone());
+		// now compute distance
+		Result = CalcDistance(Coor1, tmp);
+	} else {
+		double x1 = Coor1.GetUTMEasting();
+		double y1 = Coor1.GetUTMNorthing();
+		double x2 = Coor2.GetUTMEasting();
+		double y2 = Coor2.GetUTMNorthing();
+		Result = sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1));
+	}
+	return Result;
 }

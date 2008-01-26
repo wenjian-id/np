@@ -35,6 +35,7 @@
 class CXTrackLog {
 private:
 	size_t				m_MaxSize;		///< Max size of coordinates.
+	unsigned int		m_MinDistance;	///< Min distance between last and new coordinate.
 	CXBuffer<CXCoor *>	m_Coordinates;	///< The coordinates.
 	//-------------------------------------
 	CXTrackLog(const CXTrackLog &);							///< Not used.
@@ -70,6 +71,15 @@ public:
 	 * \param	MaxSize		Max size of coordinates.
 	 */
 	void SetMaxSize(size_t MaxSize);
+	//-------------------------------------
+	/*
+	 * \brief Set MinDistance.
+	 * 
+	 * Set MinDistance. A new coordinate must be at least MinDistance away
+	 * from last coordinate to be added.
+	 * \param	MaxSize		Max size of coordinates.
+	 */
+	void SetMinDistance(unsigned int MinDistance);
 	//-------------------------------------
 	/*
 	 * \brief Relocate coordinates to new UTM zone.

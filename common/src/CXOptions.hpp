@@ -62,7 +62,8 @@ private:
 	int					m_InfoBarTopHeight;		///< oiu
 	int					m_MaxSpeedSize;			///< oiu
 	int					m_CompassSize;			///< oiu
-	int					m_TrackLogSize;			///< oiu
+	size_t				m_TrackLogSize;			///< oiu
+	int					m_TrackLogMinDist;		///< oiu
 	int					m_ScaleWidth;			///< oiu
 	int					m_ScaleHeight;			///< oiu
 	CXStringASCII		m_DirectoryMaps;		///< oiu
@@ -460,6 +461,18 @@ public:
 	 *
 	 */
 	void SetTrackLogSize(size_t NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	unsigned int GetTrackLogMinDist() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetTrackLogMinDist(unsigned int NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
