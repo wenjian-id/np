@@ -38,10 +38,12 @@ private:
 	QDateTime		m_Time;			///< oiu
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
-	void _CopyFrom(const CXExactTime & rOther);
+	void CopyFrom(const CXExactTime & rOther);
 protected:
 public:
 	//-------------------------------------

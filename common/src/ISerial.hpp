@@ -58,8 +58,10 @@ private:
 	E_SERCOMMSTOPBITS	m_eStopBits;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXSerialPortConfig & rOther);
 protected:

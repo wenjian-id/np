@@ -4688,6 +4688,10 @@ SOURCE=..\..\..\common\src\CXStringUTF8.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\src\CXTimeStampData.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\src\CXTrackLog.hpp
 # End Source File
 # Begin Source File

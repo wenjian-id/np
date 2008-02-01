@@ -190,6 +190,7 @@ common/src/CXStringASCII.cpp -text
 common/src/CXStringASCII.hpp -text
 common/src/CXStringUTF8.cpp -text
 common/src/CXStringUTF8.hpp -text
+common/src/CXTimeStampData.hpp -text
 common/src/CXTrackLog.cpp -text
 common/src/CXTrackLog.hpp -text
 common/src/CXTransformationMatrix.cpp -text

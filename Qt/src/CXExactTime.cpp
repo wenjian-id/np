@@ -32,7 +32,7 @@ CXExactTime::CXExactTime() {
 CXExactTime::CXExactTime(const CXExactTime &rOther) :
 	IExactTime()
 {
-	_CopyFrom(rOther);
+	CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -42,12 +42,12 @@ CXExactTime::~CXExactTime() {
 //-------------------------------------
 const CXExactTime & CXExactTime::operator = (const CXExactTime & rOther) {
 	if(this != &rOther)
-		_CopyFrom(rOther);
+		CopyFrom(rOther);
 	return *this;
 }
 
 //-------------------------------------
-void CXExactTime::_CopyFrom(const CXExactTime & rOther) {
+void CXExactTime::CopyFrom(const CXExactTime & rOther) {
 	m_Time = rOther.m_Time;
 }
 

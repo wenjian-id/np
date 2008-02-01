@@ -39,10 +39,12 @@ private:
 	size_t			m_ulAllocatedSize;		///< oiu
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
-	void _CopyFrom(const CXBuffer &rOther);
+	void CopyFrom(const CXBuffer &rOther);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -218,7 +220,7 @@ template<class tClass> CXBuffer<tClass> ::CXBuffer(const CXBuffer<tClass> &rOthe
 	m_ulBufferSize(0),
 	m_ulAllocatedSize(0)
 {
-	_CopyFrom(rOther);
+	CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -229,13 +231,13 @@ template<class tClass> CXBuffer<tClass> ::~CXBuffer() {
 //-------------------------------------
 template<class tClass> const CXBuffer<tClass> & CXBuffer<tClass> ::operator = (const CXBuffer<tClass> &rOther) {
 	if(this != &rOther) {
-		_CopyFrom(rOther);
+		CopyFrom(rOther);
 	}
 	return *this;
 }
 
 //-------------------------------------
-template<class tClass> void CXBuffer<tClass> ::_CopyFrom(const CXBuffer<tClass> &rOther) {
+template<class tClass> void CXBuffer<tClass> ::CopyFrom(const CXBuffer<tClass> &rOther) {
 	delete [] m_pBuffer;
 	m_ulAllocatedSize = rOther.m_ulAllocatedSize;
 	m_ulBufferSize = rOther.m_ulBufferSize;

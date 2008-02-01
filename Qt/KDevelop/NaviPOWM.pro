@@ -128,4 +128,5 @@ src/OSSpecific.hpp \
  ../../common/src/IWorkRequestThread.hpp \
  ../../common/src/Utils.hpp \
  ../../common/src/CXInfoBarCommon.hpp \
- ../../common/src/CXInfoBarSpeed.hpp
+ ../../common/src/CXInfoBarSpeed.hpp \
+ ../../common/src/CXTimeStampData.hpp

@@ -66,7 +66,8 @@ bool CXLocatorThread::GetFlag_NewDataGPS() const {
 void CXLocatorThread::SetGPSDataGGA(const tUCBuffer & Buffer) {
 	CXMutexLocker L(&m_MutexInputData);
 	// overwrite existing data
-	m_InputBufferGPS = Buffer;
+	m_InputBufferGPSGGA.SetData(Buffer);
+	m_InputBufferGPSGGA.SetNow();
 	SetFlag_NewDataGPS(true);
 }
 
@@ -77,9 +78,9 @@ void CXLocatorThread::SetNaviPOWM(CXNaviPOWM *pNaviPOWM) {
 }
 
 //-------------------------------------
-tUCBuffer CXLocatorThread::GetGPSDataGGA() const {
+CXTimeStampData<tUCBuffer> CXLocatorThread::GetGPSDataGGA() const {
 	CXMutexLocker L(&m_MutexInputData);
-	return m_InputBufferGPS ;
+	return m_InputBufferGPSGGA ;
 }
 
 //-------------------------------------
@@ -102,7 +103,7 @@ void CXLocatorThread::OnThreadLoop() {
 		OnNewDataGPS(GetGPSDataGGA());
 	} else {
 		// no data arrived
-		unsigned long Delta = Now - mLastReceivedGPS;
+		unsigned long Delta = Now - mLastReceivedGGA;
 		if(Delta > 1000*TIMEOUT_RECEIVE) {
 			m_NaviData.SetnSat(0);
 //oiu			m_NaviData.SetUTMSpeed(0);
@@ -181,25 +182,25 @@ void CXLocatorThread::OnThreadStopped() {
 }
 
 //-------------------------------------
-void CXLocatorThread::OnNewDataGPS(const tUCBuffer & Buffer) {
+void CXLocatorThread::OnNewDataGPS(const CXTimeStampData<tUCBuffer> & Buffer) {
 	CXMutexLocker L(&m_Mutex);
 	// reset flag
 	SetFlag_NewDataGPS(false);
 	// extract GGA packet if possible
-	unsigned long Size = Buffer.GetSize();
-	const char *pBuffer = reinterpret_cast<const char *>(Buffer.GetBuffer());
+	unsigned long Size = Buffer.Data().GetSize();
+	const char *pBuffer = reinterpret_cast<const char *>(Buffer.Data().GetBuffer());
 	CXStringASCII Line(pBuffer, Size);
 	double dLon = 0, dLat = 0, Height = 0; int nSat = 0;
 	if(!ExtractGGAData(Line, dLon, dLat, Height, nSat))
 		return;
 
 	// OK, valid GGA data arrived
-	mLastReceivedGPS.SetNow();
+	mLastReceivedGGA.SetNow();
 	CXCoor Coor(dLon, dLat);
 
 	// calculate speed
 	CXUTMSpeed Speed;
-	m_SpeedCalculator.SetData(Coor, mLastReceivedGPS);
+	m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(Coor, Buffer.TimeStamp()));
 
 	if(m_SpeedCalculator.HasValidSpeed()) {
 		// take speed

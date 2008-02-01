@@ -34,8 +34,10 @@ private:
 	double m_y;		///< oiu
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXCoorVector &rOther);
 protected:
@@ -122,8 +124,10 @@ private:
 								double a31, double a32, double a33);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXTransformationMatrix2D &rOther);
 	//-------------------------------------

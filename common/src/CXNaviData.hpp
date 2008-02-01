@@ -65,10 +65,12 @@ private:
 	mutable CXMutex		m_Mutex;		
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
-	void _CopyFrom(const CXNaviData &rOther);
+	void CopyFrom(const CXNaviData &rOther);
 protected:
 public:
 	//-------------------------------------

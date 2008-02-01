@@ -200,6 +200,7 @@ extraResourceOptions=
 63=..\..\common\src\CXPenHolder.hpp
 64=..\..\common\src\CXTrackLog.hpp
 65=..\..\common\src\CXCoor.hpp
+66=..\..\common\src\CXTimeStampData.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

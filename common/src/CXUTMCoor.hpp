@@ -38,8 +38,10 @@ private:
 	double		m_UTMNorthing;		///< UTM Northing
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXUTMCoor &rOther);
 protected:

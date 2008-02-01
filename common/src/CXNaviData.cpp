@@ -46,18 +46,18 @@ CXNaviData::~CXNaviData() {
 
 //-------------------------------------
 CXNaviData::CXNaviData(const CXNaviData &rOther) {
-	_CopyFrom(rOther);
+	CopyFrom(rOther);
 }
 
 //-------------------------------------
 const CXNaviData & CXNaviData::operator = (const CXNaviData &rOther) {
 	if(this != &rOther)
-		_CopyFrom(rOther);
+		CopyFrom(rOther);
 	return *this;
 }
 
 //-------------------------------------
-void CXNaviData::_CopyFrom(const CXNaviData &rOther) {
+void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	CXMutexLocker L(&m_Mutex);
 	CXMutexLocker Lo(&rOther.m_Mutex);
 	m_dLon			= rOther.m_dLon;

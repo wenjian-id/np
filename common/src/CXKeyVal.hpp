@@ -32,9 +32,11 @@ template<class tKey, class tValue> class CXKeyVal {
 private:
 	//-------------------------------------
 	/*
-		* \brief oiu
-		*
-		*/
+	 * \brief Copy from other instance to self.
+	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
+	 */
 	void CopyFrom(const CXKeyVal &rOther) {
 		m_Key = rOther.m_Key;
 		m_Value = rOther.m_Value;

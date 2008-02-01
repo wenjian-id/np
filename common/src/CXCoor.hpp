@@ -37,8 +37,10 @@ private:
 	CXUTMCoor	m_UTMCoor;	///< UTM coordinate
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXCoor &rOther);
 protected:

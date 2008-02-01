@@ -23,7 +23,7 @@
 #ifndef __CXSPEEDCALCULATOR_HPP__
 #define __CXSPEEDCALCULATOR_HPP__
 
-#include "CXExactTime.hpp"
+#include "CXTimeStampData.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXCoor.hpp"
 #include "CXMutex.hpp"
@@ -39,65 +39,16 @@
  */
 class CXSpeedCalculator {
 private:
-
-	//---------------------------------------------------------------------
-	/*
-	 * \brief Helper class for the speed calculator.
-	 *
-	 * Helper class for the speed calculator.
-	 */
-	class CXData {
-	private:
-		//-------------------------------------
-		CXData();									///< Not used.
-		CXData(const CXData &);						///< Not used.
-		const CXData & operator = (const CXData &);	///< Not used.
-		//-------------------------------------
-	public:
-		CXCoor			m_Coor;			///< coordinate.
-		CXExactTime		m_TimeStamp;	///< Time stamp for coordinate.
-		//-------------------------------------
-		/*
-		 * \brief Constructor.
-		 *
-		 * Constructor.
-		 * \param	Coor		coordinate
-		 * \param	TimeStamp	TimeStamp for coordinate.
-		 */
-		CXData(const CXCoor & Coor, const CXExactTime & TimeStamp) {
-			m_Coor = Coor;
-			m_TimeStamp = TimeStamp;
-		}
-		//-------------------------------------
-		/*
-		 * \brief Destructor
-		 *
-		 * Destructor.
-		 */
-		virtual ~CXData() {
-		}
-		//-------------------------------------
-		/*
-		 * \brief oiu
-		 *
-		 */
-		void RelocateUTM(int ForceUTMZone) {
-			m_Coor.RelocateUTM(ForceUTMZone);
-		}
-	};
-
-
-private:
 	// buffer stuff
-	size_t				m_iBufferSize;		///< Number of coordinates.
-	CXData				**m_pBuffer;		///< Buffer with coordinates.
+	size_t						m_iBufferSize;		///< Number of coordinates.
+	CXTimeStampData<CXCoor>		**m_pBuffer;		///< Buffer with coordinates.
 	// speed stuff
-	int					m_iCurrentUTMZone;	///< Current UTM zone
-	CXUTMSpeed			m_Speed;			///< Current speed
-	bool				m_oValidSpeed;		///< Flag indicating if a valid speed exists.
-	CXUTMSpeed			m_LastValidSpeed;	///< last valid computed speed.
+	int							m_iCurrentUTMZone;	///< Current UTM zone
+	CXUTMSpeed					m_Speed;			///< Current speed
+	bool						m_oValidSpeed;		///< Flag indicating if a valid speed exists.
+	CXUTMSpeed					m_LastValidSpeed;	///< last valid computed speed.
 	// sync stuff
-	mutable CXMutex		m_Mutex;			///< Sync object
+	mutable CXMutex				m_Mutex;			///< Sync object
 	//-------------------------------------
 	CXSpeedCalculator();												///< Not used.
 	CXSpeedCalculator(const CXSpeedCalculator &);						///< Not used.
@@ -134,7 +85,7 @@ public:
 	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetData(const CXCoor & Coor, const CXExactTime & TimeStamp);
+	void SetData(const CXTimeStampData<CXCoor> &Coor);
 	//-------------------------------------
 	/*
 	 * \brief Reset data.

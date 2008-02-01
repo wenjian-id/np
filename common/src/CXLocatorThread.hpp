@@ -24,6 +24,7 @@
 #define __CXLOCATORTHREAD_HPP__
 
 #include "CXLoopThread.hpp"
+#include "CXTimeStampData.hpp"
 #include "CXBuffer.hpp"
 #include "CXNaviData.hpp"
 #include "CXExactTime.hpp"
@@ -38,15 +39,15 @@ class CXNaviPOWM;
  */
 class CXLocatorThread : public CXLoopThread {
 private:
-	tUCBuffer			m_InputBufferGPS;	///< oiu
-	bool				m_oNewDataGPS;		///< oiu
-	CXSpeedCalculator	m_SpeedCalculator;	///< oiu
-	CXExactTime			mLastReceivedGPS;	///< oiu
-	CXNaviData			m_NaviData;			///< oiu
-	CXNaviPOWM			*m_pNaviPOWM;		///< oiu
-	CXExactTime			m_StartTime;		///< starting time
-	mutable CXMutex		m_MutexInputData;	///< oiu
-	mutable CXMutex		m_Mutex;			///< oiu
+	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;	///< oiu
+	bool							m_oNewDataGPS;			///< oiu
+	CXSpeedCalculator				m_SpeedCalculator;		///< oiu
+	CXExactTime						mLastReceivedGGA;		///< oiu
+	CXNaviData						m_NaviData;				///< oiu
+	CXNaviPOWM						*m_pNaviPOWM;			///< oiu
+	CXExactTime						m_StartTime;			///< starting time
+	mutable CXMutex					m_MutexInputData;		///< oiu
+	mutable CXMutex					m_Mutex;				///< oiu
 	//-------------------------------------
 	CXLocatorThread(const CXLocatorThread&);						///< Not used.
 	const CXLocatorThread & operator = (const CXLocatorThread&);	///< Not used.
@@ -67,13 +68,13 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	tUCBuffer GetGPSDataGGA() const;
+	CXTimeStampData<tUCBuffer> GetGPSDataGGA() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void OnNewDataGPS(const tUCBuffer & Buffer);
+	void OnNewDataGPS(const CXTimeStampData<tUCBuffer> & Buffer);
 	//-------------------------------------
 	/*
 	 * \brief oiu

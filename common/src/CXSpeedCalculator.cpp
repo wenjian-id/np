@@ -37,7 +37,7 @@ CXSpeedCalculator::CXSpeedCalculator(size_t BufferSize) :
 	m_iCurrentUTMZone(UTMZoneNone),
 	m_oValidSpeed(false)
 {
-	m_pBuffer = new CXData*[m_iBufferSize];
+	m_pBuffer = new CXTimeStampData<CXCoor>*[m_iBufferSize];
 	for(size_t i=0; i<m_iBufferSize; i++)
 		m_pBuffer[i] = NULL;
 }
@@ -61,14 +61,14 @@ void CXSpeedCalculator::ClearBuffer() {
 }
 
 //-------------------------------------
-void CXSpeedCalculator::SetData(const CXCoor & Coor, const CXExactTime & TimeStamp) {
+void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
 	CXMutexLocker L(&m_Mutex);
 	// check if m_iCurrentUTMZone changes
-	if(m_iCurrentUTMZone != Coor.GetUTMZone()) {
+	if(m_iCurrentUTMZone != Coor.Data().GetUTMZone()) {
 		/// yes it cahnged. Recompute all UTM coords and force them to m_iCurrentUTMZone
 		for(size_t i=0; i<m_iBufferSize; i++) {
 			if(m_pBuffer[i] != NULL) {
-				m_pBuffer[i]->RelocateUTM(m_iCurrentUTMZone);
+				m_pBuffer[i]->Data().RelocateUTM(m_iCurrentUTMZone);
 			}
 		}
 	}
@@ -82,7 +82,7 @@ void CXSpeedCalculator::SetData(const CXCoor & Coor, const CXExactTime & TimeSta
 	for(size_t i=m_iBufferSize-1; i>0; i--)
 		m_pBuffer[i] = m_pBuffer[i-1];
 	// set first value
-	m_pBuffer[0] = new CXData(Coor, TimeStamp);
+	m_pBuffer[0] = new CXTimeStampData<CXCoor>(Coor);
 	// now calculate speed
 	size_t count = 0;
 	for(size_t j=0; j<m_iBufferSize; j++)
@@ -93,17 +93,17 @@ void CXSpeedCalculator::SetData(const CXCoor & Coor, const CXExactTime & TimeSta
 	if(count > 1) {
 		// compute speed
 		// take care, when more than one second between measurements
-		CXExactTime StartTime = m_pBuffer[count-1]->m_TimeStamp;
+		CXExactTime StartTime = m_pBuffer[count-1]->TimeStamp();
 		for(size_t i=0; i<count; i++) {
 			if(i != count-1) {
-				x1 = x1 + m_pBuffer[i]->m_Coor.GetUTMEasting();
-				y1 = y1 + m_pBuffer[i]->m_Coor.GetUTMNorthing();
-				dt1 = dt1 + (m_pBuffer[i]->m_TimeStamp-StartTime);
+				x1 = x1 + m_pBuffer[i]->Data().GetUTMEasting();
+				y1 = y1 + m_pBuffer[i]->Data().GetUTMNorthing();
+				dt1 = dt1 + (m_pBuffer[i]->TimeStamp()-StartTime);
 			}
 			if(i != 0) {
-				x2 = x2 + m_pBuffer[i]->m_Coor.GetUTMEasting();
-				y2 = y2 + m_pBuffer[i]->m_Coor.GetUTMNorthing();
-				dt2 = dt2 + (m_pBuffer[i]->m_TimeStamp-StartTime);
+				x2 = x2 + m_pBuffer[i]->Data().GetUTMEasting();
+				y2 = y2 + m_pBuffer[i]->Data().GetUTMNorthing();
+				dt2 = dt2 + (m_pBuffer[i]->TimeStamp()-StartTime);
 			}
 		}
 		x1 = x1/(count-1);
