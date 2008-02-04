@@ -446,15 +446,17 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXExactTime Stop;
 
-	char buf[200];
-	snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld Co:%ld Sc:%ld Ps:%ld",
-				StopPrepare-StopLock, StopDrawWays-StopPrepare, WayCount, 
-				StopTrackLog-StopDrawWays, StopCompass-StopTrackLog, StopScale-StopCompass,
-				Stop-StopScale);
-	CXStringASCII ttt = buf;
-	tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-	TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop());
-	pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
+		char buf[200];
+		snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld Co:%ld Sc:%ld Ps:%ld",
+					StopPrepare-StopLock, StopDrawWays-StopPrepare, WayCount, 
+					StopTrackLog-StopDrawWays, StopCompass-StopTrackLog, StopScale-StopCompass,
+					Stop-StopScale);
+		CXStringASCII ttt = buf;
+		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
+		TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop());
+		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+	}
 }
 
 //-------------------------------------

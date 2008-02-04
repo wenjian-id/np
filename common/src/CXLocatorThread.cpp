@@ -115,7 +115,7 @@ void CXLocatorThread::OnThreadLoop() {
 	if(Now - m_StartTime > CXOptions::Instance()->GetLogoTime()) {
 		if(CXOptions::Instance()->MustShowLogo())
 			LogoHidden = true;
-		CXOptions::Instance()->ClearShowLogoFlag();
+		CXOptions::Instance()->SetShowLogoFlag(false);
 	}
 	if(m_NaviData.Changed() || LogoHidden) {
 		// data has been changed or logo hidden

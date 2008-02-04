@@ -44,6 +44,7 @@ CXOptions::CXOptions() :
 	m_oShowTrackLog(false),
 	m_oShowScale(false),
 	m_OSMVali(0),
+	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
 	m_MaxSpeedSize(61),
@@ -133,6 +134,10 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// OSMVali maxspeed
 	if(F.Get("OSMValiMaxSpeed", "off").ToUpper() == "ON")
 		SetOSMValiFlag(e_OSMValiMaxSpeed);
+	// DebugInfo
+	// DBGDrawTimes
+	if(F.Get("DBGDrawTimes", "off").ToUpper() == "ON")
+		SetDebugInfoFlag(e_DBGDrawTimes);
 	// maps directory
 	CXStringASCII DirMaps=m_StartPath;
 	DirMaps+=F.Get("DirectoryMaps", "Maps");
@@ -449,15 +454,9 @@ void CXOptions::ToggleSaving() {
 }
 
 //-------------------------------------
-void CXOptions::ClearShowLogoFlag() {
+void CXOptions::SetShowLogoFlag(bool NewValue) {
 	CXMutexLocker L(&m_Mutex);
-	m_oShowLogo = false;
-}
-
-//-------------------------------------
-void CXOptions::SetShowLogoFlag() {
-	CXMutexLocker L(&m_Mutex);
-	m_oShowLogo = true;
+	m_oShowLogo = NewValue;
 }
 
 //-------------------------------------
@@ -572,4 +571,22 @@ void CXOptions::SetOSMValiFlag(E_OSM_VALI eFlag) {
 void CXOptions::ClearOSMValiFlag(E_OSM_VALI eFlag) {
 	CXMutexLocker L(&m_Mutex);
 	m_OSMVali &= ~eFlag;
+}
+
+//-------------------------------------
+bool CXOptions::IsDebugInfoFlagSet(E_DEBUGINFO eFlag) const {
+	CXMutexLocker L(&m_Mutex);
+	return (m_DebugInfo & eFlag) != 0;
+}
+
+//-------------------------------------
+void CXOptions::SetDebugInfoFlag(E_DEBUGINFO eFlag) {
+	CXMutexLocker L(&m_Mutex);
+	m_DebugInfo |= eFlag;
+}
+
+//-------------------------------------
+void CXOptions::ClearDebugInfoFlag(E_DEBUGINFO eFlag) {
+	CXMutexLocker L(&m_Mutex);
+	m_DebugInfo &= ~eFlag;
 }

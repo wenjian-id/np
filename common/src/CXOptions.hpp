@@ -44,13 +44,22 @@ public:
 		e_OSMValiRef		= 0x0002,		///< oiu
 		e_OSMValiMaxSpeed	= 0x0004,		///< oiu
 	};
+	//-------------------------------------
+	/*
+	 * \brief Flags for displaying certain debug informations.
+	 *
+	 *	Flags for displaying certain debug informations.
+	 */
+	enum E_DEBUGINFO {
+		e_DBGDrawTimes		= 0x0001,		///< Display drawing times.
+	};
 private:
 	static CXOptions	*m_pInstance;			///< oiu
 	CXStringASCII		m_StartPath;			///< oiu
 	CXSerialPortConfig	m_SerialPortConfig;		///< oiu
 	bool				m_oNorthing;			///< oiu
 	bool				m_oFullScreen;			///< oiu
-	bool				m_oShowLogo;			///< show logo
+	bool				m_oShowLogo;			///< Show logo.
 	bool				m_oSaving;				///< oiu
 	bool				m_oShowZoomButtons;		///< oiu
 	bool				m_oShowMaxSpeed;		///< oiu
@@ -58,6 +67,7 @@ private:
 	bool				m_oShowTrackLog;		///< oiu
 	bool				m_oShowScale;			///< oiu
 	t_uint64			m_OSMVali;				///< oiu
+	t_uint64			m_DebugInfo;			///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;	///< oiu
 	int					m_InfoBarTopHeight;		///< oiu
 	int					m_MaxSpeedSize;			///< oiu
@@ -376,13 +386,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void ClearShowLogoFlag();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetShowLogoFlag();
+	void SetShowLogoFlag(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -497,6 +501,31 @@ public:
 	 *
 	 */
 	void ClearOSMValiFlag(E_OSM_VALI eFlag);
+	//-------------------------------------
+	/*
+	 * \brief Check if debug info flag is set.
+	 *
+	 *	Check if debug info flag is set.
+	 *	\param	eFlag	The flag.
+	 *	\return			True if flag is set.
+	 */
+	bool IsDebugInfoFlagSet(E_DEBUGINFO eFlag) const;
+	//-------------------------------------
+	/*
+	 * \brief Set a specific debug info flag.
+	 *
+	 *	Set a specific debug info flag
+	 *	\param	eFlag	The flag.
+	 */
+	void SetDebugInfoFlag(E_DEBUGINFO eFlag);
+	//-------------------------------------
+	/*
+	 * \brief Clear a specific debug info flag.
+	 *
+	 *	Clear a specific debug info flag
+	 *	\param	eFlag	The flag.
+	 */
+	void ClearDebugInfoFlag(E_DEBUGINFO eFlag);
 };
 
 #endif // __CXOPTIONS_HPP__
