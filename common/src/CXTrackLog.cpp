@@ -62,12 +62,12 @@ void CXTrackLog::SetMinDistance(unsigned int MinDistance) {
 }
 
 //-------------------------------------
-void CXTrackLog::RelocateUTM(int ForceUTMZone) {
+void CXTrackLog::RelocateUTM(int NewUTMZone) {
 	size_t Size = m_Coordinates.GetSize();
 	for(size_t i=0; i<Size; i++) {
 		CXCoor *pCoor = m_Coordinates[i];
 		if(pCoor != NULL)
-			pCoor->RelocateUTM(ForceUTMZone);
+			pCoor->RelocateUTM(NewUTMZone);
 	}
 }
 

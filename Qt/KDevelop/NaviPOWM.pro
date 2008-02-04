@@ -37,7 +37,7 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/CXMapPainter.cpp \
  ../../common/src/CXMapPainterDoubleBuffered.cpp \
  ../../common/src/CXMapPainterTest.cpp \
- ../../common/src/CXMapThread.cpp \
+ ../../common/src/CXMapPainterThread.cpp \
  ../../common/src/CXMutexLocker.cpp \
  ../../common/src/CXNaviData.cpp \
  ../../common/src/CXNaviPOWM.cpp \
@@ -97,7 +97,7 @@ src/OSSpecific.hpp \
  ../../common/src/CXMapPainter.hpp \
  ../../common/src/CXMapPainterTest.hpp \
  ../../common/src/CXMapSimple.hpp \
- ../../common/src/CXMapThread.hpp \
+ ../../common/src/CXMapPainterThread.hpp \
  ../../common/src/CXMutexLocker.hpp \
  ../../common/src/CXNaviData.hpp \
  ../../common/src/CXNaviPOWM.hpp \

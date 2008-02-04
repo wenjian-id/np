@@ -162,9 +162,9 @@ common/src/CXMapPainterDoubleBuffered.cpp -text
 common/src/CXMapPainterDoubleBuffered.hpp -text
 common/src/CXMapPainterTest.cpp -text
 common/src/CXMapPainterTest.hpp -text
+common/src/CXMapPainterThread.cpp -text
+common/src/CXMapPainterThread.hpp -text
 common/src/CXMapSimple.hpp -text
-common/src/CXMapThread.cpp -text
-common/src/CXMapThread.hpp -text
 common/src/CXMutexLocker.cpp -text
 common/src/CXMutexLocker.hpp -text
 common/src/CXNaviData.cpp -text

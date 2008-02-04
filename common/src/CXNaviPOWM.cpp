@@ -23,7 +23,7 @@
 #include "CXNaviPOWM.hpp"
 #include "CXGPSRecvThread.hpp"
 #include "CXLocatorThread.hpp"
-#include "CXMapThread.hpp"
+#include "CXMapPainterThread.hpp"
 #include "CXInfoBarBottom.hpp"
 #include "CXInfoBarTop.hpp"
 #include "CXInfoBarSpeed.hpp"
@@ -75,7 +75,7 @@ CXNaviPOWM::CXNaviPOWM() :
 	m_pMainWindow(NULL),
 	m_pGPSRecvThread(NULL),
 	m_pLocatorThread(NULL),
-	m_pMapThread(NULL),
+	m_pMapPainterThread(NULL),
 	m_pInfoBarBottom(NULL),
 	m_pInfoBarTop(NULL),
 	m_pInfoBarSpeed(NULL),
@@ -101,8 +101,8 @@ CXNaviPOWM::~CXNaviPOWM() {
 	m_pGPSRecvThread = NULL;
 	delete m_pLocatorThread;
 	m_pLocatorThread = NULL;
-	delete m_pMapThread;
-	m_pMapThread = NULL;
+	delete m_pMapPainterThread;
+	m_pMapPainterThread = NULL;
 	delete m_pInfoBarBottom;
 	m_pInfoBarBottom =  NULL;
 	delete m_pInfoBarTop;
@@ -148,16 +148,16 @@ bool CXNaviPOWM::Init(IMainWindow *pMainWindow) {
 		return false;
 	if(m_pLocatorThread != NULL)
 		return false;
-	if(m_pMapThread != NULL)
+	if(m_pMapPainterThread != NULL)
 		return false;
 	// create new threads
 	m_pGPSRecvThread = new CXGPSRecvThread();
 	m_pLocatorThread = new CXLocatorThread();
-	m_pMapThread = new CXMapThread();
+	m_pMapPainterThread = new CXMapPainterThread();
 	// create connections between threads
 	m_pGPSRecvThread->SetLocator(m_pLocatorThread);
 	m_pLocatorThread->SetNaviPOWM(this);
-	m_pMapThread->SetNaviPOWM(this);
+	m_pMapPainterThread->SetNaviPOWM(this);
 	return true;
 }
 
@@ -167,12 +167,12 @@ bool CXNaviPOWM::StartThreads() {
 		return false;
 	if(m_pLocatorThread == NULL)
 		return false;
-	if(m_pMapThread == NULL)
+	if(m_pMapPainterThread == NULL)
 		return false;
 	// create and run thread s
 	m_pGPSRecvThread->CreateThread();
 	m_pLocatorThread->CreateThread();
-	m_pMapThread->CreateThread();
+	m_pMapPainterThread->CreateThread();
 	return true;
 }
 
@@ -182,16 +182,16 @@ void CXNaviPOWM::StopThreads() {
 		return;
 	if(m_pLocatorThread == NULL)
 		return;
-	if(m_pMapThread == NULL)
+	if(m_pMapPainterThread == NULL)
 		return;
 	// stop threads
 	m_pGPSRecvThread->StopThread();
 	m_pLocatorThread->StopThread();
-	m_pMapThread->StopThread();
+	m_pMapPainterThread->StopThread();
 	// wait for thread exit
 	m_pGPSRecvThread->WaitForThreadExit(5000);
 	m_pLocatorThread->WaitForThreadExit(5000);
-	m_pMapThread->WaitForThreadExit(5000);
+	m_pMapPainterThread->WaitForThreadExit(5000);
 }
 
 //-------------------------------------
@@ -204,7 +204,7 @@ void CXNaviPOWM::RequestRepaint() {
 void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	if(pDC == NULL)
 		return;
-	if(m_pMapThread == NULL)
+	if(m_pMapPainterThread == NULL)
 		return;
 	if(m_pInfoBarBottom == NULL)
 		return;
@@ -215,7 +215,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	if(m_pInfoBarCommon == NULL)
 		return;
 	
-	m_pMapThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
+	m_pMapPainterThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
 	if(CXOptions::Instance()->MustShowMaxSpeed()) {
@@ -256,7 +256,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 
 //-------------------------------------
 void CXNaviPOWM::Resize(int Width, int Height) {
-	if(m_pMapThread == NULL)
+	if(m_pMapPainterThread == NULL)
 		return;
 	if(m_pInfoBarBottom == NULL)
 		return;
@@ -291,7 +291,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomOutPos.SetLeft(0);
 	m_ZoomOutPos.SetRight(ZoomSize);
 
-	m_pMapThread->Resize(Width, Height - IBBH - IBTH);
+	m_pMapPainterThread->Resize(Width, Height - IBBH - IBTH);
 	m_pInfoBarBottom->Resize(Width, IBBH);
 	m_pInfoBarTop->Resize(Width, IBTH);
 	m_ZoomInBtn.Resize(ZoomSize, ZoomSize);
@@ -315,7 +315,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 
 //-------------------------------------
 void CXNaviPOWM::PositionChanged(const CXNaviData & NewData) {
-	if(m_pMapThread == NULL)
+	if(m_pMapPainterThread == NULL)
 		return;
 	if(m_pInfoBarBottom == NULL)
 		return;
@@ -327,7 +327,7 @@ void CXNaviPOWM::PositionChanged(const CXNaviData & NewData) {
 		return;
 	m_pInfoBarTop->PositionChanged(NewData);
 	m_pInfoBarBottom->PositionChanged(NewData);
-	m_pMapThread->PositionChanged(NewData);
+	m_pMapPainterThread->PositionChanged(NewData);
 	m_pInfoBarSpeed->PositionChanged(NewData);
 	m_pInfoBarCommon->PositionChanged(NewData);
 }
@@ -338,12 +338,12 @@ void CXNaviPOWM::OnChar(int /*TheChar*/) {
 
 //-------------------------------------
 void CXNaviPOWM::OnKeyDown(int TheChar) {
-	if(m_pMapThread == NULL)
+	if(m_pMapPainterThread == NULL)
 		return;
 	if(TheChar == NP_LEFT)
-		m_pMapThread->ZoomOut();
+		m_pMapPainterThread->ZoomOut();
 	else if(TheChar == NP_RIGHT)
-		m_pMapThread->ZoomIn();
+		m_pMapPainterThread->ZoomIn();
 }
 
 //-------------------------------------
@@ -381,13 +381,13 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		case e_Info:	m_oShowInfo = !m_oShowInfo; RequestRepaint(); break;
 		case e_Save:	CXOptions::Instance()->ToggleSaving(); RequestRepaint(); break;
 		case e_ZoomIn:	{
-							if(m_pMapThread != NULL)
-								m_pMapThread->ZoomIn();
+							if(m_pMapPainterThread != NULL)
+								m_pMapPainterThread->ZoomIn();
 							break;
 						}
 		case e_ZoomOut:	{
-							if(m_pMapThread != NULL)
-								m_pMapThread->ZoomOut();
+							if(m_pMapPainterThread != NULL)
+								m_pMapPainterThread->ZoomOut();
 							break;
 						}
 		default:		break;

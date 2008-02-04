@@ -26,7 +26,6 @@
 #include "CXBuffer.hpp"
 #include "CXMapPainterDoubleBuffered.hpp"
 #include "CXPOWMMap.hpp"
-#include "CXTransformationMatrix.hpp"
 #include "CXPenHolder.hpp"
 
 class CXCache;
@@ -38,7 +37,7 @@ class CXCache;
  */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
-	double					m_Scale;		///< oiu
+	double					m_Scale;		///< Current scale factor.
 	CXPenHolder				m_PenHolder;	///< oiu
 	CXBuffer<TWayBuffer *>	m_DrawWays;		///< oiu
 	mutable CXMutex			m_Mutex;		///< oiu
@@ -47,22 +46,39 @@ private:
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Check if a way has segments that may be visible.
 	 *
+	 *	Check if a way has segments that may be visible.
+	 *	\param	pWay		Way to check.
+	 *	\param	Width		Width of screen.
+	 *	\param	Height		Height of screen.
+	 *	\return				true if way may be visible.
 	 */
-	void DrawWay(IBitmap *pBMP, CXWay *pWay, const CXTransformationMatrix2D & TM, int Width, int Height);
+	bool IsWayPossiblyVisible(CXWay *pWay, int Width, int Height);
+	//-------------------------------------
+	/*
+	 * \brief Draw a way.
+	 *
+	 *	Draw a way (background an foreground) with correct pen.
+	 *	\param	pBMP		Pointer to bitmap.
+	 *	\param	pWay		Way to draw.
+	 *	\param	Width		Width of screen.
+	 *	\param	Height		Height of screen.
+	 *	\return				true if way may be visible.
+	 */
+	void DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, const CXTransformationMatrix2D & TM, int Width, int Height);
+	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, const CXTransformationMatrix2D & TM, int Width, int Height);
+	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/*
 	 * \brief oiu

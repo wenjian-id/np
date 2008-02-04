@@ -47,12 +47,12 @@ CXCoor::~CXCoor() {
 }
 
 //-------------------------------------
-void CXCoor::RelocateUTM(int ForceUTMZone) {
+void CXCoor::RelocateUTM(int NewUTMZone) {
 	int NewZone = UTMZoneNone;
 	char UTMLetter = 0;
 	double UTME = 0;
 	double UTMN = 0;
-	LLtoUTM(WGS84, m_dLon, m_dLat, ForceUTMZone, NewZone, UTMLetter, UTME, UTMN);
+	LLtoUTM(WGS84, m_dLon, m_dLat, NewUTMZone, NewZone, UTMLetter, UTME, UTMN);
 	m_UTMCoor.SetUTMZone(NewZone);
 	m_UTMCoor.SetUTMLetter(UTMLetter);
 	m_UTMCoor.SetUTMEasting(UTME);

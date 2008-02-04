@@ -25,6 +25,7 @@
 #include "CXFile.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
+#include "CXTransformationMatrix.hpp"
 #include "Utils.hpp"
 #include "CoordConversion.h"
 
@@ -61,8 +62,28 @@ double CXNode::GetUTMN() const {
 }
 
 //-------------------------------------
-void CXNode::RelocateUTM(int ForceUTMZone) {
-	m_Coor.RelocateUTM(ForceUTMZone);
+void CXNode::RelocateUTM(int NewUTMZone) {
+	m_Coor.RelocateUTM(NewUTMZone);
+}
+
+//-------------------------------------
+int CXNode::GetDisplayX() const {
+	return m_DisplayX;
+}
+
+//-------------------------------------
+void CXNode::SetDisplayX(int X) {
+	m_DisplayX = X;
+}
+
+//-------------------------------------
+int CXNode::GetDisplayY() const {
+	return m_DisplayY;
+}
+
+//-------------------------------------
+void CXNode::SetDisplayY(int Y) {
+	m_DisplayY = Y;
 }
 
 //----------------------------------------------------------------------------
@@ -531,4 +552,18 @@ void CXPOWMMap::RunOSMVali() {
 //-------------------------------------
 const CXTrackLog & CXPOWMMap::GetTrackLog() const {
 	return m_TrackLog;
+}
+
+//-------------------------------------
+void CXPOWMMap::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM) {
+	// run coordinate transformation for every node
+	CXNode *pNode = NULL;
+	POS PosN = m_NodeMap.GetStart();
+	while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+		if(pNode != NULL) {
+			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
+			pNode->SetDisplayX(v.GetIntX());
+			pNode->SetDisplayY(v.GetIntY());
+		}
+	}
 }

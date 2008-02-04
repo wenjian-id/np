@@ -20,14 +20,14 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXMapThread.hpp"
+#include "CXMapPainterThread.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXMapPainter2D.hpp"
 #include "CXMapPainterTest.hpp"
 #include "CXNaviPOWM.hpp"
 
 //-------------------------------------
-CXMapThread::CXMapThread() :
+CXMapPainterThread::CXMapPainterThread() :
 	m_pMapPainter(NULL),
 	m_pNaviPOWM(NULL)
 {
@@ -36,27 +36,27 @@ CXMapThread::CXMapThread() :
 }
 
 //-------------------------------------
-CXMapThread::~CXMapThread() {
+CXMapPainterThread::~CXMapPainterThread() {
 	delete m_pMapPainter;
 	m_pMapPainter = NULL;
 }
 
 //-------------------------------------
-void CXMapThread::SetNaviPOWM(CXNaviPOWM *pNaviPOWM) {
+void CXMapPainterThread::SetNaviPOWM(CXNaviPOWM *pNaviPOWM) {
 	CXMutexLocker L(&m_Mutex);
 	m_pNaviPOWM = pNaviPOWM;
 }
 
 
 //-------------------------------------
-void CXMapThread::PositionChanged(const CXNaviData &NewNaviData) {
+void CXMapPainterThread::PositionChanged(const CXNaviData &NewNaviData) {
 	if(m_pMapPainter != NULL)
 		m_pMapPainter->PositionChanged(NewNaviData);
 	RequestWork();
 }
 
 //-------------------------------------
-void CXMapThread::ZoomIn() {
+void CXMapPainterThread::ZoomIn() {
 	if(m_pMapPainter == NULL)
 		return;
 	if(m_pMapPainter->ZoomIn())
@@ -64,7 +64,7 @@ void CXMapThread::ZoomIn() {
 }
 
 //-------------------------------------
-void CXMapThread::ZoomOut() {
+void CXMapPainterThread::ZoomOut() {
 	if(m_pMapPainter == NULL)
 		return;
 	if(m_pMapPainter->ZoomOut())
@@ -72,30 +72,30 @@ void CXMapThread::ZoomOut() {
 }
 
 //-------------------------------------
-void CXMapThread::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
+void CXMapPainterThread::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	if(m_pMapPainter != NULL)
 		m_pMapPainter->Paint(pDC, OffsetX, OffsetY);
 }
 
 //-------------------------------------
-void CXMapThread::Resize(int Width, int Height) {
+void CXMapPainterThread::Resize(int Width, int Height) {
 	if(m_pMapPainter != NULL)
 		m_pMapPainter->Resize(Width, Height);
 	RequestWork();
 }
 
 //-------------------------------------
-void CXMapThread::OnThreadStarted() {
+void CXMapPainterThread::OnThreadStarted() {
 	// nothing to do
 }
 
 //-------------------------------------
-void CXMapThread::OnThreadStopped() {
+void CXMapPainterThread::OnThreadStopped() {
 	// nothing to do
 }
 
 //-------------------------------------
-void CXMapThread::OnWorkFunc() {
+void CXMapPainterThread::OnWorkFunc() {
 	if(m_pMapPainter == NULL)
 		return;
 	// do work

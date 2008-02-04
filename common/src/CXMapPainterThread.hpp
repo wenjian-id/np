@@ -20,8 +20,8 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXMAPTHREAD_HPP__
-#define __CXMAPTHREAD_HPP__
+#ifndef __CXMAPPAINTERTHREAD_HPP__
+#define __CXMAPPAINTERTHREAD_HPP__
 
 #include "CXNaviData.hpp"
 #include "CXWorkRequestThread.hpp"
@@ -29,42 +29,85 @@
 
 class CXMapPainter;
 class CXNaviPOWM;
-class CXPOWMMap;
 class CXDeviceContext;
 
 //----------------------------------------------------------------------------
-class CXMapThread : public CXWorkRequestThread {
+/*
+ * \brief oiu
+ *
+ */
+class CXMapPainterThread : public CXWorkRequestThread {
 private:
-	CXMapPainter		*m_pMapPainter;
-	CXNaviPOWM			*m_pNaviPOWM;
-	mutable CXMutex		m_Mutex;
+	CXMapPainter		*m_pMapPainter;		///< oiu
+	CXNaviPOWM			*m_pNaviPOWM;		///< oiu
+	mutable CXMutex		m_Mutex;			///< oiu
 	//-------------------------------------
-	CXMapThread(const CXMapThread &);
-	const CXMapThread & operator = (const CXMapThread &);
+	CXMapPainterThread(const CXMapPainterThread &);						///< Not used.
+	const CXMapPainterThread & operator = (const CXMapPainterThread &);	///< Not used.
 	//-------------------------------------
 	virtual void OnWorkFunc();
 protected:
 public:
 	//-------------------------------------
-	CXMapThread();
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXMapPainterThread();
 	//-------------------------------------
-	virtual ~CXMapThread();
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXMapPainterThread();
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	void PositionChanged(const CXNaviData &NewNaviData);
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void Resize(int Width, int Height);
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	void ZoomIn();
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	void ZoomOut();
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void OnThreadStarted();
 	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void OnThreadStopped();
 };
 
-#endif // __CXMAPTHREAD_HPP__
+#endif // __CXMAPPAINTERTHREAD_HPP__

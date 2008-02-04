@@ -3652,12 +3652,10 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	
-NODEP_CPP_CXWIN=\
-	".\hellsdk.h"\
-	".\hsdkstc.h"\
-	".\ipapi.h"\
-	".\ygshell.h"\
+	{$(INCLUDE)}"aygshell.h"\
+	{$(INCLUDE)}"shellsdk.h"\
+	{$(INCLUDE)}"shsdkstc.h"\
+	{$(INCLUDE)}"sipapi.h"\
 	
 
 !ENDIF 
@@ -4522,11 +4520,11 @@ SOURCE=..\..\..\common\src\CXMapPainterTest.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\src\CXMapSimple.hpp
+SOURCE=..\..\..\common\src\CXMapPainterThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\src\CXMapThread.hpp
+SOURCE=..\..\..\common\src\CXMapSimple.hpp
 # End Source File
 # Begin Source File
 
@@ -5543,6 +5541,7 @@ DEP_CPP_CXFILE=\
 	"..\..\..\common\src\CXFileIni.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
@@ -6194,6 +6193,7 @@ DEP_CPP_CXGPS=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXGPSRecvThread.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
@@ -6201,9 +6201,11 @@ DEP_CPP_CXGPS=\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTimeStampData.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
@@ -6577,6 +6579,7 @@ DEP_CPP_CXINF=\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
@@ -7186,6 +7189,7 @@ DEP_CPP_CXINFO=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarBottom.hpp"\
@@ -7859,6 +7863,7 @@ DEP_CPP_CXINFOB=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarCommon.hpp"\
@@ -8534,11 +8539,13 @@ DEP_CPP_CXINFOBA=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarSpeed.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPen.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -9201,6 +9208,7 @@ DEP_CPP_CXINFOBAR=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
@@ -10048,6 +10056,7 @@ DEP_CPP_CXLOC=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -10065,6 +10074,8 @@ DEP_CPP_CXLOC=\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTimeStampData.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
@@ -10782,6 +10793,7 @@ DEP_CPP_CXMAP=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
@@ -11563,6 +11575,8 @@ DEP_CPP_CXMAPP=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
@@ -11573,11 +11587,13 @@ DEP_CPP_CXMAPP=\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -12213,6 +12229,7 @@ DEP_CPP_CXMAPPA=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
@@ -12748,6 +12765,7 @@ DEP_CPP_CXMAPPAI=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
@@ -12770,14 +12788,15 @@ DEP_CPP_CXMAPPAI=\
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\src\CXMapThread.cpp
+SOURCE=..\..\..\common\src\CXMapPainterThread.cpp
 
 !IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -12786,86 +12805,102 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	"..\..\..\common\src\Utils.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXFile.hpp"\
-	"..\..\..\common\src\CXInfoBar.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	"..\..\..\common\src\Utils.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXFile.hpp"\
-	"..\..\..\common\src\CXInfoBar.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -12883,10 +12918,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -12895,16 +12931,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -12922,10 +12960,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -12934,16 +12973,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -12961,10 +13002,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -12973,16 +13015,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13000,74 +13044,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13076,16 +13057,102 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13103,10 +13170,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13115,16 +13183,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13142,10 +13212,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13154,16 +13225,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13181,10 +13254,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13193,16 +13267,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13220,10 +13296,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13232,16 +13309,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13259,10 +13338,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13271,16 +13351,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13298,10 +13380,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13310,16 +13393,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13337,10 +13422,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13349,16 +13435,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13376,202 +13464,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
-	"..\..\..\common\src\CXKeyVal.hpp"\
-	"..\..\..\common\src\CXMapHashSimple.hpp"\
-	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMapPainter2D.hpp"\
-	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMapPainterTest.hpp"\
-	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
-	"..\..\..\common\src\CXNaviData.hpp"\
-	"..\..\..\common\src\CXNaviPOWM.hpp"\
-	"..\..\..\common\src\CXPOWMMap.hpp"\
-	"..\..\..\common\src\CXRect.hpp"\
-	"..\..\..\common\src\CXStringASCII.hpp"\
-	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTransformationMatrix.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\CXUTMSpeed.hpp"\
-	
-NODEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CXBitmap.hpp"\
-	"..\..\..\common\src\CXMutex.hpp"\
-	"..\..\..\common\src\CXWorkRequestThread.hpp"\
-	"..\..\..\common\src\TargetIncludes.hpp"\
-	
-
-!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
-
-DEP_CPP_CXMAPT=\
-	"..\..\..\common\src\CoordConstants.h"\
-	"..\..\..\common\src\CoordConversion.h"\
-	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13580,16 +13477,270 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
+
+DEP_CPP_CXMAPPAIN=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXInfoBar.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapPainter.hpp"\
+	"..\..\..\common\src\CXMapPainter2D.hpp"\
+	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -13607,10 +13758,11 @@ DEP_CPP_CXMAPT=\
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
-DEP_CPP_CXMAPT=\
+DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13619,16 +13771,18 @@ DEP_CPP_CXMAPT=\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -14248,6 +14402,7 @@ DEP_CPP_CXNAV=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
@@ -14280,7 +14435,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14299,6 +14453,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -14318,7 +14473,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14337,6 +14491,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -14354,7 +14509,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14385,6 +14539,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
@@ -14400,7 +14557,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14431,6 +14587,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
@@ -14446,7 +14605,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14477,6 +14635,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
@@ -14492,7 +14653,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14524,6 +14684,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
+	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
 
@@ -14538,7 +14701,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14556,6 +14718,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -14573,7 +14736,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14591,6 +14753,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -14608,7 +14771,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14639,6 +14801,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
@@ -14654,7 +14819,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14685,6 +14849,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
@@ -14700,7 +14867,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14731,6 +14897,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
@@ -14746,7 +14915,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14777,6 +14945,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
@@ -14792,7 +14963,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14823,6 +14993,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
@@ -14838,7 +15011,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14869,6 +15041,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
@@ -14884,7 +15059,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14915,6 +15089,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
+	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
@@ -14930,7 +15107,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14962,6 +15138,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
+	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
 
@@ -14976,7 +15155,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -14994,6 +15172,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -15011,7 +15190,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15029,6 +15207,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -15046,7 +15225,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15064,6 +15242,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -15081,7 +15260,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15099,6 +15277,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -15116,7 +15295,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15134,6 +15312,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -15151,7 +15330,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15169,6 +15347,7 @@ NODEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXBitmap.hpp"\
 	"..\..\..\common\src\CXDeviceContext.hpp"\
 	"..\..\..\common\src\CXExactTime.hpp"\
+	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutex.hpp"\
 	"..\..\..\common\src\CXWorkRequestThread.hpp"\
 	
@@ -15186,7 +15365,6 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15218,6 +15396,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
+NODEP_CPP_CXNAVI=\
+	"..\..\..\common\src\CXMapThread.hpp"\
+	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
@@ -15225,14 +15406,17 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXGPSRecvThread.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarBottom.hpp"\
+	"..\..\..\common\src\CXInfoBarCommon.hpp"\
+	"..\..\..\common\src\CXInfoBarSpeed.hpp"\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMapThread.hpp"\
+	"..\..\..\common\src\CXMapPainterThread.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -15242,6 +15426,7 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTimeStampData.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
@@ -15716,6 +15901,7 @@ DEP_CPP_CXOPT=\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
@@ -17041,6 +17227,7 @@ DEP_CPP_CXPOW=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
@@ -17048,8 +17235,11 @@ DEP_CPP_CXPOW=\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\ISerial.hpp"\
@@ -17869,8 +18059,10 @@ DEP_CPP_CXSPE=\
 DEP_CPP_CXSPE=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
+	"..\..\..\common\src\CXTimeStampData.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
@@ -18548,8 +18740,13 @@ DEP_CPP_CXTRA=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -21158,10 +21355,15 @@ DEP_CPP_UTILS=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_UTILS=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	

@@ -31,7 +31,7 @@
 
 class CXGPSRecvThread;
 class CXLocatorThread;
-class CXMapThread;
+class CXMapPainterThread;
 class IMainWindow;
 class CXDeviceContext;
 class CXNaviData;
@@ -95,7 +95,7 @@ private:
 	IMainWindow			*m_pMainWindow;				///< oiu
 	CXGPSRecvThread		*m_pGPSRecvThread;			///< oiu
 	CXLocatorThread		*m_pLocatorThread;			///< oiu
-	CXMapThread			*m_pMapThread;				///< oiu
+	CXMapPainterThread	*m_pMapPainterThread;		///< oiu
 	CXInfoBarBottom		*m_pInfoBarBottom;			///< oiu
 	CXInfoBarTop		*m_pInfoBarTop;				///< oiu
 	CXInfoBarSpeed		*m_pInfoBarSpeed;			///< oiu

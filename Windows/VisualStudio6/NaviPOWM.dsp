@@ -285,11 +285,11 @@ SOURCE=..\..\common\src\CXMapPainterTest.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapSimple.hpp
+SOURCE=..\..\common\src\CXMapPainterThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapThread.hpp
+SOURCE=..\..\common\src\CXMapSimple.hpp
 # End Source File
 # Begin Source File
 
@@ -485,7 +485,7 @@ SOURCE=..\..\common\src\CXMapPainterTest.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapThread.cpp
+SOURCE=..\..\common\src\CXMapPainterThread.cpp
 # End Source File
 # Begin Source File
 

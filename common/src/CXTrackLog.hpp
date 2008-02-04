@@ -85,9 +85,9 @@ public:
 	 * \brief Relocate coordinates to new UTM zone.
 	 * 
 	 * Relocate coordinates to new UTM zone.
-	 * \param	ForceUTMZone	New UTM Zone.
+	 * \param	NewUTMZone	New UTM Zone.
 	 */
-	void RelocateUTM(int ForceUTMZone);
+	void RelocateUTM(int NewUTMZone);
 	//-------------------------------------
 	/*
 	 * \brief Get coordinates.

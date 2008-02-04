@@ -28,6 +28,7 @@
 #include "CoordConstants.h"
 #include "CXStringASCII.hpp"
 #include "CXPen.hpp"
+#include "CXTransformationMatrix.hpp"
 #include "TargetIncludes.hpp"
 
 
@@ -78,7 +79,37 @@ CXMapPainter2D::~CXMapPainter2D() {
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, const CXTransformationMatrix2D & TM, int Width, int Height) {
+bool CXMapPainter2D::IsWayPossiblyVisible(CXWay *pWay, int Width, int Height) {
+	if(pWay == NULL)
+		return false;
+
+	int x0 = 0;
+	int y0 = 0;
+	size_t NodeCount = pWay->GetNodeCount();
+	for(size_t i=0; i<NodeCount; i++) {
+		CXNode *pNode = pWay->GetNode(i);
+		int x = pNode->GetDisplayX();
+		int y = pNode->GetDisplayY();
+		// check if it is worth drawing
+		if(	((x0 < 0) && (x < 0)) ||
+			((x0 > Width) && (x > Width)) ||
+			((y0 < 0) && (y < 0)) ||
+			((y0 > Height) && (y > Height)))
+		{
+			// no
+			// do nothing
+		} else if (i != 0) {
+			return true;
+		}
+		x0 = x;
+		y0 = y;
+	}
+	return false;
+}
+
+
+//-------------------------------------
+void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) {
 	if(pWay == NULL)
 		return;
 	size_t NodeCount = pWay->GetNodeCount();
@@ -86,9 +117,8 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, const CXTransformationM
 	int y0 = 0;
 	for(size_t i=0; i<NodeCount; i++) {
 		CXNode *pNode = pWay->GetNode(i);
-		CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
-		int x = v.GetIntX();
-		int y = v.GetIntY();
+		int x = pNode->GetDisplayX();
+		int y = pNode->GetDisplayY();
 		// check if it is worth drawing
 		if(	((x0 < 0) && (x < 0)) ||
 			((x0 > Width) && (x > Width)) ||
@@ -108,7 +138,7 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, const CXTransformationM
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, const CXTransformationMatrix2D & TM, int Width, int Height) {
+void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height) {
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
@@ -128,7 +158,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 			// set red pen
 			if(oUseRedPen)
 				pBMP->SetPen(RedPen);
-			DrawWay(pBMP, pWay, TM, Width, Height);
+			DrawWay(pBMP, pWay, Width, Height);
 			// set old pen
 			if(oUseRedPen)
 				pBMP->SetPen(*pPen);
@@ -137,7 +167,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, const CXTransformationMatrix2D & TM, int Width, int Height) {
+void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height) {
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
@@ -157,7 +187,7 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 			// set red pen
 			if(oUseRedPen)
 				pBMP->SetPen(RedPen);
-			DrawWay(pBMP, pWay, TM, Width, Height);
+			DrawWay(pBMP, pWay, Width, Height);
 			// set old pen
 			if(oUseRedPen)
 				pBMP->SetPen(*pPen);
@@ -266,6 +296,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	tIRect CompassRect(0,0,CompassSize,CompassSize);
 
 	// get zone
+	int WayCount = 0;
 	int CurrentZone = CXPOWMMap::Instance()->GetCurrentZone();
 	if(CurrentZone != UTMZoneNone) {
 		int xc = 0;
@@ -305,23 +336,27 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TMCompass.Scale(1, -1);				// do scaling (negative for y!)
 		TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
 
+		// run coordinate transformations
+		CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
+
 		// prepare drawing
 		TWayMap &Ways = CXPOWMMap::Instance()->GetWayMap();
 		POS pos = Ways.GetStart();
 		CXWay *pWay = NULL;
-		int cnt = 0;
 		while (Ways.GetNext(pos, pWay) != TWayMap::NPOS) {
-			CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
-			m_DrawWays[HighwayType]->Append(pWay);
-			cnt++;
+			if (IsWayPossiblyVisible(pWay, Width, Height)) {
+				CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
+				m_DrawWays[HighwayType]->Append(pWay);
+				WayCount++;
+			}
 		}
 		StopPrepare.SetNow();
 		// ok, now draw bg
 		for(i=0; i< CXWay::eEnumCount; i++) {
-			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], TMMap, Width, Height);
+			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
 		for(i=0; i< CXWay::eEnumCount; i++) {
-			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], TMMap, Width, Height);
+			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
 		StopDrawWays.SetNow();
 
@@ -412,8 +447,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXExactTime Stop;
 
 	char buf[200];
-	snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld TL:%ld Co:%ld Sc:%ld Ps:%ld",
-				StopPrepare-StopLock, StopDrawWays-StopPrepare, 
+	snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld Co:%ld Sc:%ld Ps:%ld",
+				StopPrepare-StopLock, StopDrawWays-StopPrepare, WayCount, 
 				StopTrackLog-StopDrawWays, StopCompass-StopTrackLog, StopScale-StopCompass,
 				Stop-StopScale);
 	CXStringASCII ttt = buf;

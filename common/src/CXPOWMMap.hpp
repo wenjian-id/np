@@ -34,6 +34,7 @@
 #include "CXTrackLog.hpp"
 
 class CXWay;
+class CXTransformationMatrix2D;
 
 //---------------------------------------------------------------------
 /*
@@ -45,6 +46,8 @@ class CXNode {
 private:
 	t_uint64	m_ID;		///< ID of node.
 	CXCoor		m_Coor;		///< Coordinate of node
+	int			m_DisplayX;	///< X coordinate on display [pixel];
+	int			m_DisplayY;	///< Y coordinate on display [pixel];
 	//-------------------------------------
 	CXNode();										///< Not used.
 	CXNode(const CXNode &);							///< Not used.
@@ -53,8 +56,12 @@ protected:
 public:
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Constructor.
 	 *
+	 *	Constructor.
+	 *	\param	ID		ID of node.
+	 *	\param	Lon		Longitude of node [deg].
+	 *	\param	Lat		Latitude of node [deg].
 	 */
 	CXNode(t_uint64 ID, double Lon, double Lat);
 	//-------------------------------------
@@ -66,38 +73,80 @@ public:
 	virtual ~CXNode();
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get longitude.
 	 *
+	 *	Get longitude.
+	 *	\return		Longitude [deg]
 	 */
 	double GetLon() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get latitude.
 	 *
+	 *	Get latitude.
+	 *	\return		Latitude [deg]
 	 */
 	double GetLat() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get UTM easting.
 	 *
+	 *	Get UTM easting.
+	 *	\return		UTM easting.
 	 */
 	double GetUTME() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get UTM northing.
 	 *
+	 *	Get UTM northing.
+	 *	\return		UTM northing.
 	 */
 	double GetUTMN() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
-	 *
+	 * \brief Relocate UTM coordinates to new UTM zone.
+	 * 
+	 * Relocate UTM coordinates to new UTM zone.
+	 * \param	NewUTMZone	New UTM Zone.
 	 */
-	void RelocateUTM(int ForceUTMZone);
+	void RelocateUTM(int NewUTMZone);
+	//-------------------------------------
+	/*
+	 * \brief Get X coordinate on display.
+	 *
+	 *	Get X coordinate on display.
+	 *	\return		X coordinate on display [pixel].
+	 */
+	int GetDisplayX() const;
+	//-------------------------------------
+	/*
+	 * \brief Set X coordinate on display.
+	 *
+	 *	Set X coordinate on display.
+	 *	\param	X	X coordinate on display [pixel].
+	 */
+	void SetDisplayX(int X);
+	//-------------------------------------
+	/*
+	 * \brief Get Y coordinate on display.
+	 *
+	 *	Get Y coordinate on display.
+	 *	\return		Y coordinate on display [pixel].
+	 */
+	int GetDisplayY() const;
+	//-------------------------------------
+	/*
+	 * \brief Set Y coordinate on display.
+	 *
+	 *	Set Y coordinate on display.
+	 *	\param	Y	Y coordinate on display [pixel].
+	 */
+	void SetDisplayY(int Y);
 };
 
 typedef CXMapHashSimple<t_uint64, CXNode *>		TNodeMap;		///< oiu
-typedef CXBuffer<CXNode *>						TNodeBuffer;		///< oiu
+typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
 
 //---------------------------------------------------------------------
 /*
@@ -360,6 +409,12 @@ public:
 	 *
 	 */
 	static CXPOWMMap *Instance();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM);
 };
 
 #endif // __CXPOWMMAP_HPP__

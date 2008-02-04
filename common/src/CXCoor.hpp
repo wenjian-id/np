@@ -128,7 +128,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void RelocateUTM(int ForceUTMZone);
+	void RelocateUTM(int NewUTMZone);
 };
 
 #endif // __CXCOOR_HPP__
