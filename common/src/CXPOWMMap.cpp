@@ -29,6 +29,8 @@
 #include "Utils.hpp"
 #include "CoordConversion.h"
 
+const unsigned int MAPVERSION = 0x00010200; // 0.1.2
+
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXNode::CXNode(t_uint64 ID, double dLon, double dLat) :
@@ -305,7 +307,7 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 
 	// check version
 	unsigned long Version = 0;
-	unsigned long ReqVersion = 0x01010201; // 0.1.2 dev1
+	unsigned long ReqVersion = MAPVERSION;
 	if(!ReadUL32(InFile, Version)) {
 		CXStringASCII ErrorMsg("Error reading Version from file: ");
 		ErrorMsg += FileName;
@@ -322,11 +324,19 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		// not supported version
 		CXStringASCII ErrorMsg(FileName);
 		ErrorMsg += " has wrong Version: ";
-		char buf[10];
-		snprintf(	buf, 10, "%d.%d.%d", 
-					static_cast<unsigned char>((Version & 0xff0000) >> 16),
-					static_cast<unsigned char>((Version & 0xff00) >> 8),
-					static_cast<unsigned char>(Version & 0xff));
+		char buf[100];
+		if((Version & 0xff) == 0) {
+			snprintf(	buf, sizeof(buf), "%d.%d.%d", 
+						static_cast<unsigned char>((Version & 0xff000000) >> 24),
+						static_cast<unsigned char>((Version & 0xff0000) >> 16),
+						static_cast<unsigned char>((Version & 0xff00) >> 8));
+		} else {
+			snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
+						static_cast<unsigned char>((Version & 0xff000000) >> 24),
+						static_cast<unsigned char>((Version & 0xff0000) >> 16),
+						static_cast<unsigned char>((Version & 0xff00) >> 8),
+						static_cast<unsigned char>((Version & 0xff)));
+		}
 		ErrorMsg += buf;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
