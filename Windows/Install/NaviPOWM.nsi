@@ -6,7 +6,7 @@
 ; The name of the installer
 Name "NaviPOWM"
 
-!define Version "0.1.2-dev"             ; version string
+!define Version "0.1.2"             ; version string
 
 ; Result of compiler
 OutFile "Install\NaviPOWM-MinGW-${Version}-Setup.exe"

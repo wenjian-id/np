@@ -98,11 +98,34 @@ ZoomOutName -> icon for zoom out button
 
 [config]
 LogoTime -> time in ms for displaying logo when starting
-FullScreen ->If on, a frameless maximized window is used, when off a normal window is used [on/off]
-Northing -> If on, north is alway on top, else heading is on top [on/off]
-ShowZoomButtons -> If on, the zoom buttons are shown and you can zoom by clicking them [on/off]
+FullScreen -> if on, a frameless maximized window is used, when off a normal window is used [on/off]
+Northing -> if on, north is alway on top, else heading is on top [on/off]
+ShowZoomButtons -> if on, the zoom buttons are shown and you can zoom by clicking them [on/off]
 InfoBarBottomHeight -> please don't touch [20]
 InfoBarTopHeight -> please don't touch [20]
+ShowMaxSpeed -> if a max permitted speed is avalable it will be shown [on/off]
+MaxSpeedSize -> size of permitted speed circle in pixel 
+ShowCompass -> if on, a compas will be shown in upper left corner [on/off]
+CompassSize -> size of compass in pixel 
+
+[scale]
+ShowScale -> if on, a scale is shown in the bottom part of the screen [on/off]
+ScaleWidth -> width of scale in pixel
+ScaleHeight -> height of scale in pixel
+
+[tracklog]
+ShowTrackLog = -> if on, a tracklog is displayed in blue [on/off]
+TrackLogSize -> number of points in tracklog (FIFO). 0 shows all points.
+TrackLogMinDist -> min distance to previous point to add a point to the tracklog [m] 
+
+[OSM validation]
+OSMValiName -> if on, ways without name are displayed in red [on/off]
+OSMValiRef -> if on, ways without ref are displayed in red [on/off]
+OSMValiMaxSpeed -> if on, ways without maxspeed are displayed in red [on/off]
+
+[debug informations]
+DBGDrawTimes -> if on, debug information about drawing is dispalyed [on/off]
+
 
 [Serial port for GPS input]
 SerialPort -> serial port from which NMEA data is read.

@@ -2,6 +2,7 @@ Version 0.1.2:
  - fixed bugs:
 
  - implemented feature requests:
+   - 1828490: Show a trace on the map for last x minutes.
    - 1829222: Compiling for WM2003SE
    - 1829512: Help search for unnamed streets
    - 1834085: Show current speed
