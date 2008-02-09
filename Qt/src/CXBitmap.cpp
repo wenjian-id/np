@@ -27,6 +27,7 @@
 
 #include <qcolor.h>
 #include <qpainter.h>
+#include <qbitmap.h>
 
 //-------------------------------------
 CXBitmap::CXBitmap() :
@@ -375,4 +376,48 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 	m_pPainter->drawImage(tgt, img);
 
 	return true;
+}
+
+//-------------------------------------
+void CXBitmap::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
+	if(IsNull())
+		return;
+	if(pBmp == NULL)
+		return;
+
+	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+}
+
+//-------------------------------------
+void CXBitmap::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
+	if(IsNull())
+		return;
+	if(pBmp == NULL)
+		return;
+
+	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+	qreal Opacity = m_pPainter->opacity();
+	m_pPainter->setOpacity(Alpha/100.0);
+	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+	m_pPainter->setOpacity(Opacity);
+}
+
+//-------------------------------------
+void CXBitmap::DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) {
+	if(IsNull())
+		return;
+	if(pBmp == NULL)
+		return;
+
+	QRect src(XSource, YSource, Width, Height);
+	QPixmap cpy = QPixmap::fromImage(pBmp->GetImage()->copy(src));
+	QBitmap mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskInColor);
+	cpy.setMask(mask);
+	src = QRect(0, 0, Width, Height);
+	QRect tgt(XTarget, YTarget, Width, Height);
+	m_pPainter->drawPixmap(tgt, cpy, src);
+	
 }

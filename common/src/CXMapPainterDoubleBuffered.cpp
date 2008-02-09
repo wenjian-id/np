@@ -86,11 +86,17 @@ void CXMapPainterDoubleBuffered::SwitchBuffers() {
 }
 
 //-------------------------------------
+void CXMapPainterDoubleBuffered::OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height) {
+	// do nothing
+}
+
+//-------------------------------------
 void CXMapPainterDoubleBuffered::CreateBuffers(CXDeviceContext *pDC, int Width, int Height) {
 	m_Bitmap1.Destroy();
 	m_Bitmap2.Destroy();
 	m_Bitmap1.Create(pDC, Width, Height);
 	m_Bitmap2.Create(pDC, Width, Height);
+	OnBuffersCreated(pDC, Width, Height);
 }
 
 //-------------------------------------

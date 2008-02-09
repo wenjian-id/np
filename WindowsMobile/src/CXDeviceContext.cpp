@@ -74,6 +74,12 @@ void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned c
 
 //-------------------------------------
 void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB &TrColor) {
+	if(m_hDC == NULL)
+		return;
+	if(pBmp == NULL)
+		return;
+	if(pBmp->GetDC() == NULL)
+		return;
 	::TransparentBlt(	m_hDC, OffsetX, OffsetY, 
 						pBmp->GetWidth(), pBmp->GetHeight(), 
 						pBmp->GetDC(), 0, 0, 

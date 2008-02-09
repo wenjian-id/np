@@ -29,6 +29,7 @@
 #include "CXStringUTF8.hpp"
 
 class CXDeviceContext;
+class CXBitmap;
 class CXPen;
 
 //---------------------------------------------------------------------
@@ -201,6 +202,24 @@ public:
 	 *
 	 */
 	virtual bool LoadFromFile(const CXStringASCII & FileName) = 0;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) = 0;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) = 0;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) = 0;
 };
 
 #endif // __IBITMAP_HPP__

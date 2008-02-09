@@ -187,6 +187,24 @@ public:
 	 *
 	 */
 	virtual bool LoadFromFile(const CXStringASCII & FileName);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor);
 };
 
 #endif // __IBITMAP_HPP__

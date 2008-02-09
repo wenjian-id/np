@@ -28,8 +28,8 @@ static TCHAR buf[1024];
 
 //-------------------------------------
 CXBitmap::CXBitmap() :
-	m_DC(NULL),
-	m_BMP(NULL),
+	m_hDC(NULL),
+	m_hBMP(NULL),
 	m_hFont(NULL)
 {
 }
@@ -41,45 +41,45 @@ CXBitmap::~CXBitmap() {
 
 //-------------------------------------
 bool CXBitmap::IsNull() {
-	return m_DC == NULL;
+	return m_hDC == NULL;
 }
 
 //-------------------------------------
 bool CXBitmap::Create(CXDeviceContext *pDC, int Width, int Height) {
 	if(pDC == NULL)
 		return false;
-	if(m_DC != NULL)
+	if(m_hDC != NULL)
 		return true;
-	m_DC = CreateCompatibleDC(pDC->GetDC());
+	m_hDC = CreateCompatibleDC(pDC->GetDC());
 	SetWidth(Width);
 	SetHeight(Height);
-	if(m_DC != NULL) {
+	if(m_hDC != NULL) {
 		// create new bitmap
-		m_BMP = ::CreateBitmap(GetWidth(), GetHeight(), 1, 32, NULL);
+		m_hBMP = ::CreateBitmap(GetWidth(), GetHeight(), 1, 32, NULL);
 		// and select it
-		::SelectObject(m_DC, m_BMP);
+		::SelectObject(m_hDC, m_hBMP);
 	} else {
 		Destroy();
 	}
-	return m_DC != NULL;
+	return m_hDC != NULL;
 }
 
 //-------------------------------------
 void CXBitmap::Destroy() {
-	if(m_DC != NULL)
-		::DeleteObject(m_DC);
-	if(m_BMP!=NULL)
-		::DeleteObject(m_BMP);
+	if(m_hDC != NULL)
+		::DeleteObject(m_hDC);
+	if(m_hBMP!=NULL)
+		::DeleteObject(m_hBMP);
 	if(m_hFont != NULL)
 		::DeleteObject(m_hFont);
-	m_DC = NULL;
-	m_BMP = NULL;
+	m_hDC = NULL;
+	m_hBMP = NULL;
 	m_hFont = NULL;
 }
 
 //-------------------------------------
 HDC CXBitmap::GetDC() const {
-	return m_DC;
+	return m_hDC;
 }
 
 //-------------------------------------
@@ -92,14 +92,14 @@ void CXBitmap::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXR
 	HBRUSH NewBrush = ::CreateSolidBrush(CXRGB2COLORREF(BrushColor));
 
 	// get old pen and brush
-	HPEN OldPen = (HPEN)::SelectObject(m_DC, NewPen); 
-	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_DC, NewBrush);
+	HPEN OldPen = (HPEN)::SelectObject(m_hDC, NewPen); 
+	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_hDC, NewBrush);
 	// draw rectangle
-	::Rectangle(m_DC, TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight(), TheRect.GetBottom());
+	::Rectangle(m_hDC, TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight(), TheRect.GetBottom());
 
 	// restore old pen and brush
-	::SelectObject(m_DC, OldBrush);
-	::SelectObject(m_DC, OldPen);
+	::SelectObject(m_hDC, OldBrush);
+	::SelectObject(m_hDC, OldPen);
 	::DeleteObject(NewPen);
 	::DeleteObject(NewBrush);
 }
@@ -120,7 +120,7 @@ tIRect CXBitmap::CalcTextRectASCII(const CXStringASCII & Text, int AddWidth, int
 	Rect.top = 0;
 
 	ASCII2UCS2(Text.c_str(), Text.GetSize(), buf, 1024);
-	int res = ::DrawText(m_DC, buf, -1, &Rect, DT_CALCRECT); 
+	int res = ::DrawText(m_hDC, buf, -1, &Rect, DT_CALCRECT); 
 	Result = tIRect(Rect.left, Rect.top, Rect.right + AddWidth, Rect.bottom + AddHeight);
 
 	return Result;
@@ -132,8 +132,8 @@ void CXBitmap::DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect,
 		return;
 
 	// get old colors
-	COLORREF OldTextColor = ::SetTextColor(m_DC, CXRGB2COLORREF(FgColor));
-	COLORREF OldBkColor = ::SetBkColor(m_DC, CXRGB2COLORREF(BgColor));
+	COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(FgColor));
+	COLORREF OldBkColor = ::SetBkColor(m_hDC, CXRGB2COLORREF(BgColor));
 
 	// draw text
 	RECT tmp;
@@ -142,16 +142,16 @@ void CXBitmap::DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect,
 	tmp.right = TheRect.GetRight();
 	tmp.bottom = TheRect.GetBottom();
 	ASCII2UCS2(Text.c_str(), Text.GetSize(), buf, 1024);
-	::DrawText(m_DC, buf, -1, &tmp, DT_CENTER | DT_VCENTER | DT_SINGLELINE); 
+	::DrawText(m_hDC, buf, -1, &tmp, DT_CENTER | DT_VCENTER | DT_SINGLELINE); 
 
 	// restore old colors
-	SetBkColor(m_DC, OldBkColor);
-	SetTextColor(m_DC, OldTextColor);
+	SetBkColor(m_hDC, OldBkColor);
+	SetTextColor(m_hDC, OldTextColor);
 }
 
 //-------------------------------------
 void CXBitmap::DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect, const CXRGB & FgColor) {
-	DrawTextASCII(Text, TheRect, FgColor, COLORREF2CXRGB(::GetBkColor(m_DC)));
+	DrawTextASCII(Text, TheRect, FgColor, COLORREF2CXRGB(::GetBkColor(m_hDC)));
 }
 
 //-------------------------------------
@@ -168,7 +168,7 @@ tIRect CXBitmap::CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int A
 	RECT Rect;
 	Rect.left = 0;
 	Rect.top = 0;
-	int res = ::DrawTextW(m_DC, Text.w_str(), -1, &Rect, DT_CALCRECT); 
+	int res = ::DrawTextW(m_hDC, Text.w_str(), -1, &Rect, DT_CALCRECT); 
 	Result = tIRect(Rect.left, Rect.top, Rect.right + AddWidth, Rect.bottom + AddHeight);
 
 	return Result;
@@ -180,8 +180,8 @@ void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, c
 		return;
 
 	// get old colors
-	COLORREF OldTextColor = ::SetTextColor(m_DC, CXRGB2COLORREF(FgColor));
-	COLORREF OldBkColor = ::SetBkColor(m_DC, CXRGB2COLORREF(BgColor));
+	COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(FgColor));
+	COLORREF OldBkColor = ::SetBkColor(m_hDC, CXRGB2COLORREF(BgColor));
 
 	// draw text
 	RECT tmp;
@@ -189,38 +189,38 @@ void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, c
 	tmp.top = TheRect.GetTop();
 	tmp.right = TheRect.GetRight();
 	tmp.bottom = TheRect.GetBottom();
-	::DrawTextW(m_DC, Text.w_str(), -1, &tmp, DT_CENTER | DT_VCENTER | DT_SINGLELINE); 
+	::DrawTextW(m_hDC, Text.w_str(), -1, &tmp, DT_CENTER | DT_VCENTER | DT_SINGLELINE); 
 
 	// restore old colors
-	SetBkColor(m_DC, OldBkColor);
-	SetTextColor(m_DC, OldTextColor);
+	SetBkColor(m_hDC, OldBkColor);
+	SetTextColor(m_hDC, OldTextColor);
 }
 
 //-------------------------------------
 void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor) {
-	DrawTextUTF8(Text, TheRect, FgColor, COLORREF2CXRGB(::GetBkColor(m_DC)));
+	DrawTextUTF8(Text, TheRect, FgColor, COLORREF2CXRGB(::GetBkColor(m_hDC)));
 }
 
 //-------------------------------------
 void CXBitmap::DrawLine(int x0, int y0, int x1, int y1) {
 	if(IsNull())
 		return;
-	::MoveToEx(m_DC, x0, y0, NULL);
-	::LineTo(m_DC, x1, y1);
+	::MoveToEx(m_hDC, x0, y0, NULL);
+	::LineTo(m_hDC, x1, y1);
 }
 
 //-------------------------------------
 void CXBitmap::MoveTo(int x, int y) {
 	if(IsNull())
 		return;
-	::MoveToEx(m_DC, x, y, NULL);
+	::MoveToEx(m_hDC, x, y, NULL);
 }
 
 //-------------------------------------
 void CXBitmap::LineTo(int x, int y) {
 	if(IsNull())
 		return;
-	::LineTo(m_DC, x, y);
+	::LineTo(m_hDC, x, y);
 }
 
 //-------------------------------------
@@ -228,31 +228,31 @@ bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &F
 	if(IsNull())
 		return false;
 	// get old colors
-	COLORREF OldTextColor = ::SetTextColor(m_DC, CXRGB2COLORREF(PenColor));
-	COLORREF OldBkColor = ::SetBkColor(m_DC, CXRGB2COLORREF(FillColor));
+	COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(PenColor));
+	COLORREF OldBkColor = ::SetBkColor(m_hDC, CXRGB2COLORREF(FillColor));
 
 	// create pen & brush 
 	HPEN hPen = CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
 	HBRUSH hBrush = ::CreateSolidBrush(CXRGB2COLORREF(FillColor));
 
 	// select
-	HPEN OldPen = (HPEN)::SelectObject(m_DC, hPen);
-	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_DC, hBrush);
+	HPEN OldPen = (HPEN)::SelectObject(m_hDC, hPen);
+	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_hDC, hBrush);
 
 	// draw circle
-	::Ellipse(m_DC, x-r, y-r, x+r, y+r);
+	::Ellipse(m_hDC, x-r, y-r, x+r, y+r);
 
 	// restore pen & brush
-	::SelectObject(m_DC, OldPen);
-	::SelectObject(m_DC, OldBrush);
+	::SelectObject(m_hDC, OldPen);
+	::SelectObject(m_hDC, OldBrush);
 
 	// delete
 	::DeleteObject(hPen);
 	::DeleteObject(hBrush);
 
 	// restore old colors
-	SetBkColor(m_DC, OldBkColor);
-	SetTextColor(m_DC, OldTextColor);
+	SetBkColor(m_hDC, OldBkColor);
+	SetTextColor(m_hDC, OldTextColor);
 
 	return true;
 }
@@ -269,16 +269,16 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
 		return false;
 
 	// get old colors
-	COLORREF OldTextColor = ::SetTextColor(m_DC, CXRGB2COLORREF(PenColor));
-	COLORREF OldBkColor = ::SetBkColor(m_DC, CXRGB2COLORREF(FillColor));
+	COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(PenColor));
+	COLORREF OldBkColor = ::SetBkColor(m_hDC, CXRGB2COLORREF(FillColor));
 
 	// create pen & brush 
 	HPEN hPen = CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
 	HBRUSH hBrush = ::CreateSolidBrush(CXRGB2COLORREF(FillColor));
 
 	// select
-	HPEN OldPen = (HPEN)::SelectObject(m_DC, hPen);
-	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_DC, hBrush);
+	HPEN OldPen = (HPEN)::SelectObject(m_hDC, hPen);
+	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_hDC, hBrush);
 
 	POINT *pPoints = new POINT[Count];
 	for(size_t i=0; i<Count; i++) {
@@ -287,21 +287,21 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
 	}
 
 	// draw polygon
-	::Polygon(m_DC, pPoints, Count);
+	::Polygon(m_hDC, pPoints, Count);
 
 	delete [] pPoints;
 
 	// restore pen & brush
-	::SelectObject(m_DC, OldPen);
-	::SelectObject(m_DC, OldBrush);
+	::SelectObject(m_hDC, OldPen);
+	::SelectObject(m_hDC, OldBrush);
 
 	// delete
 	::DeleteObject(hPen);
 	::DeleteObject(hBrush);
 
 	// restore old colors
-	SetBkColor(m_DC, OldBkColor);
-	SetTextColor(m_DC, OldTextColor);
+	SetBkColor(m_hDC, OldBkColor);
+	SetTextColor(m_hDC, OldTextColor);
 
 	return true;
 }
@@ -324,7 +324,7 @@ bool CXBitmap::PolyLine(int *pX, int *pY, size_t Count) {
 	}
 
 	// draw polyline
-	::Polyline(m_DC, pPoints, Count);
+	::Polyline(m_hDC, pPoints, Count);
 
 	delete [] pPoints;
 
@@ -342,7 +342,7 @@ void CXBitmap::SetPen(const CXPen &Pen) {
 	}
 	HPEN hPen = CreatePen(Style, Pen.GetWidth(), CXRGB2COLORREF(Pen.GetColor()));
 
-	HPEN OldPen = (HPEN)::SelectObject(m_DC, hPen);
+	HPEN OldPen = (HPEN)::SelectObject(m_hDC, hPen);
 	if(OldPen != NULL)
 		::DeleteObject(OldPen);
 }
@@ -366,7 +366,7 @@ void CXBitmap::SetFont(int FontHeight, bool Bold) {
 	lf.lfPitchAndFamily = DEFAULT_PITCH | FF_SWISS;
 	m_hFont = CreateFontIndirect(&lf);
 	if(m_hFont != NULL) {
-		HFONT OldFont = (HFONT)SelectObject(m_DC, m_hFont);
+		HFONT OldFont = (HFONT)SelectObject(m_hDC, m_hFont);
 		DeleteObject(OldFont);
 	}
 }
@@ -387,12 +387,12 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 	GetObject(HBmp, sizeof(BITMAP), &bm);
 
 	// draw it
-	HDC DC = CreateCompatibleDC(m_DC);
+	HDC DC = CreateCompatibleDC(m_hDC);
 	if(DC != NULL) {
 		// select object
 		::SelectObject(DC, HBmp);
 		// stretch
-		::StretchBlt(m_DC, 0, 0, GetWidth(), GetHeight(), DC, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);
+		::StretchBlt(m_hDC, 0, 0, GetWidth(), GetHeight(), DC, 0, 0, bm.bmWidth, bm.bmHeight, SRCCOPY);
 		// and delete
 		::DeleteObject(DC);
 	}
@@ -400,4 +400,49 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 	::DeleteObject(HBmp);
 	
 	return true;
+}
+
+//-------------------------------------
+void CXBitmap::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
+	if(IsNull())
+		return;
+	if(pBmp == NULL)
+		return;
+	if(pBmp->GetDC() == NULL)
+		return;
+	::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
+}
+
+//-------------------------------------
+void CXBitmap::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
+	if(IsNull())
+		return;
+	if(pBmp == NULL)
+		return;
+	if(pBmp->GetDC() == NULL)
+		return;
+/*
+	BLENDFUNCTION bf;
+	bf.BlendOp = AC_SRC_OVER;
+	bf.BlendFlags = 0;
+	bf.SourceConstantAlpha = static_cast<unsigned char>(256.0*Alpha/100);
+	bf.AlphaFormat = 0;
+	AlphaBlend(	m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), 
+				pBmp->GetDC(), 0, 0, pBmp->GetWidth(), pBmp->GetHeight(), 
+				bf);
+*/
+	::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
+}
+
+//-------------------------------------
+void CXBitmap::DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) {
+	if(IsNull())
+		return;
+	if(pBmp == NULL)
+		return;
+	if(pBmp->GetDC() == NULL)
+		return;
+	::TransparentBlt(	m_hDC, XTarget, YTarget, Width, Width, 
+						pBmp->GetDC(), XSource, YSource, Width, Height, 
+						CXRGB2COLORREF(TrColor));
 }

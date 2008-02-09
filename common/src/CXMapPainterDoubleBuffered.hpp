@@ -78,6 +78,12 @@ protected:
 	 *
 	 */
 	virtual void OnDoWork();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height);
 public:
 	//-------------------------------------
 	/*
