@@ -121,6 +121,8 @@ common/Images/Icons20x20.xcf -text
 common/Images/MainIcon.ico -text
 common/Images/NaviPOWM.xcf -text
 common/Images/Zoom.xcf -text
+common/Images/amenity1.bmp -text
+common/Images/amenity1.xcf -text
 common/Images/info.bmp -text
 common/Images/logo.bmp -text
 common/Images/logosmall.bmp -text

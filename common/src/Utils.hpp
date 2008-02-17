@@ -110,7 +110,7 @@ bool ReadUL32(CXFile & rInFile, unsigned long & rValue);
  * \param	rValue		Value to fill with data.
  * \return				true if successfull.
  */
-bool ReadI64(CXFile & rInFile, t_uint64 & rValue);
+bool ReadUI64(CXFile & rInFile, t_uint64 & rValue);
 
 //-------------------------------------
 /*

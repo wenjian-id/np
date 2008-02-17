@@ -94,7 +94,7 @@ bool ReadUL32(CXFile & rInFile, unsigned long & rValue) {
 }
 
 //-------------------------------------
-bool ReadI64(CXFile & rInFile, t_uint64 & rValue) {
+bool ReadUI64(CXFile & rInFile, t_uint64 & rValue) {
 	// reset value
 	rValue = 0;
 	unsigned char buf[8];

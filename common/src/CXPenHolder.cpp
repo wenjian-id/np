@@ -36,7 +36,7 @@ CXPenHolder::~CXPenHolder() {
 //-------------------------------------
 void CXPenHolder::CreatePens() {
 
-	for(size_t i=0; i<CXWay::eEnumCount; i++) {
+	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
 		m_Pens.Append(new SPens());
 	}
 		
@@ -44,77 +44,77 @@ void CXPenHolder::CreatePens() {
 
 	// now create pens
 	// Mapnik
-	pPens = m_Pens[CXWay::eUnknown];
+	pPens = m_Pens[CXWay::e_Unknown];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[CXWay::eMotorway];
+	pPens = m_Pens[CXWay::e_Motorway];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x50, 0x60, 0x76));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x80, 0x9B, 0xC0));
 
-	pPens = m_Pens[CXWay::eMotorwayLink];
+	pPens = m_Pens[CXWay::e_MotorwayLink];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x50, 0x60, 0x76));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x80, 0x9B, 0xC0));
 
-	pPens = m_Pens[CXWay::eTrunk];
+	pPens = m_Pens[CXWay::e_Trunk];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x47, 0x71, 0x47));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x7E, 0xC8, 0x7E));
 
-	pPens = m_Pens[CXWay::eTrunkLink];
+	pPens = m_Pens[CXWay::e_TrunkLink];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x47, 0x71, 0x47));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x7E, 0xC8, 0x7E));
 
-	pPens = m_Pens[CXWay::ePrimary];
+	pPens = m_Pens[CXWay::e_Primary];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x92, 0x46, 0x49));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xE3, 0x60, 0x70));
 
-	pPens = m_Pens[CXWay::ePrimaryLink];
+	pPens = m_Pens[CXWay::e_PrimaryLink];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x92, 0x46, 0x49));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xE3, 0x6C, 0x70));
 
-	pPens = m_Pens[CXWay::eSecondary];
+	pPens = m_Pens[CXWay::e_Secondary];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xA5, 0x7D, 0x49));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFC, 0xBE, 0x6E));
 
-	pPens = m_Pens[CXWay::eTertiary];
+	pPens = m_Pens[CXWay::e_Tertiary];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xCB));
 
-	pPens = m_Pens[CXWay::eUnclassified];
+	pPens = m_Pens[CXWay::e_Unclassified];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xDD));
 
-	pPens = m_Pens[CXWay::eTrack];
+	pPens = m_Pens[CXWay::e_Track];
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 2, CXRGB(0xF9, 0x80, 0x72));
 
-	pPens = m_Pens[CXWay::eResidential];
+	pPens = m_Pens[CXWay::e_Residential];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
 
-	pPens = m_Pens[CXWay::eService];
+	pPens = m_Pens[CXWay::e_Service];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xE0, 0xE0, 0xE0));
 
-	pPens = m_Pens[CXWay::eBridleway];
+	pPens = m_Pens[CXWay::e_Bridleway];
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[CXWay::eCycleway];
+	pPens = m_Pens[CXWay::e_Cycleway];
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x80, 0x00));
 
-	pPens = m_Pens[CXWay::eFootway];
+	pPens = m_Pens[CXWay::e_Footway];
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xF9, 0x80, 0x72));
 
-	pPens = m_Pens[CXWay::ePedestrian];
+	pPens = m_Pens[CXWay::e_Pedestrian];
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[CXWay::eSteps];
+	pPens = m_Pens[CXWay::e_Steps];
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
@@ -122,7 +122,7 @@ void CXPenHolder::CreatePens() {
 
 //-------------------------------------
 void CXPenHolder::DestroyPens() {
-	for(size_t i=0; i<CXWay::eEnumCount; i++) {
+	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
 		SPens *pPens = m_Pens[i];
 		delete pPens->m_pBg;
 		delete pPens->m_pSegm;

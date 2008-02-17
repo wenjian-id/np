@@ -30,6 +30,7 @@
 #include "CXPen.hpp"
 #include "CXTransformationMatrix.hpp"
 #include "TargetIncludes.hpp"
+#include "Utils.hpp"
 
 
 // Mapnik colors
@@ -37,25 +38,25 @@ static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
 static const CXRGB FGCOLOR(0x00, 0x00, 0x00);
 const double ZoomFactor = 1.2;
 
-CXWay::E_KEYHIGHWAY Order[CXWay::eEnumCount] = {
-	CXWay::eUnknown,
-	CXWay::eSteps,
-	CXWay::ePedestrian,
-	CXWay::eFootway,
-	CXWay::eCycleway,
-	CXWay::eBridleway,
-	CXWay::eService,
-	CXWay::eResidential,
-	CXWay::eTrack,
-	CXWay::eUnclassified,
-	CXWay::eTertiary,
-	CXWay::eSecondary,
-	CXWay::ePrimaryLink,
-	CXWay::eTrunkLink,
-	CXWay::eMotorwayLink,
-	CXWay::ePrimary,
-	CXWay::eTrunk,
-	CXWay::eMotorway
+CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
+	CXWay::e_Unknown,
+	CXWay::e_Steps,
+	CXWay::e_Pedestrian,
+	CXWay::e_Footway,
+	CXWay::e_Cycleway,
+	CXWay::e_Bridleway,
+	CXWay::e_Service,
+	CXWay::e_Residential,
+	CXWay::e_Track,
+	CXWay::e_Unclassified,
+	CXWay::e_Tertiary,
+	CXWay::e_Secondary,
+	CXWay::e_PrimaryLink,
+	CXWay::e_TrunkLink,
+	CXWay::e_MotorwayLink,
+	CXWay::e_Primary,
+	CXWay::e_Trunk,
+	CXWay::e_Motorway
 };
 
 //----------------------------------------------------------------------------
@@ -63,7 +64,7 @@ CXWay::E_KEYHIGHWAY Order[CXWay::eEnumCount] = {
 CXMapPainter2D::CXMapPainter2D() :
 	m_Scale(1/2.5)
 {
-	for(size_t i=0; i<CXWay::eEnumCount; i++) {
+	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
 	}
 }
@@ -71,11 +72,18 @@ CXMapPainter2D::CXMapPainter2D() :
 //-------------------------------------
 CXMapPainter2D::~CXMapPainter2D() {
 	// delete arrays
-	for(size_t i=0; i<CXWay::eEnumCount; i++) {
+	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
 		TWayBuffer *pBuffer = m_DrawWays[i];
 		delete pBuffer;
 	}
 	m_DrawWays.Clear();
+}
+
+//-------------------------------------
+void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height) {
+	// reload POI bitmaps
+	m_BmpPOIAmenity1.Create(pDC, 160, 160);
+	m_BmpPOIAmenity1.LoadFromFile(CXOptions::Instance()->GetAmenity1FileName());
 }
 
 //-------------------------------------
@@ -291,6 +299,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXExactTime StopTrackLog;
 	CXExactTime StopScale;
 	CXExactTime StopCompass;
+	CXExactTime StopPOI;
+	CXExactTime StopPos;
+
 
 	int CompassSize = CXOptions::Instance()->GetCompassSize();
 	tIRect CompassRect(0,0,CompassSize,CompassSize);
@@ -352,16 +363,16 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		}
 		StopPrepare.SetNow();
 		// ok, now draw bg
-		for(i=0; i< CXWay::eEnumCount; i++) {
+		for(i=0; i< CXWay::e_EnumCount; i++) {
 			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
-		for(i=0; i< CXWay::eEnumCount; i++) {
+		for(i=0; i< CXWay::e_EnumCount; i++) {
 			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
 		StopDrawWays.SetNow();
 
 		// clear arrays
-		for(i=0; i<CXWay::eEnumCount; i++) {
+		for(i=0; i<CXWay::e_EnumCount; i++) {
 			TWayBuffer *pBuffer = m_DrawWays[i];
 			pBuffer->Clear();
 		}
@@ -389,6 +400,25 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			}
 		}
 		StopTrackLog.SetNow();
+
+
+		// test code for POIs
+		TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
+		POS PosN = POINodes.GetStart();
+		CXPOINode *pNode = NULL;
+		while (POINodes.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+			int x = pNode->GetDisplayX();
+			int y = pNode->GetDisplayY();
+			if((x >= 0) && (x < Width) && (y >= 0) && (y < Height)) {
+				if(pNode->IsPOIAmenity1()) {
+					int row = 0;
+					int col = 0;
+					pNode->ComputeAmenity1PosInBMP(row, col);
+					pBMP->DrawTransparent(&m_BmpPOIAmenity1, x-10, y-10, col*20, row*20, 20, 20, COLOR_TRANSPARENT);
+				}
+			}
+		}
+		StopPOI.SetNow();
 
 		int X[4];
 		int Y[4];
@@ -440,21 +470,20 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
 //		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
+		StopPos.SetNow();
 	}
 	CXPOWMMap::Instance()->UnlockMap();
 
 
-	CXExactTime Stop;
-
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];
-		snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld Co:%ld Sc:%ld Ps:%ld",
+		snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld POI:%ld Co:%ld Sc:%ld Pos:%ld",
 					StopPrepare-StopLock, StopDrawWays-StopPrepare, WayCount, 
-					StopTrackLog-StopDrawWays, StopCompass-StopTrackLog, StopScale-StopCompass,
-					Stop-StopScale);
+					StopTrackLog-StopDrawWays, StopPOI-StopTrackLog, StopCompass-StopPOI,
+					StopScale-StopCompass, StopPos-StopScale);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-		TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop());
+		TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop()+20);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
 }

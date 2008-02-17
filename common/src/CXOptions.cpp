@@ -186,6 +186,10 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	CXStringASCII ZoomOut=DirIcons;
 	ZoomOut+=F.Get("ZoomOutName", "zoomout.bmp");
 	SetZoomOutFileName(ZoomOut);
+	// amenity
+	CXStringASCII Amenity1=DirIcons;
+	Amenity1+=F.Get("Amenity1Name", "amenity1.bmp");
+	SetAmenity1FileName(Amenity1);
 	return true;
 }
 
@@ -439,6 +443,18 @@ CXStringASCII CXOptions::GetZoomOutFileName() const {
 void CXOptions::SetZoomOutFileName(const CXStringASCII & Value) {
 	CXMutexLocker L(&m_Mutex);
 	m_ZoomOutFileName = Value;
+}
+
+//-------------------------------------
+CXStringASCII CXOptions::GetAmenity1FileName() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_Amenity1FileName;
+}
+
+//-------------------------------------
+void CXOptions::SetAmenity1FileName(const CXStringASCII & Value) {
+	CXMutexLocker L(&m_Mutex);
+	m_Amenity1FileName = Value;
 }
 
 //-------------------------------------
