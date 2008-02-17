@@ -72,10 +72,10 @@ void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, 
 		return;
 	if(pBmp == NULL)
 		return;
-	QPixmap cpy = QPixmap::fromImage(*pBmp->GetImage());
-	QBitmap mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskInColor);
-	cpy.setMask(mask);
+	QImage cpy = *pBmp->GetImage();
+	QImage mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskOutColor);
+	cpy.setAlphaChannel(mask);
 	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
 	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
-	m_pPainter->drawPixmap(tgt, cpy, src);
+	m_pPainter->drawImage(tgt, cpy, src);
 }

@@ -413,11 +413,10 @@ void CXBitmap::DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSo
 		return;
 
 	QRect src(XSource, YSource, Width, Height);
-	QPixmap cpy = QPixmap::fromImage(pBmp->GetImage()->copy(src));
-	QBitmap mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskInColor);
-	cpy.setMask(mask);
+	QImage cpy = pBmp->GetImage()->copy(src);
+	QImage mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskOutColor);
+	cpy.setAlphaChannel(mask);
 	src = QRect(0, 0, Width, Height);
 	QRect tgt(XTarget, YTarget, Width, Height);
-	m_pPainter->drawPixmap(tgt, cpy, src);
-	
+	m_pPainter->drawImage(tgt, cpy, src);
 }
