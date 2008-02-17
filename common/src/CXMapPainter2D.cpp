@@ -80,7 +80,7 @@ CXMapPainter2D::~CXMapPainter2D() {
 }
 
 //-------------------------------------
-void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height) {
+void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /*Height*/) {
 	// reload POI bitmaps
 	m_BmpPOIAmenity1.Create(pDC, 160, 160);
 	m_BmpPOIAmenity1.LoadFromFile(CXOptions::Instance()->GetAmenity1FileName());
@@ -406,6 +406,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
 		POS PosN = POINodes.GetStart();
 		CXPOINode *pNode = NULL;
+
 		while (POINodes.GetNext(PosN, pNode) != TNodeMap::NPOS) {
 			int x = pNode->GetDisplayX();
 			int y = pNode->GetDisplayY();
@@ -418,6 +419,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 				}
 			}
 		}
+
 		StopPOI.SetNow();
 
 		int X[4];
@@ -473,7 +475,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		StopPos.SetNow();
 	}
 	CXPOWMMap::Instance()->UnlockMap();
-
 
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];

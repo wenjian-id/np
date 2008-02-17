@@ -86,7 +86,7 @@ void CXMapPainterDoubleBuffered::SwitchBuffers() {
 }
 
 //-------------------------------------
-void CXMapPainterDoubleBuffered::OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height) {
+void CXMapPainterDoubleBuffered::OnBuffersCreated(CXDeviceContext * /*pDC*/, int /*Width*/, int /*Height*/) {
 	// do nothing
 }
 
