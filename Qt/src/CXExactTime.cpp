@@ -58,7 +58,7 @@ void CXExactTime::SetNow() {
 
 //-------------------------------------
 unsigned long CXExactTime::operator - (const CXExactTime & rOther) const {
-	if(m_Time < m_Time)
+	if(m_Time < rOther.m_Time)
 		return 0;
 	// compute difference in seconds
 	return rOther.m_Time.time().msecsTo(m_Time.time());
