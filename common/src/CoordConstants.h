@@ -33,19 +33,20 @@
 
 #include "CoordConversion.h"
 
-const double UTMPI = 3.14159265;		///< oiu
-const double FOURTHPI = UTMPI / 4;		///< oiu
-const double deg2rad = UTMPI / 180;		///< oiu
-const double rad2deg = 180.0 / UTMPI;	///< oiu
+const double UTMPI = 3.14159265;		///< PI
+const double FOURTHPI = UTMPI / 4;		///< PI/4
+const double deg2rad = UTMPI / 180;		///< Conversion factor for deg -> rad
+const double rad2deg = 180.0 / UTMPI;	///< Conversion factor for rad -> deg
 
-const int UTMZoneNone = -1;				///< oiu
-const char UTMLetterNone = 'Z';			///< oiu
-const int WGS84 = 23;					///< oiu
+const int UTMZoneNone = -1;				///< UTM zone "none"
+const char UTMLetterNone = 'Z';			///< UTM letter "none"
+const int WGS84 = 23;					///< Used ellipsoid
 
 //-------------------------------------
 /*
- * \brief oiu
+ * \brief Possible ellipsoids.
  *
+ *	Possible ellipsoids.
  */
 static Ellipsoid ellipsoid[] = {//  id, Ellipsoid name, Equatorial Radius, square of eccentricity
 	Ellipsoid( -1, "Placeholder", 0, 0),//placeholder only, To allow array indices to match id numbers

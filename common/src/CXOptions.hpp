@@ -87,7 +87,7 @@ private:
 	CXStringASCII		m_SavingOffFileName;	///< oiu
 	CXStringASCII		m_ZoomInFileName;		///< oiu
 	CXStringASCII		m_ZoomOutFileName;		///< oiu
-	CXStringASCII		m_Amenity1FileName;		///< oiu
+	CXStringASCII		m_Amenity1FileName;		///< File name for amenities part 1
 	mutable CXMutex		m_Mutex;				///< oiu
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -372,14 +372,18 @@ public:
 	void SetZoomOutFileName(const CXStringASCII & Value);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Get filename for amenity part 1 bitmap.
 	 *
+	 *	Get filename for amenity part 1 bitmap.
+	 *	\return		Filename.
 	 */
 	CXStringASCII GetAmenity1FileName() const;
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Set filename for amenity part 1 bitmap.
 	 *
+	 *	Set filename for amenity part 1 bitmap.
+	 *	\param	Value	Filename.
 	 */
 	void SetAmenity1FileName(const CXStringASCII & Value);
 	//-------------------------------------

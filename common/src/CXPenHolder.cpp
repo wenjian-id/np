@@ -86,7 +86,7 @@ void CXPenHolder::CreatePens() {
 
 	pPens = m_Pens[CXWay::e_Track];
 	pPens->m_pBg		= NULL;
-	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 2, CXRGB(0xF9, 0x80, 0x72));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 2, CXRGB(0xD7, 0x93, 0x31));
 
 	pPens = m_Pens[CXWay::e_Residential];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
@@ -107,7 +107,7 @@ void CXPenHolder::CreatePens() {
 
 	pPens = m_Pens[CXWay::e_Footway];
 	pPens->m_pBg		= NULL;
-	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xF9, 0x80, 0x72));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xD7, 0x93, 0x31));
 
 	pPens = m_Pens[CXWay::e_Pedestrian];
 	/// \todo implement

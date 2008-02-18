@@ -35,43 +35,47 @@
 
 //-------------------------------------
 /*
- * \brief oiu
+ * \brief Convert longitude and latitude to UTM coordinates.
  *
+ *	Convert longitude and latitude to UTM coordinates.
+ *	\param	ReferenceEllipsoid		Ellipsoid to use.
+ *	\param	dLon					Longitude [decimal degrees].
+ *	\param	dLat					Latitude [decimal degrees].
+ *	\param	ForceZoneNumber			Force coordinates to this zone number. If UTMZoneNone the UTM zone will be computed.
+ *	\param	ZoneNumber				Computed UTM zone number.
+ *	\param	UTMLetter				Computed UTM letter.
+ *	\param	UTMEasting				Computed UTM easting.
+ *	\param	UTMNorthing				Computed UTM northing.
  */
 void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
 
 //-------------------------------------
 /*
- * \brief oiu
+ * \brief Convert UTM coordinates to longitude and latitude.
  *
+ *	Convert UTM coordinates to longitude and latitude.
+ *	\param	ReferenceEllipsoid		Ellipsoid to use.
+ *	\param	UTMEasting				UTM easting.
+ *	\param	UTMNorthing				UTM northing.
+ *	\param	ZoneNumber				UTM zone number.
+ *	\param	rdLon					Computed longitude [decimal degrees].
+ *	\param	rdLat					Computed Latitude [decimal degrees].
  */
 void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& rdLon,  double& rdLat);
 
 //-------------------------------------
 /*
- * \brief oiu
+ * \brief Get UTM letter from latitude.
  *
+ * Get UTM letter from latitude.
  */
 char UTMLetterDesignator(double dLat);
 
 //-------------------------------------
 /*
- * \brief oiu
+ * \brief Class describing ellipsoids.
  *
- */
-void LLtoSwissGrid(const double dLat, const double dLon, double &SwissNorthing, double &SwissEasting);
-
-//-------------------------------------
-/*
- * \brief oiu
- *
- */
-void SwissGridtoLL(const double SwissNorthing, const double SwissEasting, double& rdLat, double& rdLon);
-
-//-------------------------------------
-/*
- * \brief oiu
- *
+ * Class describing ellipsoids.
  */
 class Ellipsoid {
 public:

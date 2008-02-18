@@ -162,7 +162,7 @@ public:
 	 * \brief oiu
 	 *
 	 * Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
-	 * Correctnes taken from http://wiki.openstreetmap.org/index.php/Map_Features
+	 * Correctness taken from http://wiki.openstreetmap.org/index.php/Map_Features
 	 */
 	enum E_POI_AMENITY1_TYPE {		// must fit the values in the map file!!!
 		e_POI_Amenity1_Parking				= 0x0000000000000001,	///< Car park.
@@ -199,7 +199,7 @@ public:
 		e_POI_Amenity1_Prison				= 0x0000000080000000,	///< Prison.
 	};
 private:
-	t_uint64	m_POIAmenity1;	///< POI Amenity1 flags.
+	t_uint64	m_POIAmenity1;	///< POI Amenity part 1 flags.
 	//-------------------------------------
 	CXPOINode();										///< Not used.
 	CXPOINode(const CXPOINode &);						///< Not used.
