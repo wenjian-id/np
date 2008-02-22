@@ -69,6 +69,25 @@ CXOptions *CXOptions::Instance() {
 }
 
 //-------------------------------------
+CXStringASCII CXOptions::CreateAbsolutePath(const CXStringASCII & StartPath, const CXStringASCII &Path) {
+	CXStringASCII Result;
+	if((Path.GetSize() >= 1) && (Path[0] == PATHDELIMITER)) {
+		// Path is an absolute path already. use it
+		Result = Path;
+	} else {
+		// Path is a relative path. Append to StartPath.
+		Result = StartPath;
+		Result += Path;
+	}
+	// append PATHDELIMITER if neccessary
+	if((Result.GetSize() > 0) && (Result[Result.GetSize()-1] != PATHDELIMITER)) {
+		Result+=PATHDELIMITER;
+	}
+	return Result;
+}
+
+
+//-------------------------------------
 bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// read options
 	CXFileIni F;
@@ -139,27 +158,13 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	if(F.Get("DBGDrawTimes", "off").ToUpper() == "ON")
 		SetDebugInfoFlag(e_DBGDrawTimes);
 	// maps directory
-	CXStringASCII DirMaps=m_StartPath;
-	DirMaps+=F.Get("DirectoryMaps", "Maps");
-	if((DirMaps.GetSize() > 0) && (DirMaps[DirMaps.GetSize()-1] != PATHDELIMITER)) {
-		DirMaps+=PATHDELIMITER;
-	}
-	SetDirectoryMaps(DirMaps);
+	SetDirectoryMaps(CreateAbsolutePath(m_StartPath, F.Get("DirectoryMaps", "Maps")));
 	// Save directory
-	CXStringASCII DirSave=m_StartPath;
-	DirSave+=F.Get("DirectorySave", "Save");
-	if((DirSave.GetSize() > 0) && (DirSave[DirSave.GetSize()-1] != PATHDELIMITER)) {
-		DirSave+=PATHDELIMITER;
-	}
-	SetDirectorySave(DirSave);
+	SetDirectorySave(CreateAbsolutePath(m_StartPath, F.Get("DirectorySave", "Save")));
 	// Icons directory
-	CXStringASCII DirIcons=m_StartPath;
-	DirIcons+=F.Get("DirectoryIcons", "Icons");
-	if((DirIcons.GetSize() > 0) && (DirIcons[DirIcons.GetSize()-1] != PATHDELIMITER)) {
-		DirIcons+=PATHDELIMITER;
-	}
-	SetDirectoryIcons(DirIcons);
+	SetDirectoryIcons(CreateAbsolutePath(m_StartPath, F.Get("DirectoryIcons", "Icons")));
 	// logo
+	CXStringASCII DirIcons=GetDirectoryIcons();
 	CXStringASCII Logo=DirIcons;
 	Logo+=F.Get("LogoName", "logo.bmp");
 	SetLogoFileName(Logo);

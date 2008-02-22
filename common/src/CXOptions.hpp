@@ -92,6 +92,19 @@ private:
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
 	const CXOptions & operator = (const CXOptions &);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief Create an absolute path for directory entries.
+	 *
+	 * Create an absolute path for directory entries.
+	 * If Path is an absolute path (well, a path starting whith PATHDELIMITER)
+	 * already it will be used as result, else the result will be StartPath + Path.
+	 * If necessary, a PATHDELIMITER will be appended.
+	 * \param	StartPath	Start path
+	 * \param	Path		Path to be processed.
+	 * \return				New absolute path.
+	 */
+	CXStringASCII CreateAbsolutePath(const CXStringASCII &StartPath, const CXStringASCII &Path);
 protected:
 public:
 	//-------------------------------------
