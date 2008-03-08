@@ -48,6 +48,8 @@ template <class t> t Min(const t &a, const t&b) {
 
 const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);
 
+static const size_t MaxPOITypes = 8; ///< oiu
+
 //-------------------------------------
 /*
  * \brief Possible command.
@@ -91,15 +93,15 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue);
 
 //-------------------------------------
 /*
- * \brief Read an unsigned long (4 bytes) from a file.
+ * \brief Read a 32 bit unsigned integer from a file.
  *
- * Read an unsigned long (4 bytes) from a file.
+ * Read a 32 bit unsigned integer from a file.
  * \todo	use platform independent type
  * \param	rInFile     The file to read from.
  * \param	rValue		Value to fill with data.
  * \return				true if successfull.
  */
-bool ReadUL32(CXFile & rInFile, unsigned long & rValue);
+bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
 
 //-------------------------------------
 /*

@@ -34,7 +34,7 @@
 #include "CXDeviceContext.hpp"
 #include "Utils.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.1.3-dev1";
+const char * VERSIONSTRING ="NaviPOWM 0.1.3-dev2";
 const char * INFOSTRING1 ="(C) Doru-Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 

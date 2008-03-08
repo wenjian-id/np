@@ -37,11 +37,11 @@ class CXCache;
  */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
-	double					m_Scale;			///< Current scale factor.
-	CXPenHolder				m_PenHolder;		///< oiu
-	CXBuffer<TWayBuffer *>	m_DrawWays;			///< oiu
-	CXBitmap				m_BmpPOIAmenity1;	///< Bitmap for Amenities Part1
-	mutable CXMutex			m_Mutex;			///< oiu
+	double					m_Scale;				///< Current scale factor.
+	CXPenHolder				m_PenHolder;			///< oiu
+	CXBuffer<TWayBuffer *>	m_DrawWays;				///< oiu
+	CXBitmap				m_BmpPOI[MaxPOITypes];	///< Bitmaps for POIs
+	mutable CXMutex			m_Mutex;				///< oiu
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.

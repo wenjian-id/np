@@ -29,7 +29,7 @@
 #include "Utils.hpp"
 #include "CoordConversion.h"
 
-const unsigned int MAPVERSION = 0x00010301; // 0.1.3-dev1
+const unsigned int MAPVERSION = 0x00010302; // 0.1.3-dev2
 
 //----------------------------------------------------------------------------
 //-------------------------------------
@@ -91,9 +91,11 @@ void CXNode::SetDisplayY(int Y) {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXPOINode::CXPOINode(t_uint64 ID, double Lon, double Lat) :
-	CXNode(ID, Lon, Lat),
-	m_POIAmenity1(0)
+	CXNode(ID, Lon, Lat)
 {
+	for(size_t i=0; i<MaxPOITypes; i++) {
+		m_POI[i] = 0;
+	}
 }
 
 //-------------------------------------
@@ -101,35 +103,31 @@ CXPOINode::~CXPOINode() {
 }
 
 //-------------------------------------
-bool CXPOINode::IsPOIAmenity1Type(E_POI_AMENITY1_TYPE eType) const {
-	return (m_POIAmenity1 & eType) != 0;
+bool CXPOINode::IsPOI(size_t Index) const {
+	if(Index >= MaxPOITypes)
+		Index = 0;
+	return m_POI[Index] != 0;
 }
 
 //-------------------------------------
-bool CXPOINode::IsPOIAmenity1() const {
-	return m_POIAmenity1 != 0;
+t_uint32 CXPOINode::GetPOIType(size_t Index) const {
+	if(Index >= MaxPOITypes)
+		Index = 0;
+	return m_POI[Index];
 }
 
 //-------------------------------------
-t_uint64 CXPOINode::GetPOIAmenity1Type() const {
-	return m_POIAmenity1;
+void CXPOINode::SetPOIType(size_t Index, t_uint32 NewValue) {
+	if(Index >= MaxPOITypes)
+		Index = 0;
+	m_POI[Index] = NewValue;
 }
 
 //-------------------------------------
-void CXPOINode::SetPOIAmenity1Type(t_uint64 NewValue) {
-	m_POIAmenity1 = NewValue;
-}
-
-//-------------------------------------
-void CXPOINode::ComputeAmenity1PosInBMP(int & rRow, int & rCol) {
+void CXPOINode::ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol) {
 	rRow = 0;
 	rCol = 0;
-	t_uint64 tmp = m_POIAmenity1;
-	if((tmp & 0xFFFFFFFF) == 0) {
-		// no lower 32 bits set
-		tmp = tmp >> 32;
-		rRow += 4;
-	}
+	t_uint32 tmp = POI;
 	if((tmp & 0xFFFF) == 0) {
 		// no lower 16 bits set
 		tmp = tmp >> 16;
@@ -362,9 +360,9 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 		return false;
 	}
 
-	unsigned long MagicCode = 0;
-	unsigned long ReqMagicCode = ('P' << 24) + ('O' << 16) + ('W' << 8) + 'M';
-	if(!ReadUL32(InFile, MagicCode)) {
+	t_uint32 MagicCode = 0;
+	t_uint32 ReqMagicCode = ('P' << 24) + ('O' << 16) + ('W' << 8) + 'M';
+	if(!ReadUI32(InFile, MagicCode)) {
 		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
@@ -378,9 +376,9 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 	}
 
 	// check version
-	unsigned long Version = 0;
-	unsigned long ReqVersion = MAPVERSION;
-	if(!ReadUL32(InFile, Version)) {
+	t_uint32 Version = 0;
+	t_uint32 ReqVersion = MAPVERSION;
+	if(!ReadUI32(InFile, Version)) {
 		CXStringASCII ErrorMsg("Error reading Version from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
@@ -434,24 +432,24 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 //-------------------------------------
 bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & FileName) {
 	// node count
-	unsigned long NodeCount = 0;
-	if(!ReadUL32(InFile, NodeCount)) {
+	t_uint32 NodeCount = 0;
+	if(!ReadUI32(InFile, NodeCount)) {
 		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read nodes
-	for(unsigned long ulNode=0; ulNode<NodeCount; ulNode++) {
+	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
-		t_uint64 POIType = 0;
-		unsigned long Lon = 0; 
-		unsigned long Lat = 0;
+		unsigned char POIIdx = 0;
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
 		ReadUI64(InFile, ID);
-		ReadUL32(InFile, Lon);
-		ReadUL32(InFile, Lat);
-		ReadUI64(InFile, POIType);
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+		ReadB(InFile, POIIdx);
 
 		// compute lon
 		double dLon = 1.0;
@@ -474,14 +472,22 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 		dLat = dLat*Lat/1000000.0;
 
 		CXNode *pNode = NULL;
-		if(POIType == 0) {
+		if(POIIdx == 0) {
 			// create node
 			pNode = new CXNode(ID, dLon, dLat);
 		} else {
 			// create POI node
 			CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
-			// set node attributes
-			pPOINode->SetPOIAmenity1Type(POIType);
+
+			t_uint32 POI = 0;
+			for(size_t i=0; i<MaxPOITypes; i++) {
+				if((POIIdx % 2) == 1) {
+					ReadUI32(InFile, POI);
+					pPOINode->SetPOIType(MaxPOITypes-i-1, POI);
+				}
+				POIIdx = POIIdx >> 1;
+			}
+
 			// add node to POI map
 			m_POINodes.SetAt(ID, pPOINode);
 			// set pNode
@@ -492,15 +498,15 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 	}
 
 	// way count
-	unsigned long WayCount = 0;
-	if(!ReadUL32(InFile, WayCount)) {
+	t_uint32 WayCount = 0;
+	if(!ReadUI32(InFile, WayCount)) {
 		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read ways
-	for(unsigned long ulWay=0; ulWay<WayCount; ulWay++) {
+	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
 		t_uint64 ID = 0;
 		unsigned char HighwayType = 0;
@@ -518,9 +524,9 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 		// add node
 		m_WayMap.SetAt(ID, pWay);
 		// 
-		unsigned long NodeCount = 0;
-		ReadUL32(InFile, NodeCount);
-		for(unsigned long ul=0; ul<NodeCount; ul++) {
+		t_uint32 NodeCount = 0;
+		ReadUI32(InFile, NodeCount);
+		for(t_uint32 ul=0; ul<NodeCount; ul++) {
 			t_uint64 SegID = 0;
 			ReadUI64(InFile, SegID);
 			CXNode *pNode = NULL;
@@ -535,22 +541,22 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 //-------------------------------------
 bool CXPOWMMap::LoadMap0_1_2(CXFile & InFile, const CXStringASCII & FileName) {
 	// node count
-	unsigned long NodeCount = 0;
-	if(!ReadUL32(InFile, NodeCount)) {
+	t_uint32 NodeCount = 0;
+	if(!ReadUI32(InFile, NodeCount)) {
 		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read nodes
-	for(unsigned long ulNode=0; ulNode<NodeCount; ulNode++) {
+	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
-		unsigned long Lon = 0; 
-		unsigned long Lat = 0;
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
 		ReadUI64(InFile, ID);
-		ReadUL32(InFile, Lon);
-		ReadUL32(InFile, Lat);
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
 
 		// compute lon
 		double dLon = 1.0;
@@ -579,15 +585,15 @@ bool CXPOWMMap::LoadMap0_1_2(CXFile & InFile, const CXStringASCII & FileName) {
 	}
 
 	// way count
-	unsigned long WayCount = 0;
-	if(!ReadUL32(InFile, WayCount)) {
+	t_uint32 WayCount = 0;
+	if(!ReadUI32(InFile, WayCount)) {
 		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read ways
-	for(unsigned long ulWay=0; ulWay<WayCount; ulWay++) {
+	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
 		t_uint64 ID = 0;
 		unsigned char HighwayType = 0;
@@ -605,9 +611,9 @@ bool CXPOWMMap::LoadMap0_1_2(CXFile & InFile, const CXStringASCII & FileName) {
 		// add node
 		m_WayMap.SetAt(ID, pWay);
 		// 
-		unsigned long NodeCount = 0;
-		ReadUL32(InFile, NodeCount);
-		for(unsigned long ul=0; ul<NodeCount; ul++) {
+		t_uint32 NodeCount = 0;
+		ReadUI32(InFile, NodeCount);
+		for(t_uint32 ul=0; ul<NodeCount; ul++) {
 			t_uint64 SegID = 0;
 			ReadUI64(InFile, SegID);
 			CXNode *pNode = NULL;
@@ -622,22 +628,22 @@ bool CXPOWMMap::LoadMap0_1_2(CXFile & InFile, const CXStringASCII & FileName) {
 //-------------------------------------
 bool CXPOWMMap::LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName) {
 	// node count
-	unsigned long NodeCount = 0;
-	if(!ReadUL32(InFile, NodeCount)) {
+	t_uint32 NodeCount = 0;
+	if(!ReadUI32(InFile, NodeCount)) {
 		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read nodes
-	for(unsigned long ulNode=0; ulNode<NodeCount; ulNode++) {
+	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
-		unsigned long Lon = 0; 
-		unsigned long Lat = 0;
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
 		ReadUI64(InFile, ID);
-		ReadUL32(InFile, Lon);
-		ReadUL32(InFile, Lat);
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
 
 		// compute lon
 		double dLon = 1.0;
@@ -666,15 +672,15 @@ bool CXPOWMMap::LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName) {
 	}
 
 	// way count
-	unsigned long WayCount = 0;
-	if(!ReadUL32(InFile, WayCount)) {
+	t_uint32 WayCount = 0;
+	if(!ReadUI32(InFile, WayCount)) {
 		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
 		ErrorMsg += FileName;
 		DoOutputErrorMessage(ErrorMsg.c_str());
 		return false;
 	}
 	// read ways
-	for(unsigned long ulWay=0; ulWay<WayCount; ulWay++) {
+	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
 		t_uint64 ID = 0;
 		unsigned char HighwayType = 0;
@@ -689,9 +695,9 @@ bool CXPOWMMap::LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName) {
 		// add node
 		m_WayMap.SetAt(ID, pWay);
 		// 
-		unsigned long NodeCount = 0;
-		ReadUL32(InFile, NodeCount);
-		for(unsigned long ul=0; ul<NodeCount; ul++) {
+		t_uint32 NodeCount = 0;
+		ReadUI32(InFile, NodeCount);
+		for(t_uint32 ul=0; ul<NodeCount; ul++) {
 			t_uint64 SegID = 0;
 			ReadUI64(InFile, SegID);
 			CXNode *pNode = NULL;

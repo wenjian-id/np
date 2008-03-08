@@ -69,7 +69,7 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue) {
 }
 
 //-------------------------------------
-bool ReadUL32(CXFile & rInFile, unsigned long & rValue) {
+bool ReadUI32(CXFile & rInFile, t_uint32 & rValue) {
 	// reset value
 	rValue = 0;
 	unsigned char buf[4];

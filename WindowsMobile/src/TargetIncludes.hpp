@@ -27,6 +27,10 @@
 
 #define WAIT_INFINITE INFINITE
 
+#ifndef t_uint32
+typedef unsigned __int32 t_uint32;
+#endif
+
 #ifndef t_uint64
 typedef unsigned __int64 t_uint64;
 #endif

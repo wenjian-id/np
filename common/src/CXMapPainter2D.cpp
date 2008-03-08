@@ -37,6 +37,10 @@
 static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
 static const CXRGB FGCOLOR(0x00, 0x00, 0x00);
 const double ZoomFactor = 1.2;
+static const size_t POIWIDTH		= 20;
+static const size_t POIHEIGHT		= 20;
+static const size_t POICOUNTHORZ	= 8;
+static const size_t POICOUNTVERT	= 4;
 
 CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
 	CXWay::e_Unknown,
@@ -82,8 +86,10 @@ CXMapPainter2D::~CXMapPainter2D() {
 //-------------------------------------
 void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /*Height*/) {
 	// reload POI bitmaps
-	m_BmpPOIAmenity1.Create(pDC, 160, 160);
-	m_BmpPOIAmenity1.LoadFromFile(CXOptions::Instance()->GetAmenity1FileName());
+	for(size_t i=0; i<MaxPOITypes; i++) {
+		m_BmpPOI[i].Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
+		m_BmpPOI[i].LoadFromFile(CXOptions::Instance()->GetPOIFileName(i));
+	}
 }
 
 //-------------------------------------
@@ -411,11 +417,17 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			int x = pNode->GetDisplayX();
 			int y = pNode->GetDisplayY();
 			if((x >= 0) && (x < Width) && (y >= 0) && (y < Height)) {
-				if(pNode->IsPOIAmenity1()) {
-					int row = 0;
-					int col = 0;
-					pNode->ComputeAmenity1PosInBMP(row, col);
-					pBMP->DrawTransparent(&m_BmpPOIAmenity1, x-10, y-10, col*20, row*20, 20, 20, COLOR_TRANSPARENT);
+				for(size_t i=0; i<MaxPOITypes; i++) {
+					if(pNode->IsPOI(i)) {
+						int row = 0;
+						int col = 0;
+						pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
+						pBMP->DrawTransparent(	&(m_BmpPOI[i]),
+												x-POIWIDTH/2, y-POIHEIGHT/2,
+												col*POIWIDTH, row*POIHEIGHT,
+												POIWIDTH, POIHEIGHT,
+												COLOR_TRANSPARENT);
+					}
 				}
 			}
 		}

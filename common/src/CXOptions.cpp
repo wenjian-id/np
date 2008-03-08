@@ -191,10 +191,16 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	CXStringASCII ZoomOut=DirIcons;
 	ZoomOut+=F.Get("ZoomOutName", "zoomout.bmp");
 	SetZoomOutFileName(ZoomOut);
-	// amenity
-	CXStringASCII Amenity1=DirIcons;
-	Amenity1+=F.Get("Amenity1Name", "amenity1.bmp");
-	SetAmenity1FileName(Amenity1);
+	// POIs
+	for(size_t i=0; i<MaxPOITypes; i++) {
+		char buf1[100];
+		char buf2[100];
+		snprintf(buf1, sizeof(buf1), "POI%dName", i+1);
+		snprintf(buf2, sizeof(buf2), "poi%d.bmp", i+1);
+		CXStringASCII POI=DirIcons;
+		POI+=F.Get(buf1, buf2);
+		SetPOIFileName(i, POI);
+	}
 	return true;
 }
 
@@ -451,17 +457,20 @@ void CXOptions::SetZoomOutFileName(const CXStringASCII & Value) {
 }
 
 //-------------------------------------
-CXStringASCII CXOptions::GetAmenity1FileName() const {
+CXStringASCII CXOptions::GetPOIFileName(size_t Index) const {
 	CXMutexLocker L(&m_Mutex);
-	return m_Amenity1FileName;
+	if(Index >= MaxPOITypes)
+		Index = 0;
+	return m_POIFileNames[Index];
 }
 
 //-------------------------------------
-void CXOptions::SetAmenity1FileName(const CXStringASCII & Value) {
+void CXOptions::SetPOIFileName(size_t Index, const CXStringASCII & Value) {
 	CXMutexLocker L(&m_Mutex);
-	m_Amenity1FileName = Value;
+	if(Index >= MaxPOITypes)
+		Index = 0;
+	m_POIFileNames[Index] = Value;
 }
-
 //-------------------------------------
 bool CXOptions::IsSaving() const {
 	CXMutexLocker L(&m_Mutex);

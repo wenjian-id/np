@@ -26,6 +26,7 @@
 #include "CXStringASCII.hpp"
 #include "CXMutex.hpp"
 #include "ISerial.hpp"
+#include "Utils.hpp"
 
 //---------------------------------------------------------------------
 /*
@@ -54,41 +55,41 @@ public:
 		e_DBGDrawTimes		= 0x0001,		///< Display drawing times.
 	};
 private:
-	static CXOptions	*m_pInstance;			///< oiu
-	CXStringASCII		m_StartPath;			///< oiu
-	CXSerialPortConfig	m_SerialPortConfig;		///< oiu
-	bool				m_oNorthing;			///< oiu
-	bool				m_oFullScreen;			///< oiu
-	bool				m_oShowLogo;			///< Show logo.
-	bool				m_oSaving;				///< oiu
-	bool				m_oShowZoomButtons;		///< oiu
-	bool				m_oShowMaxSpeed;		///< oiu
-	bool				m_oShowCompass;			///< oiu
-	bool				m_oShowTrackLog;		///< oiu
-	bool				m_oShowScale;			///< oiu
-	t_uint64			m_OSMVali;				///< oiu
-	t_uint64			m_DebugInfo;			///< Holder for debug info flags.
-	int					m_InfoBarBottomHeight;	///< oiu
-	int					m_InfoBarTopHeight;		///< oiu
-	int					m_MaxSpeedSize;			///< oiu
-	int					m_CompassSize;			///< oiu
-	size_t				m_TrackLogSize;			///< oiu
-	int					m_TrackLogMinDist;		///< oiu
-	int					m_ScaleWidth;			///< oiu
-	int					m_ScaleHeight;			///< oiu
-	CXStringASCII		m_DirectoryMaps;		///< oiu
-	CXStringASCII		m_DirectorySave;		///< oiu
-	CXStringASCII		m_DirectoryIcons;		///< oiu
-	unsigned long		m_LogoTime;				///< oiu
-	CXStringASCII		m_LogoFileName;			///< oiu
-	CXStringASCII		m_InfoFileName;			///< oiu
-	CXStringASCII		m_QuitFileName;			///< oiu
-	CXStringASCII		m_SavingOnFileName;		///< oiu
-	CXStringASCII		m_SavingOffFileName;	///< oiu
-	CXStringASCII		m_ZoomInFileName;		///< oiu
-	CXStringASCII		m_ZoomOutFileName;		///< oiu
-	CXStringASCII		m_Amenity1FileName;		///< File name for amenities part 1
-	mutable CXMutex		m_Mutex;				///< oiu
+	static CXOptions	*m_pInstance;					///< oiu
+	CXStringASCII		m_StartPath;					///< oiu
+	CXSerialPortConfig	m_SerialPortConfig;				///< oiu
+	bool				m_oNorthing;					///< oiu
+	bool				m_oFullScreen;					///< oiu
+	bool				m_oShowLogo;					///< Show logo.
+	bool				m_oSaving;						///< oiu
+	bool				m_oShowZoomButtons;				///< oiu
+	bool				m_oShowMaxSpeed;				///< oiu
+	bool				m_oShowCompass;					///< oiu
+	bool				m_oShowTrackLog;				///< oiu
+	bool				m_oShowScale;					///< oiu
+	t_uint64			m_OSMVali;						///< oiu
+	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
+	int					m_InfoBarBottomHeight;			///< oiu
+	int					m_InfoBarTopHeight;				///< oiu
+	int					m_MaxSpeedSize;					///< oiu
+	int					m_CompassSize;					///< oiu
+	size_t				m_TrackLogSize;					///< oiu
+	int					m_TrackLogMinDist;				///< oiu
+	int					m_ScaleWidth;					///< oiu
+	int					m_ScaleHeight;					///< oiu
+	CXStringASCII		m_DirectoryMaps;				///< oiu
+	CXStringASCII		m_DirectorySave;				///< oiu
+	CXStringASCII		m_DirectoryIcons;				///< oiu
+	unsigned long		m_LogoTime;						///< oiu
+	CXStringASCII		m_LogoFileName;					///< oiu
+	CXStringASCII		m_InfoFileName;					///< oiu
+	CXStringASCII		m_QuitFileName;					///< oiu
+	CXStringASCII		m_SavingOnFileName;				///< oiu
+	CXStringASCII		m_SavingOffFileName;			///< oiu
+	CXStringASCII		m_ZoomInFileName;				///< oiu
+	CXStringASCII		m_ZoomOutFileName;				///< oiu
+	CXStringASCII		m_POIFileNames[MaxPOITypes];	///< File names for POIs
+	mutable CXMutex		m_Mutex;						///< oiu
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
 	const CXOptions & operator = (const CXOptions &);	///< Not used.
@@ -385,20 +386,22 @@ public:
 	void SetZoomOutFileName(const CXStringASCII & Value);
 	//-------------------------------------
 	/*
-	 * \brief Get filename for amenity part 1 bitmap.
+	 * \brief Get filename for POIs part n bitmap.
 	 *
-	 *	Get filename for amenity part 1 bitmap.
-	 *	\return		Filename.
+	 *	Get filename for POIs part n bitmap.
+	 *	\param	Index	Index of Name.
+	 *	\return			Filename.
 	 */
-	CXStringASCII GetAmenity1FileName() const;
+	CXStringASCII GetPOIFileName(size_t Index) const;
 	//-------------------------------------
 	/*
-	 * \brief Set filename for amenity part 1 bitmap.
+	 * \brief Set filename for POIs part n bitmap.
 	 *
-	 *	Set filename for amenity part 1 bitmap.
+	 *	Set filename for POIs part n bitmap.
+	 *	\param	Index	Index of Name.
 	 *	\param	Value	Filename.
 	 */
-	void SetAmenity1FileName(const CXStringASCII & Value);
+	void SetPOIFileName(size_t Index, const CXStringASCII & Value);
 	//-------------------------------------
 	/*
 	 * \brief oiu

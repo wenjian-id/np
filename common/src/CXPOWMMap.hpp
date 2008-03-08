@@ -32,6 +32,7 @@
 #include "CXFile.hpp"
 #include "CXCoor.hpp"
 #include "CXTrackLog.hpp"
+#include "Utils.hpp"
 
 class CXWay;
 class CXTransformationMatrix2D;
@@ -157,49 +158,149 @@ typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
  */
 class CXPOINode : public CXNode {
 public:
+	//Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
+	// Correctness taken from http://wiki.openstreetmap.org/index.php/Map_Features
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
-	 * Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
-	 * Correctness taken from http://wiki.openstreetmap.org/index.php/Map_Features
+	 *	oiu
 	 */
-	enum E_POI_AMENITY1_TYPE {		// must fit the values in the map file!!!
-		e_POI_Amenity1_Parking				= 0x0000000000000001,	///< Car park.
-		e_POI_Amenity1_Fuel					= 0x0000000000000002,	///< Fuel.
-		e_POI_Amenity1_PlaceOfWorhsip		= 0x0000000000000004,	///< Church, temple, etc.
-		e_POI_Amenity1_Restaurant			= 0x0000000000000008,	///< Restaurant.
-		e_POI_Amenity1_School				= 0x0000000000000010,	///< School.
-		e_POI_Amenity1_Recycling			= 0x0000000000000020,	///< Recycling facilities.
-		e_POI_Amenity1_Telephone			= 0x0000000000000040,	///< Public telephone
-		e_POI_Amenity1_PostBox				= 0x0000000000000080,	///< Post box.
-		e_POI_Amenity1_Pharmacy				= 0x0000000000000100,	///< Pharmacy.
-		e_POI_Amenity1_Bank					= 0x0000000000000200,	///< Bank.
-		e_POI_Amenity1_FastFood				= 0x0000000000000400,	///< Fast food.
-		e_POI_Amenity1_PublicBuilding		= 0x0000000000000800,	///< Public building.
-		e_POI_Amenity1_Pub					= 0x0000000000001000,	///< Pub.
-		e_POI_Amenity1_Hospital				= 0x0000000000002000,	///< Hospital.
-		e_POI_Amenity1_University			= 0x0000000000004000,	///< University campus and buildings.
-		e_POI_Amenity1_PostOffice			= 0x0000000000008000,	///< Post office.
-		e_POI_Amenity1_FireStation			= 0x0000000000010000,	///< Fire station.
-		e_POI_Amenity1_Police				= 0x0000000000020000,	///< Police station.
-		e_POI_Amenity1_TownHall				= 0x0000000000040000,	///< Town hall.
-		e_POI_Amenity1_GraveYard			= 0x0000000000080000,	///< Grave yard.
-		e_POI_Amenity1_BusStation			= 0x0000000000100000,	///< Bus station.
-		e_POI_Amenity1_Toilets				= 0x0000000000200000,	///< Public toilets.
-		e_POI_Amenity1_Cafe					= 0x0000000000400000,	///< Cafe.
-		e_POI_Amenity1_Library				= 0x0000000000800000,	///< Library.
-		e_POI_Amenity1_Cinema				= 0x0000000001000000,	///< Cinema.
-		e_POI_Amenity1_ATM					= 0x0000000002000000,	///< ATM, cash point.
-		e_POI_Amenity1_Theatre				= 0x0000000004000000,	///< Theatre or opera.
-		e_POI_Amenity1_Biergarten			= 0x0000000008000000,	///< Biergarten.
-		e_POI_Amenity1_BicycleParking		= 0x0000000010000000,	///< Parking for bicycles.
-		e_POI_Amenity1_BusStop				= 0x0000000020000000,	///< Bus stop.
-		e_POI_Amenity1_Courthouse			= 0x0000000040000000,	///< Courthouse.
-		e_POI_Amenity1_Prison				= 0x0000000080000000,	///< Prison.
+	enum E_POI1_TYPE {		// must fit the values in the map file!!!
+		// amenities
+		e_POI1_Parking				= 0x00000001,	///< Car park.
+		e_POI1_Fuel					= 0x00000002,	///< Fuel.
+		e_POI1_PlaceOfWorhsip		= 0x00000004,	///< Church, temple, etc.
+		e_POI1_Restaurant			= 0x00000008,	///< Restaurant.
+		e_POI1_School				= 0x00000010,	///< School.
+		e_POI1_Recycling			= 0x00000020,	///< Recycling facilities.
+		e_POI1_Telephone			= 0x00000040,	///< Public telephone
+		e_POI1_PostBox				= 0x00000080,	///< Post box.
+		e_POI1_Pharmacy				= 0x00000100,	///< Pharmacy.
+		e_POI1_Bank					= 0x00000200,	///< Bank.
+		e_POI1_FastFood				= 0x00000400,	///< Fast food.
+		e_POI1_PublicBuilding		= 0x00000800,	///< Public building.
+		e_POI1_Pub					= 0x00001000,	///< Pub.
+		e_POI1_Hospital				= 0x00002000,	///< Hospital.
+		e_POI1_University			= 0x00004000,	///< University campus and buildings.
+		e_POI1_PostOffice			= 0x00008000,	///< Post office.
+		e_POI1_FireStation			= 0x00010000,	///< Fire station.
+		e_POI1_Police				= 0x00020000,	///< Police station.
+		e_POI1_TownHall				= 0x00040000,	///< Town hall.
+		e_POI1_GraveYard			= 0x00080000,	///< Grave yard.
+		e_POI1_BusStation			= 0x00100000,	///< Bus station.
+		e_POI1_Toilets				= 0x00200000,	///< Public toilets.
+		e_POI1_Cafe					= 0x00400000,	///< Cafe.
+		e_POI1_Library				= 0x00800000,	///< Library.
+		e_POI1_Cinema				= 0x01000000,	///< Cinema.
+		e_POI1_ATM					= 0x02000000,	///< ATM, cash point.
+		e_POI1_Theatre				= 0x04000000,	///< Theatre or opera.
+		e_POI1_Biergarten			= 0x08000000,	///< Biergarten.
+		e_POI1_BicycleParking		= 0x10000000,	///< Parking for bicycles.
+		e_POI1_Courthouse			= 0x20000000,	///< Courthouse.
+		e_POI1_Prison				= 0x40000000,	///< Prison.
+		e_POI1_College				= 0x80000000,	///< College.
 	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI2_TYPE {		// must fit the values in the map file!!!
+		// amenities
+		e_POI2_Taxi					= 0x00000001,	///< Taxi.
+		// highway
+		e_POI2_Stop					= 0x00000002,	///< Stop sign
+		e_POI2_TrafficSignals		= 0x00000004,	///< Traffic signals
+		e_POI2_MotorwayJunction		= 0x00000008,	///< Motorway junction
+		e_POI2_BusStop				= 0x00000010,	///< Bus stop.
+		// railway
+		e_POI2_RailwayStation		= 0x00000020,	///< Railway station.
+		e_POI2_RailwayHalt			= 0x00000040,	///< Railway halt.
+		e_POI2_TramStop				= 0x00000080,	///< Tram stop.
+		e_POI2_SubwayEntrance		= 0x00000100,	///< Subway entrance
+		e_POI2_RWCrossing			= 0x00000200,	///< Crossing
+		e_POI2_LevelCrossing		= 0x00000400,	///< Level crossing
+		// aeroway
+		e_POI2_Aerodrome			= 0x00000800,	///< Aerodrome
+		e_POI2_Helipad				= 0x00001000,	///< Helipad
+		// power
+		e_POI2_PowerTower			= 0x00002000,	///< Power tower.
+		e_POI2_PowerSubStation		= 0x00004000,	///< Power sub station.
+		// leisure
+		// shop
+		// tourism
+		// historic
+		// military
+		// natural
+		// 
+	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI3_TYPE {		// must fit the values in the map file!!!
+	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI4_TYPE {		// must fit the values in the map file!!!
+	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI5_TYPE {		// must fit the values in the map file!!!
+	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI6_TYPE {		// must fit the values in the map file!!!
+	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI7_TYPE {		// must fit the values in the map file!!!
+	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_POI8_TYPE {		// must fit the values in the map file!!!
+	};
+	enum E_PLACE_TYPE {		// must fit the values in the map file!!!
+		e_Place_Continent	= 0x0001,	///< Continent.
+		e_Place_Coutry		= 0x0002,	///< Country.
+		e_Place_State		= 0x0004,	///< State.
+		e_Place_Region		= 0x0008,	///< Region.
+		e_Place_County		= 0x0010,	///< Country.
+		e_Place_City		= 0x0020,	///< City.
+		e_Place_Town		= 0x0040,	///< Town.
+		e_Place_Village		= 0x0080,	///< Village.
+		e_Place_Hamlet		= 0x0100,	///< Hamlet.
+		e_Place_Suburb		= 0x0200,	///< Suburb.
+		e_Place_Locality	= 0x0400,	///< Locality
+		e_Place_Island		= 0x0800,	///< Island.
+	};
+
 private:
-	t_uint64	m_POIAmenity1;	///< POI Amenity part 1 flags.
+	t_uint32	m_POI[MaxPOITypes];	///< POI 1 flags.
 	//-------------------------------------
 	CXPOINode();										///< Not used.
 	CXPOINode(const CXPOINode &);						///< Not used.
@@ -225,46 +326,41 @@ public:
 	virtual ~CXPOINode();
 	//-------------------------------------
 	/*
-	 * \brief Check if point is POI of specific Amenity1 type.
+	 * \brief Check if point is POI of POI1 type.
 	 *
-	 *	Check if point is POI of specific Amenity1 type.
-	 *	\param	eType	type to be checked.
-	 *	\return			true if it is of this type.
+	 *	Check if point is POI of POI1.
+	 *	\param		Index	Index of POI type [1-8].
+	 *	\return				true if it is of this type.
 	 */
-	bool IsPOIAmenity1Type(E_POI_AMENITY1_TYPE eType) const;
+	bool IsPOI(size_t Index) const;
 	//-------------------------------------
 	/*
-	 * \brief Check if point is POI of Amenity1 type.
+	 * \brief Get POI1 flag.
 	 *
-	 *	Check if point is POI of Amenity1.
-	 *	\return			true if it is of this type.
+	 *	Get POI1 flag.
+	 *	\param		Index	Index of POI type [1-8].
+	 *	\return				POI flag.
 	 */
-	bool IsPOIAmenity1() const;
+	t_uint32 GetPOIType(size_t Index) const;
 	//-------------------------------------
 	/*
-	 * \brief Get POI Amenity1 flag.
+	 * \brief Set POI flag.
 	 *
-	 *	Get POI Amenity1 flag.
-	 *	\return		POI Amenity1 flag.
+	 *	Set POI flag.
+	 *	\param		Index		Index of POI type [1-8].
+	 *	\param		NewValue	New value
 	 */
-	t_uint64 GetPOIAmenity1Type() const;
+	void SetPOIType(size_t Index, t_uint32 NewValue);
 	//-------------------------------------
 	/*
-	 * \brief Set POI Amenity1 flag.
+	 * \brief Compute position in bitmap (row, column) of the most important POI only.
 	 *
-	 *	Set POI Amenity1 flag.
-	 *	\param	NewValue	New value
-	 */
-	void SetPOIAmenity1Type(t_uint64 NewValue);
-	//-------------------------------------
-	/*
-	 * \brief Compute position in bitmap (row, column) of the most important amenity only.
-	 *
-	 *	Compute position in bitmap (row, column) of the most important amenity only.
+	 *	Compute position in bitmap (row, column) of the most important POI only.
+	 *	\param	POI			oiu
 	 *	\param	rRow		Computed row.
 	 *	\param	rCol		Computed column.
 	 */
-	void ComputeAmenity1PosInBMP(int & rRow, int & rCol);
+	void ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol);
 };
 
 typedef CXMapHashSimple<t_uint64, CXPOINode *>		TPOINodeMap;		///< oiu

@@ -134,7 +134,7 @@ template<class tKey, class tValue> void CXMapSimple<tKey, tValue> ::SetAt(const 
 		// already exists overwrite
 		pS->m_Value = Value;
 	} else {
-		// does not exist yer
+		// does not exist yet
 		m_Data.Append(new CXKeyVal<tKey, tValue>(Key, Value));
 	}
 }
