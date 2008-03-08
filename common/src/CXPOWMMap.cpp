@@ -20,13 +20,13 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
+#include "Utils.hpp"
 #include "CXPOWMMap.hpp"
 #include "CXExactTime.hpp"
 #include "CXFile.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
 #include "CXTransformationMatrix.hpp"
-#include "Utils.hpp"
 #include "CoordConversion.h"
 
 const unsigned int MAPVERSION = 0x00010302; // 0.1.3-dev2
