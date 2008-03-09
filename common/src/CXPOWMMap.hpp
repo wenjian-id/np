@@ -228,13 +228,25 @@ public:
 		// power
 		e_POI2_PowerTower			= 0x00002000,	///< Power tower.
 		e_POI2_PowerSubStation		= 0x00004000,	///< Power sub station.
-		// leisure
-		// shop
 		// tourism
-		// historic
-		// military
-		// natural
-		// 
+		e_POI2_Hotel				= 0x00008000,	///< Hotel.
+		e_POI2_Attraction			= 0x00010000,	///< Attraction.
+		e_POI2_Hostel				= 0x00020000,	///< Hostel.
+		e_POI2_CampSite				= 0x00040000,	///< Camp site.
+		e_POI2_ViewPoint			= 0x00080000,	///< Viewpoint.
+		e_POI2_Information			= 0x00100000,	///< Information.
+		e_POI2_Zoo					= 0x00200000,	///< Zoo.
+		e_POI2_GuestHouse			= 0x00400000,	///< Guest house
+		e_POI2_PicnicSite			= 0x00800000,	///< Picninc site.
+		e_POI2_ThemePark			= 0x01000000,	///< Theme park.
+		e_POI2_CaravanSite			= 0x02000000,	///< Caravan site.
+		e_POI2_Motel				= 0x04000000,	///< Motel.
+		e_POI2_Museum				= 0x08000000,	///< Museum.
+		e_POI2_Artwork				= 0x10000000,	///< Artwork.
+		// shop
+		e_POI2_Supermarket			= 0x20000000,	///< Supermarket.
+		e_POI2_ShopBakery			= 0x40000000,	///< Bakery
+		e_POI2_ShopButcher			= 0x80000000,	///< Butcher.
 	};
 	//-------------------------------------
 	/*
@@ -243,6 +255,16 @@ public:
 	 * oiu
 	 */
 	enum E_POI3_TYPE {		// must fit the values in the map file!!!
+		e_POI3_Kiosk				= 0x00000001,	///< Kiosk.
+		e_POI3_ShopConvenience		= 0x00000002,	///< Shop convenience
+		e_POI3_ShopDoItYourself		= 0x00000004,	///< Shop "do it yourself"
+		e_POI3_ShopBicycle			= 0x00000008,	///< Shop bicycle.
+		e_POI3_ShopOutdoor			= 0x00000010,	///< Shop Outdoor.
+		// leisure
+		// historic
+		// military
+		// natural
+		// 
 	};
 	//-------------------------------------
 	/*
