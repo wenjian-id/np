@@ -64,7 +64,7 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/ISerial.cpp \
  ../../common/src/CXInfoBarCommon.cpp \
  ../../common/src/CXInfoBarSpeed.cpp \
- ../../common/src/CXtrackLog.cpp
+ ../../common/src/CXTrackLog.cpp
 
 HEADERS += src/CXSerial.hpp \
 src/OSSpecific.hpp \
@@ -129,4 +129,5 @@ src/OSSpecific.hpp \
  ../../common/src/Utils.hpp \
  ../../common/src/CXInfoBarCommon.hpp \
  ../../common/src/CXInfoBarSpeed.hpp \
- ../../common/src/CXTimeStampData.hpp
+ ../../common/src/CXTimeStampData.hpp \
+ ../../common/src/CXTrackLog.hpp
