@@ -116,10 +116,8 @@ private:
 	 *	Draw track log.
 	 *	\param	pBMP			Pointer to bitmap.
 	 *	\param	TMMap			Transformation matrix.
-	 *	\param	ScreenWidth		Width of screen.
-	 *	\param	ScreenHeight	Height of screen.
 	 */
-	void DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap, int ScreenWidth, int ScreenHeight);
+	void DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap);
 	//-------------------------------------
 	/*
 	 * \brief Draw current position.

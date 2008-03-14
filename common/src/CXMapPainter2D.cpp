@@ -274,7 +274,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap, int ScreenWidth, int ScreenHeight) {
+void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap) {
 	if(pBMP == NULL)
 		return;
 
@@ -501,7 +501,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 		// draw TrackLog if neccessary
 		if(CXOptions::Instance()->MustShowTrackLog()) {
-			DrawTrackLog(pBMP, TMMap, Width, Height);
+			DrawTrackLog(pBMP, TMMap);
 		}
 		StopTrackLog.SetNow();
 
