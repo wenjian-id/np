@@ -82,10 +82,53 @@ private:
 	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Draw map scale.
 	 *
+	 *	Compute and draw map scale.
+	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	ScreenWidth		Width of screen.
+	 *	\param	ScreenHeight	Height of screen.
 	 */
 	void DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight);
+	//-------------------------------------
+	/*
+	 * \brief Draw POIs.
+	 *
+	 *	Draw POIs.
+	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	ScreenWidth		Width of screen.
+	 *	\param	ScreenHeight	Height of screen.
+	 */
+	void DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight);
+	//-------------------------------------
+	/*
+	 * \brief Draw compass.
+	 *
+	 *	Draw compass.
+	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	TMCompass		Transformation matrix for compass.
+	 */
+	void DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &TMCompass);
+	//-------------------------------------
+	/*
+	 * \brief Draw track log.
+	 *
+	 *	Draw track log.
+	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	TMMap			Transformation matrix.
+	 *	\param	ScreenWidth		Width of screen.
+	 *	\param	ScreenHeight	Height of screen.
+	 */
+	void DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap, int ScreenWidth, int ScreenHeight);
+	//-------------------------------------
+	/*
+	 * \brief Draw current position.
+	 *
+	 *	Draw current position.
+	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	TMCurrentPos	Transformation matrix.
+	 */
+	void DrawCurrentPosition(IBitmap *pBMP, const CXTransformationMatrix2D &TMCurrentPos);
 protected:
 	//-------------------------------------
 	/*

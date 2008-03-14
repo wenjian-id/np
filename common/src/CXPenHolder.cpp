@@ -118,6 +118,10 @@ void CXPenHolder::CreatePens() {
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
+
+	pPens = m_Pens[CXWay::e_LivingStreet];
+	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
 }
 
 //-------------------------------------

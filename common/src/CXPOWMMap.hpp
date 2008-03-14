@@ -306,6 +306,12 @@ public:
 	 */
 	enum E_POI8_TYPE {		// must fit the values in the map file!!!
 	};
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
 	enum E_PLACE_TYPE {		// must fit the values in the map file!!!
 		e_Place_Continent	= 0x0001,	///< Continent.
 		e_Place_Coutry		= 0x0002,	///< Country.
@@ -420,7 +426,8 @@ public:
 		e_Footway		= 15,	///< oiu
 		e_Pedestrian	= 16,	///< oiu
 		e_Steps			= 17,	///< oiu
-		e_EnumCount		= 18,	///< oiu
+		e_LivingStreet	= 18,	///< oiu
+		e_EnumCount		= 19,	///< oiu
 	};
 private:
 	t_uint64		m_ID;				///< oiu

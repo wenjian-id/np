@@ -37,10 +37,10 @@
 static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
 static const CXRGB FGCOLOR(0x00, 0x00, 0x00);
 const double ZoomFactor = 1.2;
-static const size_t POIWIDTH		= 20;
-static const size_t POIHEIGHT		= 20;
-static const size_t POICOUNTHORZ	= 8;
-static const size_t POICOUNTVERT	= 4;
+static const int POIWIDTH		= 20;
+static const int POIHEIGHT		= 20;
+static const int POICOUNTHORZ	= 8;
+static const int POICOUNTVERT	= 4;
 
 CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
 	CXWay::e_Unknown,
@@ -210,6 +210,96 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 }
 
 //-------------------------------------
+void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &TMCompass) {
+	if(pBMP == NULL)
+		return;
+
+	int CompassSize = CXOptions::Instance()->GetCompassSize();
+	tIRect CompassRect(0,0,CompassSize,CompassSize);
+
+	int CX = CompassRect.GetLeft() + CompassRect.GetWidth()/2;
+	int CY = CompassRect.GetTop() + CompassRect.GetHeight()/2;
+	double R = 0.8*CompassSize/2;
+
+	CXPen pen(CXPen::e_Solid, 1, CXRGB(0xFF, 0x00, 0x00));
+	pBMP->SetPen(pen);
+
+	CXCoorVector v;
+	int X[4];
+	int Y[4];
+	v = TMCompass*CXCoorVector(0, R);
+	X[0] = CX + v.GetIntX();
+	Y[0] = CY + v.GetIntY();
+	v = TMCompass*CXCoorVector(R/2, -0.7*R);
+	X[1] = CX + v.GetIntX();
+	Y[1] = CY + v.GetIntY();
+	v = TMCompass*CXCoorVector(0, -0.25*R);
+	X[2] = CX + v.GetIntX();
+	Y[2] = CY + v.GetIntY();
+	v = TMCompass*CXCoorVector(-R/2, -0.7*R);
+	X[3] = CX + v.GetIntX();
+	Y[3] = CY + v.GetIntY();
+	pBMP->Polygon(X, Y, 4, CXRGB(0xB0, 0xB0, 0x00), CXRGB(0xB0, 0x00, 0x00));
+}
+
+//-------------------------------------
+void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) {
+	if(pBMP == NULL)
+		return;
+
+	TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
+	POS PosN = POINodes.GetStart();
+	CXPOINode *pNode = NULL;
+
+	// iterate through POIs
+	while (POINodes.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+		int x = pNode->GetDisplayX();
+		int y = pNode->GetDisplayY();
+		// check if visible
+		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
+			for(size_t i=0; i<MaxPOITypes; i++) {
+				if(pNode->IsPOI(i)) {
+					int row = 0;
+					int col = 0;
+					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
+					pBMP->DrawTransparent(	&(m_BmpPOI[i]),
+											x-POIWIDTH/2, y-POIHEIGHT/2,
+											col*POIWIDTH, row*POIHEIGHT,
+											POIWIDTH, POIHEIGHT,
+											COLOR_TRANSPARENT);
+				}
+			}
+		}
+	}
+}
+
+//-------------------------------------
+void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap, int ScreenWidth, int ScreenHeight) {
+	if(pBMP == NULL)
+		return;
+
+	CXCoorVector v;
+	const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetCoordinates();
+	size_t Size = CoorBuffer.GetSize();
+	CXPen TLPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0xFF));
+	pBMP->SetPen(TLPen);
+	if(Size > 1) {
+		int *pX = new int[Size];
+		int *pY = new int[Size];
+		for(size_t i=0; i<Size; i++) {
+			CXCoor *pCoor = CoorBuffer[i];
+			v = TMMap*CXCoorVector(pCoor->GetUTMEasting(), pCoor->GetUTMNorthing());
+			pX[i] = v.GetIntX();
+			pY[i] = v.GetIntY();
+		}
+
+		pBMP->PolyLine(pX, pY, Size);
+		delete [] pX;
+		delete [] pY;
+	}
+}
+
+//-------------------------------------
 void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) {
 	if(pBMP == NULL)
 		return;
@@ -271,7 +361,35 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 
 
 //-------------------------------------
+void CXMapPainter2D::DrawCurrentPosition(IBitmap *pBMP, const CXTransformationMatrix2D &TMCurrentPos) {
+	if(pBMP == NULL)
+		return;
+
+	// draw current position
+	CXCoorVector v;
+	int X[4];
+	int Y[4];
+	double ArrowSize = 15.0;
+	v = TMCurrentPos*CXCoorVector(0, ArrowSize);
+	X[0] = v.GetIntX();
+	Y[0] = v.GetIntY();
+	v = TMCurrentPos*CXCoorVector(ArrowSize/2, -0.7*ArrowSize);
+	X[1] = v.GetIntX();
+	Y[1] = v.GetIntY();
+	v = TMCurrentPos*CXCoorVector(0, -0.25*ArrowSize);
+	X[2] = v.GetIntX();
+	Y[2] = v.GetIntY();
+	v = TMCurrentPos*CXCoorVector(-ArrowSize/2, -0.7*ArrowSize);
+	X[3] = v.GetIntX();
+	Y[3] = v.GetIntY();
+
+	pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+}
+
+//-------------------------------------
 void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
+	if(pBMP == NULL)
+		return;
 	// clear wisible rect
 	pBMP->DrawRect(tIRect(0,0, Width, Height), BGCOLOR, BGCOLOR);
 }
@@ -308,9 +426,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXExactTime StopPOI;
 	CXExactTime StopPos;
 
-
-	int CompassSize = CXOptions::Instance()->GetCompassSize();
-	tIRect CompassRect(0,0,CompassSize,CompassSize);
 
 	// get zone
 	int WayCount = 0;
@@ -352,6 +467,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TMMap.Translate(xc, yc);			// display it centered on screen
 		TMCompass.Scale(1, -1);				// do scaling (negative for y!)
 		TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
+		TMCurrentPos.Translate(xc, yc);		// an position it on screen
 
 		// run coordinate transformations
 		CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
@@ -383,81 +499,19 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pBuffer->Clear();
 		}
 
-		CXCoorVector v;
 		// draw TrackLog if neccessary
 		if(CXOptions::Instance()->MustShowTrackLog()) {
-			const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetCoordinates();
-			size_t Size = CoorBuffer.GetSize();
-			CXPen TLPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0xFF));
-			pBMP->SetPen(TLPen);
-			if(Size > 1) {
-				int *pX = new int[Size];
-				int *pY = new int[Size];
-				for(size_t i=0; i<Size; i++) {
-					CXCoor *pCoor = CoorBuffer[i];
-					v = TMMap*CXCoorVector(pCoor->GetUTMEasting(), pCoor->GetUTMNorthing());
-					pX[i] = v.GetIntX();
-					pY[i] = v.GetIntY();
-				}
-
-				pBMP->PolyLine(pX, pY, Size);
-				delete [] pX;
-				delete [] pY;
-			}
+			DrawTrackLog(pBMP, TMMap, Width, Height);
 		}
 		StopTrackLog.SetNow();
 
-
-		// test code for POIs
-		TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
-		POS PosN = POINodes.GetStart();
-		CXPOINode *pNode = NULL;
-
-		while (POINodes.GetNext(PosN, pNode) != TNodeMap::NPOS) {
-			int x = pNode->GetDisplayX();
-			int y = pNode->GetDisplayY();
-			if((x >= 0) && (x < Width) && (y >= 0) && (y < Height)) {
-				for(size_t i=0; i<MaxPOITypes; i++) {
-					if(pNode->IsPOI(i)) {
-						int row = 0;
-						int col = 0;
-						pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
-						pBMP->DrawTransparent(	&(m_BmpPOI[i]),
-												x-POIWIDTH/2, y-POIHEIGHT/2,
-												col*POIWIDTH, row*POIHEIGHT,
-												POIWIDTH, POIHEIGHT,
-												COLOR_TRANSPARENT);
-					}
-				}
-			}
-		}
-
+		// draw POIs
+		DrawPOIs(pBMP, Width, Height);
 		StopPOI.SetNow();
 
-		int X[4];
-		int Y[4];
 		// draw compass if necessary
 		if(CXOptions::Instance()->MustShowCompass()) {
-			int CX = CompassRect.GetLeft() + CompassRect.GetWidth()/2;
-			int CY = CompassRect.GetTop() + CompassRect.GetHeight()/2;
-			double R = 0.8*CompassSize/2;
-
-			CXPen pen(CXPen::e_Solid, 1, CXRGB(0xFF, 0x00, 0x00));
-			pBMP->SetPen(pen);
-
-			v = TMCompass*CXCoorVector(0, R);
-			X[0] = CX + v.GetIntX();
-			Y[0] = CY + v.GetIntY();
-			v = TMCompass*CXCoorVector(R/2, -0.7*R);
-			X[1] = CX + v.GetIntX();
-			Y[1] = CY + v.GetIntY();
-			v = TMCompass*CXCoorVector(0, -0.25*R);
-			X[2] = CX + v.GetIntX();
-			Y[2] = CY + v.GetIntY();
-			v = TMCompass*CXCoorVector(-R/2, -0.7*R);
-			X[3] = CX + v.GetIntX();
-			Y[3] = CY + v.GetIntY();
-			pBMP->Polygon(X, Y, 4, CXRGB(0xB0, 0xB0, 0x00), CXRGB(0xB0, 0x00, 0x00));
+			DrawCompass(pBMP, TMCompass);
 		}
 		StopCompass.SetNow();
 
@@ -468,22 +522,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		StopScale.SetNow();
 
 		// draw current position
-		double ArrowSize = 15.0;
-		v = TMCurrentPos*CXCoorVector(0, ArrowSize);
-		X[0] = xc + v.GetIntX();
-		Y[0] = yc + v.GetIntY();
-		v = TMCurrentPos*CXCoorVector(ArrowSize/2, -0.7*ArrowSize);
-		X[1] = xc + v.GetIntX();
-		Y[1] = yc + v.GetIntY();
-		v = TMCurrentPos*CXCoorVector(0, -0.25*ArrowSize);
-		X[2] = xc + v.GetIntX();
-		Y[2] = yc + v.GetIntY();
-		v = TMCurrentPos*CXCoorVector(-ArrowSize/2, -0.7*ArrowSize);
-		X[3] = xc + v.GetIntX();
-		Y[3] = yc + v.GetIntY();
-
-		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
-//		pBMP->DrawRect(tIRect(xc-5, yc-5, xc+5, yc+5), CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0x00, 0x00));
+		DrawCurrentPosition(pBMP, TMCurrentPos);
 		StopPos.SetNow();
 	}
 	CXPOWMMap::Instance()->UnlockMap();
@@ -496,7 +535,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 					StopScale-StopCompass, StopPos-StopScale);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-		TextRect.OffsetRect(-TextRect.GetLeft(), CompassRect.GetBottom()-TextRect.GetTop()+20);
+		TextRect.OffsetRect(-TextRect.GetLeft(), CXOptions::Instance()->GetCompassSize()-TextRect.GetTop()+20);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
 }
