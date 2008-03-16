@@ -92,6 +92,18 @@ public:
  */
 class CXNaviPOWM {
 private:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_DISPLAY_MODE {
+		e_ModeMap,			///< oiu
+		e_ModeInfo,			///< oiu
+		e_ModeSatInfo,		///< oiu
+	};
+private:
+	E_DISPLAY_MODE		m_eDisplayMode;				///< oiu
 	IMainWindow			*m_pMainWindow;				///< oiu
 	CXGPSRecvThread		*m_pGPSRecvThread;			///< oiu
 	CXLocatorThread		*m_pLocatorThread;			///< oiu
@@ -108,7 +120,6 @@ private:
 	tIRect				m_InfoBarCommonPos;			///< oiu
 	tIRect				m_ZoomInPos;				///< oiu
 	tIRect				m_ZoomOutPos;				///< oiu
-	bool				m_oShowInfo;				///< oiu
 	CXZoomBtn			m_ZoomInBtn;				///< oiu
 	CXZoomBtn			m_ZoomOutBtn;				///< oiu
 	mutable CXMutex		m_Mutex;					///< oiu

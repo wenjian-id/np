@@ -24,9 +24,14 @@
 #include <CXMutexLocker.hpp>
 #include "CXLocatorThread.hpp"
 #include "CXOptions.hpp"
+#include "CXSatelliteData.hpp"
+#include "CXGSVSatelliteInfo.hpp"
 #include "Utils.hpp"
 
-static unsigned char GGABEGIN[6] = {'$', 'G', 'P', 'G', 'G', 'A'};
+static const unsigned char GGABEGIN[6]	= {'$', 'G', 'P', 'G', 'G', 'A'};
+static const unsigned char RMCBEGIN[6]	= {'$', 'G', 'P', 'R', 'M', 'C'};
+static const unsigned char GSABEGIN[6]	= {'$', 'G', 'P', 'G', 'S', 'A'};
+static const unsigned char GSVBEGIN[6]	= {'$', 'G', 'P', 'G', 'S', 'V'};
 
 //-------------------------------------
 CXGPSRecvThread::CXGPSRecvThread() :
@@ -121,6 +126,51 @@ bool CXGPSRecvThread::CheckGGA() {
 }
 
 //-------------------------------------
+bool CXGPSRecvThread::CheckRMC() {
+    // length must be at least 11 : $ G P R M C * x x CR LF
+    if(m_LastPacket.GetSize() < 11)
+    	return false;
+    
+    // must start with "$GPRMC"
+    if(!m_LastPacket.CompareBegin(RMCBEGIN, sizeof(RMCBEGIN))) {
+    	return false;
+    }
+
+	// OK, it is a RMC packet
+	return true;
+}
+
+//-------------------------------------
+bool CXGPSRecvThread::CheckGSA() {
+    // length must be at least 11 : $ G P G S A * x x CR LF
+    if(m_LastPacket.GetSize() < 11)
+    	return false;
+    
+    // must start with "$GPGSA"
+    if(!m_LastPacket.CompareBegin(GSABEGIN, sizeof(GSABEGIN))) {
+    	return false;
+    }
+
+	// OK, it is a GSA packet
+	return true;
+}
+
+//-------------------------------------
+bool CXGPSRecvThread::CheckGSV() {
+    // length must be at least 11 : $ G P G S V * x x CR LF
+    if(m_LastPacket.GetSize() < 11)
+    	return false;
+    
+    // must start with "$GPGSV"
+    if(!m_LastPacket.CompareBegin(GSVBEGIN, sizeof(GSVBEGIN))) {
+    	return false;
+    }
+
+	// OK, it is a GSV packet
+	return true;
+}
+
+//-------------------------------------
 void CXGPSRecvThread::OnThreadLoop() {
 	CXMutexLocker L(&m_Mutex);
 	// poll data on serial port
@@ -130,6 +180,10 @@ void CXGPSRecvThread::OnThreadLoop() {
 			// save data if necessary
 			Save(m_LastPacket);
 			// check GGA packet
+			if(CheckRMC()) {
+				/// \todo implement
+				// DoOutputDebugString("RMC detected\n");
+			}
 			if(CheckGGA()) {
 				// check if demo mode
 				if(m_oDemoMode) {
@@ -146,6 +200,33 @@ void CXGPSRecvThread::OnThreadLoop() {
 				// tell the locator that data is ready
 				if(m_pLocator != NULL)
 					m_pLocator->SetGPSDataGGA(m_LastPacket);
+			}
+			if(CheckGSA()) {
+				// process GSA packet
+				CXBuffer<int> Sat;
+				CXStringASCII Line(reinterpret_cast<const char *>(m_LastPacket.GetBuffer()), m_LastPacket.GetSize());
+				if(ExtractGSAData(Line, Sat)) {
+					// data extracted and OK
+					// now set it
+					CXSatelliteData::Instance()->SetActiveSatellites(Sat);
+				}
+			}
+			if(CheckGSV()) {
+				// process GSV packet
+				CXStringASCII Line(reinterpret_cast<const char *>(m_LastPacket.GetBuffer()), m_LastPacket.GetSize());
+				int NTelegrams = 0;
+				int NCurrentTelegram = 0;
+				int NSat = 0;
+				int NInfos = 0;
+				CXGSVSatelliteInfo Info1;
+				CXGSVSatelliteInfo Info2;
+				CXGSVSatelliteInfo Info3;
+				CXGSVSatelliteInfo Info4;
+				if(ExtractGSVData(Line, NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4)) {
+					// data extracted and OK
+					// now set it
+					CXSatelliteData::Instance()->SetGSVData(NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4);
+				}
 			}
 		}
 	}

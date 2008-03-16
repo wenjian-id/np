@@ -333,16 +333,14 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 	int ScaleXPixel = static_cast<int>(1.0*ScaleX*exp*m_Scale);
 	// draw scale
 	// first the black rectangle
-	tIRect ScaleRect(	(ScreenWidth - ScaleXPixel)/2, ScreenHeight - ScaleHeight - 5,
-						(ScreenWidth + ScaleXPixel)/2, ScreenHeight - 5);
-	pBMP->DrawRect(ScaleRect, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0x00, 0x00));
+	tIRect BlackRect((ScreenWidth - ScaleXPixel)/2, ScreenHeight - ScaleHeight - 5, ScaleXPixel, ScaleHeight);
+	pBMP->DrawRect(BlackRect, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0x00, 0x00));
 	// now the left yellow rectangle
-	tIRect ScaleRect1(	(ScreenWidth - ScaleXPixel/2)/2, ScreenHeight - ScaleHeight - 5,
-						ScreenWidth/2, ScreenHeight - 5);
-	pBMP->DrawRect(ScaleRect1, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
+	tIRect YellowRect((ScreenWidth - ScaleXPixel/2)/2, ScreenHeight - ScaleHeight - 5, ScaleXPixel/2 - ScaleXPixel/4, ScaleHeight);
+	pBMP->DrawRect(YellowRect, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
 	// now the right yellow rectangle
-	ScaleRect1.OffsetRect(ScaleXPixel/2, 0);
-	pBMP->DrawRect(ScaleRect1, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
+	YellowRect.OffsetRect(ScaleXPixel/2, 0);
+	pBMP->DrawRect(YellowRect, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
 	// draw scale description
 	char buf[100];
 	if(exp < 1000) {
@@ -351,12 +349,12 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 		sprintf(buf, "%d km", ScaleX*(exp/1000));
 	}
 	// calculate size of text
-	ScaleRect1 = pBMP->CalcTextRectASCII(buf, 2, 2);
+	tIRect TextRect = pBMP->CalcTextRectASCII(buf, 2, 2);
 	// position it
-	ScaleRect1.OffsetRect(	-ScaleRect1.GetLeft() + ScreenWidth/2 - ScaleRect1.GetWidth()/2,
-							-ScaleRect1.GetTop() + ScaleRect.GetTop() - ScaleRect1.GetHeight() - 1);
+	TextRect.OffsetRect(	ScreenWidth/2 - TextRect.GetWidth()/2,
+							BlackRect.GetTop() - TextRect.GetHeight() - 1);
 	// and draw it
-	pBMP->DrawTextASCII(buf, ScaleRect1, CXRGB(0x00, 0x00, 0x00), BGCOLOR);
+	pBMP->DrawTextASCII(buf, TextRect, CXRGB(0x00, 0x00, 0x00), BGCOLOR);
 }
 
 
@@ -535,7 +533,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 					StopScale-StopCompass, StopPos-StopScale);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-		TextRect.OffsetRect(-TextRect.GetLeft(), CXOptions::Instance()->GetCompassSize()-TextRect.GetTop()+20);
+		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
 }

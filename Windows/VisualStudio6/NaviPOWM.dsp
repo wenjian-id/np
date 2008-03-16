@@ -233,6 +233,10 @@ SOURCE=..\..\common\src\CXGPSRecvThread.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXGSVSatelliteInfo.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXInfoBar.hpp
 # End Source File
 # Begin Source File
@@ -330,6 +334,10 @@ SOURCE=..\..\common\src\CXRect.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXRGB.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSatelliteData.hpp
 # End Source File
 # Begin Source File
 
@@ -441,6 +449,10 @@ SOURCE=..\..\common\src\CXGPSRecvThread.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXGSVSatelliteInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXInfoBar.cpp
 # End Source File
 # Begin Source File
@@ -522,6 +534,10 @@ SOURCE=..\..\common\src\CXReadLocker.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXRGB.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSatelliteData.cpp
 # End Source File
 # Begin Source File
 

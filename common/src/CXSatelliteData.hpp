@@ -20,149 +20,78 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXGPSRECVTHREAD_HPP__
-#define __CXGPSRECVTHREAD_HPP__
+#ifndef __CXSATELLITEDATA_HPP__
+#define __CXSATELLITEDATA_HPP__
 
-#include "CXLoopThread.hpp"
 #include "CXBuffer.hpp"
-#include "CXFile.hpp"
-#include "CXExactTime.hpp"
-#include <CXMutex.hpp>
-#include <CXSerial.hpp>
+#include "CXGSVSatelliteInfo.hpp"
+#include "CXMutex.hpp"
 
-class CXLocatorThread;
+class CXDeviceContext;
 
 //----------------------------------------------------------------------------
 /*
  * \brief oiu
  *
  */
-class CXGPSRecvThread : public CXLoopThread {
+class CXSatelliteData {
 private:
-	CXSerial			m_Serial;		///< oiu
-	bool				m_oDemoMode;	///< oiu
-	CXFile				m_DemoFile;		///< oiu
-	size_t				m_DemoTimeout;	///< oiu
-	CXExactTime			m_LastDemoGGA;	///< oiu
-	tUCBuffer			m_Buffer;		///< oiu
-	tUCBuffer			m_LastPacket;	///< oiu
-	CXLocatorThread		*m_pLocator;	///< oiu
-	bool				m_oSaving;		///< oiu
-	CXFile				m_SaveFile;		///< oiu
-	mutable CXMutex		m_Mutex;		///< oiu
+	static CXSatelliteData			*m_pInstance;			///< oiu
+	CXBuffer<int>					m_ActiveSatellites;		///< oiu
+	CXBuffer<CXGSVSatelliteInfo *>	m_SatInfo;				///< oiu
+	CXBuffer<CXGSVSatelliteInfo *>	m_TmpSatInfo;			///< oiu
+	int								m_LastReceivedGSVTel;	///< oiu
+	int								m_TmpNrSat;				///< oiu
+	mutable CXMutex					m_Mutex;				///< oiu
 	//-------------------------------------
-	CXGPSRecvThread(const CXGPSRecvThread &);						///< Not used.
-	const CXGPSRecvThread & operator = (const CXGPSRecvThread &);	///< Not used.
+	CXSatelliteData(const CXSatelliteData &);						///< Not used.
+	const CXSatelliteData & operator = (const CXSatelliteData &);	///< Not used.
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void OpenSerial();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void ReopenSerial();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void CloseSerial();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool ReceiveData();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool ProcessData();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGGA();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckRMC();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGSA();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGSV();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadLoop();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void Save(const tUCBuffer & Buffer);
+	void ClearBuffer(CXBuffer<CXGSVSatelliteInfo *> & rBuffer);
+protected:
 public:
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	CXGPSRecvThread();
+	CXSatelliteData();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	virtual ~CXGPSRecvThread();
+	virtual ~CXSatelliteData();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	bool IsOpen() const;
+	static CXSatelliteData *Instance();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetLocator(CXLocatorThread *pLocator);
+	void SetActiveSatellites(const CXBuffer<int> &ActiveSatellites);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void FlushInput();
+	void SetGSVData(int NTelegrams, int NCurrentTelegram, int NSat, int NInfos, 
+					const CXGSVSatelliteInfo &Info1, const CXGSVSatelliteInfo &Info2,
+					const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height);
 };
 
-
-#endif // __CXGPSRECVTHREAD_HPP__
+#endif // __CXSATELLITEDATA_HPP__

@@ -25,7 +25,10 @@
 
 //---------------------------------------------------------------------
 /*
- * \brief oiu
+ * \brief This class encapsulates the functionality for a rectangle.
+ *
+ * This class encapsulates the functionality for a rectangle. The coordinates for left and top
+ * are included in the rectangle, those for righ t and bottom are not included anymore!
  *
  */
 template<class tClass> class CXRect {
@@ -46,7 +49,7 @@ protected:
 public:
 	//-------------------------------------
 	/*
-	 * \brief oiu
+	 * \brief Default constructor.
 	 *
 	 */
 	CXRect();
@@ -55,7 +58,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXRect(const tClass &Left, const tClass &Top, const tClass &Right, const tClass &Bottom);
+	CXRect(const tClass &Left, const tClass &Top, const tClass &Width, const tClass &Height);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -145,6 +148,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void MoveTo(const tClass & left, const tClass & top);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	bool Contains(const tClass & x, const tClass & y);
 };
 
@@ -156,11 +165,11 @@ template<class tClass> CXRect<tClass> ::CXRect() {
 }
 
 //-------------------------------------
-template<class tClass> CXRect<tClass> ::CXRect(const tClass &Left, const tClass &Top, const tClass &Right, const tClass &Bottom) :
+template<class tClass> CXRect<tClass> ::CXRect(const tClass &Left, const tClass &Top, const tClass &Width, const tClass &Height) :
 	m_Left(Left),
 	m_Top(Top),
-	m_Right(Right),
-	m_Bottom(Bottom)
+	m_Right(Left + Width),
+	m_Bottom(Top + Height)
 {
 }
 
@@ -247,8 +256,17 @@ template<class tClass> void CXRect<tClass> ::OffsetRect(const tClass & dx, const
 }
 
 //-------------------------------------
+template<class tClass> void CXRect<tClass> ::MoveTo(const tClass & left, const tClass & top) {
+	// calculate offset
+	tClass OffsetX = left - m_Left;
+	tClass OffsetY = top - m_Top;
+	// and move
+	OffsetRect(OffsetX, OffsetY);
+}
+
+//-------------------------------------
 template<class tClass> bool CXRect<tClass> ::Contains(const tClass & x, const tClass & y) {
-	return (m_Left <= x) && (x <= m_Right) && (m_Top <= y) && (y <= m_Bottom);
+	return (m_Left <= x) && (x < m_Right) && (m_Top <= y) && (y < m_Bottom);
 }
 
 #endif // __CXRECT_HPP__

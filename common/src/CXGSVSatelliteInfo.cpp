@@ -20,66 +20,80 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXInfoBar.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXGSVSatelliteInfo.hpp"
 
+
+//----------------------------------------------------------------------------
 //-------------------------------------
-CXInfoBar::CXInfoBar() :
-	m_Width(0),
-	m_Height(0),
-	m_oSizeChanged(false)
+CXGSVSatelliteInfo::CXGSVSatelliteInfo() :
+	m_PRN(0),
+	m_Elevation(0),
+	m_Azimuth(0),
+	m_SNR(0)
 {
 }
 
 //-------------------------------------
-CXInfoBar::~CXInfoBar() {
+CXGSVSatelliteInfo::CXGSVSatelliteInfo(const CXGSVSatelliteInfo &rOther) {
+	CopyFrom(rOther);
 }
 
 //-------------------------------------
-int CXInfoBar::GetWidth() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_Width;
+CXGSVSatelliteInfo::~CXGSVSatelliteInfo() {
 }
 
 //-------------------------------------
-int CXInfoBar::GetHeight() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_Height;
+const CXGSVSatelliteInfo & CXGSVSatelliteInfo::operator = (const CXGSVSatelliteInfo &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
 }
 
 //-------------------------------------
-void CXInfoBar::Resize(int Width, int Height) {
-	CXMutexLocker L(&m_Mutex);
-	m_Width = Width;
-	m_Height = Height;
-	m_oSizeChanged = true;
+void CXGSVSatelliteInfo::CopyFrom(const CXGSVSatelliteInfo &rOther) {
+	m_PRN		= rOther.m_PRN;
+	m_Elevation	= rOther.m_Elevation;
+	m_Azimuth	= rOther.m_Azimuth;
+	m_SNR		= rOther.m_SNR;
 }
 
 //-------------------------------------
-bool CXInfoBar::SizeChanged() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_oSizeChanged;
+int CXGSVSatelliteInfo::GetPRN() const {
+	return m_PRN;
 }
 
 //-------------------------------------
-void CXInfoBar::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
-	if(pDC == NULL)
-		return;
-	OnPaint(pDC, OffsetX, OffsetY);
-	{
-		// reset size changed flag
-		CXMutexLocker L(&m_Mutex);
-		m_oSizeChanged = false;
-	}
+void CXGSVSatelliteInfo::SetPRN(int NewValue) {
+	m_PRN = NewValue;
 }
 
 //-------------------------------------
-E_COMMAND CXInfoBar::OnInternalMouseDown(int /*X*/, int /*Y*/) {
-	return e_CmdNone;
+int CXGSVSatelliteInfo::GetElevation() const {
+	return m_Elevation;
 }
 
 //-------------------------------------
-E_COMMAND CXInfoBar::OnMouseDown(int X, int Y) {
-	CXMutexLocker L(&m_Mutex);
-	return OnInternalMouseDown(X, Y);
+void CXGSVSatelliteInfo::SetElevation(int NewValue) {
+	m_Elevation = NewValue;
 }
+
+//-------------------------------------
+int CXGSVSatelliteInfo::GetAzimuth() const {
+	return m_Azimuth;
+}
+
+//-------------------------------------
+void CXGSVSatelliteInfo::SetAzimuth(int NewValue) {
+	m_Azimuth = NewValue;
+}
+
+//-------------------------------------
+int CXGSVSatelliteInfo::GetSNR() const {
+	return m_SNR;
+}
+
+//-------------------------------------
+void CXGSVSatelliteInfo::SetSNR(int NewValue) {
+	m_SNR = NewValue;
+}
+

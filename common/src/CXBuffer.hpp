@@ -196,7 +196,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool CompareBegin(tClass *pBuf, size_t ulCount) const;
+	bool CompareBegin(const tClass *pBuf, size_t ulCount) const;
 };
 
 typedef CXBuffer<unsigned char>		tUCBuffer;
@@ -435,7 +435,7 @@ template<class tClass> CXBuffer<tClass> CXBuffer<tClass> ::Left(size_t ulCount) 
 }
 
 //-------------------------------------
-template<class tClass> bool CXBuffer<tClass> ::CompareBegin(tClass *pbBuf, size_t ulCount) const {
+template<class tClass> bool CXBuffer<tClass> ::CompareBegin(const tClass *pbBuf, size_t ulCount) const {
 	// check if valid pointer
 	if(pbBuf == NULL)
 		return false;

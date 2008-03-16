@@ -147,6 +147,8 @@ common/src/CXFileIni.cpp -text
 common/src/CXFileIni.hpp -text
 common/src/CXGPSRecvThread.cpp -text
 common/src/CXGPSRecvThread.hpp -text
+common/src/CXGSVSatelliteInfo.cpp -text
+common/src/CXGSVSatelliteInfo.hpp -text
 common/src/CXInfoBar.cpp -text
 common/src/CXInfoBar.hpp -text
 common/src/CXInfoBarBottom.cpp -text
@@ -193,6 +195,8 @@ common/src/CXRGB.hpp -text
 common/src/CXReadLocker.cpp -text
 common/src/CXReadLocker.hpp -text
 common/src/CXRect.hpp -text
+common/src/CXSatelliteData.cpp -text
+common/src/CXSatelliteData.hpp -text
 common/src/CXSpeedCalculator.cpp -text
 common/src/CXSpeedCalculator.hpp -text
 common/src/CXStringASCII.cpp -text

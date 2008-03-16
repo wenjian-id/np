@@ -134,6 +134,8 @@ extraResourceOptions=
 52=..\..\common\src\CXTrackLog.cpp
 53=..\..\common\src\CXCoor.cpp
 54=..\..\common\src\CXMapPainterThread.cpp
+55=..\..\common\src\CXGSVSatelliteInfo.cpp
+56=..\..\common\src\CXSatelliteData.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -202,6 +204,8 @@ extraResourceOptions=
 65=..\..\common\src\CXCoor.hpp
 66=..\..\common\src\CXTimeStampData.hpp
 67=..\..\common\src\CXMapPainterThread.hpp
+68=..\..\common\src\CXGSVSatelliteInfo.hpp
+69=..\..\common\src\CXSatelliteData.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

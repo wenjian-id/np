@@ -29,6 +29,7 @@
 #include "CXRGB.hpp"
 
 class CXCoor;
+class CXGSVSatelliteInfo;
 
 template <class t> t Max(const t &a, const t&b) {
 	if(a < b)
@@ -50,6 +51,9 @@ const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);
 
 static const size_t MaxPOITypes = 8; ///< oiu
 
+const unsigned char DegUTF8[2] = {0xC2, 0xB0};
+
+
 //-------------------------------------
 /*
  * \brief Possible command.
@@ -57,12 +61,13 @@ static const size_t MaxPOITypes = 8; ///< oiu
  * Possible command.
  */
 enum E_COMMAND {
-	e_None,		///< No command.
-	e_Quit,		///< Quit.
-	e_Info,		///< Info.
-	e_Save,		///< Toggle save.
-	e_ZoomIn,	///< Zoom in
-	e_ZoomOut,	///< Zoom out
+	e_CmdNone,		///< No command.
+	e_CmdQuit,		///< Quit.
+	e_CmdInfo,		///< Info.
+	e_CmdSave,		///< Toggle save.
+	e_CmdZoomIn,	///< Zoom in
+	e_CmdZoomOut,	///< Zoom out
+	e_CmdSat,		///< Sat info.
 };
 
 
@@ -128,11 +133,21 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
 
 //-------------------------------------
 /*
+ * \brief Check if CRC of NMEA packet is correct.
+ *
+ * Check if CRC of NMEA packet is correct.
+ * \param	NMEAPacket		String containing the NMEA packet including CR LF 
+ * \return					true if CRC s OK.
+ */
+bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
+
+//-------------------------------------
+/*
  * \brief Extract information from a GGA packet.
  *
  * Extract information from a GGA packet. The information extracted
  * consists of longitude, latitude and number of sattelites.
- * \param	NMEAPacket	String containing the NMEA packet includeing CR LF 
+ * \param	NMEAPacket	String containing the NMEA packet including CR LF 
  * \param	rLon		Extracted longitude [decimal degrees]
  * \param	rLat		Extracted latitude [decimal degrees]
  * \param	rHeight		Extracted height [m]
@@ -140,6 +155,40 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
  * \return				true if successfull.
  */
 bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLat, double & rHeight, int &rnSat);
+
+//-------------------------------------
+/*
+ * \brief Extract information from a GSA packet.
+ *
+ * Extract information from a GSA packet. The information extracted
+ * consists of an array of the PRN of active satellites.
+ * \param	NMEAPacket		String containing the NMEA packet including CR LF 
+ * \param	rSatellites		Buffer with PRN of active satellites
+ * \return					true if successfull.
+ */
+bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXBuffer<int> &rSatellites);
+
+//-------------------------------------
+/*
+ * \brief Extract information from a GSV packet.
+ *
+ * Extract information from a GSV packet. The information extracted
+ * consists of 
+ * \param	NMEAPacket			String containing the NMEA packet including CR LF 
+ * \param	rNTelegrams			Number of GSV telegrams
+ * \param	rNCurrentTelegram	Number of current telegram
+ * \param	rNSat				Number of visible staellites
+ * \param	rNInfos				Number of staellite infos received
+ * \param	rInfo1				Satellite info 1
+ * \param	rInfo2				Satellite info 2
+ * \param	rInfo3				Satellite info 3
+ * \param	rInfo4				Satellite info 4
+ * \return						true if successfull.
+ */
+bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram, 
+					int &rNSat, int &rNInfos, 
+					CXGSVSatelliteInfo &rInfo1, CXGSVSatelliteInfo &rInfo2,
+					CXGSVSatelliteInfo &rInfo3, CXGSVSatelliteInfo &rInfo4);
 
 //-------------------------------------
 /*

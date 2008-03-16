@@ -62,10 +62,10 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		Bmp.DrawRect(ClientRect, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
 
 		double R = 1.0*Min(Width/2, Height/2);
-		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(R)), CXRGB(0xA0, 0xA0, 0xA0), CXRGB(0xFF, 0xFF, 0xFF));
-		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(0.90*R)), CXRGB(0xFF, 0x00, 0x00), CXRGB(0xFF, 0x00, 0x00));
+		Bmp.DrawCircle(Width/2, Height/2, static_cast<int>(floor(R)), CXRGB(0xA0, 0xA0, 0xA0), CXRGB(0xFF, 0xFF, 0xFF));
+		Bmp.DrawCircle(Width/2, Height/2, static_cast<int>(floor(0.90*R)), CXRGB(0xFF, 0x00, 0x00), CXRGB(0xFF, 0x00, 0x00));
 		double WhiteRadius = 0.70*R;
-		Bmp.Circle(Width/2, Height/2, static_cast<int>(floor(WhiteRadius)), CXRGB(0xFF, 0xFF, 0xFF), CXRGB(0xFF, 0xFF, 0xFF));
+		Bmp.DrawCircle(Width/2, Height/2, static_cast<int>(floor(WhiteRadius)), CXRGB(0xFF, 0xFF, 0xFF), CXRGB(0xFF, 0xFF, 0xFF));
 		
 		// draw text
 		char buf[10];

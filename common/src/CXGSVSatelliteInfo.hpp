@@ -20,149 +20,100 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXGPSRECVTHREAD_HPP__
-#define __CXGPSRECVTHREAD_HPP__
-
-#include "CXLoopThread.hpp"
-#include "CXBuffer.hpp"
-#include "CXFile.hpp"
-#include "CXExactTime.hpp"
-#include <CXMutex.hpp>
-#include <CXSerial.hpp>
-
-class CXLocatorThread;
+#ifndef __CXGSVSATELLITEINFO_HPP__
+#define __CXGSVSATELLITEINFO_HPP__
 
 //----------------------------------------------------------------------------
 /*
  * \brief oiu
  *
  */
-class CXGPSRecvThread : public CXLoopThread {
+class CXGSVSatelliteInfo {
 private:
-	CXSerial			m_Serial;		///< oiu
-	bool				m_oDemoMode;	///< oiu
-	CXFile				m_DemoFile;		///< oiu
-	size_t				m_DemoTimeout;	///< oiu
-	CXExactTime			m_LastDemoGGA;	///< oiu
-	tUCBuffer			m_Buffer;		///< oiu
-	tUCBuffer			m_LastPacket;	///< oiu
-	CXLocatorThread		*m_pLocator;	///< oiu
-	bool				m_oSaving;		///< oiu
-	CXFile				m_SaveFile;		///< oiu
-	mutable CXMutex		m_Mutex;		///< oiu
-	//-------------------------------------
-	CXGPSRecvThread(const CXGPSRecvThread &);						///< Not used.
-	const CXGPSRecvThread & operator = (const CXGPSRecvThread &);	///< Not used.
+	int		m_PRN;			///< oiu
+	int		m_Elevation;	///< oiu
+	int		m_Azimuth;		///< oiu
+	int		m_SNR;			///< oiu
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void OpenSerial();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void ReopenSerial();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void CloseSerial();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool ReceiveData();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool ProcessData();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGGA();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckRMC();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGSA();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGSV();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadLoop();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped();
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void Save(const tUCBuffer & Buffer);
+	void CopyFrom(const CXGSVSatelliteInfo &rOther);
+protected:
 public:
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	CXGPSRecvThread();
+	CXGSVSatelliteInfo();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	virtual ~CXGPSRecvThread();
+	CXGSVSatelliteInfo(const CXGSVSatelliteInfo &rOther);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	bool IsOpen() const;
+	virtual ~CXGSVSatelliteInfo();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetLocator(CXLocatorThread *pLocator);
+	const CXGSVSatelliteInfo & operator = (const CXGSVSatelliteInfo &rOther);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void FlushInput();
+	int GetPRN() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetPRN(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetElevation() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetElevation(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetAzimuth() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetAzimuth(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetSNR() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSNR(int NewValue);
 };
 
-
-#endif // __CXGPSRECVTHREAD_HPP__
+#endif // __CXGSVSATELLITEINFO_HPP__

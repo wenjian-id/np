@@ -22,9 +22,15 @@
 
 #include "Utils.hpp"
 #include "CXCoor.hpp"
+#include "CXGSVSatelliteInfo.hpp"
 
 #include  <stdlib.h>
 #include  <math.h>
+
+static const char *pcGGABEGIN			= "$GPGGA";
+static const char *pcRMCBEGIN			= "$GPRMC";
+static const char *pcGSABEGIN			= "$GPGSA";
+static const char *pcGSVBEGIN			= "$GPGSV";
 
 //-------------------------------------
 bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine) {
@@ -144,44 +150,51 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue) {
 }
 
 //-------------------------------------
-bool ExtractGGAData(const CXStringASCII &Line, double & rLon, double & rLat, double & rHeight, int &rnSat) {
-	// check if this line contains a GGA packet
-
-	// length must be greater than 11 $ G P G G A * x x CR LF
-	if(Line.GetSize() < 11)
-		return false;
-
-	// the first 6 characters must be "$CPGGA"
-	if(Line.Find("$GPGGA") != 0) {
-		return false;
-	}
-
-	// count colons
-	int iCount = 0;
-	for(size_t i=0; i<Line.GetSize(); i++)
-		if(Line[i] == ',')
-			iCount++;
-	if(iCount != 14)
-		return false;
-
+bool CheckNMEACRC(const CXStringASCII &NMEAPacket) {
 	// now check CRC
 	int iCRC = 0;
 	// CRC are te last two characters before CRLF, starting after '$'
-	for(size_t j=1; j<Line.GetSize()-3; j++)
-		iCRC ^= Line[j];
+	for(size_t j=1; j<NMEAPacket.GetSize()-3; j++)
+		iCRC ^= NMEAPacket[j];
 
 	// read CRC from packet
 	int iReadCRC = 0;
-	char tmp[3] = {Line[Line.GetSize()-2], Line[Line.GetSize()-1], 0};
+	char tmp[3] = {NMEAPacket[NMEAPacket.GetSize()-2], NMEAPacket[NMEAPacket.GetSize()-1], 0};
 	sscanf(tmp, "%x", &iReadCRC);
 	if(iCRC != iReadCRC) {
 		// CRC error
 		return false;
 	}
+	return true;
+}
+
+//-------------------------------------
+bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLat, double & rHeight, int &rnSat) {
+	// check if this NMEAPacket contains a GGA packet
+
+	// length must be greater than 11 $ G P G G A * x x CR LF
+	if(NMEAPacket.GetSize() < 11)
+		return false;
+
+	// the first 6 characters must be "$CPGGA"
+	if(NMEAPacket.Find(pcGGABEGIN) != 0) {
+		return false;
+	}
+
+	// count colons
+	int iCount = 0;
+	for(size_t i=0; i<NMEAPacket.GetSize(); i++)
+		if(NMEAPacket[i] == ',')
+			iCount++;
+	if(iCount != 14)
+		return false;
+
+	if(!CheckNMEACRC(NMEAPacket))
+		return false;
 
 	// OK, GGA-Paket seems to be complete
 	// now extract data
-	CXStringASCII s = Line;
+	CXStringASCII s = NMEAPacket;
 	// remove $GGA
 	ExtractFirstToken(s, ',');
 	// UTC
@@ -237,6 +250,108 @@ bool ExtractGGAData(const CXStringASCII &Line, double & rLon, double & rLat, dou
 
 	return oReturn;
 }
+
+//-------------------------------------
+bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXBuffer<int> &rSatellites) {
+	// check if this NMEAPacket contains a GSA packet
+
+	// length must be greater than 11 $ G P G S A * x x CR LF
+	if(NMEAPacket.GetSize() < 11)
+		return false;
+
+	// the first 6 characters must be "$CPGSA"
+	if(NMEAPacket.Find(pcGSABEGIN) != 0) {
+		return false;
+	}
+
+	// count colons
+	int iCount = 0;
+	for(size_t i=0; i<NMEAPacket.GetSize(); i++)
+		if(NMEAPacket[i] == ',')
+			iCount++;
+	if(iCount != 17)
+		return false;
+
+	if(!CheckNMEACRC(NMEAPacket))
+		return false;
+
+	// OK, GSA-Paket seems to be complete
+	// now extract data
+	CXStringASCII s = NMEAPacket;
+	// remove $GSA
+	ExtractFirstToken(s, ',');
+
+	// selection mode
+	ExtractFirstToken(s, ',');
+	// fix
+	ExtractFirstToken(s, ',');
+	// now extract 12 satellite PRN
+	rSatellites.Clear();
+	for(size_t j=0; j<12; j++) {
+		CXStringASCII SPRN = ExtractFirstToken(s, ',');
+		if(!SPRN.IsEmpty())
+			rSatellites.Append(atoi(SPRN.c_str()));
+	}
+	return true;
+}
+
+
+//-------------------------------------
+bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram, 
+					int &rNSat, int &rNInfos, CXGSVSatelliteInfo &rInfo1, CXGSVSatelliteInfo &rInfo2,
+					CXGSVSatelliteInfo &rInfo3, CXGSVSatelliteInfo &rInfo4)
+{
+	// check if this NMEAPacket contains a GSV packet
+
+	// length must be greater than 11 $ G P G S V * x x CR LF
+	if(NMEAPacket.GetSize() < 11)
+		return false;
+
+	// the first 6 characters must be "$CPGSV"
+	if(NMEAPacket.Find(pcGSVBEGIN) != 0) {
+		return false;
+	}
+
+	// we can not count colons since packet length is variable
+
+	// check CRC
+	if(!CheckNMEACRC(NMEAPacket))
+		return false;
+
+	// OK, GSV-Paket seems to be complete
+	// now extract data
+	CXStringASCII s = NMEAPacket;
+	// remove $GSA
+	ExtractFirstToken(s, ',');
+	// number of GSV telegram
+	rNTelegrams = atoi(ExtractFirstToken(s, ',').c_str());
+	// current GSV telegram
+	rNCurrentTelegram = atoi(ExtractFirstToken(s, ',').c_str());
+	// number of visible satellites
+	rNSat = atoi(ExtractFirstToken(s, ',').c_str());
+
+	// remove until '*'
+	s = ExtractFirstToken(s, '*');
+
+	// now extract satellite infos
+	while(!s.IsEmpty()) {
+		rNInfos++;
+		CXGSVSatelliteInfo *pInfo = &rInfo1;
+		switch(rNInfos) {
+			case 1 : pInfo = &rInfo1; break;
+			case 2 : pInfo = &rInfo2; break;
+			case 3 : pInfo = &rInfo3; break;
+			case 4 : pInfo = &rInfo4; break;
+		}
+		// read an set data
+		pInfo->SetPRN(atoi(ExtractFirstToken(s, ',').c_str()));
+		pInfo->SetElevation(atoi(ExtractFirstToken(s, ',').c_str()));
+		pInfo->SetAzimuth(atoi(ExtractFirstToken(s, ',').c_str()));
+		pInfo->SetSNR(atoi(ExtractFirstToken(s, ',').c_str()));
+	}
+	return true;
+}
+
 
 //-------------------------------------
 CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar) {

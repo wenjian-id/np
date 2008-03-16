@@ -113,7 +113,7 @@ tIRect CXBitmap::CalcTextRectQString(const QString & Text, int AddWidth, int Add
 	// calc text rect
 	QRect NullRect(0,0,0,0);
 	QRect Res = m_pPainter->boundingRect(NullRect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextSingleLine, Text);
-	Result = tIRect(Res.left(), Res.top(), Res.right() + AddWidth, Res.bottom() + AddHeight);
+	Result = tIRect(0, 0, Res.width() + AddWidth, Res.height() + AddHeight);
 	return Result;
 }
 
@@ -140,7 +140,7 @@ void CXBitmap::DrawTextQString(const QString & Text, const tIRect & TheRect, con
 	m_pPainter->setPen(NewPen);
 
 	// calc and draw rectangle
-	QRect Rect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight() - TheRect.GetLeft() + 1, TheRect.GetBottom() - TheRect.GetTop() + 1);
+	QRect Rect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth(), TheRect.GetHeight());
 	QRect Res = m_pPainter->boundingRect(Rect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextSingleLine, Text);
 	m_pPainter->drawRect(Res);
 	
@@ -237,7 +237,7 @@ void CXBitmap::LineTo(int x, int y) {
 }
 
 //-------------------------------------
-bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
+bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
 	if(IsNull())
 		return false;
 

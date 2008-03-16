@@ -117,7 +117,9 @@ tIRect CXBitmap::CalcTextRectASCII(const CXStringASCII & Text, int AddWidth, int
 	Rect.left = 0;
 	Rect.top = 0;
 	::DrawTextA(m_hDC, Text.c_str(), -1, &Rect, DT_CALCRECT); 
-	Result = tIRect(Rect.left, Rect.top, Rect.right + AddWidth, Rect.bottom + AddHeight);
+	Result = tIRect(Rect.left, Rect.top, Rect.right - Rect.left + AddWidth, Rect.bottom - Rect.top + AddHeight);
+	// make sure it starts at 0, 0
+	Result.OffsetRect(-Result.GetLeft(), -Result.GetTop());
 
 	return Result;
 }
@@ -164,7 +166,9 @@ tIRect CXBitmap::CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int A
 	Rect.left = 0;
 	Rect.top = 0;
 	::DrawTextW(m_hDC, Text.w_str(), -1, &Rect, DT_CALCRECT); 
-	Result = tIRect(Rect.left, Rect.top, Rect.right + AddWidth, Rect.bottom + AddHeight);
+	Result = tIRect(Rect.left, Rect.top, Rect.right - Rect.left + AddWidth, Rect.bottom - Rect.top + AddHeight);
+	// make sure it starts at 0, 0
+	Result.OffsetRect(-Result.GetLeft(), -Result.GetTop());
 
 	return Result;
 }
@@ -219,7 +223,7 @@ void CXBitmap::LineTo(int x, int y) {
 }
 
 //-------------------------------------
-bool CXBitmap::Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
+bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
 	if(IsNull())
 		return false;
 	// get old colors

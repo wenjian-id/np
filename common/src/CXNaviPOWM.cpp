@@ -28,6 +28,7 @@
 #include "CXInfoBarTop.hpp"
 #include "CXInfoBarSpeed.hpp"
 #include "CXInfoBarCommon.hpp"
+#include "CXSatelliteData.hpp"
 #include "CXMutexLocker.hpp"
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
@@ -53,14 +54,14 @@ CXZoomBtn::~CXZoomBtn() {
 E_COMMAND CXZoomBtn::OnInternalMouseDown(int X, int Y) {
 	if((X >= 0) && (X <= GetWidth()) && (Y >= 0) && (Y <= GetHeight()))
 		return m_eCommand;
-	return e_None;
+	return e_CmdNone;
 }
 
 //-------------------------------------
 void CXZoomBtn::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	if(SizeChanged()) {
 		m_Bmp.Create(pDC, GetWidth(), GetHeight());
-		if(m_eCommand == e_ZoomIn)
+		if(m_eCommand == e_CmdZoomIn)
 			m_Bmp.LoadFromFile(CXOptions::Instance()->GetZoomInFileName());
 		else
 			m_Bmp.LoadFromFile(CXOptions::Instance()->GetZoomOutFileName());
@@ -72,6 +73,7 @@ void CXZoomBtn::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 //-------------------------------------
 CXNaviPOWM::CXNaviPOWM() :
+	m_eDisplayMode(e_ModeMap),
 	m_pMainWindow(NULL),
 	m_pGPSRecvThread(NULL),
 	m_pLocatorThread(NULL),
@@ -88,9 +90,8 @@ CXNaviPOWM::CXNaviPOWM() :
 	m_InfoBarCommonPos(0,0,1,1),
 	m_ZoomInPos(0,0,1,1),
 	m_ZoomOutPos(0,0,1,1),
-	m_oShowInfo(false),
-	m_ZoomInBtn(e_ZoomIn),
-	m_ZoomOutBtn(e_ZoomOut)
+	m_ZoomInBtn(e_CmdZoomIn),
+	m_ZoomOutBtn(e_CmdZoomOut)
 {
 }
 
@@ -214,21 +215,29 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		return;
 	if(m_pInfoBarCommon == NULL)
 		return;
-	
-	m_pMapPainterThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
+
+	if(m_eDisplayMode == e_ModeMap) {
+		// paint map
+		m_pMapPainterThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
+	} else if (m_eDisplayMode == e_ModeSatInfo) {
+		CXSatelliteData::Instance()->Paint(	pDC, 0, m_InfoBarTopPos.GetBottom(),
+											GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
+	}
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
-	if(CXOptions::Instance()->MustShowMaxSpeed()) {
-		m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
+	if(m_eDisplayMode == e_ModeMap) {
+		if(CXOptions::Instance()->MustShowMaxSpeed()) {
+			m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
+		}
+		m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
+		// paint zoom buttons
+		if(CXOptions::Instance()->MustShowZoomButtons()) {
+			m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
+			m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
+		}
 	}
-	m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
-	// paint zoom buttons
-	if(CXOptions::Instance()->MustShowZoomButtons()) {
-		m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
-		m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
-	}
-
-	if(m_oShowInfo) {
+	
+	if(m_eDisplayMode == e_ModeInfo) {
 		// show info
 		CXBitmap Bmp;
 		tIRect rect(0, 0, GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
@@ -356,40 +365,67 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		return;
 	if(m_pInfoBarTop == NULL)
 		return;
-	if(m_oShowInfo && !m_InfoBarTopPos.Contains(X, Y)) {
+	if((m_eDisplayMode == e_ModeInfo) && !m_InfoBarTopPos.Contains(X, Y)) {
 		// turn off showing info when clicking outside InfoBarTop
-		m_oShowInfo = false;
+		m_eDisplayMode = e_ModeMap;
 		RequestRepaint();
 		return;
 	}
-	// turn off showing info
+	if((m_eDisplayMode == e_ModeSatInfo) && !m_InfoBarTopPos.Contains(X, Y)) {
+		// turn off showing info when clicking outside InfoBarTop
+		m_eDisplayMode = e_ModeMap;
+		RequestRepaint();
+		return;
+	}
 	// get command
-	E_COMMAND Cmd = e_None;
+	E_COMMAND Cmd = e_CmdNone;
 	// check Info bar buttons
 	Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
 	// check for zoom buttons
-	if(!m_oShowInfo && (CXOptions::Instance()->MustShowZoomButtons()) && (Cmd == e_None)) {
+	if((m_eDisplayMode == e_ModeMap) && (CXOptions::Instance()->MustShowZoomButtons()) && (Cmd == e_CmdNone)) {
 		Cmd = m_ZoomInBtn.OnMouseDown(X - m_ZoomInPos.GetLeft(), Y - m_ZoomInPos.GetTop());
-		if(Cmd == e_None)
+		if(Cmd == e_CmdNone)
 			Cmd = m_ZoomOutBtn.OnMouseDown(X - m_ZoomOutPos.GetLeft(), Y - m_ZoomOutPos.GetTop());
 	}
 	// turn off showing info when clicking outside info button
-	if(m_oShowInfo && (Cmd != e_Info))
-		m_oShowInfo = false;
+	if((m_eDisplayMode == e_ModeInfo) && (Cmd != e_CmdInfo))
+		m_eDisplayMode = e_ModeMap;
+	// turn off showing info when clicking outside sat button
+	if((m_eDisplayMode == e_ModeSatInfo) && (Cmd != e_CmdSat))
+		m_eDisplayMode = e_ModeMap;
 	switch(Cmd) {
-		case e_Quit:	m_pMainWindow->RequestTermination(); break;
-		case e_Info:	m_oShowInfo = !m_oShowInfo; RequestRepaint(); break;
-		case e_Save:	CXOptions::Instance()->ToggleSaving(); RequestRepaint(); break;
-		case e_ZoomIn:	{
-							if(m_pMapPainterThread != NULL)
-								m_pMapPainterThread->ZoomIn();
-							break;
-						}
-		case e_ZoomOut:	{
-							if(m_pMapPainterThread != NULL)
-								m_pMapPainterThread->ZoomOut();
-							break;
-						}
-		default:		break;
+		case e_CmdQuit:		m_pMainWindow->RequestTermination(); break;
+		case e_CmdInfo:		{
+								if(m_eDisplayMode == e_ModeInfo)
+									// switch back top map mode
+									m_eDisplayMode = e_ModeMap;
+								else
+									// switch to info mode
+									m_eDisplayMode = e_ModeInfo;
+								RequestRepaint();
+								break;
+							}
+		case e_CmdSat:		{
+								if(m_eDisplayMode == e_ModeSatInfo)
+									// switch back top map mode
+									m_eDisplayMode = e_ModeMap;
+								else
+									// switch to Sat mode
+									m_eDisplayMode = e_ModeSatInfo;
+								RequestRepaint();
+								break;
+							}
+		case e_CmdSave:		CXOptions::Instance()->ToggleSaving(); RequestRepaint(); break;
+		case e_CmdZoomIn:	{
+								if(m_pMapPainterThread != NULL)
+									m_pMapPainterThread->ZoomIn();
+								break;
+							}
+		case e_CmdZoomOut:	{
+								if(m_pMapPainterThread != NULL)
+									m_pMapPainterThread->ZoomOut();
+								break;
+							}
+		default:			break;
 	}
 }

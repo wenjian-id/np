@@ -171,7 +171,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual bool Circle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) = 0;
+	virtual bool DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) = 0;
 	//-------------------------------------
 	/*
 	 * \brief oiu

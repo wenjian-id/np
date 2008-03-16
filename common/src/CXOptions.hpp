@@ -98,7 +98,7 @@ private:
 	 * \brief Create an absolute path for directory entries.
 	 *
 	 * Create an absolute path for directory entries.
-	 * If Path is an absolute path (well, a path starting whith PATHDELIMITER)
+	 * If Path is an absolute path (well, a path starting with PATHDELIMITER)
 	 * already it will be used as result, else the result will be StartPath + Path.
 	 * If necessary, a PATHDELIMITER will be appended.
 	 * \param	StartPath	Start path

@@ -31,7 +31,6 @@
 static const CXRGB BGCOLOR(0x00, 0x00, 0x00);
 static const CXRGB FGCOLOR(0xff, 0xff, 0x00);
 
-unsigned char DegUTF8[2] = {0xC2, 0xB0};
 
 //-------------------------------------
 CXInfoBarCommon::CXInfoBarCommon() {
@@ -82,22 +81,22 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		tIRect LonRect(0, 0, Width, Height);
 		CXStringUTF8 StrLon;
 		StrLon = "-180.99999";
-		StrLon.Append(DegUTF8, 2);
+		StrLon.Append(DegUTF8, sizeof(DegUTF8));
 		int FHLon = CalcFontHeight(TmpBmp, StrLon, LonRect);
 		snprintf(buf, sizeof(buf), "%0.5f", m_NaviData.GetLon());
 		StrLon = buf;
-		StrLon.Append(DegUTF8, 2);
+		StrLon.Append(DegUTF8, sizeof(DegUTF8));
 		LonRect = TmpBmp.CalcTextRectUTF8(StrLon, 4, 0);
-		LonRect.OffsetRect(Width - LonRect.GetRight(), -LonRect.GetTop());
+		LonRect.OffsetRect(Width - LonRect.GetRight(), 0);
 
 		// calc lat rect
 		tIRect LatRect(0, 0, Width, Height);
 		CXStringUTF8 StrLat;
 		snprintf(buf, sizeof(buf), "%0.5f", m_NaviData.GetLat());
 		StrLat = buf;
-		StrLat.Append(DegUTF8, 2);
+		StrLat.Append(DegUTF8, sizeof(DegUTF8));
 		LatRect = TmpBmp.CalcTextRectUTF8(StrLat, 4, 0);
-		LatRect.OffsetRect(Width - LatRect.GetRight(), LonRect.GetBottom()+0-LatRect.GetTop());
+		LatRect.OffsetRect(Width - LatRect.GetRight(), LonRect.GetBottom());
 
 		// calc height rect
 		tIRect HeightRect(0, 0, Width, Height);
@@ -105,7 +104,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		snprintf(buf, sizeof(buf), "%0.0f m", m_NaviData.GetHeight());
 		StrHeight = buf;
 		HeightRect = TmpBmp.CalcTextRectUTF8(StrHeight, 4, 0);
-		HeightRect.OffsetRect(Width - HeightRect.GetRight(), LatRect.GetBottom()+0-HeightRect.GetTop());
+		HeightRect.OffsetRect(Width - HeightRect.GetRight(), LatRect.GetBottom());
 
 		// calc speed rect
 		tIRect SpeedRect(0, 0, Width, Height);
@@ -116,7 +115,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		snprintf(buf, sizeof(buf), "%d kmh", Speed);
 		StrSpeed = buf;
 		SpeedRect = TmpBmp.CalcTextRectUTF8(StrSpeed, 4, 0);
-		SpeedRect.OffsetRect(Width - SpeedRect.GetRight(), HeightRect.GetBottom()+0-SpeedRect.GetTop());
+		SpeedRect.OffsetRect(Width - SpeedRect.GetRight(), HeightRect.GetBottom());
 
 		// create bitmap
 		CXBitmap Bmp;

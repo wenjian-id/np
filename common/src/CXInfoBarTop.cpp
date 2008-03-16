@@ -72,7 +72,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		m_QuitRect.SetLeft(Width - Height);
 		// calc width of SatRect
 		m_SatRect = Bmp.CalcTextRectASCII("XX", 4, 0);
-		m_SatRect.OffsetRect(-m_SatRect.GetLeft() + Height, -m_SatRect.GetTop());
+		m_SatRect.OffsetRect(Height, 0);
 		m_SatRect.SetBottom(Height);
 		m_SaveRect.SetLeft(m_SatRect.GetRight()+1);
 		m_SaveRect.SetRight(m_SaveRect.GetLeft() + Height);
@@ -141,11 +141,13 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 //-------------------------------------
 E_COMMAND CXInfoBarTop::OnInternalMouseDown(int X, int Y) {
 	if(m_InfoRect.Contains(X, Y))
-		return e_Info;
+		return e_CmdInfo;
+	if(m_SatRect.Contains(X, Y))
+		return e_CmdSat;
 	if(m_QuitRect.Contains(X, Y))
-		return e_Quit;
+		return e_CmdQuit;
 	if(m_SaveRect.Contains(X, Y))
-		return e_Save;
-	return e_None;
+		return e_CmdSave;
+	return e_CmdNone;
 }
 

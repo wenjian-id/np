@@ -553,7 +553,7 @@ private:
 	 * \brief Load map version 0.1.2
 	 *
 	 *	Load map version 0.1.2
-	 *	\param	InFile		File whith map data.
+	 *	\param	InFile		File with map data.
 	 *	\param	FileName	File name for map file (used for error messages).
 	 *	\return				true on success
 	 */
@@ -563,7 +563,7 @@ private:
 	 * \brief Load map version 0.1.1
 	 *
 	 *	Load map version 0.1.1
-	 *	\param	InFile		File whith map data.
+	 *	\param	InFile		File with map data.
 	 *	\param	FileName	File name for map file (used for error messages).
 	 *	\return				true on success
 	 */
@@ -573,7 +573,7 @@ private:
 	 * \brief Load map current version
 	 *
 	 *	Load map current version
-	 *	\param	InFile		File whith map data.
+	 *	\param	InFile		File with map data.
 	 *	\param	FileName	File name for map file (used for error messages).
 	 *	\return				true on success
 	 */
