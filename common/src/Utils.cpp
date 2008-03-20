@@ -22,7 +22,7 @@
 
 #include "Utils.hpp"
 #include "CXCoor.hpp"
-#include "CXGSVSatelliteInfo.hpp"
+#include "CXNMEA.hpp"
 
 #include  <stdlib.h>
 #include  <math.h>
@@ -169,7 +169,7 @@ bool CheckNMEACRC(const CXStringASCII &NMEAPacket) {
 }
 
 //-------------------------------------
-bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLat, double & rHeight, int &rnSat) {
+bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
 	// check if this NMEAPacket contains a GGA packet
 
 	// length must be greater than 11 $ G P G G A * x x CR LF
@@ -198,7 +198,7 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLa
 	// remove $GGA
 	ExtractFirstToken(s, ',');
 	// UTC
-	ExtractFirstToken(s, ',');
+	rGGAPacket.SetUTC(ExtractFirstToken(s, ','));
 	// read latitude
 	CXStringASCII SLat = ExtractFirstToken(s, ',');
 	double dLat = 0;
@@ -217,11 +217,13 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLa
 	// quality
 	int quality = atoi(ExtractFirstToken(s, ',').c_str());
 	// nr satellites
-	rnSat = atoi(ExtractFirstToken(s, ',').c_str());
+	rGGAPacket.SetNSat(atoi(ExtractFirstToken(s, ',').c_str()));
 	// HDOP
 	ExtractFirstToken(s, ',');
 	// height
-	sscanf(ExtractFirstToken(s, ',').c_str(), "%lf", &rHeight);
+	double Height = 0;
+	sscanf(ExtractFirstToken(s, ',').c_str(), "%lf", &Height);
+	rGGAPacket.SetHeight(Height);
 	// ignore
 	ExtractFirstToken(s, ',');
 	// HOG
@@ -233,19 +235,100 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLa
 	// StationID
 	ExtractFirstToken(s, ',');
 
-	unsigned char cLat = strLat[0];
-	if((cLat == 's') || (cLat == 'S'))
+	if((strLat == "s") || (strLat == "S"))
 		dLat = -dLat;
-	unsigned char cLon = strLon[0];
-	if((cLon == 'w') || (cLon == 'W'))
+	if((strLon == "w") || (strLon == "W"))
 		dLon = -dLon;
 	
 	// transform to decimal degrees
-	LLGMDToG(dLon, dLat, rLon, rLat);
+	double dLonDeg = 0, dLatDeg = 0;
+	LLGMDToG(dLon, dLat, dLonDeg, dLatDeg);
+	rGGAPacket.SetLon(dLonDeg);
+	rGGAPacket.SetLat(dLatDeg);
 
 	bool oReturn = true;
 	// check for invalid quality
 	if(quality == 0)
+		oReturn = false;
+
+	return oReturn;
+}
+
+//-------------------------------------
+bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
+	// check if this NMEAPacket contains a RMC packet
+
+	// length must be greater than 11 $ G P R M C * x x CR LF
+	if(NMEAPacket.GetSize() < 11)
+		return false;
+
+	// the first 6 characters must be "$CPRMC"
+	if(NMEAPacket.Find(pcRMCBEGIN) != 0) {
+		return false;
+	}
+
+	// count colons
+	int iCount = 0;
+	for(size_t i=0; i<NMEAPacket.GetSize(); i++)
+		if(NMEAPacket[i] == ',')
+			iCount++;
+	if(iCount != 12)
+		return false;
+
+	if(!CheckNMEACRC(NMEAPacket))
+		return false;
+
+	// OK, RMC-Paket seems to be complete
+	// now extract data
+	CXStringASCII s = NMEAPacket;
+	// remove $GGA
+	ExtractFirstToken(s, ',');
+	// UTC
+	rRMCPacket.SetUTC(ExtractFirstToken(s, ','));
+	// fix status
+	CXStringASCII Fix = ExtractFirstToken(s, ',');
+	// read latitude
+	CXStringASCII SLat = ExtractFirstToken(s, ',');
+	double dLat = 0;
+	sscanf(SLat.c_str(), "%lf", &dLat);
+	CXStringASCII strLat = ExtractFirstToken(s, ',');
+	if((strLat != "N") && (strLat != "n") && (strLat != "S") && (strLat != "s"))
+		return false;
+	// read longitude
+	CXStringASCII SLon = ExtractFirstToken(s, ',');
+	double dLon = 0;
+	sscanf(SLon.c_str(), "%lf", &dLon);
+	CXStringASCII strLon = ExtractFirstToken(s, ',');
+	if((strLon != "E") && (strLon != "e") && (strLon != "W") && (strLon != "w"))
+		return false;
+
+	// speed
+	CXStringASCII SSpeed = ExtractFirstToken(s, ',');
+	double dSpeed = 0;
+	sscanf(SSpeed.c_str(), "%lf", &dSpeed);
+	// convert to m/s
+	dSpeed = 0.51444*dSpeed;
+	rRMCPacket.SetSpeed(dSpeed);
+	// course
+	CXStringASCII SCourse = ExtractFirstToken(s, ',');
+	double dCourse = 0;
+	sscanf(SCourse.c_str(), "%lf", &dCourse);
+	rRMCPacket.SetCourse(dCourse);
+
+	if((strLat == "s") || (strLat == "S"))
+		dLat = -dLat;
+	if((strLon == "w") || (strLon == "W"))
+		dLon = -dLon;
+	
+	// transform to decimal degrees
+	double dLonDeg = 0, dLatDeg = 0;
+	LLGMDToG(dLon, dLat, dLonDeg, dLatDeg);
+	rRMCPacket.SetLon(dLonDeg);
+	rRMCPacket.SetLat(dLatDeg);
+
+	bool oReturn = true;
+	// check for invalid fix
+	if((Fix == "v") || (Fix == "V"))
 		oReturn = false;
 
 	return oReturn;

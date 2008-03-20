@@ -20,56 +20,26 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXNAVIDATA_HPP__
-#define __CXNAVIDATA_HPP__
+#ifndef __CXNMEA_HPP__
+#define __CXNMEA_HPP__
 
-#include "CXRWLock.hpp"
-#include "CXCoor.hpp"
-#include "CXUTMSpeed.hpp"
-#include "CXStringUTF8.hpp"
-#include <TargetIncludes.hpp>
+#include "CXStringASCII.hpp"
 
-//----------------------------------------------------------------------------
+//---------------------------------------------------------------------
 /*
  * \brief oiu
  *
  */
-class CXNaviData {
+class CXGGAPacket {
 private:
-	//-------------
-	// position stuff
-	//-------------
-	double				m_dLon;				///< grad.dec
-	double				m_dLat;				///< grad.dec
-	double				m_dHeight;			///< height
-	CXCoor				m_Coor;				///< coordinate
-	//-------------
-	// speed stuff
-	//-------------
-	CXUTMSpeed			m_UTMSpeed;			///< UTM speed
-	double				m_RMCSpeed;			///< oiu
-
-	CXStringUTF8		m_StreetName;		///< name of street
-	CXStringUTF8		m_Ref;				///< ref
-	unsigned char		m_MaxSpeed;			///< max. speed
-	t_uint64			m_WayID;			///< id of last located way
-	bool				m_oLocated;			///< is located on a way or not
-	bool				m_oTimeout;			///< timeout occured
-	double				m_TargetDist;		///< distance to target
-	double				m_TargetCos;		///< oiu 0 grad = east
-	double				m_TargetSin;		///< oiu 0 grad = east
-	//-------------
-	// general stuff
-	//-------------
-	mutable CXRWLock	m_RWLock;			///< oiu
+	CXStringASCII	m_UTC;		///< oiu
+	int				m_NSat;		///< oiu
+	double			m_dLon;		///< oiu
+	double			m_dLat;		///< oiu
+	double			m_dHeight;	///< oiu
 	//-------------------------------------
-	/*
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXNaviData &rOther);
+	CXGGAPacket(const CXGGAPacket &);						///< Not used.
+	const CXGGAPacket & operator = (const CXGGAPacket &);	///< Not used.
 protected:
 public:
 	//-------------------------------------
@@ -77,25 +47,37 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXNaviData();
+	CXGGAPacket();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	CXNaviData(const CXNaviData &rOther);
+	virtual ~CXGGAPacket();
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	~CXNaviData();
+	CXStringASCII GetUTC() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	const CXNaviData & operator = (const CXNaviData &rOther);
+	void SetUTC(const CXStringASCII &NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int	GetNSat() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetNSat(int NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -107,7 +89,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetLon(double dLon);
+	void SetLon(double NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -119,7 +101,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetLat(double dLat);
+	void SetLat(double NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -131,151 +113,245 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetHeight(double dHeight);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXCoor GetCoor() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetCoor(const CXCoor &Coor);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXUTMSpeed GetUTMSpeed() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetUTMSpeedGGA(const CXUTMSpeed & UTMSpeed);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetRMCSpeed() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetRMCSpeed(double NewValue);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetStreetName() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetStreetName(const CXStringUTF8 & StreetName);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetRef() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetRef(const CXStringUTF8 & Ref);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	unsigned char GetMaxSpeed() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetMaxSpeed(unsigned char MaxSpeed);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	t_uint64 GetWayID() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetWayID(t_uint64);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool GetLocated() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetLocated(bool Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool IsTimeout() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTimeout(bool Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTargetDist(double Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetTargetDist() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTargetCos(double Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetTargetCos() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTargetSin(double Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetTargetSin() const;
+	void SetHeight(double NewValue);
 };
 
-#endif // __CXNAVIDATA_H_
+//---------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+class CXRMCPacket {
+private:
+	CXStringASCII	m_UTC;		///< oiu
+	double			m_dLon;		///< oiu
+	double			m_dLat;		///< oiu
+	double			m_dSpeed;	///< oiu
+	double			m_dCourse;	///< oiu
+	//-------------------------------------
+	CXRMCPacket(const CXRMCPacket &);						///< Not used.
+	const CXRMCPacket & operator = (const CXRMCPacket &);	///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXRMCPacket();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXRMCPacket();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetUTC() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetUTC(const CXStringASCII &NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetLon() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetLon(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetLat() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetLat(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetSpeed() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSpeed(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetCourse() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetCourse(double NewValue);
+};
+
+//---------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+class CXGSAPacket {
+private:
+	//-------------------------------------
+	CXGSAPacket(const CXGSAPacket &);						///< Not used.
+	const CXGSAPacket & operator = (const CXGSAPacket &);	///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXGSAPacket();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXGSAPacket();
+};
+
+//---------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+class CXGSVSatelliteInfo {
+private:
+private:
+	int		m_PRN;			///< oiu
+	int		m_Elevation;	///< oiu
+	int		m_Azimuth;		///< oiu
+	int		m_SNR;			///< oiu
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void CopyFrom(const CXGSVSatelliteInfo &rOther);
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXGSVSatelliteInfo();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXGSVSatelliteInfo(const CXGSVSatelliteInfo &rOther);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXGSVSatelliteInfo();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	const CXGSVSatelliteInfo & operator = (const CXGSVSatelliteInfo &rOther);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetPRN() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetPRN(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetElevation() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetElevation(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetAzimuth() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetAzimuth(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetSNR() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSNR(int NewValue);
+};
+
+//---------------------------------------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+class CXGSVPacket {
+private:
+	//-------------------------------------
+	CXGSVPacket(const CXGSVPacket &);						///< Not used.
+	const CXGSVPacket & operator = (const CXGSVPacket &);	///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXGSVPacket();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXGSVPacket();
+};
+
+
+#endif //__CXNMEA_HPP__

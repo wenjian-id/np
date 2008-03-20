@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "CXSatelliteData.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
 #include "CXPen.hpp"
@@ -36,14 +37,19 @@ CXSatelliteData * CXSatelliteData::m_pInstance = NULL;
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXSatelliteData::CXSatelliteData() :
+	m_NrSat(0),
 	m_LastReceivedGSVTel(0),
-	m_TmpNrSat(0)
+	m_TmpNrSat(0),
+	m_oRMCData(false),
+	m_oGGAData(false),
+	m_oGSAData(false),
+	m_oGSVData(false)
 {
 }
 
 //-------------------------------------
 CXSatelliteData::~CXSatelliteData() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	ClearBuffer(m_SatInfo);
 	ClearBuffer(m_TmpSatInfo);
 }
@@ -63,9 +69,31 @@ void CXSatelliteData::ClearBuffer(CXBuffer<CXGSVSatelliteInfo *> & rBuffer) {
 }
 
 //-------------------------------------
+void CXSatelliteData::SetRMCReceived() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oRMCData = true;
+}
+
+//-------------------------------------
+void CXSatelliteData::SetNrSatGGA(int NrSatGGA) {
+	CXWriteLocker WL(&m_RWLock);
+	m_NrSat = NrSatGGA;
+	m_oGGAData = true;
+}
+
+//-------------------------------------
+int CXSatelliteData::GetNrSat() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_NrSat;
+}
+
+//-------------------------------------
 void CXSatelliteData::SetActiveSatellites(const CXBuffer<int> &ActiveSatellites) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_ActiveSatellites = ActiveSatellites;
+	// set nr satellites
+	m_NrSat = m_ActiveSatellites.GetSize();
+	m_oGSAData = true;
 }
 
 //-------------------------------------
@@ -73,7 +101,8 @@ void CXSatelliteData::SetGSVData(	int NTelegrams, int NCurrentTelegram, int NSat
 									const CXGSVSatelliteInfo &Info1, const CXGSVSatelliteInfo &Info2,
 									const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4)
 {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
+	m_oGSVData = true;
 	// check if we are in sync
 	if(NCurrentTelegram != m_LastReceivedGSVTel+1) {
 		// not in sync. reset and discard
@@ -117,13 +146,16 @@ void CXSatelliteData::SetGSVData(	int NTelegrams, int NCurrentTelegram, int NSat
 
 //-------------------------------------
 void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height) {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 
 	CXRGB LineColor(0xFF, 0xFF, 0xFF);
 	CXRGB BgColor(0x00,0x00,0x00);
 	CXRGB SatBgColor(0x60,0x60,0x60);
 	CXRGB SatActiveColor(0x00,0xFF,0x00);
 	CXRGB SatInactiveColor(0xFF,0x00,0x00);
+	CXRGB OrientationColor(0xFF, 0xFF, 0x00);
+	CXRGB TelegramReceivedColor(0x00, 0xFF, 0x00);
+	CXRGB TelegramNotReceivedColor(0xFF, 0x00, 0x00);
 
 	// create bitmap
 	CXBitmap Bmp;
@@ -133,7 +165,7 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 
 	// draw satellites
 	const int SatBarHeight = 42;
-	const int Margin = 5;
+	const int Margin = 7;
 	const int dx = 5;
 	const int SatRadius = 6;
 
@@ -157,11 +189,35 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	// "45°"
 	CXStringUTF8 Str("45");
 	Str.Append(DegUTF8, sizeof(DegUTF8));
-	tIRect StrRect = Bmp.CalcTextRectUTF8(Str, 2, 2);
-	StrRect.OffsetRect(CX + 3*Radius/6 - StrRect.GetWidth()/2, CY);
-	Bmp.DrawTextUTF8(Str, StrRect, LineColor, BgColor);
+	tIRect StrRect = Bmp.CalcTextRectUTF8(Str, 4, 2);
+	StrRect.OffsetRect(CX + 3*Radius/6 - StrRect.GetWidth()/2, CY - StrRect.GetHeight()/2);
+	Bmp.DrawTextUTF8(Str, StrRect, OrientationColor, BgColor);
+	// "N"
+	Str = "N";
+	StrRect = Bmp.CalcTextRectUTF8(Str, 4, 2);
+	StrRect.OffsetRect(CX - StrRect.GetWidth()/2, CY - Radius - StrRect.GetHeight()/2);
+	Bmp.DrawRect(StrRect, BgColor, BgColor);
+	Bmp.DrawTextUTF8(Str, StrRect, OrientationColor, BgColor);
+	// "E"
+	Str = "E";
+	StrRect = Bmp.CalcTextRectUTF8(Str, 4, 2);
+	StrRect.OffsetRect(CX + Radius - StrRect.GetWidth()/2, CY - StrRect.GetHeight()/2);
+	Bmp.DrawRect(StrRect, BgColor, BgColor);
+	Bmp.DrawTextUTF8(Str, StrRect, OrientationColor, BgColor);
+	// "S"
+	Str = "S";
+	StrRect = Bmp.CalcTextRectUTF8(Str, 4, 2);
+	StrRect.OffsetRect(CX - StrRect.GetWidth()/2, CY + Radius - StrRect.GetHeight()/2);
+	Bmp.DrawRect(StrRect, BgColor, BgColor);
+	Bmp.DrawTextUTF8(Str, StrRect, OrientationColor, BgColor);
+	// "W"
+	Str = "W";
+	StrRect = Bmp.CalcTextRectUTF8(Str, 4, 2);
+	StrRect.OffsetRect(CX - Radius - StrRect.GetWidth()/2, CY - StrRect.GetHeight()/2 );
+	Bmp.DrawRect(StrRect, BgColor, BgColor);
+	Bmp.DrawTextUTF8(Str, StrRect, OrientationColor, BgColor);
 
-
+	// now draw satellites
 	size_t SatCount = m_SatInfo.GetSize();
 	if(SatCount != 0) {
 		// compute width for one satellite
@@ -217,6 +273,47 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 			x += SatWidth;
 		}
 	}
+
+	tIRect RMCRect = Bmp.CalcTextRectUTF8("GPRMC", 2, 2);
+	tIRect GGARect = Bmp.CalcTextRectUTF8("GPGGA", 2, 2);
+	tIRect GSARect = Bmp.CalcTextRectUTF8("GPGSA", 2, 2);
+	tIRect GSVRect = Bmp.CalcTextRectUTF8("GPGSV", 2, 2);
+	// move rectangles
+	GGARect.OffsetRect(0, RMCRect.GetHeight());
+	GSARect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight());
+	GSVRect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight() + GSARect.GetHeight());
+	CXRGB TextColor = TelegramNotReceivedColor;
+
+	if(m_oRMCData) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8("GPRMC", RMCRect, TextColor, BgColor);
+	if(m_oGGAData) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8("GPGGA", GGARect, TextColor, BgColor);
+
+	if(m_oGSAData) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8("GPGSA", GSARect, TextColor, BgColor);
+
+	if(m_oGSVData) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8("GPGSV", GSVRect, TextColor, BgColor);
 
 	pDC->Draw(&Bmp, OffsetX, OffsetY);
 

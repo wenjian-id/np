@@ -24,8 +24,8 @@
 #define __CXSATELLITEDATA_HPP__
 
 #include "CXBuffer.hpp"
-#include "CXGSVSatelliteInfo.hpp"
-#include "CXMutex.hpp"
+#include "CXNMEA.hpp"
+#include "CXRWLock.hpp"
 
 class CXDeviceContext;
 
@@ -37,12 +37,17 @@ class CXDeviceContext;
 class CXSatelliteData {
 private:
 	static CXSatelliteData			*m_pInstance;			///< oiu
+	int								m_NrSat;				///< oiu
 	CXBuffer<int>					m_ActiveSatellites;		///< oiu
 	CXBuffer<CXGSVSatelliteInfo *>	m_SatInfo;				///< oiu
 	CXBuffer<CXGSVSatelliteInfo *>	m_TmpSatInfo;			///< oiu
 	int								m_LastReceivedGSVTel;	///< oiu
 	int								m_TmpNrSat;				///< oiu
-	mutable CXMutex					m_Mutex;				///< oiu
+	bool							m_oRMCData;				///< oiu
+	bool							m_oGGAData;				///< oiu
+	bool							m_oGSAData;				///< oiu
+	bool							m_oGSVData;				///< oiu
+	mutable CXRWLock				m_RWLock;				///< oiu
 	//-------------------------------------
 	CXSatelliteData(const CXSatelliteData &);						///< Not used.
 	const CXSatelliteData & operator = (const CXSatelliteData &);	///< Not used.
@@ -72,6 +77,24 @@ public:
 	 *
 	 */
 	static CXSatelliteData *Instance();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetRMCReceived();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetNrSatGGA(int NrSatGGA);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetNrSat() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu

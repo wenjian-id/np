@@ -28,7 +28,7 @@ CXSemaphore::CXSemaphore(size_t MaxCount) :
 	m_hSemaphore(NULL)
 {
 	/// \todo error checking
-	m_hSemaphore = CreateSemaphore(NULL, 0, MaxCount, NULL);
+	m_hSemaphore = CreateSemaphore(NULL, MaxCount, MaxCount, NULL);
 }
 
 //-------------------------------------

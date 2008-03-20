@@ -24,8 +24,7 @@
 #include <CXMutexLocker.hpp>
 #include "CXLocatorThread.hpp"
 #include "CXOptions.hpp"
-#include "CXSatelliteData.hpp"
-#include "CXGSVSatelliteInfo.hpp"
+#include "CXNMEA.hpp"
 #include "Utils.hpp"
 
 static const unsigned char GGABEGIN[6]	= {'$', 'G', 'P', 'G', 'G', 'A'};
@@ -181,8 +180,9 @@ void CXGPSRecvThread::OnThreadLoop() {
 			Save(m_LastPacket);
 			// check GGA packet
 			if(CheckRMC()) {
-				/// \todo implement
-				// DoOutputDebugString("RMC detected\n");
+				// tell the locator that data is ready
+				if(m_pLocator != NULL)
+					m_pLocator->SetGPSDataRMC(m_LastPacket);
 			}
 			if(CheckGGA()) {
 				// check if demo mode
@@ -202,31 +202,14 @@ void CXGPSRecvThread::OnThreadLoop() {
 					m_pLocator->SetGPSDataGGA(m_LastPacket);
 			}
 			if(CheckGSA()) {
-				// process GSA packet
-				CXBuffer<int> Sat;
-				CXStringASCII Line(reinterpret_cast<const char *>(m_LastPacket.GetBuffer()), m_LastPacket.GetSize());
-				if(ExtractGSAData(Line, Sat)) {
-					// data extracted and OK
-					// now set it
-					CXSatelliteData::Instance()->SetActiveSatellites(Sat);
-				}
+				// tell the locator that data is ready
+				if(m_pLocator != NULL)
+					m_pLocator->SetGPSDataGSA(m_LastPacket);
 			}
 			if(CheckGSV()) {
-				// process GSV packet
-				CXStringASCII Line(reinterpret_cast<const char *>(m_LastPacket.GetBuffer()), m_LastPacket.GetSize());
-				int NTelegrams = 0;
-				int NCurrentTelegram = 0;
-				int NSat = 0;
-				int NInfos = 0;
-				CXGSVSatelliteInfo Info1;
-				CXGSVSatelliteInfo Info2;
-				CXGSVSatelliteInfo Info3;
-				CXGSVSatelliteInfo Info4;
-				if(ExtractGSVData(Line, NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4)) {
-					// data extracted and OK
-					// now set it
-					CXSatelliteData::Instance()->SetGSVData(NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4);
-				}
+				// tell the locator that data is ready
+				if(m_pLocator != NULL)
+					m_pLocator->SetGPSDataGSV(m_LastPacket);
 			}
 		}
 	}

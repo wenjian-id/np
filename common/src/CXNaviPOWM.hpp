@@ -91,7 +91,7 @@ public:
  *
  */
 class CXNaviPOWM {
-private:
+public:
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -150,6 +150,24 @@ private:
 	 *
 	 */
 	void SetHeight(int Height);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetDisplayMode(E_DISPLAY_MODE eDisplayMode);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	E_DISPLAY_MODE GetDisplayMode() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void DoRequestRepaint();
 protected:
 public:
 	//-------------------------------------
@@ -187,7 +205,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void RequestRepaint();
+	void RequestRepaint(E_DISPLAY_MODE eDisplayMode);
 	//-------------------------------------
 	/*
 	 * \brief oiu

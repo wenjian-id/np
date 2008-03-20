@@ -24,6 +24,7 @@
 #include "CXDeviceContext.hpp"
 #include "CXStringUTF8.hpp"
 #include "CXExactTime.hpp"
+#include "CXSatelliteData.hpp"
 #include "CXOptions.hpp"
 
 //-------------------------------------
@@ -94,7 +95,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 		char buf[10];
 		// draw satellite count
-		int NSat = m_NaviData.GetnSat();
+		int NSat = CXSatelliteData::Instance()->GetNrSat();
 		snprintf(buf, 10, "%d", NSat);
 		CXStringASCII StrNSat(buf);
 		// compute color

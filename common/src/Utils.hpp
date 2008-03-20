@@ -29,6 +29,8 @@
 #include "CXRGB.hpp"
 
 class CXCoor;
+class CXGGAPacket;
+class CXRMCPacket;
 class CXGSVSatelliteInfo;
 
 template <class t> t Max(const t &a, const t&b) {
@@ -146,15 +148,24 @@ bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
  * \brief Extract information from a GGA packet.
  *
  * Extract information from a GGA packet. The information extracted
- * consists of longitude, latitude and number of sattelites.
+ * consists of longitude, latitude and number of satellites.
  * \param	NMEAPacket	String containing the NMEA packet including CR LF 
- * \param	rLon		Extracted longitude [decimal degrees]
- * \param	rLat		Extracted latitude [decimal degrees]
- * \param	rHeight		Extracted height [m]
- * \param	rnSat		Extracted number of sattelites.
+ * \param	rGGAPacket	Extracted data.
  * \return				true if successfull.
  */
-bool ExtractGGAData(const CXStringASCII &NMEAPacket, double & rLon, double & rLat, double & rHeight, int &rnSat);
+bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket);
+
+//-------------------------------------
+/*
+ * \brief Extract information from a RMC packet.
+ *
+ * Extract information from a RMC packet. The information extracted
+ * consists of longitude, latitude and speed and course.
+ * \param	NMEAPacket	String containing the NMEA packet including CR LF 
+ * \param	rRMCPacket	Extracted data.
+ * \return				true if successfull.
+ */
+bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
 
 //-------------------------------------
 /*

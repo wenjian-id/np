@@ -26,7 +26,7 @@
 #include "CXTimeStampData.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXCoor.hpp"
-#include "CXMutex.hpp"
+#include "CXRWLock.hpp"
 
 //---------------------------------------------------------------------
 /*
@@ -48,7 +48,7 @@ private:
 	bool						m_oValidSpeed;		///< Flag indicating if a valid speed exists.
 	CXUTMSpeed					m_LastValidSpeed;	///< last valid computed speed.
 	// sync stuff
-	mutable CXMutex				m_Mutex;			///< Sync object
+	mutable CXRWLock	m_RWLock;					///< Sync object
 	//-------------------------------------
 	CXSpeedCalculator();												///< Not used.
 	CXSpeedCalculator(const CXSpeedCalculator &);						///< Not used.

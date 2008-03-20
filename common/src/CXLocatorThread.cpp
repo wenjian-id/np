@@ -29,7 +29,9 @@
 #include "CXNaviPOWM.hpp"
 #include "CXPOWMMap.hpp"
 #include "CXOptions.hpp"
+#include "CXSatelliteData.hpp"
 #include "TargetIncludes.hpp"
+#include "CoordConstants.h"
 
 #include <math.h>
 
@@ -40,7 +42,8 @@ static const double MAXDIST = 40;
 //---------------------------------------------------------------------
 //-------------------------------------
 CXLocatorThread::CXLocatorThread() :
-	m_oNewDataGPS(false),
+	m_oNewDataGPSGGA(false),
+	m_oNewDataGPSRMC(false),
 	m_SpeedCalculator(4),
 	m_pNaviPOWM(NULL)
 {
@@ -51,15 +54,27 @@ CXLocatorThread::~CXLocatorThread() {
 }
 
 //-------------------------------------
-void CXLocatorThread::SetFlag_NewDataGPS(bool NewValue) {
+void CXLocatorThread::SetFlag_NewDataGPSGGA(bool NewValue) {
 	CXMutexLocker L(&m_MutexInputData);
-	m_oNewDataGPS = NewValue;
+	m_oNewDataGPSGGA = NewValue;
 }
 
 //-------------------------------------
-bool CXLocatorThread::GetFlag_NewDataGPS() const {
+void CXLocatorThread::SetFlag_NewDataGPSRMC(bool NewValue) {
 	CXMutexLocker L(&m_MutexInputData);
-	return m_oNewDataGPS;
+	m_oNewDataGPSRMC = NewValue;
+}
+
+//-------------------------------------
+bool CXLocatorThread::GetFlag_NewDataGPSGGA() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_oNewDataGPSGGA;
+}
+
+//-------------------------------------
+bool CXLocatorThread::GetFlag_NewDataGPSRMC() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_oNewDataGPSRMC;
 }
 
 //-------------------------------------
@@ -68,7 +83,57 @@ void CXLocatorThread::SetGPSDataGGA(const tUCBuffer & Buffer) {
 	// overwrite existing data
 	m_InputBufferGPSGGA.SetData(Buffer);
 	m_InputBufferGPSGGA.SetNow();
-	SetFlag_NewDataGPS(true);
+	SetFlag_NewDataGPSGGA(true);
+}
+
+//-------------------------------------
+void CXLocatorThread::SetGPSDataRMC(const tUCBuffer & Buffer) {
+	CXMutexLocker L(&m_MutexInputData);
+	// overwrite existing data
+	m_InputBufferGPSRMC.SetData(Buffer);
+	m_InputBufferGPSRMC.SetNow();
+	SetFlag_NewDataGPSRMC(true);
+	// oiu put somewhere else
+	CXSatelliteData::Instance()->SetRMCReceived();
+}
+
+//-------------------------------------
+void CXLocatorThread::SetGPSDataGSA(const tUCBuffer & Buffer) {
+	CXMutexLocker L(&m_MutexInputData);
+	// process GSA packet
+	CXBuffer<int> Sat;
+	CXStringASCII Line(reinterpret_cast<const char *>(Buffer.GetBuffer()), Buffer.GetSize());
+	if(ExtractGSAData(Line, Sat)) {
+		// data extracted and OK
+		// now set it
+		CXSatelliteData::Instance()->SetActiveSatellites(Sat);
+		// request repaint
+		if(m_pNaviPOWM != NULL)
+			m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
+	}
+}
+
+//-------------------------------------
+void CXLocatorThread::SetGPSDataGSV(const tUCBuffer & Buffer) {
+	CXMutexLocker L(&m_MutexInputData);
+	// process GSV packet
+	CXStringASCII Line(reinterpret_cast<const char *>(Buffer.GetBuffer()), Buffer.GetSize());
+	int NTelegrams = 0;
+	int NCurrentTelegram = 0;
+	int NSat = 0;
+	int NInfos = 0;
+	CXGSVSatelliteInfo Info1;
+	CXGSVSatelliteInfo Info2;
+	CXGSVSatelliteInfo Info3;
+	CXGSVSatelliteInfo Info4;
+	if(ExtractGSVData(Line, NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4)) {
+		// data extracted and OK
+		// now set it
+		CXSatelliteData::Instance()->SetGSVData(NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4);
+		// request repaint
+		if(m_pNaviPOWM != NULL)
+			m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
+	}
 }
 
 //-------------------------------------
@@ -84,30 +149,118 @@ CXTimeStampData<tUCBuffer> CXLocatorThread::GetGPSDataGGA() const {
 }
 
 //-------------------------------------
+CXTimeStampData<tUCBuffer> CXLocatorThread::GetGPSDataRMC() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_InputBufferGPSRMC;
+}
+
+//-------------------------------------
 void CXLocatorThread::OnThreadStarted() {
 	// nothing to do
 }
 
 //-------------------------------------
 void CXLocatorThread::OnThreadLoop() {
-	/// \todo implement
-	// clear flag for m_NaviData
-	m_NaviData.ClearChangedFlag();
 	// check if new data arriwed
-	bool NewData = GetFlag_NewDataGPS();
-	// check if receive timeout
 	CXExactTime Now;
-	if(NewData) {
-		// OK, we have new data
+	bool NewDataRMC = GetFlag_NewDataGPSRMC();
+	bool NewDataGGA = GetFlag_NewDataGPSGGA();
+	bool NewDataArrived = false;
+	// process new data
+	if(NewDataRMC) {
 		// process it
-		OnNewDataGPS(GetGPSDataGGA());
-	} else {
+		// reset flag
+		SetFlag_NewDataGPSRMC(false);
+		CXTimeStampData<tUCBuffer> Buffer = GetGPSDataRMC();
+		// extract RMC packet if possible
+		unsigned long Size = Buffer.Data().GetSize();
+		const char *pBuffer = reinterpret_cast<const char *>(Buffer.Data().GetBuffer());
+		CXStringASCII Line(pBuffer, Size);
+		CXRMCPacket RMCData;
+		if(ExtractRMCData(Line, RMCData)) {
+			// OK, valid data arrived
+			CXUTMSpeed UTMSpeed;
+			UTMSpeed.SetSpeed(RMCData.GetSpeed());
+			double alpha = (90 - RMCData.GetCourse())*deg2rad;
+			UTMSpeed.SetCos(cos(alpha));
+			UTMSpeed.SetSin(sin(alpha));
+			// oiu remove after testing both speeds
+			m_NaviData.SetRMCSpeed(RMCData.GetSpeed());
+			// check if really new data arrived
+			if(RMCData.GetUTC() != m_LastPositionUTC) {
+				// UTC differs, so new data
+				NewDataArrived = true;
+				m_LastPositionUTC = RMCData.GetUTC();
+				// set private navigation data
+				m_NaviData.SetLon(RMCData.GetLon());
+				m_NaviData.SetLat(RMCData.GetLat());
+				m_NaviData.SetRMCSpeed(RMCData.GetSpeed());
+				CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
+				int CurrentZone = pPOWMMap->GetCurrentZone();
+				int NewZone = UTMZoneNone;
+				char UTMLetter = 0;
+				double x0 = 0;
+				double y0 = 0;
+				LLtoUTM(WGS84, m_NaviData.GetLon(), m_NaviData.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
+				m_NaviData.SetCoor(CXCoor(x0, y0));
+			}
+		}
+	}
+	if(NewDataGGA) {
+		// process it
+		// reset flag
+		SetFlag_NewDataGPSGGA(false);
+		// extract GGA packet if possible
+		CXTimeStampData<tUCBuffer> Buffer = GetGPSDataGGA();
+		unsigned long Size = Buffer.Data().GetSize();
+		const char *pBuffer = reinterpret_cast<const char *>(Buffer.Data().GetBuffer());
+		CXStringASCII Line(pBuffer, Size);
+		CXGGAPacket GGAData;
+		if(ExtractGGAData(Line, GGAData)) {
+			// OK, valid GGA data arrived
+			m_LastReceivedGGA.SetNow();
+			double dLon = GGAData.GetLon();
+			double dLat = GGAData.GetLat();
+			CXCoor Coor(dLon, dLat);
+
+			// calculate speed
+			CXUTMSpeed Speed;
+			m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(Coor, Buffer.TimeStamp()));
+
+			if(m_SpeedCalculator.HasValidSpeed()) {
+				// take speed
+				Speed = m_SpeedCalculator.GetSpeed();
+			} else {
+				// no valid current speed. try last valid speed
+				Speed = m_SpeedCalculator.GetLastValidSpeed();
+			}
+			// set number of satellites
+			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
+			// set height
+			m_NaviData.SetHeight(GGAData.GetHeight());
+			// oiu remove after testing both speeds
+			m_NaviData.SetUTMSpeedGGA(Speed);
+			// check if really new data arrived
+			if(GGAData.GetUTC() != m_LastPositionUTC) {
+				// UTC differs, so new data
+				NewDataArrived = true;
+				m_LastPositionUTC = GGAData.GetUTC();
+				// set private navigation data
+				m_NaviData.SetLon(dLon);
+				m_NaviData.SetLat(dLat);
+				m_NaviData.SetUTMSpeedGGA(Speed);
+				m_NaviData.SetCoor(Coor);
+			}
+		}
+	}
+	if(!NewDataArrived) {
 		// no data arrived
-		unsigned long Delta = Now - mLastReceivedGGA;
+		unsigned long Delta = Now - m_LastReceivedGGA;
 		if(Delta > 1000*TIMEOUT_RECEIVE) {
-			m_NaviData.SetnSat(0);
-//oiu			m_NaviData.SetUTMSpeed(0);
-			// oiu m_SpeedCalculator
+			// oiu
+			CXSatelliteData::Instance()->SetNrSatGGA(0);
+			if(m_pNaviPOWM != NULL)
+				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
 		}
 	}
 	// check if we must hide logo
@@ -117,11 +270,12 @@ void CXLocatorThread::OnThreadLoop() {
 			LogoHidden = true;
 		CXOptions::Instance()->SetShowLogoFlag(false);
 	}
-	if(m_NaviData.Changed() || LogoHidden) {
+	/// \todo change
+	if(NewDataArrived || LogoHidden) {
 		// data has been changed or logo hidden
 		CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
 		// notify listeners
-		if((pPOWMMap != NULL)&& (m_NaviData.GetnSat() != 0)) {
+		if((pPOWMMap != NULL)&& (CXSatelliteData::Instance()->GetNrSat() != 0)) {
 			// load map only if valid position
 
 			// check if new map has to be loaded
@@ -179,45 +333,6 @@ void CXLocatorThread::OnThreadLoop() {
 //-------------------------------------
 void CXLocatorThread::OnThreadStopped() {
 	// nothing to do
-}
-
-//-------------------------------------
-void CXLocatorThread::OnNewDataGPS(const CXTimeStampData<tUCBuffer> & Buffer) {
-	CXMutexLocker L(&m_Mutex);
-	// reset flag
-	SetFlag_NewDataGPS(false);
-	// extract GGA packet if possible
-	unsigned long Size = Buffer.Data().GetSize();
-	const char *pBuffer = reinterpret_cast<const char *>(Buffer.Data().GetBuffer());
-	CXStringASCII Line(pBuffer, Size);
-	double dLon = 0, dLat = 0, Height = 0; int nSat = 0;
-	if(!ExtractGGAData(Line, dLon, dLat, Height, nSat))
-		return;
-
-	// OK, valid GGA data arrived
-	mLastReceivedGGA.SetNow();
-	CXCoor Coor(dLon, dLat);
-
-	// calculate speed
-	CXUTMSpeed Speed;
-	m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(Coor, Buffer.TimeStamp()));
-
-	if(m_SpeedCalculator.HasValidSpeed()) {
-		// take speed
-		Speed = m_SpeedCalculator.GetSpeed();
-	} else {
-		// no valid current speed. try last valid speed
-		Speed = m_SpeedCalculator.GetLastValidSpeed();
-	}
-
-	// set private navigation data
-	m_NaviData.SetLon(dLon);
-	m_NaviData.SetLat(dLat);
-	m_NaviData.SetHeight(Height);
-	m_NaviData.SetnSat(nSat);
-	m_NaviData.SetUTMSpeed(Speed);
-	m_NaviData.SetCoor(Coor);
-
 }
 
 //-------------------------------------

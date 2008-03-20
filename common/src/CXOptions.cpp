@@ -22,7 +22,8 @@
 
 #include "CXOptions.hpp"
 #include "CXFileIni.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 #include "Utils.hpp"
 #include <OSSpecific.hpp>
 
@@ -206,259 +207,259 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 
 //-------------------------------------
 CXStringASCII CXOptions::GetStartPath() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_StartPath;
 }
 
 //-------------------------------------
 void CXOptions::SetStartPath(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_StartPath = Value;
 }
 
 //-------------------------------------
 CXSerialPortConfig CXOptions::GetSerialPortConfig() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_SerialPortConfig;
 }
 
 //-------------------------------------
 void CXOptions::SetSerialPortConfig(const CXSerialPortConfig & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_SerialPortConfig = Value;
 }
 
 //-------------------------------------
 bool CXOptions::IsNorthing() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oNorthing;
 }
 
 //-------------------------------------
 void CXOptions::SetNorthing(bool Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oNorthing = Value;
 }
 
 //-------------------------------------
 bool CXOptions::IsFullScreen() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oFullScreen;
 }
 
 //-------------------------------------
 void CXOptions::SetFullScreen(bool Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oFullScreen = Value;
 }
 
 //-------------------------------------
 int CXOptions::GetInfoBarBottomHeight() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_InfoBarBottomHeight;
 }
 
 //-------------------------------------
 int CXOptions::GetInfoBarTopHeight() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_InfoBarTopHeight;
 }
 
 //-------------------------------------
 void CXOptions::SetInfoBarBottomHeight(int Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_InfoBarBottomHeight = Value;
 }
 
 //-------------------------------------
 void CXOptions::SetInfoBarTopHeight(int Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_InfoBarTopHeight = Value;
 }
 
 //-------------------------------------
 int CXOptions::GetMaxSpeedSize() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_MaxSpeedSize;
 }
 
 //-------------------------------------
 void CXOptions::SetMaxSpeedSize(int Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_MaxSpeedSize = Value;
 }
 
 //-------------------------------------
 int CXOptions::GetCompassSize() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_CompassSize;
 }
 
 //-------------------------------------
 void CXOptions::SetCompassSize(int Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_CompassSize = Value;
 }
 
 //-------------------------------------
 int CXOptions::GetScaleWidth() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_ScaleWidth;
 }
 
 //-------------------------------------
 void CXOptions::SetScaleWidth(int Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_ScaleWidth = Value;
 }
 
 //-------------------------------------
 int CXOptions::GetScaleHeight() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_ScaleHeight;
 }
 
 //-------------------------------------
 void CXOptions::SetScaleHeight(int Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_ScaleHeight = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetDirectoryMaps() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_DirectoryMaps;
 }
 
 //-------------------------------------
 void CXOptions::SetDirectoryMaps(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_DirectoryMaps = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetDirectorySave() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_DirectorySave;
 }
 
 //-------------------------------------
 void CXOptions::SetDirectorySave(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_DirectorySave = Value;
 }
 
 //-------------------------------------
 void CXOptions::SetDirectoryIcons(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_DirectoryIcons = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetDirectoryIcons() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_DirectoryIcons;
 }
 
 //-------------------------------------
 unsigned long CXOptions::GetLogoTime() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_LogoTime;
 }
 
 //-------------------------------------
 void CXOptions::SetLogoTime(unsigned long LogoTime) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_LogoTime = LogoTime;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetLogoFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_LogoFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetLogoFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_LogoFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetInfoFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_InfoFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetInfoFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_InfoFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetQuitFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_QuitFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetQuitFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_QuitFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetSaveOnFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_SavingOnFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetSaveOnFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_SavingOnFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetSaveOffFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_SavingOffFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetSaveOffFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_SavingOffFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetZoomInFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_ZoomInFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetZoomInFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_ZoomInFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetZoomOutFileName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_ZoomOutFileName;
 }
 
 //-------------------------------------
 void CXOptions::SetZoomOutFileName(const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_ZoomOutFileName = Value;
 }
 
 //-------------------------------------
 CXStringASCII CXOptions::GetPOIFileName(size_t Index) const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	if(Index >= MaxPOITypes)
 		Index = 0;
 	return m_POIFileNames[Index];
@@ -466,157 +467,157 @@ CXStringASCII CXOptions::GetPOIFileName(size_t Index) const {
 
 //-------------------------------------
 void CXOptions::SetPOIFileName(size_t Index, const CXStringASCII & Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	if(Index >= MaxPOITypes)
 		Index = 0;
 	m_POIFileNames[Index] = Value;
 }
 //-------------------------------------
 bool CXOptions::IsSaving() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oSaving;
 }
 
 //-------------------------------------
 void CXOptions::ToggleSaving() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oSaving = ! m_oSaving;
 }
 
 //-------------------------------------
 void CXOptions::SetShowLogoFlag(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oShowLogo = NewValue;
 }
 
 //-------------------------------------
 bool CXOptions::MustShowLogo() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oShowLogo;
 }
 
 //-------------------------------------
 bool CXOptions::MustShowZoomButtons() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oShowZoomButtons;
 }
 
 //-------------------------------------
 void CXOptions::SetShowZoomButtonsFlag(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oShowZoomButtons = NewValue;
 }
 
 //-------------------------------------
 bool CXOptions::MustShowMaxSpeed() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oShowMaxSpeed;
 }
 
 //-------------------------------------
 void CXOptions::SetShowMaxSpeedFlag(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oShowMaxSpeed = NewValue;
 }
 
 //-------------------------------------
 bool CXOptions::MustShowCompass() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oShowCompass;
 }
 
 //-------------------------------------
 void CXOptions::SetShowCompassFlag(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oShowCompass = NewValue;
 }
 
 //-------------------------------------
 bool CXOptions::MustShowScale() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oShowScale;
 }
 
 //-------------------------------------
 void CXOptions::SetShowScaleFlag(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oShowScale = NewValue;
 }
 
 //-------------------------------------
 bool CXOptions::MustShowTrackLog() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oShowTrackLog;
 }
 
 //-------------------------------------
 void CXOptions::SetShowTrackLogFlag(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oShowTrackLog = NewValue;
 }
 
 //-------------------------------------
 size_t CXOptions::GetTrackLogSize() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_TrackLogSize;
 }
 
 //-------------------------------------
 void CXOptions::SetTrackLogSize(size_t NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_TrackLogSize = NewValue;
 }
 
 //-------------------------------------
 unsigned int CXOptions::GetTrackLogMinDist() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_TrackLogMinDist;
 }
 
 //-------------------------------------
 void CXOptions::SetTrackLogMinDist(unsigned int NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_TrackLogMinDist = NewValue;
 }
 
 //-------------------------------------
 t_uint64 CXOptions::GetOSMValiFlags() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_OSMVali;
 }
 
 //-------------------------------------
 bool CXOptions::IsOSMValiFlagSet(E_OSM_VALI eFlag) const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return (m_OSMVali & eFlag) != 0;
 }
 
 //-------------------------------------
 void CXOptions::SetOSMValiFlag(E_OSM_VALI eFlag) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_OSMVali |= eFlag;
 }
 
 //-------------------------------------
 void CXOptions::ClearOSMValiFlag(E_OSM_VALI eFlag) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_OSMVali &= ~eFlag;
 }
 
 //-------------------------------------
 bool CXOptions::IsDebugInfoFlagSet(E_DEBUGINFO eFlag) const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return (m_DebugInfo & eFlag) != 0;
 }
 
 //-------------------------------------
 void CXOptions::SetDebugInfoFlag(E_DEBUGINFO eFlag) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_DebugInfo |= eFlag;
 }
 
 //-------------------------------------
 void CXOptions::ClearDebugInfoFlag(E_DEBUGINFO eFlag) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_DebugInfo &= ~eFlag;
 }

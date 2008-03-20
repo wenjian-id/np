@@ -103,14 +103,6 @@ BOOL InitInstance(HINSTANCE hInstance, int /*nCmdShow*/, CXMainWindow *pMainWnd)
 //-------------------------------------
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpCmdLine*/, int nCmdShow) {
 
-	tIRect R(0, 0, 100, 100);
-	int l = R.GetLeft();
-	int t = R.GetTop();
-	int r = R.GetRight();
-	int b = R.GetBottom();
-	int w = R.GetWidth();
-	int h = R.GetHeight();
-
 	char buf[1000];
 	GetModuleFileName(NULL, buf, 1000);
 	CXStringASCII Path(buf);

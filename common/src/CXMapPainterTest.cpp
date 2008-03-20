@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXMapPainterTest.hpp"
+#include "CXSatelliteData.hpp"
 #include "TargetIncludes.hpp"
 
 #include <stdio.h>
@@ -67,7 +68,7 @@ void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXRGB C2(0xff, 0xff, 0xff);
 	
 	tIRect R1(0, 0, 200, 40);
-	sprintf(buf, "%.6f %.6f %d", Data.GetLon(), Data.GetLat(), Data.GetnSat());
+	sprintf(buf, "%.6f %.6f %d", Data.GetLon(), Data.GetLat(), CXSatelliteData::Instance()->GetNrSat());
 	pBMP->DrawTextASCII(buf, R1, C1, C2);
 
 	tIRect R2(0, 50, 200, 90);

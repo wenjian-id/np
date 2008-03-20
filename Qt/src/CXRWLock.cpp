@@ -43,7 +43,13 @@ void CXRWLock::LockWrite() {
 }
 
 //-------------------------------------
-void CXRWLock::Unlock() {
+void CXRWLock::UnlockRead() {
+	// unlock
+	m_RWLock.unlock();
+}
+
+//-------------------------------------
+void CXRWLock::UnlockWrite() {
 	// unlock
 	m_RWLock.unlock();
 }

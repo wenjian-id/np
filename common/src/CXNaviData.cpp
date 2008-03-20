@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "CXNaviData.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 
 //-------------------------------------
@@ -29,14 +30,13 @@ CXNaviData::CXNaviData() :
 	m_dLon(0.0),
 	m_dLat(0.0),
 	m_dHeight(0.0),
-	m_nSat(0),
+	m_RMCSpeed(0),
 	m_MaxSpeed(0),
 	m_WayID(0), m_oLocated(false),
 	m_oTimeout(false),
 	m_TargetDist(0.0),
 	m_TargetCos(0.0),
-	m_TargetSin(0.0),
-	m_oChanged(false)
+	m_TargetSin(0.0)
 {
 }
 
@@ -58,14 +58,14 @@ const CXNaviData & CXNaviData::operator = (const CXNaviData &rOther) {
 
 //-------------------------------------
 void CXNaviData::CopyFrom(const CXNaviData &rOther) {
-	CXMutexLocker L(&m_Mutex);
-	CXMutexLocker Lo(&rOther.m_Mutex);
+	CXReadLocker RL(&rOther.m_RWLock);
+	CXWriteLocker WL(&m_RWLock);
 	m_dLon			= rOther.m_dLon;
 	m_dLat			= rOther.m_dLat;
 	m_dHeight		= rOther.m_dHeight;
-	m_nSat			= rOther.m_nSat;
 	m_Coor			= rOther.m_Coor;
 	m_UTMSpeed		= rOther.m_UTMSpeed;
+	m_RMCSpeed		= rOther.m_RMCSpeed;
 	m_StreetName	= rOther.m_StreetName;
 	m_Ref			= rOther.m_Ref;
 	m_MaxSpeed		= rOther.m_MaxSpeed;
@@ -75,235 +75,185 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	m_TargetDist	= rOther.m_TargetDist;
 	m_TargetCos		= rOther.m_TargetCos;
 	m_TargetSin		= rOther.m_TargetSin;
-	SetChangedFlag();
 }
 
 //-------------------------------------
 double CXNaviData::GetLon() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_dLon;
 }
 
 //-------------------------------------
 void CXNaviData::SetLon(double dLon) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_dLon != dLon)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_dLon = dLon;
 }
 
 //-------------------------------------
 double CXNaviData::GetLat() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_dLat;
 }
 
 //-------------------------------------
 void CXNaviData::SetLat(double dLat) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_dLat != dLat)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_dLat = dLat;
 }
 
 //-------------------------------------
 double CXNaviData::GetHeight() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_dHeight;
 }
 
 //-------------------------------------
 void CXNaviData::SetHeight(double dHeight) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_dHeight != dHeight)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_dHeight = dHeight;
 }
 
 //-------------------------------------
-int CXNaviData::GetnSat() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_nSat;
-}
-
-//-------------------------------------
-void CXNaviData::SetnSat(int nSat) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_nSat != nSat)
-		SetChangedFlag();
-	m_nSat = nSat;
-}
-
-//-------------------------------------
 CXCoor CXNaviData::GetCoor() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_Coor;
 }
 
 //-------------------------------------
 void CXNaviData::SetCoor(const CXCoor &Coor) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_Coor != Coor)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_Coor = Coor;
 }
 
 //-------------------------------------
 CXUTMSpeed CXNaviData::GetUTMSpeed() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_UTMSpeed;
 }
 
 //-------------------------------------
-void CXNaviData::SetUTMSpeed(const CXUTMSpeed & UTMSpeed) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_UTMSpeed != UTMSpeed)
-		SetChangedFlag();
+void CXNaviData::SetUTMSpeedGGA(const CXUTMSpeed & UTMSpeed) {
+	CXWriteLocker WL(&m_RWLock);
 	m_UTMSpeed = UTMSpeed;
 }
 
+//-------------------------------------
+double CXNaviData::GetRMCSpeed() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_RMCSpeed;
+}
+
+//-------------------------------------
+void CXNaviData::SetRMCSpeed(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_RMCSpeed = NewValue;
+}
 
 //-------------------------------------
 CXStringUTF8 CXNaviData::GetStreetName() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_StreetName;
 }
 
 //-------------------------------------
 void CXNaviData::SetStreetName(const CXStringUTF8 & StreetName) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_StreetName != StreetName)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_StreetName = StreetName;
 }
 
 //-------------------------------------
 CXStringUTF8 CXNaviData::GetRef() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_Ref;
 }
 
 //-------------------------------------
 void CXNaviData::SetRef(const CXStringUTF8 & Ref) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_Ref != Ref)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_Ref = Ref;
 }
 
 //-------------------------------------
 unsigned char CXNaviData::GetMaxSpeed() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_MaxSpeed;
 }
 
 //-------------------------------------
 void CXNaviData::SetMaxSpeed(unsigned char MaxSpeed) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_MaxSpeed != MaxSpeed)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_MaxSpeed = MaxSpeed;
 }
 
 //-------------------------------------
 t_uint64 CXNaviData::GetWayID() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_WayID;
 }
 
 //-------------------------------------
 void CXNaviData::SetWayID(t_uint64 ID) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_WayID != ID)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_WayID = ID;
 }
 
 //-------------------------------------
 bool CXNaviData::GetLocated() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oLocated;
 }
 
 //-------------------------------------
 void CXNaviData::SetLocated(bool Value) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_oLocated != Value)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_oLocated = Value;
 }
 
 //-------------------------------------
 bool CXNaviData::IsTimeout() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oTimeout;
 }
 
 //-------------------------------------
 void CXNaviData::SetTimeout(bool Value) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_oTimeout != Value)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_oTimeout = Value;
 }
 
 //-------------------------------------
 void CXNaviData::SetTargetDist(double Value) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_TargetDist != Value)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_TargetDist = Value;
 }
 
 //-------------------------------------
 double CXNaviData::GetTargetDist() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_TargetDist;
 }
 
 //-------------------------------------
 void CXNaviData::SetTargetCos(double Value) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_TargetCos != Value)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_TargetCos = Value;
 }
 
 //-------------------------------------
 double CXNaviData::GetTargetCos() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_TargetCos;
 }
 
 //-------------------------------------
 void CXNaviData::SetTargetSin(double Value) {
-	CXMutexLocker L(&m_Mutex);
-	if(m_TargetSin != Value)
-		SetChangedFlag();
+	CXWriteLocker WL(&m_RWLock);
 	m_TargetSin = Value;
 }
 
 //-------------------------------------
 double CXNaviData::GetTargetSin() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_TargetSin;
-}
-
-//-------------------------------------
-void CXNaviData::ClearChangedFlag() {
-	CXMutexLocker L(&m_Mutex);
-	m_oChanged = false;
-}
-
-//-------------------------------------
-void CXNaviData::SetChangedFlag() {
-	CXMutexLocker L(&m_Mutex);
-	m_oChanged = true;
-}
-
-//-------------------------------------
-bool CXNaviData::Changed() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_oChanged;
 }
 

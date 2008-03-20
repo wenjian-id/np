@@ -28,6 +28,7 @@
 #include "CXBuffer.hpp"
 #include "CXNaviData.hpp"
 #include "CXExactTime.hpp"
+#include "CXStringASCII.hpp"
 #include "CXSpeedCalculator.hpp"
 
 class CXNaviPOWM;
@@ -40,9 +41,12 @@ class CXNaviPOWM;
 class CXLocatorThread : public CXLoopThread {
 private:
 	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;	///< oiu
-	bool							m_oNewDataGPS;			///< oiu
+	CXTimeStampData<tUCBuffer>		m_InputBufferGPSRMC;	///< oiu
+	bool							m_oNewDataGPSGGA;		///< oiu
+	bool							m_oNewDataGPSRMC;		///< oiu
 	CXSpeedCalculator				m_SpeedCalculator;		///< oiu
-	CXExactTime						mLastReceivedGGA;		///< oiu
+	CXExactTime						m_LastReceivedGGA;		///< oiu
+	CXStringASCII					m_LastPositionUTC;		///< oiu
 	CXNaviData						m_NaviData;				///< oiu
 	CXNaviPOWM						*m_pNaviPOWM;			///< oiu
 	CXExactTime						m_StartTime;			///< starting time
@@ -56,13 +60,25 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	void SetFlag_NewDataGPS(bool NewValue);
+	void SetFlag_NewDataGPSGGA(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	bool GetFlag_NewDataGPS() const;
+	void SetFlag_NewDataGPSRMC(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool GetFlag_NewDataGPSGGA() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool GetFlag_NewDataGPSRMC() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -74,7 +90,7 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	void OnNewDataGPS(const CXTimeStampData<tUCBuffer> & Buffer);
+	CXTimeStampData<tUCBuffer> GetGPSDataRMC() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -119,6 +135,24 @@ public:
 	 *
 	 */
 	void SetGPSDataGGA(const tUCBuffer & Buffer);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSDataRMC(const tUCBuffer & Buffer);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSDataGSA(const tUCBuffer & Buffer);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSDataGSV(const tUCBuffer & Buffer);
 	//-------------------------------------
 	/*
 	 * \brief oiu

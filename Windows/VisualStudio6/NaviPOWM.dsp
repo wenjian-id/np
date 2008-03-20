@@ -233,10 +233,6 @@ SOURCE=..\..\common\src\CXGPSRecvThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGSVSatelliteInfo.hpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\src\CXInfoBar.hpp
 # End Source File
 # Begin Source File
@@ -306,6 +302,10 @@ SOURCE=..\..\common\src\CXNaviData.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXNaviPOWM.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXNMEA.hpp
 # End Source File
 # Begin Source File
 
@@ -449,10 +449,6 @@ SOURCE=..\..\common\src\CXGPSRecvThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGSVSatelliteInfo.cpp
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\src\CXInfoBar.cpp
 # End Source File
 # Begin Source File
@@ -510,6 +506,10 @@ SOURCE=..\..\common\src\CXNaviData.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXNaviPOWM.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXNMEA.cpp
 # End Source File
 # Begin Source File
 

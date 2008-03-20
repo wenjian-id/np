@@ -24,7 +24,7 @@
 #define __CXOPTIONS_HPP__
 
 #include "CXStringASCII.hpp"
-#include "CXMutex.hpp"
+#include "CXRWLock.hpp"
 #include "ISerial.hpp"
 #include "Utils.hpp"
 
@@ -89,7 +89,7 @@ private:
 	CXStringASCII		m_ZoomInFileName;				///< oiu
 	CXStringASCII		m_ZoomOutFileName;				///< oiu
 	CXStringASCII		m_POIFileNames[MaxPOITypes];	///< File names for POIs
-	mutable CXMutex		m_Mutex;						///< oiu
+	mutable CXRWLock	m_RWLock;						///< oiu
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
 	const CXOptions & operator = (const CXOptions &);	///< Not used.

@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "CXSpeedCalculator.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 #include "CoordConversion.h"
 #include "TargetIncludes.hpp"
 #include <stdio.h>
@@ -62,7 +63,7 @@ void CXSpeedCalculator::ClearBuffer() {
 
 //-------------------------------------
 void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	// check if m_iCurrentUTMZone changes
 	if(m_iCurrentUTMZone != Coor.Data().GetUTMZone()) {
 		/// yes it cahnged. Recompute all UTM coords and force them to m_iCurrentUTMZone
@@ -147,7 +148,7 @@ void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
 
 //-------------------------------------
 void CXSpeedCalculator::ResetData() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	ClearBuffer();
 	m_oValidSpeed = false;
 	m_Speed.Reset();
@@ -156,18 +157,18 @@ void CXSpeedCalculator::ResetData() {
 
 //-------------------------------------
 bool CXSpeedCalculator::HasValidSpeed() {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oValidSpeed;
 }
 
 //-------------------------------------
 CXUTMSpeed CXSpeedCalculator::GetSpeed() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_Speed;
 }
 
 //-------------------------------------
 CXUTMSpeed CXSpeedCalculator::GetLastValidSpeed() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_LastValidSpeed;
 }

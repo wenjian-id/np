@@ -102,7 +102,7 @@ void CXMapPainterThread::OnWorkFunc() {
 	m_pMapPainter->DoWork();
 	// check if paint needed
 	if(m_pMapPainter->MustRepaint() && (m_pNaviPOWM != NULL)) {
-		m_pNaviPOWM->RequestRepaint();
+		m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
 	}
 }
 

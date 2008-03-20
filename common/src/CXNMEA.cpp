@@ -20,7 +20,137 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXGSVSatelliteInfo.hpp"
+#include "CXNMEA.hpp"
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXGGAPacket::CXGGAPacket() :
+	m_NSat(0),
+	m_dLon(0),
+	m_dLat(0),
+	m_dHeight(0)
+{
+}
+
+//-------------------------------------
+CXGGAPacket::~CXGGAPacket() {
+}
+
+//-------------------------------------
+CXStringASCII CXGGAPacket::GetUTC() const {
+	return m_UTC;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetUTC(const CXStringASCII &NewValue) {
+	m_UTC = NewValue;
+}
+
+//-------------------------------------
+int	CXGGAPacket::GetNSat() const {
+	return m_NSat;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetNSat(int NewValue) {
+	m_NSat = NewValue;
+}
+
+//-------------------------------------
+double CXGGAPacket::GetHeight() const {
+	return m_dHeight;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetHeight(double NewValue) {
+	m_dHeight = NewValue;
+}
+
+//-------------------------------------
+double CXGGAPacket::GetLon() const {
+	return m_dLon;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetLon(double NewValue) {
+	m_dLon = NewValue;
+}
+
+//-------------------------------------
+double CXGGAPacket::GetLat() const {
+	return m_dLat;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetLat(double NewValue) {
+	m_dLat = NewValue;
+}
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXRMCPacket::CXRMCPacket() :
+	m_dLon(0),
+	m_dLat(0),
+	m_dSpeed(0),
+	m_dCourse(0)
+{
+}
+
+//-------------------------------------
+CXRMCPacket::~CXRMCPacket() {
+}
+
+//-------------------------------------
+CXStringASCII CXRMCPacket::GetUTC() const {
+	return m_UTC;
+}
+
+//-------------------------------------
+void CXRMCPacket::SetUTC(const CXStringASCII &NewValue) {
+	m_UTC = NewValue;
+}
+
+//-------------------------------------
+double CXRMCPacket::GetLon() const {
+	return m_dLon;
+}
+
+//-------------------------------------
+void CXRMCPacket::SetLon(double NewValue) {
+	m_dLon = NewValue;
+}
+
+//-------------------------------------
+double CXRMCPacket::GetLat() const {
+	return m_dLat;
+}
+
+//-------------------------------------
+void CXRMCPacket::SetLat(double NewValue) {
+	m_dLat = NewValue;
+}
+
+//-------------------------------------
+double CXRMCPacket::GetSpeed() const {
+	return m_dSpeed;
+}
+
+//-------------------------------------
+void CXRMCPacket::SetSpeed(double NewValue) {
+	m_dSpeed = NewValue;
+}
+
+//-------------------------------------
+double CXRMCPacket::GetCourse() const {
+	return m_dCourse;
+}
+
+//-------------------------------------
+void CXRMCPacket::SetCourse(double NewValue) {
+	m_dCourse = NewValue;
+}
 
 
 //----------------------------------------------------------------------------
@@ -96,4 +226,5 @@ int CXGSVSatelliteInfo::GetSNR() const {
 void CXGSVSatelliteInfo::SetSNR(int NewValue) {
 	m_SNR = NewValue;
 }
+
 

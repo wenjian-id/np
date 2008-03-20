@@ -139,6 +139,18 @@ void CXNaviPOWM::SetHeight(int Height) {
 }
 
 //-------------------------------------
+void CXNaviPOWM::SetDisplayMode(E_DISPLAY_MODE eDisplayMode) {
+	CXMutexLocker L(&m_Mutex);
+	m_eDisplayMode = eDisplayMode;
+}
+
+//-------------------------------------
+CXNaviPOWM::E_DISPLAY_MODE CXNaviPOWM::GetDisplayMode() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_eDisplayMode;
+}
+
+//-------------------------------------
 bool CXNaviPOWM::Init(IMainWindow *pMainWindow) {
 	m_pMainWindow = pMainWindow;
 	m_pInfoBarBottom = new CXInfoBarBottom();
@@ -196,9 +208,15 @@ void CXNaviPOWM::StopThreads() {
 }
 
 //-------------------------------------
-void CXNaviPOWM::RequestRepaint() {
+void CXNaviPOWM::DoRequestRepaint() {
 	if(m_pMainWindow != NULL)
 		m_pMainWindow->RequestRepaint();
+}
+
+//-------------------------------------
+void CXNaviPOWM::RequestRepaint(E_DISPLAY_MODE eDisplayMode) {
+	if(GetDisplayMode() == eDisplayMode)
+		DoRequestRepaint();
 }
 
 //-------------------------------------
@@ -216,16 +234,18 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	if(m_pInfoBarCommon == NULL)
 		return;
 
-	if(m_eDisplayMode == e_ModeMap) {
+	// get display mode
+	E_DISPLAY_MODE eDisplayMode = GetDisplayMode();
+	if(eDisplayMode == e_ModeMap) {
 		// paint map
 		m_pMapPainterThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
-	} else if (m_eDisplayMode == e_ModeSatInfo) {
+	} else if (eDisplayMode == e_ModeSatInfo) {
 		CXSatelliteData::Instance()->Paint(	pDC, 0, m_InfoBarTopPos.GetBottom(),
 											GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
 	}
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());
-	if(m_eDisplayMode == e_ModeMap) {
+	if(eDisplayMode == e_ModeMap) {
 		if(CXOptions::Instance()->MustShowMaxSpeed()) {
 			m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
 		}
@@ -237,7 +257,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		}
 	}
 	
-	if(m_eDisplayMode == e_ModeInfo) {
+	if(eDisplayMode == e_ModeInfo) {
 		// show info
 		CXBitmap Bmp;
 		tIRect rect(0, 0, GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
@@ -319,7 +339,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_InfoBarCommonPos.SetRight(Width);
 	m_InfoBarCommonPos.SetBottom(IBBH+4*20);
 	m_pInfoBarCommon->Resize(m_InfoBarCommonPos.GetWidth(), m_InfoBarCommonPos.GetHeight());
-	RequestRepaint();
+	DoRequestRepaint();
 }
 
 //-------------------------------------
@@ -365,16 +385,18 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		return;
 	if(m_pInfoBarTop == NULL)
 		return;
-	if((m_eDisplayMode == e_ModeInfo) && !m_InfoBarTopPos.Contains(X, Y)) {
+	// get display mode
+	E_DISPLAY_MODE eDisplayMode = GetDisplayMode();
+	if((eDisplayMode == e_ModeInfo) && !m_InfoBarTopPos.Contains(X, Y)) {
 		// turn off showing info when clicking outside InfoBarTop
-		m_eDisplayMode = e_ModeMap;
-		RequestRepaint();
+		SetDisplayMode(e_ModeMap);
+		DoRequestRepaint();
 		return;
 	}
-	if((m_eDisplayMode == e_ModeSatInfo) && !m_InfoBarTopPos.Contains(X, Y)) {
+	if((eDisplayMode == e_ModeSatInfo) && !m_InfoBarTopPos.Contains(X, Y)) {
 		// turn off showing info when clicking outside InfoBarTop
-		m_eDisplayMode = e_ModeMap;
-		RequestRepaint();
+		SetDisplayMode(e_ModeMap);
+		DoRequestRepaint();
 		return;
 	}
 	// get command
@@ -382,40 +404,41 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 	// check Info bar buttons
 	Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
 	// check for zoom buttons
-	if((m_eDisplayMode == e_ModeMap) && (CXOptions::Instance()->MustShowZoomButtons()) && (Cmd == e_CmdNone)) {
+	if((eDisplayMode == e_ModeMap) && (CXOptions::Instance()->MustShowZoomButtons()) && (Cmd == e_CmdNone)) {
 		Cmd = m_ZoomInBtn.OnMouseDown(X - m_ZoomInPos.GetLeft(), Y - m_ZoomInPos.GetTop());
 		if(Cmd == e_CmdNone)
 			Cmd = m_ZoomOutBtn.OnMouseDown(X - m_ZoomOutPos.GetLeft(), Y - m_ZoomOutPos.GetTop());
 	}
 	// turn off showing info when clicking outside info button
-	if((m_eDisplayMode == e_ModeInfo) && (Cmd != e_CmdInfo))
-		m_eDisplayMode = e_ModeMap;
+	if((eDisplayMode == e_ModeInfo) && (Cmd != e_CmdInfo))
+		SetDisplayMode(e_ModeMap);
 	// turn off showing info when clicking outside sat button
-	if((m_eDisplayMode == e_ModeSatInfo) && (Cmd != e_CmdSat))
-		m_eDisplayMode = e_ModeMap;
+	if((eDisplayMode == e_ModeSatInfo) && (Cmd != e_CmdSat))
+		SetDisplayMode(e_ModeMap);
+	eDisplayMode = GetDisplayMode();
 	switch(Cmd) {
 		case e_CmdQuit:		m_pMainWindow->RequestTermination(); break;
 		case e_CmdInfo:		{
-								if(m_eDisplayMode == e_ModeInfo)
+								if(eDisplayMode == e_ModeInfo)
 									// switch back top map mode
-									m_eDisplayMode = e_ModeMap;
+									SetDisplayMode(e_ModeMap);
 								else
 									// switch to info mode
-									m_eDisplayMode = e_ModeInfo;
-								RequestRepaint();
+									SetDisplayMode(e_ModeInfo);
+								DoRequestRepaint();
 								break;
 							}
 		case e_CmdSat:		{
-								if(m_eDisplayMode == e_ModeSatInfo)
+								if(eDisplayMode == e_ModeSatInfo)
 									// switch back top map mode
-									m_eDisplayMode = e_ModeMap;
+									SetDisplayMode(e_ModeMap);
 								else
 									// switch to Sat mode
-									m_eDisplayMode = e_ModeSatInfo;
-								RequestRepaint();
+									SetDisplayMode(e_ModeSatInfo);
+								DoRequestRepaint();
 								break;
 							}
-		case e_CmdSave:		CXOptions::Instance()->ToggleSaving(); RequestRepaint(); break;
+		case e_CmdSave:		CXOptions::Instance()->ToggleSaving(); DoRequestRepaint(); break;
 		case e_CmdZoomIn:	{
 								if(m_pMapPainterThread != NULL)
 									m_pMapPainterThread->ZoomIn();

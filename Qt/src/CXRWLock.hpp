@@ -70,7 +70,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void Unlock();
+	virtual void UnlockRead();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void UnlockWrite();
 };
 
 #endif // __CXRWLOCK_HPP__
