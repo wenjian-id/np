@@ -131,7 +131,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		Bmp.Create(pDC, Width, SpeedRect1.GetBottom());
 
 		// set rect
-		tIRect ClientRect(0,0,Width,SpeedRect.GetBottom());
+		tIRect ClientRect(0,0,Width,SpeedRect1.GetBottom());
 		// draw backgound
 		Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
 
