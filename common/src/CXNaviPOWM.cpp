@@ -328,16 +328,16 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 
 	int InfoBarCommonWidth = 65;
 	int MaxSpeedSize = CXOptions::Instance()->GetMaxSpeedSize();
-	m_InfoBarSpeedPos.SetTop(IBBH);
+	m_InfoBarSpeedPos.SetTop(IBTH);
 	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-MaxSpeedSize);
 	m_InfoBarSpeedPos.SetRight(Width-InfoBarCommonWidth);
-	m_InfoBarSpeedPos.SetBottom(IBBH+MaxSpeedSize);
+	m_InfoBarSpeedPos.SetBottom(IBTH+MaxSpeedSize);
 	m_pInfoBarSpeed->Resize(m_InfoBarSpeedPos.GetWidth(), m_InfoBarSpeedPos.GetHeight());
 
-	m_InfoBarCommonPos.SetTop(IBBH);
+	m_InfoBarCommonPos.SetTop(IBTH);
 	m_InfoBarCommonPos.SetLeft(Width-InfoBarCommonWidth);
 	m_InfoBarCommonPos.SetRight(Width);
-	m_InfoBarCommonPos.SetBottom(IBBH+4*20);
+	m_InfoBarCommonPos.SetBottom(IBTH+4*20);
 	m_pInfoBarCommon->Resize(m_InfoBarCommonPos.GetWidth(), m_InfoBarCommonPos.GetHeight());
 	DoRequestRepaint();
 }

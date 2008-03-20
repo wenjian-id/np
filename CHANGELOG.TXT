@@ -1,8 +1,13 @@
 Version 0.1.3:
  - fixed bugs:
+   - adjusting InfoBarTopHeight was not working properly 
  - implemented feature requests:
    - 1834019: Allow absolute paths for maps directory.
+   - 1869075: "No GPS Device" Message implemented as satellite map.
  - other:
+   - packets GPGSA, GPGSV and GPRMC now processed
+   - current speed now taken from GPRMC if available, else computed.
+   - some POIs are displayed
 
 Version 0.1.2:
  - fixed bugs:
