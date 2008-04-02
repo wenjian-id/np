@@ -328,7 +328,8 @@ public:
 	};
 
 private:
-	t_uint32	m_POI[MaxPOITypes];	///< POI 1 flags.
+	CXStringUTF8	m_Name;				///< oiu
+	t_uint32		m_POI[MaxPOITypes];	///< POI 1 flags.
 	//-------------------------------------
 	CXPOINode();										///< Not used.
 	CXPOINode(const CXPOINode &);						///< Not used.
@@ -389,6 +390,22 @@ public:
 	 *	\param	rCol		Computed column.
 	 */
 	void ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol);
+	//-------------------------------------
+	/*
+	 * \brief Set name.
+	 *
+	 *	Set name.
+	 *	\param	NewValue	New value.
+	 */
+	void SetName(const CXStringUTF8 &NewValue);
+	//-------------------------------------
+	/*
+	 * \brief Get name.
+	 *
+	 *	Get name.
+	 *	\return	Name.
+	 */
+	CXStringUTF8 GetName() const;
 };
 
 typedef CXMapHashSimple<t_uint64, CXPOINode *>		TPOINodeMap;		///< oiu

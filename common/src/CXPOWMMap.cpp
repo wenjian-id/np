@@ -29,7 +29,7 @@
 #include "CXTransformationMatrix.hpp"
 #include "CoordConversion.h"
 
-const unsigned int MAPVERSION = 0x00010303; // 0.1.3-dev3
+const unsigned int MAPVERSION = 0x00010304; // 0.1.3-dev4
 
 //----------------------------------------------------------------------------
 //-------------------------------------
@@ -151,6 +151,15 @@ void CXPOINode::ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol) {
 	}
 }
 
+//-------------------------------------
+void CXPOINode::SetName(const CXStringUTF8 &NewValue) {
+	m_Name = NewValue;
+}
+
+//-------------------------------------
+CXStringUTF8 CXPOINode::GetName() const {
+	return m_Name;
+}
 
 //----------------------------------------------------------------------------
 //-------------------------------------
@@ -487,6 +496,9 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 				}
 				POIIdx = POIIdx >> 1;
 			}
+			CXStringUTF8 Name;
+			ReadStringUTF8(InFile, Name);
+			pPOINode->SetName(Name);
 
 			// add node to POI map
 			m_POINodes.SetAt(ID, pPOINode);

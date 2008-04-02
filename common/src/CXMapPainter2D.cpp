@@ -36,6 +36,9 @@
 // Mapnik colors
 static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
 static const CXRGB FGCOLOR(0x00, 0x00, 0x00);
+static const CXRGB POITEXTCOLOR(0x00, 0x00, 0xA0);
+static const CXRGB POIBGCOLOR(0xE2, 0xDE, 0xD8);
+
 const double ZoomFactor = 1.2;
 static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
@@ -262,11 +265,17 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 					int row = 0;
 					int col = 0;
 					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
+					// draw POI bitmap
 					pBMP->DrawTransparent(	&(m_BmpPOI[i]),
 											x-POIWIDTH/2, y-POIHEIGHT/2,
 											col*POIWIDTH, row*POIHEIGHT,
 											POIWIDTH, POIHEIGHT,
 											COLOR_TRANSPARENT);
+					// draw name
+					CXStringUTF8 Name = pNode->GetName();
+					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
+					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
+					pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
 				}
 			}
 		}
