@@ -67,6 +67,7 @@ private:
 	bool				m_oShowCompass;					///< oiu
 	bool				m_oShowTrackLog;				///< oiu
 	bool				m_oShowScale;					///< oiu
+	bool				m_oShowMinimizeButton;			///< oiu
 	t_uint64			m_OSMVali;						///< oiu
 	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;			///< oiu
@@ -84,6 +85,7 @@ private:
 	CXStringASCII		m_LogoFileName;					///< oiu
 	CXStringASCII		m_InfoFileName;					///< oiu
 	CXStringASCII		m_QuitFileName;					///< oiu
+	CXStringASCII		m_MinimizeFileName;				///< oiu
 	CXStringASCII		m_SavingOnFileName;				///< oiu
 	CXStringASCII		m_SavingOffFileName;			///< oiu
 	CXStringASCII		m_ZoomInFileName;				///< oiu
@@ -336,6 +338,30 @@ public:
 	 *
 	 */
 	void SetQuitFileName(const CXStringASCII & Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowMinimizeButton() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowMinimizeButtonFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetMinimizeFileName() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetMinimizeFileName(const CXStringASCII & Value);
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -93,6 +93,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void ShowMinimized();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void RequestRepaint();
 };
 

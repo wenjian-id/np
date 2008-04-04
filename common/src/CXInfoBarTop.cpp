@@ -32,7 +32,8 @@ CXInfoBarTop::CXInfoBarTop() :
 	m_InfoRect(0,0,1,1),
 	m_QuitRect(0,0,1,1),
 	m_SatRect(0,0,1,1),
-	m_SaveRect(0,0,1,1)
+	m_SaveRect(0,0,1,1),
+	m_MinimizeRect(0,0,1,1)
 {
 }
 
@@ -71,6 +72,9 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		m_QuitRect.SetRight(Width);
 		m_QuitRect.SetBottom(Height);
 		m_QuitRect.SetLeft(Width - Height);
+		m_MinimizeRect.SetRight(m_QuitRect.GetLeft() - 1);
+		m_MinimizeRect.SetLeft(m_MinimizeRect.GetRight() - Height);
+		m_MinimizeRect.SetBottom(Height);
 		// calc width of SatRect
 		m_SatRect = Bmp.CalcTextRectASCII("XX", 4, 0);
 		m_SatRect.OffsetRect(Height, 0);
@@ -84,6 +88,9 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		// create new quit bmp
 		m_QuitBmp.Create(pDC, m_QuitRect.GetWidth(), m_QuitRect.GetHeight());
 		m_QuitBmp.LoadFromFile(CXOptions::Instance()->GetQuitFileName());
+		// create new minimize bmp
+		m_MinimizeBmp.Create(pDC, m_MinimizeRect.GetWidth(), m_MinimizeRect.GetHeight());
+		m_MinimizeBmp.LoadFromFile(CXOptions::Instance()->GetMinimizeFileName());
 		// create new save bmps
 		m_SaveOnBmp.Create(pDC, m_SaveRect.GetWidth(), m_SaveRect.GetHeight());
 		m_SaveOnBmp.LoadFromFile(CXOptions::Instance()->GetSaveOnFileName());
@@ -109,8 +116,6 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		}
 		Bmp.DrawTextASCII(StrNSat, m_SatRect, NSatColor, BgColor);
 
-		int TimeRight = Width - Height;
-
 		// get current time
 		CXExactTime Now;
 		snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
@@ -118,7 +123,13 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 		// draw time
 		tIRect TimeRect = Bmp.CalcTextRectASCII(StrNow, 4, 0);
-		TimeRect.OffsetRect(-TimeRect.GetRight() + TimeRight, -TimeRect.GetTop());
+		if(CXOptions::Instance()->MustShowMinimizeButton()) {
+			// ends on minimize button
+			TimeRect.OffsetRect(-TimeRect.GetRight() + m_MinimizeRect.GetLeft(), 0);
+		} else {
+			// ends on quit button
+			TimeRect.OffsetRect(-TimeRect.GetRight() + m_QuitRect.GetLeft(), 0);
+		}
 		TimeRect.SetBottom(Height);
 		Bmp.DrawTextASCII(StrNow, TimeRect, CXRGB(0xff, 0xff, 0x00), BgColor);
 	}
@@ -131,6 +142,10 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		pDC->Draw(&m_InfoBmp, m_InfoRect.GetLeft(), m_InfoRect.GetTop());
 		// draw quit bmp
 		pDC->Draw(&m_QuitBmp, m_QuitRect.GetLeft(), m_QuitRect.GetTop());
+		// draw minimize bmp
+		if(CXOptions::Instance()->MustShowMinimizeButton()) {
+			pDC->Draw(&m_MinimizeBmp, m_MinimizeRect.GetLeft(), m_MinimizeRect.GetTop());
+		}
 		// draw save bmp
 		if(CXOptions::Instance()->IsSaving())
 			pDC->Draw(&m_SaveOnBmp, m_SaveRect.GetLeft(), m_SaveRect.GetTop());
@@ -147,6 +162,10 @@ E_COMMAND CXInfoBarTop::OnInternalMouseDown(int X, int Y) {
 		return e_CmdSat;
 	if(m_QuitRect.Contains(X, Y))
 		return e_CmdQuit;
+	if(CXOptions::Instance()->MustShowMinimizeButton()) {
+		if(m_MinimizeRect.Contains(X, Y))
+			return e_CmdMinimize;
+	}
 	if(m_SaveRect.Contains(X, Y))
 		return e_CmdSave;
 	return e_CmdNone;

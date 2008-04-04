@@ -44,6 +44,7 @@ CXOptions::CXOptions() :
 	m_oShowCompass(false),
 	m_oShowTrackLog(false),
 	m_oShowScale(false),
+	m_oShowMinimizeButton(false),
 	m_OSMVali(0),
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
@@ -178,6 +179,11 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	CXStringASCII Quit=DirIcons;
 	Quit+=F.Get("QuitName", "quit.bmp");
 	SetQuitFileName(Quit);
+	// Minimize bmp
+	SetShowMinimizeButtonFlag(F.Get("ShowMinimizeButton", "off").ToUpper() == "ON");
+	CXStringASCII Minimize=DirIcons;
+	Minimize+=F.Get("MinimizeName", "minimize.bmp");
+	SetMinimizeFileName(Minimize);
 	// save bmps
 	CXStringASCII SaveOn=DirIcons;
 	SaveOn+=F.Get("SaveOnName", "saveon.bmp");
@@ -407,6 +413,30 @@ CXStringASCII CXOptions::GetQuitFileName() const {
 void CXOptions::SetQuitFileName(const CXStringASCII & Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_QuitFileName = Value;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowMinimizeButton() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowMinimizeButton;
+}
+
+//-------------------------------------
+void CXOptions::SetShowMinimizeButtonFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowMinimizeButton = NewValue;
+}
+
+//-------------------------------------
+CXStringASCII CXOptions::GetMinimizeFileName() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_MinimizeFileName;
+}
+
+//-------------------------------------
+void CXOptions::SetMinimizeFileName(const CXStringASCII & Value) {
+	CXWriteLocker WL(&m_RWLock);
+	m_MinimizeFileName = Value;
 }
 
 //-------------------------------------

@@ -4,6 +4,7 @@ Version 0.1.3:
  - implemented feature requests:
    - 1834019: Allow absolute paths for maps directory.
    - 1869075: "No GPS Device" Message implemented as satellite map.
+   - 1933651: Add minimize button.
  - other:
    - packets GPGSA, GPGSV and GPRMC now processed
    - current speed now taken from GPRMC if available, else computed.

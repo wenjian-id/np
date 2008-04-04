@@ -70,6 +70,7 @@ enum E_COMMAND {
 	e_CmdZoomIn,	///< Zoom in
 	e_CmdZoomOut,	///< Zoom out
 	e_CmdSat,		///< Sat info.
+	e_CmdMinimize,	///< Minimize.
 };
 
 

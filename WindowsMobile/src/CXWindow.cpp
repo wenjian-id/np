@@ -83,21 +83,15 @@ void CXWindow::ShowFullScreen() {
 	if(m_hWnd != NULL) {
 		// hide windows stuff
 		SHFullScreen(m_hWnd, SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
-/*
-		BringWindowToTop(m_hWnd);
-		HWND hWndInputPanel = FindWindow(TEXT("SipWndClass"), NULL);
-		HWND hWndSipButton = FindWindow(TEXT("MS_SIPBUTTON"), NULL);
-		HWND hWndTaskBar = FindWindow(TEXT("HHTaskBar"), NULL);
-		if(hWndTaskBar != NULL)
-			ShowWindow(hWndTaskBar, SW_HIDE);
-		if(hWndInputPanel != NULL)
-			ShowWindow(hWndInputPanel, SW_HIDE);
-		if(hWndSipButton != NULL)
-			ShowWindow(hWndSipButton, SW_HIDE);		// resize to full screen
-*/
 		int width = GetDeviceCaps(NULL, HORZRES);
 		int height = GetDeviceCaps(NULL, VERTRES);
 		MoveWindow(m_hWnd, 0, 0, width, height, TRUE);
 	}
 }
 
+//-------------------------------------
+void CXWindow::ShowMinimized() {
+	if(m_hWnd != NULL) {
+		ShowWindow(m_hWnd, SW_MINIMIZE);
+	}
+}

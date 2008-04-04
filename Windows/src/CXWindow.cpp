@@ -82,3 +82,10 @@ void CXWindow::ShowFullScreen() {
 		ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
 	}
 }
+
+//-------------------------------------
+void CXWindow::ShowMinimized() {
+	if(m_hWnd != NULL) {
+		ShowWindow(m_hWnd, SW_MINIMIZE);
+	}
+}

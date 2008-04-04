@@ -418,6 +418,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 	eDisplayMode = GetDisplayMode();
 	switch(Cmd) {
 		case e_CmdQuit:		m_pMainWindow->RequestTermination(); break;
+		case e_CmdMinimize:	m_pMainWindow->ShowMinimized(); break;
 		case e_CmdInfo:		{
 								if(eDisplayMode == e_ModeInfo)
 									// switch back top map mode

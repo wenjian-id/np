@@ -108,6 +108,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void ShowMinimized() = 0;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual void RequestRepaint() = 0;
 };
 

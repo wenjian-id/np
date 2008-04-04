@@ -39,10 +39,12 @@ private:
 	CXBitmap			m_QuitBmp;		///< oiu
 	CXBitmap			m_SaveOnBmp;	///< oiu
 	CXBitmap			m_SaveOffBmp;	///< oiu
+	CXBitmap			m_MinimizeBmp;	///< oiu
 	tIRect				m_InfoRect;		///< oiu
 	tIRect				m_QuitRect;		///< oiu
 	tIRect				m_SatRect;		///< oiu
 	tIRect				m_SaveRect;		///< oiu
+	tIRect				m_MinimizeRect;	///< oiu
 	//-------------------------------------
 	CXInfoBarTop(const CXInfoBarTop &);						///< Not used.
 	const CXInfoBarTop & operator = (const CXInfoBarTop &);	///< Not used.
