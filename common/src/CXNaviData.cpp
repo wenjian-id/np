@@ -27,16 +27,10 @@
 
 //-------------------------------------
 CXNaviData::CXNaviData() :
-	m_dLon(0.0),
-	m_dLat(0.0),
 	m_dHeight(0.0),
-	m_RMCSpeed(0),
 	m_MaxSpeed(0),
 	m_WayID(0), m_oLocated(false),
-	m_oTimeout(false),
-	m_TargetDist(0.0),
-	m_TargetCos(0.0),
-	m_TargetSin(0.0)
+	m_oTimeout(false)
 {
 }
 
@@ -60,45 +54,27 @@ const CXNaviData & CXNaviData::operator = (const CXNaviData &rOther) {
 void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	CXReadLocker RL(&rOther.m_RWLock);
 	CXWriteLocker WL(&m_RWLock);
-	m_dLon			= rOther.m_dLon;
-	m_dLat			= rOther.m_dLat;
 	m_dHeight		= rOther.m_dHeight;
 	m_Coor			= rOther.m_Coor;
 	m_UTMSpeed		= rOther.m_UTMSpeed;
-	m_RMCSpeed		= rOther.m_RMCSpeed;
 	m_StreetName	= rOther.m_StreetName;
 	m_Ref			= rOther.m_Ref;
 	m_MaxSpeed		= rOther.m_MaxSpeed;
 	m_WayID			= rOther.m_WayID;
 	m_oLocated		= rOther.m_oLocated;
 	m_oTimeout		= rOther.m_oTimeout;
-	m_TargetDist	= rOther.m_TargetDist;
-	m_TargetCos		= rOther.m_TargetCos;
-	m_TargetSin		= rOther.m_TargetSin;
 }
 
 //-------------------------------------
 double CXNaviData::GetLon() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_dLon;
-}
-
-//-------------------------------------
-void CXNaviData::SetLon(double dLon) {
-	CXWriteLocker WL(&m_RWLock);
-	m_dLon = dLon;
+	return m_Coor.GetLon();
 }
 
 //-------------------------------------
 double CXNaviData::GetLat() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_dLat;
-}
-
-//-------------------------------------
-void CXNaviData::SetLat(double dLat) {
-	CXWriteLocker WL(&m_RWLock);
-	m_dLat = dLat;
+	return m_Coor.GetLat();
 }
 
 //-------------------------------------
@@ -132,21 +108,9 @@ CXUTMSpeed CXNaviData::GetUTMSpeed() const {
 }
 
 //-------------------------------------
-void CXNaviData::SetUTMSpeedGGA(const CXUTMSpeed & UTMSpeed) {
+void CXNaviData::SetUTMSpeed(const CXUTMSpeed & UTMSpeed) {
 	CXWriteLocker WL(&m_RWLock);
 	m_UTMSpeed = UTMSpeed;
-}
-
-//-------------------------------------
-double CXNaviData::GetRMCSpeed() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_RMCSpeed;
-}
-
-//-------------------------------------
-void CXNaviData::SetRMCSpeed(double NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_RMCSpeed = NewValue;
 }
 
 //-------------------------------------
@@ -219,41 +183,5 @@ bool CXNaviData::IsTimeout() const {
 void CXNaviData::SetTimeout(bool Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oTimeout = Value;
-}
-
-//-------------------------------------
-void CXNaviData::SetTargetDist(double Value) {
-	CXWriteLocker WL(&m_RWLock);
-	m_TargetDist = Value;
-}
-
-//-------------------------------------
-double CXNaviData::GetTargetDist() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_TargetDist;
-}
-
-//-------------------------------------
-void CXNaviData::SetTargetCos(double Value) {
-	CXWriteLocker WL(&m_RWLock);
-	m_TargetCos = Value;
-}
-
-//-------------------------------------
-double CXNaviData::GetTargetCos() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_TargetCos;
-}
-
-//-------------------------------------
-void CXNaviData::SetTargetSin(double Value) {
-	CXWriteLocker WL(&m_RWLock);
-	m_TargetSin = Value;
-}
-
-//-------------------------------------
-double CXNaviData::GetTargetSin() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_TargetSin;
 }
 

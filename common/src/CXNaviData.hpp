@@ -39,15 +39,12 @@ private:
 	//-------------
 	// position stuff
 	//-------------
-	double				m_dLon;				///< grad.dec
-	double				m_dLat;				///< grad.dec
 	double				m_dHeight;			///< height
 	CXCoor				m_Coor;				///< coordinate
 	//-------------
 	// speed stuff
 	//-------------
 	CXUTMSpeed			m_UTMSpeed;			///< UTM speed
-	double				m_RMCSpeed;			///< oiu
 
 	CXStringUTF8		m_StreetName;		///< name of street
 	CXStringUTF8		m_Ref;				///< ref
@@ -55,9 +52,6 @@ private:
 	t_uint64			m_WayID;			///< id of last located way
 	bool				m_oLocated;			///< is located on a way or not
 	bool				m_oTimeout;			///< timeout occured
-	double				m_TargetDist;		///< distance to target
-	double				m_TargetCos;		///< oiu 0 grad = east
-	double				m_TargetSin;		///< oiu 0 grad = east
 	//-------------
 	// general stuff
 	//-------------
@@ -107,19 +101,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetLon(double dLon);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
 	double GetLat() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetLat(double dLat);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -155,19 +137,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetUTMSpeedGGA(const CXUTMSpeed & UTMSpeed);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetRMCSpeed() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetRMCSpeed(double NewValue);
+	void SetUTMSpeed(const CXUTMSpeed & UTMSpeed);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -240,42 +210,6 @@ public:
 	 *
 	 */
 	void SetTimeout(bool Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTargetDist(double Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetTargetDist() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTargetCos(double Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetTargetCos() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTargetSin(double Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetTargetSin() const;
 };
 
 #endif // __CXNAVIDATA_H_

@@ -40,14 +40,27 @@ class CXNaviPOWM;
  */
 class CXLocatorThread : public CXLoopThread {
 private:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_SPEED_SOURCE {
+		e_SpeedCalculator,		///< oiu
+		e_RMC_Packet,			///< oiu
+	};
+private:
 	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;	///< oiu
 	CXTimeStampData<tUCBuffer>		m_InputBufferGPSRMC;	///< oiu
 	bool							m_oNewDataGPSGGA;		///< oiu
 	bool							m_oNewDataGPSRMC;		///< oiu
 	CXSpeedCalculator				m_SpeedCalculator;		///< oiu
-	CXExactTime						m_LastReceivedGGA;		///< oiu
+	CXExactTime						m_LastReceivedPosition;	///< oiu
 	CXStringASCII					m_LastPositionUTC;		///< oiu
 	CXNaviData						m_NaviData;				///< oiu
+	CXCoor							m_LastReceivedCoor;		///< oiu
+	E_SPEED_SOURCE					m_eSpeedSource;			///< oiu
+	CXUTMSpeed						m_LastUTMSpeed;			///< oiu
 	CXNaviPOWM						*m_pNaviPOWM;			///< oiu
 	CXExactTime						m_StartTime;			///< starting time
 	mutable CXMutex					m_MutexInputData;		///< oiu

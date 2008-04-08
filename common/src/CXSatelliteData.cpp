@@ -40,10 +40,10 @@ CXSatelliteData::CXSatelliteData() :
 	m_NrSat(0),
 	m_LastReceivedGSVTel(0),
 	m_TmpNrSat(0),
-	m_oRMCData(false),
-	m_oGGAData(false),
-	m_oGSAData(false),
-	m_oGSVData(false)
+	m_oRMCDataReceived(false),
+	m_oGGADataReceived(false),
+	m_oGSADataReceived(false),
+	m_oGSVDataReceived(false)
 {
 }
 
@@ -71,14 +71,14 @@ void CXSatelliteData::ClearBuffer(CXBuffer<CXGSVSatelliteInfo *> & rBuffer) {
 //-------------------------------------
 void CXSatelliteData::SetRMCReceived() {
 	CXWriteLocker WL(&m_RWLock);
-	m_oRMCData = true;
+	m_oRMCDataReceived = true;
 }
 
 //-------------------------------------
 void CXSatelliteData::SetNrSatGGA(int NrSatGGA) {
 	CXWriteLocker WL(&m_RWLock);
 	m_NrSat = NrSatGGA;
-	m_oGGAData = true;
+	m_oGGADataReceived = true;
 }
 
 //-------------------------------------
@@ -93,7 +93,7 @@ void CXSatelliteData::SetActiveSatellites(const CXBuffer<int> &ActiveSatellites)
 	m_ActiveSatellites = ActiveSatellites;
 	// set nr satellites
 	m_NrSat = m_ActiveSatellites.GetSize();
-	m_oGSAData = true;
+	m_oGSADataReceived = true;
 }
 
 //-------------------------------------
@@ -102,7 +102,7 @@ void CXSatelliteData::SetGSVData(	int NTelegrams, int NCurrentTelegram, int NSat
 									const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4)
 {
 	CXWriteLocker WL(&m_RWLock);
-	m_oGSVData = true;
+	m_oGSVDataReceived = true;
 	// check if we are in sync
 	if(NCurrentTelegram != m_LastReceivedGSVTel+1) {
 		// not in sync. reset and discard
@@ -284,14 +284,14 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	GSVRect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight() + GSARect.GetHeight());
 	CXRGB TextColor = TelegramNotReceivedColor;
 
-	if(m_oRMCData) {
+	if(m_oRMCDataReceived) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
 	}
 	// draw
 	Bmp.DrawTextUTF8("GPRMC", RMCRect, TextColor, BgColor);
-	if(m_oGGAData) {
+	if(m_oGGADataReceived) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
@@ -299,7 +299,7 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	// draw
 	Bmp.DrawTextUTF8("GPGGA", GGARect, TextColor, BgColor);
 
-	if(m_oGSAData) {
+	if(m_oGSADataReceived) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
@@ -307,7 +307,7 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	// draw
 	Bmp.DrawTextUTF8("GPGSA", GSARect, TextColor, BgColor);
 
-	if(m_oGSVData) {
+	if(m_oGSVDataReceived) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;

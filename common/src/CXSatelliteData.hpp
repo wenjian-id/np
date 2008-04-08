@@ -43,10 +43,10 @@ private:
 	CXBuffer<CXGSVSatelliteInfo *>	m_TmpSatInfo;			///< oiu
 	int								m_LastReceivedGSVTel;	///< oiu
 	int								m_TmpNrSat;				///< oiu
-	bool							m_oRMCData;				///< oiu
-	bool							m_oGGAData;				///< oiu
-	bool							m_oGSAData;				///< oiu
-	bool							m_oGSVData;				///< oiu
+	bool							m_oRMCDataReceived;		///< oiu
+	bool							m_oGGADataReceived;		///< oiu
+	bool							m_oGSADataReceived;		///< oiu
+	bool							m_oGSVDataReceived;		///< oiu
 	mutable CXRWLock				m_RWLock;				///< oiu
 	//-------------------------------------
 	CXSatelliteData(const CXSatelliteData &);						///< Not used.

@@ -45,6 +45,7 @@ CXLocatorThread::CXLocatorThread() :
 	m_oNewDataGPSGGA(false),
 	m_oNewDataGPSRMC(false),
 	m_SpeedCalculator(4),
+	m_eSpeedSource(e_SpeedCalculator),
 	m_pNaviPOWM(NULL)
 {
 }
@@ -179,30 +180,37 @@ void CXLocatorThread::OnThreadLoop() {
 		CXRMCPacket RMCData;
 		if(ExtractRMCData(Line, RMCData)) {
 			// OK, valid data arrived
-			CXUTMSpeed UTMSpeed;
-			UTMSpeed.SetSpeed(RMCData.GetSpeed());
-			double alpha = (90 - RMCData.GetCourse())*deg2rad;
-			UTMSpeed.SetCos(cos(alpha));
-			UTMSpeed.SetSin(sin(alpha));
-			// oiu remove after testing both speeds
-			m_NaviData.SetRMCSpeed(RMCData.GetSpeed());
+			m_LastReceivedPosition.SetNow();
+			// set speed source to RMC speed
+			m_eSpeedSource = e_RMC_Packet;
+			double dLon = RMCData.GetLon();
+			double dLat = RMCData.GetLat();
+			// remember coordinates
+			m_LastReceivedCoor = CXCoor(dLon, dLat);
+			
 			// check if really new data arrived
 			if(RMCData.GetUTC() != m_LastPositionUTC) {
 				// UTC differs, so new data
 				NewDataArrived = true;
 				m_LastPositionUTC = RMCData.GetUTC();
-				// set private navigation data
-				m_NaviData.SetLon(RMCData.GetLon());
-				m_NaviData.SetLat(RMCData.GetLat());
-				m_NaviData.SetRMCSpeed(RMCData.GetSpeed());
-				CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
-				int CurrentZone = pPOWMMap->GetCurrentZone();
-				int NewZone = UTMZoneNone;
-				char UTMLetter = 0;
-				double x0 = 0;
-				double y0 = 0;
-				LLtoUTM(WGS84, m_NaviData.GetLon(), m_NaviData.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
-				m_NaviData.SetCoor(CXCoor(x0, y0));
+				
+				// calculate speed
+				m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
+
+				CXUTMSpeed UTMSpeed;
+				if(m_SpeedCalculator.HasValidSpeed()) {
+					// take speed
+					UTMSpeed = m_SpeedCalculator.GetSpeed();
+				} else {
+					// no valid current speed. try last valid speed
+					UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
+				}
+				// check which speed to take
+				if(m_eSpeedSource == e_RMC_Packet) {
+					// override with RMC speed
+					UTMSpeed.SetSpeed(RMCData.GetSpeed());
+					m_LastUTMSpeed = UTMSpeed;
+				}
 			}
 		}
 	}
@@ -218,49 +226,58 @@ void CXLocatorThread::OnThreadLoop() {
 		CXGGAPacket GGAData;
 		if(ExtractGGAData(Line, GGAData)) {
 			// OK, valid GGA data arrived
-			m_LastReceivedGGA.SetNow();
+			m_LastReceivedPosition.SetNow();
+			// extract data
 			double dLon = GGAData.GetLon();
 			double dLat = GGAData.GetLat();
-			CXCoor Coor(dLon, dLat);
+			// remember coordinates
+			m_LastReceivedCoor = CXCoor(dLon, dLat);
 
-			// calculate speed
-			CXUTMSpeed Speed;
-			m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(Coor, Buffer.TimeStamp()));
-
-			if(m_SpeedCalculator.HasValidSpeed()) {
-				// take speed
-				Speed = m_SpeedCalculator.GetSpeed();
-			} else {
-				// no valid current speed. try last valid speed
-				Speed = m_SpeedCalculator.GetLastValidSpeed();
-			}
 			// set number of satellites
 			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
 			// set height
 			m_NaviData.SetHeight(GGAData.GetHeight());
-			// oiu remove after testing both speeds
-			m_NaviData.SetUTMSpeedGGA(Speed);
 			// check if really new data arrived
 			if(GGAData.GetUTC() != m_LastPositionUTC) {
 				// UTC differs, so new data
 				NewDataArrived = true;
 				m_LastPositionUTC = GGAData.GetUTC();
-				// set private navigation data
-				m_NaviData.SetLon(dLon);
-				m_NaviData.SetLat(dLat);
-				m_NaviData.SetUTMSpeedGGA(Speed);
-				m_NaviData.SetCoor(Coor);
+
+				// calculate speed
+				m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
+
+				CXUTMSpeed UTMSpeed;
+				if(m_SpeedCalculator.HasValidSpeed()) {
+					// take speed
+					UTMSpeed = m_SpeedCalculator.GetSpeed();
+				} else {
+					// no valid current speed. try last valid speed
+					UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
+				}
+				// check which speed to take
+				if(m_eSpeedSource == e_SpeedCalculator) {
+					// take computed speed
+					m_LastUTMSpeed = UTMSpeed;
+				} else {
+					// set only speed vectors but not speed
+					m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
+					m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+				}
 			}
 		}
 	}
-	if(!NewDataArrived) {
+	if(NewDataArrived) {
+		// set private navigation data
+		m_NaviData.SetUTMSpeed(m_LastUTMSpeed);
+		m_NaviData.SetCoor(m_LastReceivedCoor);
+	} else {
 		// no data arrived
-		unsigned long Delta = Now - m_LastReceivedGGA;
+		unsigned long Delta = Now - m_LastReceivedPosition;
 		if(Delta > 1000*TIMEOUT_RECEIVE) {
 			// oiu
 			CXSatelliteData::Instance()->SetNrSatGGA(0);
 			if(m_pNaviPOWM != NULL)
-				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
+				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
 		}
 	}
 	// check if we must hide logo

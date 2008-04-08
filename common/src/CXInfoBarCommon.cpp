@@ -117,21 +117,12 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		SpeedRect = TmpBmp.CalcTextRectUTF8(StrSpeed, 4, 0);
 		SpeedRect.OffsetRect(Width - SpeedRect.GetRight(), HeightRect.GetBottom());
 
-		// calc speed rect1
-		tIRect SpeedRect1(0, 0, Width, Height);
-		CXStringUTF8 StrSpeed1;
-		Speed = static_cast<int>(floor(3.6*m_NaviData.GetRMCSpeed()));
-		snprintf(buf, sizeof(buf), "%d kmh", Speed);
-		StrSpeed1 = buf;
-		SpeedRect1 = TmpBmp.CalcTextRectUTF8(StrSpeed1, 4, 0);
-		SpeedRect1.OffsetRect(Width - SpeedRect1.GetRight(), SpeedRect.GetBottom());
-
 		// create bitmap
 		CXBitmap Bmp;
-		Bmp.Create(pDC, Width, SpeedRect1.GetBottom());
+		Bmp.Create(pDC, Width, SpeedRect.GetBottom());
 
 		// set rect
-		tIRect ClientRect(0,0,Width,SpeedRect1.GetBottom());
+		tIRect ClientRect(0,0,Width,SpeedRect.GetBottom());
 		// draw backgound
 		Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
 
@@ -142,7 +133,6 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		Bmp.DrawTextUTF8(StrHeight, HeightRect, FGCOLOR, BGCOLOR);
 		Bmp.SetFont(FHSpeed, false);
 		Bmp.DrawTextUTF8(StrSpeed, SpeedRect, FGCOLOR, BGCOLOR);
-		Bmp.DrawTextUTF8(StrSpeed1, SpeedRect1, FGCOLOR, BGCOLOR);
 
 		// blend to device context
 		pDC->Blend(&Bmp, OffsetX, OffsetY, 70);
