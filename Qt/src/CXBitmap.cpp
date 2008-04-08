@@ -96,7 +96,7 @@ void CXBitmap::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXR
 	m_pPainter->setPen(NewPen);
 
 	// draw rectangle
-	m_pPainter->drawRect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight() - TheRect.GetLeft() - 1, TheRect.GetBottom() - TheRect.GetTop() - 1);
+	m_pPainter->drawRect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth() - 1, TheRect.GetHeight() - 1);
 
 	// restore old pen and brush
 	m_pPainter->setPen(OldPen);
@@ -122,6 +122,9 @@ void CXBitmap::DrawTextQString(const QString & Text, const tIRect & TheRect, con
 	if(IsNull())
 		return;
 
+	// draw background
+	DrawRect(TheRect, BgColor, BgColor);
+	
 	// get old pen and brush
 	QPen OldPen = m_pPainter->pen();
 	QBrush OldBrush = m_pPainter->brush();
@@ -140,10 +143,8 @@ void CXBitmap::DrawTextQString(const QString & Text, const tIRect & TheRect, con
 	m_pPainter->setPen(NewPen);
 
 	// calc and draw rectangle
-	QRect Rect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth(), TheRect.GetHeight());
-	QRect Res = m_pPainter->boundingRect(Rect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextSingleLine, Text);
-	m_pPainter->drawRect(Res);
-	
+	QRect Rect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth()-1, TheRect.GetHeight()-1);
+
 	// now change color to FgColor
 	NewPen.setColor(CXRGB2QColor(FgColor));
 	m_pPainter->setPen(NewPen);

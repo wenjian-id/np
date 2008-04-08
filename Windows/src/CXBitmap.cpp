@@ -129,6 +129,9 @@ void CXBitmap::DrawTextASCII(const CXStringASCII & Text, const tIRect & TheRect,
 	if(IsNull())
 		return;
 
+	// draw background
+	DrawRect(TheRect, BgColor, BgColor);
+
 	// get old colors
 	COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(FgColor));
 	COLORREF OldBkColor = ::SetBkColor(m_hDC, CXRGB2COLORREF(BgColor));
@@ -177,6 +180,9 @@ tIRect CXBitmap::CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int A
 void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & BgColor) {
 	if(IsNull())
 		return;
+
+	// draw background
+	DrawRect(TheRect, BgColor, BgColor);
 
 	// get old colors
 	COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(FgColor));

@@ -74,10 +74,11 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		// fit text to white circle
 		double Radius = 1.5*WhiteRadius;
 		int FontSize = static_cast<int>(floor(Radius));
+		tIRect TextRect(0,0,1,1);
 		for(;;) {
 			Bmp.SetFont(static_cast<int>(floor(FontSize)), true);
-			tIRect Rect = Bmp.CalcTextRectASCII(buf, 2, 2);
-			if(Rect.GetWidth()*Rect.GetWidth() + Rect.GetHeight()*Rect.GetHeight() > 4*WhiteRadius*WhiteRadius) {
+			TextRect = Bmp.CalcTextRectASCII(buf, 2, 2);
+			if(TextRect.GetWidth()*TextRect.GetWidth() + TextRect.GetHeight()*TextRect.GetHeight() > 4*WhiteRadius*WhiteRadius) {
 				// does not fit
 				FontSize--;
 			} else {
@@ -87,7 +88,10 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 				break;
 		}
 
-		Bmp.DrawTextASCII(buf, ClientRect, CXRGB(0x00, 0x00, 0x00));
+		// position speed
+		TextRect.OffsetRect((ClientRect.GetWidth() - TextRect.GetWidth())/2, (ClientRect.GetHeight() - TextRect.GetHeight())/2);
+		// and draw
+		Bmp.DrawTextASCII(buf, TextRect, CXRGB(0x00, 0x00, 0x00));
 	
 		// draw data
 		pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
