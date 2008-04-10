@@ -205,12 +205,18 @@ void CXLocatorThread::OnThreadLoop() {
 					// no valid current speed. try last valid speed
 					UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
 				}
-				// check which speed to take
-				if(m_eSpeedSource == e_RMC_Packet) {
-					// override with RMC speed
-					UTMSpeed.SetSpeed(RMCData.GetSpeed());
-					m_LastUTMSpeed = UTMSpeed;
-				}
+				// set speed vector
+				m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
+				m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+
+			}
+			// since e_RMC_Packet has a higher priority than e_SpeedCalculator,
+			// the following is done outside the block executed only when really 
+			// new data arrived.
+			// check which speed to take
+			if(m_eSpeedSource == e_RMC_Packet) {
+				// set RMC speed
+				m_LastUTMSpeed.SetSpeed(RMCData.GetSpeed());
 			}
 		}
 	}
@@ -254,14 +260,15 @@ void CXLocatorThread::OnThreadLoop() {
 					// no valid current speed. try last valid speed
 					UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
 				}
-				// check which speed to take
+
+				// set speed vector
+				m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
+				m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+
+				// check if we must set speed
 				if(m_eSpeedSource == e_SpeedCalculator) {
 					// take computed speed
-					m_LastUTMSpeed = UTMSpeed;
-				} else {
-					// set only speed vectors but not speed
-					m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
-					m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+					m_LastUTMSpeed.SetSpeed(UTMSpeed.GetSpeed());
 				}
 			}
 		}
