@@ -68,6 +68,7 @@ private:
 	bool				m_oShowTrackLog;				///< oiu
 	bool				m_oShowScale;					///< oiu
 	bool				m_oShowMinimizeButton;			///< oiu
+	bool				m_oShowPOIs;					///< Show some POIs.
 	t_uint64			m_OSMVali;						///< oiu
 	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;			///< oiu
@@ -512,6 +513,18 @@ public:
 	 *
 	 */
 	void SetShowTrackLogFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowPOIs() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetShowPOIsFlag(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

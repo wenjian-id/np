@@ -45,6 +45,7 @@ CXOptions::CXOptions() :
 	m_oShowTrackLog(false),
 	m_oShowScale(false),
 	m_oShowMinimizeButton(false),
+	m_oShowPOIs(false),
 	m_OSMVali(0),
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
@@ -199,6 +200,7 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	ZoomOut+=F.Get("ZoomOutName", "zoomout.bmp");
 	SetZoomOutFileName(ZoomOut);
 	// POIs
+	SetShowPOIsFlag(F.Get("ShowPOIs", "off").ToUpper() == "ON");
 	for(size_t i=0; i<MaxPOITypes; i++) {
 		char buf1[100];
 		char buf2[100];
@@ -437,6 +439,18 @@ CXStringASCII CXOptions::GetMinimizeFileName() const {
 void CXOptions::SetMinimizeFileName(const CXStringASCII & Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_MinimizeFileName = Value;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowPOIs() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowPOIs;
+}
+
+//-------------------------------------
+void CXOptions::SetShowPOIsFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowPOIs = NewValue;
 }
 
 //-------------------------------------

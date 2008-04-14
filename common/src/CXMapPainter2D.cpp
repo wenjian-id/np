@@ -45,6 +45,17 @@ static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 8;
 static const int POICOUNTVERT	= 4;
 
+// for revision 0.1.3 enable only following POIs
+t_uint32 Rev013POI[MaxPOITypes] = {	CXPOINode::e_POI1_Parking | CXPOINode::e_POI1_Fuel | CXPOINode::e_POI1_Restaurant | CXPOINode::e_POI1_Pub,
+									0,
+									0,
+									0,
+									0,
+									0,
+									0,
+									0};
+
+
 CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
 	CXWay::e_Unknown,
 	CXWay::e_Steps,
@@ -250,6 +261,9 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 	if(pBMP == NULL)
 		return;
 
+	if(!CXOptions::Instance()->MustShowPOIs())
+		return;
+
 	TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
 	POS PosN = POINodes.GetStart();
 	CXPOINode *pNode = NULL;
@@ -261,7 +275,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 		// check if visible
 		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
 			for(size_t i=0; i<MaxPOITypes; i++) {
-				if(pNode->IsPOI(i)) {
+				if(pNode->IsPOI(i) && ((pNode->GetPOIType(i) & Rev013POI[i]) != 0)) {
 					int row = 0;
 					int col = 0;
 					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
@@ -273,9 +287,11 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 											COLOR_TRANSPARENT);
 					// draw name
 					CXStringUTF8 Name = pNode->GetName();
-					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
-					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
-					pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
+					if(!Name.IsEmpty()) {
+						tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
+						NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
+						pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
+					}
 				}
 			}
 		}
