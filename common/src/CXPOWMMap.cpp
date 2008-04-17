@@ -29,7 +29,7 @@
 #include "CXTransformationMatrix.hpp"
 #include "CoordConversion.h"
 
-const unsigned int MAPVERSION = 0x00010304; // 0.1.3-dev4
+const unsigned int MAPVERSION = 0x00010300; // 0.1.3
 
 //----------------------------------------------------------------------------
 //-------------------------------------

@@ -46,7 +46,7 @@ static const int POICOUNTHORZ	= 8;
 static const int POICOUNTVERT	= 4;
 
 // for revision 0.1.3 enable only following POIs
-t_uint32 Rev013POI[MaxPOITypes] = {	CXPOINode::e_POI1_Parking | CXPOINode::e_POI1_Fuel | CXPOINode::e_POI1_Restaurant | CXPOINode::e_POI1_Pub,
+t_uint32 Rev013POI[MaxPOITypes] = {	CXPOINode::e_POI1_Parking | CXPOINode::e_POI1_Fuel | CXPOINode::e_POI1_Restaurant | CXPOINode::e_POI1_Pub | CXPOINode::e_POI1_Hospital,
 									0,
 									0,
 									0,
