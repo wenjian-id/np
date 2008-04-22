@@ -1,3 +1,5 @@
+del /q Common\*.*
+del /q Icons\*.*
 copy ..\WM2003SE\eVC4\ARMV4Rel\NaviPOWM.exe Common
 copy ..\..\LICENSE.TXT Common
 copy ..\..\README.TXT Common
@@ -5,10 +7,19 @@ copy ..\..\CHANGELOG.TXT Common
 copy ..\..\common\Demo\demo01.txt Common
 copy ..\..\common\Demo\E0071N509.map Common
 copy ..\..\common\Config\navipowm.ini Common\navipowm.txt
-copy ..\..\common\Images\logosmall.bmp Icons\logo.bmp
 copy ..\..\common\Images\info.bmp Icons
+copy ..\..\common\Images\logosmall.bmp Icons\logo.bmp
+copy ..\..\common\Images\minimize.bmp Icons
+copy ..\..\common\Images\poi1.bmp Icons
+copy ..\..\common\Images\poi2.bmp Icons
+copy ..\..\common\Images\poi3.bmp Icons
+copy ..\..\common\Images\poi4.bmp Icons
+copy ..\..\common\Images\poi5.bmp Icons
+copy ..\..\common\Images\poi6.bmp Icons
+copy ..\..\common\Images\poi7.bmp Icons
+copy ..\..\common\Images\poi8.bmp Icons
 copy ..\..\common\Images\quit.bmp Icons
-copy ..\..\common\Images\saveon.bmp Icons
 copy ..\..\common\Images\saveoff.bmp Icons
+copy ..\..\common\Images\saveon.bmp Icons
 copy ..\..\common\Images\zoomin.bmp Icons
 copy ..\..\common\Images\zoomout.bmp Icons

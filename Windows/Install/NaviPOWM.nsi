@@ -6,7 +6,7 @@
 ; The name of the installer
 Name "NaviPOWM"
 
-!define Version "0.1.2"             ; version string
+!define Version "0.1.3"             ; version string
 
 ; Result of compiler
 OutFile "Install\NaviPOWM-MinGW-${Version}-Setup.exe"
@@ -53,11 +53,22 @@ Section "" ;start with this
     SetOutPath $INSTDIR\Icons 
     File "Icons\info.bmp"
     File "Icons\logo.bmp"
+    File "Icons\minimize.bmp"
+    File "Icons\poi1.bmp"
+    File "Icons\poi2.bmp"
+    File "Icons\poi3.bmp"
+    File "Icons\poi4.bmp"
+    File "Icons\poi5.bmp"
+    File "Icons\poi6.bmp"
+    File "Icons\poi7.bmp"
+    File "Icons\poi8.bmp"
     File "Icons\quit.bmp"
     File "Icons\saveoff.bmp"
     File "Icons\saveon.bmp"
     File "Icons\zoomin.bmp"
     File "Icons\zoomout.bmp"
+
+
     SetOutPath Icons 
 
     ; Maps
@@ -94,6 +105,15 @@ Section "Uninstall"
     ; Icons
     Delete "$INSTDIR\Icons\info.bmp"
     Delete "$INSTDIR\Icons\logo.bmp"
+    Delete "$INSTDIR\Icons\minimize.bmp"
+    Delete "$INSTDIR\Icons\poi1.bmp"
+    Delete "$INSTDIR\Icons\poi2.bmp"
+    Delete "$INSTDIR\Icons\poi3.bmp"
+    Delete "$INSTDIR\Icons\poi4.bmp"
+    Delete "$INSTDIR\Icons\poi5.bmp"
+    Delete "$INSTDIR\Icons\poi6.bmp"
+    Delete "$INSTDIR\Icons\poi7.bmp"
+    Delete "$INSTDIR\Icons\poi8.bmp"
     Delete "$INSTDIR\Icons\quit.bmp"
     Delete "$INSTDIR\Icons\saveoff.bmp"
     Delete "$INSTDIR\Icons\saveon.bmp"
