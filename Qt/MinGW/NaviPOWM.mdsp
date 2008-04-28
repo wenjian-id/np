@@ -205,6 +205,7 @@ extraResourceOptions=
 66=..\..\common\src\CXMapPainterThread.hpp
 67=..\..\common\src\CXSatelliteData.hpp
 68=..\..\common\src\CXNMEA.hpp
+69=..\..\common\src\CXSmartPtr.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

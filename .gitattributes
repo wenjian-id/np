@@ -198,6 +198,7 @@ common/src/CXReadLocker.hpp -text
 common/src/CXRect.hpp -text
 common/src/CXSatelliteData.cpp -text
 common/src/CXSatelliteData.hpp -text
+common/src/CXSmartPtr.hpp -text
 common/src/CXSpeedCalculator.cpp -text
 common/src/CXSpeedCalculator.hpp -text
 common/src/CXStringASCII.cpp -text

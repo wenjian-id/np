@@ -275,7 +275,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 		// check if visible
 		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
 			for(size_t i=0; i<MaxPOITypes; i++) {
-				if(pNode->IsPOI(i) && ((pNode->GetPOIType(i) & Rev013POI[i]) != 0)) {
+				if(pNode->IsPOI(i) /*&& ((pNode->GetPOIType(i) & Rev013POI[i]) != 0)*/) {
 					int row = 0;
 					int col = 0;
 					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);

@@ -134,5 +134,6 @@ src/OSSpecific.hpp \
  ../../common/src/CXTimeStampData.hpp \
  ../../common/src/CXTrackLog.hpp \
  ../../common/src/CXSatelliteData.hpp \
- ../../common/src/CXNMEA.hpp
+ ../../common/src/CXNMEA.hpp \
+ ../../common/src/CXSmartPtr.hpp
  

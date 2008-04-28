@@ -341,6 +341,10 @@ SOURCE=..\..\common\src\CXSatelliteData.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXSmartPtr.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXSpeedCalculator.hpp
 # End Source File
 # Begin Source File

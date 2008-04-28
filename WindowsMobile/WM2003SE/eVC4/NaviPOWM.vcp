@@ -3656,10 +3656,12 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	{$(INCLUDE)}"aygshell.h"\
-	{$(INCLUDE)}"shellsdk.h"\
-	{$(INCLUDE)}"shsdkstc.h"\
-	{$(INCLUDE)}"sipapi.h"\
+	
+NODEP_CPP_CXWIN=\
+	".\hellsdk.h"\
+	".\hsdkstc.h"\
+	".\ipapi.h"\
+	".\ygshell.h"\
 	
 
 !ENDIF 
@@ -4585,6 +4587,10 @@ SOURCE=..\..\..\common\src\CXRGB.hpp
 # Begin Source File
 
 SOURCE=..\..\..\common\src\CXSatelliteData.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXSmartPtr.hpp
 # End Source File
 # Begin Source File
 
