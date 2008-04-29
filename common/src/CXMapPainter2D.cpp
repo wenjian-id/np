@@ -30,6 +30,7 @@
 #include "CXPen.hpp"
 #include "CXTransformationMatrix.hpp"
 #include "TargetIncludes.hpp"
+#include "CXDebugInfo.hpp"
 #include "Utils.hpp"
 
 
@@ -559,6 +560,12 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
+		int bottom = TextRect.GetBottom();
+		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		snprintf(	buf, sizeof(buf), "LoadTimeNodes: %d LoadTimeWays: %d", CXDebugInfo::Instance()->GetLoadTimeNodes(), CXDebugInfo::Instance()->GetLoadTimeWays());
+		ttt = buf;
+		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
+		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
 }

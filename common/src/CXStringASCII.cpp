@@ -92,6 +92,16 @@ void CXStringASCII::operator += (const CXStringASCII &rOther) {
 }
 
 //-------------------------------------
+bool CXStringASCII::operator < (const CXStringASCII &rOther) const {
+	return tCBuffer::operator < (rOther);
+}
+
+//-------------------------------------
+bool CXStringASCII::operator > (const CXStringASCII &rOther) const {
+	return tCBuffer::operator > (rOther);
+}
+
+//-------------------------------------
 size_t CXStringASCII::Find(const char *pcFind) const {
 	if(pcFind == NULL)
 		return NPOS;

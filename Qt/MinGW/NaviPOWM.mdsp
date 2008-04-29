@@ -136,6 +136,7 @@ extraResourceOptions=
 54=..\..\common\src\CXMapPainterThread.cpp
 55=..\..\common\src\CXSatelliteData.cpp
 56=..\..\common\src\CXNMEA.cpp
+57=..\..\common\src\CXDebugInfo.cpp
 [Header]
 1=..\src\CXMutex.hpp
 2=..\src\CXRWLock.hpp
@@ -206,6 +207,8 @@ extraResourceOptions=
 67=..\..\common\src\CXSatelliteData.hpp
 68=..\..\common\src\CXNMEA.hpp
 69=..\..\common\src\CXSmartPtr.hpp
+70=..\..\common\src\CXMapSort.hpp
+71=..\..\common\src\CXDebugInfo.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

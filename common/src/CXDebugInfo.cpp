@@ -20,98 +20,51 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "CXCoor.hpp"
+#include "CXDebugInfo.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
+
+CXDebugInfo * CXDebugInfo::m_pInstance = NULL;
+
 
 //-------------------------------------
-CXCoor::CXCoor() :
-	m_dLon(0),
-	m_dLat(0)
+CXDebugInfo::CXDebugInfo() :
+	m_LoadTimeNodes(0),
+	m_LoadTimeWays(0)
 {
 }
 
 //-------------------------------------
-CXCoor::CXCoor(double dLon, double dLat) :
-	m_dLon(dLon),
-	m_dLat(dLat)
-{
-	RelocateUTM(UTMZoneNone);
+CXDebugInfo::~CXDebugInfo() {
 }
 
 //-------------------------------------
-CXCoor::CXCoor(const CXCoor &rOther) {
-	CopyFrom(rOther);
+CXDebugInfo *CXDebugInfo::Instance() {
+	if(m_pInstance == NULL)
+		m_pInstance = new CXDebugInfo();
+	return m_pInstance;
 }
 
 //-------------------------------------
-CXCoor::~CXCoor() {
+int CXDebugInfo::GetLoadTimeNodes() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_LoadTimeNodes;
 }
 
 //-------------------------------------
-void CXCoor::RelocateUTM(int NewUTMZone) {
-	// relocate only if neccessary
-	if((NewUTMZone == UTMZoneNone) || (m_UTMCoor.GetUTMZone() != NewUTMZone)) {
-		int NewZone = UTMZoneNone;
-		char UTMLetter = 0;
-		double UTME = 0;
-		double UTMN = 0;
-		LLtoUTM(WGS84, m_dLon, m_dLat, NewUTMZone, NewZone, UTMLetter, UTME, UTMN);
-		m_UTMCoor.SetUTMZone(NewZone);
-		m_UTMCoor.SetUTMLetter(UTMLetter);
-		m_UTMCoor.SetUTMEasting(UTME);
-		m_UTMCoor.SetUTMNorthing(UTMN);
-	}
+void CXDebugInfo::SetLoadTimeNodes(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_LoadTimeNodes = NewValue;
 }
 
 //-------------------------------------
-const CXCoor & CXCoor::operator = (const CXCoor &rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+int CXDebugInfo::GetLoadTimeWays() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_LoadTimeWays;
 }
 
 //-------------------------------------
-void CXCoor::CopyFrom(const CXCoor &rOther) {
-	m_dLon = rOther.m_dLon;
-	m_dLat = rOther.m_dLat;
-	m_UTMCoor = rOther.m_UTMCoor;
-}
-
-//-------------------------------------
-bool CXCoor::operator == (const CXCoor &rOther) {
-	return ((m_dLon == rOther.m_dLon) && (m_dLat == rOther.m_dLat));
-}
-
-//-------------------------------------
-bool CXCoor::operator != (const CXCoor &rOther) {
-	return !operator ==(rOther);
-}
-
-//-------------------------------------
-double CXCoor::GetLon() const {
-	return m_dLon;
-}
-
-//-------------------------------------
-double CXCoor::GetLat() const {
-	return m_dLat;
-}
-
-//-------------------------------------
-int CXCoor::GetUTMZone() const {
-	return m_UTMCoor.GetUTMZone();
-}
-
-//-------------------------------------
-char CXCoor::GetUTMLetter() const {
-	return m_UTMCoor.GetUTMLetter();
-}
-
-//-------------------------------------
-double CXCoor::GetUTMEasting() const {
-	return m_UTMCoor.GetUTMEasting();
-}
-
-//-------------------------------------
-double CXCoor::GetUTMNorthing() const {
-	return m_UTMCoor.GetUTMNorthing();
+void CXDebugInfo::SetLoadTimeWays(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_LoadTimeWays = NewValue;
 }

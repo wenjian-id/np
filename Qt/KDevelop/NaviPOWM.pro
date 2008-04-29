@@ -66,7 +66,8 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/CXInfoBarSpeed.cpp \
  ../../common/src/CXTrackLog.cpp \
  ../../common/src/CXSatelliteData.cpp \
- ../../common/src/CXNMEA.cpp
+ ../../common/src/CXNMEA.cpp \
+ ../../common/src/CXDebugInfo.cpp
 
 HEADERS += src/CXSerial.hpp \
 src/OSSpecific.hpp \
@@ -135,5 +136,7 @@ src/OSSpecific.hpp \
  ../../common/src/CXTrackLog.hpp \
  ../../common/src/CXSatelliteData.hpp \
  ../../common/src/CXNMEA.hpp \
- ../../common/src/CXSmartPtr.hpp
+ ../../common/src/CXSmartPtr.hpp \
+ ../../common/src/CXMapSort.hpp \
+ ../../common/src/CXDebugInfo.hpp
  

@@ -100,6 +100,18 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	bool operator < (const CXBuffer &rOther) const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool operator > (const CXBuffer &rOther) const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	const tClass *GetBuffer() const;
 	//-------------------------------------
 	/*
@@ -131,6 +143,12 @@ public:
 	 *
 	 */
 	void Append(const tClass &c);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void InsertAt(size_t Index, const tClass &c);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -305,7 +323,25 @@ template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer &rOth
 	if(m_ulBufferSize != rOther.m_ulBufferSize)
 		return false;
 	// check data
-	return memcmp(m_pBuffer, rOther.m_pBuffer, m_ulBufferSize) == 0;
+	return memcmp(m_pBuffer, rOther.m_pBuffer, m_ulBufferSize*sizeof(tClass)) == 0;
+}
+
+//-------------------------------------
+template<class tClass> bool CXBuffer<tClass> ::operator < (const CXBuffer &rOther) const {
+	// check if buffer allocated
+	if((m_pBuffer == NULL) || (rOther.m_pBuffer == NULL))
+		return false;
+	// check data
+	return memcmp(m_pBuffer, rOther.m_pBuffer, m_ulBufferSize*sizeof(tClass)) < 0;
+}
+
+//-------------------------------------
+template<class tClass> bool CXBuffer<tClass> ::operator > (const CXBuffer &rOther) const {
+	// check if buffer allocated
+	if((m_pBuffer == NULL) || (rOther.m_pBuffer == NULL))
+		return false;
+	// check data
+	return memcmp(m_pBuffer, rOther.m_pBuffer, m_ulBufferSize*sizeof(tClass)) > 0;
 }
 
 //-------------------------------------
@@ -322,7 +358,7 @@ template<class tClass> void CXBuffer<tClass> ::Append(const tClass *pbData, size
 	size_t NewSize = m_ulBufferSize + ulDataSize;
 	if(NewSize > m_ulAllocatedSize) {
 		// no, we must grow the buffer
-		GrowTo(m_ulBufferSize + ulDataSize);
+		GrowTo(NewSize);
 	}
 	// append data
 	memmove(&(m_pBuffer[m_ulBufferSize]), pbData, ulDataSize*sizeof(tClass));
@@ -332,6 +368,23 @@ template<class tClass> void CXBuffer<tClass> ::Append(const tClass *pbData, size
 //-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::Append(const tClass & c) {
 	Append(&c, 1);
+}
+
+//-------------------------------------
+template<class tClass> void CXBuffer<tClass> ::InsertAt(size_t Index, const tClass &c) {
+	if(Index >= m_ulBufferSize)
+		// wrong index
+		return;
+	// check if it fits in allocated memory
+	size_t NewSize = m_ulBufferSize + 1;
+	if(NewSize > m_ulAllocatedSize) {
+		// no, we must grow the buffer
+		GrowTo(NewSize);
+	}
+	// move data arround
+	memmove(&(m_pBuffer[Index+1]), &(m_pBuffer[Index]), (m_ulBufferSize-Index)*sizeof(tClass));
+	m_pBuffer[Index] = c;
+	m_ulBufferSize = NewSize;
 }
 
 //-------------------------------------
@@ -404,7 +457,7 @@ template<class tClass> size_t CXBuffer<tClass> ::Find(const tClass * pc, size_t 
 	if(Len > m_ulBufferSize)
 		return NPOS;
 	for(size_t i = 0; i <= m_ulBufferSize-Len; i++) {
-		if(memcmp(m_pBuffer+i, pc, Len) == 0)
+		if(memcmp(m_pBuffer+i, pc, Len*sizeof(tClass)) == 0)
 			return i;
 	}
 	return NPOS;
@@ -442,7 +495,7 @@ template<class tClass> bool CXBuffer<tClass> ::CompareBegin(const tClass *pbBuf,
 	// check if enaugh data
 	if(ulCount > m_ulBufferSize)
 		return false;
-	return memcmp(m_pBuffer, pbBuf, ulCount) == 0;
+	return memcmp(m_pBuffer, pbBuf, ulCount*sizeof(tClass)) == 0;
 }
 
 

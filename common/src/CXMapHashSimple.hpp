@@ -24,9 +24,11 @@
 #define __CXMAPHASHSIMPLE_HPP__
 
 #include "CXBuffer.hpp"
+#include "CXMapSort.hpp"
 #include "CXMapSimple.hpp"
 #include <TargetIncludes.hpp>
 
+#define tMap CXMapSort
 
 //-------------------------------------
 /*
@@ -121,7 +123,7 @@ public:
 	static POS NPOS;		///< oiu
 	static POS START;		///< oiu
 private:
-	CXMapSimple<tKey, tValue>	*m_pData[DataSize];	///< oiu
+	tMap<tKey, tValue>	*m_pData[DataSize];	///< oiu
 	//-------------------------------------
 	CXMapHashSimple(const CXMapHashSimple &);						///< Not used.
 	const CXMapHashSimple & operator = (const CXMapHashSimple &);	///< Not used.
@@ -177,14 +179,14 @@ public:
 	POS GetNext(POS & Pos, tValue &rValue) const;
 };
 
-template<class tKey, class tValue> POS CXMapHashSimple<tKey, tValue> ::NPOS = POS(0xffff, CXMapSimple<tKey, tValue>::NPOS);
-template<class tKey, class tValue> POS CXMapHashSimple<tKey, tValue> ::START = POS(0xffff, CXMapSimple<tKey, tValue>::START);
+template<class tKey, class tValue> POS CXMapHashSimple<tKey, tValue> ::NPOS = POS(0xffff, tMap<tKey, tValue>::NPOS);
+template<class tKey, class tValue> POS CXMapHashSimple<tKey, tValue> ::START = POS(0xffff, tMap<tKey, tValue>::START);
 
 
 //-------------------------------------
 template<class tKey, class tValue> CXMapHashSimple<tKey, tValue> ::CXMapHashSimple() {
 	for(size_t i=0; i<DataSize; i++) {
-		m_pData[i] = new CXMapSimple<tKey, tValue>();
+		m_pData[i] = new tMap<tKey, tValue>();
 	}
 }
 
@@ -238,9 +240,9 @@ template<class tKey, class tValue> POS CXMapHashSimple<tKey, tValue> ::GetNext(P
 	}
 	if(Pos == START) {
 		Pos.idx = 0;
-		Pos.pos = CXMapSimple<tKey, tValue>::START;
+		Pos.pos = tMap<tKey, tValue>::START;
 	}
-	while((Pos.pos = m_pData[Pos.idx]->GetNext(Pos.pos, rValue)) == CXMapSimple<tKey, tValue>::NPOS) {
+	while((Pos.pos = m_pData[Pos.idx]->GetNext(Pos.pos, rValue)) == tMap<tKey, tValue>::NPOS) {
 		// try next idx
 		// end of m_pData[Pos.pos] reached
 		if (Pos.idx == 255) {
@@ -250,7 +252,7 @@ template<class tKey, class tValue> POS CXMapHashSimple<tKey, tValue> ::GetNext(P
 		} else {
 			// next idx
 			Pos.idx++;
-			Pos.pos = CXMapSimple<tKey, tValue>::START;
+			Pos.pos = tMap<tKey, tValue>::START;
 		}
 	}
 	return Pos;

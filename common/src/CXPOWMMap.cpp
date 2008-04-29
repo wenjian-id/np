@@ -26,6 +26,7 @@
 #include "CXFile.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
+#include "CXDebugInfo.hpp"
 #include "CXTransformationMatrix.hpp"
 #include "CoordConversion.h"
 
@@ -441,6 +442,10 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 //-------------------------------------
 bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & FileName) {
 	// node count
+
+	CXExactTime Time1;
+	Time1.SetNow();
+
 	t_uint32 NodeCount = 0;
 	if(!ReadUI32(InFile, NodeCount)) {
 		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
@@ -509,6 +514,8 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 		m_NodeMap.SetAt(ID, pNode);
 	}
 
+	CXExactTime Time2;
+	Time2.SetNow();
 	// way count
 	t_uint32 WayCount = 0;
 	if(!ReadUI32(InFile, WayCount)) {
@@ -547,6 +554,12 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 			pWay->AddNode(pNode);
 		}
 	}
+
+	CXExactTime Time3;
+	Time3.SetNow();
+
+	CXDebugInfo::Instance()->SetLoadTimeNodes(Time2 - Time1);
+	CXDebugInfo::Instance()->SetLoadTimeWays(Time3 - Time2);
 	return true;
 }
 

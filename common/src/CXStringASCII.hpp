@@ -107,6 +107,18 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	bool operator < (const CXStringASCII &rOther) const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool operator > (const CXStringASCII &rOther) const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	size_t Find(const char *pcFind) const;
 	//-------------------------------------
 	/*
