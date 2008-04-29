@@ -59,6 +59,7 @@ t_uint32 Rev013POI[MaxPOITypes] = {	CXPOINode::e_POI1_Parking | CXPOINode::e_POI
 
 CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
 	CXWay::e_Unknown,
+	CXWay::e_LivingStreet,
 	CXWay::e_Steps,
 	CXWay::e_Pedestrian,
 	CXWay::e_Footway,
