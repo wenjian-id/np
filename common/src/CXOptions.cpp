@@ -171,6 +171,10 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 		SetMode(e_ModePedestrian);
 	else if (Mode == "CACHE")
 		SetMode(e_ModeCaching);
+	else if (Mode == "MAP")
+		SetMode(e_ModeCaching);
+	else
+		SetMode(e_ModeCar);
 	// maps directory
 	SetDirectoryMaps(CreateAbsolutePath(m_StartPath, F.Get("DirectoryMaps", "Maps")));
 	// Save directory

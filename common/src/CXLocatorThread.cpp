@@ -446,14 +446,20 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 			}
 			case CXOptions::e_ModePedestrian:
 			{
-				// take all ways
-				oUseWay = true;
+				// take all ways except "unknown"
+				oUseWay = (Type != CXWay::e_Unknown);
 				break;
 			}
 			case CXOptions::e_ModeCaching:
 			{
-				// take all ways
-				oUseWay = true;
+				// take all ways except "unknown"
+				oUseWay = (Type != CXWay::e_Unknown);
+				break;
+			}
+			case CXOptions::e_ModeMapping:
+			{
+				// take all ways except "unknown"
+				oUseWay = (Type != CXWay::e_Unknown);
 				break;
 			}
 		}

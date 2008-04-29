@@ -55,6 +55,7 @@ public:
 		e_ModeBike,			///< oiu
 		e_ModePedestrian,	///< oiu
 		e_ModeCaching,		///< oiu
+		e_ModeMapping,		///< oiu
 	};
 	//-------------------------------------
 	/*
