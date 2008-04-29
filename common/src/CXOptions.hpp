@@ -47,6 +47,17 @@ public:
 	};
 	//-------------------------------------
 	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_MODE {
+		e_ModeCar,			///< oiu
+		e_ModeBike,			///< oiu
+		e_ModePedestrian,	///< oiu
+		e_ModeCaching,		///< oiu
+	};
+	//-------------------------------------
+	/*
 	 * \brief Flags for displaying certain debug informations.
 	 *
 	 *	Flags for displaying certain debug informations.
@@ -79,6 +90,7 @@ private:
 	int					m_TrackLogMinDist;				///< oiu
 	int					m_ScaleWidth;					///< oiu
 	int					m_ScaleHeight;					///< oiu
+	E_MODE				m_eMode;						///< oiu
 	CXStringASCII		m_DirectoryMaps;				///< oiu
 	CXStringASCII		m_DirectorySave;				///< oiu
 	CXStringASCII		m_DirectoryIcons;				///< oiu
@@ -255,6 +267,18 @@ public:
 	 *
 	 */
 	void SetScaleHeight(int Value);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	E_MODE GetMode() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetMode(E_MODE NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

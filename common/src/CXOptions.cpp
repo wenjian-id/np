@@ -56,6 +56,7 @@ CXOptions::CXOptions() :
 	m_TrackLogMinDist(10),
 	m_ScaleWidth(100),
 	m_ScaleHeight(5),
+	m_eMode(e_ModeCar),
 	m_LogoTime(5000)
 {
 }
@@ -160,6 +161,16 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// DBGDrawTimes
 	if(F.Get("DBGDrawTimes", "off").ToUpper() == "ON")
 		SetDebugInfoFlag(e_DBGDrawTimes);
+	// mode
+	CXStringASCII Mode = F.Get("Mode", "off").ToUpper();
+	if(Mode == "CAR")
+		SetMode(e_ModeCar);
+	else if (Mode == "BIKE")
+		SetMode(e_ModeBike);
+	else if (Mode == "PED")
+		SetMode(e_ModePedestrian);
+	else if (Mode == "CACHE")
+		SetMode(e_ModeCaching);
 	// maps directory
 	SetDirectoryMaps(CreateAbsolutePath(m_StartPath, F.Get("DirectoryMaps", "Maps")));
 	// Save directory
@@ -331,6 +342,18 @@ int CXOptions::GetScaleHeight() const {
 void CXOptions::SetScaleHeight(int Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_ScaleHeight = Value;
+}
+
+//-------------------------------------
+CXOptions::E_MODE CXOptions::GetMode() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_eMode;
+}
+
+//-------------------------------------
+void CXOptions::SetMode(E_MODE NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_eMode = NewValue;
 }
 
 //-------------------------------------

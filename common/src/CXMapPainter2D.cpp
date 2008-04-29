@@ -567,6 +567,13 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		bottom = TextRect.GetBottom();
+		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		snprintf(	buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
+		ttt = buf;
+		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
+		TextRect.OffsetRect(0, bottom);
+		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
 }
 

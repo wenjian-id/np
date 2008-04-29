@@ -30,14 +30,15 @@
 #include "CXPOWMMap.hpp"
 #include "CXOptions.hpp"
 #include "CXSatelliteData.hpp"
+#include "CXDebugInfo.hpp"
 #include "TargetIncludes.hpp"
 #include "CoordConstants.h"
 
 #include <math.h>
 
 const int TIMEOUT_RECEIVE = 5; // seconds
-static const int MIN_SEGMENTSIZE = 5;
-static const double MAXDIST = 40;
+static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
+static const double SQUARE_MAXDIST = 1600; // 40*40
 
 //---------------------------------------------------------------------
 //-------------------------------------
@@ -362,13 +363,16 @@ void CXLocatorThread::OnThreadStopped() {
 //-------------------------------------
 bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 
+	CXExactTime StartTime;
+	StartTime.SetNow();
+
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
     // The received coordinate is defined by P(x0, y0).
     // The nearest point to P(x0,y0) lying on the segment PS(PSx, PSy)
   
     double PSx = 0;
     double PSy = 0;
-    double dMinDist = -1;	// smallest distance from x0,y0 to a segment
+    double dSquareMinDist = -1;	// smallest distance from x0,y0 to a segment
 	bool first = true;
     
 	CXNode *pNode1 = NULL;
@@ -377,9 +381,9 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
     double Node1y = 0;
     double Node2x = 0;
     double Node2y = 0;
-    double SegLen = 0;		// length of segment
-    double dDist = 0;		// distance from x0,y0 to segment
-    double dCos = 0;		// cosinus of angle between vector Node1->P and Node1->Node2
+    double SqSegLen = 0;		// square length of segment
+    double dSquareDist = 0;		// distance from x0,y0 to segment
+    double dCos = 0;			// cosinus of angle between vector Node1->P and Node1->Node2
 
 	CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
     pPOWMMap->LockMap();
@@ -398,64 +402,126 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 	POS Pos = Ways.GetStart();
 	CXWay *pWay = NULL;
 	while (Ways.GetNext(Pos, pWay) != TWayMap::NPOS) {
-		size_t NodeCount = pWay->GetNodeCount();
-		// start with 1
-		for(size_t i=1; i<NodeCount; i++) {
-			// get first node
-			pNode1 = pWay->GetNode(i-1);
-			// get second node
-			pNode2 = pWay->GetNode(i);
-    		// get coordinates
-    		Node1x = pNode1->GetUTME();
-    		Node1y = pNode1->GetUTMN();
-    		Node2x = pNode2->GetUTME();
-    		Node2y = pNode2->GetUTMN();
-    		// compute SegLen
-    		SegLen = sqrt((Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y));
-
-			// mx distance from endpoints to current position is 1000 m
-			double dMax = 1000;
-			if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
-				(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
+		CXWay::E_KEYHIGHWAY Type = pWay->GetHighwayType();
+		bool oUseWay = false;
+		switch(CXOptions::Instance()->GetMode()) {
+			case CXOptions::e_ModeCar:
 			{
-    			// only compute segments with at least MIN_SEGMENTSIZE length
-    			if(SegLen > MIN_SEGMENTSIZE) {
-    				// compute cos of angle
-        			dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/(SegLen*SegLen);
-    				if(dCos<0) {
-    					// projection of P on segment lies before Node1 so take Node1
+				oUseWay =	(Type == CXWay::e_Motorway) ||
+							(Type == CXWay::e_MotorwayLink) ||
+							(Type == CXWay::e_Trunk) ||
+							(Type == CXWay::e_TrunkLink) ||
+							(Type == CXWay::e_Primary) ||
+							(Type == CXWay::e_PrimaryLink) ||
+							(Type == CXWay::e_Secondary) ||
+							(Type == CXWay::e_Tertiary) ||
+							(Type == CXWay::e_Unclassified) ||
+							(Type == CXWay::e_Residential) ||
+							(Type == CXWay::e_Service) ||
+							(Type == CXWay::e_LivingStreet);
+				break;
+			}
+			case CXOptions::e_ModeBike:
+			{
+				// oiu todo
+				oUseWay =	(Type == CXWay::e_Motorway) ||
+							(Type == CXWay::e_MotorwayLink) ||
+							(Type == CXWay::e_Trunk) ||
+							(Type == CXWay::e_TrunkLink) ||
+							(Type == CXWay::e_Primary) ||
+							(Type == CXWay::e_PrimaryLink) ||
+							(Type == CXWay::e_Secondary) ||
+							(Type == CXWay::e_Tertiary) ||
+							(Type == CXWay::e_Unclassified) ||
+							(Type == CXWay::e_Track) ||
+							(Type == CXWay::e_Residential) ||
+							(Type == CXWay::e_Service) ||
+							(Type == CXWay::e_Cycleway) ||
+							(Type == CXWay::e_Footway) ||
+							(Type == CXWay::e_Pedestrian) ||
+							(Type == CXWay::e_Steps) ||
+							(Type == CXWay::e_LivingStreet);
+
+				break;
+			}
+			case CXOptions::e_ModePedestrian:
+			{
+				// take all ways
+				oUseWay = true;
+				break;
+			}
+			case CXOptions::e_ModeCaching:
+			{
+				// take all ways
+				oUseWay = true;
+				break;
+			}
+		}
+		if(oUseWay) {
+			size_t NodeCount = pWay->GetNodeCount();
+			// start with 1
+			for(size_t i=1; i<NodeCount; i++) {
+				// get first node
+				pNode1 = pWay->GetNode(i-1);
+				// get second node
+				pNode2 = pWay->GetNode(i);
+    			// get coordinates
+    			Node1x = pNode1->GetUTME();
+    			Node1y = pNode1->GetUTMN();
+    			Node2x = pNode2->GetUTME();
+    			Node2y = pNode2->GetUTMN();
+
+				// mx distance from endpoints to current position is 1000 m
+				double dMax = 1000;
+				if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
+					(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
+				{
+    				// compute SqSegLen
+    				SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
+    				// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
+    				if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
+    					// compute cos of angle
+        				dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
+    					if(dCos<0) {
+    						// projection of P on segment lies before Node1 so take Node1
+    						PSx = Node1x;
+    						PSy = Node1y;
+    					} else if (dCos>1) {
+    						// projection of P on segment lies after Node2 so take Node2
+    						PSx = Node2x;
+    						PSy = Node2y;
+    					} else {
+    						// projection of P on segment lies between Node1 and Node2
+    						PSx = Node1x + dCos*(Node2x-Node1x);
+    						PSy = Node1y + dCos*(Node2y-Node1y);
+    					}
+    				} else {
+    					// segment too short, so we take Node1
+    					dCos=0;
     					PSx = Node1x;
     					PSy = Node1y;
-    				} else if (dCos>1) {
-    					// projection of P on segment lies after Node2 so take Node2
-    					PSx = Node2x;
-    					PSy = Node2y;
-    				} else {
-    					// projection of P on segment lies between Node1 and Node2
-    					PSx = Node1x + dCos*(Node2x-Node1x);
-    					PSy = Node1y + dCos*(Node2y-Node1y);
     				}
-    			} else {
-    				// segment too short, so we take Node1
-    				dCos=0;
-    				PSx = Node1x;
-    				PSy = Node1y;
-    			}
-    			// compute distance between P and PS
-    			dDist = sqrt((x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy));
+    				// compute square distance between P and PS
+    				dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
     
-    			// check if new best fit
-    			if(first || (dDist < dMinDist)) {
-					first = false;
-    				// yes
-    				dMinDist = dDist;
-    				rProxWay = pWay->GetID();
-    			}
+    				// check if new best fit
+    				if(first || (dSquareDist < dSquareMinDist)) {
+						first = false;
+    					// yes
+    					dSquareMinDist = dSquareDist;
+    					rProxWay = pWay->GetID();
+    				}
+				}
 			}
 		}
     }
 
 	pPOWMMap->UnlockMap();
+
+	CXExactTime StopTime;
+	StopTime.SetNow();
+
+	CXDebugInfo::Instance()->SetLocatorTime(StopTime-StartTime);
 
     if(first) {
     	// nothing found
@@ -463,7 +529,7 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
     }
 
     	// if too far from a way return false
-    if(dMinDist > MAXDIST) {
+    if(dSquareMinDist > SQUARE_MAXDIST) {
     	return false;
 	}
 

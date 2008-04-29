@@ -35,6 +35,7 @@ private:
 	static CXDebugInfo	*m_pInstance;					///< oiu
 	int					m_LoadTimeNodes;
 	int					m_LoadTimeWays;
+	int					m_LocatorTime;
 	mutable CXRWLock	m_RWLock;						///< oiu
 	//-------------------------------------
 	CXDebugInfo(const CXDebugInfo &);						///< Not used.
@@ -83,6 +84,18 @@ public:
 	 *
 	 */
 	void SetLoadTimeWays(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetLocatorTime() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetLocatorTime(int NewValue);
 };
 
 #endif // __CXDEBUGINFO_HPP__
