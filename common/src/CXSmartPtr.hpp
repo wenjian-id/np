@@ -61,7 +61,6 @@ private:
 			m_pPtr = pPtr;
 			m_oIsArray = oIsArray;
 			m_Counter = 0;
-			m_pPtr = NULL;
 		}
 		//-------------------------------------
 		/*
@@ -143,8 +142,10 @@ public:
 		// lock other instance
 		CXMutexLocker ML(&rOther.m_Mutex);
 		// new reference
-		if(rOther.m_pDescriptor != NULL)
+		m_pDescriptor = rOther.m_pDescriptor;
+		if(m_pDescriptor != NULL)
 			m_pDescriptor->AddRef();
+
 	}
 	//-------------------------------------
 	/*
@@ -177,6 +178,7 @@ public:
 		m_pDescriptor = rOther.m_pDescriptor;
 		if(m_pDescriptor != NULL)
 			m_pDescriptor->AddRef();
+		return *this;
 	}
 	//-------------------------------------
 	/*

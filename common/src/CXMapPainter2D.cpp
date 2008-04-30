@@ -563,7 +563,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
 		int bottom = TextRect.GetBottom();
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
-		snprintf(	buf, sizeof(buf), "LoadTimeNodes: %d LoadTimeWays: %d", CXDebugInfo::Instance()->GetLoadTimeNodes(), CXDebugInfo::Instance()->GetLoadTimeWays());
+		snprintf(	buf, sizeof(buf), "LoadTime Nodes: %d Ways: %d", CXDebugInfo::Instance()->GetLoadTimeNodes(), CXDebugInfo::Instance()->GetLoadTimeWays());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
