@@ -41,6 +41,7 @@ static const CXRGB POITEXTCOLOR(0x00, 0x00, 0xA0);
 static const CXRGB POIBGCOLOR(0xE2, 0xDE, 0xD8);
 
 const double ZoomFactor = 1.2;
+const double MAXMETERPERPIXEL = 100000; // 100 km/pixel
 static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 8;
@@ -82,11 +83,13 @@ CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapPainter2D::CXMapPainter2D() :
-	m_Scale(1/2.5)
+	m_MeterPerPixel(3),
+	m_ZoomLevel(0)
 {
 	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
 	}
+	UpdateZoomLevel();
 }
 
 //-------------------------------------
@@ -334,15 +337,14 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 	// get scale dimensions
 	int ScaleWidth = CXOptions::Instance()->GetScaleWidth();
 	int ScaleHeight = CXOptions::Instance()->GetScaleHeight();
-	const double EPSILON = 0.000001;
-	if(m_Scale < EPSILON)
+	if(m_MeterPerPixel > MAXMETERPERPIXEL)
 		return;
 	// get optimal scale display
 	int exp = 1;
 	int ScaleX = 1;
 	int expFinal = exp;
 	int ScaleXFinal = ScaleX;
-	while(1.0*ScaleX*exp*m_Scale < ScaleWidth) {
+	while(1.0*ScaleX*exp/m_MeterPerPixel < ScaleWidth) {
 		expFinal = exp;
 		ScaleXFinal = ScaleX;
 		if(ScaleX == 1) {
@@ -357,7 +359,7 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 	exp = expFinal;
 	ScaleX = ScaleXFinal;
 	// compute scale width in pixel
-	int ScaleXPixel = static_cast<int>(1.0*ScaleX*exp*m_Scale);
+	int ScaleXPixel = static_cast<int>(1.0*ScaleX*exp/m_MeterPerPixel);
 	// draw scale
 	// first the black rectangle
 	tIRect BlackRect((ScreenWidth - ScaleXPixel)/2, ScreenHeight - ScaleHeight - 5, ScaleXPixel, ScaleHeight);
@@ -488,7 +490,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			TMCompass.Rotate(UTMPI/2);
 		}
 
-		TMMap.Scale(m_Scale, -m_Scale);		// do scaling (negative for y!)
+		TMMap.Scale(1.0/m_MeterPerPixel, -1.0/m_MeterPerPixel);		// do scaling (negative for y!)
 		TMMap.Translate(xc, yc);			// display it centered on screen
 		TMCompass.Scale(1, -1);				// do scaling (negative for y!)
 		TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
@@ -554,23 +556,33 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];
-		snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld POI:%ld Co:%ld Sc:%ld Pos:%ld",
+		snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld POI:%ld",
 					StopPrepare-StopLock, StopDrawWays-StopPrepare, WayCount, 
-					StopTrackLog-StopDrawWays, StopPOI-StopTrackLog, StopCompass-StopPOI,
-					StopScale-StopCompass, StopPos-StopScale);
+					StopTrackLog-StopDrawWays, StopPOI-StopTrackLog);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
 		int bottom = TextRect.GetBottom();
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
-		snprintf(	buf, sizeof(buf), "LoadTime Nodes: %d Ways: %d", CXDebugInfo::Instance()->GetLoadTimeNodes(), CXDebugInfo::Instance()->GetLoadTimeWays());
+		snprintf(buf, sizeof(buf), "LoadTime Nodes: %d Ways: %d", CXDebugInfo::Instance()->GetLoadTimeNodes(), CXDebugInfo::Instance()->GetLoadTimeWays());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 		bottom = TextRect.GetBottom();
+		snprintf(buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
+		ttt = buf;
+		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
+		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
-		snprintf(	buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
+		bottom = TextRect.GetBottom();
+		snprintf(buf, sizeof(buf), "Zoom: %d", CXDebugInfo::Instance()->GetZoomLevel());
+		ttt = buf;
+		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
+		TextRect.OffsetRect(0, bottom);
+		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		bottom = TextRect.GetBottom();
+		snprintf(buf, sizeof(buf), "m/pixel: %0.2f", m_MeterPerPixel);
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
@@ -581,13 +593,53 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 //-------------------------------------
 bool CXMapPainter2D::ZoomIn() {
 	CXMutexLocker L(&m_Mutex);
-	m_Scale = m_Scale * ZoomFactor;
+	m_MeterPerPixel = m_MeterPerPixel / ZoomFactor;
+	if(m_MeterPerPixel > MAXMETERPERPIXEL)
+		m_MeterPerPixel = MAXMETERPERPIXEL;
+	UpdateZoomLevel();
 	return true;
 }
 
 //-------------------------------------
 bool CXMapPainter2D::ZoomOut() {
 	CXMutexLocker L(&m_Mutex);
-	m_Scale = m_Scale / ZoomFactor;
+	m_MeterPerPixel = m_MeterPerPixel * ZoomFactor;
+	if(m_MeterPerPixel > MAXMETERPERPIXEL)
+		m_MeterPerPixel = MAXMETERPERPIXEL;
+	UpdateZoomLevel();
 	return true;
+}
+
+//-------------------------------------
+void CXMapPainter2D::UpdateZoomLevel() {
+	char buf[100];
+	snprintf(buf, sizeof(buf), "m_MeterPerPixel = %.2f\n", m_MeterPerPixel);
+	DoOutputDebugString(buf);
+	if(m_MeterPerPixel <= 6)
+		m_ZoomLevel = 0;
+	else if(m_MeterPerPixel <= 10)
+		m_ZoomLevel = 1;
+	else if(m_MeterPerPixel <= 15)
+		m_ZoomLevel = 2;
+	else if(m_MeterPerPixel <= 20)
+		m_ZoomLevel = 3;
+	else if(m_MeterPerPixel <= 30)
+		m_ZoomLevel = 4;
+	else if(m_MeterPerPixel <= 50)
+		m_ZoomLevel = 5;
+	else if(m_MeterPerPixel <= 100)
+		m_ZoomLevel = 6;
+	else if(m_MeterPerPixel <= 300)
+		m_ZoomLevel = 7;
+	else if(m_MeterPerPixel <= 500)
+		m_ZoomLevel = 8;
+	else
+		m_ZoomLevel = 9;
+	CXDebugInfo::Instance()->SetZoomLevel(m_ZoomLevel);
+}
+
+//-------------------------------------
+int CXMapPainter2D::GetZoomLevel() const {
+	CXMutexLocker L(&m_Mutex);
+	return m_ZoomLevel;
 }

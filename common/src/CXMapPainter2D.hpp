@@ -37,7 +37,8 @@ class CXCache;
  */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
-	double					m_Scale;				///< Current scale factor.
+	double					m_MeterPerPixel;		///< Current scale factor.
+	int						m_ZoomLevel;			///< Current zoom level.
 	CXPenHolder				m_PenHolder;			///< oiu
 	CXBuffer<TWayBuffer *>	m_DrawWays;				///< oiu
 	CXBitmap				m_BmpPOI[MaxPOITypes];	///< Bitmaps for POIs
@@ -146,6 +147,12 @@ protected:
 	 *
 	 */
 	virtual void OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void UpdateZoomLevel();
 public:
 	//-------------------------------------
 	/*
@@ -171,6 +178,12 @@ public:
 	 *
 	 */
 	virtual bool ZoomOut();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual int GetZoomLevel() const;
 };
 
 #endif // __CXMAPPAINTER2D_HPP__

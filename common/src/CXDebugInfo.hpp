@@ -36,6 +36,7 @@ private:
 	int					m_LoadTimeNodes;
 	int					m_LoadTimeWays;
 	int					m_LocatorTime;
+	int					m_ZoomLevel;
 	mutable CXRWLock	m_RWLock;						///< oiu
 	//-------------------------------------
 	CXDebugInfo(const CXDebugInfo &);						///< Not used.
@@ -96,6 +97,18 @@ public:
 	 *
 	 */
 	void SetLocatorTime(int NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetZoomLevel() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetZoomLevel(int NewValue);
 };
 
 #endif // __CXDEBUGINFO_HPP__
