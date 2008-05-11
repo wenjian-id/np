@@ -24,6 +24,7 @@
 #include <CXMainWindow.hpp>
 #include <OSSpecific.hpp>
 #include <CXOptions.hpp>
+#include <locale.h>
 
 #include <qmessagebox.h>
 
@@ -31,6 +32,10 @@ int main( int argc, char ** argv ) {
 	QApplication a(argc, argv);
 	a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
 	int result = 0;
+
+	// set locale for numeric conversions
+	setlocale(LC_NUMERIC, "C");
+
 	try{
 		char * p = argv[0];
 		CXStringASCII Path(p);

@@ -96,6 +96,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow, CXMainWindow *pMainWnd) {
 //-------------------------------------
 int WINAPI WinMain(	HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow) {
 
+	// Windows mobile does not support locale
+
 	_TCHAR ucs2buf[1000];
 	char buf[1000];
 	GetModuleFileName(NULL, ucs2buf, 1000);

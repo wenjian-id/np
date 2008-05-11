@@ -24,8 +24,8 @@
 #include "CXOptions.hpp"
 #include <OSSpecific.hpp>
 #include <resource.h>
-
 #include "CXRect.hpp"
+#include <locale.h>
 
 #define MAX_LOADSTRING 100
 
@@ -102,6 +102,9 @@ BOOL InitInstance(HINSTANCE hInstance, int /*nCmdShow*/, CXMainWindow *pMainWnd)
 
 //-------------------------------------
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR /*lpCmdLine*/, int nCmdShow) {
+
+	// set locale for numeric conversions
+	setlocale(LC_NUMERIC, "C");
 
 	char buf[1000];
 	GetModuleFileName(NULL, buf, 1000);
