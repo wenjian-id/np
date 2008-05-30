@@ -1,5 +1,5 @@
 - fixed bugs:
-  - 1978789: 
+  - 1978789: DEMO mode doesn't accept absolute file paths to NMEA log fil
 
 
 Version 0.1.3:
