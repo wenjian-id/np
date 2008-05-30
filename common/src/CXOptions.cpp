@@ -73,25 +73,6 @@ CXOptions *CXOptions::Instance() {
 }
 
 //-------------------------------------
-CXStringASCII CXOptions::CreateAbsolutePath(const CXStringASCII & StartPath, const CXStringASCII &Path) {
-	CXStringASCII Result;
-	if((Path.GetSize() >= 1) && (Path[0] == PATHDELIMITER)) {
-		// Path is an absolute path already. use it
-		Result = Path;
-	} else {
-		// Path is a relative path. Append to StartPath.
-		Result = StartPath;
-		Result += Path;
-	}
-	// append PATHDELIMITER if neccessary
-	if((Result.GetSize() > 0) && (Result[Result.GetSize()-1] != PATHDELIMITER)) {
-		Result+=PATHDELIMITER;
-	}
-	return Result;
-}
-
-
-//-------------------------------------
 bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// read options
 	CXFileIni F;

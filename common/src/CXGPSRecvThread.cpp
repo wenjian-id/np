@@ -58,8 +58,7 @@ void CXGPSRecvThread::OpenSerial() {
 	if(m_oDemoMode) {
 		ExtractFirstToken(Port, ';');
 		// extract file name
-		CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
-		FileName += ExtractFirstToken(Port, ';');
+		CXStringASCII FileName = CreateAbsoluteFileName(CXOptions::Instance()->GetStartPath(), ExtractFirstToken(Port, ';'));
 		// extract timeout
 		// check if "ms" is found.
 		size_t PosMS = Port.Find("ms");

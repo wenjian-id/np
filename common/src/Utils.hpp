@@ -76,6 +76,33 @@ enum E_COMMAND {
 
 //-------------------------------------
 /*
+ * \brief Create an absolute path for directory entries.
+ *
+ * Create an absolute path for directory entries.
+ * If Path is an absolute path (well, a path starting with PATHDELIMITER)
+ * already it will be used as result, else the result will be StartPath + Path.
+ * If necessary, a PATHDELIMITER will be appended.
+ * \param	StartPath	Start path
+ * \param	Path		Path to be processed.
+ * \return				New absolute path.
+ */
+CXStringASCII CreateAbsolutePath(const CXStringASCII &StartPath, const CXStringASCII &Path);
+
+//-------------------------------------
+/*
+ * \brief Create an absolute path for directory entries.
+ *
+ * Create an absolute filename.
+ * If FileName is an absolute file name (well, a file name starting with PATHDELIMITER)
+ * already it will be used as result, else the result will be StartPath + FileName.
+ * \param	StartPath	Start path
+ * \param	FileName	File name to be processed.
+ * \return				New absolute path.
+ */
+CXStringASCII CreateAbsoluteFileName(const CXStringASCII &StartPath, const CXStringASCII &FileName);
+
+//-------------------------------------
+/*
  * \brief Read one ASCII line from a file.
  *
  * Read a line consisting of ASCII characters from a file.

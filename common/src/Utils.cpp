@@ -23,6 +23,7 @@
 #include "Utils.hpp"
 #include "CXCoor.hpp"
 #include "CXNMEA.hpp"
+#include "OSSpecific.hpp"
 
 #include  <stdlib.h>
 #include  <math.h>
@@ -31,6 +32,31 @@ static const char *pcGGABEGIN			= "$GPGGA";
 static const char *pcRMCBEGIN			= "$GPRMC";
 static const char *pcGSABEGIN			= "$GPGSA";
 static const char *pcGSVBEGIN			= "$GPGSV";
+
+//-------------------------------------
+CXStringASCII CreateAbsolutePath(const CXStringASCII & StartPath, const CXStringASCII &Path) {
+	CXStringASCII Result = CreateAbsoluteFileName(StartPath, Path);
+	// append PATHDELIMITER if neccessary
+	if((Result.GetSize() > 0) && (Result[Result.GetSize()-1] != PATHDELIMITER)) {
+		Result+=PATHDELIMITER;
+	}
+	return Result;
+}
+
+//-------------------------------------
+CXStringASCII CreateAbsoluteFileName(const CXStringASCII & StartPath, const CXStringASCII &FileName) {
+	CXStringASCII Result;
+	if((FileName.GetSize() >= 1) && (FileName[0] == PATHDELIMITER)) {
+		// FileName is an absolute name already. use it
+		Result = FileName;
+	} else {
+		// FileName is a relative path. Append to StartPath.
+		Result = StartPath;
+		Result += FileName;
+	}
+	return Result;
+}
+
 
 //-------------------------------------
 bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine) {
