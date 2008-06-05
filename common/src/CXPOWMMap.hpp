@@ -305,6 +305,7 @@ public:
 	 * oiu
 	 */
 	enum E_POI8_TYPE {		// must fit the values in the map file!!!
+		e_POI8_WP			= 0x80000000,	///< oiu
 	};
 	//-------------------------------------
 	/*
@@ -358,7 +359,7 @@ public:
 	 * \brief Check if point is POI of POI1 type.
 	 *
 	 *	Check if point is POI of POI1.
-	 *	\param		Index	Index of POI type [1-8].
+	 *	\param		Index	Index of POI type [0-7].
 	 *	\return				true if it is of this type.
 	 */
 	bool IsPOI(size_t Index) const;
@@ -367,7 +368,7 @@ public:
 	 * \brief Get POI1 flag.
 	 *
 	 *	Get POI1 flag.
-	 *	\param		Index	Index of POI type [1-8].
+	 *	\param		Index	Index of POI type [0-7].
 	 *	\return				POI flag.
 	 */
 	t_uint32 GetPOIType(size_t Index) const;
@@ -376,7 +377,7 @@ public:
 	 * \brief Set POI flag.
 	 *
 	 *	Set POI flag.
-	 *	\param		Index		Index of POI type [1-8].
+	 *	\param		Index		Index of POI type [0-7].
 	 *	\param		NewValue	New value
 	 */
 	void SetPOIType(size_t Index, t_uint32 NewValue);
@@ -597,6 +598,7 @@ private:
 	bool LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & FileName);
 protected:
 public:
+	TPOINodeMap		m_WPNodes;
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -27,6 +27,9 @@
 #include "Utils.hpp"
 #include <OSSpecific.hpp>
 
+
+#include "CXPOWMMap.hpp"
+
 #include  <stdlib.h>
 
 CXOptions * CXOptions::m_pInstance = NULL;
@@ -46,6 +49,7 @@ CXOptions::CXOptions() :
 	m_oShowScale(false),
 	m_oShowMinimizeButton(false),
 	m_oShowPOIs(false),
+	m_oSnapToWay(false),
 	m_OSMVali(0),
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
@@ -70,6 +74,27 @@ CXOptions *CXOptions::Instance() {
 	if(m_pInstance == NULL)
 		m_pInstance = new CXOptions();
 	return m_pInstance;
+}
+
+//-------------------------------------
+void CXOptions::oiu(int ID, CXStringASCII WP) {
+	if(WP.IsEmpty())
+		return;
+
+	// extract lon
+	CXStringASCII SLon = ExtractFirstToken(WP, ';');
+	double dLon = 0;
+	sscanf(SLon.c_str(), "%lf", &dLon);
+	// extract lat
+	CXStringASCII SLat = ExtractFirstToken(WP, ';');
+	double dLat = 0;
+	sscanf(SLat.c_str(), "%lf", &dLat);
+	// extract name
+	CXPOINode *pNode = new CXPOINode(ID, dLon, dLat);
+	pNode->SetName(WP.c_str());
+	pNode->SetPOIType(7, CXPOINode::e_POI8_WP);
+	CXPOWMMap::Instance()->m_WPNodes.SetAt(ID, pNode);
+
 }
 
 //-------------------------------------
@@ -197,6 +222,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetZoomOutFileName(ZoomOut);
 	// POIs
 	SetShowPOIsFlag(F.Get("ShowPOIs", "off").ToUpper() == "ON");
+	// SnapToWay
+	SetSnapToWayFlag(F.Get("SnapToWay", "off").ToUpper() == "ON");
 	for(size_t i=0; i<MaxPOITypes; i++) {
 		char buf1[100];
 		char buf2[100];
@@ -206,6 +233,27 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 		POI+=F.Get(buf1, buf2);
 		SetPOIFileName(i, POI);
 	}
+	// oiu
+	CXStringASCII StrWP1 = F.Get("WP1", "");
+	CXStringASCII StrWP2 = F.Get("WP2", "");
+	CXStringASCII StrWP3 = F.Get("WP3", "");
+	CXStringASCII StrWP4 = F.Get("WP4", "");
+	CXStringASCII StrWP5 = F.Get("WP5", "");
+	CXStringASCII StrWP6 = F.Get("WP6", "");
+	CXStringASCII StrWP7 = F.Get("WP7", "");
+	CXStringASCII StrWP8 = F.Get("WP8", "");
+	CXStringASCII StrWP9 = F.Get("WP9", "");
+	CXStringASCII StrWP10= F.Get("WP10", "");
+	oiu(1, StrWP1);
+	oiu(2, StrWP2);
+	oiu(3, StrWP3);
+	oiu(4, StrWP4);
+	oiu(5, StrWP5);
+	oiu(6, StrWP6);
+	oiu(7, StrWP7);
+	oiu(8, StrWP8);
+	oiu(9, StrWP9);
+	oiu(10, StrWP10);
 	return true;
 }
 
@@ -459,6 +507,18 @@ bool CXOptions::MustShowPOIs() const {
 void CXOptions::SetShowPOIsFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oShowPOIs = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustSnapToWay() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oSnapToWay;
+}
+
+//-------------------------------------
+void CXOptions::SetSnapToWayFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oSnapToWay = NewValue;
 }
 
 //-------------------------------------

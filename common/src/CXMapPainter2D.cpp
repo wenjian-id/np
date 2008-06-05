@@ -270,6 +270,14 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 		return;
 
 	TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
+	DrawPOIs(pBMP, POINodes, ScreenWidth, ScreenHeight);
+	TPOINodeMap &WPNodes = CXPOWMMap::Instance()->m_WPNodes;
+	DrawPOIs(pBMP, WPNodes, ScreenWidth, ScreenHeight);
+}
+
+//-------------------------------------
+void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight) {
+
 	POS PosN = POINodes.GetStart();
 	CXPOINode *pNode = NULL;
 
@@ -465,7 +473,18 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		double x0 = 0;
 		double y0 = 0;
 		int NewZone = UTMZoneNone;
-		LLtoUTM(WGS84, NaviData.GetLon(), NaviData.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
+		double dLon = 0;
+		double dLat = 0;
+		if(CXOptions::Instance()->MustSnapToWay()) {
+			// get coordinates from locator
+			dLon = NaviData.GetLocatorCoor().GetLon();
+			dLat = NaviData.GetLocatorCoor().GetLat();
+		} else {
+			// get gps coordinates
+			dLon = NaviData.GetGPSCoor().GetLon();
+			dLat = NaviData.GetGPSCoor().GetLat();
+		}
+		LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
 
 		CXTransformationMatrix2D TMMap;
 		CXTransformationMatrix2D TMCompass;

@@ -83,7 +83,8 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		StrLon = "-180.99999";
 		StrLon.Append(DegUTF8, sizeof(DegUTF8));
 		int FHLon = CalcFontHeight(TmpBmp, StrLon, LonRect);
-		snprintf(buf, sizeof(buf), "%0.5f", m_NaviData.GetLon());
+		CXCoor Coor = m_NaviData.GetGPSCoor();
+		snprintf(buf, sizeof(buf), "%0.5f", Coor.GetLon());
 		StrLon = buf;
 		StrLon.Append(DegUTF8, sizeof(DegUTF8));
 		LonRect = TmpBmp.CalcTextRectUTF8(StrLon, 4, 0);
@@ -92,7 +93,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		// calc lat rect
 		tIRect LatRect(0, 0, Width, Height);
 		CXStringUTF8 StrLat;
-		snprintf(buf, sizeof(buf), "%0.5f", m_NaviData.GetLat());
+		snprintf(buf, sizeof(buf), "%0.5f", Coor.GetLat());
 		StrLat = buf;
 		StrLat.Append(DegUTF8, sizeof(DegUTF8));
 		LatRect = TmpBmp.CalcTextRectUTF8(StrLat, 4, 0);

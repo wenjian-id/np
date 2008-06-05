@@ -277,7 +277,7 @@ void CXLocatorThread::OnThreadLoop() {
 	if(NewDataArrived) {
 		// set private navigation data
 		m_NaviData.SetUTMSpeed(m_LastUTMSpeed);
-		m_NaviData.SetCoor(m_LastReceivedCoor);
+		m_NaviData.SetGPSCoor(m_LastReceivedCoor);
 	} else {
 		// no data arrived
 		unsigned long Delta = Now - m_LastReceivedPosition;
@@ -305,8 +305,10 @@ void CXLocatorThread::OnThreadLoop() {
 
 			// check if new map has to be loaded
 			char buf[100];
-			double dLon = m_NaviData.GetLon();
-			double dLat = m_NaviData.GetLat();
+			CXCoor Coor = m_NaviData.GetGPSCoor();
+			/// \todo which coor
+			double dLon = Coor.GetLon();
+			double dLat = Coor.GetLat();
 			int NameLon = static_cast<int>(floor(fabs(dLon*10)));
 			int NameLat = static_cast<int>(floor(fabs(dLat*10)));
 			char EW = 'E';
@@ -322,7 +324,7 @@ void CXLocatorThread::OnThreadLoop() {
 				pPOWMMap->LoadMap(FileName);
 			}
 
-			pPOWMMap->PositionChanged(m_NaviData.GetLon(), m_NaviData.GetLat());
+			pPOWMMap->PositionChanged(dLon, dLat);
 
 			t_uint64 ID = 0;
 			if(Locate(ID)) {
@@ -366,12 +368,17 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 	CXExactTime StartTime;
 	StartTime.SetNow();
 
+	// initialize LocatorCoor
+	m_NaviData.SetLocatorCoor(m_NaviData.GetGPSCoor());
+
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
     // The received coordinate is defined by P(x0, y0).
     // The nearest point to P(x0,y0) lying on the segment PS(PSx, PSy)
   
     double PSx = 0;
     double PSy = 0;
+    double PSProxx = 0;
+    double PSProxy = 0;
     double dSquareMinDist = -1;	// smallest distance from x0,y0 to a segment
 	bool first = true;
     
@@ -394,7 +401,9 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 	int NewZone = UTMZoneNone;
 
 	int CurrentZone = pPOWMMap->GetCurrentZone();
-	LLtoUTM(WGS84, m_NaviData.GetLon(), m_NaviData.GetLat(), CurrentZone, NewZone, UTMLetter, x0, y0);
+	double dLon = m_NaviData.GetGPSCoor().GetLon();
+	double dLat = m_NaviData.GetGPSCoor().GetLat();
+	LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
 
     // Iterrate through ways
 	TWayMap &Ways = pPOWMMap->GetWayMap();
@@ -516,6 +525,8 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
     					// yes
     					dSquareMinDist = dSquareDist;
     					rProxWay = pWay->GetID();
+						PSProxx = PSx;
+						PSProxy = PSy;
     				}
 				}
 			}
@@ -529,15 +540,13 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 
 	CXDebugInfo::Instance()->SetLocatorTime(StopTime-StartTime);
 
-    if(first) {
-    	// nothing found
+    if(first || (dSquareMinDist > SQUARE_MAXDIST)) {
+    	// nothing found or too far from a way.
     	return false;
     }
 
-    	// if too far from a way return false
-    if(dSquareMinDist > SQUARE_MAXDIST) {
-    	return false;
-	}
+	UTMtoLL(WGS84, PSProxx, PSProxy, CurrentZone, UTMLetter, dLon, dLat);
+	m_NaviData.SetLocatorCoor(CXCoor(dLon, dLat));
 
 	return true;
 }

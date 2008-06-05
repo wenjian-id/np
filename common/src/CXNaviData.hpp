@@ -40,7 +40,8 @@ private:
 	// position stuff
 	//-------------
 	double				m_dHeight;			///< height
-	CXCoor				m_Coor;				///< coordinate
+	CXCoor				m_GPSCoor;			///< coordinate
+	CXCoor				m_LocatorCoor;		///< coordinate
 	//-------------
 	// speed stuff
 	//-------------
@@ -95,18 +96,6 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	double GetLon() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	double GetLat() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
 	double GetHeight() const;
 	//-------------------------------------
 	/*
@@ -119,13 +108,25 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXCoor GetCoor() const;
+	CXCoor GetGPSCoor() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
-	void SetCoor(const CXCoor &Coor);
+	void SetGPSCoor(const CXCoor &Coor);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXCoor GetLocatorCoor() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetLocatorCoor(const CXCoor &Coor);
 	//-------------------------------------
 	/*
 	 * \brief oiu

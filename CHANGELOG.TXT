@@ -1,6 +1,8 @@
 - fixed bugs:
-  - 1978789: DEMO mode doesn't accept absolute file paths to NMEA log fil
-
+  - 1900169: QT Threading Assert Failure in r85
+  - 1978789: DEMO mode doesn't accept absolute file paths to NMEA log file
+- implemented feature requests:
+  - 1957886: Snap position to nearest way
 
 Version 0.1.3:
  - fixed bugs:

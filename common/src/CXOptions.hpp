@@ -35,6 +35,7 @@
  */
 class CXOptions {
 public:
+	void oiu(int ID, CXStringASCII WP);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -81,6 +82,7 @@ private:
 	bool				m_oShowScale;					///< oiu
 	bool				m_oShowMinimizeButton;			///< oiu
 	bool				m_oShowPOIs;					///< Show some POIs.
+	bool				m_oSnapToWay;					///< oiu
 	t_uint64			m_OSMVali;						///< oiu
 	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;			///< oiu
@@ -537,6 +539,18 @@ public:
 	 *
 	 */
 	void SetShowPOIsFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool MustSnapToWay() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSnapToWayFlag(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -306,6 +306,17 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat) {
 				pNode->RelocateUTM(m_iCurrentZone);
 			}
 		}
+
+
+		Pos = m_WPNodes.GetStart();
+		CXPOINode *pPOINode = NULL;
+		// go through all nodes and recompute xy
+		while (m_WPNodes.GetNext(Pos, pPOINode) != TNodeMap::NPOS) {
+			if(pPOINode != NULL) {
+				pPOINode->RelocateUTM(m_iCurrentZone);
+			}
+		}
+
 		// relocate tracklog
 		m_TrackLog.RelocateUTM(m_iCurrentZone);
 	}
@@ -781,6 +792,18 @@ void CXPOWMMap::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM) {
 			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
 			pNode->SetDisplayX(v.GetIntX());
 			pNode->SetDisplayY(v.GetIntY());
+		}
+	}
+
+
+	PosN = m_WPNodes.GetStart();
+	CXPOINode *pPOINode = NULL;
+	// go through all nodes and recompute xy
+	while (m_WPNodes.GetNext(PosN, pPOINode) != TNodeMap::NPOS) {
+		if(pPOINode != NULL) {
+			CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
+			pPOINode->SetDisplayX(v.GetIntX());
+			pPOINode->SetDisplayY(v.GetIntY());
 		}
 	}
 }

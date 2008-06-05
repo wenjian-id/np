@@ -55,7 +55,8 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	CXReadLocker RL(&rOther.m_RWLock);
 	CXWriteLocker WL(&m_RWLock);
 	m_dHeight		= rOther.m_dHeight;
-	m_Coor			= rOther.m_Coor;
+	m_GPSCoor		= rOther.m_GPSCoor;
+	m_LocatorCoor	= rOther.m_LocatorCoor;
 	m_UTMSpeed		= rOther.m_UTMSpeed;
 	m_StreetName	= rOther.m_StreetName;
 	m_Ref			= rOther.m_Ref;
@@ -63,18 +64,6 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	m_WayID			= rOther.m_WayID;
 	m_oLocated		= rOther.m_oLocated;
 	m_oTimeout		= rOther.m_oTimeout;
-}
-
-//-------------------------------------
-double CXNaviData::GetLon() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_Coor.GetLon();
-}
-
-//-------------------------------------
-double CXNaviData::GetLat() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_Coor.GetLat();
 }
 
 //-------------------------------------
@@ -90,15 +79,27 @@ void CXNaviData::SetHeight(double dHeight) {
 }
 
 //-------------------------------------
-CXCoor CXNaviData::GetCoor() const {
+CXCoor CXNaviData::GetGPSCoor() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_Coor;
+	return m_GPSCoor;
 }
 
 //-------------------------------------
-void CXNaviData::SetCoor(const CXCoor &Coor) {
+void CXNaviData::SetGPSCoor(const CXCoor &Coor) {
 	CXWriteLocker WL(&m_RWLock);
-	m_Coor = Coor;
+	m_GPSCoor = Coor;
+}
+
+//-------------------------------------
+CXCoor CXNaviData::GetLocatorCoor() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_LocatorCoor;
+}
+
+//-------------------------------------
+void CXNaviData::SetLocatorCoor(const CXCoor &Coor) {
+	CXWriteLocker WL(&m_RWLock);
+	m_LocatorCoor = Coor;
 }
 
 //-------------------------------------

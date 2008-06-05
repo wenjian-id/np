@@ -61,12 +61,12 @@ void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	PaintPackground(pBMP, Width, Height);
 
+/*	
 	CXRGB C0(128, 42, 42);
 
 	char buf[100];
 	CXRGB C1(0x00, 0x00, 0x00);
 	CXRGB C2(0xff, 0xff, 0xff);
-	
 	tIRect R1(0, 0, 200, 40);
 	sprintf(buf, "%.6f %.6f %d", Data.GetLon(), Data.GetLat(), CXSatelliteData::Instance()->GetNrSat());
 	pBMP->DrawTextASCII(buf, R1, C1, C2);
@@ -82,6 +82,6 @@ void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	tIRect R4(0, 150, 200, 190);
 	CXStringUTF8 Name = Data.GetStreetName();
 	pBMP->DrawTextUTF8(Name, R4, C2, C0);
-
+*/
 
 }
