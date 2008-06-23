@@ -56,7 +56,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	const size_t GetMaxCount();
+	size_t GetMaxCount();
 	//-------------------------------------
 	/*
 	 * \brief oiu
