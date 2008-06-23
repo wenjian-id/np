@@ -197,6 +197,8 @@ bool CheckNMEACRC(const CXStringASCII &NMEAPacket) {
 //-------------------------------------
 bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
 	// check if this NMEAPacket contains a GGA packet
+	rGGAPacket.SetFix(false);
+	bool oFix = false;
 
 	// length must be greater than 11 $ G P G G A * x x CR LF
 	if(NMEAPacket.GetSize() < 11)
@@ -231,19 +233,20 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
 	sscanf(SLat.c_str(), "%lf", &dLat);
 	CXStringASCII strLat = ExtractFirstToken(s, ',');
 	if((strLat != "N") && (strLat != "n") && (strLat != "S") && (strLat != "s"))
-		return false;
+		oFix = false;
 	// read longitude
 	CXStringASCII SLon = ExtractFirstToken(s, ',');
 	double dLon = 0;
 	sscanf(SLon.c_str(), "%lf", &dLon);
 	CXStringASCII strLon = ExtractFirstToken(s, ',');
 	if((strLon != "E") && (strLon != "e") && (strLon != "W") && (strLon != "w"))
-		return false;
+		oFix = false;
 
 	// quality
 	int quality = atoi(ExtractFirstToken(s, ',').c_str());
 	// nr satellites
-	rGGAPacket.SetNSat(atoi(ExtractFirstToken(s, ',').c_str()));
+	int NSat = atoi(ExtractFirstToken(s, ',').c_str());
+	rGGAPacket.SetNSat(NSat);
 	// HDOP
 	ExtractFirstToken(s, ',');
 	// height
@@ -272,17 +275,20 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
 	rGGAPacket.SetLon(dLonDeg);
 	rGGAPacket.SetLat(dLatDeg);
 
-	bool oReturn = true;
-	// check for invalid quality
-	if(quality == 0)
-		oReturn = false;
+	// set fix
+	if((quality != 0) && (NSat > 0))
+		oFix = true;
 
-	return oReturn;
+	rGGAPacket.SetFix(oFix);
+
+	return true;
 }
 
 //-------------------------------------
 bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
 	// check if this NMEAPacket contains a RMC packet
+	rRMCPacket.SetFix(false);
+	bool oFix = false;
 
 	// length must be greater than 11 $ G P R M C * x x CR LF
 	if(NMEAPacket.GetSize() < 11)
@@ -319,14 +325,14 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
 	sscanf(SLat.c_str(), "%lf", &dLat);
 	CXStringASCII strLat = ExtractFirstToken(s, ',');
 	if((strLat != "N") && (strLat != "n") && (strLat != "S") && (strLat != "s"))
-		return false;
+		oFix = false;
 	// read longitude
 	CXStringASCII SLon = ExtractFirstToken(s, ',');
 	double dLon = 0;
 	sscanf(SLon.c_str(), "%lf", &dLon);
 	CXStringASCII strLon = ExtractFirstToken(s, ',');
 	if((strLon != "E") && (strLon != "e") && (strLon != "W") && (strLon != "w"))
-		return false;
+		oFix = false;
 
 	// speed
 	CXStringASCII SSpeed = ExtractFirstToken(s, ',');
@@ -352,12 +358,12 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
 	rRMCPacket.SetLon(dLonDeg);
 	rRMCPacket.SetLat(dLatDeg);
 
-	bool oReturn = true;
-	// check for invalid fix
-	if((Fix == "v") || (Fix == "V"))
-		oReturn = false;
+	// check for valid fix
+	if((Fix == "a") || (Fix == "A"))
+		oFix = true;
 
-	return oReturn;
+	rRMCPacket.SetFix(oFix);
+	return true;
 }
 
 //-------------------------------------

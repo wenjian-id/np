@@ -26,6 +26,7 @@
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXGGAPacket::CXGGAPacket() :
+	m_oFix(false),
 	m_NSat(0),
 	m_dLon(0),
 	m_dLat(0),
@@ -45,6 +46,16 @@ CXStringASCII CXGGAPacket::GetUTC() const {
 //-------------------------------------
 void CXGGAPacket::SetUTC(const CXStringASCII &NewValue) {
 	m_UTC = NewValue;
+}
+
+//-------------------------------------
+bool CXGGAPacket::HasFix() const {
+	return m_oFix;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetFix(bool NewValue) {
+	m_oFix = NewValue;
 }
 
 //-------------------------------------
@@ -91,6 +102,7 @@ void CXGGAPacket::SetLat(double NewValue) {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXRMCPacket::CXRMCPacket() :
+	m_oFix(false),
 	m_dLon(0),
 	m_dLat(0),
 	m_dSpeed(0),
@@ -110,6 +122,16 @@ CXStringASCII CXRMCPacket::GetUTC() const {
 //-------------------------------------
 void CXRMCPacket::SetUTC(const CXStringASCII &NewValue) {
 	m_UTC = NewValue;
+}
+
+//-------------------------------------
+bool CXRMCPacket::HasFix() const {
+	return m_oFix;
+}
+
+//-------------------------------------
+void CXRMCPacket::SetFix(bool NewValue) {
+	m_oFix = NewValue;
 }
 
 //-------------------------------------

@@ -33,6 +33,7 @@
 class CXGGAPacket {
 private:
 	CXStringASCII	m_UTC;		///< oiu
+	bool			m_oFix;		///< oiu
 	int				m_NSat;		///< oiu
 	double			m_dLon;		///< oiu
 	double			m_dLat;		///< oiu
@@ -66,6 +67,18 @@ public:
 	 *
 	 */
 	void SetUTC(const CXStringASCII &NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool HasFix() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetFix(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -124,6 +137,7 @@ public:
 class CXRMCPacket {
 private:
 	CXStringASCII	m_UTC;		///< oiu
+	bool			m_oFix;		///< oiu
 	double			m_dLon;		///< oiu
 	double			m_dLat;		///< oiu
 	double			m_dSpeed;	///< oiu
@@ -157,6 +171,18 @@ public:
 	 *
 	 */
 	void SetUTC(const CXStringASCII &NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool HasFix() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetFix(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -396,7 +396,7 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 
 
 //-------------------------------------
-void CXMapPainter2D::DrawCurrentPosition(IBitmap *pBMP, const CXTransformationMatrix2D &TMCurrentPos) {
+void CXMapPainter2D::DrawCurrentPosition(IBitmap *pBMP, const CXNaviData &NaviData, const CXTransformationMatrix2D &TMCurrentPos) {
 	if(pBMP == NULL)
 		return;
 
@@ -418,7 +418,10 @@ void CXMapPainter2D::DrawCurrentPosition(IBitmap *pBMP, const CXTransformationMa
 	X[3] = v.GetIntX();
 	Y[3] = v.GetIntY();
 
-	pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+	if(NaviData.HasFix())
+		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+	else
+		pBMP->Polygon(X, Y, 4, CXRGB(0x00, 0x00, 0x00), CXRGB(0xFF, 0x00, 0x00));
 }
 
 //-------------------------------------
@@ -568,7 +571,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		StopScale.SetNow();
 
 		// draw current position
-		DrawCurrentPosition(pBMP, TMCurrentPos);
+		DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);
 		StopPos.SetNow();
 	}
 	CXPOWMMap::Instance()->UnlockMap();

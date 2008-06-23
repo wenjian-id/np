@@ -126,9 +126,10 @@ private:
 	 *
 	 *	Draw current position.
 	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	NaviData		Navigation data.
 	 *	\param	TMCurrentPos	Transformation matrix.
 	 */
-	void DrawCurrentPosition(IBitmap *pBMP, const CXTransformationMatrix2D &TMCurrentPos);
+	void DrawCurrentPosition(IBitmap *pBMP, const CXNaviData &NaviData, const CXTransformationMatrix2D &TMCurrentPos);
 protected:
 	//-------------------------------------
 	/*

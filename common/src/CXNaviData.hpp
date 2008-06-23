@@ -36,6 +36,7 @@
  */
 class CXNaviData {
 private:
+	bool				m_oFix;				///< oiu
 	//-------------
 	// position stuff
 	//-------------
@@ -91,6 +92,18 @@ public:
 	 *
 	 */
 	const CXNaviData & operator = (const CXNaviData &rOther);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool HasFix() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetFix(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

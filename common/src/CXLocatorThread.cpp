@@ -168,6 +168,7 @@ void CXLocatorThread::OnThreadLoop() {
 	bool NewDataRMC = GetFlag_NewDataGPSRMC();
 	bool NewDataGGA = GetFlag_NewDataGPSGGA();
 	bool NewDataArrived = false;
+	bool oHasFix = false;
 	// process new data
 	if(NewDataRMC) {
 		// process it
@@ -181,43 +182,50 @@ void CXLocatorThread::OnThreadLoop() {
 		CXRMCPacket RMCData;
 		if(ExtractRMCData(Line, RMCData)) {
 			// OK, valid data arrived
+			oHasFix = RMCData.HasFix();
 			m_LastReceivedPosition.SetNow();
-			// set speed source to RMC speed
-			m_eSpeedSource = e_RMC_Packet;
-			double dLon = RMCData.GetLon();
-			double dLat = RMCData.GetLat();
-			// remember coordinates
-			m_LastReceivedCoor = CXCoor(dLon, dLat);
-			
 			// check if really new data arrived
 			if(RMCData.GetUTC() != m_LastPositionUTC) {
 				// UTC differs, so new data
 				NewDataArrived = true;
-				m_LastPositionUTC = RMCData.GetUTC();
-				
-				// calculate speed
-				m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
-
-				CXUTMSpeed UTMSpeed;
-				if(m_SpeedCalculator.HasValidSpeed()) {
-					// take speed
-					UTMSpeed = m_SpeedCalculator.GetSpeed();
-				} else {
-					// no valid current speed. try last valid speed
-					UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
-				}
-				// set speed vector
-				m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
-				m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
-
 			}
-			// since e_RMC_Packet has a higher priority than e_SpeedCalculator,
-			// the following is done outside the block executed only when really 
-			// new data arrived.
-			// check which speed to take
-			if(m_eSpeedSource == e_RMC_Packet) {
-				// set RMC speed
-				m_LastUTMSpeed.SetSpeed(RMCData.GetSpeed());
+			// check fix
+			if(oHasFix) {
+				// set speed source to RMC speed
+				m_eSpeedSource = e_RMC_Packet;
+				double dLon = RMCData.GetLon();
+				double dLat = RMCData.GetLat();
+				// remember coordinates
+				m_LastReceivedCoor = CXCoor(dLon, dLat);
+				
+				// check if really new data arrived
+				if(RMCData.GetUTC() != m_LastPositionUTC) {
+					m_LastPositionUTC = RMCData.GetUTC();
+					
+					// calculate speed
+					m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
+
+					CXUTMSpeed UTMSpeed;
+					if(m_SpeedCalculator.HasValidSpeed()) {
+						// take speed
+						UTMSpeed = m_SpeedCalculator.GetSpeed();
+					} else {
+						// no valid current speed. try last valid speed
+						UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
+					}
+					// set speed vector
+					m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
+					m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+
+				}
+				// since e_RMC_Packet has a higher priority than e_SpeedCalculator,
+				// the following is done outside the block executed only when really 
+				// new data arrived.
+				// check which speed to take
+				if(m_eSpeedSource == e_RMC_Packet) {
+					// set RMC speed
+					m_LastUTMSpeed.SetSpeed(RMCData.GetSpeed());
+				}
 			}
 		}
 	}
@@ -233,43 +241,49 @@ void CXLocatorThread::OnThreadLoop() {
 		CXGGAPacket GGAData;
 		if(ExtractGGAData(Line, GGAData)) {
 			// OK, valid GGA data arrived
+			oHasFix = GGAData.HasFix();
 			m_LastReceivedPosition.SetNow();
-			// extract data
-			double dLon = GGAData.GetLon();
-			double dLat = GGAData.GetLat();
-			// remember coordinates
-			m_LastReceivedCoor = CXCoor(dLon, dLat);
-
-			// set number of satellites
-			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
-			// set height
-			m_NaviData.SetHeight(GGAData.GetHeight());
-			// check if really new data arrived
 			if(GGAData.GetUTC() != m_LastPositionUTC) {
 				// UTC differs, so new data
 				NewDataArrived = true;
-				m_LastPositionUTC = GGAData.GetUTC();
+			}
+			// set number of satellites
+			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
+			// check fix
+			if(oHasFix) {
+				// extract data
+				double dLon = GGAData.GetLon();
+				double dLat = GGAData.GetLat();
+				// remember coordinates
+				m_LastReceivedCoor = CXCoor(dLon, dLat);
 
-				// calculate speed
-				m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
+				// set height
+				m_NaviData.SetHeight(GGAData.GetHeight());
+				// check if really new data arrived
+				if(GGAData.GetUTC() != m_LastPositionUTC) {
+					m_LastPositionUTC = GGAData.GetUTC();
 
-				CXUTMSpeed UTMSpeed;
-				if(m_SpeedCalculator.HasValidSpeed()) {
-					// take speed
-					UTMSpeed = m_SpeedCalculator.GetSpeed();
-				} else {
-					// no valid current speed. try last valid speed
-					UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
-				}
+					// calculate speed
+					m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
 
-				// set speed vector
-				m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
-				m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+					CXUTMSpeed UTMSpeed;
+					if(m_SpeedCalculator.HasValidSpeed()) {
+						// take speed
+						UTMSpeed = m_SpeedCalculator.GetSpeed();
+					} else {
+						// no valid current speed. try last valid speed
+						UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
+					}
 
-				// check if we must set speed
-				if(m_eSpeedSource == e_SpeedCalculator) {
-					// take computed speed
-					m_LastUTMSpeed.SetSpeed(UTMSpeed.GetSpeed());
+					// set speed vector
+					m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
+					m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
+
+					// check if we must set speed
+					if(m_eSpeedSource == e_SpeedCalculator) {
+						// take computed speed
+						m_LastUTMSpeed.SetSpeed(UTMSpeed.GetSpeed());
+					}
 				}
 			}
 		}
@@ -278,6 +292,7 @@ void CXLocatorThread::OnThreadLoop() {
 		// set private navigation data
 		m_NaviData.SetUTMSpeed(m_LastUTMSpeed);
 		m_NaviData.SetGPSCoor(m_LastReceivedCoor);
+		m_NaviData.SetFix(oHasFix);
 	} else {
 		// no data arrived
 		unsigned long Delta = Now - m_LastReceivedPosition;
