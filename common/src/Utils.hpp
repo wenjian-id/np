@@ -140,6 +140,18 @@ bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
 
 //-------------------------------------
 /*
+ * \brief Write a 32 bit unsigned integer to a file.
+ *
+ * Write a 32 bit unsigned integer to a file.
+ * \todo	use platform independent type
+ * \param	rOutFile	The file to write to .
+ * \param	Value		Value to write.
+ * \return				true if successfull.
+ */
+bool WriteUI32(CXFile & rOutFile, t_uint32 Value);
+
+//-------------------------------------
+/*
  * \brief Read a 64 bit unsigned integer from a file.
  *
  * Read a 64 bit unsigned integer from a file.

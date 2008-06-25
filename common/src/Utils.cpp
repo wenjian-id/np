@@ -126,6 +126,21 @@ bool ReadUI32(CXFile & rInFile, t_uint32 & rValue) {
 }
 
 //-------------------------------------
+bool WriteUI32(CXFile & rOutFile, t_uint32 Value) {
+	unsigned char buf[4];
+	buf[0] = static_cast<unsigned char>((Value & 0xff000000) >> 24);
+	buf[1] = static_cast<unsigned char>((Value & 0x00ff0000) >> 16);
+	buf[2] = static_cast<unsigned char>((Value & 0x0000ff00) >> 8);
+	buf[3] = static_cast<unsigned char>(Value & 0x000000ff);
+	size_t WriteSize=0;
+	if(rOutFile.Write(buf, sizeof(buf), WriteSize) != CXFile::E_OK)
+		return false;
+	if(WriteSize != sizeof(buf))
+		return false;
+	return true;
+}
+
+//-------------------------------------
 bool ReadUI64(CXFile & rInFile, t_uint64 & rValue) {
 	// reset value
 	rValue = 0;

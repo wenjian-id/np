@@ -79,8 +79,8 @@ bool CXThread::WaitForThreadExit(size_t dwMilliSeconds) {
 	HANDLE ThreadHandle = GetHandle();
 	// get m_Handle in a safe way
 	if(ThreadHandle != NULL) {
-		// wait
-		MsgWaitForMultipleObjects(1, &ThreadHandle, FALSE, dwMilliSeconds, QS_ALLEVENTS);
+		// wait for thread termination
+		WaitForSingleObject(ThreadHandle, dwMilliSeconds);
 	}
 	SetHandle(NULL);
 	return true;

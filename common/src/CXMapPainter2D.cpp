@@ -507,7 +507,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			yc = 3*Height/4;
 			TMMap.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
 			TMCompass.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
-			// rotate 90 to left, since 0 is east amd we want it point to north
+			// rotate 90 to left, since 0 is east and we want it point to north
 			TMMap.Rotate(UTMPI/2);
 			TMCompass.Rotate(UTMPI/2);
 		}

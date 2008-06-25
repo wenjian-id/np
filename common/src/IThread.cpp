@@ -53,8 +53,15 @@ bool IThread::IsRunning() const {
 }
 
 //-------------------------------------
+void IThread::SetRunning(bool NewValue) {
+	CXMutexLocker L(&m_Mutex);
+	m_oRunning = NewValue;
+}
+
+//-------------------------------------
 int IThread::ThreadFunc() {
 	/// \todo check !IsRunning()
+	SetRunning(true);
 	// tell thread was started
 	OnThreadStarted();
 	// run specific thread function
@@ -62,6 +69,8 @@ int IThread::ThreadFunc() {
 
 	// tell thread was stopped
 	OnThreadStopped();
+
+	SetRunning(false);
 
 	return Result;
 }

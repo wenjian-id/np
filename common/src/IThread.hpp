@@ -114,6 +114,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void SetRunning(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
 	virtual bool WaitForThreadExit(size_t dwMilliSeconds) = 0;
 };
 

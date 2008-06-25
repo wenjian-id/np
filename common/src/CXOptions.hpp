@@ -83,6 +83,7 @@ private:
 	bool				m_oShowMinimizeButton;			///< oiu
 	bool				m_oShowPOIs;					///< Show some POIs.
 	bool				m_oSnapToWay;					///< oiu
+	bool				m_oStartWithLastPosition;		///< oiu
 	t_uint64			m_OSMVali;						///< oiu
 	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;			///< oiu
@@ -551,6 +552,18 @@ public:
 	 *
 	 */
 	void SetSnapToWayFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool MustStartWithLastPosition() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetStartWithLastPositionFlag(bool NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

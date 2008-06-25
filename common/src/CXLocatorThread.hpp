@@ -50,21 +50,24 @@ private:
 		e_RMC_Packet,			///< oiu
 	};
 private:
-	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;	///< oiu
-	CXTimeStampData<tUCBuffer>		m_InputBufferGPSRMC;	///< oiu
-	bool							m_oNewDataGPSGGA;		///< oiu
-	bool							m_oNewDataGPSRMC;		///< oiu
-	CXSpeedCalculator				m_SpeedCalculator;		///< oiu
-	CXExactTime						m_LastReceivedPosition;	///< oiu
-	CXStringASCII					m_LastPositionUTC;		///< oiu
-	CXNaviData						m_NaviData;				///< oiu
-	CXCoor							m_LastReceivedCoor;		///< oiu
-	E_SPEED_SOURCE					m_eSpeedSource;			///< oiu
-	CXUTMSpeed						m_LastUTMSpeed;			///< oiu
-	CXNaviPOWM						*m_pNaviPOWM;			///< oiu
-	CXExactTime						m_StartTime;			///< starting time
-	mutable CXMutex					m_MutexInputData;		///< oiu
-	mutable CXMutex					m_Mutex;				///< oiu
+	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;		///< oiu
+	CXTimeStampData<tUCBuffer>		m_InputBufferGPSRMC;		///< oiu
+	bool							m_oNewDataGPSGGA;			///< oiu
+	bool							m_oNewDataGPSRMC;			///< oiu
+	CXSpeedCalculator				m_SpeedCalculator;			///< oiu
+	CXExactTime						m_LastReceivedPosition;		///< oiu
+	CXStringASCII					m_LastPositionUTC;			///< oiu
+	CXNaviData						m_NaviData;					///< oiu
+	CXCoor							m_LastReceivedCoor;			///< oiu
+	CXCoor							m_StartCoordinates;			///< oiu
+	bool							m_oGPSFixAtLeastOnce;		///< oiu
+	bool							m_oStartCoordinatesValid;	///< oiu
+	E_SPEED_SOURCE					m_eSpeedSource;				///< oiu
+	CXUTMSpeed						m_LastUTMSpeed;				///< oiu
+	CXNaviPOWM						*m_pNaviPOWM;				///< oiu
+	CXExactTime						m_StartTime;				///< starting time
+	mutable CXMutex					m_MutexInputData;			///< oiu
+	mutable CXMutex					m_Mutex;					///< oiu
 	//-------------------------------------
 	CXLocatorThread(const CXLocatorThread&);						///< Not used.
 	const CXLocatorThread & operator = (const CXLocatorThread&);	///< Not used.
@@ -110,6 +113,12 @@ private:
 	 *
 	 */
 	bool Locate(t_uint64 &rProxWay);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	bool LoadStartGPSCoordinates();
 protected:
 	//-------------------------------------
 	/*
@@ -172,6 +181,12 @@ public:
 	 *
 	 */
 	void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SaveLastReceivedGPSCoordinate();
 };
 
 

@@ -50,6 +50,7 @@ CXOptions::CXOptions() :
 	m_oShowMinimizeButton(false),
 	m_oShowPOIs(false),
 	m_oSnapToWay(false),
+	m_oStartWithLastPosition(false),
 	m_OSMVali(0),
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
@@ -224,6 +225,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetShowPOIsFlag(F.Get("ShowPOIs", "off").ToUpper() == "ON");
 	// SnapToWay
 	SetSnapToWayFlag(F.Get("SnapToWay", "off").ToUpper() == "ON");
+	// StartWithLastPosition
+	SetStartWithLastPositionFlag(F.Get("StartWithLastPosition", "off").ToUpper() == "ON");
+	// POIs
 	for(size_t i=0; i<MaxPOITypes; i++) {
 		char buf1[100];
 		char buf2[100];
@@ -519,6 +523,18 @@ bool CXOptions::MustSnapToWay() const {
 void CXOptions::SetSnapToWayFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oSnapToWay = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustStartWithLastPosition() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oStartWithLastPosition;
+}
+
+//-------------------------------------
+void CXOptions::SetStartWithLastPositionFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oStartWithLastPosition = NewValue;
 }
 
 //-------------------------------------

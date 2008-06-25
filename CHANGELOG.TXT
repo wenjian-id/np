@@ -2,6 +2,7 @@
   - 1900169: QT Threading Assert Failure in r85
   - 1978789: DEMO mode doesn't accept absolute file paths to NMEA log file
 - implemented feature requests:
+  - 1834080: Start with last GPS position
   - 1957886: Snap position to nearest way
 
 Version 0.1.3:
@@ -18,7 +19,6 @@ Version 0.1.3:
 
 Version 0.1.2:
  - fixed bugs:
-
  - implemented feature requests:
    - 1828490: Show a trace on the map for last x minutes.
    - 1829222: Compiling for WM2003SE
@@ -41,7 +41,6 @@ Version 0.1.1:
  - implemented feature requests:
    - 1828282: Show zoom buttons
    - 1834978: Make baud rate configurable
-
  - other:
    - turned off case sensitivity for keys in INI file
    - turned off case sensitivity for some values (on and off) in INI file

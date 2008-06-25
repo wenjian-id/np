@@ -417,7 +417,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		SetDisplayMode(e_ModeMap);
 	eDisplayMode = GetDisplayMode();
 	switch(Cmd) {
-		case e_CmdQuit:		m_pMainWindow->RequestTermination(); break;
+		case e_CmdQuit:		m_pLocatorThread->SaveLastReceivedGPSCoordinate(); m_pMainWindow->RequestTermination(); break;
 		case e_CmdMinimize:	m_pMainWindow->ShowMinimized(); break;
 		case e_CmdInfo:		{
 								if(eDisplayMode == e_ModeInfo)

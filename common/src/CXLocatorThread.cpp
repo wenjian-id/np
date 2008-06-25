@@ -39,6 +39,8 @@
 const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
 static const double SQUARE_MAXDIST = 1600; // 40*40
+static const unsigned int SCALE_FACTOR = 1000000;
+static const char * pcLastCoorFileName = "last.gps";
 
 //---------------------------------------------------------------------
 //-------------------------------------
@@ -46,9 +48,13 @@ CXLocatorThread::CXLocatorThread() :
 	m_oNewDataGPSGGA(false),
 	m_oNewDataGPSRMC(false),
 	m_SpeedCalculator(4),
+	m_oGPSFixAtLeastOnce(false),
+	m_oStartCoordinatesValid(false),
 	m_eSpeedSource(e_SpeedCalculator),
 	m_pNaviPOWM(NULL)
 {
+	// load last received coordinates
+	LoadStartGPSCoordinates();
 }
 
 //-------------------------------------
@@ -191,6 +197,7 @@ void CXLocatorThread::OnThreadLoop() {
 			}
 			// check fix
 			if(oHasFix) {
+				m_oGPSFixAtLeastOnce = true;
 				// set speed source to RMC speed
 				m_eSpeedSource = e_RMC_Packet;
 				double dLon = RMCData.GetLon();
@@ -251,6 +258,7 @@ void CXLocatorThread::OnThreadLoop() {
 			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
 			// check fix
 			if(oHasFix) {
+				m_oGPSFixAtLeastOnce = true;
 				// extract data
 				double dLon = GGAData.GetLon();
 				double dLat = GGAData.GetLat();
@@ -288,10 +296,30 @@ void CXLocatorThread::OnThreadLoop() {
 			}
 		}
 	}
+	bool oLoadMap = true;
 	if(NewDataArrived) {
 		// set private navigation data
 		m_NaviData.SetUTMSpeed(m_LastUTMSpeed);
-		m_NaviData.SetGPSCoor(m_LastReceivedCoor);
+		if(m_oGPSFixAtLeastOnce) {
+			// at least one GPS fix. Use last received coordinates
+			m_NaviData.SetGPSCoor(m_LastReceivedCoor);
+		} else {
+			// no GPS fix yet
+			if(CXOptions::Instance()->MustStartWithLastPosition()) {
+				if(m_oStartCoordinatesValid) {
+					// use start cordinates
+					m_NaviData.SetGPSCoor(m_StartCoordinates);
+				} else {
+					// could not load start coordinates
+					// so do not load map
+					oLoadMap = false;
+				}
+			} else {
+				// no fix yet and not starting with last saved coordinates
+				// so do not load map
+				oLoadMap = false;
+			}
+		}
 		m_NaviData.SetFix(oHasFix);
 	} else {
 		// no data arrived
@@ -315,9 +343,7 @@ void CXLocatorThread::OnThreadLoop() {
 		// data has been changed or logo hidden
 		CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
 		// notify listeners
-		if((pPOWMMap != NULL)&& (CXSatelliteData::Instance()->GetNrSat() != 0)) {
-			// load map only if valid position
-
+		if(pPOWMMap != NULL) {
 			// check if new map has to be loaded
 			char buf[100];
 			CXCoor Coor = m_NaviData.GetGPSCoor();
@@ -336,7 +362,11 @@ void CXLocatorThread::OnThreadLoop() {
 			CXStringASCII FileName=CXOptions::Instance()->GetDirectoryMaps();
 			FileName+=buf;
 			if(pPOWMMap->GetFileName() != FileName) {
-				pPOWMMap->LoadMap(FileName);
+				if(oLoadMap) {
+					pPOWMMap->LoadMap(FileName);
+				} else {
+					// do not load any map (no fix yet and not starting with last saved coordinate
+				}
 			}
 
 			pPOWMMap->PositionChanged(dLon, dLat);
@@ -374,8 +404,83 @@ void CXLocatorThread::OnThreadLoop() {
 
 //-------------------------------------
 void CXLocatorThread::OnThreadStopped() {
-	// nothing to do
+	// do nothing
 }
+
+//-------------------------------------
+void CXLocatorThread::SaveLastReceivedGPSCoordinate() {
+	// check if we can save last received coordinates
+	if(m_oGPSFixAtLeastOnce) {
+		// at least one fix. use it to save data
+		double dLon = m_LastReceivedCoor.GetLon();
+		double dLat = m_LastReceivedCoor.GetLat();
+		unsigned long ulLon = static_cast<unsigned long>(fabs(dLon)*SCALE_FACTOR);
+		unsigned long ulLat = static_cast<unsigned long>(fabs(dLat)*SCALE_FACTOR);
+		// set neg-bit
+		// since 180 is max value for Lon/Lat, the max value for
+		// ulLon/ulLat is 0x0ABA9500
+		// so we can use msb to mark negative values
+		if(dLon < 0) {
+			ulLon |= 0x80000000;
+		}
+		if(dLat < 0) {
+			ulLat |= 0x80000000;
+		}
+		CXFile OutFile;
+		CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
+		FileName += pcLastCoorFileName;
+		if(OutFile.Open(FileName.c_str(), CXFile::E_WRITE) == CXFile::E_OK) {
+			// write data
+			WriteUI32(OutFile, ulLon);
+			WriteUI32(OutFile, ulLat);
+		} else {
+			// open error
+		}
+	}
+}
+
+//-------------------------------------
+bool CXLocatorThread::LoadStartGPSCoordinates() {
+	CXFile InFile;
+	CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
+	FileName += pcLastCoorFileName;
+	if(InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
+		// read data
+		t_uint32 ulLon = 0; 
+		t_uint32 ulLat = 0;
+		if(ReadUI32(InFile, ulLon) && ReadUI32(InFile, ulLat)) {
+			// compute lon
+			double dLon = 1.0;
+			if((ulLon & 0x80000000) != 0) {
+				// negative coordinate
+				dLon = -1;
+				ulLon &= 0x7FFFFFFF;
+			}
+			// now scale back
+			dLon = dLon*ulLon/SCALE_FACTOR;
+
+			// compute lat
+			double dLat = 1.0;
+			if((ulLat & 0x80000000) != 0) {
+				// negative coordinate
+				dLat = -1;
+				ulLat &= 0x7FFFFFFF;
+			}
+			// now scale back
+			dLat = dLat*ulLat/SCALE_FACTOR;
+			m_StartCoordinates = CXCoor(dLon, dLat);
+			m_oStartCoordinatesValid = true;
+		} else {
+			// read error
+			m_oStartCoordinatesValid = false;
+		}
+	} else {
+		// open error
+		m_oStartCoordinatesValid = false;
+	}
+	return m_oStartCoordinatesValid;
+}
+
 
 //-------------------------------------
 bool CXLocatorThread::Locate(t_uint64 &rProxWay) {

@@ -66,8 +66,8 @@ bool CXUTMSpeed::operator != (const CXUTMSpeed &rOther) {
 //-------------------------------------
 void CXUTMSpeed::Reset() {
 	m_dSpeed = 0;
-	m_dCos = 1;
-	m_dSin = 0;
+	m_dCos = 0;
+	m_dSin = 1;
 }
 
 //-------------------------------------
