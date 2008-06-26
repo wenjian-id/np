@@ -62,7 +62,12 @@ CXOptions::CXOptions() :
 	m_ScaleWidth(100),
 	m_ScaleHeight(5),
 	m_eMode(e_ModeCar),
-	m_LogoTime(5000)
+	m_LogoTime(5000),
+	m_SpeedThresholdCar(1),
+	m_SpeedThresholdBike(1),
+	m_SpeedThresholdPedestrian(1),
+	m_SpeedThresholdCaching(1),
+	m_SpeedThresholdMapping(1)
 {
 }
 
@@ -227,6 +232,12 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetSnapToWayFlag(F.Get("SnapToWay", "off").ToUpper() == "ON");
 	// StartWithLastPosition
 	SetStartWithLastPositionFlag(F.Get("StartWithLastPosition", "off").ToUpper() == "ON");
+	// Speed thresholds
+	SetSpeedThresholdCar(atof(F.Get("SpeedThresholdCar", "2").c_str()));
+	SetSpeedThresholdBike(atof(F.Get("SpeedThresholdBike", "1.5").c_str()));
+	SetSpeedThresholdPedestrian(atof(F.Get("SpeedThresholdPedestrian", "1").c_str()));
+	SetSpeedThresholdCaching(atof(F.Get("SpeedThresholdCaching", "1").c_str()));
+	SetSpeedThresholdMapping(atof(F.Get("SpeedThresholdMapping", "1").c_str()));
 	// POIs
 	for(size_t i=0; i<MaxPOITypes; i++) {
 		char buf1[100];
@@ -748,4 +759,64 @@ void CXOptions::SetDebugInfoFlag(E_DEBUGINFO eFlag) {
 void CXOptions::ClearDebugInfoFlag(E_DEBUGINFO eFlag) {
 	CXWriteLocker WL(&m_RWLock);
 	m_DebugInfo &= ~eFlag;
+}
+
+//-------------------------------------
+double CXOptions::GetSpeedThresholdCar() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_SpeedThresholdCar;
+}
+
+//-------------------------------------
+void CXOptions::SetSpeedThresholdCar(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_SpeedThresholdCar = NewValue;
+}
+
+//-------------------------------------
+double CXOptions::GetSpeedThresholdBike() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_SpeedThresholdBike;
+}
+
+//-------------------------------------
+void CXOptions::SetSpeedThresholdBike(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_SpeedThresholdBike = NewValue;
+}
+
+//-------------------------------------
+double CXOptions::GetSpeedThresholdPedestrian() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_SpeedThresholdPedestrian;
+}
+
+//-------------------------------------
+void CXOptions::SetSpeedThresholdPedestrian(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_SpeedThresholdPedestrian = NewValue;
+}
+
+//-------------------------------------
+double CXOptions::GetSpeedThresholdCaching() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_SpeedThresholdCaching;
+}
+
+//-------------------------------------
+void CXOptions::SetSpeedThresholdCaching(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_SpeedThresholdCaching = NewValue;
+}
+
+//-------------------------------------
+double CXOptions::GetSpeedThresholdMapping() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_SpeedThresholdMapping;
+}
+
+//-------------------------------------
+void CXOptions::SetSpeedThresholdMapping(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_SpeedThresholdMapping = NewValue;
 }

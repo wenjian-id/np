@@ -26,6 +26,7 @@
 #include "CXTimeStampData.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXCoor.hpp"
+#include "CXStringASCII.hpp"
 #include "CXRWLock.hpp"
 
 //---------------------------------------------------------------------
@@ -39,14 +40,29 @@
  */
 class CXSpeedCalculator {
 private:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	enum E_SPEED_SOURCE {
+		e_GGA_Packet,		///< oiu
+		e_RMC_Packet,		///< oiu
+	};
+private:
 	// buffer stuff
 	size_t						m_iBufferSize;		///< Number of coordinates.
 	CXTimeStampData<CXCoor>		**m_pBuffer;		///< Buffer with coordinates.
 	// speed stuff
+	E_SPEED_SOURCE				m_eSpeedSource;		///< oiu
 	int							m_iCurrentUTMZone;	///< Current UTM zone
 	CXUTMSpeed					m_Speed;			///< Current speed
+	double						m_dRMCSpeed;		///< oiu
 	bool						m_oValidSpeed;		///< Flag indicating if a valid speed exists.
-	CXUTMSpeed					m_LastValidSpeed;	///< last valid computed speed.
+	bool						m_oNewDataArrived;	///< oiu.
+	CXUTMSpeed					m_LastValidSpeed;	///< Last valid computed speed.
+	double						m_SpeedThreshold;	///< Min speed which is recognised as "moving".
+	CXStringASCII				m_LastUTC;			///< oiu
 	// sync stuff
 	mutable CXRWLock	m_RWLock;					///< Sync object
 	//-------------------------------------
@@ -60,6 +76,15 @@ private:
 	 * Clear buffer with coordinates.
 	 */
 	void ClearBuffer();
+	//-------------------------------------
+	/*
+	 * \brief Set new data.
+	 *
+	 * Set new data.
+	 * \param	Coor		New coordinate.
+	 * \param	TimeStamp	TiemStamp for the coordinate.
+	 */
+	void SetData(const CXTimeStampData<CXCoor> &Coor);
 protected:
 public:
 	//-------------------------------------
@@ -79,13 +104,22 @@ public:
 	virtual ~CXSpeedCalculator();
 	//-------------------------------------
 	/*
-	 * \brief Set new data.
+	 * \brief Set new GGA data.
 	 *
-	 * Set new data.
+	 * Set new GGA data.
 	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetData(const CXTimeStampData<CXCoor> &Coor);
+	void SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor);
+	//-------------------------------------
+	/*
+	 * \brief Set new RMC data.
+	 *
+	 * Set new RMC data.
+	 * \param	Coor		New coordinate.
+	 * \param	TimeStamp	TiemStamp for the coordinate.
+	 */
+	void SetRMCData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed);
 	//-------------------------------------
 	/*
 	 * \brief Reset data.
@@ -93,14 +127,6 @@ public:
 	 * All saved data is resetted.
 	 */
 	void ResetData();
-	//-------------------------------------
-	/*
-	 * \brief Check if a valid speed is available.
-	 *
-	 * Check if a valid speed is available.
-	 * \return	true	Returns true if a valid speed is available.
-	 */
-	bool HasValidSpeed();
 	//-------------------------------------
 	/*
 	 * \brief Get speed.
@@ -111,12 +137,34 @@ public:
 	CXUTMSpeed GetSpeed() const;
 	//-------------------------------------
 	/*
-	 * \brief Get last valid speed.
+	 * \brief Get speed threshold.
 	 *
-	 * Get last Speed.
-	 * \return	Last valid speed.
+	 * Get speed threshold.
+	 * \return	Speed threshold.
 	 */
-	CXUTMSpeed GetLastValidSpeed() const;
+	double GetSpeedThreshold() const;
+	//-------------------------------------
+	/*
+	 * \brief Set speed threshold.
+	 *
+	 * Set speed threshold.
+	 * \param	NewValue	New speed threshold.
+	 */
+	void SetSpeedThreshold(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool NewDataArrived() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetNewDataArrivedFlag();
 };
 
 #endif // __CXSPEEDCALCULATOR_HPP__

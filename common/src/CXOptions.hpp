@@ -108,6 +108,11 @@ private:
 	CXStringASCII		m_ZoomInFileName;				///< oiu
 	CXStringASCII		m_ZoomOutFileName;				///< oiu
 	CXStringASCII		m_POIFileNames[MaxPOITypes];	///< File names for POIs
+	double				m_SpeedThresholdCar;			///< oiu
+	double				m_SpeedThresholdBike;			///< oiu
+	double				m_SpeedThresholdPedestrian;		///< oiu
+	double				m_SpeedThresholdCaching;		///< oiu
+	double				m_SpeedThresholdMapping;		///< oiu
 	mutable CXRWLock	m_RWLock;						///< oiu
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -637,6 +642,66 @@ public:
 	 *	\param	eFlag	The flag.
 	 */
 	void ClearDebugInfoFlag(E_DEBUGINFO eFlag);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetSpeedThresholdCar() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSpeedThresholdCar(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetSpeedThresholdBike() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSpeedThresholdBike(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetSpeedThresholdPedestrian() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSpeedThresholdPedestrian(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetSpeedThresholdCaching() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSpeedThresholdCaching(double NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	double GetSpeedThresholdMapping() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetSpeedThresholdMapping(double NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

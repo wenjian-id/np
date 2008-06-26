@@ -4,6 +4,7 @@
 - implemented feature requests:
   - 1834080: Start with last GPS position
   - 1957886: Snap position to nearest way
+  - 1957887: Don't react on gps coordinates when vehicle is stopped
 
 Version 0.1.3:
  - fixed bugs:

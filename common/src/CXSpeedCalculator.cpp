@@ -35,8 +35,12 @@ const double EPSILON = 0.01;
 CXSpeedCalculator::CXSpeedCalculator(size_t BufferSize) :
 	m_iBufferSize(BufferSize),
 	m_pBuffer(NULL),
+	m_eSpeedSource(e_GGA_Packet),
 	m_iCurrentUTMZone(UTMZoneNone),
-	m_oValidSpeed(false)
+	m_dRMCSpeed(0),
+	m_oValidSpeed(false),
+	m_oNewDataArrived(false),
+	m_SpeedThreshold(1)
 {
 	m_pBuffer = new CXTimeStampData<CXCoor>*[m_iBufferSize];
 	for(size_t i=0; i<m_iBufferSize; i++)
@@ -125,20 +129,24 @@ void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
 			// nor to m/s
 			dSpeed = dUnnormedSpeed*1000/dt;
 		}
-		if(dSpeed < 1) {
-			// standstill
-			// do not touch direction to avoid turning map around
-			m_Speed.SetSpeed(0);
+		// compute direction
+		// 0 is east, so use dx and dy
+		double dCos = dx / dUnnormedSpeed;
+		double dSin = dy / dUnnormedSpeed;
+		m_Speed.SetSpeed(dSpeed);
+		// now check if we have a standstill. Take rmc speed into account
+		switch(m_eSpeedSource) {
+			case e_GGA_Packet:	break;
+			case e_RMC_Packet:	dSpeed = m_dRMCSpeed; break;
+		}
+		if(dSpeed < m_SpeedThreshold) {
+			// standstill. Do not touch direction to avoid turning map around
 		} else {
-			// moving
-			// cos, sin
-			// 0 is east, so use dx and dy
-			double dCos = dx / dUnnormedSpeed;
-			double dSin = dy / dUnnormedSpeed;
-			m_Speed.SetSpeed(dSpeed);
+			// moving. Set direction.
 			m_Speed.SetCos(dCos);
 			m_Speed.SetSin(dSin);
 		}
+
 		m_LastValidSpeed = m_Speed;
 		m_oValidSpeed = true;
 	} else {
@@ -147,28 +155,88 @@ void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
 }
 
 //-------------------------------------
-void CXSpeedCalculator::ResetData() {
-	CXWriteLocker WL(&m_RWLock);
-	ClearBuffer();
-	m_oValidSpeed = false;
-	m_Speed.Reset();
-	m_LastValidSpeed.Reset();
+void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor) {
+	if(m_LastUTC != UTC) {
+		// new data arrived
+		SetData(Coor);
+		m_LastUTC = UTC;
+		m_oNewDataArrived = true;
+	} else {
+		m_oNewDataArrived = false;
+	}
 }
 
 //-------------------------------------
-bool CXSpeedCalculator::HasValidSpeed() {
-	CXReadLocker RL(&m_RWLock);
-	return m_oValidSpeed;
+void CXSpeedCalculator::SetRMCData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed) {
+	if(m_LastUTC != UTC) {
+		// new data arrived
+		m_eSpeedSource = e_RMC_Packet;
+		SetData(Coor);
+		m_dRMCSpeed = dRMCSpeed;
+		m_LastUTC = UTC;
+		m_oNewDataArrived = true;
+	} else {
+		m_oNewDataArrived = false;
+	}
+}
+
+//-------------------------------------
+void CXSpeedCalculator::ResetData() {
+	CXWriteLocker WL(&m_RWLock);
+	ClearBuffer();
+
+	m_LastValidSpeed.Reset();
+
+	m_eSpeedSource = e_GGA_Packet;
+	m_iCurrentUTMZone = UTMZoneNone;
+	m_Speed.Reset();
+	m_dRMCSpeed = 0;
+	m_oValidSpeed = false;
+	m_oNewDataArrived = false;
+	m_LastValidSpeed.Reset();
+	m_SpeedThreshold = 1;
+	m_LastUTC.Empty();
 }
 
 //-------------------------------------
 CXUTMSpeed CXSpeedCalculator::GetSpeed() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_Speed;
+	CXUTMSpeed Result;
+	if(m_oValidSpeed) {
+		// take speed
+		Result = m_Speed;
+	} else {
+		// no valid current speed. try last valid speed
+		Result = m_LastValidSpeed;
+	}
+	// set speed depending on m_eSpeedSource
+	switch(m_eSpeedSource) {
+		case e_GGA_Packet:	break;									// do not alter speed
+		case e_RMC_Packet:	Result.SetSpeed(m_dRMCSpeed); break;	// set RMC speed
+	}
+	return Result;
 }
 
 //-------------------------------------
-CXUTMSpeed CXSpeedCalculator::GetLastValidSpeed() const {
+double CXSpeedCalculator::GetSpeedThreshold() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_LastValidSpeed;
+	return m_SpeedThreshold;
+}
+
+//-------------------------------------
+void CXSpeedCalculator::SetSpeedThreshold(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_SpeedThreshold = fabs(NewValue);
+}
+
+//-------------------------------------
+bool CXSpeedCalculator::NewDataArrived() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oNewDataArrived;
+}
+
+//-------------------------------------
+void CXSpeedCalculator::ResetNewDataArrivedFlag() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oNewDataArrived = false;
 }

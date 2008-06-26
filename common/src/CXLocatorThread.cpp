@@ -50,7 +50,6 @@ CXLocatorThread::CXLocatorThread() :
 	m_SpeedCalculator(4),
 	m_oGPSFixAtLeastOnce(false),
 	m_oStartCoordinatesValid(false),
-	m_eSpeedSource(e_SpeedCalculator),
 	m_pNaviPOWM(NULL)
 {
 	// load last received coordinates
@@ -173,8 +172,8 @@ void CXLocatorThread::OnThreadLoop() {
 	CXExactTime Now;
 	bool NewDataRMC = GetFlag_NewDataGPSRMC();
 	bool NewDataGGA = GetFlag_NewDataGPSGGA();
-	bool NewDataArrived = false;
 	bool oHasFix = false;
+	bool oNewDataNoFix = false;
 	// process new data
 	if(NewDataRMC) {
 		// process it
@@ -190,49 +189,17 @@ void CXLocatorThread::OnThreadLoop() {
 			// OK, valid data arrived
 			oHasFix = RMCData.HasFix();
 			m_LastReceivedPosition.SetNow();
-			// check if really new data arrived
-			if(RMCData.GetUTC() != m_LastPositionUTC) {
-				// UTC differs, so new data
-				NewDataArrived = true;
-			}
 			// check fix
 			if(oHasFix) {
 				m_oGPSFixAtLeastOnce = true;
-				// set speed source to RMC speed
-				m_eSpeedSource = e_RMC_Packet;
 				double dLon = RMCData.GetLon();
 				double dLat = RMCData.GetLat();
 				// remember coordinates
 				m_LastReceivedCoor = CXCoor(dLon, dLat);
-				
-				// check if really new data arrived
-				if(RMCData.GetUTC() != m_LastPositionUTC) {
-					m_LastPositionUTC = RMCData.GetUTC();
-					
-					// calculate speed
-					m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
-
-					CXUTMSpeed UTMSpeed;
-					if(m_SpeedCalculator.HasValidSpeed()) {
-						// take speed
-						UTMSpeed = m_SpeedCalculator.GetSpeed();
-					} else {
-						// no valid current speed. try last valid speed
-						UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
-					}
-					// set speed vector
-					m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
-					m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
-
-				}
-				// since e_RMC_Packet has a higher priority than e_SpeedCalculator,
-				// the following is done outside the block executed only when really 
-				// new data arrived.
-				// check which speed to take
-				if(m_eSpeedSource == e_RMC_Packet) {
-					// set RMC speed
-					m_LastUTMSpeed.SetSpeed(RMCData.GetSpeed());
-				}
+				// set data in speed calculator
+				m_SpeedCalculator.SetRMCData(RMCData.GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()), RMCData.GetSpeed());
+			} else {
+				oNewDataNoFix = true;
 			}
 		}
 	}
@@ -250,10 +217,6 @@ void CXLocatorThread::OnThreadLoop() {
 			// OK, valid GGA data arrived
 			oHasFix = GGAData.HasFix();
 			m_LastReceivedPosition.SetNow();
-			if(GGAData.GetUTC() != m_LastPositionUTC) {
-				// UTC differs, so new data
-				NewDataArrived = true;
-			}
 			// set number of satellites
 			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
 			// check fix
@@ -264,42 +227,28 @@ void CXLocatorThread::OnThreadLoop() {
 				double dLat = GGAData.GetLat();
 				// remember coordinates
 				m_LastReceivedCoor = CXCoor(dLon, dLat);
-
 				// set height
 				m_NaviData.SetHeight(GGAData.GetHeight());
-				// check if really new data arrived
-				if(GGAData.GetUTC() != m_LastPositionUTC) {
-					m_LastPositionUTC = GGAData.GetUTC();
-
-					// calculate speed
-					m_SpeedCalculator.SetData(CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
-
-					CXUTMSpeed UTMSpeed;
-					if(m_SpeedCalculator.HasValidSpeed()) {
-						// take speed
-						UTMSpeed = m_SpeedCalculator.GetSpeed();
-					} else {
-						// no valid current speed. try last valid speed
-						UTMSpeed = m_SpeedCalculator.GetLastValidSpeed();
-					}
-
-					// set speed vector
-					m_LastUTMSpeed.SetCos(UTMSpeed.GetCos());
-					m_LastUTMSpeed.SetSin(UTMSpeed.GetSin());
-
-					// check if we must set speed
-					if(m_eSpeedSource == e_SpeedCalculator) {
-						// take computed speed
-						m_LastUTMSpeed.SetSpeed(UTMSpeed.GetSpeed());
-					}
-				}
+				// set data in speed calculator
+				m_SpeedCalculator.SetGGAData(GGAData.GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
+			} else {
+				oNewDataNoFix = true;
 			}
 		}
 	}
 	bool oLoadMap = true;
-	if(NewDataArrived) {
+	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix;
+	if(oNewDataArrived) {
+		// set speed thresholds for speed calculator
+		switch(CXOptions::Instance()->GetMode()) {
+			case CXOptions::e_ModeCar:			m_SpeedCalculator.SetSpeedThreshold(CXOptions::Instance()->GetSpeedThresholdCar()); break;
+			case CXOptions::e_ModeBike:			m_SpeedCalculator.SetSpeedThreshold(CXOptions::Instance()->GetSpeedThresholdBike()); break;
+			case CXOptions::e_ModePedestrian:	m_SpeedCalculator.SetSpeedThreshold(CXOptions::Instance()->GetSpeedThresholdPedestrian()); break;
+			case CXOptions::e_ModeCaching:		m_SpeedCalculator.SetSpeedThreshold(CXOptions::Instance()->GetSpeedThresholdCaching()); break;
+			case CXOptions::e_ModeMapping:		m_SpeedCalculator.SetSpeedThreshold(CXOptions::Instance()->GetSpeedThresholdMapping()); break;
+		}
 		// set private navigation data
-		m_NaviData.SetUTMSpeed(m_LastUTMSpeed);
+		m_NaviData.SetUTMSpeed(m_SpeedCalculator.GetSpeed());
 		if(m_oGPSFixAtLeastOnce) {
 			// at least one GPS fix. Use last received coordinates
 			m_NaviData.SetGPSCoor(m_LastReceivedCoor);
@@ -339,8 +288,10 @@ void CXLocatorThread::OnThreadLoop() {
 		CXOptions::Instance()->SetShowLogoFlag(false);
 	}
 	/// \todo change
-	if(NewDataArrived || LogoHidden) {
+	if(oNewDataArrived || LogoHidden) {
 		// data has been changed or logo hidden
+		// reset speed calculator new data flag
+		m_SpeedCalculator.ResetNewDataArrivedFlag();
 		CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
 		// notify listeners
 		if(pPOWMMap != NULL) {
