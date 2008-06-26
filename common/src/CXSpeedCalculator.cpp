@@ -161,8 +161,6 @@ void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampDa
 		SetData(Coor);
 		m_LastUTC = UTC;
 		m_oNewDataArrived = true;
-	} else {
-		m_oNewDataArrived = false;
 	}
 }
 
@@ -175,8 +173,6 @@ void CXSpeedCalculator::SetRMCData(const CXStringASCII &UTC, const CXTimeStampDa
 		m_dRMCSpeed = dRMCSpeed;
 		m_LastUTC = UTC;
 		m_oNewDataArrived = true;
-	} else {
-		m_oNewDataArrived = false;
 	}
 }
 
