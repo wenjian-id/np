@@ -568,6 +568,16 @@ private:
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
 	//-------------------------------------
 	/*
+	 * \brief Load map version 0.1.3
+	 *
+	 *	Load map version 0.1.3
+	 *	\param	InFile		File with map data.
+	 *	\param	FileName	File name for map file (used for error messages).
+	 *	\return				true on success
+	 */
+	bool LoadMap0_1_3(CXFile & InFile, const CXStringASCII & FileName);
+	//-------------------------------------
+	/*
 	 * \brief Load map version 0.1.2
 	 *
 	 *	Load map version 0.1.2

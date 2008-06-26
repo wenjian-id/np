@@ -30,7 +30,7 @@
 #include "CXTransformationMatrix.hpp"
 #include "CoordConversion.h"
 
-const unsigned int MAPVERSION = 0x00010300; // 0.1.3
+const unsigned int MAPVERSION = 0x00010401; // 0.1.4-dev1
 
 //----------------------------------------------------------------------------
 //-------------------------------------
@@ -414,6 +414,9 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 	} else if(Version == 0x00010200) {
 		// v 0.1.2
 		Result = LoadMap0_1_2(InFile, FileName);
+	} else if(Version == 0x00010300) {
+		// v 0.1.3
+		Result = LoadMap0_1_3(InFile, FileName);
 	} else if(Version != ReqVersion) {
 		// not supported version
 		CXStringASCII ErrorMsg(FileName);
@@ -573,6 +576,131 @@ bool CXPOWMMap::LoadMap_CurrentVersion(CXFile & InFile, const CXStringASCII & Fi
 	CXDebugInfo::Instance()->SetLoadTimeWays(Time3 - Time2);
 	return true;
 }
+
+//-------------------------------------
+bool CXPOWMMap::LoadMap0_1_3(CXFile & InFile, const CXStringASCII & FileName) {
+	// node count
+
+	CXExactTime Time1;
+	Time1.SetNow();
+
+	t_uint32 NodeCount = 0;
+	if(!ReadUI32(InFile, NodeCount)) {
+		CXStringASCII ErrorMsg("Error reading NodeCount from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+	// read nodes
+	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
+		// read node: IDX, LON, LAT
+		t_uint64 ID = 0;
+		unsigned char POIIdx = 0;
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
+		ReadUI64(InFile, ID);
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+		ReadB(InFile, POIIdx);
+
+		// compute lon
+		double dLon = 1.0;
+		if((Lon & 0x80000000) != 0) {
+			// negative coordinate
+			dLon = -1;
+			Lon &= 0x7FFFFFFF;
+		}
+		// now scale back
+		dLon = dLon*Lon/1000000.0;
+
+		// compute lat
+		double dLat = 1.0;
+		if((Lat & 0x80000000) != 0) {
+			// negative coordinate
+			dLat = -1;
+			Lat &= 0x7FFFFFFF;
+		}
+		// now scale back
+		dLat = dLat*Lat/1000000.0;
+
+		CXNode *pNode = NULL;
+		if(POIIdx == 0) {
+			// create node
+			pNode = new CXNode(ID, dLon, dLat);
+		} else {
+			// create POI node
+			CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
+
+			t_uint32 POI = 0;
+			for(size_t i=0; i<MaxPOITypes; i++) {
+				if((POIIdx % 2) == 1) {
+					ReadUI32(InFile, POI);
+					pPOINode->SetPOIType(MaxPOITypes-i-1, POI);
+				}
+				POIIdx = POIIdx >> 1;
+			}
+			CXStringUTF8 Name;
+			ReadStringUTF8(InFile, Name);
+			pPOINode->SetName(Name);
+
+			// add node to POI map
+			m_POINodes.SetAt(ID, pPOINode);
+			// set pNode
+			pNode = pPOINode;
+		}
+		// add node to node map
+		m_NodeMap.SetAt(ID, pNode);
+	}
+
+	CXExactTime Time2;
+	Time2.SetNow();
+	// way count
+	t_uint32 WayCount = 0;
+	if(!ReadUI32(InFile, WayCount)) {
+		CXStringASCII ErrorMsg("Error reading WayCount from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+	// read ways
+	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
+		// read Way: Idx, Name, node count, node ids
+		t_uint64 ID = 0;
+		unsigned char HighwayType = 0;
+		CXStringUTF8 Name;
+		CXStringUTF8 Ref;
+		unsigned char MaxSpeed = 0;
+		ReadUI64(InFile, ID);
+		ReadB(InFile, HighwayType);
+		ReadStringUTF8(InFile, Name);
+		ReadStringUTF8(InFile, Ref);
+		ReadB(InFile, MaxSpeed);
+		// create way
+		CXWay *pWay = new CXWay(ID, static_cast<CXWay::E_KEYHIGHWAY>(HighwayType), Name, Ref);
+		pWay->SetMaxSpeed(MaxSpeed);
+		// add node
+		m_WayMap.SetAt(ID, pWay);
+		// 
+		t_uint32 NodeCount = 0;
+		ReadUI32(InFile, NodeCount);
+		for(t_uint32 ul=0; ul<NodeCount; ul++) {
+			t_uint64 SegID = 0;
+			ReadUI64(InFile, SegID);
+			CXNode *pNode = NULL;
+			if(!m_NodeMap.Lookup(SegID, pNode))
+				continue;
+			pWay->AddNode(pNode);
+		}
+	}
+
+	CXExactTime Time3;
+	Time3.SetNow();
+
+	CXDebugInfo::Instance()->SetLoadTimeNodes(Time2 - Time1);
+	CXDebugInfo::Instance()->SetLoadTimeWays(Time3 - Time2);
+	return true;
+}
+
 
 //-------------------------------------
 bool CXPOWMMap::LoadMap0_1_2(CXFile & InFile, const CXStringASCII & FileName) {
