@@ -4,6 +4,7 @@ Version 0.1.4:
    - 1978789: DEMO mode doesn't accept absolute file paths to NMEA log file
  - implemented feature requests:
    - 1834080: Start with last GPS position
+   - 1834980: WM: send "still alive" to OS.
    - 1957886: Snap position to nearest way
    - 1957887: Don't react on gps coordinates when vehicle is stopped
  - other:

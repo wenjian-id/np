@@ -20,18 +20,52 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __OSSPECIFIC_HPP__
-#define __OSSPECIFIC_HPP__
+#ifndef __CXWATCHDOGTHREAD_HPP__
+#define __CXWATCHDOGTHREAD_HPP__
 
-#ifndef PATHDELIMITER
-#define PATHDELIMITER '\\'
-#endif
-
-//-------------------------------------
+#include "CXLoopThread.hpp"
+//----------------------------------------------------------------------------
 /*
  * \brief oiu
  *
  */
-void TriggerWatchdog();
+class CXWatchdogThread : public CXLoopThread {
+private:
+	//-------------------------------------
+	CXWatchdogThread(const CXWatchdogThread &);						///< Not used.
+	const CXWatchdogThread & operator = (const CXWatchdogThread &);	///< Not used.
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnThreadStarted();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnThreadLoop();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnThreadStopped();
+public:
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	CXWatchdogThread();
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXWatchdogThread();
+};
 
-#endif // __OSSPECIFIC_HPP__
+
+#endif // __CXWATCHDOGTHREAD_HPP__

@@ -29,4 +29,11 @@
 #define PATHDELIMITER '\\'
 #endif
 
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+void TriggerWatchdog();
+
 #endif // __OSSPECIFIC_HPP__

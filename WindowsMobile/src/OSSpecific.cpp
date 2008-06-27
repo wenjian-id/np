@@ -20,18 +20,11 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __OSSPECIFIC_HPP__
-#define __OSSPECIFIC_HPP__
-
-#ifndef PATHDELIMITER
-#define PATHDELIMITER '\\'
-#endif
+#include "OSSpecific.hpp"
+#include <windows.h>
+#include <winuser.h>
 
 //-------------------------------------
-/*
- * \brief oiu
- *
- */
-void TriggerWatchdog();
-
-#endif // __OSSPECIFIC_HPP__
+void TriggerWatchdog() {
+	SystemIdleTimerReset();
+}

@@ -84,6 +84,7 @@ private:
 	bool				m_oShowPOIs;					///< Show some POIs.
 	bool				m_oSnapToWay;					///< oiu
 	bool				m_oStartWithLastPosition;		///< oiu
+	int					m_WatchdogTimeout;				///< oiu
 	t_uint64			m_OSMVali;						///< oiu
 	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;			///< oiu
@@ -569,6 +570,18 @@ public:
 	 *
 	 */
 	void SetStartWithLastPositionFlag(bool NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	int GetWatchdogTimeout() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetWatchdogTimeout(int NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu

@@ -20,18 +20,40 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __OSSPECIFIC_HPP__
-#define __OSSPECIFIC_HPP__
-
-#ifndef PATHDELIMITER
-#define PATHDELIMITER '\\'
-#endif
+#include "CXWatchdogThread.hpp"
+#include "CXOptions.hpp"
+#include "OSSpecific.hpp"
 
 //-------------------------------------
-/*
- * \brief oiu
- *
- */
-void TriggerWatchdog();
+CXWatchdogThread::CXWatchdogThread() {
+	int SleepTime = CXOptions::Instance()->GetWatchdogTimeout();
+	if(SleepTime != 0) {
+		SetSleepTime(SleepTime);
+	} else {
+		SetSleepTime(5000); // 5 seconds
+	}
+}
 
-#endif // __OSSPECIFIC_HPP__
+
+//-------------------------------------
+CXWatchdogThread::~CXWatchdogThread() {
+}
+
+
+//-------------------------------------
+void CXWatchdogThread::OnThreadStarted() {
+	// do nothing
+}
+
+
+//-------------------------------------
+void CXWatchdogThread::OnThreadStopped() {
+	// do nothing
+}
+
+//-------------------------------------
+void CXWatchdogThread::OnThreadLoop() {
+	// trigger watchdog if neccessary
+	if(CXOptions::Instance()->GetWatchdogTimeout() != 0)
+		TriggerWatchdog();
+}

@@ -197,6 +197,10 @@ SOURCE=..\src\Main.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\src\OSSpecific.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\src\TargetIncludes.cpp
 # End Source File
 # End Group
@@ -382,6 +386,10 @@ SOURCE=..\..\common\src\CXUTMCoor.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXUTMSpeed.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXWatchdogThread.hpp
 # End Source File
 # Begin Source File
 
@@ -582,6 +590,10 @@ SOURCE=..\..\common\src\CXUTMCoor.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXUTMSpeed.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXWatchdogThread.cpp
 # End Source File
 # Begin Source File
 

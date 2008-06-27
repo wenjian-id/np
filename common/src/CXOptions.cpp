@@ -51,6 +51,7 @@ CXOptions::CXOptions() :
 	m_oShowPOIs(false),
 	m_oSnapToWay(false),
 	m_oStartWithLastPosition(false),
+	m_WatchdogTimeout(0),
 	m_OSMVali(0),
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
@@ -238,6 +239,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetSpeedThresholdPedestrian(atof(F.Get("SpeedThresholdPedestrian", "1").c_str()));
 	SetSpeedThresholdCaching(atof(F.Get("SpeedThresholdCaching", "1").c_str()));
 	SetSpeedThresholdMapping(atof(F.Get("SpeedThresholdMapping", "1").c_str()));
+	// Watchdog
+	SetWatchdogTimeout(Max(0, 1000*atoi(F.Get("WatchdogTimeout", "0").c_str())));
 	// POIs
 	for(size_t i=0; i<MaxPOITypes; i++) {
 		char buf1[100];
@@ -546,6 +549,18 @@ bool CXOptions::MustStartWithLastPosition() const {
 void CXOptions::SetStartWithLastPositionFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oStartWithLastPosition = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetWatchdogTimeout() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_WatchdogTimeout;
+}
+
+//-------------------------------------
+void CXOptions::SetWatchdogTimeout(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_WatchdogTimeout = NewValue;
 }
 
 //-------------------------------------

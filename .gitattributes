@@ -4,11 +4,13 @@
 Qt/KDevelop/NaviPOWM.pro -text
 Qt/KDevelop/src/CXSerial.cpp -text
 Qt/KDevelop/src/CXSerial.hpp -text
+Qt/KDevelop/src/OSSpecific.cpp -text
 Qt/KDevelop/src/OSSpecific.hpp -text
 Qt/MinGW/NaviPOWM.mdsp -text
 Qt/MinGW/NaviPOWM.rc -text
 Qt/MinGW/src/CXSerial.cpp -text
 Qt/MinGW/src/CXSerial.hpp -text
+Qt/MinGW/src/OSSpecific.cpp -text
 Qt/MinGW/src/OSSpecific.hpp -text
 Qt/src/CXBitmap.cpp -text
 Qt/src/CXBitmap.hpp -text
@@ -68,6 +70,7 @@ Windows/src/CXWindow.hpp -text
 Windows/src/CXWorkRequestThread.cpp -text
 Windows/src/CXWorkRequestThread.hpp -text
 Windows/src/Main.cpp -text
+Windows/src/OSSpecific.cpp -text
 Windows/src/OSSpecific.hpp -text
 Windows/src/TargetIncludes.cpp -text
 Windows/src/TargetIncludes.hpp -text
@@ -111,6 +114,7 @@ WindowsMobile/src/CXWindow.hpp -text
 WindowsMobile/src/CXWorkRequestThread.cpp -text
 WindowsMobile/src/CXWorkRequestThread.hpp -text
 WindowsMobile/src/Main.cpp -text
+WindowsMobile/src/OSSpecific.cpp -text
 WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
@@ -217,6 +221,8 @@ common/src/CXUTMCoor.cpp -text
 common/src/CXUTMCoor.hpp -text
 common/src/CXUTMSpeed.cpp -text
 common/src/CXUTMSpeed.hpp -text
+common/src/CXWatchdogThread.cpp -text
+common/src/CXWatchdogThread.hpp -text
 common/src/CXWriteLocker.cpp -text
 common/src/CXWriteLocker.hpp -text
 common/src/CoordConstants.h -text

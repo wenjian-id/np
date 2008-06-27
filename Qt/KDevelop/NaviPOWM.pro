@@ -12,6 +12,7 @@ INCLUDEPATH += src \
 CONFIG -= release
 
 SOURCES += src/CXSerial.cpp \
+src/OSSpecific.cpp \
  ../src/CXBitmap.cpp \
  ../src/CXDeviceContext.cpp \
  ../src/CXExactTime.cpp \
@@ -38,6 +39,7 @@ SOURCES += src/CXSerial.cpp \
  ../../common/src/CXMapPainterDoubleBuffered.cpp \
  ../../common/src/CXMapPainterTest.cpp \
  ../../common/src/CXMapPainterThread.cpp \
+ ../../common/src/CXWatchdogThread.cpp \
  ../../common/src/CXMutexLocker.cpp \
  ../../common/src/CXNaviData.cpp \
  ../../common/src/CXNaviPOWM.cpp \
@@ -101,6 +103,7 @@ src/OSSpecific.hpp \
  ../../common/src/CXMapPainterTest.hpp \
  ../../common/src/CXMapSimple.hpp \
  ../../common/src/CXMapPainterThread.hpp \
+ ../../common/src/CXWatchdogThread.hpp \
  ../../common/src/CXMutexLocker.hpp \
  ../../common/src/CXNaviData.hpp \
  ../../common/src/CXNaviPOWM.hpp \
