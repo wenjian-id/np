@@ -24,6 +24,8 @@
 #define __CXWATCHDOGTHREAD_HPP__
 
 #include "CXLoopThread.hpp"
+#include "CXExactTime.hpp"
+
 //----------------------------------------------------------------------------
 /*
  * \brief oiu
@@ -31,6 +33,7 @@
  */
 class CXWatchdogThread : public CXLoopThread {
 private:
+	CXExactTime		m_TriggerTime;	///< oiu
 	//-------------------------------------
 	CXWatchdogThread(const CXWatchdogThread &);						///< Not used.
 	const CXWatchdogThread & operator = (const CXWatchdogThread &);	///< Not used.

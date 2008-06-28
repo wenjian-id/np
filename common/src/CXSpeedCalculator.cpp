@@ -157,7 +157,7 @@ void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
 //-------------------------------------
 void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor) {
 	if(m_LastUTC != UTC) {
-		// new data arrived
+		// new coordinates arrived
 		SetData(Coor);
 		m_LastUTC = UTC;
 		m_oNewDataArrived = true;
@@ -166,11 +166,14 @@ void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampDa
 
 //-------------------------------------
 void CXSpeedCalculator::SetRMCData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed) {
+	// set speed source
+	m_eSpeedSource = e_RMC_Packet;
+	// and RMC speed
+	m_dRMCSpeed = dRMCSpeed;
+	// check if we must 
 	if(m_LastUTC != UTC) {
-		// new data arrived
-		m_eSpeedSource = e_RMC_Packet;
+		// new coordinates arrived
 		SetData(Coor);
-		m_dRMCSpeed = dRMCSpeed;
 		m_LastUTC = UTC;
 		m_oNewDataArrived = true;
 	}

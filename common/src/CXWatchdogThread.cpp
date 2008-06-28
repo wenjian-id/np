@@ -26,12 +26,8 @@
 
 //-------------------------------------
 CXWatchdogThread::CXWatchdogThread() {
-	int SleepTime = CXOptions::Instance()->GetWatchdogTimeout();
-	if(SleepTime != 0) {
-		SetSleepTime(SleepTime);
-	} else {
-		SetSleepTime(5000); // 5 seconds
-	}
+	SetSleepTime(250);	// 250 ms
+	m_TriggerTime.SetNow();
 }
 
 
@@ -54,6 +50,13 @@ void CXWatchdogThread::OnThreadStopped() {
 //-------------------------------------
 void CXWatchdogThread::OnThreadLoop() {
 	// trigger watchdog if neccessary
-	if(CXOptions::Instance()->GetWatchdogTimeout() != 0)
-		TriggerWatchdog();
+	unsigned long SleepTime = CXOptions::Instance()->GetWatchdogTimeout();
+	if(SleepTime != 0) {
+		CXExactTime	Now;
+		if(Now - m_TriggerTime > SleepTime) {
+			TriggerWatchdog();
+			m_TriggerTime.SetNow();
+			DoOutputDebugString("trigger\n");
+		}
+	}
 }
