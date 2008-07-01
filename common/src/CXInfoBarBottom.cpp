@@ -67,7 +67,15 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		RefRect.OffsetRect(Width -RefRect.GetWidth(), 0);
 		Bmp.DrawTextUTF8(Ref, RefRect, CXRGB(0xff, 0xff, 0x00), BgColor);
 		// draw name
-		tIRect NameRect(0, 0, RefRect.GetLeft(), Height);
+		tIRect NameRect = Bmp.CalcTextRectUTF8(Name, 0, 0);
+		// check if name fits if displayed centered
+		if(NameRect.GetWidth()/2 <= (Width/2 - RefRect.GetWidth())) {
+			// display centered on screen
+			NameRect = tIRect(RefRect.GetWidth(), 0, RefRect.GetLeft() - RefRect.GetWidth(), Height);
+		} else {
+			// does not fit centered. Display it centered in remaining slot
+			NameRect = tIRect(0, 0, RefRect.GetLeft(), Height);
+		}
 		Bmp.DrawTextUTF8(Name, NameRect, CXRGB(0xff, 0xff, 0xff), BgColor);
 	}
 
