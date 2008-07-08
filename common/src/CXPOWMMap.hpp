@@ -453,6 +453,7 @@ private:
 	CXStringUTF8	m_Name;				///< oiu
 	CXStringUTF8	m_Ref;				///< oiu
 	unsigned char	m_MaxSpeed;			///< oiu 0 means no max speed
+	char			m_Layer;			///< oiu
 	bool			m_oOSMValiFailed;	///< oiu
 	TNodeBuffer		m_Nodes;			///< oiu
 	//-------------------------------------
@@ -502,13 +503,25 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetMaxSpeed(unsigned char MaxSpeed);
+	void SetMaxSpeed(unsigned char NewValue);
 	//-------------------------------------
 	/*
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetMaxSpeed() const;
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	void SetLayer(char NewValue);
+	//-------------------------------------
+	/*
+	 * \brief oiu
+	 *
+	 */
+	unsigned char GetLayer() const;
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -559,7 +572,7 @@ private:
 	// maps
 	TNodeMap			m_NodeMap;				///< oiu
 	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
-	TWayMap				m_WayMap;				///< oiu
+	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
 	CXTrackLog			m_TrackLog;				///< oiu
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< oiu
@@ -650,7 +663,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void PositionChanged(double dLon, double dLat);
+	void PositionChanged(double dLon, double dLat, bool oFix);
 	//-------------------------------------
 	/*
 	 * \brief oiu
@@ -680,7 +693,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	TWayMap &GetWayMap();
+	CXBuffer<TWayMap *> &GetWayMap();
 	//-------------------------------------
 	/*
 	 * \brief oiu

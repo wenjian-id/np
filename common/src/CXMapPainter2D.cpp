@@ -457,7 +457,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXPOWMMap::Instance()->LockMap();
 	CXExactTime StopLock;
-	CXExactTime StopPrepare;
 	CXExactTime StopDrawWays;
 	CXExactTime StopTrackLog;
 	CXExactTime StopScale;
@@ -523,31 +522,34 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
 
 		// prepare drawing
-		TWayMap &Ways = CXPOWMMap::Instance()->GetWayMap();
-		POS pos = Ways.GetStart();
-		CXWay *pWay = NULL;
-		while (Ways.GetNext(pos, pWay) != TWayMap::NPOS) {
-			if (IsWayPossiblyVisible(pWay, Width, Height)) {
-				CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
-				m_DrawWays[HighwayType]->Append(pWay);
-				WayCount++;
+		CXBuffer<TWayMap *> &Ways = CXPOWMMap::Instance()->GetWayMap();
+		for(size_t Index=0; Index< Ways.GetSize(); Index++) {
+			TWayMap *pWayMap = Ways[Index];
+			POS pos = pWayMap->GetStart();
+			CXWay *pWay = NULL;
+			while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
+				if (IsWayPossiblyVisible(pWay, Width, Height)) {
+					CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
+					m_DrawWays[HighwayType]->Append(pWay);
+					WayCount++;
+				}
+			}
+			// ok, now draw bg
+			for(i=0; i< CXWay::e_EnumCount; i++) {
+				DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+			}
+			for(i=0; i< CXWay::e_EnumCount; i++) {
+				DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+			}
+
+			// clear arrays
+			for(i=0; i<CXWay::e_EnumCount; i++) {
+				TWayBuffer *pBuffer = m_DrawWays[i];
+				pBuffer->Clear();
 			}
 		}
-		StopPrepare.SetNow();
-		// ok, now draw bg
-		for(i=0; i< CXWay::e_EnumCount; i++) {
-			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
-		}
-		for(i=0; i< CXWay::e_EnumCount; i++) {
-			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
-		}
-		StopDrawWays.SetNow();
 
-		// clear arrays
-		for(i=0; i<CXWay::e_EnumCount; i++) {
-			TWayBuffer *pBuffer = m_DrawWays[i];
-			pBuffer->Clear();
-		}
+		StopDrawWays.SetNow();
 
 		// draw TrackLog if neccessary
 		if(CXOptions::Instance()->MustShowTrackLog()) {
@@ -579,8 +581,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];
-		snprintf(	buf, sizeof(buf), "Pr:%ld Wy:%ld (%d) TL:%ld POI:%ld",
-					StopPrepare-StopLock, StopDrawWays-StopPrepare, WayCount, 
+		snprintf(	buf, sizeof(buf), "Wy:%ld (%d) TL:%ld POI:%ld",
+					StopDrawWays-StopLock, WayCount, 
 					StopTrackLog-StopDrawWays, StopPOI-StopTrackLog);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);

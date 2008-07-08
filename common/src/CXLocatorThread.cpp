@@ -320,7 +320,7 @@ void CXLocatorThread::OnThreadLoop() {
 				}
 			}
 
-			pPOWMMap->PositionChanged(dLon, dLat);
+			pPOWMMap->PositionChanged(dLon, dLat, oHasFix);
 
 			t_uint64 ID = 0;
 			if(Locate(ID)) {
@@ -477,132 +477,134 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 	LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
 
     // Iterrate through ways
-	TWayMap &Ways = pPOWMMap->GetWayMap();
-
-	POS Pos = Ways.GetStart();
-	CXWay *pWay = NULL;
-	while (Ways.GetNext(Pos, pWay) != TWayMap::NPOS) {
-		CXWay::E_KEYHIGHWAY Type = pWay->GetHighwayType();
-		bool oUseWay = false;
-		switch(CXOptions::Instance()->GetMode()) {
-			case CXOptions::e_ModeCar:
-			{
-				oUseWay =	(Type == CXWay::e_Motorway) ||
-							(Type == CXWay::e_MotorwayLink) ||
-							(Type == CXWay::e_Trunk) ||
-							(Type == CXWay::e_TrunkLink) ||
-							(Type == CXWay::e_Primary) ||
-							(Type == CXWay::e_PrimaryLink) ||
-							(Type == CXWay::e_Secondary) ||
-							(Type == CXWay::e_Tertiary) ||
-							(Type == CXWay::e_Unclassified) ||
-							(Type == CXWay::e_Residential) ||
-							(Type == CXWay::e_Service) ||
-							(Type == CXWay::e_LivingStreet);
-				break;
-			}
-			case CXOptions::e_ModeBike:
-			{
-				// oiu todo
-				oUseWay =	(Type == CXWay::e_Motorway) ||
-							(Type == CXWay::e_MotorwayLink) ||
-							(Type == CXWay::e_Trunk) ||
-							(Type == CXWay::e_TrunkLink) ||
-							(Type == CXWay::e_Primary) ||
-							(Type == CXWay::e_PrimaryLink) ||
-							(Type == CXWay::e_Secondary) ||
-							(Type == CXWay::e_Tertiary) ||
-							(Type == CXWay::e_Unclassified) ||
-							(Type == CXWay::e_Track) ||
-							(Type == CXWay::e_Residential) ||
-							(Type == CXWay::e_Service) ||
-							(Type == CXWay::e_Cycleway) ||
-							(Type == CXWay::e_Footway) ||
-							(Type == CXWay::e_Pedestrian) ||
-							(Type == CXWay::e_Steps) ||
-							(Type == CXWay::e_LivingStreet);
-
-				break;
-			}
-			case CXOptions::e_ModePedestrian:
-			{
-				// take all ways except "unknown"
-				oUseWay = (Type != CXWay::e_Unknown);
-				break;
-			}
-			case CXOptions::e_ModeCaching:
-			{
-				// take all ways except "unknown"
-				oUseWay = (Type != CXWay::e_Unknown);
-				break;
-			}
-			case CXOptions::e_ModeMapping:
-			{
-				// take all ways except "unknown"
-				oUseWay = (Type != CXWay::e_Unknown);
-				break;
-			}
-		}
-		if(oUseWay) {
-			size_t NodeCount = pWay->GetNodeCount();
-			// start with 1
-			for(size_t i=1; i<NodeCount; i++) {
-				// get first node
-				pNode1 = pWay->GetNode(i-1);
-				// get second node
-				pNode2 = pWay->GetNode(i);
-    			// get coordinates
-    			Node1x = pNode1->GetUTME();
-    			Node1y = pNode1->GetUTMN();
-    			Node2x = pNode2->GetUTME();
-    			Node2y = pNode2->GetUTMN();
-
-				// mx distance from endpoints to current position is 1000 m
-				double dMax = 1000;
-				if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
-					(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
+	CXBuffer<TWayMap *> &Ways = pPOWMMap->GetWayMap();
+	for(size_t i=0; i< Ways.GetSize(); i++) {
+		TWayMap *pWayMap = Ways[i];
+		POS Pos = pWayMap->GetStart();
+		CXWay *pWay = NULL;
+		while (pWayMap->GetNext(Pos, pWay) != TWayMap::NPOS) {
+			CXWay::E_KEYHIGHWAY Type = pWay->GetHighwayType();
+			bool oUseWay = false;
+			switch(CXOptions::Instance()->GetMode()) {
+				case CXOptions::e_ModeCar:
 				{
-    				// compute SqSegLen
-    				SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
-    				// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
-    				if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
-    					// compute cos of angle
-        				dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
-    					if(dCos<0) {
-    						// projection of P on segment lies before Node1 so take Node1
+					oUseWay =	(Type == CXWay::e_Motorway) ||
+								(Type == CXWay::e_MotorwayLink) ||
+								(Type == CXWay::e_Trunk) ||
+								(Type == CXWay::e_TrunkLink) ||
+								(Type == CXWay::e_Primary) ||
+								(Type == CXWay::e_PrimaryLink) ||
+								(Type == CXWay::e_Secondary) ||
+								(Type == CXWay::e_Tertiary) ||
+								(Type == CXWay::e_Unclassified) ||
+								(Type == CXWay::e_Residential) ||
+								(Type == CXWay::e_Service) ||
+								(Type == CXWay::e_LivingStreet);
+					break;
+				}
+				case CXOptions::e_ModeBike:
+				{
+					// oiu todo
+					oUseWay =	(Type == CXWay::e_Motorway) ||
+								(Type == CXWay::e_MotorwayLink) ||
+								(Type == CXWay::e_Trunk) ||
+								(Type == CXWay::e_TrunkLink) ||
+								(Type == CXWay::e_Primary) ||
+								(Type == CXWay::e_PrimaryLink) ||
+								(Type == CXWay::e_Secondary) ||
+								(Type == CXWay::e_Tertiary) ||
+								(Type == CXWay::e_Unclassified) ||
+								(Type == CXWay::e_Track) ||
+								(Type == CXWay::e_Residential) ||
+								(Type == CXWay::e_Service) ||
+								(Type == CXWay::e_Cycleway) ||
+								(Type == CXWay::e_Footway) ||
+								(Type == CXWay::e_Pedestrian) ||
+								(Type == CXWay::e_Steps) ||
+								(Type == CXWay::e_LivingStreet);
+
+					break;
+				}
+				case CXOptions::e_ModePedestrian:
+				{
+					// take all ways except "unknown"
+					oUseWay = (Type != CXWay::e_Unknown);
+					break;
+				}
+				case CXOptions::e_ModeCaching:
+				{
+					// take all ways except "unknown"
+					oUseWay = (Type != CXWay::e_Unknown);
+					break;
+				}
+				case CXOptions::e_ModeMapping:
+				{
+					// take all ways except "unknown"
+					oUseWay = (Type != CXWay::e_Unknown);
+					break;
+				}
+			}
+			if(oUseWay) {
+				size_t NodeCount = pWay->GetNodeCount();
+				// start with 1
+				for(size_t i=1; i<NodeCount; i++) {
+					// get first node
+					pNode1 = pWay->GetNode(i-1);
+					// get second node
+					pNode2 = pWay->GetNode(i);
+    				// get coordinates
+    				Node1x = pNode1->GetUTME();
+    				Node1y = pNode1->GetUTMN();
+    				Node2x = pNode2->GetUTME();
+    				Node2y = pNode2->GetUTMN();
+
+					// mx distance from endpoints to current position is 1000 m
+					double dMax = 1000;
+					if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
+						(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
+					{
+    					// compute SqSegLen
+    					SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
+    					// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
+    					if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
+    						// compute cos of angle
+        					dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
+    						if(dCos<0) {
+    							// projection of P on segment lies before Node1 so take Node1
+    							PSx = Node1x;
+    							PSy = Node1y;
+    						} else if (dCos>1) {
+    							// projection of P on segment lies after Node2 so take Node2
+    							PSx = Node2x;
+    							PSy = Node2y;
+    						} else {
+    							// projection of P on segment lies between Node1 and Node2
+    							PSx = Node1x + dCos*(Node2x-Node1x);
+    							PSy = Node1y + dCos*(Node2y-Node1y);
+    						}
+    					} else {
+    						// segment too short, so we take Node1
+    						dCos=0;
     						PSx = Node1x;
     						PSy = Node1y;
-    					} else if (dCos>1) {
-    						// projection of P on segment lies after Node2 so take Node2
-    						PSx = Node2x;
-    						PSy = Node2y;
-    					} else {
-    						// projection of P on segment lies between Node1 and Node2
-    						PSx = Node1x + dCos*(Node2x-Node1x);
-    						PSy = Node1y + dCos*(Node2y-Node1y);
     					}
-    				} else {
-    					// segment too short, so we take Node1
-    					dCos=0;
-    					PSx = Node1x;
-    					PSy = Node1y;
-    				}
-    				// compute square distance between P and PS
-    				dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
+    					// compute square distance between P and PS
+    					dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
     
-    				// check if new best fit
-    				if(first || (dSquareDist < dSquareMinDist)) {
-						first = false;
-    					// yes
-    					dSquareMinDist = dSquareDist;
-    					rProxWay = pWay->GetID();
-						PSProxx = PSx;
-						PSProxy = PSy;
-    				}
+    					// check if new best fit
+    					if(first || (dSquareDist < dSquareMinDist)) {
+							first = false;
+    						// yes
+    						dSquareMinDist = dSquareDist;
+    						rProxWay = pWay->GetID();
+							PSProxx = PSx;
+							PSProxy = PSy;
+    					}
+					}
 				}
 			}
 		}
-    }
+	}
 
 	pPOWMMap->UnlockMap();
 
