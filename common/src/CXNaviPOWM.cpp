@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Doru-Julian Bugariu                             *
+ *   Copyright (C) by Doru Julian Bugariu                                  *
  *   bugariu@users.sourceforge.net                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -37,7 +37,7 @@
 #include "Utils.hpp"
 
 const char * VERSIONSTRING ="NaviPOWM 0.1.4-dev2";
-const char * INFOSTRING1 ="(C) Doru-Julian Bugariu";
+const char * INFOSTRING1 ="(C) Doru Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 
 
