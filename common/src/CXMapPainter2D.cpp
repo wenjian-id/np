@@ -49,13 +49,29 @@ static const int POICOUNTHORZ	= 8;
 static const int POICOUNTVERT	= 4;
 
 // for revision 0.1.4 enable only following POIs
-t_uint32 Rev014POI[MaxPOITypes] = {	CXPOINode::e_POI1_Parking | CXPOINode::e_POI1_Fuel | CXPOINode::e_POI1_Restaurant | CXPOINode::e_POI1_Pub | CXPOINode::e_POI1_Hospital,
+t_uint32 Rev014POI[MaxPOITypes] = {
+									// POI1
+									CXPOINode::e_POI1_Parking |
+									CXPOINode::e_POI1_Fuel | 
+									CXPOINode::e_POI1_Restaurant | 
+									CXPOINode::e_POI1_Pub | 
+									CXPOINode::e_POI1_Hospital |
+									CXPOINode::e_POI1_Toilets,
+									// POI2
+									CXPOINode::e_POI2_PowerTower |
+									CXPOINode::e_POI2_PowerSubStation |
+									CXPOINode::e_POI2_Hotel,
+									// POI3
 									0,
+									// POI4
 									0,
+									// POI5
 									0,
+									// POI6
 									0,
+									// POI7
 									0,
-									0,
+									// POI8
 									0};
 
 
@@ -289,7 +305,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 		// check if visible
 		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
 			for(size_t i=0; i<MaxPOITypes; i++) {
-				if(pNode->IsPOI(i) /*&& ((pNode->GetPOIType(i) & Rev014POI[i]) != 0)*/) {
+				if(pNode->IsPOI(i) && ((pNode->GetPOIType(i) & Rev014POI[i]) != 0)) {
 					int row = 0;
 					int col = 0;
 					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
