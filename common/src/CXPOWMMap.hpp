@@ -38,7 +38,7 @@ class CXWay;
 class CXTransformationMatrix2D;
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief This class encapsulates data and functionality for a node.
  *
  * This class encapsulates data and functionality for a node.
@@ -56,7 +56,7 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Constructor.
 	 *
 	 *	Constructor.
@@ -66,14 +66,14 @@ public:
 	 */
 	CXNode(t_uint64 ID, double Lon, double Lat);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
 	virtual ~CXNode();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get longitude.
 	 *
 	 *	Get longitude.
@@ -81,7 +81,7 @@ public:
 	 */
 	double GetLon() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get latitude.
 	 *
 	 *	Get latitude.
@@ -89,7 +89,7 @@ public:
 	 */
 	double GetLat() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get UTM easting.
 	 *
 	 *	Get UTM easting.
@@ -97,7 +97,7 @@ public:
 	 */
 	double GetUTME() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get UTM northing.
 	 *
 	 *	Get UTM northing.
@@ -105,7 +105,7 @@ public:
 	 */
 	double GetUTMN() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Relocate UTM coordinates to new UTM zone.
 	 * 
 	 * Relocate UTM coordinates to new UTM zone.
@@ -113,7 +113,7 @@ public:
 	 */
 	void RelocateUTM(int NewUTMZone);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get X coordinate on display.
 	 *
 	 *	Get X coordinate on display.
@@ -121,7 +121,7 @@ public:
 	 */
 	int GetDisplayX() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set X coordinate on display.
 	 *
 	 *	Set X coordinate on display.
@@ -129,7 +129,7 @@ public:
 	 */
 	void SetDisplayX(int X);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get Y coordinate on display.
 	 *
 	 *	Get Y coordinate on display.
@@ -137,7 +137,7 @@ public:
 	 */
 	int GetDisplayY() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set Y coordinate on display.
 	 *
 	 *	Set Y coordinate on display.
@@ -151,7 +151,7 @@ typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
 
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief This class encapsulates data and functionality for a node.
  *
  * This class encapsulates data and functionality for a node.
@@ -161,7 +161,7 @@ public:
 	//Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
 	// Correctness taken from http://wiki.openstreetmap.org/index.php/Map_Features
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 *	oiu
@@ -202,7 +202,7 @@ public:
 		e_POI1_College				= 0x80000000,	///< College.
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -249,7 +249,7 @@ public:
 		e_POI2_ShopButcher			= 0x80000000,	///< Butcher.
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -267,7 +267,7 @@ public:
 		// 
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -275,7 +275,7 @@ public:
 	enum E_POI4_TYPE {		// must fit the values in the map file!!!
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -283,7 +283,7 @@ public:
 	enum E_POI5_TYPE {		// must fit the values in the map file!!!
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -291,7 +291,7 @@ public:
 	enum E_POI6_TYPE {		// must fit the values in the map file!!!
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -299,7 +299,7 @@ public:
 	enum E_POI7_TYPE {		// must fit the values in the map file!!!
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -308,7 +308,7 @@ public:
 		e_POI8_WP			= 0x80000000,	///< oiu
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -338,7 +338,7 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Constructor.
 	 *
 	 *	Constructor.
@@ -348,14 +348,14 @@ public:
 	 */
 	CXPOINode(t_uint64 ID, double Lon, double Lat);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
 	virtual ~CXPOINode();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Check if point is POI of POI1 type.
 	 *
 	 *	Check if point is POI of POI1.
@@ -364,7 +364,7 @@ public:
 	 */
 	bool IsPOI(size_t Index) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get POI1 flag.
 	 *
 	 *	Get POI1 flag.
@@ -373,7 +373,7 @@ public:
 	 */
 	t_uint32 GetPOIType(size_t Index) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set POI flag.
 	 *
 	 *	Set POI flag.
@@ -382,7 +382,7 @@ public:
 	 */
 	void SetPOIType(size_t Index, t_uint32 NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Compute position in bitmap (row, column) of the most important POI only.
 	 *
 	 *	Compute position in bitmap (row, column) of the most important POI only.
@@ -392,7 +392,7 @@ public:
 	 */
 	void ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set name.
 	 *
 	 *	Set name.
@@ -400,7 +400,7 @@ public:
 	 */
 	void SetName(const CXStringUTF8 &NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get name.
 	 *
 	 *	Get name.
@@ -414,14 +414,14 @@ typedef CXBuffer<CXPOINode *>						TPOINodeBuffer;		///< oiu
 
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXWay {
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -463,91 +463,92 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXWay();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	t_uint64 GetID() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	E_KEYHIGHWAY GetHighwayType() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringUTF8 GetName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringUTF8 GetRef() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetMaxSpeed(unsigned char NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetMaxSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLayer(char NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetLayer() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void AddNode(CXNode *pNode);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t GetNodeCount() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXNode *GetNode(size_t Index) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool GetOSMValiState() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -559,7 +560,7 @@ typedef CXBuffer<CXWay *>						TWayBuffer;		///< oiu
 
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -575,12 +576,12 @@ private:
 	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
 	CXTrackLog			m_TrackLog;				///< oiu
 	// synchronisation
-	mutable CXMutex		m_Mutex;				///< oiu
+	mutable CXMutex		m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Load map version 0.1.3
 	 *
 	 *	Load map version 0.1.3
@@ -590,7 +591,7 @@ private:
 	 */
 	bool LoadMap0_1_3(CXFile & InFile, const CXStringASCII & FileName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Load map version 0.1.2
 	 *
 	 *	Load map version 0.1.2
@@ -600,7 +601,7 @@ private:
 	 */
 	bool LoadMap0_1_2(CXFile & InFile, const CXStringASCII & FileName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Load map version 0.1.1
 	 *
 	 *	Load map version 0.1.1
@@ -610,7 +611,7 @@ private:
 	 */
 	bool LoadMap0_1_1(CXFile & InFile, const CXStringASCII & FileName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Load map current version
 	 *
 	 *	Load map current version
@@ -623,109 +624,111 @@ protected:
 public:
 	TPOINodeMap		m_WPNodes;
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXPOWMMap();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXPOWMMap();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Clear();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetCurrentZone() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetDataPath(const CXStringASCII & Path);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool LoadMap(const CXStringASCII & FileName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void PositionChanged(double dLon, double dLat, bool oFix);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void LockMap();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void UnlockMap();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	TNodeMap &GetNodeMap();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	TPOINodeMap &GetPOINodeMap();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXBuffer<TWayMap *> &GetWayMap();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXWay *GetWay(t_uint64 ID);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void RunOSMVali();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	const CXTrackLog & GetTrackLog() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	static CXPOWMMap *Instance();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

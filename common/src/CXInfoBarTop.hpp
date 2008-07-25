@@ -28,7 +28,7 @@
 #include "CXBitmap.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -49,33 +49,35 @@ private:
 	CXInfoBarTop(const CXInfoBarTop &);						///< Not used.
 	const CXInfoBarTop & operator = (const CXInfoBarTop &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual E_COMMAND OnInternalMouseDown(int X, int Y);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXInfoBarTop();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXInfoBarTop();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

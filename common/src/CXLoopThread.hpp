@@ -27,53 +27,55 @@
 #include <CXThread.hpp>
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXLoopThread : public CXThread {
 private:
 	size_t				m_SleepTime;	///< oiu
-	mutable CXMutex		m_Mutex;		///< oiu
+	mutable CXMutex		m_Mutex;		///< Synchronization object.
 	//-------------------------------------
 	CXLoopThread(const CXLoopThread &);							///< Not used.
 	const CXLoopThread & operator = (const CXLoopThread &);		///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int OnThreadFunc();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadLoop() = 0;
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSleepTime(size_t SleepTime);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t GetSleepTime() const;
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXLoopThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXLoopThread();
 };

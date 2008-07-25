@@ -30,36 +30,26 @@
 #include <TargetIncludes.hpp>
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXNaviData {
 private:
 	bool				m_oFix;				///< oiu
-	//-------------
-	// position stuff
-	//-------------
-	double				m_dHeight;			///< height
-	CXCoor				m_GPSCoor;			///< coordinate
-	CXCoor				m_LocatorCoor;		///< coordinate
-	//-------------
-	// speed stuff
-	//-------------
-	CXUTMSpeed			m_UTMSpeed;			///< UTM speed
-
-	CXStringUTF8		m_StreetName;		///< name of street
-	CXStringUTF8		m_Ref;				///< ref
-	unsigned char		m_MaxSpeed;			///< max. speed
-	t_uint64			m_WayID;			///< id of last located way
-	bool				m_oLocated;			///< is located on a way or not
-	bool				m_oTimeout;			///< timeout occured
-	//-------------
-	// general stuff
-	//-------------
-	mutable CXRWLock	m_RWLock;			///< oiu
+	double				m_dHeight;			///< Height [m].
+	CXCoor				m_GPSCoor;			///< Received GPS coordinate.
+	CXCoor				m_CorrectedGPSCoor;	///< Corrected GPS coordinate.
+	CXCoor				m_LocatedCoor;		///< Located coordinate.
+	CXUTMSpeed			m_UTMSpeed;			///< UTM speed.
+	CXStringUTF8		m_StreetName;		///< Name of street.
+	CXStringUTF8		m_Ref;				///< Ref of street.
+	unsigned char		m_MaxSpeed;			///< Max. allowed speed.
+	t_uint64			m_WayID;			///< ID of last located way.
+	bool				m_oLocated;			///< Is located on a way or not.
+	mutable CXRWLock	m_RWLock;			///< Synchronization object.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -69,161 +59,168 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXNaviData();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXNaviData(const CXNaviData &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	~CXNaviData();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXNaviData & operator = (const CXNaviData &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool HasFix() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetFix(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetHeight(double dHeight);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXCoor GetGPSCoor() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetGPSCoor(const CXCoor &Coor);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
-	CXCoor GetLocatorCoor() const;
+	CXCoor GetCorrectedGPSCoor() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetLocatorCoor(const CXCoor &Coor);
+	void SetCorrectedGPSCoor(const CXCoor &Coor);
 	//-------------------------------------
-	/*
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXCoor GetLocatedCoor() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetLocatedCoor(const CXCoor &Coor);
+	//-------------------------------------
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXUTMSpeed GetUTMSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetUTMSpeed(const CXUTMSpeed & UTMSpeed);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringUTF8 GetStreetName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetStreetName(const CXStringUTF8 & StreetName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringUTF8 GetRef() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetRef(const CXStringUTF8 & Ref);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetMaxSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetMaxSpeed(unsigned char MaxSpeed);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	t_uint64 GetWayID() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetWayID(t_uint64);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool GetLocated() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLocated(bool Value);
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	bool IsTimeout() const;
-	//-------------------------------------
-	/*
-	 * \brief oiu
-	 *
-	 */
-	void SetTimeout(bool Value);
 };
 
-#endif // __CXNAVIDATA_H_
+#endif // __CXNAVIDATA_HPP__

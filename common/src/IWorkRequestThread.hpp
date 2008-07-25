@@ -27,30 +27,30 @@
 #include <CXThread.hpp>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class IWorkRequestThread : public CXThread {
 private:
-	mutable CXMutex		m_Mutex;			///< oiu
+	mutable CXMutex		m_Mutex;			///< Synchronization object.
 	//-------------------------------------
 	IWorkRequestThread(const IWorkRequestThread &);							///< Not used.
 	const IWorkRequestThread & operator = (const IWorkRequestThread &);		///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int OnThreadFunc();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnWorkFunc() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -58,25 +58,27 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	IWorkRequestThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~IWorkRequestThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 * we must overload it to exit waiting
 	 */
 	virtual void StopThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

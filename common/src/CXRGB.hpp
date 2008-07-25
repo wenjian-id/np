@@ -24,7 +24,7 @@
 #define __CXRGB_HPP__
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -34,7 +34,7 @@ private:
 	unsigned char m_G;		///< oiu
 	unsigned char m_B;		///< oiu
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -44,67 +44,74 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXRGB();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXRGB(unsigned char R, unsigned char G, unsigned char B);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXRGB(const CXRGB &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXRGB();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXRGB & operator = (const CXRGB & rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetR() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetG() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned char GetB() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetR(unsigned char R);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetG(unsigned char G);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

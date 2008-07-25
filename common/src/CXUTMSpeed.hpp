@@ -24,7 +24,7 @@
 #define __CXUTMSPEED_HPP__
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -34,7 +34,7 @@ private:
 	double	m_dCos;			///< oiu
 	double	m_dSin;			///< oiu
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -43,79 +43,92 @@ private:
 	void CopyFrom(const CXUTMSpeed &rOther);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXUTMSpeed();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXUTMSpeed(const CXUTMSpeed &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXUTMSpeed();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXUTMSpeed & operator = (const CXUTMSpeed &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
 	 */
 	bool operator == (const CXUTMSpeed &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
 	 */
 	bool operator != (const CXUTMSpeed &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Reset();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSpeed(double dSpeed);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetCos() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetCos(double dCos);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSin() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

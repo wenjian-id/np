@@ -124,3 +124,9 @@ double CXUTMCoor::GetUTMNorthing() const {
 void CXUTMCoor::SetUTMNorthing(double NewValue){
 	m_UTMNorthing = NewValue;
 }
+
+//-------------------------------------
+void CXUTMCoor::OffsetCoor(double dUTME, double dUTMN) {
+	m_UTMEasting += dUTME;
+	m_UTMNorthing += dUTMN;
+}

@@ -29,14 +29,14 @@
 class CXPen;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXPenHolder {
 private:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -49,13 +49,13 @@ private:
 	CXPenHolder(const CXPenHolder &);						///< Not used.
 	const CXPenHolder & operator = (const CXPenHolder &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void CreatePens();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -63,25 +63,27 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXPenHolder();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXPenHolder();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXPen *GetPenBg(CXWay::E_KEYHIGHWAY HighwayType);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

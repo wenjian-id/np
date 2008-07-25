@@ -26,7 +26,7 @@
 #include "CXMutex.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -40,15 +40,17 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMutexLocker(CXMutex *pMutex);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMutexLocker();
 };

@@ -24,7 +24,7 @@
 #define __CXRECT_HPP__
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief This class encapsulates the functionality for a rectangle.
  *
  * This class encapsulates the functionality for a rectangle. The coordinates for left and top
@@ -38,7 +38,7 @@ private:
 	tClass		m_Right;	///< oiu
 	tClass		m_Bottom;	///< oiu
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -48,109 +48,116 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXRect();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXRect(const tClass &Left, const tClass &Top, const tClass &Width, const tClass &Height);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXRect(const CXRect &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXRect();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXRect & operator = (const CXRect &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass GetTop() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetTop(const tClass & NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass GetLeft() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLeft(const tClass & NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass GetBottom() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetBottom(const tClass & NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass GetRight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetRight(const tClass & NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass GetWidth() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass GetHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void OffsetRect(const tClass & dx, const tClass & dy);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void MoveTo(const tClass & left, const tClass & top);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

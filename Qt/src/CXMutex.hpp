@@ -28,13 +28,13 @@
 #include <qmutex.h>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXMutex : public IMutex {
 private:
-	QMutex	m_Mutex;	///< oiu
+	QMutex	m_Mutex;	///< Synchronization object.
 	//-------------------------------------
 	CXMutex(const CXMutex &);							///< Not used.
 	//-------------------------------------
@@ -42,25 +42,27 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMutex();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMutex();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Lock();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

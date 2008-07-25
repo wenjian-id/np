@@ -30,8 +30,8 @@ CXNaviData::CXNaviData() :
 	m_oFix(false),
 	m_dHeight(0.0),
 	m_MaxSpeed(0),
-	m_WayID(0), m_oLocated(false),
-	m_oTimeout(false)
+	m_WayID(0),
+	m_oLocated(false)
 {
 }
 
@@ -55,17 +55,17 @@ const CXNaviData & CXNaviData::operator = (const CXNaviData &rOther) {
 void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	CXReadLocker RL(&rOther.m_RWLock);
 	CXWriteLocker WL(&m_RWLock);
-	m_oFix			= rOther.m_oFix;
-	m_dHeight		= rOther.m_dHeight;
-	m_GPSCoor		= rOther.m_GPSCoor;
-	m_LocatorCoor	= rOther.m_LocatorCoor;
-	m_UTMSpeed		= rOther.m_UTMSpeed;
-	m_StreetName	= rOther.m_StreetName;
-	m_Ref			= rOther.m_Ref;
-	m_MaxSpeed		= rOther.m_MaxSpeed;
-	m_WayID			= rOther.m_WayID;
-	m_oLocated		= rOther.m_oLocated;
-	m_oTimeout		= rOther.m_oTimeout;
+	m_oFix				= rOther.m_oFix;
+	m_dHeight			= rOther.m_dHeight;
+	m_GPSCoor			= rOther.m_GPSCoor;
+	m_CorrectedGPSCoor	= rOther.m_CorrectedGPSCoor;
+	m_LocatedCoor		= rOther.m_LocatedCoor;
+	m_UTMSpeed			= rOther.m_UTMSpeed;
+	m_StreetName		= rOther.m_StreetName;
+	m_Ref				= rOther.m_Ref;
+	m_MaxSpeed			= rOther.m_MaxSpeed;
+	m_WayID				= rOther.m_WayID;
+	m_oLocated			= rOther.m_oLocated;
 }
 
 //-------------------------------------
@@ -105,15 +105,27 @@ void CXNaviData::SetGPSCoor(const CXCoor &Coor) {
 }
 
 //-------------------------------------
-CXCoor CXNaviData::GetLocatorCoor() const {
+CXCoor CXNaviData::GetCorrectedGPSCoor() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_LocatorCoor;
+	return m_CorrectedGPSCoor;
 }
 
 //-------------------------------------
-void CXNaviData::SetLocatorCoor(const CXCoor &Coor) {
+void CXNaviData::SetCorrectedGPSCoor(const CXCoor &Coor) {
 	CXWriteLocker WL(&m_RWLock);
-	m_LocatorCoor = Coor;
+	m_CorrectedGPSCoor = Coor;
+}
+
+//-------------------------------------
+CXCoor CXNaviData::GetLocatedCoor() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_LocatedCoor;
+}
+
+//-------------------------------------
+void CXNaviData::SetLocatedCoor(const CXCoor &Coor) {
+	CXWriteLocker WL(&m_RWLock);
+	m_LocatedCoor = Coor;
 }
 
 //-------------------------------------
@@ -187,16 +199,3 @@ void CXNaviData::SetLocated(bool Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oLocated = Value;
 }
-
-//-------------------------------------
-bool CXNaviData::IsTimeout() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oTimeout;
-}
-
-//-------------------------------------
-void CXNaviData::SetTimeout(bool Value) {
-	CXWriteLocker WL(&m_RWLock);
-	m_oTimeout = Value;
-}
-

@@ -33,7 +33,7 @@
 class CXLocatorThread;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -49,115 +49,117 @@ private:
 	CXLocatorThread		*m_pLocator;	///< oiu
 	bool				m_oSaving;		///< oiu
 	CXFile				m_SaveFile;		///< oiu
-	mutable CXMutex		m_Mutex;		///< oiu
+	mutable CXMutex		m_Mutex;		///< Synchronization object.
 	//-------------------------------------
 	CXGPSRecvThread(const CXGPSRecvThread &);						///< Not used.
 	const CXGPSRecvThread & operator = (const CXGPSRecvThread &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void OpenSerial();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void ReopenSerial();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void CloseSerial();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool ReceiveData();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool ProcessData();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool CheckGGA();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool CheckRMC();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool CheckGSA();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool CheckGSV();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStarted();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadLoop();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStopped();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Save(const tUCBuffer & Buffer);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXGPSRecvThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXGPSRecvThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsOpen() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLocator(CXLocatorThread *pLocator);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

@@ -31,7 +31,7 @@ class CXBitmap;
 class CXStringUTF8;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief Information bar for common information.
  *
  * This class encapsulates the functionality for displaying common information:
@@ -44,7 +44,7 @@ private:
 	CXInfoBarCommon(const CXInfoBarCommon &);						///< Not used.
 	const CXInfoBarCommon & operator = (const CXInfoBarCommon &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Paint.
 	 *
 	 * Paint position and speed data to a bitmap.
@@ -54,7 +54,7 @@ private:
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Calculate optimal font height for a rect.
 	 *
 	 * Calculate optimal font height so that a text fits into a rectangle.
@@ -68,21 +68,21 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Default constructor.
 	 *
 	 * Default constructor.
 	 */
 	CXInfoBarCommon();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
 	virtual ~CXInfoBarCommon();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Position has changed.
 	 *
 	 * Position has changed.

@@ -26,7 +26,7 @@
 #include "CXStringASCII.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -44,85 +44,87 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXGGAPacket();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXGGAPacket();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetUTC() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetUTC(const CXStringASCII &NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool HasFix() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetFix(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int	GetNSat() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetNSat(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetLon() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLon(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetLat() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLat(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -130,7 +132,7 @@ public:
 };
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -148,85 +150,87 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXRMCPacket();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXRMCPacket();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetUTC() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetUTC(const CXStringASCII &NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool HasFix() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetFix(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetLon() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLon(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetLat() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLat(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSpeed(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetCourse() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -234,7 +238,7 @@ public:
 };
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -246,21 +250,23 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXGSAPacket();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXGSAPacket();
 };
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -272,81 +278,90 @@ private:
 	int		m_Azimuth;		///< oiu
 	int		m_SNR;			///< oiu
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy from other instance to self.
 	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXGSVSatelliteInfo &rOther);
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXGSVSatelliteInfo();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXGSVSatelliteInfo(const CXGSVSatelliteInfo &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXGSVSatelliteInfo();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXGSVSatelliteInfo & operator = (const CXGSVSatelliteInfo &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetPRN() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetPRN(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetElevation() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetElevation(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetAzimuth() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetAzimuth(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetSNR() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -354,7 +369,7 @@ public:
 };
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -366,15 +381,17 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXGSVPacket();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXGSVPacket();
 };

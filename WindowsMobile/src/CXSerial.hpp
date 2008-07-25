@@ -27,7 +27,7 @@
 #include <TargetIncludes.hpp>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -40,43 +40,45 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXSerial();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXSerial();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
     E_RESULTCODE Open(const CXSerialPortConfig & Config);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
     virtual E_RESULTCODE Close();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
     virtual E_RESULTCODE Receive(unsigned long  ulDataSize, unsigned char *  pbData, unsigned long &  ulReceived);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
     virtual E_RESULTCODE Transmit(unsigned long  ulDataSize, const unsigned char *  pbData, unsigned long &  ulTransmitted);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

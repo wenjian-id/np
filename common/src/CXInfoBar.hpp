@@ -29,7 +29,7 @@
 class CXDeviceContext;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -38,68 +38,70 @@ private:
 	int					m_Width;		///< oiu
 	int					m_Height;		///< oiu
 	bool				m_oSizeChanged;	///< oiu
-	mutable CXMutex		m_Mutex;		///< oiu
+	mutable CXMutex		m_Mutex;		///< Synchronization object.
 	//-------------------------------------
 	CXInfoBar(const CXInfoBar &);						///< Not used.
 	const CXInfoBar & operator = (const CXInfoBar &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) = 0;
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetWidth() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool SizeChanged() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual E_COMMAND OnInternalMouseDown(int X, int Y);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXInfoBar();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXInfoBar();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Resize(int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

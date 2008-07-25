@@ -33,38 +33,40 @@ private:
 	const CXMapPainterTest & operator = (const CXMapPainterTest &);	///< Not used.
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void PaintPackground(IBitmap *pBMP, int Width, int Height);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMapPainterTest();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMapPainterTest();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool ZoomIn();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

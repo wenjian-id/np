@@ -30,7 +30,7 @@
 #include <qthread.h>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -38,7 +38,7 @@ class CXThread : public IThread {
 friend class CXThreadHelper;
 private:
 	//---------------------------------------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -51,25 +51,26 @@ private:
 	protected:
 	public:
 		//-------------------------------------
-		/*
+		/**
 		 * \brief oiu
 		 *
 		 */
 		CXThreadHelper(CXThread *pThread);
 		//-------------------------------------
-		/*
-		 * \brief oiu
+		/**
+		 * \brief Destructor.
 		 *
+		 * Destructor.
 		 */
 		virtual ~CXThreadHelper();
 		//-------------------------------------
-		/*
+		/**
 		 * \brief oiu
 		 *
 		 */
 		void run();
 		//-------------------------------------
-		/*
+		/**
 		 * \brief oiu
 		 *
 		 */
@@ -82,32 +83,34 @@ private:
 	const CXThread & operator = (const CXThread &);		///< Not used.
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void DoSleep(size_t dwMilliSeconds);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool CreateThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

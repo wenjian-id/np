@@ -28,7 +28,7 @@
 #include "CXMapSimple.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -39,7 +39,7 @@ private:
 	CXFileIni(const CXFileIni &);						///< Not used.
 	const CXFileIni & operator = (const CXFileIni &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -47,25 +47,27 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXFileIni();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXFileIni();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool Read(const CXStringASCII & FileName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

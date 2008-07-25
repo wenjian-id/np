@@ -2,12 +2,14 @@
 /CHANGELOG.TXT -text
 /LICENSE.TXT -text
 Qt/KDevelop/NaviPOWM.pro -text
+Qt/KDevelop/doxygen/NaviPOWM.dox -text
 Qt/KDevelop/src/CXSerial.cpp -text
 Qt/KDevelop/src/CXSerial.hpp -text
 Qt/KDevelop/src/OSSpecific.cpp -text
 Qt/KDevelop/src/OSSpecific.hpp -text
 Qt/MinGW/NaviPOWM.mdsp -text
 Qt/MinGW/NaviPOWM.rc -text
+Qt/MinGW/doxygen/NaviPOWM.dox -text
 Qt/MinGW/src/CXSerial.cpp -text
 Qt/MinGW/src/CXSerial.hpp -text
 Qt/MinGW/src/OSSpecific.cpp -text
@@ -92,6 +94,7 @@ WindowsMobile/WM5/eVC4/NaviPOWM.rc -text
 WindowsMobile/WM5/eVC4/NaviPOWM.vcp -text
 WindowsMobile/WM5/eVC4/NaviPOWM.vcw -text
 WindowsMobile/WM5/eVC4/resource.h -text
+WindowsMobile/doxygen/NaviPOWM.dox -text
 WindowsMobile/src/CXBitmap.cpp -text
 WindowsMobile/src/CXBitmap.hpp -text
 WindowsMobile/src/CXDeviceContext.cpp -text

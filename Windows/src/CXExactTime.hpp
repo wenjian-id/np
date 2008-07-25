@@ -27,7 +27,7 @@
 #include "TargetIncludes.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -37,83 +37,90 @@ private:
 	SYSTEMTIME	mSystemTime;			///< oiu
 	DWORD		mdwMilliSeconds;		///< oiu
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
 	 * \param	rOther	Instance to copy from.
 	 */
-	void CopyFrom(const CXExactTime & rOther);
+	void CopyFrom(const CXExactTime &rOther);
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXExactTime();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
-	CXExactTime(const CXExactTime&rOther);
+	CXExactTime(const CXExactTime &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	~CXExactTime();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXExactTime & operator = (const CXExactTime & rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void SetNow();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual unsigned long operator - (const CXExactTime & rOther) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetYear() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetMonth() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetDay() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetHour() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetMinute() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

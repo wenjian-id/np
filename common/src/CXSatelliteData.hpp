@@ -30,7 +30,7 @@
 class CXDeviceContext;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -47,12 +47,12 @@ private:
 	bool							m_oGGADataReceived;		///< oiu
 	bool							m_oGSADataReceived;		///< oiu
 	bool							m_oGSVDataReceived;		///< oiu
-	mutable CXRWLock				m_RWLock;				///< oiu
+	mutable CXRWLock				m_RWLock;				///< Synchronization object.
 	//-------------------------------------
 	CXSatelliteData(const CXSatelliteData &);						///< Not used.
 	const CXSatelliteData & operator = (const CXSatelliteData &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -60,49 +60,51 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXSatelliteData();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXSatelliteData();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	static CXSatelliteData *Instance();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetRMCReceived();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetNrSatGGA(int NrSatGGA);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetNrSat() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetActiveSatellites(const CXBuffer<int> &ActiveSatellites);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -110,7 +112,7 @@ public:
 					const CXGSVSatelliteInfo &Info1, const CXGSVSatelliteInfo &Info2,
 					const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

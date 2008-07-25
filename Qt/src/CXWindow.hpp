@@ -29,7 +29,7 @@
 #include <qevent.h>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -37,84 +37,85 @@ class CXWindow : public IWindow, public QWidget {
 private:
 	//-------------------------------------
 	CXWindow(const CXWindow &);							///< Not used.
-	//-------------------------------------
 	const CXWindow & operator = (const CXWindow &);		///< Not used.
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnPaint();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void paintEvent(QPaintEvent *event);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void resizeEvent(QResizeEvent *event);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void keyPressEvent(QKeyEvent * event);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void keyReleaseEvent(QKeyEvent * event);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void mousePressEvent(QMouseEvent * event);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXWindow();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXWindow();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void ShowMaximized();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void ShowNormal();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void ShowFullScreen();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void ShowMinimized();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

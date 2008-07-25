@@ -29,51 +29,53 @@
 #include <TargetIncludes.hpp>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXRWLock : public IRWLock {
 private:
-	CXMutex			m_Mutex;		///< oiu
 	CXSemaphore		m_Semaphore;	///< oiu
+	CXMutex			m_Mutex;		///< Synchronization object.
 	//-------------------------------------
 	CXRWLock(const CXRWLock &);							///< Not used.
 	const CXRWLock & operator = (const CXRWLock &);		///< Not used.
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXRWLock();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXRWLock();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void LockRead();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void LockWrite();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void UnlockRead();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

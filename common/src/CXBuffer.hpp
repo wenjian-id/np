@@ -26,39 +26,45 @@
 #include <TargetIncludes.hpp>
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 template<class tClass> class CXBuffer {
 public:
-	static const size_t NPOS;				///< oiu
+	static const size_t NPOS;				///< Identifier for "No POSition".
 private:
-	tClass			*m_pBuffer;				///< oiu
-	size_t			m_ulBufferSize;			///< oiu
-	size_t			m_ulAllocatedSize;		///< oiu
+	tClass			*m_pBuffer;				///< Internal buffer.
+	size_t			m_ulBufferSize;			///< Number of used entries in internal buffer.
+	size_t			m_ulAllocatedSize;		///< Number of allocated entries in internal buffer.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
 	 * \param	rOther	Instance to copy from.
 	 */
-	void CopyFrom(const CXBuffer &rOther);
+	void CopyFrom(const CXBuffer & rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Grow internal buffer to a new size.
 	 *
+	 * Grow internal buffer to a new size. Memory is reallocated 
+	 * and content copied.
+	 * \param	ulNewSize	New number of entries.
 	 */
 	void GrowTo(size_t ulNewSize);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Grow internal buffer to a new size.
 	 *
+	 * Grow internal buffer to a new size. Memory is reallocated 
+	 * and content copied.
+	 * \param	ulNewSize	New number of entries.
 	 */
 	void ShrinkTo(size_t ulNewSize);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -66,151 +72,167 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXBuffer();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor. Memory is freed.
 	 */
 	virtual ~CXBuffer();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
-	CXBuffer(const CXBuffer &rOther);
+	CXBuffer(const CXBuffer & rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
-	const CXBuffer & operator = (const CXBuffer &rOther);
+	const CXBuffer & operator = (const CXBuffer & rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
 	 */
-	bool operator == (const CXBuffer &rOther) const;
+	bool operator == (const CXBuffer & rOther) const;
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if this instance < other instance.
 	 */
-	bool operator < (const CXBuffer &rOther) const;
+	bool operator < (const CXBuffer & rOther) const;
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if this instance > other instance.
 	 */
-	bool operator > (const CXBuffer &rOther) const;
+	bool operator > (const CXBuffer & rOther) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	const tClass *GetBuffer() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass *GetBufferWritable();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t GetSize() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t GetAllocatedSize() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Append(const tClass *pbData, size_t ulDataSize);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
-	void Append(const tClass &c);
+	void Append(const tClass & c);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
-	void InsertAt(size_t Index, const tClass &c);
+	void InsertAt(size_t Index, const tClass & c);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Clear();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void DeleteFirst(size_t ulCount);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void DeleteLast(size_t ulCount);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsEmpty() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	tClass & operator[] (size_t ulPos);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	const tClass & operator[] (size_t ulPos) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t Find(const tClass * pc, size_t Len) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t Find(const tClass & c) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t ReverseFind(const tClass & c) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXBuffer Left(size_t ulCount) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -233,7 +255,7 @@ template<class tClass> CXBuffer<tClass> ::CXBuffer() :
 }
 
 //-------------------------------------
-template<class tClass> CXBuffer<tClass> ::CXBuffer(const CXBuffer<tClass> &rOther) :
+template<class tClass> CXBuffer<tClass> ::CXBuffer(const CXBuffer<tClass> & rOther) :
 	m_pBuffer(NULL),
 	m_ulBufferSize(0),
 	m_ulAllocatedSize(0)
@@ -247,7 +269,7 @@ template<class tClass> CXBuffer<tClass> ::~CXBuffer() {
 }
 
 //-------------------------------------
-template<class tClass> const CXBuffer<tClass> & CXBuffer<tClass> ::operator = (const CXBuffer<tClass> &rOther) {
+template<class tClass> const CXBuffer<tClass> & CXBuffer<tClass> ::operator = (const CXBuffer<tClass> & rOther) {
 	if(this != &rOther) {
 		CopyFrom(rOther);
 	}
@@ -255,7 +277,7 @@ template<class tClass> const CXBuffer<tClass> & CXBuffer<tClass> ::operator = (c
 }
 
 //-------------------------------------
-template<class tClass> void CXBuffer<tClass> ::CopyFrom(const CXBuffer<tClass> &rOther) {
+template<class tClass> void CXBuffer<tClass> ::CopyFrom(const CXBuffer<tClass> & rOther) {
 	delete [] m_pBuffer;
 	m_ulAllocatedSize = rOther.m_ulAllocatedSize;
 	m_ulBufferSize = rOther.m_ulBufferSize;
@@ -315,7 +337,7 @@ template<class tClass> void CXBuffer<tClass> ::ShrinkTo(size_t ulNewSize) {
 }
 
 //-------------------------------------
-template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer &rOther) const {
+template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer & rOther) const {
 	// check if buffer allocated
 	if((m_pBuffer == NULL) || (rOther.m_pBuffer == NULL))
 		return false;
@@ -327,7 +349,7 @@ template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer &rOth
 }
 
 //-------------------------------------
-template<class tClass> bool CXBuffer<tClass> ::operator < (const CXBuffer &rOther) const {
+template<class tClass> bool CXBuffer<tClass> ::operator < (const CXBuffer & rOther) const {
 	// check if buffer allocated
 	if((m_pBuffer == NULL) || (rOther.m_pBuffer == NULL))
 		return false;
@@ -336,7 +358,7 @@ template<class tClass> bool CXBuffer<tClass> ::operator < (const CXBuffer &rOthe
 }
 
 //-------------------------------------
-template<class tClass> bool CXBuffer<tClass> ::operator > (const CXBuffer &rOther) const {
+template<class tClass> bool CXBuffer<tClass> ::operator > (const CXBuffer & rOther) const {
 	// check if buffer allocated
 	if((m_pBuffer == NULL) || (rOther.m_pBuffer == NULL))
 		return false;
@@ -371,7 +393,7 @@ template<class tClass> void CXBuffer<tClass> ::Append(const tClass & c) {
 }
 
 //-------------------------------------
-template<class tClass> void CXBuffer<tClass> ::InsertAt(size_t Index, const tClass &c) {
+template<class tClass> void CXBuffer<tClass> ::InsertAt(size_t Index, const tClass & c) {
 	if(Index >= m_ulBufferSize)
 		// wrong index
 		return;

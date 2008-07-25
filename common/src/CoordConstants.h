@@ -43,7 +43,7 @@ const char UTMLetterNone = 'Z';			///< UTM letter "none"
 const int WGS84 = 23;					///< Used ellipsoid
 
 //-------------------------------------
-/*
+/**
  * \brief Possible ellipsoids.
  *
  *	Possible ellipsoids.

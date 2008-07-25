@@ -28,7 +28,7 @@
 
 class CXBitMap;
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -41,37 +41,39 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXDeviceContext(HDC hDC);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXDeviceContext();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	HDC GetDC() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

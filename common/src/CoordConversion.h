@@ -34,7 +34,7 @@
 #define LATLONGCONV
 
 //-------------------------------------
-/*
+/**
  * \brief Convert longitude and latitude to UTM coordinates.
  *
  *	Convert longitude and latitude to UTM coordinates.
@@ -47,10 +47,10 @@
  *	\param	UTMEasting				Computed UTM easting.
  *	\param	UTMNorthing				Computed UTM northing.
  */
-void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing);
+void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const int ForceZoneNumber, int & ZoneNumber, char & UTMLetter, double & UTMEasting, double & UTMNorthing);
 
 //-------------------------------------
-/*
+/**
  * \brief Convert UTM coordinates to longitude and latitude.
  *
  *	Convert UTM coordinates to longitude and latitude.
@@ -61,10 +61,10 @@ void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const
  *	\param	rdLon					Computed longitude [decimal degrees].
  *	\param	rdLat					Computed Latitude [decimal degrees].
  */
-void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& rdLon,  double& rdLat);
+void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double & rdLon,  double & rdLat);
 
 //-------------------------------------
-/*
+/**
  * \brief Get UTM letter from latitude.
  *
  * Get UTM letter from latitude.
@@ -72,7 +72,7 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
 char UTMLetterDesignator(double dLat);
 
 //-------------------------------------
-/*
+/**
  * \brief Class describing ellipsoids.
  *
  * Class describing ellipsoids.

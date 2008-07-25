@@ -57,7 +57,7 @@ const unsigned char DegUTF8[2] = {0xC2, 0xB0};
 
 
 //-------------------------------------
-/*
+/**
  * \brief Possible command.
  *
  * Possible command.
@@ -75,7 +75,7 @@ enum E_COMMAND {
 
 
 //-------------------------------------
-/*
+/**
  * \brief Create an absolute path for directory entries.
  *
  * Create an absolute path for directory entries.
@@ -89,7 +89,7 @@ enum E_COMMAND {
 CXStringASCII CreateAbsolutePath(const CXStringASCII &StartPath, const CXStringASCII &Path);
 
 //-------------------------------------
-/*
+/**
  * \brief Create an absolute path for directory entries.
  *
  * Create an absolute filename.
@@ -102,7 +102,7 @@ CXStringASCII CreateAbsolutePath(const CXStringASCII &StartPath, const CXStringA
 CXStringASCII CreateAbsoluteFileName(const CXStringASCII &StartPath, const CXStringASCII &FileName);
 
 //-------------------------------------
-/*
+/**
  * \brief Read one ASCII line from a file.
  *
  * Read a line consisting of ASCII characters from a file.
@@ -116,7 +116,7 @@ CXStringASCII CreateAbsoluteFileName(const CXStringASCII &StartPath, const CXStr
 bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine);
 
 //-------------------------------------
-/*
+/**
  * \brief Read one byte from a file.
  *
  * Read a byte (unsigned char) from a file.
@@ -127,7 +127,7 @@ bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine);
 bool ReadB(CXFile & rInFile, unsigned char & rValue);
 
 //-------------------------------------
-/*
+/**
  * \brief Read a 32 bit unsigned integer from a file.
  *
  * Read a 32 bit unsigned integer from a file.
@@ -139,7 +139,7 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue);
 bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
 
 //-------------------------------------
-/*
+/**
  * \brief Write a 32 bit unsigned integer to a file.
  *
  * Write a 32 bit unsigned integer to a file.
@@ -151,7 +151,7 @@ bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
 bool WriteUI32(CXFile & rOutFile, t_uint32 Value);
 
 //-------------------------------------
-/*
+/**
  * \brief Read a 64 bit unsigned integer from a file.
  *
  * Read a 64 bit unsigned integer from a file.
@@ -162,7 +162,7 @@ bool WriteUI32(CXFile & rOutFile, t_uint32 Value);
 bool ReadUI64(CXFile & rInFile, t_uint64 & rValue);
 
 //-------------------------------------
-/*
+/**
  * \brief Read one UTF8 encoded string from a file.
  *
  * Read one UTF8 encoded string from a file. Strings have to 
@@ -174,7 +174,7 @@ bool ReadUI64(CXFile & rInFile, t_uint64 & rValue);
 bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
 
 //-------------------------------------
-/*
+/**
  * \brief Check if CRC of NMEA packet is correct.
  *
  * Check if CRC of NMEA packet is correct.
@@ -184,7 +184,7 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
 bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
 
 //-------------------------------------
-/*
+/**
  * \brief Extract information from a GGA packet.
  *
  * Extract information from a GGA packet. The information extracted
@@ -196,7 +196,7 @@ bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
 bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket);
 
 //-------------------------------------
-/*
+/**
  * \brief Extract information from a RMC packet.
  *
  * Extract information from a RMC packet. The information extracted
@@ -208,7 +208,7 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket);
 bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
 
 //-------------------------------------
-/*
+/**
  * \brief Extract information from a GSA packet.
  *
  * Extract information from a GSA packet. The information extracted
@@ -220,7 +220,7 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
 bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXBuffer<int> &rSatellites);
 
 //-------------------------------------
-/*
+/**
  * \brief Extract information from a GSV packet.
  *
  * Extract information from a GSV packet. The information extracted
@@ -242,7 +242,7 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
 					CXGSVSatelliteInfo &rInfo3, CXGSVSatelliteInfo &rInfo4);
 
 //-------------------------------------
-/*
+/**
  * \brief Extract first token from a string.
  *
  * Extract first token from a string. The first token consists of the string part
@@ -256,7 +256,7 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
 CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar);
 
 //-------------------------------------
-/*
+/**
  * \brief Convert lon / lat from deGreesMinute.Decimal to decimal deGrees.
  *
  * Convert lon / lat from deGreesMinute.Decimal to decimal deGrees.
@@ -268,7 +268,7 @@ CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar);
 void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdLat);
 
 //-------------------------------------
-/*
+/**
  * \brief Compute distance between two coordinates.
  *
  * Compute distance between two coordinates.

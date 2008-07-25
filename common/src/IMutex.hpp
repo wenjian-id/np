@@ -24,7 +24,7 @@
 #define __IMUTEX_HPP__
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -36,27 +36,29 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	IMutex() {
 	}
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~IMutex() {
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Lock() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

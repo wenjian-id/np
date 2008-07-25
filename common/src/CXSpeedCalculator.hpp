@@ -30,7 +30,7 @@
 #include "CXRWLock.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief Calculate speed from a bunch of UTM coordinates with timestamp.
  *
  * This class calculates a speed from a bunch of UTM coordinates with time stamp.
@@ -41,7 +41,7 @@
 class CXSpeedCalculator {
 private:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -64,20 +64,20 @@ private:
 	double						m_SpeedThreshold;	///< Min speed which is recognised as "moving".
 	CXStringASCII				m_LastUTC;			///< oiu
 	// sync stuff
-	mutable CXRWLock	m_RWLock;					///< Sync object
+	mutable CXRWLock	m_RWLock;					///< Synchronization object.
 	//-------------------------------------
 	CXSpeedCalculator();												///< Not used.
 	CXSpeedCalculator(const CXSpeedCalculator &);						///< Not used.
 	const CXSpeedCalculator & operator = (const CXSpeedCalculator &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Clear buffer with coordinates.
 	 *
 	 * Clear buffer with coordinates.
 	 */
 	void ClearBuffer();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set new data.
 	 *
 	 * Set new data.
@@ -88,7 +88,7 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Only allowed constructor.
 	 *
 	 * Only allowed constructor.
@@ -96,14 +96,14 @@ public:
 	 */
 	CXSpeedCalculator(size_t BufferSize);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Destructor.
 	 * 
 	 * Destructor.
 	 */
 	virtual ~CXSpeedCalculator();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set new GGA data.
 	 *
 	 * Set new GGA data.
@@ -112,7 +112,7 @@ public:
 	 */
 	void SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set new RMC data.
 	 *
 	 * Set new RMC data.
@@ -121,14 +121,14 @@ public:
 	 */
 	void SetRMCData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Reset data.
 	 *
 	 * All saved data is resetted.
 	 */
 	void ResetData();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get speed.
 	 *
 	 * Get Speed.
@@ -136,7 +136,7 @@ public:
 	 */
 	CXUTMSpeed GetSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get speed threshold.
 	 *
 	 * Get speed threshold.
@@ -144,7 +144,7 @@ public:
 	 */
 	double GetSpeedThreshold() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set speed threshold.
 	 *
 	 * Set speed threshold.
@@ -152,14 +152,14 @@ public:
 	 */
 	void SetSpeedThreshold(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
 	 */
 	bool NewDataArrived() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu.
 	 *
 	 * oiu.

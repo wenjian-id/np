@@ -28,13 +28,13 @@
 #include <qreadwritelock.h>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXRWLock : public IRWLock {
 private:
-	QReadWriteLock	m_RWLock;
+	QReadWriteLock	m_RWLock;	///< Synchronization object.
 	//-------------------------------------
 	CXRWLock(const CXRWLock &);							///< Not used.
 	//-------------------------------------
@@ -42,37 +42,39 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXRWLock();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXRWLock();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void LockRead();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void LockWrite();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void UnlockRead();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

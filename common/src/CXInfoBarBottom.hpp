@@ -27,7 +27,7 @@
 #include "CXNaviData.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -38,7 +38,7 @@ private:
 	CXInfoBarBottom(const CXInfoBarBottom &);						///< Not used.
 	const CXInfoBarBottom & operator = (const CXInfoBarBottom &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -46,19 +46,21 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXInfoBarBottom();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXInfoBarBottom();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

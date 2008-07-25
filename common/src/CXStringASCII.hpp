@@ -27,7 +27,7 @@
 #include "CXBuffer.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -37,133 +37,155 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXStringASCII();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXStringASCII(const CXStringASCII &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII(const char *pcChar);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII(const char *pcChar, size_t Len);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXStringASCII();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXStringASCII & operator = (const CXStringASCII &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXStringASCII & operator = (const tCBuffer &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
 	 */
 	bool operator == (const CXStringASCII &rOther) const;
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
 	 */
 	bool operator != (const CXStringASCII &rOther) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void operator += (char c);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void operator += (const CXStringASCII &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if this instance < other instance.
 	 */
 	bool operator < (const CXStringASCII &rOther) const;
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if this instance > other instance.
 	 */
 	bool operator > (const CXStringASCII &rOther) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t Find(const char *pcFind) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t ReverseFind(char cFind) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t Find(char cFind) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void TrimLeft();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void TrimRight();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Empty();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII ToUpper() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII ToLower() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

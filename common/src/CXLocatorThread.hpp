@@ -34,7 +34,7 @@
 class CXNaviPOWM;
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -53,123 +53,125 @@ private:
 	bool							m_oStartCoordinatesValid;	///< oiu
 	CXNaviPOWM						*m_pNaviPOWM;				///< oiu
 	CXExactTime						m_StartTime;				///< starting time
-	mutable CXMutex					m_MutexInputData;			///< oiu
-	mutable CXMutex					m_Mutex;					///< oiu
+	mutable CXMutex					m_MutexInputData;			///< Synchronization object for input data.
+	mutable CXMutex					m_Mutex;					///< Synchronization object.
 	//-------------------------------------
 	CXLocatorThread(const CXLocatorThread&);						///< Not used.
 	const CXLocatorThread & operator = (const CXLocatorThread&);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetFlag_NewDataGPSGGA(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetFlag_NewDataGPSRMC(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool GetFlag_NewDataGPSGGA() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool GetFlag_NewDataGPSRMC() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXTimeStampData<tUCBuffer> GetGPSDataGGA() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXTimeStampData<tUCBuffer> GetGPSDataRMC() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool Locate(t_uint64 &rProxWay);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool LoadStartGPSCoordinates();
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStarted();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadLoop();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStopped();
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXLocatorThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXLocatorThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetGPSDataGGA(const tUCBuffer & Buffer);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetGPSDataRMC(const tUCBuffer & Buffer);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetGPSDataGSA(const tUCBuffer & Buffer);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetGPSDataGSV(const tUCBuffer & Buffer);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

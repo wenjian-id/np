@@ -26,7 +26,7 @@
 #include <CXMutex.hpp>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief Interface for thread class.
  *
  * Interface for thread class. Has to be implemented target specific
@@ -41,7 +41,7 @@ private:
 	const IThread & operator = (const IThread&);	///< Not used.
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Check if thread has to be stopped.
 	 *
 	 * Check if thread has to be stopped.
@@ -49,74 +49,76 @@ protected:
 	 */
 	bool MustStopThread() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStarted() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int OnThreadFunc() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStopped() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void DoSleep(size_t dwMilliSeconds) = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int ThreadFunc();
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	IThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~IThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void StopThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool CreateThread() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool IsRunning() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void SetRunning(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

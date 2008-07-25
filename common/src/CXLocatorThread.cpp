@@ -41,6 +41,9 @@ static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
 static const double SQUARE_MAXDIST = 1600; // 40*40
 static const unsigned int SCALE_FACTOR = 1000000;
 static const char * pcLastCoorFileName = "last.gps";
+/// \todo put to options...
+static const double GPSLAGMS = 1300; // ms
+
 
 //---------------------------------------------------------------------
 //-------------------------------------
@@ -248,7 +251,8 @@ void CXLocatorThread::OnThreadLoop() {
 			case CXOptions::e_ModeMapping:		m_SpeedCalculator.SetSpeedThreshold(CXOptions::Instance()->GetSpeedThresholdMapping()); break;
 		}
 		// set private navigation data
-		m_NaviData.SetUTMSpeed(m_SpeedCalculator.GetSpeed());
+		CXUTMSpeed UTMSpeed = m_SpeedCalculator.GetSpeed();
+		m_NaviData.SetUTMSpeed(UTMSpeed);
 		if(m_oGPSFixAtLeastOnce) {
 			// at least one GPS fix. Use last received coordinates
 			m_NaviData.SetGPSCoor(m_LastReceivedCoor);
@@ -270,6 +274,12 @@ void CXLocatorThread::OnThreadLoop() {
 			}
 		}
 		m_NaviData.SetFix(oHasFix);
+		// compute and set CorrectedGPSCoor
+		CXCoor CorrectedGPSCoor(m_NaviData.GetGPSCoor());
+		double dE = 1.0*GPSLAGMS/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetCos();
+		double dN = 1.0*GPSLAGMS/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetSin();
+		CorrectedGPSCoor.OffsetCoor(dE, dN);
+		m_NaviData.SetCorrectedGPSCoor(CorrectedGPSCoor);
 	} else {
 		// no data arrived
 		unsigned long Delta = Now - m_LastReceivedPosition;
@@ -297,7 +307,7 @@ void CXLocatorThread::OnThreadLoop() {
 		if(pPOWMMap != NULL) {
 			// check if new map has to be loaded
 			char buf[100];
-			CXCoor Coor = m_NaviData.GetGPSCoor();
+			CXCoor Coor = m_NaviData.GetCorrectedGPSCoor();
 			/// \todo which coor
 			double dLon = Coor.GetLon();
 			double dLat = Coor.GetLat();
@@ -439,8 +449,8 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 	CXExactTime StartTime;
 	StartTime.SetNow();
 
-	// initialize LocatorCoor
-	m_NaviData.SetLocatorCoor(m_NaviData.GetGPSCoor());
+	// initialize LocatedCoor
+	m_NaviData.SetLocatedCoor(m_NaviData.GetCorrectedGPSCoor());
 
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
     // The received coordinate is defined by P(x0, y0).
@@ -472,8 +482,8 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 	int NewZone = UTMZoneNone;
 
 	int CurrentZone = pPOWMMap->GetCurrentZone();
-	double dLon = m_NaviData.GetGPSCoor().GetLon();
-	double dLat = m_NaviData.GetGPSCoor().GetLat();
+	double dLon = m_NaviData.GetCorrectedGPSCoor().GetLon();
+	double dLat = m_NaviData.GetCorrectedGPSCoor().GetLat();
 	LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
 
     // Iterrate through ways
@@ -619,7 +629,7 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
     }
 
 	UTMtoLL(WGS84, PSProxx, PSProxy, CurrentZone, UTMLetter, dLon, dLat);
-	m_NaviData.SetLocatorCoor(CXCoor(dLon, dLat));
+	m_NaviData.SetLocatedCoor(CXCoor(dLon, dLat));
 
 	return true;
 }

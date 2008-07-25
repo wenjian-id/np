@@ -115,3 +115,11 @@ double CXCoor::GetUTMEasting() const {
 double CXCoor::GetUTMNorthing() const {
 	return m_UTMCoor.GetUTMNorthing();
 }
+
+//-------------------------------------
+void CXCoor::OffsetCoor(double dUTME, double dUTMN) {
+	// offset UTMCoor
+	m_UTMCoor.OffsetCoor(dUTME, dUTMN);
+	// an dcompute lon / lat
+	UTMtoLL(WGS84, m_UTMCoor.GetUTMEasting(), m_UTMCoor.GetUTMNorthing(), m_UTMCoor.GetUTMZone(), m_UTMCoor.GetUTMLetter(), m_dLon, m_dLat);
+}

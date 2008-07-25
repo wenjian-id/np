@@ -26,7 +26,7 @@
 #include "CXRWLock.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -37,74 +37,76 @@ private:
 	int					m_LoadTimeWays;
 	int					m_LocatorTime;
 	int					m_ZoomLevel;
-	mutable CXRWLock	m_RWLock;						///< oiu
+	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXDebugInfo(const CXDebugInfo &);						///< Not used.
 	const CXDebugInfo & operator = (const CXDebugInfo &);	///< Not used.
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXDebugInfo();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXDebugInfo();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	static CXDebugInfo *Instance();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetLoadTimeNodes() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLoadTimeNodes(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetLoadTimeWays() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLoadTimeWays(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetLocatorTime() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLocatorTime(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetZoomLevel() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

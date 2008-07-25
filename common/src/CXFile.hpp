@@ -27,14 +27,14 @@
 #include <stdio.h>
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXFile {
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -47,7 +47,7 @@ public:
 		E_FILE_NOT_OPEN,			///< oiu
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -64,7 +64,7 @@ private:
 	CXFile(const CXFile &);							///< Not used.
 	const CXFile & operator = (const CXFile &);		///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -72,43 +72,45 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXFile();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXFile();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	E_RESULTCODE Open(const char *pcFileName, E_OPENMODE eMode);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Close();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsOpen() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	E_RESULTCODE Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

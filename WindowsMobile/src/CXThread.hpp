@@ -27,7 +27,7 @@
 #include "CXMutex.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -35,56 +35,58 @@ class CXThread : public IThread {
 private:
 	HANDLE				m_Handle;		///< oiu
 	unsigned long		m_ThreadID;		///< oiu
-	mutable CXMutex		m_Mutex;		///< oiu
+	mutable CXMutex		m_Mutex;		///< Synchronization object.
 	//-------------------------------------
 	CXThread(const CXThread &);							///< Not used.
 	const CXThread & operator = (const CXThread &);		///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	static DWORD WINAPI thrfunc(LPVOID lpParameter);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetHandle(HANDLE NewHandle);
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void DoSleep(size_t dwMilliseconds);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool CreateThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool WaitForThreadExit(size_t dwMilliSeconds);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

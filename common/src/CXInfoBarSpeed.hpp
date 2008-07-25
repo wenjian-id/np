@@ -27,7 +27,7 @@
 #include "CXNaviData.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -38,7 +38,7 @@ private:
 	CXInfoBarSpeed(const CXInfoBarSpeed &);						///< Not used.
 	const CXInfoBarSpeed & operator = (const CXInfoBarSpeed &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -46,19 +46,21 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXInfoBarSpeed();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXInfoBarSpeed();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

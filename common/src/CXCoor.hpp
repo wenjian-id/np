@@ -26,7 +26,7 @@
 #include "CXUTMCoor.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -36,7 +36,7 @@ private:
 	double		m_dLat;		///< Latitude [deg]
 	CXUTMCoor	m_UTMCoor;	///< UTM coordinate
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -46,89 +46,108 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXCoor();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXCoor(double dLon, double dLat);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXCoor(const CXCoor &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXCoor();
 	//-----------CXCoor-------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXCoor & operator = (const CXCoor &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
 	 */
 	bool operator == (const CXCoor &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
 	 */
 	bool operator != (const CXCoor &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetLon() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetLat() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetUTMZone() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	char GetUTMLetter() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetUTMEasting() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetUTMNorthing() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void RelocateUTM(int NewUTMZone);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void OffsetCoor(double dUTME, double dUTMN);
 };
 
 #endif // __CXCOOR_HPP__

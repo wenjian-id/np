@@ -28,19 +28,19 @@
 #include <qwaitcondition.h>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXWorkRequestThread : public IWorkRequestThread {
 private:
-	QMutex			m_Mutex;
 	QWaitCondition	m_WaitCondition;	///< oiu
+	QMutex			m_Mutex;			///< Synchronization object.
 	//-------------------------------------
 	CXWorkRequestThread(const CXWorkRequestThread &);							///< Not used.
 	const CXWorkRequestThread & operator = (const CXWorkRequestThread &);		///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -48,19 +48,21 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXWorkRequestThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXWorkRequestThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

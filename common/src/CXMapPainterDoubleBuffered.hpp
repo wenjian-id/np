@@ -29,7 +29,7 @@
 class CXDeviceContext;
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -43,68 +43,70 @@ private:
 	CXBitmap			*m_pDrawBitmap;			///< oiu
 	CXBitmap			*m_pFinishedBitmap;		///< oiu
 	int					m_iSwitchFlag;			///< oiu
-	mutable CXMutex		m_Mutex;				///< oiu
+	mutable CXMutex		m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainterDoubleBuffered(const CXMapPainterDoubleBuffered &);						///< Not used.
 	const CXMapPainterDoubleBuffered & operator = (const CXMapPainterDoubleBuffered &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SwitchBuffers();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void CreateBuffers(CXDeviceContext *pDC, int Width, int Height);
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height) = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void PaintPackground(IBitmap *pBMP, int Width, int Height) = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnDoWork();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height);
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMapPainterDoubleBuffered();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMapPainterDoubleBuffered();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

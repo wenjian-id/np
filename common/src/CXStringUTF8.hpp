@@ -27,7 +27,7 @@
 #include "CXBuffer.hpp"
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -38,73 +38,89 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXStringUTF8();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Copy constructor.
 	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
 	CXStringUTF8(const CXStringUTF8 &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringUTF8(const char *pcChar);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringUTF8(const char *pcChar, size_t Len);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXStringUTF8();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXStringUTF8 & operator = (const CXStringUTF8 &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Assignment operator.
 	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXStringUTF8 & operator = (const tUCBuffer &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
 	 */
 	bool operator == (const CXStringUTF8 &rOther);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Comparison operator.
 	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
 	 */
 	bool operator != (const CXStringUTF8 &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Empty();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	wchar_t *w_str() const ;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

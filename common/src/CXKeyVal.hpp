@@ -24,14 +24,14 @@
 #define __CXKEYVAL_HPP__
 
 //-------------------------------------
-/*
-	* \brief oiu
-	*
-	*/
+/**
+ * \brief oiu
+ *
+ */
 template<class tKey, class tValue> class CXKeyVal {
 private:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -46,42 +46,49 @@ public:
 	tKey	m_Key;		///< oiu
 	tValue	m_Value;	///< oiu
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
 	CXKeyVal() {
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief oiu
+	 *
+	 */
 	CXKeyVal(const tKey & Key, const tValue & Value) :
 		m_Key(Key),
 		m_Value(Value)
 	{
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
 	virtual ~CXKeyVal() {
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Copy constructor.
+	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
+	 */
 	CXKeyVal(const CXKeyVal &rOther) {
 		CopyFrom(rOther);
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Assignment operator.
+	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
+	 */
 	const CXKeyVal & operator = (const CXKeyVal & rOther) {
 		if(this != &rOther)
 			CopyFrom(rOther);

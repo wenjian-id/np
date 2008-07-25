@@ -29,7 +29,7 @@
 #include <qsemaphore.h>
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -43,25 +43,26 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXSemaphore(size_t MaxCount);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXSemaphore();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Lock();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

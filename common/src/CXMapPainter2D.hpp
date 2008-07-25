@@ -31,7 +31,7 @@
 class CXCache;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -42,12 +42,12 @@ private:
 	CXPenHolder				m_PenHolder;			///< oiu
 	CXBuffer<TWayBuffer *>	m_DrawWays;				///< oiu
 	CXBitmap				m_BmpPOI[MaxPOITypes];	///< Bitmaps for POIs
-	mutable CXMutex			m_Mutex;				///< oiu
+	mutable CXMutex			m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Check if a way has segments that may be visible.
 	 *
 	 *	Check if a way has segments that may be visible.
@@ -58,7 +58,7 @@ private:
 	 */
 	bool IsWayPossiblyVisible(CXWay *pWay, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Draw a way.
 	 *
 	 *	Draw a way (background an foreground) with correct pen.
@@ -70,19 +70,19 @@ private:
 	 */
 	void DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Draw map scale.
 	 *
 	 *	Compute and draw map scale.
@@ -92,7 +92,7 @@ private:
 	 */
 	void DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Draw POIs.
 	 *
 	 *	Draw POIs.
@@ -103,7 +103,7 @@ private:
 	void DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight);
 	void DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Draw compass.
 	 *
 	 *	Draw compass.
@@ -112,7 +112,7 @@ private:
 	 */
 	void DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &TMCompass);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Draw track log.
 	 *
 	 *	Draw track log.
@@ -121,7 +121,7 @@ private:
 	 */
 	void DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Draw current position.
 	 *
 	 *	Draw current position.
@@ -132,56 +132,58 @@ private:
 	void DrawCurrentPosition(IBitmap *pBMP, const CXNaviData &NaviData, const CXTransformationMatrix2D &TMCurrentPos);
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void PaintPackground(IBitmap *pBMP, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void UpdateZoomLevel();
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMapPainter2D();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMapPainter2D();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool ZoomIn();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual bool ZoomOut();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

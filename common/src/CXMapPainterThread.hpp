@@ -32,7 +32,7 @@ class CXNaviPOWM;
 class CXDeviceContext;
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -40,7 +40,7 @@ class CXMapPainterThread : public CXWorkRequestThread {
 private:
 	CXMapPainter		*m_pMapPainter;		///< oiu
 	CXNaviPOWM			*m_pNaviPOWM;		///< oiu
-	mutable CXMutex		m_Mutex;			///< oiu
+	mutable CXMutex		m_Mutex;			///< Synchronization object.
 	//-------------------------------------
 	CXMapPainterThread(const CXMapPainterThread &);						///< Not used.
 	const CXMapPainterThread & operator = (const CXMapPainterThread &);	///< Not used.
@@ -49,61 +49,63 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMapPainterThread();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMapPainterThread();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void PositionChanged(const CXNaviData &NewNaviData);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void Resize(int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void ZoomIn();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void ZoomOut();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnThreadStarted();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

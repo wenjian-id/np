@@ -27,7 +27,7 @@
 #include "CXCoor.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief Class for keeping track log data.
  *
  * Class for keeping track log data. Works like a FIFO.
@@ -41,7 +41,7 @@ private:
 	CXTrackLog(const CXTrackLog &);							///< Not used.
 	const CXTrackLog & operator = (const CXTrackLog &);		///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Delete superfluous elements.
 	 *
 	 * Delete superfluous elements, so that only m_MaxSize elements remain in list.
@@ -50,21 +50,21 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Default constructor.
 	 * 
 	 * Default constructor.
 	 */
 	CXTrackLog();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
 	virtual ~CXTrackLog();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set max size of coordinates.
 	 * 
 	 * Set max size of coordinates.
@@ -72,7 +72,7 @@ public:
 	 */
 	void SetMaxSize(size_t MaxSize);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set MinDistance.
 	 * 
 	 * Set MinDistance. A new coordinate must be at least MinDistance away
@@ -81,7 +81,7 @@ public:
 	 */
 	void SetMinDistance(unsigned int MinDistance);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Relocate coordinates to new UTM zone.
 	 * 
 	 * Relocate coordinates to new UTM zone.
@@ -89,7 +89,7 @@ public:
 	 */
 	void RelocateUTM(int NewUTMZone);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get coordinates.
 	 *
 	 * Get coordinates.
@@ -97,7 +97,7 @@ public:
 	 */
 	const CXBuffer<CXCoor *> & GetCoordinates() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Add coordinate.
 	 *
 	 * Add coordinate. If necessary remove older ones.

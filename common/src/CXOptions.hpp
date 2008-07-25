@@ -29,7 +29,7 @@
 #include "Utils.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -37,7 +37,7 @@ class CXOptions {
 public:
 	void oiu(int ID, CXStringASCII WP);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -47,7 +47,7 @@ public:
 		e_OSMValiMaxSpeed	= 0x0004,		///< oiu
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -59,7 +59,7 @@ public:
 		e_ModeMapping,		///< oiu
 	};
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Flags for displaying certain debug informations.
 	 *
 	 *	Flags for displaying certain debug informations.
@@ -114,326 +114,328 @@ private:
 	double				m_SpeedThresholdPedestrian;		///< oiu
 	double				m_SpeedThresholdCaching;		///< oiu
 	double				m_SpeedThresholdMapping;		///< oiu
-	mutable CXRWLock	m_RWLock;						///< oiu
+	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
 	const CXOptions & operator = (const CXOptions &);	///< Not used.
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXOptions();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXOptions();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	static CXOptions *Instance();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool ReadFromFile(const char *pcFileName);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetStartPath() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetStartPath(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXSerialPortConfig GetSerialPortConfig() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSerialPortConfig(const CXSerialPortConfig & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsNorthing() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetNorthing(bool Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsFullScreen() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetFullScreen(bool Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetInfoBarBottomHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetInfoBarTopHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetInfoBarBottomHeight(int Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetInfoBarTopHeight(int Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetMaxSpeedSize() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetMaxSpeedSize(int Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetCompassSize() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetCompassSize(int Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetScaleWidth() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetScaleWidth(int Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetScaleHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetScaleHeight(int Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	E_MODE GetMode() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetMode(E_MODE NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetDirectoryMaps() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetDirectoryMaps(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetDirectorySave() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetDirectorySave(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetDirectoryIcons() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetDirectoryIcons(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned long GetLogoTime() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLogoTime(unsigned long LogoTime);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetLogoFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetLogoFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetInfoFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetInfoFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetQuitFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetQuitFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowMinimizeButton() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowMinimizeButtonFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetMinimizeFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetMinimizeFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetSaveOnFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSaveOnFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetSaveOffFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSaveOffFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetZoomInFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetZoomInFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXStringASCII GetZoomOutFileName() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetZoomOutFileName(const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Get filename for POIs part n bitmap.
 	 *
 	 *	Get filename for POIs part n bitmap.
@@ -442,7 +444,7 @@ public:
 	 */
 	CXStringASCII GetPOIFileName(size_t Index) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set filename for POIs part n bitmap.
 	 *
 	 *	Set filename for POIs part n bitmap.
@@ -451,187 +453,187 @@ public:
 	 */
 	void SetPOIFileName(size_t Index, const CXStringASCII & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsSaving() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void ToggleSaving();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowLogoFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowLogo() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowZoomButtons() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowZoomButtonsFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowMaxSpeed() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowMaxSpeedFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowCompass() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowCompassFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowScale() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowScaleFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowTrackLog() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowTrackLogFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustShowPOIs() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetShowPOIsFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustSnapToWay() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSnapToWayFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool MustStartWithLastPosition() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetStartWithLastPositionFlag(bool NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetWatchdogTimeout() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetWatchdogTimeout(int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	size_t GetTrackLogSize() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetTrackLogSize(size_t NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	unsigned int GetTrackLogMinDist() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetTrackLogMinDist(unsigned int NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	t_uint64 GetOSMValiFlags() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool IsOSMValiFlagSet(E_OSM_VALI eFlag) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetOSMValiFlag(E_OSM_VALI eFlag);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void ClearOSMValiFlag(E_OSM_VALI eFlag);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Check if debug info flag is set.
 	 *
 	 *	Check if debug info flag is set.
@@ -640,7 +642,7 @@ public:
 	 */
 	bool IsDebugInfoFlagSet(E_DEBUGINFO eFlag) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Set a specific debug info flag.
 	 *
 	 *	Set a specific debug info flag
@@ -648,7 +650,7 @@ public:
 	 */
 	void SetDebugInfoFlag(E_DEBUGINFO eFlag);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Clear a specific debug info flag.
 	 *
 	 *	Clear a specific debug info flag
@@ -656,61 +658,61 @@ public:
 	 */
 	void ClearDebugInfoFlag(E_DEBUGINFO eFlag);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeedThresholdCar() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSpeedThresholdCar(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeedThresholdBike() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSpeedThresholdBike(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeedThresholdPedestrian() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSpeedThresholdPedestrian(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeedThresholdCaching() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetSpeedThresholdCaching(double NewValue);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	double GetSpeedThresholdMapping() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

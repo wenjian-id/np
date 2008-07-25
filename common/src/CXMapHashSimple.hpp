@@ -31,7 +31,7 @@
 #define tMap CXMapSort
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -40,72 +40,85 @@ template<class t> unsigned char Hash(const t & Key) {
 }
 
 //-------------------------------------
-/*
-	* \brief oiu
-	*
-	*/
+/**
+ * \brief oiu
+ *
+ */
 class POS {
 public:
 	unsigned short	idx;	///< iou
 	size_t			pos;	///< oiu
 public:
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
 	POS() {
 		idx = 0;
 		pos = 0;
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief oiu
+	 *
+	 */
 	POS(unsigned short Idx, size_t Pos) {
 		idx = Idx;
 		pos = Pos;
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Copy constructor.
+	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
+	 */
 	POS(const POS &rOther) {
 		idx = rOther.idx;
 		pos = rOther .pos;
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
 	virtual ~POS() {
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Assignment operator.
+	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
+	 */
 	const POS & operator = (const POS &rOther) {
 		idx = rOther.idx;
 		pos = rOther.pos;
 		return *this;
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Comparison operator.
+	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
+	 */
 	bool operator == (const POS & rOther) {
 		return (idx == rOther.idx) && (pos == rOther.pos);
 	}
 	//-------------------------------------
-	/*
-		* \brief oiu
-		*
-		*/
+	/**
+	 * \brief Comparison operator.
+	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
+	 */
 	bool operator != (const POS & rOther) {
 		return ! operator ==(rOther);
 	}
@@ -113,7 +126,7 @@ public:
 
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -128,7 +141,7 @@ private:
 	CXMapHashSimple(const CXMapHashSimple &);						///< Not used.
 	const CXMapHashSimple & operator = (const CXMapHashSimple &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -136,43 +149,45 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXMapHashSimple();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXMapHashSimple();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void RemoveAll();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetAt(const tKey & Key, const tValue & Value);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool Lookup(const tKey & Key, tValue & Result) const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	POS GetStart() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

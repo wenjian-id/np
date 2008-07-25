@@ -44,28 +44,28 @@ typedef quint64 t_uint64;
 #define NP_RIGHT Qt::Key_Right
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 void DoOutputDebugString(const char *pcBuf);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 void DoOutputErrorMessage(const char *pcBuf);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 QColor CXRGB2QColor(const CXRGB & Color);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */

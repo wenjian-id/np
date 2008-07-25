@@ -45,42 +45,42 @@ typedef unsigned __int64 t_uint64;
 class CXRGB;
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 void DoOutputDebugString(const char *pcBuf);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 void DoOutputErrorMessage(const char *pcBuf);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 CXRGB COLORREF2CXRGB(const COLORREF & Color);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 COLORREF CXRGB2COLORREF(const CXRGB & Color);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 TCHAR *ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */

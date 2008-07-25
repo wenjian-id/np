@@ -30,7 +30,7 @@ private:
 	tData			m_Data;
 	CXExactTime		m_TimeStamp;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy from other instance to self.
 	 *
 	 * Copy from other instance to self.
@@ -40,70 +40,73 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief	oiu
+	/**
+	 * \brief Default constructor.
 	 *
-	 * oiu
+	 * Default constructor.
 	 */
 	CXTimeStampData();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief	oiu
 	 *
 	 * oiu
 	 */
 	CXTimeStampData(const tData & Data, const CXExactTime &TimeStamp);
 	//-------------------------------------
-	/*
-	 * \brief	oiu
+	/**
+	 * \brief Copy constructor.
 	 *
-	 * oiu
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
 	 */
-	CXTimeStampData(const CXTimeStampData & rOther);
+	CXTimeStampData(const CXTimeStampData &rOther);
 	//-------------------------------------
-	/*
-	 * \brief	oiu
+	/**
+	 * \brief Destructor.
 	 *
-	 * oiu
+	 * Destructor.
 	 */
 	virtual ~CXTimeStampData();
 	//-------------------------------------
-	/*
-	 * \brief	oiu
+	/**
+	 * \brief Assignment operator.
 	 *
-	 * oiu
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
 	 */
 	const CXTimeStampData & operator = (const CXTimeStampData &rOther);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief	oiu
 	 *
 	 * oiu
 	 */
 	void SetData(const tData & Data);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief	oiu
 	 *
 	 * oiu
 	 */
 	tData & Data();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief	oiu
 	 *
 	 * oiu
 	 */
 	const tData & Data() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief	oiu
 	 *
 	 * oiu
 	 */
 	const CXExactTime & TimeStamp() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief	oiu
 	 *
 	 * oiu

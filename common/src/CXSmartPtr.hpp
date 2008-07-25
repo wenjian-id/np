@@ -26,7 +26,7 @@
 #include "CXMutexLocker.hpp"
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  * oiu
@@ -34,16 +34,16 @@
 template<class t> class CXSmartPtr {
 private:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu.
 	 * 
 	 * oiu.
 	 */
 	template<class tt> class CXDescriptor {
 	private:
-		mutable CXMutex		m_Mutex;	///< oiu
 		bool				m_oIsArray;	///< oiu
 		size_t				m_Counter;	///< oiu
+		mutable CXMutex		m_Mutex;	///< Synchronization object.
 		//-------------------------------------
 		CXDescriptor();												///< Not used.
 		CXDescriptor(const CXDescriptor &);							///< Not used.
@@ -52,7 +52,7 @@ private:
 	public:
 		tt					*m_pPtr;	///< oiu
 		//-------------------------------------
-		/*
+		/**
 		 * \brief Default constructor.
 		 * 
 		 * Default constructor.
@@ -63,7 +63,7 @@ private:
 			m_Counter = 0;
 		}
 		//-------------------------------------
-		/*
+		/**
 		 * \brief Destructor.
 		 * 
 		 * Destructor.
@@ -71,7 +71,7 @@ private:
 		virtual ~CXDescriptor() {
 		}
 		//-------------------------------------
-		/*
+		/**
 		 * \brief oiu
 		 * 
 		 * iou.
@@ -82,7 +82,7 @@ private:
 			return m_Counter;
 		}
 		//-------------------------------------
-		/*
+		/**
 		 * \brief oiu.
 		 *
 		 * oiu.
@@ -104,11 +104,11 @@ private:
 	};
 private:
 	CXDescriptor<t>		*m_pDescriptor;		///< oiu
-	mutable CXMutex		m_Mutex;			///< oiu
+	mutable CXMutex		m_Mutex;			///< Synchronization object.
 	//-------------------------------------
 	CXSmartPtr();					///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
@@ -122,7 +122,7 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Default constructor.
 	 * 
 	 * Default constructor.
@@ -132,7 +132,7 @@ public:
 		m_pDescriptor->AddRef();
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Copy constructor.
 	 *
 	 * Copy constructor.
@@ -148,7 +148,7 @@ public:
 
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
@@ -160,12 +160,12 @@ public:
 		Release();
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief Assignment operator.
 	 *
 	 * Assignment operator.
 	 * \param	rOther	Instance to copy from.
-	 * \return			Const refrence to this.
+	 * \return			Const reference to self.
 	 */
 	const CXSmartPtr & operator = (const CXSmartPtr &rOther) {
 		// lock instance
@@ -181,7 +181,7 @@ public:
 		return *this;
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -192,7 +192,7 @@ public:
 		return NULL;
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 * oiu

@@ -56,7 +56,6 @@ void CXWatchdogThread::OnThreadLoop() {
 		if(Now - m_TriggerTime > SleepTime) {
 			TriggerWatchdog();
 			m_TriggerTime.SetNow();
-			DoOutputDebugString("trigger\n");
 		}
 	}
 }

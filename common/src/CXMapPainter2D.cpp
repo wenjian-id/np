@@ -86,12 +86,12 @@ CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
 	CXWay::e_Service,
 	CXWay::e_Residential,
 	CXWay::e_Track,
-	CXWay::e_Unclassified,
-	CXWay::e_Tertiary,
-	CXWay::e_Secondary,
 	CXWay::e_PrimaryLink,
 	CXWay::e_TrunkLink,
 	CXWay::e_MotorwayLink,
+	CXWay::e_Unclassified,
+	CXWay::e_Tertiary,
+	CXWay::e_Secondary,
 	CXWay::e_Primary,
 	CXWay::e_Trunk,
 	CXWay::e_Motorway
@@ -496,12 +496,12 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		double dLat = 0;
 		if(CXOptions::Instance()->MustSnapToWay()) {
 			// get coordinates from locator
-			dLon = NaviData.GetLocatorCoor().GetLon();
-			dLat = NaviData.GetLocatorCoor().GetLat();
+			dLon = NaviData.GetLocatedCoor().GetLon();
+			dLat = NaviData.GetLocatedCoor().GetLat();
 		} else {
 			// get gps coordinates
-			dLon = NaviData.GetGPSCoor().GetLon();
-			dLat = NaviData.GetGPSCoor().GetLat();
+			dLon = NaviData.GetCorrectedGPSCoor().GetLon();
+			dLat = NaviData.GetCorrectedGPSCoor().GetLat();
 		}
 		LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
 
@@ -591,6 +591,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 		// draw current position
 		DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);
+
 		StopPos.SetNow();
 	}
 	CXPOWMMap::Instance()->UnlockMap();

@@ -24,69 +24,71 @@
 #define __IEXACTTIME_H__
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class IExactTime {
 private:
 	//-------------------------------------
-	IExactTime(const IExactTime&rOther);						///< Not used.
-	const IExactTime & operator = (const IExactTime & rOther);	///< Not used.
+	IExactTime(const IExactTime &);						///< Not used.
+	const IExactTime & operator = (const IExactTime &);	///< Not used.
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	IExactTime() {
 	}
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~IExactTime() {
 	}
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void SetNow() = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetYear() const = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetMonth() const = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetDay() const = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetHour() const = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual int GetMinute() const = 0;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */

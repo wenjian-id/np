@@ -43,7 +43,7 @@ class CXInfoBarCommon;
 
 
 //----------------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  * \todo THIS IS A QUICK AND DIRTY HACK TO FIX 1828282 : Implement zoom buttons
@@ -58,43 +58,44 @@ private:
 	CXZoomBtn(const CXZoomBtn &);						///< Not used.
 	const CXZoomBtn & operator = (const CXZoomBtn &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 protected:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual E_COMMAND OnInternalMouseDown(int X, int Y);
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	CXZoomBtn(E_COMMAND eCommand);
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXZoomBtn();
 };
 
 
 //---------------------------------------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
 class CXNaviPOWM {
 public:
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -124,48 +125,48 @@ private:
 	tIRect				m_ZoomOutPos;				///< oiu
 	CXZoomBtn			m_ZoomInBtn;				///< oiu
 	CXZoomBtn			m_ZoomOutBtn;				///< oiu
-	mutable CXMutex		m_Mutex;					///< oiu
+	mutable CXMutex		m_Mutex;					///< Synchronization object.
 	//-------------------------------------
 	CXNaviPOWM(const CXNaviPOWM &);						///< Not used.
 	const CXNaviPOWM & operator = (const CXNaviPOWM &);	///< Not used.
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetWidth() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetWidth(int Width);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	int GetHeight() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetHeight(int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void SetDisplayMode(E_DISPLAY_MODE eDisplayMode);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	E_DISPLAY_MODE GetDisplayMode() const;
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
@@ -173,79 +174,81 @@ private:
 protected:
 public:
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Default constructor.
 	 *
+	 * Default constructor.
 	 */
 	CXNaviPOWM();
 	//-------------------------------------
-	/*
-	 * \brief oiu
+	/**
+	 * \brief Destructor.
 	 *
+	 * Destructor.
 	 */
 	virtual ~CXNaviPOWM();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool Init(IMainWindow *pMainWindow);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	bool StartThreads();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void StopThreads();
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void RequestRepaint(E_DISPLAY_MODE eDisplayMode);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Paint(CXDeviceContext *pDC);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	void Resize(int Width, int Height);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnChar(int TheChar);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnKeyDown(int TheChar);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnKeyUp(int TheChar);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
 	virtual void OnMouseDown(int X, int Y);
 	//-------------------------------------
-	/*
+	/**
 	 * \brief oiu
 	 *
 	 */
