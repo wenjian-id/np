@@ -47,6 +47,7 @@ Windows/VisualStudio6/NaviPOWM.dsp -text
 Windows/VisualStudio6/NaviPOWM.dsw -text
 Windows/VisualStudio6/NaviPOWM.rc -text
 Windows/VisualStudio6/resource.h -text
+Windows/doxygen/NaviPOWM.dox -text
 Windows/src/CXBitmap.cpp -text
 Windows/src/CXBitmap.hpp -text
 Windows/src/CXDeviceContext.cpp -text
