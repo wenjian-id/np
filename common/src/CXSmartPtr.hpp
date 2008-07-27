@@ -106,8 +106,6 @@ private:
 	CXDescriptor<t>		*m_pDescriptor;		///< oiu
 	mutable CXMutex		m_Mutex;			///< Synchronization object.
 	//-------------------------------------
-	CXSmartPtr();					///< Not used.
-	//-------------------------------------
 	/**
 	 * \brief oiu.
 	 *
@@ -126,6 +124,15 @@ public:
 	 * \brief Default constructor.
 	 * 
 	 * Default constructor.
+	 */
+	CXSmartPtr() {
+		m_pDescriptor = NULL;
+	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 * 
+	 * oiu
 	 */
 	CXSmartPtr(t *pPtr, bool oIsArray) {
 		m_pDescriptor = new CXDescriptor<t>(pPtr, oIsArray);

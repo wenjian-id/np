@@ -217,6 +217,10 @@ SOURCE=..\..\common\src\CoordConversion.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXArray.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXBuffer.hpp
 # End Source File
 # Begin Source File
@@ -297,6 +301,10 @@ SOURCE=..\..\common\src\CXMapPainterThread.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXMapSection.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXMapSimple.hpp
 # End Source File
 # Begin Source File
@@ -318,6 +326,10 @@ SOURCE=..\..\common\src\CXNaviPOWM.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXNMEA.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXNode.hpp
 # End Source File
 # Begin Source File
 
@@ -390,6 +402,10 @@ SOURCE=..\..\common\src\CXUTMSpeed.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXWatchdogThread.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXWay.hpp
 # End Source File
 # Begin Source File
 
@@ -521,6 +537,10 @@ SOURCE=..\..\common\src\CXMapPainterThread.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXMapSection.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXMutexLocker.cpp
 # End Source File
 # Begin Source File
@@ -534,6 +554,10 @@ SOURCE=..\..\common\src\CXNaviPOWM.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXNMEA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXNode.cpp
 # End Source File
 # Begin Source File
 
@@ -594,6 +618,10 @@ SOURCE=..\..\common\src\CXUTMSpeed.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXWatchdogThread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXWay.cpp
 # End Source File
 # Begin Source File
 

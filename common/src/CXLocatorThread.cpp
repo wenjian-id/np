@@ -297,7 +297,6 @@ void CXLocatorThread::OnThreadLoop() {
 			LogoHidden = true;
 		CXOptions::Instance()->SetShowLogoFlag(false);
 	}
-	/// \todo change
 	if(oNewDataArrived || LogoHidden) {
 		// data has been changed or logo hidden
 		// reset speed calculator new data flag
@@ -305,37 +304,17 @@ void CXLocatorThread::OnThreadLoop() {
 		CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
 		// notify listeners
 		if(pPOWMMap != NULL) {
-			// check if new map has to be loaded
-			char buf[100];
+			// position has changed
 			CXCoor Coor = m_NaviData.GetCorrectedGPSCoor();
-			/// \todo which coor
 			double dLon = Coor.GetLon();
 			double dLat = Coor.GetLat();
-			int NameLon = static_cast<int>(floor(fabs(dLon*10)));
-			int NameLat = static_cast<int>(floor(fabs(dLat*10)));
-			char EW = 'E';
-			if(dLon < 0 )
-				EW = 'W';
-			char NS = 'N';
-			if(dLat < 0 )
-				NS = 'S';
-			snprintf(buf, 100, "%c%04d%c%03d.map", EW, NameLon, NS, NameLat);
-			CXStringASCII FileName=CXOptions::Instance()->GetDirectoryMaps();
-			FileName+=buf;
-			if(pPOWMMap->GetFileName() != FileName) {
-				if(oLoadMap) {
-					pPOWMMap->LoadMap(FileName);
-				} else {
-					// do not load any map (no fix yet and not starting with last saved coordinate
-				}
-			}
-
 			pPOWMMap->PositionChanged(dLon, dLat, oHasFix);
-
 			t_uint64 ID = 0;
 			if(Locate(ID)) {
 				m_NaviData.SetLocated(true);
 				m_NaviData.SetWayID(ID);
+				/// \todo implement
+/*
 				pPOWMMap->LockMap();
 				CXStringUTF8 Name;
 				CXStringUTF8 Ref;
@@ -350,6 +329,7 @@ void CXLocatorThread::OnThreadLoop() {
 				m_NaviData.SetRef(Ref);
 				m_NaviData.SetMaxSpeed(MaxSpeed);
 				pPOWMMap->UnlockMap();
+*/
 			} else {
 				m_NaviData.SetLocated(false);
 				m_NaviData.SetStreetName("");
@@ -445,7 +425,8 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
 
 //-------------------------------------
 bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
-
+	/// \todo implement
+/*
 	CXExactTime StartTime;
 	StartTime.SetNow();
 
@@ -630,6 +611,6 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 
 	UTMtoLL(WGS84, PSProxx, PSProxy, CurrentZone, UTMLetter, dLon, dLat);
 	m_NaviData.SetLocatedCoor(CXCoor(dLon, dLat));
-
+*/
 	return true;
 }

@@ -48,8 +48,8 @@ static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 8;
 static const int POICOUNTVERT	= 4;
 
-// for revision 0.1.4 enable only following POIs
-t_uint32 Rev014POI[MaxPOITypes] = {
+// for revision 0.2.0 enable only following POIs
+t_uint32 Rev020POI[MaxPOITypes] = {
 									// POI1
 									CXPOINode::e_POI1_Parking |
 									CXPOINode::e_POI1_Fuel | 
@@ -286,10 +286,11 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 	if(!CXOptions::Instance()->MustShowPOIs())
 		return;
 
+	/// \todo implement
+/*
 	TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
 	DrawPOIs(pBMP, POINodes, ScreenWidth, ScreenHeight);
-	TPOINodeMap &WPNodes = CXPOWMMap::Instance()->m_WPNodes;
-	DrawPOIs(pBMP, WPNodes, ScreenWidth, ScreenHeight);
+*/
 }
 
 //-------------------------------------
@@ -305,7 +306,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 		// check if visible
 		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
 			for(size_t i=0; i<MaxPOITypes; i++) {
-				if(pNode->IsPOI(i) && ((pNode->GetPOIType(i) & Rev014POI[i]) != 0)) {
+				if(pNode->IsPOI(i) && ((pNode->GetPOIType(i) & Rev020POI[i]) != 0)) {
 					int row = 0;
 					int col = 0;
 					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
@@ -471,6 +472,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	if(CXPOWMMap::Instance() == NULL)
 		return;
 
+	/// \todo implement
+/*
 	CXPOWMMap::Instance()->LockMap();
 	CXExactTime StopLock;
 	CXExactTime StopDrawWays;
@@ -630,6 +633,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
+*/
 }
 
 //-------------------------------------

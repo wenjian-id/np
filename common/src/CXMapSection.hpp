@@ -20,33 +20,35 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXPOWMMAP_HPP__
-#define __CXPOWMMAP_HPP__
+#ifndef __CXMAPSECTION_HPP__
+#define __CXMAPSECTION_HPP__
 
+#include "CXWay.hpp"
+#include "CXNode.hpp"
 #include "CXMutex.hpp"
-#include "CXMapSection.hpp"
-#include "CXFile.hpp"
-#include "CXTrackLog.hpp"
-#include "CXArray.hpp"
-#include "Utils.hpp"
-
-typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
+#include "CXSmartPtr.hpp"
 
 //---------------------------------------------------------------------
 /**
  * \brief oiu
  *
  */
-class CXPOWMMap {
+class CXMapSection {
 private:
-	static CXPOWMMap	*m_pInstance;			///< oiu
-	// stuff
-	CXTrackLog			m_TrackLog;				///< oiu
+	TNodeMap			m_NodeMap;				///< Map with all nodes.
+	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
+	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< Synchronization object.
 	//-------------------------------------
-	CXPOWMMap(const CXPOWMMap &);						///< Not used.
-	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
+	/**
+	 * \brief Load map current version
+	 *
+	 *	Load map current version
+	 *	\param	InFile		File with map data.
+	 *	\return				true on success
+	 */
+	bool LoadMap_CurrentVersion(CXFile & InFile);
 protected:
 public:
 	//-------------------------------------
@@ -55,38 +57,47 @@ public:
 	 *
 	 * Default constructor.
 	 */
-	CXPOWMMap();
+	CXMapSection();
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
-	virtual ~CXPOWMMap();
+	virtual ~CXMapSection();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void PositionChanged(double dLon, double dLat, bool oFix);
+	const TPOINodeMap & GetPOINodeMap() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	const CXTrackLog & GetTrackLog() const;
+	bool LoadMap(CXFile & InFile);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	static CXPOWMMap *Instance();
+	CXWay *GetWay(t_uint64 ID);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	TMapSectionPtrArray GetMapSections(double dLon, double dLat, unsigned char ZoomLevel);
+	void RunOSMVali();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM);
 };
 
-#endif // __CXPOWMMAP_HPP__
+typedef CXSmartPtr<CXMapSection> TMapSectionPtr;
+
+
+#endif // __CXMAPSECTION_HPP__

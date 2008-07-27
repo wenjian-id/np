@@ -243,7 +243,7 @@ typedef CXBuffer<unsigned char>		tUCBuffer;
 typedef CXBuffer<char>				tCBuffer;
 typedef CXBuffer<unsigned short>	tUSBuffer;
 
-static const size_t GROWSIZE = 16;
+static const size_t BUFFER_GROWSIZE = 16;
 template<class tClass> const size_t CXBuffer<tClass> ::NPOS = ~(size_t(0));
 
 //-------------------------------------
@@ -287,7 +287,7 @@ template<class tClass> void CXBuffer<tClass> ::CopyFrom(const CXBuffer<tClass> &
 
 //-------------------------------------
 template<class tClass> size_t CXBuffer<tClass> ::GetMultipleOfGrowSize(size_t NewSize) {
-	return ((NewSize / GROWSIZE) + 1) * GROWSIZE;
+	return ((NewSize / BUFFER_GROWSIZE) + 1) * BUFFER_GROWSIZE;
 }
 
 //-------------------------------------
@@ -312,7 +312,7 @@ template<class tClass> size_t CXBuffer<tClass> ::GetAllocatedSize() const {
 
 //-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::GrowTo(size_t ulNewSize) {
-	// multiple of GROWSIZE
+	// multiple of BUFFER_GROWSIZE
 	ulNewSize = GetMultipleOfGrowSize(ulNewSize);
 	if(ulNewSize > m_ulAllocatedSize) {
 		m_ulAllocatedSize = ulNewSize;
@@ -325,7 +325,7 @@ template<class tClass> void CXBuffer<tClass> ::GrowTo(size_t ulNewSize) {
 
 //-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::ShrinkTo(size_t ulNewSize) {
-	// multiple of GROWSIZE
+	// multiple of BUFFER_GROWSIZE
 	ulNewSize = GetMultipleOfGrowSize(ulNewSize);
 	if(ulNewSize < m_ulAllocatedSize) {
 		m_ulAllocatedSize = ulNewSize;

@@ -147,6 +147,7 @@ common/Images/saveoff.bmp -text
 common/Images/saveon.bmp -text
 common/Images/zoomin.bmp -text
 common/Images/zoomout.bmp -text
+common/src/CXArray.hpp -text
 common/src/CXBuffer.hpp -text
 common/src/CXCoor.cpp -text
 common/src/CXCoor.hpp -text
@@ -184,6 +185,8 @@ common/src/CXMapPainterTest.cpp -text
 common/src/CXMapPainterTest.hpp -text
 common/src/CXMapPainterThread.cpp -text
 common/src/CXMapPainterThread.hpp -text
+common/src/CXMapSection.cpp -text
+common/src/CXMapSection.hpp -text
 common/src/CXMapSimple.hpp -text
 common/src/CXMapSort.hpp -text
 common/src/CXMutexLocker.cpp -text
@@ -194,6 +197,8 @@ common/src/CXNaviData.cpp -text
 common/src/CXNaviData.hpp -text
 common/src/CXNaviPOWM.cpp -text
 common/src/CXNaviPOWM.hpp -text
+common/src/CXNode.cpp -text
+common/src/CXNode.hpp -text
 common/src/CXOptions.cpp -text
 common/src/CXOptions.hpp -text
 common/src/CXPOWMMap.cpp -text
@@ -227,6 +232,8 @@ common/src/CXUTMSpeed.cpp -text
 common/src/CXUTMSpeed.hpp -text
 common/src/CXWatchdogThread.cpp -text
 common/src/CXWatchdogThread.hpp -text
+common/src/CXWay.cpp -text
+common/src/CXWay.hpp -text
 common/src/CXWriteLocker.cpp -text
 common/src/CXWriteLocker.hpp -text
 common/src/CoordConstants.h -text
