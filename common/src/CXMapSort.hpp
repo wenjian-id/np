@@ -34,8 +34,102 @@
  */
 template<class tKey, class tValue> class CXMapSort {
 public:
-	static const size_t NPOS;				///< oiu
-	static const size_t START;				///< oiu
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	class POS {
+	public:
+		tKey		m_key;	///< oiu
+		size_t		m_pos;	///< oiu
+	public:
+		//-------------------------------------
+		/**
+		 * \brief Default constructor.
+		 *
+		 * Default constructor.
+		 */
+		POS() {
+			// m_key = 0;
+			m_pos = 0;
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu
+		 *
+		 */
+		POS(size_t Pos) {
+			// m_key = 0;
+			m_pos = Pos;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Copy constructor.
+		 *
+		 * Copy constructor.
+		 * \param	rOther	Instance to copy from.
+		 */
+		POS(const POS &rOther) {
+			m_key = rOther.m_key;
+			m_pos = rOther.m_pos;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Destructor.
+		 *
+		 * Destructor.
+		 */
+		virtual ~POS() {
+		}
+		//-------------------------------------
+		/**
+		 * \brief Assignment operator.
+		 *
+		 * Assignment operator.
+		 * \param	rOther	Instance to copy from.
+		 * \return			Const reference to self.
+		 */
+		const POS & operator = (const POS &rOther) {
+			m_key = rOther.m_key;
+			m_pos = rOther.m_pos;
+			return *this;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Comparison operator.
+		 *
+		 * Compares this instance with other instance.
+		 * \param	rOther	Instance to compare with.
+		 * \return			True if equal.
+		 */
+		bool operator == (const POS & rOther) {
+			return m_pos == rOther.m_pos;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Comparison operator.
+		 *
+		 * Compares this instance with other instance.
+		 * \param	rOther	Instance to compare with.
+		 * \return			True if not equal.
+		 */
+		bool operator != (const POS & rOther) {
+			return ! operator ==(rOther);
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu.
+		 *
+		 * oiu.
+		 */
+		tKey GetKey() const {
+			return m_key;
+		}
+	};
+public:
+	static const POS	NPOS;				///< oiu
+	static const POS	START;				///< oiu
 private:
 	CXBuffer< CXKeyVal<tKey, tValue> *>	m_Data;			///< oiu
 	//-------------------------------------
@@ -74,6 +168,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	size_t GetSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void SetAt(const tKey & Key, const tValue & Value);
 	//-------------------------------------
 	/**
@@ -92,17 +192,17 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	size_t GetStart() const;
+	POS GetStart() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	size_t GetNext(size_t & Pos, tValue &rValue) const;
+	POS GetNext(POS & Pos, tValue &rValue) const;
 };
 
-template<class tKey, class tValue> const size_t CXMapSort<tKey, tValue> ::NPOS = ~(size_t(0));
-template<class tKey, class tValue> const size_t CXMapSort<tKey, tValue> ::START = ~(size_t(1));
+template<class tKey, class tValue> const CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue>::NPOS =  CXMapSort::POS(~(size_t(0)));
+template<class tKey, class tValue> const CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue>::START = CXMapSort::POS(~(size_t(1)));
 
 
 //-------------------------------------
@@ -123,8 +223,13 @@ template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAll() {
 }
 
 //-------------------------------------
+template<class tKey, class tValue> size_t CXMapSort<tKey, tValue> ::GetSize() const {
+	return m_Data.GetSize();
+}
+
+//-------------------------------------
 template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSort<tKey, tValue> ::Find(const tKey & Key, size_t & rIndex) const {
-	rIndex = NPOS;
+	rIndex = 0;
 	if(m_Data.GetSize() == 0) {
 		return NULL;
 	} else if (m_Data[0]->m_Key > Key) {
@@ -178,8 +283,8 @@ template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSort<tKey, tVal
 //-------------------------------------
 template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::SetAt(const tKey & Key, const tValue & Value) {
 	// check if already exists
-	size_t Index = NPOS;
-	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
+	size_t TmpIndex = 0;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, TmpIndex);
 	if(pS != NULL) {
 		// already exists overwrite
 		pS->m_Value = Value;
@@ -251,7 +356,7 @@ template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::SetAt(const tK
 //-------------------------------------
 template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAt(const tKey & Key) {
 	// check if exists
-	size_t Index = NPOS;
+	size_t Index = 0;
 	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
 	if(pS == NULL) {
 		// Does not exist
@@ -265,7 +370,7 @@ template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAt(const
 //-------------------------------------
 template<class tKey, class tValue> bool CXMapSort<tKey, tValue> ::Lookup(const tKey &Key, tValue & Result) const {
 	// check if exists
-	size_t Index = NPOS;
+	size_t Index = 0;
 	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
 	if(pS != NULL) {
 		// exists
@@ -277,25 +382,26 @@ template<class tKey, class tValue> bool CXMapSort<tKey, tValue> ::Lookup(const t
 }
 
 //-------------------------------------
-template<class tKey, class tValue> size_t CXMapSort<tKey, tValue> ::GetStart() const {
+template<class tKey, class tValue> CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue> ::GetStart() const {
 	return START;
 }
 
 //-------------------------------------
-template<class tKey, class tValue> size_t CXMapSort<tKey, tValue> ::GetNext(size_t & Pos, tValue &rValue) const {
+template<class tKey, class tValue> CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue> ::GetNext(POS & Pos, tValue &rValue) const {
 	if(Pos == NPOS) {
 		return Pos;
 	}
 	if(Pos == START) {
-		Pos = 0;
+		Pos.m_pos = 0;
 	} else {
-		Pos++;
+		Pos.m_pos++;
 	}
-	if(Pos >= m_Data.GetSize()) {
+	if(Pos.m_pos >= m_Data.GetSize()) {
 		Pos = NPOS;
 		return Pos;
 	}
-	rValue = m_Data[Pos]->m_Value;
+	rValue = m_Data[Pos.m_pos]->m_Value;
+	Pos.m_key = m_Data[Pos.m_pos]->m_Key;
 	return Pos;
 }
 

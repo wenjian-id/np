@@ -297,11 +297,11 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight) {
 
-	POS PosN = POINodes.GetStart();
+	TPOINodeMap::POS PosN = POINodes.GetStart();
 	CXPOINode *pNode = NULL;
 
 	// iterate through POIs
-	while (POINodes.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+	while (POINodes.GetNext(PosN, pNode) != POINodes.NPOS) {
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
 		// check if visible

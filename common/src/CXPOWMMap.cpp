@@ -32,6 +32,7 @@
 #include <math.h>
 
 const unsigned int MAPVERSION = 0x00020001; // 0.2.0-dev1
+static const size_t TOCCACHESIZE = 20;		///< oiu
 
 
 //----------------------------------------------------------------------------
@@ -83,7 +84,9 @@ unsigned char CXVisibleMapSectionDescr::GetZoomLevel() const {
 CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 
 //-------------------------------------
-CXPOWMMap::CXPOWMMap() {
+CXPOWMMap::CXPOWMMap() :
+	m_TOCCache(TOCCACHESIZE)
+{
 }
 
 //-------------------------------------
@@ -260,7 +263,7 @@ CXStringASCII CXPOWMMap::GetFileNameFromCoor(double dLon, double dLat) {
 //-------------------------------------
 t_uint32 CXPOWMMap::GetCacheKeyFromCoor(double dLon, double dLat, unsigned char ZoomLevel) {
 	int NameLon = static_cast<int>(floor(dLon+180));	// [0 - 360]
-	int NameLat = static_cast<int>(floor(dLat+90));		// [ 0 - 180]
+	int NameLat = static_cast<int>(floor(dLat+90));		// [0 - 180]
 	t_uint32 Result = NameLon << 16;
 	Result += NameLat << 8;
 	Result += ZoomLevel;
@@ -282,22 +285,20 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	modf(Descr.GetLatMin(), &dLatMin);
 	modf(Descr.GetLatMax(), &dLatMax);
 	// load all TOCMapContainer between 
-	DoOutputDebugString("-----\n");
 	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
 		for(double dLat = dLatMin; dLat <= dLatMax; dLat++) {
 			CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
-			DoOutputDebugString(FileName.c_str());
 			t_uint32 CachKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
-			DoOutputDebugString("\n");
 			// get TOCMapContainer from cache
-			TTOCMapContainerPtr TOCMapContainerPtr = mTOCCache.GetAt(CachKey);
-			// load TOC for map container at a specific zoom level containing lon and lat from Descr
-//			LoadTOCMapContainer(FileName, ZoomLevel);
+			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CachKey);
+			CXTOCMapContainer *pTOC = TOCMapContainerPtr.GetPtr();
+			if(!pTOC->IsLoaded()) {
+				// load TOC for map container at a specific zoom level containing lon and lat from Descr
+			}
 			// get fiting map sections from this container for specific zoom level
 			// 
 		}
 	}
-	DoOutputDebugString("-----\n");
 
 	return Result;
 }

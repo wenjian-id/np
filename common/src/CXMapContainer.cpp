@@ -25,11 +25,18 @@
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXTOCMapContainer::CXTOCMapContainer() {
+CXTOCMapContainer::CXTOCMapContainer() :
+	m_oLoaded(false)
+{
 }
 
 //-------------------------------------
 CXTOCMapContainer::~CXTOCMapContainer() {
+}
+
+//-------------------------------------
+bool CXTOCMapContainer::IsLoaded() const {
+	return m_oLoaded;
 }
 
 

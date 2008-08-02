@@ -33,6 +33,7 @@
  */
 class CXTOCMapContainer {
 private:
+	bool		m_oLoaded;	///< oiu
 	//-------------------------------------
 	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
 	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
@@ -52,6 +53,13 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXTOCMapContainer();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool IsLoaded() const;
 };
 
 typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;

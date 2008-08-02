@@ -32,10 +32,20 @@
  */
 template <class tKey, class tValue> class CXCache {
 private:
-	template <class tValue> class oiu {
+	template <class tValue> class CXCacheHelper {
 	private:
 		int					m_Counter;	///< oiu
 		CXSmartPtr<tValue>	m_Value;	///< oiu
+		//-------------------------------------
+		/**
+		 * \brief oiu.
+		 * 
+		 * oiu.
+		 */
+		void CopyFrom(const CXCacheHelper &rOther) {
+			m_Counter = rOther.m_Counter;
+			m_Value = rOther.m_Value;
+		}
 	protected:
 	public:
 		//-------------------------------------
@@ -44,7 +54,7 @@ private:
 		 * 
 		 * oiu.
 		 */
-		oiu(tValue *pValue) :
+		CXCacheHelper(tValue *pValue) :
 			m_Counter(1),
 			m_Value(pValue, false)
 		{
@@ -55,7 +65,27 @@ private:
 		 * 
 		 * oiu.
 		 */
-		virtual ~oiu() {
+		CXCacheHelper(const CXCacheHelper &rOther) {
+			CopyFrom(rOther);
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu.
+		 * 
+		 * oiu.
+		 */
+		virtual ~CXCacheHelper() {
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu.
+		 * 
+		 * oiu.
+		 */
+		const CXCacheHelper & operator = (const CXCacheHelper &rOther) {
+			if(this != &rOther)
+				CopyFrom(rOther);
+			return *this;
 		}
 		//-------------------------------------
 		/**
@@ -95,8 +125,10 @@ private:
 		};
 	};
 private:
-	CXMapSort<tKey, oiu<tValue> >	m_Values;		///< oiu
+	size_t										m_MaxCacheSize;		///< oiu
+	CXMapSort<tKey, CXCacheHelper<tValue> *>	m_Values;			///< oiu
 	//-------------------------------------
+	CXCache();										///< Not used.
 	CXCache(const CXCache &);						///< Not used.
 	const CXCache & operator = (const CXCache &);	///< Not used.
 protected:
@@ -107,7 +139,9 @@ public:
 	 *
 	 * Default constructor.
 	 */
-	CXCache() {
+	CXCache(size_t MaxCacheSize) :
+		m_MaxCacheSize(MaxCacheSize)
+	{
 	}
 	//-------------------------------------
 	/**
@@ -116,6 +150,12 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXCache() {
+		// delete all entries
+		CXCacheHelper<tValue> *pDel = NULL;
+		CXMapSort<tKey, CXCacheHelper<tValue> *>::POS Pos = m_Values.GetStart();
+		while(m_Values.GetNext(Pos, pDel) != m_Values.NPOS) {
+			delete pDel;
+		}
 	}
 	//-------------------------------------
 	/**
@@ -123,20 +163,60 @@ public:
 	 *
 	 */
 	CXSmartPtr<tValue> GetAt(const tKey & Key) {
-		oiu<tValue> oiuResult(NULL);
+		IncrementCounters();
+		CXCacheHelper<tValue> *pResult = NULL;
 		// check if value exists
-		if(!m_Values.Lookup(Key, oiuResult)) {
+		if(!m_Values.Lookup(Key, pResult)) {
+			// check if we have to remove a Element
+			if(m_Values.GetSize() >= m_MaxCacheSize) {
+				// remove rarely used element
+				CXCacheHelper<tValue> *pTmp = NULL;
+				CXCacheHelper<tValue> *pDel = NULL;
+				CXMapSort<tKey, CXCacheHelper<tValue> *>::POS Pos = m_Values.GetStart();
+				int MaxCount = -1;
+				tKey MaxKey;
+				while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
+					if(pTmp->GetCounter() > MaxCount) {
+						// found new maximum
+						MaxKey = Pos.GetKey();
+						MaxCount = pTmp->GetCounter();
+						pDel = pTmp;
+					}
+				}
+				// now remove maximum
+				char buf[100];
+				snprintf(buf, sizeof(buf), "Removing cache entry with key %d having age %d\n", MaxKey, MaxCount);
+				DoOutputDebugString(buf);
+				m_Values.RemoveAt(MaxKey);
+				delete pDel;
+			}
+			char buf[100];
+			snprintf(buf, sizeof(buf), "Adding cache entry with key %d\n", Key);
+			DoOutputDebugString(buf);
 			// value does not exist. create new tValue
 			tValue *pNewValue = new tValue;
 			// save in map
-			m_Values.SetAt(Key, oiu<tValue>(pNewValue));
+			m_Values.SetAt(Key, new CXCacheHelper<tValue>(pNewValue));
 			// lookup again
-			m_Values.Lookup(Key, oiuResult);
+			m_Values.Lookup(Key, pResult);
 		}
 		// reset counter
-		oiuResult.ResetCounter();
+		pResult->ResetCounter();
 		// and return value
-		return oiuResult.GetValue();
+		return pResult->GetValue();
+	}
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 * 
+	 * oiu.
+	 */
+	void IncrementCounters() {
+		CXCacheHelper<tValue> *pTmp = NULL;
+		CXMapSort<tKey, CXCacheHelper<tValue> *>::POS Pos = m_Values.GetStart();
+		while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
+			pTmp->IncrementCounter();
+		}
 	}
 };
 
