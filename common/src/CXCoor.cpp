@@ -120,6 +120,6 @@ double CXCoor::GetUTMNorthing() const {
 void CXCoor::OffsetCoor(double dUTME, double dUTMN) {
 	// offset UTMCoor
 	m_UTMCoor.OffsetCoor(dUTME, dUTMN);
-	// an dcompute lon / lat
+	// and compute lon / lat
 	UTMtoLL(WGS84, m_UTMCoor.GetUTMEasting(), m_UTMCoor.GetUTMNorthing(), m_UTMCoor.GetUTMZone(), m_UTMCoor.GetUTMLetter(), m_dLon, m_dLat);
 }

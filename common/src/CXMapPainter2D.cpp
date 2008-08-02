@@ -33,6 +33,7 @@
 #include "CXDebugInfo.hpp"
 #include "Utils.hpp"
 
+#include <math.h>
 
 // Mapnik colors
 static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
@@ -333,7 +334,8 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap) {
 	if(pBMP == NULL)
 		return;
-
+	/// \todo make it work again
+/*
 	CXCoorVector v;
 	const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetCoordinates();
 	size_t Size = CoorBuffer.GetSize();
@@ -353,6 +355,7 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 		delete [] pX;
 		delete [] pY;
 	}
+*/
 }
 
 //-------------------------------------
@@ -473,8 +476,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		return;
 
 	/// \todo implement
-/*
-	CXPOWMMap::Instance()->LockMap();
+
 	CXExactTime StopLock;
 	CXExactTime StopDrawWays;
 	CXExactTime StopTrackLog;
@@ -486,118 +488,185 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	// get zone
 	int WayCount = 0;
-	int CurrentZone = CXPOWMMap::Instance()->GetCurrentZone();
-	if(CurrentZone != UTMZoneNone) {
-		int xc = 0;
-		int yc = 0;
-		// compute coordinate
-		char UTMLetter = 0;
-		double x0 = 0;
-		double y0 = 0;
-		int NewZone = UTMZoneNone;
-		double dLon = 0;
-		double dLat = 0;
-		if(CXOptions::Instance()->MustSnapToWay()) {
-			// get coordinates from locator
-			dLon = NaviData.GetLocatedCoor().GetLon();
-			dLat = NaviData.GetLocatedCoor().GetLat();
-		} else {
-			// get gps coordinates
-			dLon = NaviData.GetCorrectedGPSCoor().GetLon();
-			dLat = NaviData.GetCorrectedGPSCoor().GetLat();
-		}
-		LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
-
-		CXTransformationMatrix2D TMMap;
-		CXTransformationMatrix2D TMCompass;
-		CXTransformationMatrix2D TMCurrentPos;
-
-		CXUTMSpeed UTMSpeed = NaviData.GetUTMSpeed();
-
-		TMMap.Translate(-x0, -y0);			// x0, y0 is center of visible universe
-		// rotate
-		if(pOpt->IsNorthing()) {
-			xc = Width/2;
-			yc = Height/2;
-			TMCurrentPos.Rotate(UTMSpeed.GetCos(), UTMSpeed.GetSin());
-			TMCurrentPos.Rotate(-UTMPI/2);
-		} else {
-			xc = Width/2;
-			yc = 3*Height/4;
-			TMMap.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
-			TMCompass.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
-			// rotate 90 to left, since 0 is east and we want it point to north
-			TMMap.Rotate(UTMPI/2);
-			TMCompass.Rotate(UTMPI/2);
-		}
-
-		TMMap.Scale(1.0/m_MeterPerPixel, -1.0/m_MeterPerPixel);		// do scaling (negative for y!)
-		TMMap.Translate(xc, yc);			// display it centered on screen
-		TMCompass.Scale(1, -1);				// do scaling (negative for y!)
-		TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
-		TMCurrentPos.Translate(xc, yc);		// an position it on screen
-
-		// run coordinate transformations
-		CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
-
-		// prepare drawing
-		CXBuffer<TWayMap *> &Ways = CXPOWMMap::Instance()->GetWayMap();
-		for(size_t Index=0; Index< Ways.GetSize(); Index++) {
-			TWayMap *pWayMap = Ways[Index];
-			POS pos = pWayMap->GetStart();
-			CXWay *pWay = NULL;
-			while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
-				if (IsWayPossiblyVisible(pWay, Width, Height)) {
-					CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
-					m_DrawWays[HighwayType]->Append(pWay);
-					WayCount++;
-				}
-			}
-			// ok, now draw bg
-			for(i=0; i< CXWay::e_EnumCount; i++) {
-				DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
-			}
-			for(i=0; i< CXWay::e_EnumCount; i++) {
-				DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
-			}
-
-			// clear arrays
-			for(i=0; i<CXWay::e_EnumCount; i++) {
-				TWayBuffer *pBuffer = m_DrawWays[i];
-				pBuffer->Clear();
-			}
-		}
-
-		StopDrawWays.SetNow();
-
-		// draw TrackLog if neccessary
-		if(CXOptions::Instance()->MustShowTrackLog()) {
-			DrawTrackLog(pBMP, TMMap);
-		}
-		StopTrackLog.SetNow();
-
-		// draw POIs
-		DrawPOIs(pBMP, Width, Height);
-		StopPOI.SetNow();
-
-		// draw compass if necessary
-		if(CXOptions::Instance()->MustShowCompass()) {
-			DrawCompass(pBMP, TMCompass);
-		}
-		StopCompass.SetNow();
-
-		// draw scale if necessary
-		if(CXOptions::Instance()->MustShowScale()) {
-			DrawScale(pBMP, Width, Height);
-		}
-		StopScale.SetNow();
-
-		// draw current position
-		DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);
-
-		StopPos.SetNow();
+	int xc = 0;
+	int yc = 0;
+	// compute coordinate
+	char UTMLetterCurrent = 0;
+	double UTME = 0;
+	double UTMN = 0;
+	int UTMZoneCurrent = UTMZoneNone;
+	/// \todo remove again
+	double dLon = 0;
+	double dLat = 0;
+	if(CXOptions::Instance()->MustSnapToWay()) {
+		// get coordinates from locator
+		dLon = NaviData.GetLocatedCoor().GetLon();
+		dLat = NaviData.GetLocatedCoor().GetLat();
+	} else {
+		// get gps coordinates
+		dLon = NaviData.GetCorrectedGPSCoor().GetLon();
+		dLat = NaviData.GetCorrectedGPSCoor().GetLat();
 	}
-	CXPOWMMap::Instance()->UnlockMap();
+	// compute UTM coordinates
+	LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, UTME, UTMN);
+	// OK, we have the coordinates
+
+	// now compute all transformation matrices
+	CXTransformationMatrix2D TMMap;				// for the map
+	CXTransformationMatrix2D TMCompass;			// for the compass
+	CXTransformationMatrix2D TMCurrentPos;		// for arrow indicating the current position
+
+	CXUTMSpeed UTMSpeed = NaviData.GetUTMSpeed();
+
+	TMMap.Translate(-UTME, -UTMN);			// UTME, UTMN is center of visible universe
+	// rotate
+	if(pOpt->IsNorthing()) {
+		xc = Width/2;
+		yc = Height/2;
+		TMCurrentPos.Rotate(UTMSpeed.GetCos(), UTMSpeed.GetSin());
+		TMCurrentPos.Rotate(-UTMPI/2);
+	} else {
+		xc = Width/2;
+		yc = 3*Height/4;
+		TMMap.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
+		TMCompass.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
+		// rotate 90 to left, since 0 is east and we want it point to north
+		TMMap.Rotate(UTMPI/2);
+		TMCompass.Rotate(UTMPI/2);
+	}
+
+	TMMap.Scale(1.0/m_MeterPerPixel, -1.0/m_MeterPerPixel);		// do scaling (negative for y!)
+	TMMap.Translate(xc, yc);			// display it centered on screen
+	TMCompass.Scale(1, -1);				// do scaling (negative for y!)
+	TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
+	TMCurrentPos.Translate(xc, yc);		// an position it on screen
+
+	// compute inverse to TMMap
+	CXTransformationMatrix2D Inv = TMMap.Inverse();
+
+	// compute coordinates of corners of the screen
+	CXCoorVector TL = Inv*CXCoorVector(0,0);
+	CXCoorVector TR = Inv*CXCoorVector(Width-1,0);
+	CXCoorVector BL = Inv*CXCoorVector(0,Height-1);
+	CXCoorVector BR = Inv*CXCoorVector(Width-1,Height-1);
+
+	double dLonTL = 0; double dLatTL = 0;
+	UTMtoLL(WGS84, TL.GetX(), TL.GetY(), UTMZoneCurrent, UTMLetterCurrent, dLonTL, dLatTL);
+	double dLonTR = 0; double dLatTR = 0;
+	UTMtoLL(WGS84, TR.GetX(), TR.GetY(), UTMZoneCurrent, UTMLetterCurrent, dLonTR, dLatTR);
+	double dLonBL = 0; double dLatBL = 0;
+	UTMtoLL(WGS84, BL.GetX(), BL.GetY(), UTMZoneCurrent, UTMLetterCurrent, dLonBL, dLatBL);
+	double dLonBR = 0; double dLatBR = 0;
+	UTMtoLL(WGS84, BR.GetX(), BR.GetY(), UTMZoneCurrent, UTMLetterCurrent, dLonBR, dLatBR);
+
+	double dLonMin = Min(Min(dLonTL, dLonTR), Min(dLonBL, dLonBR));
+	double dLonMax = Max(Max(dLonTL, dLonTR), Max(dLonBL, dLonBR));
+	double dLatMin = Min(Min(dLatTL, dLatTR), Min(dLatBL, dLatBR));
+	double dLatMax = Max(Max(dLatTL, dLatTR), Max(dLatBL, dLatBR));
+
+	// now get map sections currently visible
+	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, m_ZoomLevel, TMMap);
+	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSections(Descr);
+	for(i=0; i<MapSections.GetSize(); i++) {
+		CXMapSection *pMapSection = MapSections[i].GetPtr();
+		if(pMapSection != NULL) {
+			/// \todo implement
+			int xxx = 0;
+		}
+	}
+
+	// run coordinate transformations
+	for(int x=static_cast<int>(floor(dLonMin)*100); x<static_cast<int>(ceil(dLonMax)*100); x++) {
+		for(int y=static_cast<int>(floor(dLatMin)*100); y<static_cast<int>(ceil(dLatMax)*100); y++) {
+			int Zone = 0;
+			char UTML = 0;
+			double E0 = 0;
+			double N0 = 0;
+			double dLon = 1.0*x/100; 
+			double dLat = 1.0*y/100; 
+			LLtoUTM(WGS84, dLon, dLat, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v0 = TMMap*CXCoorVector(E0, N0);
+
+			dLon = 1.0*(x+1)/100; 
+			dLat = 1.0*y/100; 
+			LLtoUTM(WGS84, dLon, dLat, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v1 = TMMap*CXCoorVector(E0, N0);
+
+			dLon = 1.0*x/100; 
+			dLat = 1.0*(y+1)/100; 
+			LLtoUTM(WGS84, dLon, dLat, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v2 = TMMap*CXCoorVector(E0, N0);
+			if(((x%100) == 0) || ((y%100) == 0))
+				pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0xff, 0x00)));
+			else if(((x%10) == 0) || ((y%10) == 0))
+				pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0xff, 0x00, 0x00)));
+			else
+				pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00)));
+
+		
+			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v1.GetIntX(), v1.GetIntY());
+			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v2.GetIntX(), v2.GetIntY());
+		}
+	}
+
+/*
+	CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
+	// prepare drawing
+	CXBuffer<TWayMap *> &Ways = CXPOWMMap::Instance()->GetWayMap();
+	for(size_t Index=0; Index< Ways.GetSize(); Index++) {
+		TWayMap *pWayMap = Ways[Index];
+		POS pos = pWayMap->GetStart();
+		CXWay *pWay = NULL;
+		while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
+			if (IsWayPossiblyVisible(pWay, Width, Height)) {
+				CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
+				m_DrawWays[HighwayType]->Append(pWay);
+				WayCount++;
+			}
+		}
+		// ok, now draw bg
+		for(i=0; i< CXWay::e_EnumCount; i++) {
+			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+		}
+		for(i=0; i< CXWay::e_EnumCount; i++) {
+			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+		}
+
+		// clear arrays
+		for(i=0; i<CXWay::e_EnumCount; i++) {
+			TWayBuffer *pBuffer = m_DrawWays[i];
+			pBuffer->Clear();
+		}
+	}
+*/
+	StopDrawWays.SetNow();
+
+	// draw TrackLog if neccessary
+	if(CXOptions::Instance()->MustShowTrackLog()) {
+		DrawTrackLog(pBMP, TMMap);
+	}
+	StopTrackLog.SetNow();
+
+	// draw POIs
+	DrawPOIs(pBMP, Width, Height);
+	StopPOI.SetNow();
+
+	// draw compass if necessary
+	if(CXOptions::Instance()->MustShowCompass()) {
+		DrawCompass(pBMP, TMCompass);
+	}
+	StopCompass.SetNow();
+
+	// draw scale if necessary
+	if(CXOptions::Instance()->MustShowScale()) {
+		DrawScale(pBMP, Width, Height);
+	}
+	StopScale.SetNow();
+
+	// draw current position
+	DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);
+
+	StopPos.SetNow();
 
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];
@@ -633,7 +702,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
-*/
 }
 
 //-------------------------------------

@@ -20,59 +20,74 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __TARGETINCLUDES_HPP__
-#define __TARGETINCLUDES_HPP__
+#ifndef __CXMAPCONTAINER_HPP__
+#define __CXMAPCONTAINER_HPP__
 
-#include <windows.h>
-#include <stdio.h>
+#include "CXSmartPtr.hpp"
 
-#pragma warning(disable: 4786)
 
-#define WAIT_INFINITE INFINITE
-
-#ifndef t_uint32
-typedef unsigned __int32 t_uint32;
-#endif
-
-#ifndef t_uint64
-typedef unsigned __int64 t_uint64;
-#endif
-
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-
-#define NP_LEFT VK_LEFT
-#define NP_RIGHT VK_RIGHT
-
-class CXRGB;
-
-//-------------------------------------
+//---------------------------------------------------------------------
 /**
  * \brief oiu
  *
  */
-void DoOutputDebugString(const char *pcBuf);
+class CXTOCMapContainer {
+private:
+	//-------------------------------------
+	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
+	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
+	CXTOCMapContainer();
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXTOCMapContainer();
+};
 
-//-------------------------------------
+typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;
+
+
+//---------------------------------------------------------------------
 /**
  * \brief oiu
  *
  */
-void DoOutputErrorMessage(const char *pcBuf);
+class CXMapContainer {
+private:
+	// synchronisation
+	mutable CXMutex		m_Mutex;				///< Synchronization object.
+	//-------------------------------------
+	CXMapContainer(const CXMapContainer &);							///< Not used.
+	const CXMapContainer & operator = (const CXMapContainer &);		///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
+	CXMapContainer();
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXMapContainer();
+};
 
-//-------------------------------------
-/**
- * \brief oiu
- *
- */
-CXRGB COLORREF2CXRGB(const COLORREF & Color);
+typedef CXSmartPtr<CXMapContainer> TMapContainerPtr;
 
-//-------------------------------------
-/**
- * \brief oiu
- *
- */
-COLORREF CXRGB2COLORREF(const CXRGB & Color);
 
-#endif // __TARGETINCLUDES_HPP__
+#endif // __CXMAPCONTAINER_HPP__

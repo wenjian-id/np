@@ -186,3 +186,21 @@ void CXTransformationMatrix2D::Scale(double dX, double dY) {
 	SM.Multiply(*this);
 	*this = SM;
 }
+
+//-------------------------------------
+CXTransformationMatrix2D CXTransformationMatrix2D::Inverse() const {
+	// determinant
+	double Det =	m_a11*m_a22*m_a33 + m_a12*m_a23*m_a31 + m_a13*m_a21*m_a32 -
+					m_a13*m_a22*m_a31 - m_a11*m_a23*m_a32 - m_a12*m_a21*m_a33;
+	CXTransformationMatrix2D Result;
+	Result.m_a11 = (m_a22*m_a33 - m_a23*m_a32)/Det;
+	Result.m_a12 = (m_a13*m_a32 - m_a12*m_a33)/Det;
+	Result.m_a13 = (m_a12*m_a23 - m_a13*m_a22)/Det;
+	Result.m_a21 = (m_a23*m_a31 - m_a21*m_a33)/Det;
+	Result.m_a22 = (m_a11*m_a33 - m_a13*m_a31)/Det;
+	Result.m_a23 = (m_a13*m_a21 - m_a11*m_a23)/Det;
+	Result.m_a31 = (m_a21*m_a32 - m_a22*m_a31)/Det;
+	Result.m_a32 = (m_a12*m_a31 - m_a11*m_a32)/Det;
+	Result.m_a33 = (m_a11*m_a22 - m_a12*m_a21)/Det;
+	return Result;
+}

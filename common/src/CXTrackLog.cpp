@@ -21,18 +21,33 @@
  ***************************************************************************/
 
 #include "CXTrackLog.hpp"
+#include "CXWriteLocker.hpp"
+#include "CXOptions.hpp"
 #include "Utils.hpp"
+
+//----------------------------------------------------------------------------
+CXTrackLog *CXTrackLog::m_pInstance = NULL;
 
 //-------------------------------------
 CXTrackLog::CXTrackLog() :
 	m_MaxSize(0),
 	m_MinDistance(0)
 {
+	SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
+	SetMinDistance(CXOptions::Instance()->GetTrackLogMinDist());
 }
 
 //-------------------------------------
 CXTrackLog::~CXTrackLog() {
 }
+
+//-------------------------------------
+CXTrackLog *CXTrackLog::Instance() {
+	if(m_pInstance == NULL)
+		m_pInstance = new CXTrackLog();
+	return m_pInstance;
+}
+
 
 //-------------------------------------
 void CXTrackLog::DeleteSuperfluous() {
@@ -52,17 +67,20 @@ void CXTrackLog::DeleteSuperfluous() {
 
 //-------------------------------------
 void CXTrackLog::SetMaxSize(size_t MaxSize) {
+	CXWriteLocker WL(&m_RWLock);
 	m_MaxSize = MaxSize;
 	DeleteSuperfluous();
 }
 
 //-------------------------------------
 void CXTrackLog::SetMinDistance(unsigned int MinDistance) {
+	CXWriteLocker WL(&m_RWLock);
 	m_MinDistance = MinDistance;
 }
 
 //-------------------------------------
 void CXTrackLog::RelocateUTM(int NewUTMZone) {
+	CXWriteLocker WL(&m_RWLock);
 	size_t Size = m_Coordinates.GetSize();
 	for(size_t i=0; i<Size; i++) {
 		CXCoor *pCoor = m_Coordinates[i];
@@ -70,14 +88,15 @@ void CXTrackLog::RelocateUTM(int NewUTMZone) {
 			pCoor->RelocateUTM(NewUTMZone);
 	}
 }
-
+/*
 //-------------------------------------
-const CXBuffer<CXCoor *> & CXTrackLog::GetCoordinates() const {
+const TCoorBuffer & CXTrackLog::GetCoordinates() const {
 	return m_Coordinates;
 }
-
+*/
 //-------------------------------------
 void CXTrackLog::AddCoordinate(double dLon, double dLat) {
+	CXWriteLocker WL(&m_RWLock);
 	CXCoor *pCoor = new CXCoor(dLon, dLat);
 	// check for m_MinDistance
 	bool MustAppend = false;

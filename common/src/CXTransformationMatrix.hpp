@@ -206,6 +206,13 @@ public:
 	 *
 	 */
 	void Scale(double dX, double dY);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu
+	 */
+	CXTransformationMatrix2D Inverse() const;
 };
 
 #endif // __CXTRANSFORMATIONMATRIX_HPP__

@@ -179,6 +179,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void RemoveAt(const tKey & Key);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	bool Lookup(const tKey & Key, tValue & Result) const;
 	//-------------------------------------
 	/**
@@ -233,6 +239,13 @@ template<class tKey, class tValue> void CXMapHashSimple<tKey, tValue> ::SetAt(co
 	// check if already exists
 	unsigned char idx = Hash(Key);
 	m_pData[idx]->SetAt(Key, Value);
+}
+
+//-------------------------------------
+template<class tKey, class tValue> void CXMapHashSimple<tKey, tValue> ::RemoveAt(const tKey & Key) {
+	// check if already exists
+	unsigned char idx = Hash(Key);
+	m_pData[idx]->RemoveAt(Key);
 }
 
 //-------------------------------------

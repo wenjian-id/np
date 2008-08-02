@@ -69,6 +69,12 @@ private:
 	 *
 	 */
 	size_t GetMultipleOfGrowSize(size_t NewSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RemoveAt(size_t Index, size_t Count);
 protected:
 public:
 	//-------------------------------------
@@ -171,6 +177,12 @@ public:
 	 *
 	 */
 	void InsertAt(size_t Index, const tClass & c);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RemoveAt(size_t Index);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -279,15 +291,20 @@ template<class tClass> const CXBuffer<tClass> & CXBuffer<tClass> ::operator = (c
 //-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::CopyFrom(const CXBuffer<tClass> & rOther) {
 	delete [] m_pBuffer;
+	m_pBuffer = NULL;
 	m_ulAllocatedSize = rOther.m_ulAllocatedSize;
 	m_ulBufferSize = rOther.m_ulBufferSize;
-	m_pBuffer = new tClass [m_ulAllocatedSize];
-	memcpy(m_pBuffer, rOther.m_pBuffer, m_ulBufferSize*sizeof(tClass));
+	if(m_ulAllocatedSize > 0) {
+		m_pBuffer = new tClass [m_ulAllocatedSize];
+		memcpy(m_pBuffer, rOther.m_pBuffer, m_ulBufferSize*sizeof(tClass));
+	}
 }
 
 //-------------------------------------
 template<class tClass> size_t CXBuffer<tClass> ::GetMultipleOfGrowSize(size_t NewSize) {
-	return ((NewSize / BUFFER_GROWSIZE) + 1) * BUFFER_GROWSIZE;
+	if(NewSize == 0)
+		return 0;
+	return (((NewSize-1) / BUFFER_GROWSIZE) + 1) * BUFFER_GROWSIZE;
 }
 
 //-------------------------------------
@@ -329,12 +346,35 @@ template<class tClass> void CXBuffer<tClass> ::ShrinkTo(size_t ulNewSize) {
 	ulNewSize = GetMultipleOfGrowSize(ulNewSize);
 	if(ulNewSize < m_ulAllocatedSize) {
 		m_ulAllocatedSize = ulNewSize;
-		tClass *pNewBuffer = new tClass [m_ulAllocatedSize];
-		memmove(pNewBuffer, m_pBuffer, m_ulBufferSize*sizeof(tClass));
+		tClass *pNewBuffer = NULL;
+		if(m_ulAllocatedSize > 0) {
+			// at least one element left
+			pNewBuffer = new tClass [m_ulAllocatedSize];
+			memmove(pNewBuffer, m_pBuffer, m_ulBufferSize*sizeof(tClass));
+		} else {
+			// no element left
+			pNewBuffer = NULL;
+		}
+		// set new buffer
 		delete [] m_pBuffer;
 		m_pBuffer = pNewBuffer;
 	}
 }
+
+//-------------------------------------
+template<class tClass> void CXBuffer<tClass> ::RemoveAt(size_t Index, size_t Count) {
+	if(Index >= m_ulBufferSize)
+		// wrong index
+		return;
+	if(Index + Count > m_ulBufferSize)
+		return;
+	// move data around
+	m_ulBufferSize -= Count;
+	memmove(&(m_pBuffer[Index]), &(m_pBuffer[Index+Count]), (m_ulBufferSize-Index)*sizeof(tClass));
+	// shrink
+	ShrinkTo(m_ulBufferSize);
+}
+
 
 //-------------------------------------
 template<class tClass> bool CXBuffer<tClass> ::operator == (const CXBuffer & rOther) const {
@@ -376,12 +416,10 @@ template<class tClass> void CXBuffer<tClass> ::Clear() {
 
 //-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::Append(const tClass *pbData, size_t ulDataSize) {
-	// check if it fits in allocated memory
+	// new size
 	size_t NewSize = m_ulBufferSize + ulDataSize;
-	if(NewSize > m_ulAllocatedSize) {
-		// no, we must grow the buffer
-		GrowTo(NewSize);
-	}
+	// grow
+	GrowTo(NewSize);
 	// append data
 	memmove(&(m_pBuffer[m_ulBufferSize]), pbData, ulDataSize*sizeof(tClass));
 	m_ulBufferSize = NewSize;
@@ -397,12 +435,10 @@ template<class tClass> void CXBuffer<tClass> ::InsertAt(size_t Index, const tCla
 	if(Index >= m_ulBufferSize)
 		// wrong index
 		return;
-	// check if it fits in allocated memory
+	// new size
 	size_t NewSize = m_ulBufferSize + 1;
-	if(NewSize > m_ulAllocatedSize) {
-		// no, we must grow the buffer
-		GrowTo(NewSize);
-	}
+	// grow
+	GrowTo(NewSize);
 	// move data arround
 	memmove(&(m_pBuffer[Index+1]), &(m_pBuffer[Index]), (m_ulBufferSize-Index)*sizeof(tClass));
 	m_pBuffer[Index] = c;
@@ -410,52 +446,21 @@ template<class tClass> void CXBuffer<tClass> ::InsertAt(size_t Index, const tCla
 }
 
 //-------------------------------------
+template<class tClass> void CXBuffer<tClass> ::RemoveAt(size_t Index) {
+	RemoveAt(Index, 1);
+}
+
+//-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::DeleteFirst(size_t ulCount) {
-	// check
-	if(ulCount >= m_ulBufferSize) {
-		// delete all
-		Clear();
-	} else {
-		// delete part
-		size_t NewSize = GetMultipleOfGrowSize(m_ulBufferSize - ulCount);
-		if(NewSize < m_ulAllocatedSize) {
-			// allocate new block
-			m_ulAllocatedSize = NewSize;
-			tClass *pNewBuffer = new tClass [m_ulAllocatedSize];
-			m_ulBufferSize = m_ulBufferSize - ulCount;
-			memmove(pNewBuffer, &(m_pBuffer[ulCount]), m_ulBufferSize*sizeof(tClass));
-			delete [] m_pBuffer;
-			m_pBuffer = pNewBuffer;
-		} else {
-			// use existing block
-			m_ulBufferSize = m_ulBufferSize - ulCount;
-			memmove(m_pBuffer, &(m_pBuffer[ulCount]), m_ulBufferSize*sizeof(tClass));
-		}
-	}
+	RemoveAt(0, ulCount);
 }
 
 //-------------------------------------
 template<class tClass> void CXBuffer<tClass> ::DeleteLast(size_t ulCount) {
 	if(ulCount >= m_ulBufferSize) {
-		// delete all
-		Clear();
-	} else {
-		// delete part
-		// check
-		size_t NewSize = GetMultipleOfGrowSize(m_ulBufferSize - ulCount);
-		if(NewSize < m_ulAllocatedSize) {
-			// allocate new block
-			m_ulAllocatedSize = NewSize;
-			tClass *pNewBuffer = new tClass [m_ulAllocatedSize];
-			m_ulBufferSize = m_ulBufferSize - ulCount;
-			memmove(pNewBuffer, m_pBuffer, m_ulBufferSize*sizeof(tClass));
-			delete [] m_pBuffer;
-			m_pBuffer = pNewBuffer;
-		} else {
-			// use existing block
-			m_ulBufferSize = m_ulBufferSize - ulCount;
-		}
+		return;
 	}
+	RemoveAt(m_ulBufferSize-ulCount, ulCount);
 }
 
 //-------------------------------------

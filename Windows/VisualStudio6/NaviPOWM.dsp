@@ -225,6 +225,10 @@ SOURCE=..\..\common\src\CXBuffer.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXCache.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXCoor.hpp
 # End Source File
 # Begin Source File
@@ -274,6 +278,10 @@ SOURCE=..\..\common\src\CXLocatorThread.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXLoopThread.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXMapContainer.hpp
 # End Source File
 # Begin Source File
 
@@ -514,6 +522,10 @@ SOURCE=..\..\common\src\CXLocatorThread.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXLoopThread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXMapContainer.cpp
 # End Source File
 # Begin Source File
 

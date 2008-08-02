@@ -33,6 +33,7 @@
 #include "CXDebugInfo.hpp"
 #include "TargetIncludes.hpp"
 #include "CoordConstants.h"
+#include "CXTrackLog.hpp"
 
 #include <math.h>
 
@@ -308,7 +309,9 @@ void CXLocatorThread::OnThreadLoop() {
 			CXCoor Coor = m_NaviData.GetCorrectedGPSCoor();
 			double dLon = Coor.GetLon();
 			double dLat = Coor.GetLat();
-			pPOWMMap->PositionChanged(dLon, dLat, oHasFix);
+			if(oHasFix && CXOptions::Instance()->MustShowTrackLog()) {
+				CXTrackLog::Instance()->AddCoordinate(dLon, dLat);
+			}
 			t_uint64 ID = 0;
 			if(Locate(ID)) {
 				m_NaviData.SetLocated(true);

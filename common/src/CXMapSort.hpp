@@ -46,7 +46,7 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	CXKeyVal<tKey, tValue> *Find(const tKey & Key) const;
+	CXKeyVal<tKey, tValue> *Find(const tKey & Key, size_t & rIndex) const;
 protected:
 public:
 	//-------------------------------------
@@ -75,6 +75,12 @@ public:
 	 *
 	 */
 	void SetAt(const tKey & Key, const tValue & Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RemoveAt(const tKey & Key);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -117,7 +123,8 @@ template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAll() {
 }
 
 //-------------------------------------
-template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSort<tKey, tValue> ::Find(const tKey & Key) const {
+template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSort<tKey, tValue> ::Find(const tKey & Key, size_t & rIndex) const {
+	rIndex = NPOS;
 	if(m_Data.GetSize() == 0) {
 		return NULL;
 	} else if (m_Data[0]->m_Key > Key) {
@@ -141,6 +148,7 @@ template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSort<tKey, tVal
 				// found
 				oFound = true;
 				oContinue = false;
+				rIndex = IdxCmp;
 			} else if(pResult->m_Key > Key) {
 				// go to left
 				IdxStop = IdxCmp;
@@ -170,7 +178,8 @@ template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSort<tKey, tVal
 //-------------------------------------
 template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::SetAt(const tKey & Key, const tValue & Value) {
 	// check if already exists
-	CXKeyVal<tKey, tValue> *pS = Find(Key);
+	size_t Index = NPOS;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
 	if(pS != NULL) {
 		// already exists overwrite
 		pS->m_Value = Value;
@@ -240,9 +249,24 @@ template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::SetAt(const tK
 }
 
 //-------------------------------------
+template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAt(const tKey & Key) {
+	// check if exists
+	size_t Index = NPOS;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
+	if(pS == NULL) {
+		// Does not exist
+		return;
+	}
+	delete m_Data[Index];
+	m_Data.RemoveAt(Index);
+}
+
+
+//-------------------------------------
 template<class tKey, class tValue> bool CXMapSort<tKey, tValue> ::Lookup(const tKey &Key, tValue & Result) const {
 	// check if exists
-	CXKeyVal<tKey, tValue> *pS = Find(Key);
+	size_t Index = NPOS;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
 	if(pS != NULL) {
 		// exists
 		Result = pS->m_Value;

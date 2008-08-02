@@ -20,59 +20,25 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __TARGETINCLUDES_HPP__
-#define __TARGETINCLUDES_HPP__
+#include "CXMapContainer.hpp"
 
-#include <windows.h>
-#include <stdio.h>
 
-#pragma warning(disable: 4786)
-
-#define WAIT_INFINITE INFINITE
-
-#ifndef t_uint32
-typedef unsigned __int32 t_uint32;
-#endif
-
-#ifndef t_uint64
-typedef unsigned __int64 t_uint64;
-#endif
-
-#ifndef snprintf
-#define snprintf _snprintf
-#endif
-
-#define NP_LEFT VK_LEFT
-#define NP_RIGHT VK_RIGHT
-
-class CXRGB;
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXTOCMapContainer::CXTOCMapContainer() {
+}
 
 //-------------------------------------
-/**
- * \brief oiu
- *
- */
-void DoOutputDebugString(const char *pcBuf);
+CXTOCMapContainer::~CXTOCMapContainer() {
+}
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXMapContainer::CXMapContainer() {
+}
 
 //-------------------------------------
-/**
- * \brief oiu
- *
- */
-void DoOutputErrorMessage(const char *pcBuf);
+CXMapContainer::~CXMapContainer() {
+}
 
-//-------------------------------------
-/**
- * \brief oiu
- *
- */
-CXRGB COLORREF2CXRGB(const COLORREF & Color);
-
-//-------------------------------------
-/**
- * \brief oiu
- *
- */
-COLORREF CXRGB2COLORREF(const CXRGB & Color);
-
-#endif // __TARGETINCLUDES_HPP__

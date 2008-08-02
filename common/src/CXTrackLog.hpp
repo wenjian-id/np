@@ -25,6 +25,10 @@
 
 #include "CXBuffer.hpp"
 #include "CXCoor.hpp"
+#include "CXRWLock.hpp"
+
+typedef CXBuffer<CXCoor *>	TCoorBuffer;
+
 
 //---------------------------------------------------------------------
 /**
@@ -36,7 +40,9 @@ class CXTrackLog {
 private:
 	size_t				m_MaxSize;		///< Max size of coordinates.
 	unsigned int		m_MinDistance;	///< Min distance between last and new coordinate.
-	CXBuffer<CXCoor *>	m_Coordinates;	///< The coordinates.
+	TCoorBuffer			m_Coordinates;	///< The coordinates.
+	static CXTrackLog	*m_pInstance;	///< oiu
+	CXRWLock			m_RWLock;		///< Synchronization object.
 	//-------------------------------------
 	CXTrackLog(const CXTrackLog &);							///< Not used.
 	const CXTrackLog & operator = (const CXTrackLog &);		///< Not used.
@@ -95,7 +101,7 @@ public:
 	 * Get coordinates.
 	 * \return	const reference to coordinates.
 	 */
-	const CXBuffer<CXCoor *> & GetCoordinates() const;
+//	const TCoorBuffer & GetCoordinates() const;
 	//-------------------------------------
 	/**
 	 * \brief Add coordinate.
@@ -105,10 +111,13 @@ public:
 	 * \param	dLat	Latitude of new coordinate.
 	 */
 	void AddCoordinate(double dLon, double dLat);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	static CXTrackLog *Instance();
 };
-
-typedef CXBuffer<CXCoor *>	TCoorBuffer;
-
 
 #endif // __CXTRACKLOG_HPP__
 

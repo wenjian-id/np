@@ -99,8 +99,8 @@ void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const
 
 	UTMNorthing = (double)(k0*(M+N*tan(LatRad)*(A*A/2+(5-T+9*C+4*C*C)*A*A*A*A/24
 	 + (61-58*T+T*T+600*C-330*eccPrimeSquared)*A*A*A*A*A*A/720)));
-	if(dLat < 0)
-		UTMNorthing += 10000000.0; //10000000 meter offset for southern hemisphere
+//oiu	if(dLat < 0)
+//oiu		UTMNorthing += 10000000.0; //10000000 meter offset for southern hemisphere
 }
 
 char UTMLetterDesignator(double dLat)
@@ -173,16 +173,14 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
 	double LongOrigin;
 	double mu, phi1, phi1Rad;
 	double x, y;
-	int NorthernHemisphere; //1 for northern hemispher, 0 for southern
 
 	x = UTMEasting - 500000.0; //remove 500,000 meter offset for longitude
 	y = UTMNorthing;
 
 	if((UTMLetter - 'N') >= 0) {
-		NorthernHemisphere = 1;//point is in northern hemisphere
+		//point is in northern hemisphere
 	} else {
-		NorthernHemisphere = 0;//point is in southern hemisphere
-		y -= 10000000.0;//remove 10,000,000 meter offset used for southern hemisphere
+//oiu		y -= 10000000.0;//remove 10,000,000 meter offset used for southern hemisphere
 	}
 
 	LongOrigin = (ZoneNumber - 1)*6 - 180 + 3;  //+3 puts origin in middle of zone

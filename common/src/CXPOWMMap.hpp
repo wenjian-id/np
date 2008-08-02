@@ -25,10 +25,84 @@
 
 #include "CXMutex.hpp"
 #include "CXMapSection.hpp"
+#include "CXMapContainer.hpp"
 #include "CXFile.hpp"
-#include "CXTrackLog.hpp"
 #include "CXArray.hpp"
+#include "CXTransformationMatrix.hpp"
+#include "CXRect.hpp"
+#include "CXCache.hpp"
 #include "Utils.hpp"
+
+//---------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+class CXVisibleMapSectionDescr {
+private:
+	double						m_dLonMin;		///< oiu
+	double						m_dLonMax;		///< oiu.
+	double						m_dLatMin;		///< oiu
+	double						m_dLatMax;		///< oiu
+	unsigned char				m_ZoomLevel;	///< oiu
+	CXTransformationMatrix2D	m_Matrix;		///< oiu
+	//-------------------------------------
+	CXVisibleMapSectionDescr();															///< Not used.
+	CXVisibleMapSectionDescr(const CXVisibleMapSectionDescr &);							///< Not used.
+	const CXVisibleMapSectionDescr & operator = (const CXVisibleMapSectionDescr &);		///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief Only allowed constructor.
+	 *
+	 * Only allowed constructor.
+	 */
+	CXVisibleMapSectionDescr(	double dLonMin, double dLatMin,
+								double dLonMax, double dLatMax,
+								unsigned char ZoomLevel,
+								const CXTransformationMatrix2D &TMMap);
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXVisibleMapSectionDescr();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetLonMin() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 */
+	double GetLatMin() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetLonMax() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 */
+	double GetLatMax() const;
+	//-------------------------------------
+	/**
+	 * \brief Get zoom level.
+	 *
+	 * Get zoom level.
+	 * \return	Zoom level.
+	 */
+	unsigned char GetZoomLevel() const;
+};
+
 
 typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
 
@@ -39,14 +113,25 @@ typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
  */
 class CXPOWMMap {
 private:
-	static CXPOWMMap	*m_pInstance;			///< oiu
-	// stuff
-	CXTrackLog			m_TrackLog;				///< oiu
+	static CXPOWMMap	*m_pInstance;					///< oiu
+	CXCache<t_uint32, CXTOCMapContainer>	mTOCCache;	///< oiu
 	// synchronisation
-	mutable CXMutex		m_Mutex;				///< Synchronization object.
+	mutable CXMutex		m_Mutex;						///< Synchronization object.
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetFileNameFromCoor(double dLon, double dLat);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	t_uint32 GetCacheKeyFromCoor(double dLon, double dLat, unsigned char ZoomLevel);
 protected:
 public:
 	//-------------------------------------
@@ -68,25 +153,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void PositionChanged(double dLon, double dLat, bool oFix);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	const CXTrackLog & GetTrackLog() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	static CXPOWMMap *Instance();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	TMapSectionPtrArray GetMapSections(double dLon, double dLat, unsigned char ZoomLevel);
+	TMapSectionPtrArray GetMapSections(const CXVisibleMapSectionDescr &Descr);
 };
 
 #endif // __CXPOWMMAP_HPP__

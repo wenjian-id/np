@@ -176,17 +176,22 @@ template<class tClass> const CXArray<tClass> & CXArray<tClass> ::operator = (con
 //-------------------------------------
 template<class tClass> void CXArray<tClass> ::CopyFrom(const CXArray<tClass> & rOther) {
 	delete [] m_pBuffer;
+	m_pBuffer = NULL;
 	m_ulAllocatedSize = rOther.m_ulAllocatedSize;
 	m_ulBufferSize = rOther.m_ulBufferSize;
-	m_pBuffer = new tClass [m_ulAllocatedSize];
-	// copy each element using copy construtor
-	for(size_t i=0; i<m_ulBufferSize; i++)
-		m_pBuffer[i] = rOther.m_pBuffer[i];
+	if(m_ulAllocatedSize > 0) {
+		m_pBuffer = new tClass [m_ulAllocatedSize];
+		// copy each element using copy construtor
+		for(size_t i=0; i<m_ulBufferSize; i++)
+			m_pBuffer[i] = rOther.m_pBuffer[i];
+	}
 }
 
 //-------------------------------------
 template<class tClass> size_t CXArray<tClass> ::GetMultipleOfGrowSize(size_t NewSize) {
-	return ((NewSize / ARRAY_GROWSIZE) + 1) * ARRAY_GROWSIZE;
+	if(NewSize == 0)
+		return 0;
+	return (((NewSize-1) / ARRAY_GROWSIZE) + 1) * ARRAY_GROWSIZE;
 }
 
 //-------------------------------------
@@ -215,10 +220,18 @@ template<class tClass> void CXArray<tClass> ::ShrinkTo(size_t ulNewSize) {
 	ulNewSize = GetMultipleOfGrowSize(ulNewSize);
 	if(ulNewSize < m_ulAllocatedSize) {
 		m_ulAllocatedSize = ulNewSize;
-		tClass *pNewBuffer = new tClass [m_ulAllocatedSize];
-		// copy each element using copy construtor
-		for(size_t i=0; i<m_ulBufferSize; i++)
-			pNewBuffer[i] = m_pBuffer[i];
+		tClass *pNewBuffer = NULL;
+		if(ulNewSize > 0) {
+			// at least one lement left
+			pNewBuffer = new tClass [m_ulAllocatedSize];
+			// copy each element using copy construtor
+			for(size_t i=0; i<m_ulBufferSize; i++)
+				pNewBuffer[i] = m_pBuffer[i];
+		} else {
+			// no element left
+			pNewBuffer = NULL;
+		}
+		// set new buffer
 		delete [] m_pBuffer;
 		m_pBuffer = pNewBuffer;
 	}
@@ -236,10 +249,8 @@ template<class tClass> void CXArray<tClass> ::Clear() {
 template<class tClass> void CXArray<tClass> ::Append(const tClass & c) {
 	// check if it fits in allocated memory
 	size_t NewSize = m_ulBufferSize + 1;
-	if(NewSize > m_ulAllocatedSize) {
-		// no, we must grow the buffer
-		GrowTo(NewSize);
-	}
+	// grow
+	GrowTo(NewSize);
 	// append data
 	m_pBuffer[m_ulBufferSize] = c;
 	m_ulBufferSize = NewSize;

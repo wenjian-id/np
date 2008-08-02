@@ -25,18 +25,65 @@
 #include "CXOptions.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXExactTime.hpp"
+#include "CXMapContainer.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXTransformationMatrix.hpp"
 
+#include <math.h>
+
 const unsigned int MAPVERSION = 0x00020001; // 0.2.0-dev1
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXVisibleMapSectionDescr::CXVisibleMapSectionDescr(	double dLonMin,double dLatMin,
+													double dLonMax,double dLatMax,
+													unsigned char ZoomLevel,
+													const CXTransformationMatrix2D &TMMap) :
+	m_dLonMin(dLonMin),
+	m_dLonMax(dLonMax),
+	m_dLatMin(dLatMin),
+	m_dLatMax(dLatMax),
+	m_ZoomLevel(ZoomLevel),
+	m_Matrix(TMMap)
+{
+}
+
+//-------------------------------------
+CXVisibleMapSectionDescr::~CXVisibleMapSectionDescr() {
+}
+
+//-------------------------------------
+double CXVisibleMapSectionDescr::GetLonMin() const {
+	return m_dLonMin;
+}
+
+//-------------------------------------
+double CXVisibleMapSectionDescr::GetLatMin() const {
+	return m_dLatMin;
+}
+
+//-------------------------------------
+double CXVisibleMapSectionDescr::GetLonMax() const {
+	return m_dLonMax;
+}
+
+//-------------------------------------
+double CXVisibleMapSectionDescr::GetLatMax() const {
+	return m_dLatMax;
+}
+
+//-------------------------------------
+unsigned char CXVisibleMapSectionDescr::GetZoomLevel() const {
+	return m_ZoomLevel;
+}
+
 
 //----------------------------------------------------------------------------
 CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 
 //-------------------------------------
 CXPOWMMap::CXPOWMMap() {
-	m_TrackLog.SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
-	m_TrackLog.SetMinDistance(CXOptions::Instance()->GetTrackLogMinDist());
 }
 
 //-------------------------------------
@@ -50,10 +97,10 @@ CXPOWMMap *CXPOWMMap::Instance() {
 	return m_pInstance;
 }
 
+/*
 //-------------------------------------
 void CXPOWMMap::PositionChanged(double dLon, double dLat, bool oFix) {
 	CXMutexLocker L(&m_Mutex);
-/*
 	int NewZone = UTMZoneNone;
 	char UTMLetter = 0;
 	double UTME = 0;
@@ -75,12 +122,8 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat, bool oFix) {
 		// relocate tracklog
 		m_TrackLog.RelocateUTM(m_iCurrentZone);
 	}
-*/
-	// if neccessary ad new point to tracklog
-	if(oFix && CXOptions::Instance()->MustShowTrackLog()) {
-		m_TrackLog.AddCoordinate(dLon, dLat);
-	}
 }
+*/
 
 /*
 //-------------------------------------
@@ -196,15 +239,65 @@ bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
 	}
 */
 
+
 //-------------------------------------
-const CXTrackLog & CXPOWMMap::GetTrackLog() const {
-	return m_TrackLog;
+CXStringASCII CXPOWMMap::GetFileNameFromCoor(double dLon, double dLat) {
+	int NameLon = static_cast<int>(floor(fabs(dLon)));
+	int NameLat = static_cast<int>(floor(fabs(dLat)));
+	char EW = 'E';
+	if(dLon < 0 )
+		EW = 'W';
+	char NS = 'N';
+	if(dLat < 0 )
+		NS = 'S';
+	char buf[100];
+	snprintf(buf, sizeof(buf), "%c%03d%c%02d.map", EW, NameLon, NS, NameLat);
+	CXStringASCII Result=CXOptions::Instance()->GetDirectoryMaps();
+	Result+=buf;
+	return Result;
 }
 
 //-------------------------------------
-TMapSectionPtrArray CXPOWMMap::GetMapSections(double dLon, double dLat, unsigned char ZoomLevel) {
-	TMapSectionPtrArray tmp;
-	TMapSectionPtr oiu(new CXMapSection(), false);
-	tmp.Append(oiu);
-	return tmp;
+t_uint32 CXPOWMMap::GetCacheKeyFromCoor(double dLon, double dLat, unsigned char ZoomLevel) {
+	int NameLon = static_cast<int>(floor(dLon+180));	// [0 - 360]
+	int NameLat = static_cast<int>(floor(dLat+90));		// [ 0 - 180]
+	t_uint32 Result = NameLon << 16;
+	Result += NameLat << 8;
+	Result += ZoomLevel;
+	return Result;
+}
+
+
+//-------------------------------------
+TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &Descr) {
+	/// \todo implement
+	TMapSectionPtrArray Result;
+	// compute file name from coordinates
+	double dLonMin = 0;
+	double dLonMax = 0;
+	double dLatMin = 0;
+	double dLatMax = 0;
+	modf(Descr.GetLonMin(), &dLonMin);
+	modf(Descr.GetLonMax(), &dLonMax);
+	modf(Descr.GetLatMin(), &dLatMin);
+	modf(Descr.GetLatMax(), &dLatMax);
+	// load all TOCMapContainer between 
+	DoOutputDebugString("-----\n");
+	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
+		for(double dLat = dLatMin; dLat <= dLatMax; dLat++) {
+			CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
+			DoOutputDebugString(FileName.c_str());
+			t_uint32 CachKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
+			DoOutputDebugString("\n");
+			// get TOCMapContainer from cache
+			TTOCMapContainerPtr TOCMapContainerPtr = mTOCCache.GetAt(CachKey);
+			// load TOC for map container at a specific zoom level containing lon and lat from Descr
+//			LoadTOCMapContainer(FileName, ZoomLevel);
+			// get fiting map sections from this container for specific zoom level
+			// 
+		}
+	}
+	DoOutputDebugString("-----\n");
+
+	return Result;
 }
