@@ -366,7 +366,6 @@ template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAt(const
 	m_Data.RemoveAt(Index);
 }
 
-
 //-------------------------------------
 template<class tKey, class tValue> bool CXMapSort<tKey, tValue> ::Lookup(const tKey &Key, tValue & Result) const {
 	// check if exists

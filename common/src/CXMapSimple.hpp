@@ -34,8 +34,102 @@
  */
 template<class tKey, class tValue> class CXMapSimple {
 public:
-	static const size_t NPOS;				///< oiu
-	static const size_t START;				///< oiu
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	class POS {
+	public:
+		tKey		m_key;	///< oiu
+		size_t		m_pos;	///< oiu
+	public:
+		//-------------------------------------
+		/**
+		 * \brief Default constructor.
+		 *
+		 * Default constructor.
+		 */
+		POS() {
+			// m_key = 0;
+			m_pos = 0;
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu
+		 *
+		 */
+		POS(size_t Pos) {
+			// m_key = 0;
+			m_pos = Pos;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Copy constructor.
+		 *
+		 * Copy constructor.
+		 * \param	rOther	Instance to copy from.
+		 */
+		POS(const POS &rOther) {
+			m_key = rOther.m_key;
+			m_pos = rOther.m_pos;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Destructor.
+		 *
+		 * Destructor.
+		 */
+		virtual ~POS() {
+		}
+		//-------------------------------------
+		/**
+		 * \brief Assignment operator.
+		 *
+		 * Assignment operator.
+		 * \param	rOther	Instance to copy from.
+		 * \return			Const reference to self.
+		 */
+		const POS & operator = (const POS &rOther) {
+			m_key = rOther.m_key;
+			m_pos = rOther.m_pos;
+			return *this;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Comparison operator.
+		 *
+		 * Compares this instance with other instance.
+		 * \param	rOther	Instance to compare with.
+		 * \return			True if equal.
+		 */
+		bool operator == (const POS & rOther) {
+			return m_pos == rOther.m_pos;
+		}
+		//-------------------------------------
+		/**
+		 * \brief Comparison operator.
+		 *
+		 * Compares this instance with other instance.
+		 * \param	rOther	Instance to compare with.
+		 * \return			True if not equal.
+		 */
+		bool operator != (const POS & rOther) {
+			return ! operator ==(rOther);
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu.
+		 *
+		 * oiu.
+		 */
+		tKey GetKey() const {
+			return m_key;
+		}
+	};
+public:
+	static const POS	NPOS;				///< oiu
+	static const POS	START;				///< oiu
 private:
 	CXBuffer< CXKeyVal<tKey, tValue> *>	m_Data;			///< oiu
 	//-------------------------------------
@@ -46,7 +140,7 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	CXKeyVal<tKey, tValue> *Find(const tKey & Key) const;
+	CXKeyVal<tKey, tValue> *Find(const tKey & Key, size_t & rIndex) const;
 protected:
 public:
 	//-------------------------------------
@@ -74,7 +168,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	size_t GetSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void SetAt(const tKey & Key, const tValue & Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RemoveAt(const tKey & Key);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -86,17 +192,17 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	size_t GetStart() const;
+	POS GetStart() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	size_t GetNext(size_t & Pos, tValue &rValue) const;
+	POS GetNext(POS & Pos, tValue &rValue) const;
 };
 
-template<class tKey, class tValue> const size_t CXMapSimple<tKey, tValue> ::NPOS = ~(size_t(0));
-template<class tKey, class tValue> const size_t CXMapSimple<tKey, tValue> ::START = ~(size_t(1));
+template<class tKey, class tValue> const CXMapSimple<tKey, tValue>::POS CXMapSimple<tKey, tValue>::NPOS =  CXMapSimple::POS(~(size_t(0)));
+template<class tKey, class tValue> const CXMapSimple<tKey, tValue>::POS CXMapSimple<tKey, tValue>::START = CXMapSimple::POS(~(size_t(1)));
 
 
 //-------------------------------------
@@ -117,13 +223,21 @@ template<class tKey, class tValue> void CXMapSimple<tKey, tValue> ::RemoveAll() 
 }
 
 //-------------------------------------
-template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSimple<tKey, tValue> ::Find(const tKey & Key) const {
+template<class tKey, class tValue> size_t CXMapSimple<tKey, tValue> ::GetSize() const {
+	return m_Data.GetSize();
+}
+
+//-------------------------------------
+template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSimple<tKey, tValue> ::Find(const tKey & Key, size_t & rIndex) const {
+	rIndex = 0;
 	// iterate through all elements and search for the one with key tKey
 	for(size_t i=0; i<m_Data.GetSize(); i++) {
 		CXKeyVal<tKey, tValue> *pResult = m_Data[i];
-		if(pResult->m_Key == Key)
+		if(pResult->m_Key == Key) {
 			// found
+			rIndex = i;
 			return pResult;
+		}
 	}
 	return NULL;
 }
@@ -131,7 +245,8 @@ template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSimple<tKey, tV
 //-------------------------------------
 template<class tKey, class tValue> void CXMapSimple<tKey, tValue> ::SetAt(const tKey & Key, const tValue & Value) {
 	// check if already exists
-	CXKeyVal<tKey, tValue> *pS = Find(Key);
+	size_t Index = 0;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
 	if(pS != NULL) {
 		// already exists overwrite
 		pS->m_Value = Value;
@@ -142,9 +257,23 @@ template<class tKey, class tValue> void CXMapSimple<tKey, tValue> ::SetAt(const 
 }
 
 //-------------------------------------
+template<class tKey, class tValue> void CXMapSimple<tKey, tValue> ::RemoveAt(const tKey & Key) {
+	// check if exists
+	size_t Index = 0;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
+	if(pS == NULL) {
+		// Does not exist
+		return;
+	}
+	delete m_Data[Index];
+	m_Data.RemoveAt(Index);
+}
+
+//-------------------------------------
 template<class tKey, class tValue> bool CXMapSimple<tKey, tValue> ::Lookup(const tKey &Key, tValue & Result) const {
 	// check if exists
-	CXKeyVal<tKey, tValue> *pS = Find(Key);
+	size_t Index = 0;
+	CXKeyVal<tKey, tValue> *pS = Find(Key, Index);
 	if(pS != NULL) {
 		// exists
 		Result = pS->m_Value;
@@ -155,25 +284,26 @@ template<class tKey, class tValue> bool CXMapSimple<tKey, tValue> ::Lookup(const
 }
 
 //-------------------------------------
-template<class tKey, class tValue> size_t CXMapSimple<tKey, tValue> ::GetStart() const {
+template<class tKey, class tValue> CXMapSimple<tKey, tValue>::POS CXMapSimple<tKey, tValue> ::GetStart() const {
 	return START;
 }
 
 //-------------------------------------
-template<class tKey, class tValue> size_t CXMapSimple<tKey, tValue> ::GetNext(size_t & Pos, tValue &rValue) const {
+template<class tKey, class tValue> CXMapSimple<tKey, tValue>::POS CXMapSimple<tKey, tValue> ::GetNext(POS & Pos, tValue &rValue) const {
 	if(Pos == NPOS) {
 		return Pos;
 	}
 	if(Pos == START) {
-		Pos = 0;
+		Pos.m_pos = 0;
 	} else {
-		Pos++;
+		Pos.m_pos++;
 	}
-	if(Pos >= m_Data.GetSize()) {
+	if(Pos.m_pos >= m_Data.GetSize()) {
 		Pos = NPOS;
 		return Pos;
 	}
-	rValue = m_Data[Pos]->m_Value;
+	rValue = m_Data[Pos.m_pos]->m_Value;
+	Pos.m_key = m_Data[Pos.m_pos]->m_Key;
 	return Pos;
 }
 

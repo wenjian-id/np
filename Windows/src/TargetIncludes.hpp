@@ -26,8 +26,6 @@
 #include <windows.h>
 #include <stdio.h>
 
-#pragma warning(disable: 4786)
-
 #define WAIT_INFINITE INFINITE
 
 #ifndef t_uint32

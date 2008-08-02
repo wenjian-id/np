@@ -139,6 +139,10 @@ extraResourceOptions=
 57=..\..\common\src\CXDebugInfo.cpp
 58=..\src\OSSpecific.cpp
 59=..\..\common\src\CXWatchdogThread.cpp
+60=..\..\common\src\CXMapContainer.cpp
+61=..\..\common\src\CXMapSection.cpp
+62=..\..\common\src\CXNode.cpp
+63=..\..\common\src\CXWay.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -213,6 +217,12 @@ extraResourceOptions=
 71=..\..\common\src\CXMapSort.hpp
 72=..\..\common\src\CXDebugInfo.hpp
 73=..\..\common\src\CXWatchdogThread.hpp
+74=..\..\common\src\CXArray.hpp
+75=..\..\common\src\CXCache.hpp
+76=..\..\common\src\CXMapContainer.hpp
+77=..\..\common\src\CXMapSection.hpp
+78=..\..\common\src\CXNode.hpp
+79=..\..\common\src\CXWay.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]
