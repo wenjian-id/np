@@ -20,6 +20,7 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
+#include "Utils.hpp"
 #include "CXMapSection.hpp"
 #include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
