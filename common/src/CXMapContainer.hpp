@@ -24,6 +24,9 @@
 #define __CXMAPCONTAINER_HPP__
 
 #include "CXSmartPtr.hpp"
+#include "CXRWLock.hpp"
+#include "CXStringASCII.hpp"
+#include "CXFile.hpp"
 
 
 //---------------------------------------------------------------------
@@ -33,10 +36,18 @@
  */
 class CXTOCMapContainer {
 private:
-	bool		m_oLoaded;	///< oiu
+	bool				m_oLoaded;	///< oiu
+	mutable CXRWLock	m_RWLock;	///< Synchronization object.
 	//-------------------------------------
 	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
 	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool Load_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel);
 protected:
 public:
 	//-------------------------------------
@@ -60,6 +71,13 @@ public:
 	 * oiu.
 	 */
 	bool IsLoaded() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool Load(const CXStringASCII & FileName, unsigned char ZoomLevel);
 };
 
 typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;

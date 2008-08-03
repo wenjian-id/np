@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXMapPainter2D.hpp"
+#include "Utils.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
 #include "CXExactTime.hpp"
@@ -31,7 +32,6 @@
 #include "CXTransformationMatrix.hpp"
 #include "TargetIncludes.hpp"
 #include "CXDebugInfo.hpp"
-#include "Utils.hpp"
 
 #include <math.h>
 

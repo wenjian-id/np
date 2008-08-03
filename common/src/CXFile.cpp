@@ -22,16 +22,17 @@
 
 #include "CXFile.hpp"
 
-static const size_t BufferSize = 100000;
+static const size_t MaxBufferSize = 100000;
 
 //-------------------------------------
 CXFile::CXFile() :
 	m_File(NULL),
 	m_pBuffer(NULL),
+	m_ReadAheadSize(MaxBufferSize),
 	m_BufferedSize(0),
 	m_BufferOffset(0)
 {
-	m_pBuffer = new unsigned char [BufferSize];
+	m_pBuffer = new unsigned char [MaxBufferSize];
 }
 
 //-------------------------------------
@@ -48,10 +49,23 @@ void CXFile::Clear() {
 }
 
 //-------------------------------------
+CXFile::E_RESULTCODE CXFile::SetReadAheadSize(size_t ReadAheadSize) {
+	// check if open
+	if(IsOpen())
+		return E_FILE_OPEN;
+	// check argument
+	if((ReadAheadSize == 0) || (ReadAheadSize > MaxBufferSize))
+		return E_INVALID_ARG;
+	// set new value
+	m_ReadAheadSize = ReadAheadSize;
+	return E_OK;
+}
+
+//-------------------------------------
 CXFile::E_RESULTCODE CXFile::Open(const char *pcFileName, E_OPENMODE eMode) {
 	// check if already open
 	if(IsOpen())
-		return E_ALREADY_OPEN;
+		return E_FILE_OPEN;
 	// check argument
 	if(pcFileName == NULL)
 		return E_INVALID_ARG;
@@ -95,7 +109,7 @@ CXFile::E_RESULTCODE CXFile::Read(unsigned char *pbBuffer, size_t Size, size_t &
 		return E_INVALID_ARG;
 	ReadSize = 0;
 	size_t BufferOffset = 0;
-	// read an copy data
+	// read and copy data
 	bool Loop = Size > 0;
 	while(Loop) {
 		// compute amount to copy from buffered data
@@ -117,7 +131,7 @@ CXFile::E_RESULTCODE CXFile::Read(unsigned char *pbBuffer, size_t Size, size_t &
 		// check if more data to be read from file
 		if(Size > 0) {
 			// more data to copy, so try to read from file to buffer
-			size_t ToRead = BufferSize;
+			size_t ToRead = m_ReadAheadSize;
 			/// \todo error handling
 			size_t Read = fread(m_pBuffer, sizeof(unsigned char), ToRead, m_File);
 			// adjust offsets
@@ -146,3 +160,15 @@ CXFile::E_RESULTCODE CXFile::Write(const unsigned char *pbBuffer, size_t Size, s
 	return E_OK;
 }
 
+//-------------------------------------
+CXFile::E_RESULTCODE CXFile::Seek(size_t Offset) {
+	if(!IsOpen())
+		return E_FILE_NOT_OPEN;
+	// invalidate m_pBuffer
+	m_BufferedSize = 0;
+	// do seek
+	if(fseek(m_File, Offset, SEEK_SET) != 0) {
+		return E_SEEK_ERROR;
+	}
+	return E_OK;
+}

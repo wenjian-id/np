@@ -21,10 +21,10 @@
  ***************************************************************************/
 
 #include "CXOptions.hpp"
+#include "Utils.hpp"
 #include "CXFileIni.hpp"
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
-#include "Utils.hpp"
 #include <OSSpecific.hpp>
 
 

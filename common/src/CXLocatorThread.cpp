@@ -20,10 +20,10 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
+#include "Utils.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXStringASCII.hpp"
-#include "Utils.hpp"
 #include "CXCoor.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXNaviPOWM.hpp"

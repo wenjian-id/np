@@ -20,8 +20,8 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "Utils.hpp"
 #include "CXMapSection.hpp"
+#include "Utils.hpp"
 #include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXOptions.hpp"
@@ -277,3 +277,14 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 		}
 	}
 }
+
+/*
+	// check return code and do other sutff
+	if(Result) {
+		// check OSMVali
+		if(CXOptions::Instance()->GetOSMValiFlags() != 0) {
+			// run vali;
+			RunOSMVali();
+		}
+	}
+*/

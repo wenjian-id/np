@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXNaviPOWM.hpp"
+#include "Utils.hpp"
 #include "CXGPSRecvThread.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXMapPainterThread.hpp"
@@ -34,7 +35,6 @@
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
 #include "CXDeviceContext.hpp"
-#include "Utils.hpp"
 
 const char * VERSIONSTRING ="NaviPOWM 0.2.0-dev1";
 const char * INFOSTRING1 ="(C) Doru Julian Bugariu";

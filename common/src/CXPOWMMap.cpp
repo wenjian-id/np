@@ -20,18 +20,16 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#include "Utils.hpp"
 #include "CXPOWMMap.hpp"
+#include "Utils.hpp"
 #include "CXOptions.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXExactTime.hpp"
-#include "CXMapContainer.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXTransformationMatrix.hpp"
 
 #include <math.h>
 
-const unsigned int MAPVERSION = 0x00020001; // 0.2.0-dev1
 static const size_t TOCCACHESIZE = 20;		///< oiu
 
 
@@ -128,121 +126,6 @@ void CXPOWMMap::PositionChanged(double dLon, double dLat, bool oFix) {
 }
 */
 
-/*
-//-------------------------------------
-bool CXPOWMMap::LoadMap(const CXStringASCII & FileName) {
-	CXMutexLocker L(&m_Mutex);
-
-	Clear();
-
-	m_FileName = FileName;
-	m_iCurrentZone = UTMZoneNone;
-
-	CXFile InFile;
-	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
-		// no error message
-		return false;
-	}
-
-	t_uint32 MagicCode = 0;
-	t_uint32 ReqMagicCode = ('P' << 24) + ('O' << 16) + ('W' << 8) + 'M';
-	if(!ReadUI32(InFile, MagicCode)) {
-		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-	if(MagicCode != ReqMagicCode) {
-		CXStringASCII ErrorMsg(FileName);
-		ErrorMsg += " is not a NaviPOWM map";
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-
-	// check version
-	t_uint32 Version = 0;
-	t_uint32 ReqVersion = MAPVERSION;
-	if(!ReadUI32(InFile, Version)) {
-		CXStringASCII ErrorMsg("Error reading Version from file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-	bool Result = false;
-
-	// decide which load function to call
-	// first of all check older versions
-	if(Version == 0x00000100) {
-		// v 0.1.1
-		Result = LoadMap0_1_1(InFile, FileName);
-	} else if(Version == 0x00010200) {
-		// v 0.1.2
-		Result = LoadMap0_1_2(InFile, FileName);
-	} else if(Version != ReqVersion) {
-		// not supported version
-		CXStringASCII ErrorMsg(FileName);
-		ErrorMsg += " has wrong Version: ";
-		char buf[100];
-		if((Version & 0xff) == 0) {
-			snprintf(	buf, sizeof(buf), "%d.%d.%d", 
-						static_cast<unsigned char>((Version & 0xff000000) >> 24),
-						static_cast<unsigned char>((Version & 0xff0000) >> 16),
-						static_cast<unsigned char>((Version & 0xff00) >> 8));
-		} else {
-			snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
-						static_cast<unsigned char>((Version & 0xff000000) >> 24),
-						static_cast<unsigned char>((Version & 0xff0000) >> 16),
-						static_cast<unsigned char>((Version & 0xff00) >> 8),
-						static_cast<unsigned char>((Version & 0xff)));
-		}
-		ErrorMsg += buf;
-//		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	} else {
-		// current version
-		Result = LoadMap_CurrentVersion(InFile, FileName);
-	}
-
-	// check return code and do other sutff
-	if(Result) {
-		// check OSMVali
-		if(CXOptions::Instance()->GetOSMValiFlags() != 0) {
-			// run vali;
-			RunOSMVali();
-		}
-	}
-	return Result;
-}
-*/
-
-/*
-	// check if new map has to be loaded
-	char buf[100];
-	CXCoor Coor = m_NaviData.GetCorrectedGPSCoor();
-	/// \todo which coor
-	double dLon = Coor.GetLon();
-	double dLat = Coor.GetLat();
-	int NameLon = static_cast<int>(floor(fabs(dLon*10)));
-	int NameLat = static_cast<int>(floor(fabs(dLat*10)));
-	char EW = 'E';
-	if(dLon < 0 )
-		EW = 'W';
-	char NS = 'N';
-	if(dLat < 0 )
-		NS = 'S';
-	snprintf(buf, 100, "%c%04d%c%03d.map", EW, NameLon, NS, NameLat);
-	CXStringASCII FileName=CXOptions::Instance()->GetDirectoryMaps();
-	FileName+=buf;
-	if(pPOWMMap->GetFileName() != FileName) {
-		if(oLoadMap) {
-			pPOWMMap->LoadMap(FileName);
-		} else {
-			// do not load any map (no fix yet and not starting with last saved coordinate
-		}
-	}
-*/
-
-
 //-------------------------------------
 CXStringASCII CXPOWMMap::GetFileNameFromCoor(double dLon, double dLat) {
 	int NameLon = static_cast<int>(floor(fabs(dLon)));
@@ -287,13 +170,14 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	// load all TOCMapContainer between 
 	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
 		for(double dLat = dLatMin; dLat <= dLatMax; dLat++) {
-			CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
 			t_uint32 CachKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
 			// get TOCMapContainer from cache
 			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CachKey);
 			CXTOCMapContainer *pTOC = TOCMapContainerPtr.GetPtr();
 			if(!pTOC->IsLoaded()) {
-				// load TOC for map container at a specific zoom level containing lon and lat from Descr
+				// load TOC for map container at a specific zoom level
+				CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
+				pTOC->Load(FileName, Descr.GetZoomLevel());
 			}
 			// get fiting map sections from this container for specific zoom level
 			// 

@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXSatelliteData.hpp"
+#include "Utils.hpp"
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 #include "CXDeviceContext.hpp"
@@ -28,7 +29,6 @@
 #include "CXPen.hpp"
 #include "CoordConstants.h"
 #include "math.h"
-#include "Utils.hpp"
 
 
 CXSatelliteData * CXSatelliteData::m_pInstance = NULL;

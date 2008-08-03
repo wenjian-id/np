@@ -41,10 +41,11 @@ public:
 	enum E_RESULTCODE {
 		E_OK,						///< oiu
 		E_INVALID_ARG,				///< oiu
-		E_ALREADY_OPEN,				///< oiu
 		E_UNSUPPORTED_OPENMODE,		///< oiu
 		E_OPEN_ERROR,				///< oiu
 		E_FILE_NOT_OPEN,			///< oiu
+		E_FILE_OPEN,				///< oiu
+		E_SEEK_ERROR,				///< oiu
 	};
 	//-------------------------------------
 	/**
@@ -58,6 +59,7 @@ public:
 private:
 	FILE			*m_File;			///< oiu
 	unsigned char	*m_pBuffer;			///< oiu
+	size_t			m_ReadAheadSize;	///< oiu
 	size_t			m_BufferedSize;		///< oiu
 	size_t			m_BufferOffset;		///< oiu
 	//-------------------------------------
@@ -90,6 +92,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	E_RESULTCODE SetReadAheadSize(size_t ReadAheadSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	E_RESULTCODE Open(const char *pcFileName, E_OPENMODE eMode);
 	//-------------------------------------
 	/**
@@ -115,6 +123,12 @@ public:
 	 *
 	 */
 	E_RESULTCODE Write(const unsigned char *pbBuffer, size_t Size, size_t &WriteSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_RESULTCODE Seek(size_t Offset);
 };
 
 #endif // __CXFILE_HPP__

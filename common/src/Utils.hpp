@@ -28,6 +28,10 @@
 #include "CXFile.hpp"
 #include "CXRGB.hpp"
 
+
+const unsigned int MAPVERSION = 0x00020001; // 0.2.0-dev1
+
+
 class CXCoor;
 class CXGGAPacket;
 class CXRMCPacket;

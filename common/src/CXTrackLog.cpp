@@ -21,9 +21,9 @@
  ***************************************************************************/
 
 #include "CXTrackLog.hpp"
+#include "Utils.hpp"
 #include "CXWriteLocker.hpp"
 #include "CXOptions.hpp"
-#include "Utils.hpp"
 
 //----------------------------------------------------------------------------
 CXTrackLog *CXTrackLog::m_pInstance = NULL;

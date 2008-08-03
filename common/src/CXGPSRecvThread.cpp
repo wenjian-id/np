@@ -21,11 +21,12 @@
  ***************************************************************************/
 
 #include "CXGPSRecvThread.hpp"
+#include "Utils.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXOptions.hpp"
 #include "CXNMEA.hpp"
-#include "Utils.hpp"
+
 #include <stdlib.h>
 
 static const unsigned char GGABEGIN[6]	= {'$', 'G', 'P', 'G', 'G', 'A'};
