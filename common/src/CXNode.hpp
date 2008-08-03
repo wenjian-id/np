@@ -140,6 +140,7 @@ public:
 };
 
 typedef CXMapHashSimple<t_uint64, CXNode *>		TNodeMap;		///< oiu
+typedef CXPOSMapHashSimple<t_uint64>			TPOSNodeMap;	///< oiu
 typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
 
 
@@ -403,6 +404,7 @@ public:
 };
 
 typedef CXMapHashSimple<t_uint64, CXPOINode *>		TPOINodeMap;		///< oiu
+typedef CXPOSMapHashSimple<t_uint64>				TPOSPOINodeMap;		///< oiu
 typedef CXBuffer<CXPOINode *>						TPOINodeBuffer;		///< oiu
 
 #endif // __CXNODE_HPP__

@@ -297,7 +297,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) 
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight) {
 
-	TPOINodeMap::POS PosN = POINodes.GetStart();
+	TPOSPOINodeMap PosN = POINodes.GetStart();
 	CXPOINode *pNode = NULL;
 
 	// iterate through POIs
@@ -491,11 +491,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	int xc = 0;
 	int yc = 0;
 	// compute coordinate
-	char UTMLetterCurrent = 0;
-	double UTME = 0;
-	double UTMN = 0;
-	int UTMZoneCurrent = UTMZoneNone;
-	/// \todo remove again
 	double dLon = 0;
 	double dLat = 0;
 	if(CXOptions::Instance()->MustSnapToWay()) {
@@ -508,6 +503,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		dLat = NaviData.GetCorrectedGPSCoor().GetLat();
 	}
 	// compute UTM coordinates
+	char UTMLetterCurrent = 0;
+	double UTME = 0;
+	double UTMN = 0;
+	int UTMZoneCurrent = UTMZoneNone;
 	LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, UTME, UTMN);
 	// OK, we have the coordinates
 

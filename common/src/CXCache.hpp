@@ -32,7 +32,7 @@
  */
 template <class tKey, class tValue> class CXCache {
 private:
-	template <class tValue> class CXCacheHelper {
+	class CXCacheHelper {
 	private:
 		int					m_Counter;	///< oiu
 		CXSmartPtr<tValue>	m_Value;	///< oiu
@@ -125,8 +125,8 @@ private:
 		};
 	};
 private:
-	size_t										m_MaxCacheSize;		///< oiu
-	CXMapSort<tKey, CXCacheHelper<tValue> *>	m_Values;			///< oiu
+	size_t								m_MaxCacheSize;		///< oiu
+	CXMapSort<tKey, CXCacheHelper *>	m_Values;			///< oiu
 	//-------------------------------------
 	CXCache();										///< Not used.
 	CXCache(const CXCache &);						///< Not used.
@@ -151,8 +151,8 @@ public:
 	 */
 	virtual ~CXCache() {
 		// delete all entries
-		CXCacheHelper<tValue> *pDel = NULL;
-		CXMapSort<tKey, CXCacheHelper<tValue> *>::POS Pos = m_Values.GetStart();
+		CXCacheHelper *pDel = NULL;
+		CXPOSMapSort<tKey> Pos = m_Values.GetStart();
 		while(m_Values.GetNext(Pos, pDel) != m_Values.NPOS) {
 			delete pDel;
 		}
@@ -164,21 +164,21 @@ public:
 	 */
 	CXSmartPtr<tValue> GetAt(const tKey & Key) {
 		IncrementCounters();
-		CXCacheHelper<tValue> *pResult = NULL;
+		CXCacheHelper *pResult = NULL;
 		// check if value exists
 		if(!m_Values.Lookup(Key, pResult)) {
 			// check if we have to remove a Element
 			if(m_Values.GetSize() >= m_MaxCacheSize) {
 				// remove rarely used element
-				CXCacheHelper<tValue> *pTmp = NULL;
-				CXCacheHelper<tValue> *pDel = NULL;
-				CXMapSort<tKey, CXCacheHelper<tValue> *>::POS Pos = m_Values.GetStart();
+				CXCacheHelper *pTmp = NULL;
+				CXCacheHelper *pDel = NULL;
+				CXPOSMapSort<tKey> Pos = m_Values.GetStart();
 				int MaxCount = -1;
 				tKey MaxKey;
 				while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
 					if(pTmp->GetCounter() > MaxCount) {
 						// found new maximum
-						MaxKey = Pos.GetKey();
+						MaxKey = Pos.m_key;
 						MaxCount = pTmp->GetCounter();
 						pDel = pTmp;
 					}
@@ -196,7 +196,7 @@ public:
 			// value does not exist. create new tValue
 			tValue *pNewValue = new tValue;
 			// save in map
-			m_Values.SetAt(Key, new CXCacheHelper<tValue>(pNewValue));
+			m_Values.SetAt(Key, new CXCacheHelper(pNewValue));
 			// lookup again
 			m_Values.Lookup(Key, pResult);
 		}
@@ -212,8 +212,8 @@ public:
 	 * oiu.
 	 */
 	void IncrementCounters() {
-		CXCacheHelper<tValue> *pTmp = NULL;
-		CXMapSort<tKey, CXCacheHelper<tValue> *>::POS Pos = m_Values.GetStart();
+		CXCacheHelper *pTmp = NULL;
+		CXPOSMapSort<tKey> Pos = m_Values.GetStart();
 		while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
 			pTmp->IncrementCounter();
 		}

@@ -428,13 +428,13 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
 
 //-------------------------------------
 bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
-	/// \todo implement
-/*
-	CXExactTime StartTime;
-	StartTime.SetNow();
-
 	// initialize LocatedCoor
 	m_NaviData.SetLocatedCoor(m_NaviData.GetCorrectedGPSCoor());
+
+/*
+	/// \todo implement
+	CXExactTime StartTime;
+	StartTime.SetNow();
 
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
     // The received coordinate is defined by P(x0, y0).

@@ -28,8 +28,6 @@
 #include "CXPOWMMap.hpp"
 #include "CXPenHolder.hpp"
 
-class CXCache;
-
 //----------------------------------------------------------------------------
 /**
  * \brief oiu

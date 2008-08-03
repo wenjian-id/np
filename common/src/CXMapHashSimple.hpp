@@ -29,6 +29,7 @@
 #include <TargetIncludes.hpp>
 
 #define tMap CXMapSort
+#define tPos CXPOSMapSort
 
 //-------------------------------------
 /**
@@ -40,101 +41,102 @@ template<class t> unsigned char Hash(const t & Key) {
 }
 
 
-//----------------------------------------------------------------------------
+//-------------------------------------
 /**
  * \brief oiu
  *
  */
-static const size_t DataSize = 256; ///< oiu
-template<class tKey, class tValue> class CXMapHashSimple {
+template<class tKey> class CXPOSMapHashSimple {
 public:
+	unsigned short	idx;	///< oiu
+	tPos<tKey>		pos;	///< oiu
+public:
+	//-------------------------------------
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
+	CXPOSMapHashSimple() {
+		idx = 0;
+		pos = 0;
+	}
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	class POS {
-	public:
-		unsigned short			idx;	///< oiu
-		tMap<tKey, tValue>::POS	pos;	///< oiu
-	public:
-		//-------------------------------------
-		/**
-		 * \brief Default constructor.
-		 *
-		 * Default constructor.
-		 */
-		POS() {
-			idx = 0;
-			pos = 0;
-		}
-		//-------------------------------------
-		/**
-		 * \brief oiu
-		 *
-		 */
-		POS(unsigned short Idx, const tMap<tKey, tValue>::POS & Pos) {
-			idx = Idx;
-			pos = Pos;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Copy constructor.
-		 *
-		 * Copy constructor.
-		 * \param	rOther	Instance to copy from.
-		 */
-		POS(const POS &rOther) {
-			idx = rOther.idx;
-			pos = rOther .pos;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Destructor.
-		 *
-		 * Destructor.
-		 */
-		virtual ~POS() {
-		}
-		//-------------------------------------
-		/**
-		 * \brief Assignment operator.
-		 *
-		 * Assignment operator.
-		 * \param	rOther	Instance to copy from.
-		 * \return			Const reference to self.
-		 */
-		const POS & operator = (const POS &rOther) {
-			idx = rOther.idx;
-			pos = rOther.pos;
-			return *this;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Comparison operator.
-		 *
-		 * Compares this instance with other instance.
-		 * \param	rOther	Instance to compare with.
-		 * \return			True if equal.
-		 */
-		bool operator == (const POS & rOther) {
-			return (idx == rOther.idx) && (pos == rOther.pos);
-		}
-		//-------------------------------------
-		/**
-		 * \brief Comparison operator.
-		 *
-		 * Compares this instance with other instance.
-		 * \param	rOther	Instance to compare with.
-		 * \return			True if not equal.
-		 */
-		bool operator != (const POS & rOther) {
-			return ! operator ==(rOther);
-		}
-	};
+	CXPOSMapHashSimple(unsigned short Idx, const tPos<tKey> & Pos) {
+		idx = Idx;
+		pos = Pos;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Copy constructor.
+	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
+	 */
+	CXPOSMapHashSimple(const CXPOSMapHashSimple &rOther) {
+		idx = rOther.idx;
+		pos = rOther .pos;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXPOSMapHashSimple() {
+	}
+	//-------------------------------------
+	/**
+	 * \brief Assignment operator.
+	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
+	 */
+	const CXPOSMapHashSimple & operator = (const CXPOSMapHashSimple &rOther) {
+		idx = rOther.idx;
+		pos = rOther.pos;
+		return *this;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Comparison operator.
+	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
+	 */
+	bool operator == (const CXPOSMapHashSimple & rOther) {
+		return (idx == rOther.idx) && (pos == rOther.pos);
+	}
+	//-------------------------------------
+	/**
+	 * \brief Comparison operator.
+	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
+	 */
+	bool operator != (const CXPOSMapHashSimple & rOther) {
+		return ! operator ==(rOther);
+	}
+};
+
+static const size_t DataSize = 256; ///< oiu
+
+//----------------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+template<class tKey, class tValue> class CXMapHashSimple {
 public:
-	static POS		NPOS;		///< oiu
-	static POS		START;		///< oiu
+	static CXPOSMapHashSimple<tKey>		NPOS;		///< oiu
+	static CXPOSMapHashSimple<tKey>		START;		///< oiu
 private:
 	tMap<tKey, tValue>	*m_pData[DataSize];	///< oiu
 	//-------------------------------------
@@ -191,17 +193,17 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	POS GetStart() const;
+	CXPOSMapHashSimple<tKey> GetStart() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	POS GetNext(POS & Pos, tValue &rValue) const;
+	CXPOSMapHashSimple<tKey> GetNext(CXPOSMapHashSimple<tKey> & Pos, tValue &rValue) const;
 };
 
-template<class tKey, class tValue> CXMapHashSimple<tKey, tValue>::POS CXMapHashSimple<tKey, tValue> ::NPOS = CXMapHashSimple<tKey, tValue>::POS(0xffff, tMap<tKey, tValue>::NPOS);
-template<class tKey, class tValue> CXMapHashSimple<tKey, tValue>::POS CXMapHashSimple<tKey, tValue> ::START = CXMapHashSimple<tKey, tValue>::POS(0xffff, tMap<tKey, tValue>::START);
+template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::NPOS = CXPOSMapHashSimple<tKey>(0xffff, tMap<tKey, tValue>::NPOS);
+template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::START = CXPOSMapHashSimple<tKey>(0xffff, tMap<tKey, tValue>::START);
 
 
 //-------------------------------------
@@ -256,13 +258,13 @@ template<class tKey, class tValue> bool CXMapHashSimple<tKey, tValue> ::Lookup(c
 }
 
 //-------------------------------------
-template<class tKey, class tValue> CXMapHashSimple<tKey, tValue>::POS CXMapHashSimple<tKey, tValue> ::GetStart() const {
+template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::GetStart() const {
 	return START;
 }
 
 
 //-------------------------------------
-template<class tKey, class tValue> CXMapHashSimple<tKey, tValue>::POS CXMapHashSimple<tKey, tValue> ::GetNext(POS & Pos, tValue &rValue) const {
+template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::GetNext(CXPOSMapHashSimple<tKey> & Pos, tValue &rValue) const {
 	if(Pos == NPOS) {
 		return Pos;
 	}

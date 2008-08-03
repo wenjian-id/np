@@ -28,108 +28,101 @@
 #include <TargetIncludes.hpp>
 
 //----------------------------------------------------------------------------
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+template<class tKey> class CXPOSMapSort {
+public:
+	tKey		m_key;	///< oiu
+	size_t		m_pos;	///< oiu
+public:
+	//-------------------------------------
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
+	CXPOSMapSort() {
+		// m_key = 0;
+		m_pos = 0;
+	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXPOSMapSort(size_t Pos) {
+		// m_key = 0;
+		m_pos = Pos;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Copy constructor.
+	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
+	 */
+	CXPOSMapSort(const CXPOSMapSort &rOther) {
+		m_key = rOther.m_key;
+		m_pos = rOther.m_pos;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXPOSMapSort() {
+	}
+	//-------------------------------------
+	/**
+	 * \brief Assignment operator.
+	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
+	 */
+	const CXPOSMapSort & operator = (const CXPOSMapSort &rOther) {
+		m_key = rOther.m_key;
+		m_pos = rOther.m_pos;
+		return *this;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Comparison operator.
+	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if equal.
+	 */
+	bool operator == (const CXPOSMapSort & rOther) {
+		return m_pos == rOther.m_pos;
+	}
+	//-------------------------------------
+	/**
+	 * \brief Comparison operator.
+	 *
+	 * Compares this instance with other instance.
+	 * \param	rOther	Instance to compare with.
+	 * \return			True if not equal.
+	 */
+	bool operator != (const CXPOSMapSort & rOther) {
+		return ! operator ==(rOther);
+	}
+};
+
+
+//----------------------------------------------------------------------------
 /**
  * \brief oiu
  *
  */
 template<class tKey, class tValue> class CXMapSort {
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	class POS {
-	public:
-		tKey		m_key;	///< oiu
-		size_t		m_pos;	///< oiu
-	public:
-		//-------------------------------------
-		/**
-		 * \brief Default constructor.
-		 *
-		 * Default constructor.
-		 */
-		POS() {
-			// m_key = 0;
-			m_pos = 0;
-		}
-		//-------------------------------------
-		/**
-		 * \brief oiu
-		 *
-		 */
-		POS(size_t Pos) {
-			// m_key = 0;
-			m_pos = Pos;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Copy constructor.
-		 *
-		 * Copy constructor.
-		 * \param	rOther	Instance to copy from.
-		 */
-		POS(const POS &rOther) {
-			m_key = rOther.m_key;
-			m_pos = rOther.m_pos;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Destructor.
-		 *
-		 * Destructor.
-		 */
-		virtual ~POS() {
-		}
-		//-------------------------------------
-		/**
-		 * \brief Assignment operator.
-		 *
-		 * Assignment operator.
-		 * \param	rOther	Instance to copy from.
-		 * \return			Const reference to self.
-		 */
-		const POS & operator = (const POS &rOther) {
-			m_key = rOther.m_key;
-			m_pos = rOther.m_pos;
-			return *this;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Comparison operator.
-		 *
-		 * Compares this instance with other instance.
-		 * \param	rOther	Instance to compare with.
-		 * \return			True if equal.
-		 */
-		bool operator == (const POS & rOther) {
-			return m_pos == rOther.m_pos;
-		}
-		//-------------------------------------
-		/**
-		 * \brief Comparison operator.
-		 *
-		 * Compares this instance with other instance.
-		 * \param	rOther	Instance to compare with.
-		 * \return			True if not equal.
-		 */
-		bool operator != (const POS & rOther) {
-			return ! operator ==(rOther);
-		}
-		//-------------------------------------
-		/**
-		 * \brief oiu.
-		 *
-		 * oiu.
-		 */
-		tKey GetKey() const {
-			return m_key;
-		}
-	};
-public:
-	static const POS	NPOS;				///< oiu
-	static const POS	START;				///< oiu
+	static const CXPOSMapSort<tKey>		NPOS;	///< oiu
+	static const CXPOSMapSort<tKey>		START;	///< oiu
 private:
 	CXBuffer< CXKeyVal<tKey, tValue> *>	m_Data;			///< oiu
 	//-------------------------------------
@@ -192,17 +185,17 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	POS GetStart() const;
+	CXPOSMapSort<tKey> GetStart() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	POS GetNext(POS & Pos, tValue &rValue) const;
+	CXPOSMapSort<tKey> GetNext(CXPOSMapSort<tKey> & Pos, tValue &rValue) const;
 };
 
-template<class tKey, class tValue> const CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue>::NPOS =  CXMapSort::POS(~(size_t(0)));
-template<class tKey, class tValue> const CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue>::START = CXMapSort::POS(~(size_t(1)));
+template<class tKey, class tValue> const CXPOSMapSort<tKey> CXMapSort<tKey, tValue>::NPOS =  CXPOSMapSort<tKey>(~(size_t(0)));
+template<class tKey, class tValue> const CXPOSMapSort<tKey> CXMapSort<tKey, tValue>::START = CXPOSMapSort<tKey>(~(size_t(1)));
 
 
 //-------------------------------------
@@ -381,12 +374,12 @@ template<class tKey, class tValue> bool CXMapSort<tKey, tValue> ::Lookup(const t
 }
 
 //-------------------------------------
-template<class tKey, class tValue> CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue> ::GetStart() const {
+template<class tKey, class tValue> CXPOSMapSort<tKey> CXMapSort<tKey, tValue>::GetStart() const {
 	return START;
 }
 
 //-------------------------------------
-template<class tKey, class tValue> CXMapSort<tKey, tValue>::POS CXMapSort<tKey, tValue> ::GetNext(POS & Pos, tValue &rValue) const {
+template<class tKey, class tValue> CXPOSMapSort<tKey> CXMapSort<tKey, tValue> ::GetNext(CXPOSMapSort<tKey> & Pos, tValue &rValue) const {
 	if(Pos == NPOS) {
 		return Pos;
 	}

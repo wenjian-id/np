@@ -38,7 +38,7 @@ CXMapSection::CXMapSection() {
 CXMapSection::~CXMapSection() {
 	// delete nodes
 	CXNode *pNode = NULL;
-	TNodeMap::POS PosN = m_NodeMap.GetStart();
+	TPOSNodeMap PosN = m_NodeMap.GetStart();
 	while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
 		if(pNode != NULL)
 			delete pNode;
@@ -48,7 +48,7 @@ CXMapSection::~CXMapSection() {
 	// delete ways
 	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
-		TWayMap::POS PosW = pWayMap->GetStart();
+		TPOSWayMap PosW = pWayMap->GetStart();
 		CXWay *pWay = NULL;
 		while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
 			if(pWay != NULL)
@@ -232,7 +232,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 void CXMapSection::RunOSMVali() {
 	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
-		TWayMap::POS PosW = pWayMap->GetStart();
+		TPOSWayMap PosW = pWayMap->GetStart();
 		CXWay *pWay = NULL;
 		t_uint64 eValiFlags = CXOptions::Instance()->GetOSMValiFlags();
 		while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
@@ -267,7 +267,7 @@ void CXMapSection::RunOSMVali() {
 void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM) {
 	// run coordinate transformation for every node
 	CXNode *pNode = NULL;
-	TNodeMap::POS PosN = m_NodeMap.GetStart();
+	TPOSNodeMap PosN = m_NodeMap.GetStart();
 	while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
 		if(pNode != NULL) {
 			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());

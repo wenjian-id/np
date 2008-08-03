@@ -172,5 +172,6 @@ public:
 };
 
 typedef CXMapHashSimple<t_uint64, CXWay *>		TWayMap;		///< oiu
+typedef CXPOSMapHashSimple<t_uint64>			TPOSWayMap;		///< oiu
 typedef CXBuffer<CXWay *>						TWayBuffer;		///< oiu
 #endif // __CXPOWMMAP_HPP__
