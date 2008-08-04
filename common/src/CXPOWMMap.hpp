@@ -23,6 +23,7 @@
 #ifndef __CXPOWMMAP_HPP__
 #define __CXPOWMMAP_HPP__
 
+#include "Utils.hpp"
 #include "CXMutex.hpp"
 #include "CXMapSection.hpp"
 #include "CXMapContainer.hpp"
@@ -31,7 +32,6 @@
 #include "CXTransformationMatrix.hpp"
 #include "CXRect.hpp"
 #include "CXCache.hpp"
-#include "Utils.hpp"
 
 //---------------------------------------------------------------------
 /**

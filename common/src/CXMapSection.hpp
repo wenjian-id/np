@@ -23,6 +23,7 @@
 #ifndef __CXMAPSECTION_HPP__
 #define __CXMAPSECTION_HPP__
 
+#include "Utils.hpp"
 #include "CXWay.hpp"
 #include "CXNode.hpp"
 #include "CXMutex.hpp"
