@@ -29,8 +29,10 @@
 #include "CXRGB.hpp"
 
 
-const unsigned int MAPVERSION = 0x00020001; // 0.2.0-dev1
+const unsigned int MAPVERSION	= 0x00020001; // 0.2.0-dev1
+const unsigned int ZOOMVERSION	= 0x00010001; // 0.1.0-dev1
 
+const unsigned int SCALE_FACTOR_UI32 = 1000000;
 
 class CXCoor;
 class CXGGAPacket;
@@ -281,5 +283,14 @@ void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdL
  * \return	Distance between coordinates
  */
 double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
+
+
+//-------------------------------------
+/**
+ * \brief oiu.
+ *
+ * oiu.
+ */
+double ConvertSavedUI32(t_uint32 Value);
 
 #endif // __UTILS_HPP__

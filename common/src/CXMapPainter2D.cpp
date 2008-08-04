@@ -574,9 +574,15 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		}
 	}
 
+	int counter = 0;
 	// run coordinate transformations
-	for(int x=static_cast<int>(floor(dLonMin)*100); x<static_cast<int>(ceil(dLonMax)*100); x++) {
-		for(int y=static_cast<int>(floor(dLatMin)*100); y<static_cast<int>(ceil(dLatMax)*100); y++) {
+	int iLonMin = static_cast<int>(floor(dLonMin*100));
+	int iLonMax = static_cast<int>(ceil(dLonMax*100));
+	int iLatMin = static_cast<int>(floor(dLatMin*100));
+	int iLatMax = static_cast<int>(ceil(dLatMax*100));
+	for(int x=iLonMin; x<iLonMax; x++) {
+		for(int y=iLatMin; y<iLatMax; y++) {
+			counter++;
 			int Zone = 0;
 			char UTML = 0;
 			double E0 = 0;

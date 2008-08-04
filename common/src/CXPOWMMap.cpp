@@ -157,6 +157,7 @@ t_uint32 CXPOWMMap::GetCacheKeyFromCoor(double dLon, double dLat, unsigned char 
 //-------------------------------------
 TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &Descr) {
 	/// \todo implement
+	CXMutexLocker L(&m_Mutex);
 	TMapSectionPtrArray Result;
 	// compute file name from coordinates
 	double dLonMin = 0;

@@ -534,3 +534,16 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2) {
 	}
 	return Result;
 }
+
+//-------------------------------------
+double ConvertSavedUI32(t_uint32 Value) {
+	double Result = 1.0;
+	if((Value & 0x80000000) != 0) {
+		// negative coordinate
+		Result = -1;
+		Value &= 0x7FFFFFFF;
+	}
+	// now scale back
+	Result = Result*Value/SCALE_FACTOR_UI32;
+	return Result;
+}

@@ -40,7 +40,6 @@
 const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
 static const double SQUARE_MAXDIST = 1600; // 40*40
-static const unsigned int SCALE_FACTOR = 1000000;
 static const char * pcLastCoorFileName = "last.gps";
 /// \todo put to options...
 static const double GPSLAGMS = 1300; // ms
@@ -358,8 +357,8 @@ void CXLocatorThread::SaveLastReceivedGPSCoordinate() {
 		// at least one fix. use it to save data
 		double dLon = m_LastReceivedCoor.GetLon();
 		double dLat = m_LastReceivedCoor.GetLat();
-		unsigned long ulLon = static_cast<unsigned long>(fabs(dLon)*SCALE_FACTOR);
-		unsigned long ulLat = static_cast<unsigned long>(fabs(dLat)*SCALE_FACTOR);
+		unsigned long ulLon = static_cast<unsigned long>(fabs(dLon)*SCALE_FACTOR_UI32);
+		unsigned long ulLat = static_cast<unsigned long>(fabs(dLat)*SCALE_FACTOR_UI32);
 		// set neg-bit
 		// since 180 is max value for Lon/Lat, the max value for
 		// ulLon/ulLat is 0x0ABA9500
@@ -394,24 +393,9 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
 		t_uint32 ulLat = 0;
 		if(ReadUI32(InFile, ulLon) && ReadUI32(InFile, ulLat)) {
 			// compute lon
-			double dLon = 1.0;
-			if((ulLon & 0x80000000) != 0) {
-				// negative coordinate
-				dLon = -1;
-				ulLon &= 0x7FFFFFFF;
-			}
-			// now scale back
-			dLon = dLon*ulLon/SCALE_FACTOR;
-
+			double dLon = ConvertSavedUI32(ulLon);
 			// compute lat
-			double dLat = 1.0;
-			if((ulLat & 0x80000000) != 0) {
-				// negative coordinate
-				dLat = -1;
-				ulLat &= 0x7FFFFFFF;
-			}
-			// now scale back
-			dLat = dLat*ulLat/SCALE_FACTOR;
+			double dLat = ConvertSavedUI32(ulLat);
 			m_StartCoordinates = CXCoor(dLon, dLat);
 			m_oStartCoordinatesValid = true;
 		} else {

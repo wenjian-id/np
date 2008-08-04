@@ -113,10 +113,10 @@ typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
  */
 class CXPOWMMap {
 private:
-	static CXPOWMMap	*m_pInstance;					///< oiu
-	CXCache<t_uint32, CXTOCMapContainer>	m_TOCCache;	///< oiu
+	static CXPOWMMap						*m_pInstance;		///< oiu
+	CXCache<t_uint32, CXTOCMapContainer>	m_TOCCache;			///< oiu
 	// synchronisation
-	mutable CXMutex		m_Mutex;						///< Synchronization object.
+	mutable CXMutex							m_Mutex;			///< Synchronization object.
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.

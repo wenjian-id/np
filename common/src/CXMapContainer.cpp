@@ -122,16 +122,71 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 		return false;
 	} else {
 		// current version
-		Result = Load_CurrentVersion(InFile, ZoomLevel);
+		Result = LoadTOCMapContainer_CurrentVersion(InFile, ZoomLevel);
 	}
 	return Result;
 
 }
 
+//-------------------------------------
+bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile) {
+	t_uint32 MagicCode = 0;
+	t_uint32 ReqMagicCode = ('Z' << 24) + ('O' << 16) + ('O' << 8) + 'M';
+	if(!ReadUI32(rFile, MagicCode))
+		return false;
+	if(MagicCode != ReqMagicCode) {
+		DoOutputErrorMessage("oiu");
+		return false;
+	}
+
+	// check version
+	t_uint32 Version = 0;
+	t_uint32 ReqVersion = ZOOMVERSION;
+	if(!ReadUI32(rFile, Version)) {
+		DoOutputErrorMessage("oiu");
+		return false;
+	}
+	bool Result = false;
+	// decide which load function to call
+	// first of all check older versions
+/*
+	if(Version == 0x00000100) {
+		// v 0.1.1
+		Result = LoadMap0_1_1(rFile, FileName);
+	} else if(Version == 0x00010200) {
+		// v 0.1.2
+		Result = LoadMap0_1_2(rFile, FileName);
+	} else if(Version != ReqVersion) {
+*/
+	if(Version != ReqVersion) {
+		// not supported version
+		CXStringASCII ErrorMsg;
+		ErrorMsg += " has wrong Version: ";
+		char buf[100];
+		if((Version & 0xff) == 0) {
+			snprintf(	buf, sizeof(buf), "%d.%d.%d", 
+						static_cast<unsigned char>((Version & 0xff000000) >> 24),
+						static_cast<unsigned char>((Version & 0xff0000) >> 16),
+						static_cast<unsigned char>((Version & 0xff00) >> 8));
+		} else {
+			snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
+						static_cast<unsigned char>((Version & 0xff000000) >> 24),
+						static_cast<unsigned char>((Version & 0xff0000) >> 16),
+						static_cast<unsigned char>((Version & 0xff00) >> 8),
+						static_cast<unsigned char>((Version & 0xff)));
+		}
+		ErrorMsg += buf;
+//		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	} else {
+		// current version
+		Result = LoadTOCZoom_CurrentVersion(rFile);
+	}
+	return Result;
+}
 
 //-------------------------------------
-bool CXTOCMapContainer::Load_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel) {
-	// ok, now load
+bool CXTOCMapContainer::LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel) {
 	t_uint32 TOCZOOMCount = 0;
 	// read count and check it
 	if(!ReadUI32(rFile, TOCZOOMCount))
@@ -147,9 +202,44 @@ bool CXTOCMapContainer::Load_CurrentVersion(CXFile & rFile, unsigned char ZoomLe
 	if(rFile.Seek(Offset) != CXFile::E_OK)
 		return false;
 	// and load toc for specific zoom level
-	return true;
+	return LoadTOCZoom(rFile);
 }
 
+//-------------------------------------
+bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile) {
+	t_uint32 TOCSectionCount = 0;
+	// read count and check it
+	if(!ReadUI32(rFile, TOCSectionCount))
+		return false;
+	// read TOCSection
+	t_uint32 Offset = 0, tmp = 0;
+	for(t_uint32 i=0; i<TOCSectionCount; i++) {
+		// read MinLon
+		if(!ReadUI32(rFile, tmp))
+			return false;
+		double dLonMin = ConvertSavedUI32(tmp);
+
+		// read MaxLon
+		if(!ReadUI32(rFile, tmp))
+			return false;
+		double dLonMax = ConvertSavedUI32(tmp);
+
+		// read MinLat
+		if(!ReadUI32(rFile, tmp))
+			return false;
+		double dLatMin = ConvertSavedUI32(tmp);
+
+		// read MaxLat
+		if(!ReadUI32(rFile, tmp))
+			return false;
+		double dLatMax = ConvertSavedUI32(tmp);
+
+		// read Offset
+		if(!ReadUI32(rFile, Offset))
+			return false;
+	}
+	return true;
+}
 
 //----------------------------------------------------------------------------
 //-------------------------------------

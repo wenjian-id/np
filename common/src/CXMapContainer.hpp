@@ -47,7 +47,21 @@ private:
 	 *
 	 * oiu.
 	 */
-	bool Load_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel);
+	bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool LoadTOCZoom_CurrentVersion(CXFile & rFile);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool LoadTOCZoom(CXFile & rFile);
 protected:
 public:
 	//-------------------------------------
