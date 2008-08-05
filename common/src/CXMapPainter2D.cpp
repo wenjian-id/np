@@ -166,25 +166,31 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 	size_t NodeCount = pWay->GetNodeCount();
 	int x0 = 0;
 	int y0 = 0;
+	bool oLastWasTerminator = false;
+	bool oTerminator = false;
 	for(size_t i=0; i<NodeCount; i++) {
 		CXNode *pNode = pWay->GetNode(i);
+		oTerminator = (pNode->GetID() == ID_NODE_TERMINATOR);
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
-		// check if it is worth drawing
-		if(	((x0 < 0) && (x < 0)) ||
-			((x0 > Width) && (x > Width)) ||
-			((y0 < 0) && (y < 0)) ||
-			((y0 > Height) && (y > Height)))
-		{
-			// no
-			// do nothing
-		} else {
-			// yes
-			if(i != 0)
-				pBMP->DrawLine(x0, y0, x, y);
+		if(!oTerminator && !oLastWasTerminator) {
+			// check if it is worth drawing
+			if(	((x0 < 0) && (x < 0)) ||
+				((x0 > Width) && (x > Width)) ||
+				((y0 < 0) && (y < 0)) ||
+				((y0 > Height) && (y > Height)))
+			{
+				// no
+				// do nothing
+			} else {
+				// yes
+				if(i != 0)
+					pBMP->DrawLine(x0, y0, x, y);
+			}
 		}
 		x0 = x;
 		y0 = y;
+		oLastWasTerminator = oTerminator;
 	}
 }
 
@@ -456,10 +462,6 @@ void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 //-------------------------------------
 void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
-	// since not all compilers can handle multiple for(size_t i=...)
-	// we set size_t i=0; right here :-(((
-	size_t i=0;
-
 	CXMutexLocker L(&m_Mutex);
 
 	CXExactTime Start;
@@ -566,14 +568,54 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// now get map sections currently visible
 	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, m_ZoomLevel, TMMap);
 	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSections(Descr);
-	for(i=0; i<MapSections.GetSize(); i++) {
-		CXMapSection *pMapSection = MapSections[i].GetPtr();
+	for(size_t idx=0; idx<MapSections.GetSize(); idx++) {
+		CXMapSection *pMapSection = MapSections[idx].GetPtr();
 		if(pMapSection != NULL) {
 			/// \todo implement
-			int xxx = 0;
+			pMapSection->Lock();
+			pMapSection->ComputeDisplayCoordinates(TMMap);
+
+
+
+			// prepare drawing
+			CXBuffer<TWayMap *> &Ways = pMapSection->GetWayMap();
+			for(size_t Index=0; Index< Ways.GetSize(); Index++) {
+				TWayMap *pWayMap = Ways[Index];
+				TPOSWayMap pos = pWayMap->GetStart();
+				CXWay *pWay = NULL;
+				while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
+					if (IsWayPossiblyVisible(pWay, Width, Height)) {
+						CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
+						m_DrawWays[HighwayType]->Append(pWay);
+						WayCount++;
+					}
+				}
+				// since not all compilers can handle multiple for(size_t i=...)
+				// we set size_t i=0; right here :-(((
+				size_t i=0;
+				// ok, now draw bg
+				for(i=0; i< CXWay::e_EnumCount; i++) {
+					DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+				}
+				for(i=0; i< CXWay::e_EnumCount; i++) {
+					DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+				}
+
+				// clear arrays
+				for(i=0; i<CXWay::e_EnumCount; i++) {
+					TWayBuffer *pBuffer = m_DrawWays[i];
+					pBuffer->Clear();
+				}
+			}
+
+
+			pMapSection->Unlock();
+
+
+		
 		}
 	}
-
+/*
 	int counter = 0;
 	// run coordinate transformations
 	int iLonMin = static_cast<int>(floor(dLonMin*100));
@@ -613,7 +655,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v2.GetIntX(), v2.GetIntY());
 		}
 	}
-
+*/
 /*
 	CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
 	// prepare drawing

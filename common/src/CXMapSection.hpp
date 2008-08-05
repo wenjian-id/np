@@ -27,7 +27,97 @@
 #include "CXWay.hpp"
 #include "CXNode.hpp"
 #include "CXMutex.hpp"
+#include "CXRect.hpp"
 #include "CXSmartPtr.hpp"
+
+//---------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+class CXTOCMapSection {
+private:
+	t_uint64		m_UID;			///< oiu
+	double			m_dLonMin;		///< oiu
+	double			m_dLonMax;		///< oiu
+	double			m_dLatMin;		///< oiu
+	double			m_dLatMax;		///< oiu
+	CXStringASCII	m_FileName;		///< oiu
+	t_uint32		m_Offset;		///< oiu
+	//-------------------------------------
+	CXTOCMapSection();												///< Not used.
+	CXTOCMapSection(const CXTOCMapSection &);						///< Not used.
+	const CXTOCMapSection & operator = (const CXTOCMapSection &);	///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax, 
+					double dLatMin, double dLatMax, 
+					const CXStringASCII & FileName, t_uint32 Offset);
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXTOCMapSection();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	t_uint64 GetUID() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetLonMin() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetLonMax() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetLatMin() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetLatMax() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetFileName() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	t_uint32 GetOffset() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool Intersects(const tDRect & Rect) const;
+};
+
+
+typedef CXSmartPtr<CXTOCMapSection> TTOCMapSectionPtr;
+
 
 //---------------------------------------------------------------------
 /**
@@ -36,11 +126,15 @@
  */
 class CXMapSection {
 private:
+	bool				m_oLoaded;				///< oiu
 	TNodeMap			m_NodeMap;				///< Map with all nodes.
 	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
 	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< Synchronization object.
+	//-------------------------------------
+	CXMapSection(const CXMapSection &);							///< Not used.
+	const CXMapSection & operator = (const CXMapSection &);		///< Not used.
 	//-------------------------------------
 	/**
 	 * \brief Load map current version
@@ -71,13 +165,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	bool IsLoaded() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	const TPOINodeMap & GetPOINodeMap() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	bool LoadMap(CXFile & InFile);
+	bool LoadMap(const TTOCMapSectionPtr & TOCPtr);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -96,6 +196,25 @@ public:
 	 *
 	 */
 	void ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void Lock() {
+		m_Mutex.Lock();
+	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void Unlock() {
+		m_Mutex.Unlock();
+	}
+	CXBuffer<TWayMap *> &GetWayMap() {
+		return m_WayMapBuffer;
+	}
 };
 
 typedef CXSmartPtr<CXMapSection> TMapSectionPtr;

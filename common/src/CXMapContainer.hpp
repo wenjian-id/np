@@ -23,10 +23,13 @@
 #ifndef __CXMAPCONTAINER_HPP__
 #define __CXMAPCONTAINER_HPP__
 
+#include "CXMapSection.hpp"
 #include "CXSmartPtr.hpp"
 #include "CXRWLock.hpp"
 #include "CXStringASCII.hpp"
+#include "CXArray.hpp"
 #include "CXFile.hpp"
+#include "CXRect.hpp"
 
 
 //---------------------------------------------------------------------
@@ -36,8 +39,10 @@
  */
 class CXTOCMapContainer {
 private:
-	bool				m_oLoaded;	///< oiu
-	mutable CXRWLock	m_RWLock;	///< Synchronization object.
+	bool						m_oLoaded;		///< oiu
+	CXStringASCII				m_FileName;		///< oiu
+	CXArray<TTOCMapSectionPtr>	m_TOCSections;	///< oiu
+	mutable CXRWLock			m_RWLock;		///< Synchronization object.
 	//-------------------------------------
 	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
 	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
@@ -47,21 +52,21 @@ private:
 	 *
 	 * oiu.
 	 */
-	bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel);
+	bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel, t_uint32 Key);
 	//-------------------------------------
 	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
 	 */
-	bool LoadTOCZoom_CurrentVersion(CXFile & rFile);
+	bool LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key);
 	//-------------------------------------
 	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
 	 */
-	bool LoadTOCZoom(CXFile & rFile);
+	bool LoadTOCZoom(CXFile & rFile, t_uint32 Key);
 protected:
 public:
 	//-------------------------------------
@@ -91,7 +96,14 @@ public:
 	 *
 	 * oiu.
 	 */
-	bool Load(const CXStringASCII & FileName, unsigned char ZoomLevel);
+	bool Load(const CXStringASCII & FileName, unsigned char ZoomLevel, t_uint32 Key);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void GetMapSections(const tDRect &Rect, CXArray<TTOCMapSectionPtr> & rResult);
 };
 
 typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;

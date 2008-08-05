@@ -115,6 +115,7 @@ class CXPOWMMap {
 private:
 	static CXPOWMMap						*m_pInstance;		///< oiu
 	CXCache<t_uint32, CXTOCMapContainer>	m_TOCCache;			///< oiu
+	CXCache<t_uint64, CXMapSection>			m_MapSectionCache;	///< oiu
 	// synchronisation
 	mutable CXMutex							m_Mutex;			///< Synchronization object.
 	//-------------------------------------

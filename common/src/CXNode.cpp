@@ -36,6 +36,11 @@ CXNode::~CXNode() {
 }
 
 //-------------------------------------
+t_uint64 CXNode::GetID() const {
+	return m_ID;
+}
+
+//-------------------------------------
 double CXNode::GetLon() const {
 	return m_Coor.GetLon();
 }

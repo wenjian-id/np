@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "CXMapSection.hpp"
-#include "Utils.hpp"
 #include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXOptions.hpp"
@@ -30,9 +29,78 @@
 static const char MINLAYER = -10;
 static const char MAXLAYER = 10;
 
+
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXMapSection::CXMapSection() {
+CXTOCMapSection::CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax, 
+								 double dLatMin, double dLatMax, const CXStringASCII & FileName, t_uint32 Offset):
+	m_UID(UID),
+	m_dLonMin(dLonMin),
+	m_dLonMax(dLonMax),
+	m_dLatMin(dLatMin),
+	m_dLatMax(dLatMax),
+	m_FileName(FileName),
+	m_Offset(Offset)
+{
+}
+
+//-------------------------------------
+CXTOCMapSection::~CXTOCMapSection() {
+}
+
+//-------------------------------------
+t_uint64 CXTOCMapSection::GetUID() const {
+	return m_UID;
+}
+
+//-------------------------------------
+double CXTOCMapSection::GetLonMin() const {
+	return m_dLonMin;
+}
+
+//-------------------------------------
+double CXTOCMapSection::GetLonMax() const {
+	return m_dLonMax;
+}
+
+//-------------------------------------
+double CXTOCMapSection::GetLatMin() const {
+	return m_dLatMin;
+}
+
+//-------------------------------------
+double CXTOCMapSection::GetLatMax() const {
+	return m_dLatMax;
+}
+
+//-------------------------------------
+CXStringASCII CXTOCMapSection::GetFileName() const {
+	return m_FileName;
+}
+
+//-------------------------------------
+t_uint32 CXTOCMapSection::GetOffset() const{
+	return m_Offset;
+}
+
+//-------------------------------------
+bool CXTOCMapSection::Intersects(const tDRect & Rect) const {
+	if(m_dLonMin > Rect.GetRight())
+		return false;
+	if(m_dLonMax < Rect.GetLeft())
+		return false;
+	if(m_dLatMin > Rect.GetBottom())	// Bottom > Top!!!
+		return false;
+	if(m_dLatMax < Rect.GetTop())		// Bottom > Top!!!
+		return false;
+	return true;
+}
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXMapSection::CXMapSection() :
+	m_oLoaded(false)
+{
 }
 
 //-------------------------------------
@@ -62,6 +130,11 @@ CXMapSection::~CXMapSection() {
 }
 
 //-------------------------------------
+bool CXMapSection::IsLoaded() const {
+	return m_oLoaded;
+}
+
+//-------------------------------------
 const TPOINodeMap &CXMapSection::GetPOINodeMap() const {
 	return m_POINodes;
 }
@@ -80,9 +153,88 @@ CXWay *CXMapSection::GetWay(t_uint64 ID) {
 }
 
 //-------------------------------------
-bool CXMapSection::LoadMap(CXFile & InFile) {
+bool CXMapSection::LoadMap(const TTOCMapSectionPtr & TOCPtr) {
 	/// \todo implement
-	return true;
+	m_oLoaded = true;
+
+	CXStringASCII FileName = TOCPtr.GetPtr()->GetFileName();
+	DoOutputDebugString("Loading MapSection for ");
+	DoOutputDebugString(FileName.c_str());
+	DoOutputDebugString("\n");
+
+	CXFile InFile;
+	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
+		// no error message
+		return false;
+	}
+	// seek to position
+	if(InFile.Seek(TOCPtr.GetPtr()->GetOffset()) != CXFile::E_OK) {
+		// no error message
+		return false;
+	}
+
+	t_uint32 MagicCode = 0;
+	t_uint32 ReqMagicCode = ('S' << 24) + ('E' << 16) + ('C' << 8) + 'T';
+	if(!ReadUI32(InFile, MagicCode)) {
+		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+	if(MagicCode != ReqMagicCode) {
+		CXStringASCII ErrorMsg(FileName);
+		ErrorMsg += " is not a NaviPOWM map";
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+
+	// check version
+	t_uint32 Version = 0;
+	t_uint32 ReqVersion = SECTVERSION;
+	if(!ReadUI32(InFile, Version)) {
+		CXStringASCII ErrorMsg("Error reading Version from file: ");
+		ErrorMsg += FileName;
+		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	}
+	bool Result = false;
+
+	// decide which load function to call
+	// first of all check older versions
+/*
+	if(Version == 0x00000100) {
+		// v 0.1.1
+		Result = LoadMap0_1_1(InFile, FileName);
+	} else if(Version == 0x00010200) {
+		// v 0.1.2
+		Result = LoadMap0_1_2(InFile, FileName);
+	} else if(Version != ReqVersion) {
+*/
+	if(Version != ReqVersion) {
+		// not supported version
+		CXStringASCII ErrorMsg(FileName);
+		ErrorMsg += " has wrong Version: ";
+		char buf[100];
+		if((Version & 0xff) == 0) {
+			snprintf(	buf, sizeof(buf), "%d.%d.%d", 
+						static_cast<unsigned char>((Version & 0xff000000) >> 24),
+						static_cast<unsigned char>((Version & 0xff0000) >> 16),
+						static_cast<unsigned char>((Version & 0xff00) >> 8));
+		} else {
+			snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
+						static_cast<unsigned char>((Version & 0xff000000) >> 24),
+						static_cast<unsigned char>((Version & 0xff0000) >> 16),
+						static_cast<unsigned char>((Version & 0xff00) >> 8),
+						static_cast<unsigned char>((Version & 0xff)));
+		}
+		ErrorMsg += buf;
+//		DoOutputErrorMessage(ErrorMsg.c_str());
+		return false;
+	} else {
+		// current version
+		Result = LoadMap_CurrentVersion(InFile);
+	}
+	return Result;
 }
 
 //-------------------------------------
@@ -92,12 +244,51 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	CXExactTime Time1;
 	Time1.SetNow();
 
+	// read POIs
+	t_uint32 POICount = 0;
+	if(!ReadUI32(InFile, POICount)) {
+		DoOutputErrorMessage("Error reading POICount");
+		return false;
+	}
+	for(t_uint32 ulPOI=0; ulPOI<POICount; ulPOI++) {
+		// read node: IDX, LON, LAT
+		t_uint64 ID = 0;
+		unsigned char POIIdx = 0;
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
+		t_uint32 POI = 0;
+		ReadUI64(InFile, ID);
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+		ReadB(InFile, POIIdx);
+		ReadUI32(InFile, POI);
+
+		// compute lon
+		double dLon = ConvertSavedUI32(Lon);
+		double dLat = ConvertSavedUI32(Lat);
+
+		// create POI node
+		CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
+
+		for(size_t i=0; i<MaxPOITypes; i++) {
+			if((POIIdx % 2) == 1) {
+				pPOINode->SetPOIType(MaxPOITypes-i-1, POI);
+			}
+			POIIdx = POIIdx >> 1;
+		}
+		CXStringUTF8 Name;
+		ReadStringUTF8(InFile, Name);
+		pPOINode->SetName(Name);
+
+		// add node to POI map
+		m_POINodes.SetAt(ID, pPOINode);
+	}
+	// read nodes
 	t_uint32 NodeCount = 0;
 	if(!ReadUI32(InFile, NodeCount)) {
 		DoOutputErrorMessage("Error reading NodeCount");
 		return false;
 	}
-	// read nodes
 	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
@@ -107,37 +298,14 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		ReadUI64(InFile, ID);
 		ReadUI32(InFile, Lon);
 		ReadUI32(InFile, Lat);
-		ReadB(InFile, POIIdx);
 
 		// compute lon
 		double dLon = ConvertSavedUI32(Lon);
 		double dLat = ConvertSavedUI32(Lat);
 
-		CXNode *pNode = NULL;
-		if(POIIdx == 0) {
-			// create node
-			pNode = new CXNode(ID, dLon, dLat);
-		} else {
-			// create POI node
-			CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
+		// create node
+		CXNode *pNode = new CXNode(ID, dLon, dLat);
 
-			t_uint32 POI = 0;
-			for(size_t i=0; i<MaxPOITypes; i++) {
-				if((POIIdx % 2) == 1) {
-					ReadUI32(InFile, POI);
-					pPOINode->SetPOIType(MaxPOITypes-i-1, POI);
-				}
-				POIIdx = POIIdx >> 1;
-			}
-			CXStringUTF8 Name;
-			ReadStringUTF8(InFile, Name);
-			pPOINode->SetName(Name);
-
-			// add node to POI map
-			m_POINodes.SetAt(ID, pPOINode);
-			// set pNode
-			pNode = pPOINode;
-		}
 		// add node to node map
 		m_NodeMap.SetAt(ID, pNode);
 	}
@@ -258,6 +426,15 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
 			pNode->SetDisplayX(v.GetIntX());
 			pNode->SetDisplayY(v.GetIntY());
+		}
+	}
+	CXPOINode *pPOINode = NULL;
+	TPOSPOINodeMap PosPN = m_POINodes.GetStart();
+	while (m_POINodes.GetNext(PosPN, pPOINode) != TPOINodeMap::NPOS) {
+		if(pPOINode != NULL) {
+			CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
+			pPOINode->SetDisplayX(v.GetIntX());
+			pPOINode->SetDisplayY(v.GetIntY());
 		}
 	}
 }

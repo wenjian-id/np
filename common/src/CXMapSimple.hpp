@@ -54,9 +54,10 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXPOSMapSimple(size_t Pos) {
+	CXPOSMapSimple(size_t Pos) :
+		m_pos(Pos)
+	{
 		// m_key = 0;
-		m_pos = Pos;
 	}
 	//-------------------------------------
 	/**
@@ -124,7 +125,7 @@ public:
 	static const CXPOSMapSimple<tKey>	NPOS;				///< oiu
 	static const CXPOSMapSimple<tKey>	START;				///< oiu
 private:
-	CXBuffer< CXKeyVal<tKey, tValue> *>	m_Data;			///< oiu
+	CXBuffer< CXKeyVal<tKey, tValue> *>	m_Data;				///< oiu
 	//-------------------------------------
 	CXMapSimple(const CXMapSimple &);						///< Not used.
 	const CXMapSimple & operator = (const CXMapSimple &);	///< Not used.

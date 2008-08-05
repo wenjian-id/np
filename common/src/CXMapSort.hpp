@@ -53,9 +53,10 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXPOSMapSort(size_t Pos) {
+	CXPOSMapSort(size_t Pos) :
+		m_pos(Pos)
+	{
 		// m_key = 0;
-		m_pos = Pos;
 	}
 	//-------------------------------------
 	/**

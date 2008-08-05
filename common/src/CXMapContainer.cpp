@@ -43,10 +43,11 @@ bool CXTOCMapContainer::IsLoaded() const {
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomLevel) {
+bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomLevel, t_uint32 Key) {
 	CXWriteLocker WL(&m_RWLock);
 	// set loaded flag
 	m_oLoaded = true;
+	m_FileName = FileName;
 	// try to load TOC
 
 	DoOutputDebugString("Loading TOC for ");
@@ -122,14 +123,14 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 		return false;
 	} else {
 		// current version
-		Result = LoadTOCMapContainer_CurrentVersion(InFile, ZoomLevel);
+		Result = LoadTOCMapContainer_CurrentVersion(InFile, ZoomLevel, Key);
 	}
 	return Result;
 
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile) {
+bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile, t_uint32 Key) {
 	t_uint32 MagicCode = 0;
 	t_uint32 ReqMagicCode = ('Z' << 24) + ('O' << 16) + ('O' << 8) + 'M';
 	if(!ReadUI32(rFile, MagicCode))
@@ -180,13 +181,13 @@ bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile) {
 		return false;
 	} else {
 		// current version
-		Result = LoadTOCZoom_CurrentVersion(rFile);
+		Result = LoadTOCZoom_CurrentVersion(rFile, Key);
 	}
 	return Result;
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel) {
+bool CXTOCMapContainer::LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel, t_uint32 Key) {
 	t_uint32 TOCZOOMCount = 0;
 	// read count and check it
 	if(!ReadUI32(rFile, TOCZOOMCount))
@@ -202,11 +203,11 @@ bool CXTOCMapContainer::LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsig
 	if(rFile.Seek(Offset) != CXFile::E_OK)
 		return false;
 	// and load toc for specific zoom level
-	return LoadTOCZoom(rFile);
+	return LoadTOCZoom(rFile, Key);
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile) {
+bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key) {
 	t_uint32 TOCSectionCount = 0;
 	// read count and check it
 	if(!ReadUI32(rFile, TOCSectionCount))
@@ -237,8 +238,28 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile) {
 		// read Offset
 		if(!ReadUI32(rFile, Offset))
 			return false;
+
+		// create key
+		t_uint64 Key64 = Key;
+		Key64 = (Key64 << 32) + i;
+
+		// append to array
+		m_TOCSections.Append(TTOCMapSectionPtr(new CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset), false));
 	}
 	return true;
+}
+
+//-------------------------------------
+void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXArray<TTOCMapSectionPtr> & rResult) {
+	CXReadLocker RL(&m_RWLock);
+	for(size_t i=0; i<m_TOCSections.GetSize(); i++) {
+		TTOCMapSectionPtr Ptr = m_TOCSections[i];
+		CXTOCMapSection *pSection = Ptr.GetPtr();
+		if(pSection != NULL) {
+			if(pSection->Intersects(Rect))
+				rResult.Append(Ptr);
+		}
+	}
 }
 
 //----------------------------------------------------------------------------

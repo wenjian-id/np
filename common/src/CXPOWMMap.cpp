@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "CXPOWMMap.hpp"
-#include "Utils.hpp"
 #include "CXOptions.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXExactTime.hpp"
@@ -30,7 +29,8 @@
 
 #include <math.h>
 
-static const size_t TOCCACHESIZE = 20;		///< oiu
+static const size_t TOCCACHESIZE = 50;		///< oiu
+static const size_t MSCACHESIZE = 200;		///< oiu
 
 
 //----------------------------------------------------------------------------
@@ -83,7 +83,8 @@ CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 
 //-------------------------------------
 CXPOWMMap::CXPOWMMap() :
-	m_TOCCache(TOCCACHESIZE)
+	m_TOCCache(TOCCACHESIZE),
+	m_MapSectionCache(MSCACHESIZE)
 {
 }
 
@@ -169,21 +170,33 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	modf(Descr.GetLatMin(), &dLatMin);
 	modf(Descr.GetLatMax(), &dLatMax);
 	// load all TOCMapContainer between 
+	CXArray<TTOCMapSectionPtr> MapSectionTOCs;
 	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
 		for(double dLat = dLatMin; dLat <= dLatMax; dLat++) {
-			t_uint32 CachKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
+			t_uint32 CacheKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
 			// get TOCMapContainer from cache
-			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CachKey);
+			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CacheKey);
 			CXTOCMapContainer *pTOC = TOCMapContainerPtr.GetPtr();
 			if(!pTOC->IsLoaded()) {
 				// load TOC for map container at a specific zoom level
 				CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
-				pTOC->Load(FileName, Descr.GetZoomLevel());
+				pTOC->Load(FileName, Descr.GetZoomLevel(), CacheKey);
 			}
 			// get fiting map sections from this container for specific zoom level
-			// 
+			tDRect Rect(Descr.GetLonMin(), Descr.GetLatMin(), Descr.GetLonMax() - Descr.GetLonMin(), Descr.GetLatMax() - Descr.GetLatMin());
+			pTOC->GetMapSections(Rect, MapSectionTOCs);
 		}
 	}
-
+	// OK we now have the map section TOC
+	// check to see which have to be loaded in MapSectionCache
+	for(size_t i=0; i<MapSectionTOCs.GetSize(); i++) {
+		TTOCMapSectionPtr TOC = MapSectionTOCs[i];
+		TMapSectionPtr MapSectionPtr = m_MapSectionCache.GetAt(TOC.GetPtr()->GetUID());
+		CXMapSection *pS = MapSectionPtr.GetPtr();
+		if(!pS->IsLoaded()) {
+			pS->LoadMap(TOC);
+		}
+		Result.Append(MapSectionPtr);
+	}
 	return Result;
 }

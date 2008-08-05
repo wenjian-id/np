@@ -67,6 +67,14 @@ public:
 	virtual ~CXNode();
 	//-------------------------------------
 	/**
+	 * \brief Get ID.
+	 *
+	 *	Get ID.
+	 *	\return		ID
+	 */
+	t_uint64 GetID() const;
+	//-------------------------------------
+	/**
 	 * \brief Get longitude.
 	 *
 	 *	Get longitude.

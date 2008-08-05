@@ -164,7 +164,8 @@ public:
 	bool Contains(const tClass & x, const tClass & y);
 };
 
-typedef CXRect<int> tIRect;
+typedef CXRect<int>		tIRect;
+typedef CXRect<double>	tDRect;
 
 //-------------------------------------
 template<class tClass> CXRect<tClass> ::CXRect() {

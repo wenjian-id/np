@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #ifndef __CXARRAY_HPP__
-#define __CXARRAY_HPP___
+#define __CXARRAY_HPP__
 
 #include <TargetIncludes.hpp>
 
