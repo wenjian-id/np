@@ -35,7 +35,7 @@ const unsigned int SECTVERSION	= 0x00010001; // 0.1.0-dev1
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;
 
-const int ID_NODE_TERMINATOR = 0;
+const t_uint64 ID_NODE_TERMINATOR = 0;
 
 class CXCoor;
 class CXGGAPacket;

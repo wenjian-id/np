@@ -59,6 +59,8 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 	DoOutputDebugString("\n");
 
 	CXFile InFile;
+	// reduce read ahead size to 100 bytes
+	InFile.SetReadAheadSize(100);
 	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
 		// no error message
 		return false;

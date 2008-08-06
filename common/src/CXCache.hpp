@@ -184,15 +184,9 @@ public:
 					}
 				}
 				// now remove maximum
-				char buf[100];
-				snprintf(buf, sizeof(buf), "Removing cache entry with key %d having age %d\n", MaxKey, MaxCount);
-				DoOutputDebugString(buf);
 				m_Values.RemoveAt(MaxKey);
 				delete pDel;
 			}
-			char buf[100];
-			snprintf(buf, sizeof(buf), "Adding cache entry with key %d\n", Key);
-			DoOutputDebugString(buf);
 			// value does not exist. create new tValue
 			tValue *pNewValue = new tValue;
 			// save in map

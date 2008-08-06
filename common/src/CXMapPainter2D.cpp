@@ -575,8 +575,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pMapSection->Lock();
 			pMapSection->ComputeDisplayCoordinates(TMMap);
 
-
-
 			// prepare drawing
 			CXBuffer<TWayMap *> &Ways = pMapSection->GetWayMap();
 			for(size_t Index=0; Index< Ways.GetSize(); Index++) {
@@ -608,11 +606,38 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 				}
 			}
 
+			// draw border
+			TTOCMapSectionPtr TOC = pMapSection->GetTOC();
+			CXTOCMapSection *pTOC = TOC.GetPtr();
+			double dLonMin = pTOC->GetLonMin();
+			double dLonMax = pTOC->GetLonMax();
+			double dLatMin = pTOC->GetLatMin();
+			double dLatMax = pTOC->GetLatMax();
+
+			int Zone = 0;
+			char UTML = 0;
+			double E0 = 0;
+			double N0 = 0;
+
+			LLtoUTM(WGS84, dLonMin, dLatMin, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v0 = TMMap*CXCoorVector(E0, N0);
+
+			LLtoUTM(WGS84, dLonMin, dLatMax, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v1 = TMMap*CXCoorVector(E0, N0);
+
+			LLtoUTM(WGS84, dLonMax, dLatMax, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v2 = TMMap*CXCoorVector(E0, N0);
+
+			LLtoUTM(WGS84, dLonMax, dLatMin, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v3 = TMMap*CXCoorVector(E0, N0);
+
+			pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00)));
+			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v1.GetIntX(), v1.GetIntY());
+			pBMP->DrawLine(v1.GetIntX(), v1.GetIntY(), v2.GetIntX(), v2.GetIntY());
+			pBMP->DrawLine(v2.GetIntX(), v2.GetIntY(), v3.GetIntX(), v3.GetIntY());
+			pBMP->DrawLine(v3.GetIntX(), v3.GetIntY(), v0.GetIntX(), v0.GetIntY());
 
 			pMapSection->Unlock();
-
-
-		
 		}
 	}
 /*
@@ -653,36 +678,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		
 			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v1.GetIntX(), v1.GetIntY());
 			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v2.GetIntX(), v2.GetIntY());
-		}
-	}
-*/
-/*
-	CXPOWMMap::Instance()->ComputeDisplayCoordinates(TMMap);
-	// prepare drawing
-	CXBuffer<TWayMap *> &Ways = CXPOWMMap::Instance()->GetWayMap();
-	for(size_t Index=0; Index< Ways.GetSize(); Index++) {
-		TWayMap *pWayMap = Ways[Index];
-		POS pos = pWayMap->GetStart();
-		CXWay *pWay = NULL;
-		while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
-			if (IsWayPossiblyVisible(pWay, Width, Height)) {
-				CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
-				m_DrawWays[HighwayType]->Append(pWay);
-				WayCount++;
-			}
-		}
-		// ok, now draw bg
-		for(i=0; i< CXWay::e_EnumCount; i++) {
-			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
-		}
-		for(i=0; i< CXWay::e_EnumCount; i++) {
-			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
-		}
-
-		// clear arrays
-		for(i=0; i<CXWay::e_EnumCount; i++) {
-			TWayBuffer *pBuffer = m_DrawWays[i];
-			pBuffer->Clear();
 		}
 	}
 */

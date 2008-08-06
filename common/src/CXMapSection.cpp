@@ -135,6 +135,11 @@ bool CXMapSection::IsLoaded() const {
 }
 
 //-------------------------------------
+TTOCMapSectionPtr CXMapSection::GetTOC() const {
+	return m_TOC;
+}
+
+//-------------------------------------
 const TPOINodeMap &CXMapSection::GetPOINodeMap() const {
 	return m_POINodes;
 }
@@ -156,6 +161,7 @@ CXWay *CXMapSection::GetWay(t_uint64 ID) {
 bool CXMapSection::LoadMap(const TTOCMapSectionPtr & TOCPtr) {
 	/// \todo implement
 	m_oLoaded = true;
+	m_TOC = TOCPtr;
 
 	CXStringASCII FileName = TOCPtr.GetPtr()->GetFileName();
 	DoOutputDebugString("Loading MapSection for ");
@@ -163,6 +169,8 @@ bool CXMapSection::LoadMap(const TTOCMapSectionPtr & TOCPtr) {
 	DoOutputDebugString("\n");
 
 	CXFile InFile;
+	// reduce read ahead size to 1000 bytes
+	InFile.SetReadAheadSize(1000);
 	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
 		// no error message
 		return false;
@@ -292,7 +300,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
-		unsigned char POIIdx = 0;
 		t_uint32 Lon = 0; 
 		t_uint32 Lat = 0;
 		ReadUI64(InFile, ID);

@@ -130,6 +130,7 @@ private:
 	TNodeMap			m_NodeMap;				///< Map with all nodes.
 	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
 	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
+	TTOCMapSectionPtr	m_TOC;					///< oiu
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< Synchronization object.
 	//-------------------------------------
@@ -212,9 +213,20 @@ public:
 	void Unlock() {
 		m_Mutex.Unlock();
 	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	CXBuffer<TWayMap *> &GetWayMap() {
 		return m_WayMapBuffer;
 	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	TTOCMapSectionPtr GetTOC() const;
 };
 
 typedef CXSmartPtr<CXMapSection> TMapSectionPtr;
