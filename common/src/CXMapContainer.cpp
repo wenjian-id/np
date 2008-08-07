@@ -215,6 +215,7 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 	if(!ReadUI32(rFile, TOCSectionCount))
 		return false;
 	// read TOCSection
+	m_TOCSections.Resize(TOCSectionCount);
 	t_uint32 Offset = 0, tmp = 0;
 	for(t_uint32 i=0; i<TOCSectionCount; i++) {
 		// read MinLon
@@ -246,7 +247,7 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 		Key64 = (Key64 << 32) + i;
 
 		// append to array
-		m_TOCSections.Append(TTOCMapSectionPtr(new CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset), false));
+		m_TOCSections[i] = TTOCMapSectionPtr(new CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset), false);
 	}
 	return true;
 }

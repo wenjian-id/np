@@ -35,7 +35,7 @@ public:
 	static const size_t NPOS;				///< Identifier for "No POSition".
 private:
 	tClass			*m_pBuffer;				///< Internal buffer.
-	size_t			m_ulBufferSize;			///< Number of used entries in internal buffer.
+	size_t			m_ulSize;				///< Number of used entries in internal buffer.
 	size_t			m_ulAllocatedSize;		///< Number of allocated entries in internal buffer.
 	//-------------------------------------
 	/**
@@ -113,6 +113,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void Resize(size_t ulNewSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void Append(const tClass & c);
 	//-------------------------------------
 	/**
@@ -146,7 +152,7 @@ template<class tClass> const size_t CXArray<tClass> ::NPOS = ~(size_t(0));
 //-------------------------------------
 template<class tClass> CXArray<tClass> ::CXArray() :
 	m_pBuffer(NULL),
-	m_ulBufferSize(0),
+	m_ulSize(0),
 	m_ulAllocatedSize(0)
 {
 }
@@ -154,7 +160,7 @@ template<class tClass> CXArray<tClass> ::CXArray() :
 //-------------------------------------
 template<class tClass> CXArray<tClass> ::CXArray(const CXArray<tClass> & rOther) :
 	m_pBuffer(NULL),
-	m_ulBufferSize(0),
+	m_ulSize(0),
 	m_ulAllocatedSize(0)
 {
 	CopyFrom(rOther);
@@ -178,11 +184,11 @@ template<class tClass> void CXArray<tClass> ::CopyFrom(const CXArray<tClass> & r
 	delete [] m_pBuffer;
 	m_pBuffer = NULL;
 	m_ulAllocatedSize = rOther.m_ulAllocatedSize;
-	m_ulBufferSize = rOther.m_ulBufferSize;
+	m_ulSize = rOther.m_ulSize;
 	if(m_ulAllocatedSize > 0) {
 		m_pBuffer = new tClass [m_ulAllocatedSize];
 		// copy each element using copy construtor
-		for(size_t i=0; i<m_ulBufferSize; i++)
+		for(size_t i=0; i<m_ulSize; i++)
 			m_pBuffer[i] = rOther.m_pBuffer[i];
 	}
 }
@@ -196,7 +202,14 @@ template<class tClass> size_t CXArray<tClass> ::GetMultipleOfGrowSize(size_t New
 
 //-------------------------------------
 template<class tClass> size_t CXArray<tClass> ::GetSize() const {
-	return m_ulBufferSize;
+	return m_ulSize;
+}
+
+//-------------------------------------
+template<class tClass> void CXArray<tClass> ::Resize(size_t ulNewSize) {
+	GrowTo(ulNewSize);
+	// adjust size
+	m_ulSize = ulNewSize;
 }
 
 //-------------------------------------
@@ -207,7 +220,7 @@ template<class tClass> void CXArray<tClass> ::GrowTo(size_t ulNewSize) {
 		m_ulAllocatedSize = ulNewSize;
 		tClass *pNewBuffer = new tClass [m_ulAllocatedSize];
 		// copy each element using copy construtor
-		for(size_t i=0; i<m_ulBufferSize; i++)
+		for(size_t i=0; i<m_ulSize; i++)
 			pNewBuffer[i] = m_pBuffer[i];
 		delete [] m_pBuffer;
 		m_pBuffer = pNewBuffer;
@@ -225,7 +238,7 @@ template<class tClass> void CXArray<tClass> ::ShrinkTo(size_t ulNewSize) {
 			// at least one lement left
 			pNewBuffer = new tClass [m_ulAllocatedSize];
 			// copy each element using copy construtor
-			for(size_t i=0; i<m_ulBufferSize; i++)
+			for(size_t i=0; i<m_ulSize; i++)
 				pNewBuffer[i] = m_pBuffer[i];
 		} else {
 			// no element left
@@ -241,24 +254,24 @@ template<class tClass> void CXArray<tClass> ::ShrinkTo(size_t ulNewSize) {
 template<class tClass> void CXArray<tClass> ::Clear() {
 	delete [] m_pBuffer;
 	m_pBuffer = NULL;
-	m_ulBufferSize = 0;
+	m_ulSize = 0;
 	m_ulAllocatedSize = 0;
 }
 
 //-------------------------------------
 template<class tClass> void CXArray<tClass> ::Append(const tClass & c) {
 	// check if it fits in allocated memory
-	size_t NewSize = m_ulBufferSize + 1;
+	size_t NewSize = m_ulSize + 1;
 	// grow
 	GrowTo(NewSize);
 	// append data
-	m_pBuffer[m_ulBufferSize] = c;
-	m_ulBufferSize = NewSize;
+	m_pBuffer[m_ulSize] = c;
+	m_ulSize = NewSize;
 }
 
 //-------------------------------------
 template<class tClass> bool CXArray<tClass> ::IsEmpty() const {
-	return m_ulBufferSize == 0;
+	return m_ulSize == 0;
 }
 
 //-------------------------------------

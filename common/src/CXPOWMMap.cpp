@@ -29,8 +29,8 @@
 
 #include <math.h>
 
-static const size_t TOCCACHESIZE = 50;		///< oiu
-static const size_t MSCACHESIZE = 200;		///< oiu
+static const size_t TOCCACHESIZE	= 100;		///< oiu
+static const size_t MSCACHESIZE		= 200;		///< oiu
 
 
 //----------------------------------------------------------------------------

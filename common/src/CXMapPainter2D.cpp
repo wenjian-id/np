@@ -640,47 +640,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pMapSection->Unlock();
 		}
 	}
-/*
-	int counter = 0;
-	// run coordinate transformations
-	int iLonMin = static_cast<int>(floor(dLonMin*100));
-	int iLonMax = static_cast<int>(ceil(dLonMax*100));
-	int iLatMin = static_cast<int>(floor(dLatMin*100));
-	int iLatMax = static_cast<int>(ceil(dLatMax*100));
-	for(int x=iLonMin; x<iLonMax; x++) {
-		for(int y=iLatMin; y<iLatMax; y++) {
-			counter++;
-			int Zone = 0;
-			char UTML = 0;
-			double E0 = 0;
-			double N0 = 0;
-			double dLon = 1.0*x/100; 
-			double dLat = 1.0*y/100; 
-			LLtoUTM(WGS84, dLon, dLat, UTMZoneCurrent, Zone, UTML, E0, N0);
-			CXCoorVector v0 = TMMap*CXCoorVector(E0, N0);
-
-			dLon = 1.0*(x+1)/100; 
-			dLat = 1.0*y/100; 
-			LLtoUTM(WGS84, dLon, dLat, UTMZoneCurrent, Zone, UTML, E0, N0);
-			CXCoorVector v1 = TMMap*CXCoorVector(E0, N0);
-
-			dLon = 1.0*x/100; 
-			dLat = 1.0*(y+1)/100; 
-			LLtoUTM(WGS84, dLon, dLat, UTMZoneCurrent, Zone, UTML, E0, N0);
-			CXCoorVector v2 = TMMap*CXCoorVector(E0, N0);
-			if(((x%100) == 0) || ((y%100) == 0))
-				pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0xff, 0x00)));
-			else if(((x%10) == 0) || ((y%10) == 0))
-				pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0xff, 0x00, 0x00)));
-			else
-				pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00)));
-
-		
-			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v1.GetIntX(), v1.GetIntY());
-			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v2.GetIntX(), v2.GetIntY());
-		}
-	}
-*/
 	StopDrawWays.SetNow();
 
 	// draw TrackLog if neccessary
