@@ -218,8 +218,8 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXBuffer<TWayMap *> &GetWayMap() {
-		return m_WayMapBuffer;
+	TWayMap *GetWayMap(char Layer) {
+		return m_WayMapBuffer[Layer-MINLAYER];
 	}
 	//-------------------------------------
 	/**

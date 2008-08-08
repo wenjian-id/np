@@ -26,10 +26,6 @@
 #include "CXOptions.hpp"
 #include "CXTransformationMatrix.hpp"
 
-static const char MINLAYER = -10;
-static const char MAXLAYER = 10;
-
-
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXTOCMapSection::CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax, 
@@ -117,14 +113,16 @@ CXMapSection::~CXMapSection() {
 	// delete ways
 	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
-		TPOSWayMap PosW = pWayMap->GetStart();
-		CXWay *pWay = NULL;
-		while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
-			if(pWay != NULL)
-				delete pWay;
+		if(pWayMap != NULL) {
+			TPOSWayMap PosW = pWayMap->GetStart();
+			CXWay *pWay = NULL;
+			while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
+				if(pWay != NULL)
+					delete pWay;
+			}
+			pWayMap->RemoveAll();
+			delete pWayMap;
 		}
-		pWayMap->RemoveAll();
-		delete pWayMap;
 	}
 	m_WayMapBuffer.Clear();
 }
@@ -377,6 +375,8 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		TWayMap *pWayMap = NULL;
 		if(Ways.Lookup(Layer, pWayMap)) {
 			m_WayMapBuffer.Append(pWayMap);
+		} else {
+			m_WayMapBuffer.Append(NULL);
 		}
 	}
 
@@ -392,32 +392,34 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 void CXMapSection::RunOSMVali() {
 	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
-		TPOSWayMap PosW = pWayMap->GetStart();
-		CXWay *pWay = NULL;
-		t_uint64 eValiFlags = CXOptions::Instance()->GetOSMValiFlags();
-		while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
-			bool Vali = true;
-			if(pWay != NULL) {
-				if((eValiFlags & CXOptions::e_OSMValiName) != 0) {
-					// check name
-					if(pWay->GetName().IsEmpty()) {
-						Vali = false;
+		if(pWayMap != NULL) {
+			TPOSWayMap PosW = pWayMap->GetStart();
+			CXWay *pWay = NULL;
+			t_uint64 eValiFlags = CXOptions::Instance()->GetOSMValiFlags();
+			while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
+				bool Vali = true;
+				if(pWay != NULL) {
+					if((eValiFlags & CXOptions::e_OSMValiName) != 0) {
+						// check name
+						if(pWay->GetName().IsEmpty()) {
+							Vali = false;
+						}
 					}
-				}
-				if((eValiFlags & CXOptions::e_OSMValiRef) != 0) {
-					// check ref
-					if(pWay->GetRef().IsEmpty()) {
-						Vali = false;
+					if((eValiFlags & CXOptions::e_OSMValiRef) != 0) {
+						// check ref
+						if(pWay->GetRef().IsEmpty()) {
+							Vali = false;
+						}
 					}
-				}
-				if((eValiFlags & CXOptions::e_OSMValiMaxSpeed) != 0) {
-					// check max speed
-					if(pWay->GetMaxSpeed() == 0) {
-						Vali = false;
+					if((eValiFlags & CXOptions::e_OSMValiMaxSpeed) != 0) {
+						// check max speed
+						if(pWay->GetMaxSpeed() == 0) {
+							Vali = false;
+						}
 					}
+					// set result
+					pWay->SetOSMVali(Vali);
 				}
-				// set result
-				pWay->SetOSMVali(Vali);
 			}
 		}
 	}

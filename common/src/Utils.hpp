@@ -34,6 +34,8 @@ const unsigned int ZOOMVERSION	= 0x00010001; // 0.1.0-dev1
 const unsigned int SECTVERSION	= 0x00010001; // 0.1.0-dev1
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;
+const char MINLAYER = -10;
+const char MAXLAYER = 10;
 
 const t_uint64 ID_NODE_TERMINATOR = 0;
 
