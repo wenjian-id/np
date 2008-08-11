@@ -574,6 +574,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		CXMapSection *pMapSection = MapSections[idx].GetPtr();
 		// lock
 		pMapSection->Lock();
+		// relocate
+		pMapSection->RelocateUTMZone(UTMZoneCurrent);
 		// compute display coordinates
 		pMapSection->ComputeDisplayCoordinates(TMMap);
 	}

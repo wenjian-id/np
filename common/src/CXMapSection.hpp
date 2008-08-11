@@ -127,6 +127,7 @@ typedef CXSmartPtr<CXTOCMapSection> TTOCMapSectionPtr;
 class CXMapSection {
 private:
 	bool				m_oLoaded;				///< oiu
+	int					m_UTMZone;				///< oiu
 	TNodeMap			m_NodeMap;				///< Map with all nodes.
 	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
 	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
@@ -227,6 +228,12 @@ public:
 	 *
 	 */
 	TTOCMapSectionPtr GetTOC() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RelocateUTMZone(int NewZone);
 };
 
 typedef CXSmartPtr<CXMapSection> TMapSectionPtr;

@@ -95,7 +95,8 @@ bool CXTOCMapSection::Intersects(const tDRect & Rect) const {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapSection::CXMapSection() :
-	m_oLoaded(false)
+	m_oLoaded(false),
+	m_UTMZone(UTMZoneNone)
 {
 }
 
@@ -447,6 +448,28 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 		}
 	}
 }
+
+//-------------------------------------
+void CXMapSection::RelocateUTMZone(int NewZone) {
+	if(NewZone != m_UTMZone) {
+		m_UTMZone = NewZone;
+		CXNode *pNode = NULL;
+		TPOSNodeMap PosN = m_NodeMap.GetStart();
+		while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+			if(pNode != NULL) {
+				pNode->RelocateUTM(m_UTMZone);
+			}
+		}
+		CXPOINode *pPOINode = NULL;
+		TPOSPOINodeMap PosPN = m_POINodes.GetStart();
+		while (m_POINodes.GetNext(PosPN, pPOINode) != TPOINodeMap::NPOS) {
+			if(pPOINode != NULL) {
+				pPOINode->RelocateUTM(m_UTMZone);
+			}
+		}
+	}
+}
+
 
 /*
 	// check return code and do other sutff
