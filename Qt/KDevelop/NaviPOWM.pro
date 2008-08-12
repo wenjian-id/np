@@ -38,6 +38,7 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXPen.cpp \
 ../../common/src/CXOptions.cpp \
 ../../common/src/CXWay.cpp \
+../../common/src/CXMapLoaderThread.cpp \
 ../../common/src/CXMapPainterThread.cpp \
 ../../common/src/CXInfoBarCommon.cpp \
 ../../common/src/CXNMEA.cpp \
@@ -98,6 +99,7 @@ HEADERS += ../../common/src/CoordConstants.h \
  ../../common/src/CXInfoBar.hpp \
  ../../common/src/CXBuffer.hpp \
  ../../common/src/ISerial.hpp \
+ ../../common/src/CXMapLoaderThread.hpp \
  ../../common/src/CXMapPainter2D.hpp \
  ../../common/src/CXMapPainterThread.hpp \
  ../../common/src/CXNMEA.hpp \
