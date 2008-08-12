@@ -26,6 +26,7 @@
 #include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXTransformationMatrix.hpp"
+#include "CXMapLoaderThread.hpp"
 
 #include <math.h>
 
@@ -84,7 +85,8 @@ CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 //-------------------------------------
 CXPOWMMap::CXPOWMMap() :
 	m_TOCCache(TOCCACHESIZE),
-	m_MapSectionCache(MSCACHESIZE)
+	m_MapSectionCache(MSCACHESIZE),
+	m_pMapLoaderThread(NULL)
 {
 }
 
@@ -97,6 +99,11 @@ CXPOWMMap *CXPOWMMap::Instance() {
 	if(m_pInstance == NULL)
 		m_pInstance = new CXPOWMMap();
 	return m_pInstance;
+}
+
+//-------------------------------------
+void CXPOWMMap::SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread) {
+	m_pMapLoaderThread = pMapLoaderThread;
 }
 
 /*
@@ -177,24 +184,25 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 			// get TOCMapContainer from cache
 			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CacheKey);
 			CXTOCMapContainer *pTOC = TOCMapContainerPtr.GetPtr();
-			if(!pTOC->IsLoaded()) {
+			if(pTOC->GetLoadStatus() == e_LSNotLoaded) {
 				// load TOC for map container at a specific zoom level
 				CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
-				pTOC->Load(FileName, Descr.GetZoomLevel(), CacheKey);
+				m_pMapLoaderThread->LoadTOCMapContainer(TOCMapContainerPtr, FileName, Descr.GetZoomLevel(), CacheKey);
 			}
 			// get fiting map sections from this container for specific zoom level
 			tDRect Rect(Descr.GetLonMin(), Descr.GetLatMin(), Descr.GetLonMax() - Descr.GetLonMin(), Descr.GetLatMax() - Descr.GetLatMin());
 			pTOC->GetMapSections(Rect, MapSectionTOCs);
 		}
 	}
-	// OK we now have the map section TOC
+	// OK we now have the map section TOCs
 	// check to see which have to be loaded in MapSectionCache
 	for(size_t i=0; i<MapSectionTOCs.GetSize(); i++) {
 		TTOCMapSectionPtr TOC = MapSectionTOCs[i];
 		TMapSectionPtr MapSectionPtr = m_MapSectionCache.GetAt(TOC.GetPtr()->GetUID());
 		CXMapSection *pS = MapSectionPtr.GetPtr();
-		if(!pS->IsLoaded()) {
-			pS->LoadMap(TOC);
+		if(pS->GetLoadStatus() == e_LSNotLoaded) {
+			pS->SetTOC(TOC);
+			m_pMapLoaderThread->LoadMapSection(MapSectionPtr);
 		}
 		Result.Append(MapSectionPtr);
 	}

@@ -289,6 +289,10 @@ SOURCE=..\..\common\src\CXMapHashSimple.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXMapLoaderThread.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXMapPainter.hpp
 # End Source File
 # Begin Source File
@@ -526,6 +530,10 @@ SOURCE=..\..\common\src\CXLoopThread.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXMapContainer.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXMapLoaderThread.cpp
 # End Source File
 # Begin Source File
 

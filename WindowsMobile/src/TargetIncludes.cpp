@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "TargetIncludes.hpp"
+#include "Utils.hpp"
 #include "CXRGB.hpp"
 
 #include <tchar.h>
@@ -55,7 +56,7 @@ COLORREF CXRGB2COLORREF(const CXRGB & Color) {
 //-------------------------------------
 TCHAR *ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen) {
 	/// \todo tests
-	size_t L = min(InLen, OutLen-1);
+	size_t L = Min(InLen, OutLen-1);
 	for(size_t i=0; i<L; i++)
 		Buf[i] = pcBuffer[i];
 	Buf[L] = 0x00;
@@ -65,7 +66,7 @@ TCHAR *ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen)
 //-------------------------------------
 char *UCS22ASCII(const TCHAR *pusBuffer, size_t InLen, char *Buf, size_t OutLen) {
 	/// \todo tests
-	size_t L = min(InLen, OutLen-1);
+	size_t L = Min(InLen, OutLen-1);
 	for(size_t i=0; i<L; i++)
 		Buf[i] = (pusBuffer[i] & 0xff);
 	Buf[L] = 0x00;

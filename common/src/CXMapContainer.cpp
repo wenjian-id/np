@@ -28,7 +28,7 @@
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXTOCMapContainer::CXTOCMapContainer() :
-	m_oLoaded(false)
+	m_eLoadStatus(e_LSNotLoaded)
 {
 }
 
@@ -37,16 +37,22 @@ CXTOCMapContainer::~CXTOCMapContainer() {
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::IsLoaded() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oLoaded;
+E_LOADING_STATUS CXTOCMapContainer::GetLoadStatus() const {
+	CXReadLocker RL(&m_StatusRWLock);
+	return m_eLoadStatus;
+}
+
+//-------------------------------------
+void CXTOCMapContainer::SetLoadStatus(E_LOADING_STATUS eStatus) {
+	CXWriteLocker WL(&m_StatusRWLock);
+	m_eLoadStatus = eStatus;
 }
 
 //-------------------------------------
 bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomLevel, t_uint32 Key) {
 	CXWriteLocker WL(&m_RWLock);
 	// set loaded flag
-	m_oLoaded = true;
+	SetLoadStatus(e_LSLoading);
 	m_FileName = FileName;
 	// try to load TOC
 
@@ -58,42 +64,26 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 	DoOutputDebugString(bbb);
 	DoOutputDebugString("\n");
 
+	bool Result = true;
 	CXFile InFile;
 	// reduce read ahead size to 100 bytes
 	InFile.SetReadAheadSize(100);
-	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
-		// no error message
-		return false;
-	}
+	Result = (InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK);
 
 	t_uint32 MagicCode = 0;
 	t_uint32 ReqMagicCode = ('P' << 24) + ('O' << 16) + ('W' << 8) + 'M';
-	if(!ReadUI32(InFile, MagicCode)) {
-		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-	if(MagicCode != ReqMagicCode) {
-		CXStringASCII ErrorMsg(FileName);
-		ErrorMsg += " is not a NaviPOWM map";
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
+	Result = Result && ReadUI32(InFile, MagicCode);
+	// check magic code
+	Result = Result && (MagicCode == ReqMagicCode);
 
 	// check version
 	t_uint32 Version = 0;
 	t_uint32 ReqVersion = MAPVERSION;
-	if(!ReadUI32(InFile, Version)) {
-		CXStringASCII ErrorMsg("Error reading Version from file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-	bool Result = false;
+	Result = Result && ReadUI32(InFile, Version);
 
 	// decide which load function to call
 	// first of all check older versions
+	if(Result) {
 /*
 	if(Version == 0x00000100) {
 		// v 0.1.1
@@ -103,29 +93,37 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 		Result = LoadMap0_1_2(InFile, FileName);
 	} else if(Version != ReqVersion) {
 */
-	if(Version != ReqVersion) {
-		// not supported version
-		CXStringASCII ErrorMsg(FileName);
-		ErrorMsg += " has wrong Version: ";
-		char buf[100];
-		if((Version & 0xff) == 0) {
-			snprintf(	buf, sizeof(buf), "%d.%d.%d", 
-						static_cast<unsigned char>((Version & 0xff000000) >> 24),
-						static_cast<unsigned char>((Version & 0xff0000) >> 16),
-						static_cast<unsigned char>((Version & 0xff00) >> 8));
+		if(Version != ReqVersion) {
+			// not supported version
+			CXStringASCII ErrorMsg(FileName);
+			ErrorMsg += " has wrong Version: ";
+			char buf[100];
+			if((Version & 0xff) == 0) {
+				snprintf(	buf, sizeof(buf), "%d.%d.%d", 
+							static_cast<unsigned char>((Version & 0xff000000) >> 24),
+							static_cast<unsigned char>((Version & 0xff0000) >> 16),
+							static_cast<unsigned char>((Version & 0xff00) >> 8));
+			} else {
+				snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
+							static_cast<unsigned char>((Version & 0xff000000) >> 24),
+							static_cast<unsigned char>((Version & 0xff0000) >> 16),
+							static_cast<unsigned char>((Version & 0xff00) >> 8),
+							static_cast<unsigned char>((Version & 0xff)));
+			}
+			ErrorMsg += buf;
+	//		DoOutputErrorMessage(ErrorMsg.c_str());
+			Result = false;
 		} else {
-			snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
-						static_cast<unsigned char>((Version & 0xff000000) >> 24),
-						static_cast<unsigned char>((Version & 0xff0000) >> 16),
-						static_cast<unsigned char>((Version & 0xff00) >> 8),
-						static_cast<unsigned char>((Version & 0xff)));
+			// current version
+			Result = LoadTOCMapContainer_CurrentVersion(InFile, ZoomLevel, Key);
 		}
-		ErrorMsg += buf;
-//		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
+	}
+	if(Result) {
+		// set loaded flag
+		SetLoadStatus(e_LSLoaded);
 	} else {
-		// current version
-		Result = LoadTOCMapContainer_CurrentVersion(InFile, ZoomLevel, Key);
+		// set loaded flag
+		SetLoadStatus(e_LSLoadError);
 	}
 	return Result;
 

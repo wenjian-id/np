@@ -69,6 +69,12 @@ private:
 	 *
 	 */
 	size_t GetMultipleOfGrowSize(size_t NewSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RemoveAt(size_t Index, size_t Count);
 protected:
 public:
 	//-------------------------------------
@@ -120,6 +126,12 @@ public:
 	 *
 	 */
 	void Append(const tClass & c);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RemoveAt(size_t Index);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -235,7 +247,7 @@ template<class tClass> void CXArray<tClass> ::ShrinkTo(size_t ulNewSize) {
 		m_ulAllocatedSize = ulNewSize;
 		tClass *pNewBuffer = NULL;
 		if(ulNewSize > 0) {
-			// at least one lement left
+			// at least one element left
 			pNewBuffer = new tClass [m_ulAllocatedSize];
 			// copy each element using copy construtor
 			for(size_t i=0; i<m_ulSize; i++)
@@ -267,6 +279,27 @@ template<class tClass> void CXArray<tClass> ::Append(const tClass & c) {
 	// append data
 	m_pBuffer[m_ulSize] = c;
 	m_ulSize = NewSize;
+}
+
+//-------------------------------------
+template<class tClass> void CXArray<tClass> ::RemoveAt(size_t Index, size_t Count) {
+	if(Index >= m_ulSize)
+		// wrong index
+		return;
+	if(Index + Count > m_ulSize)
+		return;
+	for(size_t i = Index; i<m_ulSize-Count; i++) {
+		m_pBuffer[i] = m_pBuffer[i+Count];
+	}
+	// check if it fits in allocated memory
+	m_ulSize -= Count;
+	// shrink
+	ShrinkTo(m_ulSize);
+}
+
+//-------------------------------------
+template<class tClass> void CXArray<tClass> ::RemoveAt(size_t Index) {
+	RemoveAt(Index, 1);
 }
 
 //-------------------------------------

@@ -25,6 +25,8 @@
 #include "CXDebugInfo.hpp"
 #include "CXOptions.hpp"
 #include "CXTransformationMatrix.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 //----------------------------------------------------------------------------
 //-------------------------------------
@@ -95,9 +97,12 @@ bool CXTOCMapSection::Intersects(const tDRect & Rect) const {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapSection::CXMapSection() :
-	m_oLoaded(false),
+	m_eLoadStatus(e_LSNotLoaded),
 	m_UTMZone(UTMZoneNone)
 {
+	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
+		m_WayMapBuffer.Append(NULL);
+	}
 }
 
 //-------------------------------------
@@ -129,13 +134,25 @@ CXMapSection::~CXMapSection() {
 }
 
 //-------------------------------------
-bool CXMapSection::IsLoaded() const {
-	return m_oLoaded;
+E_LOADING_STATUS CXMapSection::GetLoadStatus() const {
+	CXReadLocker RL(&m_StatusRWLock);
+	return m_eLoadStatus;
+}
+
+//-------------------------------------
+void CXMapSection::SetLoadStatus(E_LOADING_STATUS eStatus) {
+	CXWriteLocker WL(&m_StatusRWLock);
+	m_eLoadStatus = eStatus;
 }
 
 //-------------------------------------
 TTOCMapSectionPtr CXMapSection::GetTOC() const {
 	return m_TOC;
+}
+
+//-------------------------------------
+void CXMapSection::SetTOC(const TTOCMapSectionPtr & TOCPtr) {
+	m_TOC = TOCPtr;
 }
 
 //-------------------------------------
@@ -157,12 +174,13 @@ CXWay *CXMapSection::GetWay(t_uint64 ID) {
 }
 
 //-------------------------------------
-bool CXMapSection::LoadMap(const TTOCMapSectionPtr & TOCPtr) {
-	/// \todo implement
-	m_oLoaded = true;
-	m_TOC = TOCPtr;
+bool CXMapSection::LoadMap() {
+	CXMutexLocker L(&m_Mutex);
 
-	CXStringASCII FileName = TOCPtr.GetPtr()->GetFileName();
+	SetLoadStatus(e_LSLoading);
+	bool Result = true;
+
+	CXStringASCII FileName = m_TOC.GetPtr()->GetFileName();
 	DoOutputDebugString("Loading MapSection for ");
 	DoOutputDebugString(FileName.c_str());
 	DoOutputDebugString("\n");
@@ -170,44 +188,24 @@ bool CXMapSection::LoadMap(const TTOCMapSectionPtr & TOCPtr) {
 	CXFile InFile;
 	// reduce read ahead size to 1000 bytes
 	InFile.SetReadAheadSize(1000);
-	if(InFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
-		// no error message
-		return false;
-	}
+	Result = Result && (InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK);
+
 	// seek to position
-	if(InFile.Seek(TOCPtr.GetPtr()->GetOffset()) != CXFile::E_OK) {
-		// no error message
-		return false;
-	}
+	Result = Result && InFile.Seek(m_TOC.GetPtr()->GetOffset()) == CXFile::E_OK;
 
 	t_uint32 MagicCode = 0;
 	t_uint32 ReqMagicCode = ('S' << 24) + ('E' << 16) + ('C' << 8) + 'T';
-	if(!ReadUI32(InFile, MagicCode)) {
-		CXStringASCII ErrorMsg("Error reading MagicCode from file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-	if(MagicCode != ReqMagicCode) {
-		CXStringASCII ErrorMsg(FileName);
-		ErrorMsg += " is not a NaviPOWM map";
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
+	Result = Result && ReadUI32(InFile, MagicCode);
+	Result = Result && (MagicCode == ReqMagicCode);
 
 	// check version
 	t_uint32 Version = 0;
 	t_uint32 ReqVersion = SECTVERSION;
-	if(!ReadUI32(InFile, Version)) {
-		CXStringASCII ErrorMsg("Error reading Version from file: ");
-		ErrorMsg += FileName;
-		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	}
-	bool Result = false;
+	Result = Result && ReadUI32(InFile, Version);
 
 	// decide which load function to call
 	// first of all check older versions
+	if(Result) {
 /*
 	if(Version == 0x00000100) {
 		// v 0.1.1
@@ -217,30 +215,36 @@ bool CXMapSection::LoadMap(const TTOCMapSectionPtr & TOCPtr) {
 		Result = LoadMap0_1_2(InFile, FileName);
 	} else if(Version != ReqVersion) {
 */
-	if(Version != ReqVersion) {
-		// not supported version
-		CXStringASCII ErrorMsg(FileName);
-		ErrorMsg += " has wrong Version: ";
-		char buf[100];
-		if((Version & 0xff) == 0) {
-			snprintf(	buf, sizeof(buf), "%d.%d.%d", 
-						static_cast<unsigned char>((Version & 0xff000000) >> 24),
-						static_cast<unsigned char>((Version & 0xff0000) >> 16),
-						static_cast<unsigned char>((Version & 0xff00) >> 8));
+		if(Version != ReqVersion) {
+			// not supported version
+			CXStringASCII ErrorMsg(FileName);
+			ErrorMsg += " has wrong Version: ";
+			char buf[100];
+			if((Version & 0xff) == 0) {
+				snprintf(	buf, sizeof(buf), "%d.%d.%d", 
+							static_cast<unsigned char>((Version & 0xff000000) >> 24),
+							static_cast<unsigned char>((Version & 0xff0000) >> 16),
+							static_cast<unsigned char>((Version & 0xff00) >> 8));
+			} else {
+				snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
+							static_cast<unsigned char>((Version & 0xff000000) >> 24),
+							static_cast<unsigned char>((Version & 0xff0000) >> 16),
+							static_cast<unsigned char>((Version & 0xff00) >> 8),
+							static_cast<unsigned char>((Version & 0xff)));
+			}
+			ErrorMsg += buf;
+	//		DoOutputErrorMessage(ErrorMsg.c_str());
+			Result = false;
 		} else {
-			snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
-						static_cast<unsigned char>((Version & 0xff000000) >> 24),
-						static_cast<unsigned char>((Version & 0xff0000) >> 16),
-						static_cast<unsigned char>((Version & 0xff00) >> 8),
-						static_cast<unsigned char>((Version & 0xff)));
+			// current version
+			Result = LoadMap_CurrentVersion(InFile);
 		}
-		ErrorMsg += buf;
-//		DoOutputErrorMessage(ErrorMsg.c_str());
-		return false;
-	} else {
-		// current version
-		Result = LoadMap_CurrentVersion(InFile);
 	}
+	if(Result)
+		SetLoadStatus(e_LSLoaded);
+	else
+		SetLoadStatus(e_LSLoadError);
+
 	return Result;
 }
 
@@ -374,11 +378,11 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	// fill m_WayMapBuffer ordered by Layer ascending
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
 		TWayMap *pWayMap = NULL;
-		if(Ways.Lookup(Layer, pWayMap)) {
-			m_WayMapBuffer.Append(pWayMap);
-		} else {
-			m_WayMapBuffer.Append(NULL);
-		}
+		Ways.Lookup(Layer, pWayMap);
+		TWayMap *pOld = m_WayMapBuffer[Layer - MINLAYER];
+		if(pOld != NULL)
+			delete pOld;
+		m_WayMapBuffer[Layer - MINLAYER] = pWayMap;
 	}
 
 	CXExactTime Time3;

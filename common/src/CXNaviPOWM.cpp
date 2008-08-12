@@ -25,6 +25,7 @@
 #include "CXGPSRecvThread.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXMapPainterThread.hpp"
+#include "CXMapLoaderThread.hpp"
 #include "CXWatchdogThread.hpp"
 #include "CXInfoBarBottom.hpp"
 #include "CXInfoBarTop.hpp"
@@ -35,6 +36,7 @@
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
 #include "CXDeviceContext.hpp"
+#include "CXPOWMMap.hpp"
 
 const char * VERSIONSTRING ="NaviPOWM 0.2.0-dev1";
 const char * INFOSTRING1 ="(C) Doru Julian Bugariu";
@@ -79,6 +81,7 @@ CXNaviPOWM::CXNaviPOWM() :
 	m_pGPSRecvThread(NULL),
 	m_pLocatorThread(NULL),
 	m_pMapPainterThread(NULL),
+	m_pMapLoaderThread(NULL),
 	m_pWatchdogThread(NULL),
 	m_pInfoBarBottom(NULL),
 	m_pInfoBarTop(NULL),
@@ -106,6 +109,8 @@ CXNaviPOWM::~CXNaviPOWM() {
 	m_pLocatorThread = NULL;
 	delete m_pMapPainterThread;
 	m_pMapPainterThread = NULL;
+	delete m_pMapLoaderThread;
+	m_pMapLoaderThread = NULL;
 	delete m_pWatchdogThread;
 	m_pWatchdogThread = NULL;
 	delete m_pInfoBarBottom;
@@ -167,17 +172,21 @@ bool CXNaviPOWM::Init(IMainWindow *pMainWindow) {
 		return false;
 	if(m_pMapPainterThread != NULL)
 		return false;
+	if(m_pMapLoaderThread != NULL)
+		return false;
 	if(m_pWatchdogThread != NULL)
 		return false;
 	// create new threads
 	m_pGPSRecvThread = new CXGPSRecvThread();
 	m_pLocatorThread = new CXLocatorThread();
 	m_pMapPainterThread = new CXMapPainterThread();
+	m_pMapLoaderThread = new CXMapLoaderThread();
 	m_pWatchdogThread = new CXWatchdogThread();
 	// create connections between threads
 	m_pGPSRecvThread->SetLocator(m_pLocatorThread);
 	m_pLocatorThread->SetNaviPOWM(this);
 	m_pMapPainterThread->SetNaviPOWM(this);
+	CXPOWMMap::Instance()->SetMapLoaderThread(m_pMapLoaderThread);
 	return true;
 }
 
@@ -189,12 +198,15 @@ bool CXNaviPOWM::StartThreads() {
 		return false;
 	if(m_pMapPainterThread == NULL)
 		return false;
+	if(m_pMapLoaderThread== NULL)
+		return false;
 	if(m_pWatchdogThread == NULL)
 		return false;
 	// create and run thread s
 	m_pGPSRecvThread->CreateThread();
 	m_pLocatorThread->CreateThread();
 	m_pMapPainterThread->CreateThread();
+	m_pMapLoaderThread->CreateThread();
 	m_pWatchdogThread->CreateThread();
 	return true;
 }
@@ -207,17 +219,21 @@ void CXNaviPOWM::StopThreads() {
 		return;
 	if(m_pMapPainterThread == NULL)
 		return;
+	if(m_pMapLoaderThread == NULL)
+		return;
 	if(m_pWatchdogThread == NULL)
 		return;
 	// stop threads
 	m_pGPSRecvThread->StopThread();
 	m_pLocatorThread->StopThread();
 	m_pMapPainterThread->StopThread();
+	m_pMapLoaderThread->StopThread();
 	m_pWatchdogThread->StopThread();
 	// wait for thread exit
 	m_pGPSRecvThread->WaitForThreadExit(5000);
 	m_pLocatorThread->WaitForThreadExit(5000);
 	m_pMapPainterThread->WaitForThreadExit(5000);
+	m_pMapLoaderThread->WaitForThreadExit(5000);
 	m_pWatchdogThread->WaitForThreadExit(5000);
 }
 

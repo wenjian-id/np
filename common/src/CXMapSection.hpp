@@ -27,7 +27,9 @@
 #include "CXWay.hpp"
 #include "CXNode.hpp"
 #include "CXMutex.hpp"
+#include "CXRWLock.hpp"
 #include "CXRect.hpp"
+#include "CXArray.hpp"
 #include "CXSmartPtr.hpp"
 
 //---------------------------------------------------------------------
@@ -117,6 +119,7 @@ public:
 
 
 typedef CXSmartPtr<CXTOCMapSection> TTOCMapSectionPtr;
+typedef CXArray<TTOCMapSectionPtr> TTOCMapSectionPtrArray;
 
 
 //---------------------------------------------------------------------
@@ -126,7 +129,7 @@ typedef CXSmartPtr<CXTOCMapSection> TTOCMapSectionPtr;
  */
 class CXMapSection {
 private:
-	bool				m_oLoaded;				///< oiu
+	E_LOADING_STATUS	m_eLoadStatus;			///< oiu
 	int					m_UTMZone;				///< oiu
 	TNodeMap			m_NodeMap;				///< Map with all nodes.
 	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
@@ -134,6 +137,7 @@ private:
 	TTOCMapSectionPtr	m_TOC;					///< oiu
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< Synchronization object.
+	mutable CXRWLock	m_StatusRWLock;			///< Synchronization object for m_eLoadStatus.
 	//-------------------------------------
 	CXMapSection(const CXMapSection &);							///< Not used.
 	const CXMapSection & operator = (const CXMapSection &);		///< Not used.
@@ -167,7 +171,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool IsLoaded() const;
+	E_LOADING_STATUS GetLoadStatus() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetLoadStatus(E_LOADING_STATUS eStatus);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -179,7 +189,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool LoadMap(const TTOCMapSectionPtr & TOCPtr);
+	bool LoadMap();
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -233,10 +243,17 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void SetTOC(const TTOCMapSectionPtr & TOCPtr);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void RelocateUTMZone(int NewZone);
 };
 
 typedef CXSmartPtr<CXMapSection> TMapSectionPtr;
+typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
 
 
 #endif // __CXMAPSECTION_HPP__

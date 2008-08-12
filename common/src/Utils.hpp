@@ -29,43 +29,50 @@
 #include "CXRGB.hpp"
 
 
-const unsigned int MAPVERSION	= 0x00020001; // 0.2.0-dev1
-const unsigned int ZOOMVERSION	= 0x00010001; // 0.1.0-dev1
-const unsigned int SECTVERSION	= 0x00010001; // 0.1.0-dev1
-
-const unsigned int SCALE_FACTOR_UI32 = 1000000;
-const char MINLAYER = -10;
-const char MAXLAYER = 10;
-
-const t_uint64 ID_NODE_TERMINATOR = 0;
-
 class CXCoor;
 class CXGGAPacket;
 class CXRMCPacket;
 class CXGSVSatelliteInfo;
 
+
+
+const unsigned int MAPVERSION	= 0x00020001; // 0.2.0-dev1
+const unsigned int ZOOMVERSION	= 0x00010001; // 0.1.0-dev1
+const unsigned int SECTVERSION	= 0x00010001; // 0.1.0-dev1
+
+const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
+const char MINLAYER = -10;							///< oiu
+const char MAXLAYER = 10;							///< oiu
+const t_uint64 ID_NODE_TERMINATOR = 0;				///< oiu
+
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ * oiu.
+ */
 template <class t> t Max(const t &a, const t&b) {
 	if(a < b)
 		return b;
 	return a;
 }
 
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ * oiu.
+ */
 template <class t> t Min(const t &a, const t&b) {
 	if(a < b)
 		return a;
 	return b;
 }
 
-#ifndef min
-#define min(a,b)            (((a) < (b)) ? (a) : (b))
-#endif
-
-const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);
-
-static const size_t MaxPOITypes = 8; ///< oiu
-
-const unsigned char DegUTF8[2] = {0xC2, 0xB0};
-
+const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);	///< oiu
+static const size_t MaxPOITypes = 8;				///< oiu
+const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< oiu;
 
 //-------------------------------------
 /**
@@ -82,6 +89,21 @@ enum E_COMMAND {
 	e_CmdZoomOut,	///< Zoom out
 	e_CmdSat,		///< Sat info.
 	e_CmdMinimize,	///< Minimize.
+};
+
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ * oiu.
+ */
+enum E_LOADING_STATUS {
+	e_LSNotLoaded,	///< Not loaded yet.
+	e_LSInList,		///< In list for loading.
+	e_LSLoading,	///< Still loading.
+	e_LSLoadError,	///< Load error.
+	e_LSLoaded,		///< Alerady loaded.
 };
 
 

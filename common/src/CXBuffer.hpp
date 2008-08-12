@@ -158,6 +158,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void Resize(size_t ulNewSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	size_t GetAllocatedSize() const;
 	//-------------------------------------
 	/**
@@ -320,6 +326,13 @@ template<class tClass> tClass * CXBuffer<tClass> ::GetBufferWritable() {
 //-------------------------------------
 template<class tClass> size_t CXBuffer<tClass> ::GetSize() const {
 	return m_ulBufferSize;
+}
+
+//-------------------------------------
+template<class tClass> void CXBuffer<tClass> ::Resize(size_t ulNewSize) {
+	GrowTo(ulNewSize);
+	// adjust size
+	m_ulBufferSize = ulNewSize;
 }
 
 //-------------------------------------

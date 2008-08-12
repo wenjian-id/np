@@ -178,6 +178,8 @@ common/src/CXLoopThread.hpp -text
 common/src/CXMapContainer.cpp -text
 common/src/CXMapContainer.hpp -text
 common/src/CXMapHashSimple.hpp -text
+common/src/CXMapLoaderThread.cpp -text
+common/src/CXMapLoaderThread.hpp -text
 common/src/CXMapPainter.cpp -text
 common/src/CXMapPainter.hpp -text
 common/src/CXMapPainter2D.cpp -text

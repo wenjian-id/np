@@ -32,6 +32,7 @@
 class CXGPSRecvThread;
 class CXLocatorThread;
 class CXMapPainterThread;
+class CXMapLoaderThread;
 class CXWatchdogThread;
 class IMainWindow;
 class CXDeviceContext;
@@ -110,6 +111,7 @@ private:
 	CXGPSRecvThread		*m_pGPSRecvThread;			///< oiu
 	CXLocatorThread		*m_pLocatorThread;			///< oiu
 	CXMapPainterThread	*m_pMapPainterThread;		///< oiu
+	CXMapLoaderThread	*m_pMapLoaderThread;		///< oiu
 	CXWatchdogThread	*m_pWatchdogThread;			///< oiu
 	CXInfoBarBottom		*m_pInfoBarBottom;			///< oiu
 	CXInfoBarTop		*m_pInfoBarTop;				///< oiu

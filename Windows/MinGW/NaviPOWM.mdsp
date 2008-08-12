@@ -143,6 +143,7 @@ extraResourceOptions=
 61=..\..\common\src\CXMapSection.cpp
 62=..\..\common\src\CXNode.cpp
 63=..\..\common\src\CXWay.cpp
+64=..\..\common\src\CXMapLoaderThread.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -223,6 +224,7 @@ extraResourceOptions=
 77=..\..\common\src\CXMapSection.hpp
 78=..\..\common\src\CXNode.hpp
 79=..\..\common\src\CXWay.hpp
+80=..\..\common\src\CXMapLoaderThread.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

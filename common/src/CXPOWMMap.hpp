@@ -33,6 +33,9 @@
 #include "CXRect.hpp"
 #include "CXCache.hpp"
 
+
+class CXMapLoaderThread;
+
 //---------------------------------------------------------------------
 /**
  * \brief oiu
@@ -104,8 +107,6 @@ public:
 };
 
 
-typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
-
 //---------------------------------------------------------------------
 /**
  * \brief oiu
@@ -113,11 +114,12 @@ typedef CXArray<TMapSectionPtr> TMapSectionPtrArray;
  */
 class CXPOWMMap {
 private:
-	static CXPOWMMap						*m_pInstance;		///< oiu
-	CXCache<t_uint32, CXTOCMapContainer>	m_TOCCache;			///< oiu
-	CXCache<t_uint64, CXMapSection>			m_MapSectionCache;	///< oiu
+	static CXPOWMMap						*m_pInstance;			///< oiu
+	CXCache<t_uint32, CXTOCMapContainer>	m_TOCCache;				///< oiu
+	CXCache<t_uint64, CXMapSection>			m_MapSectionCache;		///< oiu
+	CXMapLoaderThread						*m_pMapLoaderThread;	///< oiu
 	// synchronisation
-	mutable CXMutex							m_Mutex;			///< Synchronization object.
+	mutable CXMutex							m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
@@ -155,6 +157,12 @@ public:
 	 *
 	 */
 	static CXPOWMMap *Instance();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread);
 	//-------------------------------------
 	/**
 	 * \brief oiu

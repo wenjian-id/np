@@ -39,10 +39,11 @@
  */
 class CXTOCMapContainer {
 private:
-	bool						m_oLoaded;		///< oiu
+	E_LOADING_STATUS			m_eLoadStatus;	///< oiu
 	CXStringASCII				m_FileName;		///< oiu
 	CXArray<TTOCMapSectionPtr>	m_TOCSections;	///< oiu
 	mutable CXRWLock			m_RWLock;		///< Synchronization object.
+	mutable CXRWLock			m_StatusRWLock;	///< Synchronization object for m_eLoadStatus.
 	//-------------------------------------
 	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
 	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
@@ -89,7 +90,14 @@ public:
 	 *
 	 * oiu.
 	 */
-	bool IsLoaded() const;
+	E_LOADING_STATUS GetLoadStatus() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void SetLoadStatus(E_LOADING_STATUS eStatus);
 	//-------------------------------------
 	/**
 	 * \brief oiu.
@@ -107,6 +115,7 @@ public:
 };
 
 typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;
+typedef CXArray<TTOCMapContainerPtr> TTOCMapContainerPtrArray;
 
 
 //---------------------------------------------------------------------
