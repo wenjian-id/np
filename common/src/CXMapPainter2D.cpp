@@ -42,8 +42,8 @@ static const CXRGB POITEXTCOLOR(0x00, 0x00, 0xA0);
 static const CXRGB POIBGCOLOR(0xE2, 0xDE, 0xD8);
 
 const double ZoomFactor = 1.2;
-const double MAXMETERPERPIXEL = 100000;	///< 100 km/pixel
-const double MINMETERPERPIXEL = 0.01;	///< 0.01 m/pixel
+const double MAXMETERPERPIXEL = 1000;	///< 1 km/pixel
+const double MINMETERPERPIXEL = 0.1;	///< 0.1 m/pixel
 static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 8;

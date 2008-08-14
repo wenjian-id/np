@@ -181,9 +181,11 @@ bool CXMapSection::LoadMap() {
 	bool Result = true;
 
 	CXStringASCII FileName = m_TOC.GetPtr()->GetFileName();
-	DoOutputDebugString("Loading MapSection for ");
-	DoOutputDebugString(FileName.c_str());
-	DoOutputDebugString("\n");
+	char buf[1024];
+	snprintf(buf, sizeof(buf), "Loading MapSection for %s: %0.2f x %0.2f - %0.2f x %0.2f\n", FileName.c_str(), 
+								m_TOC.GetPtr()->GetLonMin(), m_TOC.GetPtr()->GetLatMin(),
+								m_TOC.GetPtr()->GetLonMax(), m_TOC.GetPtr()->GetLatMax());
+	DoOutputDebugString(buf);
 
 	CXFile InFile;
 	// reduce read ahead size to 1000 bytes
@@ -207,16 +209,17 @@ bool CXMapSection::LoadMap() {
 	// first of all check older versions
 	if(Result) {
 /*
-	if(Version == 0x00000100) {
-		// v 0.1.1
-		Result = LoadMap0_1_1(InFile, FileName);
-	} else if(Version == 0x00010200) {
-		// v 0.1.2
-		Result = LoadMap0_1_2(InFile, FileName);
-	} else if(Version != ReqVersion) {
+		if(Version == 0x00000100) {
+			// v 0.1.1
+			Result = LoadMap0_1_1(InFile, FileName);
+		} else if(Version == 0x00010200) {
+			// v 0.1.2
+			Result = LoadMap0_1_2(InFile, FileName);
+		} else if(Version != ReqVersion) {
 */
 		if(Version != ReqVersion) {
 			// not supported version
+/*
 			CXStringASCII ErrorMsg(FileName);
 			ErrorMsg += " has wrong Version: ";
 			char buf[100];
@@ -233,7 +236,8 @@ bool CXMapSection::LoadMap() {
 							static_cast<unsigned char>((Version & 0xff)));
 			}
 			ErrorMsg += buf;
-	//		DoOutputErrorMessage(ErrorMsg.c_str());
+			DoOutputErrorMessage(ErrorMsg.c_str());
+*/
 			Result = false;
 		} else {
 			// current version

@@ -153,8 +153,14 @@ CXStringASCII CXPOWMMap::GetFileNameFromCoor(double dLon, double dLat) {
 
 //-------------------------------------
 t_uint32 CXPOWMMap::GetCacheKeyFromCoor(double dLon, double dLat, unsigned char ZoomLevel) {
-	int NameLon = static_cast<int>(floor(dLon+180));	// [0 - 360]
-	int NameLat = static_cast<int>(floor(dLat+90));		// [0 - 180]
+	int NameLon = static_cast<int>(floor(dLon));
+	int NameLat = static_cast<int>(floor(dLat));
+	while(NameLon < -180)
+		NameLon += 360;
+	NameLon = NameLon % 360;	// [0 - 360]
+	while(NameLat < -90)
+		NameLat += 180;
+	NameLat = NameLat % 180;	// [0 - 180]
 	t_uint32 Result = NameLon << 16;
 	Result += NameLat << 8;
 	Result += ZoomLevel;
@@ -176,6 +182,8 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	modf(Descr.GetLonMax(), &dLonMax);
 	modf(Descr.GetLatMin(), &dLatMin);
 	modf(Descr.GetLatMax(), &dLatMax);
+	// increment cache counters
+	m_TOCCache.IncrementCounters();
 	// load all TOCMapContainer between 
 	CXArray<TTOCMapSectionPtr> MapSectionTOCs;
 	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
@@ -195,6 +203,8 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 		}
 	}
 	// OK we now have the map section TOCs
+	// increment cache counters for map sections
+	m_MapSectionCache.IncrementCounters();
 	// check to see which have to be loaded in MapSectionCache
 	for(size_t i=0; i<MapSectionTOCs.GetSize(); i++) {
 		TTOCMapSectionPtr TOC = MapSectionTOCs[i];

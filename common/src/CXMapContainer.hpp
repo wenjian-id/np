@@ -39,14 +39,30 @@
  */
 class CXTOCMapContainer {
 private:
-	E_LOADING_STATUS			m_eLoadStatus;	///< oiu
-	CXStringASCII				m_FileName;		///< oiu
-	CXArray<TTOCMapSectionPtr>	m_TOCSections;	///< oiu
-	mutable CXRWLock			m_RWLock;		///< Synchronization object.
-	mutable CXRWLock			m_StatusRWLock;	///< Synchronization object for m_eLoadStatus.
+	E_LOADING_STATUS			m_eLoadStatus;		///< oiu
+	CXStringASCII				m_FileName;			///< oiu
+	TTOCMapSectionPtr			**m_pTOCSections;	///< oiu
+	size_t						m_Width;			///< oiu
+	size_t						m_Height;			///< oiu
+	mutable CXRWLock			m_RWLock;			///< Synchronization object.
+	mutable CXRWLock			m_StatusRWLock;		///< Synchronization object for m_eLoadStatus.
 	//-------------------------------------
 	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
 	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void Clear();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void Resize(size_t Width, size_t Height);
 	//-------------------------------------
 	/**
 	 * \brief oiu.

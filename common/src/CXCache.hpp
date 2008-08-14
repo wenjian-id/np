@@ -125,8 +125,8 @@ private:
 		};
 	};
 private:
-	size_t								m_MaxCacheSize;		///< oiu
-	CXMapSort<tKey, CXCacheHelper *>	m_Values;			///< oiu
+	size_t								m_NominalCacheSize;		///< oiu
+	CXMapSort<tKey, CXCacheHelper *>	m_Values;				///< oiu
 	//-------------------------------------
 	CXCache();										///< Not used.
 	CXCache(const CXCache &);						///< Not used.
@@ -139,8 +139,8 @@ public:
 	 *
 	 * Default constructor.
 	 */
-	CXCache(size_t MaxCacheSize) :
-		m_MaxCacheSize(MaxCacheSize)
+	CXCache(size_t NominalCacheSize) :
+		m_NominalCacheSize(NominalCacheSize)
 	{
 	}
 	//-------------------------------------
@@ -163,36 +163,44 @@ public:
 	 *
 	 */
 	CXSmartPtr<tValue> GetAt(const tKey & Key) {
-		IncrementCounters();
 		CXCacheHelper *pResult = NULL;
-		// check if value exists
-		if(!m_Values.Lookup(Key, pResult)) {
-			// check if we have to remove a Element
-			if(m_Values.GetSize() >= m_MaxCacheSize) {
-				// remove rarely used element
-				CXCacheHelper *pTmp = NULL;
-				CXCacheHelper *pDel = NULL;
-				CXPOSMapSort<tKey> Pos = m_Values.GetStart();
-				int MaxCount = -1;
-				tKey MaxKey;
-				while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
-					if(pTmp->GetCounter() > MaxCount) {
-						// found new maximum
-						MaxKey = Pos.m_key;
-						MaxCount = pTmp->GetCounter();
-						pDel = pTmp;
-					}
+		// check if we have to remove a Element
+		if(m_Values.GetSize() >= m_NominalCacheSize) {
+			// remove rarely used element
+			CXCacheHelper *pTmp = NULL;
+			CXCacheHelper *pDel = NULL;
+			CXPOSMapSort<tKey> Pos = m_Values.GetStart();
+			int MaxCount = -1;
+			tKey DelKey;
+			while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
+				if(pTmp->GetCounter() > MaxCount) {
+					// found new maximum
+					DelKey = Pos.m_key;
+					MaxCount = pTmp->GetCounter();
+					pDel = pTmp;
 				}
+			}
+			// check if we can remove maximum
+			if(MaxCount > 1) {
 				// now remove maximum
-				m_Values.RemoveAt(MaxKey);
+				m_Values.RemoveAt(DelKey);
+				// and delete element
 				delete pDel;
 			}
-			// value does not exist. create new tValue
+		}
+		// check if value exists
+		if(!m_Values.Lookup(Key, pResult)) {
+			// value does not exist
+			// create new tValue
 			tValue *pNewValue = new tValue;
 			// save in map
-			m_Values.SetAt(Key, new CXCacheHelper(pNewValue));
-			// lookup again
-			m_Values.Lookup(Key, pResult);
+			pResult = new CXCacheHelper(pNewValue);
+			m_Values.SetAt(Key, pResult);
+			if(m_Values.GetSize() > m_NominalCacheSize) {
+				char buf[100];
+				snprintf(buf, sizeof(buf), "cache size = %d nominal size = %d\n", m_Values.GetSize(), m_NominalCacheSize);
+				DoOutputDebugString(buf);
+			}
 		}
 		// reset counter
 		pResult->ResetCounter();

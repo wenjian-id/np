@@ -106,8 +106,5 @@ void CXMapLoaderThread::LoadMapSection(TMapSectionPtr &MapSection) {
 	MapSection.GetPtr()->SetLoadStatus(e_LSInList);
 	m_MapSectionArray.Append(MapSection);
 	CXTOCMapSection *pTOC = MapSection.GetPtr()->GetTOC().GetPtr();
-	char buf[200];
-	snprintf(buf, sizeof(buf), "%.3f %.3f %.3f %.3f\n", pTOC->GetLatMin(), pTOC->GetLatMax(), pTOC->GetLonMin(), pTOC->GetLonMax());
-	DoOutputDebugString(buf);
 	RequestWork();
 }
