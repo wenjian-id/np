@@ -211,7 +211,8 @@ template<class tKey, class tValue> CXMapSimple<tKey, tValue> ::~CXMapSimple() {
 //-------------------------------------
 template<class tKey, class tValue> void CXMapSimple<tKey, tValue> ::RemoveAll() {
 	// delete all elements
-	for(size_t i=0; i<m_Data.GetSize(); i++)
+	size_t Size = m_Data.GetSize();
+	for(size_t i=0; i<Size; i++)
 		delete m_Data[i];
 	m_Data.Clear();
 }
@@ -225,7 +226,8 @@ template<class tKey, class tValue> size_t CXMapSimple<tKey, tValue> ::GetSize() 
 template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapSimple<tKey, tValue> ::Find(const tKey & Key, size_t & rIndex) const {
 	rIndex = 0;
 	// iterate through all elements and search for the one with key tKey
-	for(size_t i=0; i<m_Data.GetSize(); i++) {
+	size_t Size = m_Data.GetSize();
+	for(size_t i=0; i<Size; i++) {
 		CXKeyVal<tKey, tValue> *pResult = m_Data[i];
 		if(pResult->m_Key == Key) {
 			// found

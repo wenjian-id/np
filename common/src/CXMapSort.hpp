@@ -211,7 +211,8 @@ template<class tKey, class tValue> CXMapSort<tKey, tValue> ::~CXMapSort() {
 //-------------------------------------
 template<class tKey, class tValue> void CXMapSort<tKey, tValue> ::RemoveAll() {
 	// delete all elements
-	for(size_t i=0; i<m_Data.GetSize(); i++)
+	size_t Size = m_Data.GetSize();
+	for(size_t i=0; i<Size; i++)
 		delete m_Data[i];
 	m_Data.Clear();
 }

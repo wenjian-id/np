@@ -23,16 +23,16 @@
 #include "CXFile.hpp"
 
 static const size_t MaxBufferSize = 100000;
+static const size_t MinBufferSize = 10;
 
 //-------------------------------------
 CXFile::CXFile() :
 	m_File(NULL),
 	m_pBuffer(NULL),
-	m_ReadAheadSize(MaxBufferSize),
+	m_ReadAheadSize(MinBufferSize),
 	m_BufferedSize(0),
 	m_BufferOffset(0)
 {
-	m_pBuffer = new unsigned char [MaxBufferSize];
 }
 
 //-------------------------------------
@@ -49,15 +49,28 @@ void CXFile::Clear() {
 }
 
 //-------------------------------------
+void CXFile::ReallocateReadAheadBuffer() {
+	// delete old buffer
+	if(m_pBuffer != NULL)
+		delete [] m_pBuffer;
+	// reallocate buffer
+	m_pBuffer = new unsigned char [m_ReadAheadSize];
+}
+
+//-------------------------------------
 CXFile::E_RESULTCODE CXFile::SetReadAheadSize(size_t ReadAheadSize) {
 	// check if open
 	if(IsOpen())
 		return E_FILE_OPEN;
 	// check argument
-	if((ReadAheadSize == 0) || (ReadAheadSize > MaxBufferSize))
+	if((ReadAheadSize > MaxBufferSize) || (ReadAheadSize < MinBufferSize))
 		return E_INVALID_ARG;
+	if(ReadAheadSize == m_ReadAheadSize)
+		return E_OK;
 	// set new value
 	m_ReadAheadSize = ReadAheadSize;
+	// and reallocate buffer
+	ReallocateReadAheadBuffer();
 	return E_OK;
 }
 
@@ -76,6 +89,9 @@ CXFile::E_RESULTCODE CXFile::Open(const char *pcFileName, E_OPENMODE eMode) {
 		case E_WRITE:	pcMode = "wb"; break;
 		default:		return E_UNSUPPORTED_OPENMODE;
 	}
+	// check if read ahead buffer has to be allocated
+	if(m_pBuffer == NULL)
+		ReallocateReadAheadBuffer();
 	// open the file
 	m_File = fopen(pcFileName, pcMode);
 	// check result

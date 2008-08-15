@@ -203,11 +203,6 @@ bool CXMapSection::LoadMap() {
 	bool Result = true;
 
 	CXStringASCII FileName = m_TOC.GetFileName();
-	char buf[1024];
-	snprintf(buf, sizeof(buf), "Loading MapSection for %s: %0.2f x %0.2f - %0.2f x %0.2f\n", FileName.c_str(), 
-								m_TOC.GetLonMin(), m_TOC.GetLatMin(),
-								m_TOC.GetLonMax(), m_TOC.GetLatMax());
-	DoOutputDebugString(buf);
 
 	CXFile InFile;
 	// reduce read ahead size to 1000 bytes

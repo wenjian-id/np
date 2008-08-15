@@ -71,6 +71,12 @@ private:
 	 *
 	 */
 	void Clear();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ReallocateReadAheadBuffer();
 protected:
 public:
 	//-------------------------------------

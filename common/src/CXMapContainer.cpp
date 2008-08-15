@@ -82,16 +82,8 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 	// set loaded flag
 	SetLoadStatus(e_LSLoading);
 	m_FileName = FileName;
+
 	// try to load TOC
-
-	DoOutputDebugString("Loading TOC for ");
-	DoOutputDebugString(FileName.c_str());
-	DoOutputDebugString(" in zoom level ");
-	char bbb[10];
-	snprintf(bbb, sizeof(bbb), "%d", ZoomLevel);
-	DoOutputDebugString(bbb);
-	DoOutputDebugString("\n");
-
 	bool Result = true;
 	CXFile InFile;
 	// reduce read ahead size to 100 bytes
