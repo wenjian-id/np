@@ -90,21 +90,20 @@ void CXMapLoaderThread::OnWorkFunc() {
 //-------------------------------------
 void CXMapLoaderThread::LoadTOCMapContainer(TTOCMapContainerPtr &TOCMapContainer, const CXStringASCII & FileName, unsigned char ZoomLevel, t_uint32 Key) {
 	CXMutexLocker L(&m_Mutex);
-	if(TOCMapContainer.GetPtr()->GetLoadStatus() != e_LSNotLoaded)
-		return;
-	TOCMapContainer.GetPtr()->SetLoadStatus(e_LSInList);
-	m_TOCMapContainerArray.Append(TOCMapContainer);
-	m_TOCDescrBuffer.Append(new CXTOCDescr(FileName, ZoomLevel, Key));
+	if(TOCMapContainer.GetPtr()->GetLoadStatus() == e_LSNotLoaded) {
+		TOCMapContainer.GetPtr()->SetLoadStatus(e_LSInList);
+		m_TOCMapContainerArray.Append(TOCMapContainer);
+		m_TOCDescrBuffer.Append(new CXTOCDescr(FileName, ZoomLevel, Key));
+	}
 	RequestWork();
 }
 
 //-------------------------------------
 void CXMapLoaderThread::LoadMapSection(TMapSectionPtr &MapSection) {
 	CXMutexLocker L(&m_Mutex);
-	if(MapSection.GetPtr()->GetLoadStatus() != e_LSNotLoaded)
-		return;
-	MapSection.GetPtr()->SetLoadStatus(e_LSInList);
-	m_MapSectionArray.Append(MapSection);
-	CXTOCMapSection *pTOC = MapSection.GetPtr()->GetTOC().GetPtr();
+	if(MapSection.GetPtr()->GetLoadStatus() == e_LSNotLoaded) {
+		MapSection.GetPtr()->SetLoadStatus(e_LSInList);
+		m_MapSectionArray.Append(MapSection);
+	}
 	RequestWork();
 }

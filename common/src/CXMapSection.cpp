@@ -30,6 +30,17 @@
 
 //----------------------------------------------------------------------------
 //-------------------------------------
+CXTOCMapSection::CXTOCMapSection() :
+	m_UID(0),
+	m_dLonMin(0),
+	m_dLonMax(0),
+	m_dLatMin(0),
+	m_dLatMax(0),
+	m_Offset(0)
+{
+}
+
+//-------------------------------------
 CXTOCMapSection::CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax, 
 								 double dLatMin, double dLatMax, const CXStringASCII & FileName, t_uint32 Offset):
 	m_UID(UID),
@@ -43,8 +54,32 @@ CXTOCMapSection::CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax,
 }
 
 //-------------------------------------
+CXTOCMapSection::CXTOCMapSection(const CXTOCMapSection &rOther) {
+	CopyFrom(rOther);
+}
+
+//-------------------------------------
 CXTOCMapSection::~CXTOCMapSection() {
 }
+
+//-------------------------------------
+const CXTOCMapSection & CXTOCMapSection::operator = (const CXTOCMapSection &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
+}
+
+//-------------------------------------
+void CXTOCMapSection::CopyFrom(const CXTOCMapSection & rOther) {
+	m_UID = rOther.m_UID;
+	m_dLonMin = rOther.m_dLonMin;
+	m_dLonMax = rOther.m_dLonMax;
+	m_dLatMin = rOther.m_dLatMin;
+	m_dLatMax = rOther.m_dLatMax;
+	m_FileName = rOther.m_FileName;
+	m_Offset = rOther.m_Offset;
+}
+
 
 //-------------------------------------
 t_uint64 CXTOCMapSection::GetUID() const {
@@ -79,19 +114,6 @@ CXStringASCII CXTOCMapSection::GetFileName() const {
 //-------------------------------------
 t_uint32 CXTOCMapSection::GetOffset() const{
 	return m_Offset;
-}
-
-//-------------------------------------
-bool CXTOCMapSection::Intersects(const tDRect & Rect) const {
-	if(m_dLonMin > Rect.GetRight())
-		return false;
-	if(m_dLonMax < Rect.GetLeft())
-		return false;
-	if(m_dLatMin > Rect.GetBottom())	// Bottom > Top!!!
-		return false;
-	if(m_dLatMax < Rect.GetTop())		// Bottom > Top!!!
-		return false;
-	return true;
 }
 
 //----------------------------------------------------------------------------
@@ -146,13 +168,13 @@ void CXMapSection::SetLoadStatus(E_LOADING_STATUS eStatus) {
 }
 
 //-------------------------------------
-TTOCMapSectionPtr CXMapSection::GetTOC() const {
+CXTOCMapSection CXMapSection::GetTOC() const {
 	return m_TOC;
 }
 
 //-------------------------------------
-void CXMapSection::SetTOC(const TTOCMapSectionPtr & TOCPtr) {
-	m_TOC = TOCPtr;
+void CXMapSection::SetTOC(const CXTOCMapSection &TOC) {
+	m_TOC = TOC;
 }
 
 //-------------------------------------
@@ -180,11 +202,11 @@ bool CXMapSection::LoadMap() {
 	SetLoadStatus(e_LSLoading);
 	bool Result = true;
 
-	CXStringASCII FileName = m_TOC.GetPtr()->GetFileName();
+	CXStringASCII FileName = m_TOC.GetFileName();
 	char buf[1024];
 	snprintf(buf, sizeof(buf), "Loading MapSection for %s: %0.2f x %0.2f - %0.2f x %0.2f\n", FileName.c_str(), 
-								m_TOC.GetPtr()->GetLonMin(), m_TOC.GetPtr()->GetLatMin(),
-								m_TOC.GetPtr()->GetLonMax(), m_TOC.GetPtr()->GetLatMax());
+								m_TOC.GetLonMin(), m_TOC.GetLatMin(),
+								m_TOC.GetLonMax(), m_TOC.GetLatMax());
 	DoOutputDebugString(buf);
 
 	CXFile InFile;
@@ -193,7 +215,7 @@ bool CXMapSection::LoadMap() {
 	Result = Result && (InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK);
 
 	// seek to position
-	Result = Result && InFile.Seek(m_TOC.GetPtr()->GetOffset()) == CXFile::E_OK;
+	Result = Result && InFile.Seek(m_TOC.GetOffset()) == CXFile::E_OK;
 
 	t_uint32 MagicCode = 0;
 	t_uint32 ReqMagicCode = ('S' << 24) + ('E' << 16) + ('C' << 8) + 'T';

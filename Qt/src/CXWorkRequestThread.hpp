@@ -45,6 +45,12 @@ private:
 	 *
 	 */
 	virtual void DoWait();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void Wakeup();
 protected:
 public:
 	//-------------------------------------
@@ -61,12 +67,6 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXWorkRequestThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void RequestWork();
 };
 
 

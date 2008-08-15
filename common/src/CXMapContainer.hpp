@@ -41,7 +41,9 @@ class CXTOCMapContainer {
 private:
 	E_LOADING_STATUS			m_eLoadStatus;		///< oiu
 	CXStringASCII				m_FileName;			///< oiu
-	TTOCMapSectionPtr			**m_pTOCSections;	///< oiu
+	CXTOCMapSection				**m_pTOCSections;	///< oiu
+	double						m_dBaseLon;			///< oiu
+	double						m_dBaseLat;			///< oiu
 	size_t						m_Width;			///< oiu
 	size_t						m_Height;			///< oiu
 	mutable CXRWLock			m_RWLock;			///< Synchronization object.
@@ -127,44 +129,10 @@ public:
 	 *
 	 * oiu.
 	 */
-	void GetMapSections(const tDRect &Rect, CXArray<TTOCMapSectionPtr> & rResult);
+	void GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSection*> & rResult);
 };
 
 typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;
 typedef CXArray<TTOCMapContainerPtr> TTOCMapContainerPtrArray;
-
-
-//---------------------------------------------------------------------
-/**
- * \brief oiu
- *
- */
-class CXMapContainer {
-private:
-	// synchronisation
-	mutable CXMutex		m_Mutex;				///< Synchronization object.
-	//-------------------------------------
-	CXMapContainer(const CXMapContainer &);							///< Not used.
-	const CXMapContainer & operator = (const CXMapContainer &);		///< Not used.
-protected:
-public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMapContainer();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMapContainer();
-};
-
-typedef CXSmartPtr<CXMapContainer> TMapContainerPtr;
-
 
 #endif // __CXMAPCONTAINER_HPP__

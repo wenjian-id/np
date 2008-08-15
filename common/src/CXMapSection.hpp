@@ -47,11 +47,21 @@ private:
 	CXStringASCII	m_FileName;		///< oiu
 	t_uint32		m_Offset;		///< oiu
 	//-------------------------------------
-	CXTOCMapSection();												///< Not used.
-	CXTOCMapSection(const CXTOCMapSection &);						///< Not used.
-	const CXTOCMapSection & operator = (const CXTOCMapSection &);	///< Not used.
+	/**
+	 * \brief Copy from other instance to self.
+	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
+	 */
+	void CopyFrom(const CXTOCMapSection & rOther);
 protected:
 public:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXTOCMapSection();
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -62,11 +72,28 @@ public:
 					const CXStringASCII & FileName, t_uint32 Offset);
 	//-------------------------------------
 	/**
+	 * \brief Copy constructor.
+	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
+	 */
+	CXTOCMapSection(const CXTOCMapSection &rOther);
+	//-------------------------------------
+	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
 	virtual ~CXTOCMapSection();
+	//-------------------------------------
+	/**
+	 * \brief Assignment operator.
+	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
+	 */
+	const CXTOCMapSection & operator = (const CXTOCMapSection &rOther);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -109,12 +136,6 @@ public:
 	 *
 	 */
 	t_uint32 GetOffset() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool Intersects(const tDRect & Rect) const;
 };
 
 
@@ -134,7 +155,7 @@ private:
 	TNodeMap			m_NodeMap;				///< Map with all nodes.
 	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
 	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
-	TTOCMapSectionPtr	m_TOC;					///< oiu
+	CXTOCMapSection		m_TOC;					///< oiu
 	// synchronisation
 	mutable CXMutex		m_Mutex;				///< Synchronization object.
 	mutable CXRWLock	m_StatusRWLock;			///< Synchronization object for m_eLoadStatus.
@@ -237,13 +258,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	TTOCMapSectionPtr GetTOC() const;
+	CXTOCMapSection GetTOC() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetTOC(const TTOCMapSectionPtr & TOCPtr);
+	void SetTOC(const CXTOCMapSection &TOC);
 	//-------------------------------------
 	/**
 	 * \brief oiu

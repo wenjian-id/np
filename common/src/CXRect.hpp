@@ -162,6 +162,12 @@ public:
 	 *
 	 */
 	bool Contains(const tClass & x, const tClass & y);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool Intersects(const CXRect &rOther) const;
 };
 
 typedef CXRect<int>		tIRect;
@@ -276,5 +282,19 @@ template<class tClass> void CXRect<tClass> ::MoveTo(const tClass & left, const t
 template<class tClass> bool CXRect<tClass> ::Contains(const tClass & x, const tClass & y) {
 	return (m_Left <= x) && (x < m_Right) && (m_Top <= y) && (y < m_Bottom);
 }
+
+//-------------------------------------
+template<class tClass> bool CXRect<tClass> ::Intersects(const CXRect &rOther) const {
+	if(m_Left> rOther.m_Right)
+		return false;
+	if(m_Right < rOther.m_Left)
+		return false;
+	if(m_Top < rOther.m_Bottom)
+		return false;
+	if(m_Bottom > rOther.m_Top)
+		return false;
+	return true;
+}
+
 
 #endif // __CXRECT_HPP__

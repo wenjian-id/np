@@ -33,6 +33,7 @@
  */
 class IWorkRequestThread : public CXThread {
 private:
+	bool				m_oWorkRequestFlag;	///< oiu
 	mutable CXMutex		m_Mutex;			///< Synchronization object.
 	//-------------------------------------
 	IWorkRequestThread(const IWorkRequestThread &);							///< Not used.
@@ -55,7 +56,27 @@ private:
 	 *
 	 */
 	virtual void DoWait() = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void Wakeup() = 0;
 protected:
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void SetWorkRequestFlag(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GetWorkRequestFlag() const;
 public:
 	//-------------------------------------
 	/**
@@ -82,7 +103,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void RequestWork() = 0;
+	virtual void RequestWork();
 };
 
 

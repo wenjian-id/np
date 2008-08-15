@@ -21,9 +21,11 @@
  ***************************************************************************/
 
 #include "IWorkRequestThread.hpp"
+#include "CXMutexLocker.hpp"
 
 //-------------------------------------
-IWorkRequestThread::IWorkRequestThread()
+IWorkRequestThread::IWorkRequestThread() :
+	m_oWorkRequestFlag(false)
 {
 }
 
@@ -39,21 +41,43 @@ IWorkRequestThread::~IWorkRequestThread() {
 }
 
 //-------------------------------------
-void IWorkRequestThread::StopThread() {
-	CXThread::StopThread();
-	RequestWork();
+void IWorkRequestThread::SetWorkRequestFlag(bool NewValue) {
+	CXMutexLocker ML(&m_Mutex);
+	m_oWorkRequestFlag = NewValue;
 }
 
+//-------------------------------------
+bool IWorkRequestThread::GetWorkRequestFlag() const {
+	CXMutexLocker ML(&m_Mutex);
+	return m_oWorkRequestFlag;
+}
+
+//-------------------------------------
+void IWorkRequestThread::StopThread() {
+	CXThread::StopThread();
+	Wakeup();
+}
+
+//-------------------------------------
+void IWorkRequestThread::RequestWork() {
+	SetWorkRequestFlag(true);
+	Wakeup();
+}
 
 //-------------------------------------
 int IWorkRequestThread::OnThreadFunc() {
 	// main loop
 	do {
-		// wait
-		DoWait();
+		if(!GetWorkRequestFlag()) {
+			// wait for a wakeup call
+			DoWait();
+		}
 		if(!MustStopThread()) {
-			// do work
-			OnWorkFunc();
+			if(GetWorkRequestFlag()) {
+				// do work
+				SetWorkRequestFlag(false);
+				OnWorkFunc();
+			}
 		}
 	} while(!MustStopThread());
 

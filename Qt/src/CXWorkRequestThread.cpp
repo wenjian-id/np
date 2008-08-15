@@ -31,7 +31,7 @@ CXWorkRequestThread::~CXWorkRequestThread() {
 }
 
 //-------------------------------------
-void CXWorkRequestThread::RequestWork() {
+void CXWorkRequestThread::Wakeup() {
 	m_WaitCondition.wakeAll();
 } 
 

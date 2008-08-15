@@ -39,7 +39,7 @@ CXWorkRequestThread::~CXWorkRequestThread() {
 }
 
 //-------------------------------------
-void CXWorkRequestThread::RequestWork() {
+void CXWorkRequestThread::Wakeup() {
 	SetEvent(m_hEvent);
 } 
 

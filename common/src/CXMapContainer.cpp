@@ -58,9 +58,9 @@ void CXTOCMapContainer::Resize(size_t Width, size_t Height) {
 	Clear();
 	m_Width = Width;
 	m_Height = Height;
-	m_pTOCSections = new TTOCMapSectionPtr *[m_Width];
+	m_pTOCSections = new CXTOCMapSection *[m_Width];
 	for(size_t x=0; x<m_Width; x++) {
-		m_pTOCSections[x] = new TTOCMapSectionPtr[m_Height];
+		m_pTOCSections[x] = new CXTOCMapSection[m_Height];
 	}
 }
 
@@ -242,12 +242,12 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 	// read MinLon
 	if(!ReadUI32(rFile, tmp))
 		return false;
-	double dBaseLon = ConvertSavedUI32(tmp);
+	m_dBaseLon = ConvertSavedUI32(tmp);
 
 	// read MinLat
 	if(!ReadUI32(rFile, tmp))
 		return false;
-	double dBaseLat = ConvertSavedUI32(tmp);
+	m_dBaseLat = ConvertSavedUI32(tmp);
 
 	// read count and check it
 	if(!ReadUI32(rFile, TOCSectionWidth))
@@ -267,29 +267,52 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 			t_uint64 Key64 = Key;
 			Key64 = (Key64 << 32) + (i<<16) + j;
 
-			double dLonMin = dBaseLon + 1.0*i/TOCSectionWidth;
-			double dLatMin = dBaseLat + 1.0*j/TOCSectionHeight;
+			double dLonMin = m_dBaseLon + 1.0*i/TOCSectionWidth;
+			double dLatMin = m_dBaseLat + 1.0*j/TOCSectionHeight;
 			double dLonMax = dLonMin + 1.0/TOCSectionWidth;
 			double dLatMax = dLatMin + 1.0/TOCSectionHeight;
 			// append to array
-			m_pTOCSections[i][j] = TTOCMapSectionPtr(new CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset), false);
+			m_pTOCSections[i][j] = CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset);
 		}
 	}
 	return true;
 }
 
 //-------------------------------------
-void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXArray<TTOCMapSectionPtr> & rResult) {
+void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSection *> & rResult) {
 	CXReadLocker RL(&m_RWLock);
 	CXExactTime Start;
-	if(m_pTOCSections != NULL) {
-		for(size_t x=0; x<m_Width; x++) {
-			for(size_t y=0; y<m_Height; y++) {
-				CXTOCMapSection *pSection = m_pTOCSections[x][y].GetPtr();
-				if(pSection != NULL) {
-					if(pSection->Intersects(Rect))
-						rResult.Append(m_pTOCSections[x][y]);
-				}
+	if((m_Width != 0) && (m_Height != 0) && (m_pTOCSections != NULL)) {
+		double dLonMin = Rect.GetLeft();
+		double dLonMax = Rect.GetRight();
+		double dLatMin = Rect.GetTop();
+		double dLatMax = Rect.GetBottom();
+		if(dLonMin > m_dBaseLon + 1.0)
+			return;
+		if(dLonMax < m_dBaseLon)
+			return;
+		if(dLatMin > m_dBaseLat + 1.0)
+			return;
+		if(dLatMax < m_dBaseLat)
+			return;
+
+		dLonMin = Max(m_dBaseLon, dLonMin);
+		dLatMin = Max(m_dBaseLat, dLatMin);
+		dLonMax = Min(m_dBaseLon+1.0, dLonMax);
+		dLatMax = Min(m_dBaseLat+1.0, dLatMax);
+
+		size_t idxXMin = static_cast<size_t>(Max(0.0, m_Width*(dLonMin-m_dBaseLon)));
+		size_t idxXMax = static_cast<size_t>(Max(0.0, m_Width*(dLonMax-m_dBaseLon)));
+		size_t idxYMin = static_cast<size_t>(Max(0.0, m_Height*(dLatMin-m_dBaseLat)));
+		size_t idxYMax = static_cast<size_t>(Max(0.0, m_Height*(dLatMax-m_dBaseLat)));
+
+		idxXMin = Min(m_Width-1,idxXMin);
+		idxXMax = Min(m_Width-1,idxXMax);
+		idxYMin = Min(m_Height-1,idxYMin);
+		idxYMax = Min(m_Height-1,idxYMax);
+		for(size_t xx=idxXMin; xx<=idxXMax; xx++) {
+			for(size_t yy=idxYMin; yy<=idxYMax; yy++) {
+				rResult.Append(new CXTOCMapSection(m_pTOCSections[xx][yy]));
 			}
 		}
 	}
@@ -297,15 +320,5 @@ void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXArray<TTOCMapSectio
 	int diff = Stop - Start;
 	char buf[100];
 	snprintf(buf, sizeof(buf), "%d\n", diff);
-	DoOutputDebugString(buf);
+//	DoOutputDebugString(buf);
 }
-
-//----------------------------------------------------------------------------
-//-------------------------------------
-CXMapContainer::CXMapContainer() {
-}
-
-//-------------------------------------
-CXMapContainer::~CXMapContainer() {
-}
-

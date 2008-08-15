@@ -185,7 +185,7 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	// increment cache counters
 	m_TOCCache.IncrementCounters();
 	// load all TOCMapContainer between 
-	CXArray<TTOCMapSectionPtr> MapSectionTOCs;
+	CXBuffer<CXTOCMapSection*> MapSectionTOCs;
 	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
 		for(double dLat = dLatMin; dLat <= dLatMax; dLat++) {
 			t_uint32 CacheKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
@@ -207,14 +207,18 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	m_MapSectionCache.IncrementCounters();
 	// check to see which have to be loaded in MapSectionCache
 	for(size_t i=0; i<MapSectionTOCs.GetSize(); i++) {
-		TTOCMapSectionPtr TOC = MapSectionTOCs[i];
-		TMapSectionPtr MapSectionPtr = m_MapSectionCache.GetAt(TOC.GetPtr()->GetUID());
-		CXMapSection *pS = MapSectionPtr.GetPtr();
-		if(pS->GetLoadStatus() == e_LSNotLoaded) {
-			pS->SetTOC(TOC);
-			m_pMapLoaderThread->LoadMapSection(MapSectionPtr);
+		CXTOCMapSection *pTOC = MapSectionTOCs[i];
+		if(pTOC != NULL) {
+			TMapSectionPtr MapSectionPtr = m_MapSectionCache.GetAt(pTOC->GetUID());
+			CXMapSection *pS = MapSectionPtr.GetPtr();
+			if(pS->GetLoadStatus() == e_LSNotLoaded) {
+				pS->SetTOC(*pTOC);
+				m_pMapLoaderThread->LoadMapSection(MapSectionPtr);
+			}
+			Result.Append(MapSectionPtr);
+			delete pTOC;
+			MapSectionTOCs[i] = NULL;
 		}
-		Result.Append(MapSectionPtr);
 	}
 	return Result;
 }
