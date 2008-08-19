@@ -456,7 +456,8 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 
     // Iterrate through ways
 	CXBuffer<TWayMap *> &Ways = pPOWMMap->GetWayMap();
-	for(size_t i=0; i< Ways.GetSize(); i++) {
+	size_t cnt = Ways.GetSize();
+	for(size_t i=0; i<cnt; i++) {
 		TWayMap *pWayMap = Ways[i];
 		POS Pos = pWayMap->GetStart();
 		CXWay *pWay = NULL;

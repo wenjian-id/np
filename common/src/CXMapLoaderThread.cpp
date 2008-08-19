@@ -29,7 +29,8 @@ CXMapLoaderThread::CXMapLoaderThread() {
 
 //-------------------------------------
 CXMapLoaderThread::~CXMapLoaderThread() {
-	for(size_t i=0; i<m_TOCDescrBuffer.GetSize(); i++)
+	size_t cnt = m_TOCDescrBuffer.GetSize();
+	for(size_t i=0; i<cnt; i++)
 		delete m_TOCDescrBuffer[i];
 }
 

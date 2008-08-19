@@ -23,6 +23,7 @@
 #include "CXTrackLog.hpp"
 #include "Utils.hpp"
 #include "CXWriteLocker.hpp"
+#include "CXReadLocker.hpp"
 #include "CXOptions.hpp"
 
 //----------------------------------------------------------------------------
@@ -31,7 +32,8 @@ CXTrackLog *CXTrackLog::m_pInstance = NULL;
 //-------------------------------------
 CXTrackLog::CXTrackLog() :
 	m_MaxSize(0),
-	m_MinDistance(0)
+	m_MinDistance(0),
+	m_iCurrentZone(UTMZoneNone)
 {
 	SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
 	SetMinDistance(CXOptions::Instance()->GetTrackLogMinDist());
@@ -81,23 +83,32 @@ void CXTrackLog::SetMinDistance(unsigned int MinDistance) {
 //-------------------------------------
 void CXTrackLog::RelocateUTM(int NewUTMZone) {
 	CXWriteLocker WL(&m_RWLock);
-	size_t Size = m_Coordinates.GetSize();
-	for(size_t i=0; i<Size; i++) {
-		CXCoor *pCoor = m_Coordinates[i];
-		if(pCoor != NULL)
-			pCoor->RelocateUTM(NewUTMZone);
+	if(m_iCurrentZone != NewUTMZone) {
+		m_iCurrentZone = NewUTMZone;
+		size_t Size = m_Coordinates.GetSize();
+		for(size_t i=0; i<Size; i++) {
+			CXCoor *pCoor = m_Coordinates[i];
+			if(pCoor != NULL)
+				pCoor->RelocateUTM(NewUTMZone);
+		}
 	}
 }
-/*
+
 //-------------------------------------
 const TCoorBuffer & CXTrackLog::GetCoordinates() const {
 	return m_Coordinates;
 }
-*/
+
+//-------------------------------------
+CXRWLock & CXTrackLog::GetRWLock() {
+	return m_RWLock;
+}
+
 //-------------------------------------
 void CXTrackLog::AddCoordinate(double dLon, double dLat) {
 	CXWriteLocker WL(&m_RWLock);
 	CXCoor *pCoor = new CXCoor(dLon, dLat);
+	pCoor->RelocateUTM(m_iCurrentZone);
 	// check for m_MinDistance
 	bool MustAppend = false;
 	if(m_Coordinates.GetSize() > 0) {

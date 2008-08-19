@@ -206,7 +206,8 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	// increment cache counters for map sections
 	m_MapSectionCache.IncrementCounters();
 	// check to see which have to be loaded in MapSectionCache
-	for(size_t i=0; i<MapSectionTOCs.GetSize(); i++) {
+	size_t cnt = MapSectionTOCs.GetSize();
+	for(size_t i=0; i<cnt; i++) {
 		CXTOCMapSection *pTOC = MapSectionTOCs[i];
 		if(pTOC != NULL) {
 			TMapSectionPtr MapSectionPtr = m_MapSectionCache.GetAt(pTOC->GetUID());

@@ -153,6 +153,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// DBGDrawTimes
 	if(F.Get("DBGDrawTimes", "off").ToUpper() == "ON")
 		SetDebugInfoFlag(e_DBGDrawTimes);
+	// DBGDrawMapSectionBorders
+	if(F.Get("DBGDrawMapSectionBorders", "off").ToUpper() == "ON")
+		SetDebugInfoFlag(e_DBGDrawMapSectionBorders);
 	// mode
 	CXStringASCII Mode = F.Get("Mode", "off").ToUpper();
 	if(Mode == "CAR")

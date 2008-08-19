@@ -139,7 +139,8 @@ CXMapSection::~CXMapSection() {
 	m_NodeMap.RemoveAll();
 	m_POINodes.RemoveAll();
 	// delete ways
-	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
+	size_t cnt = m_WayMapBuffer.GetSize();
+	for(size_t i=0; i<cnt; i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
 		if(pWayMap != NULL) {
 			TPOSWayMap PosW = pWayMap->GetStart();
@@ -185,7 +186,8 @@ const TPOINodeMap &CXMapSection::GetPOINodeMap() const {
 //-------------------------------------
 CXWay *CXMapSection::GetWay(t_uint64 ID) {
 	CXWay *Result = NULL;
-	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
+	size_t cnt = m_WayMapBuffer.GetSize();
+	for(size_t i=0; i<cnt; i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
 		if(pWayMap != NULL) {
 			if(pWayMap->Lookup(ID, Result))
@@ -416,7 +418,8 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 
 //-------------------------------------
 void CXMapSection::RunOSMVali() {
-	for(size_t i=0; i<m_WayMapBuffer.GetSize(); i++) {
+	size_t cnt = m_WayMapBuffer.GetSize();
+	for(size_t i=0; i<cnt; i++) {
 		TWayMap *pWayMap = m_WayMapBuffer[i];
 		if(pWayMap != NULL) {
 			TPOSWayMap PosW = pWayMap->GetStart();
@@ -475,7 +478,7 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 }
 
 //-------------------------------------
-void CXMapSection::RelocateUTMZone(int NewZone) {
+void CXMapSection::RelocateUTM(int NewZone) {
 	if(NewZone != m_UTMZone) {
 		m_UTMZone = NewZone;
 		CXNode *pNode = NULL;

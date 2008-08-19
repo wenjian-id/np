@@ -231,12 +231,12 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 	t_uint32 TOCSectionWidth = 0;
 	t_uint32 TOCSectionHeight = 0;
 	t_uint32 tmp = 0;
-	// read MinLon
+	// read BaseLon
 	if(!ReadUI32(rFile, tmp))
 		return false;
 	m_dBaseLon = ConvertSavedUI32(tmp);
 
-	// read MinLat
+	// read BaseLat
 	if(!ReadUI32(rFile, tmp))
 		return false;
 	m_dBaseLat = ConvertSavedUI32(tmp);

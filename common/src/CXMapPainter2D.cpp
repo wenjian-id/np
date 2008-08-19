@@ -31,6 +31,8 @@
 #include "CXPen.hpp"
 #include "CXTransformationMatrix.hpp"
 #include "TargetIncludes.hpp"
+#include "CXTrackLog.hpp"
+#include "CXReadLocker.hpp"
 #include "CXDebugInfo.hpp"
 
 #include <math.h>
@@ -340,10 +342,14 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap) {
 	if(pBMP == NULL)
 		return;
-	/// \todo make it work again
-/*
+
 	CXCoorVector v;
-	const TCoorBuffer & CoorBuffer = CXPOWMMap::Instance()->GetTrackLog().GetCoordinates();
+
+	/// \todo oiu redesign locking stuff...
+	CXRWLock & RWLock = CXTrackLog::Instance()->GetRWLock();
+	CXReadLocker RL(&RWLock);
+
+	const TCoorBuffer & CoorBuffer = CXTrackLog::Instance()->GetCoordinates();
 	size_t Size = CoorBuffer.GetSize();
 	CXPen TLPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0xFF));
 	pBMP->SetPen(TLPen);
@@ -361,7 +367,6 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 		delete [] pX;
 		delete [] pY;
 	}
-*/
 }
 
 //-------------------------------------
@@ -477,8 +482,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	if(CXPOWMMap::Instance() == NULL)
 		return;
 
-	/// \todo implement
-
 	CXExactTime StopGetMapSections;
 	CXExactTime StopLock;
 	CXExactTime StopDrawWays;
@@ -577,13 +580,15 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// lock and prepare map sections
 	CXBuffer<bool> LockedMapSections;
 	LockedMapSections.Resize(MapSections.GetSize());
-	for(idx=0; idx<MapSections.GetSize(); idx++) {
+	size_t MapSectionSize = MapSections.GetSize();
+	for(idx=0; idx<MapSectionSize; idx++) {
 		CXMapSection *pMapSection = MapSections[idx].GetPtr();
 		if(pMapSection->GetLoadStatus() == e_LSLoaded) {
 			// lock
 			pMapSection->Lock();
 			// relocate
-			pMapSection->RelocateUTMZone(UTMZoneCurrent);
+			pMapSection->RelocateUTM(UTMZoneCurrent);
+			CXTrackLog::Instance()->RelocateUTM(UTMZoneCurrent);
 			// compute display coordinates
 			pMapSection->ComputeDisplayCoordinates(TMMap);
 			LockedMapSections[idx] = true;
@@ -595,8 +600,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	StopLock.SetNow();
 
 	// draw layer for layer to avoid artefacts on map section borders
+	MapSectionSize = MapSections.GetSize();
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
-		for(size_t idx=0; idx<MapSections.GetSize(); idx++) {
+		for(size_t idx=0; idx<MapSectionSize; idx++) {
 			if(LockedMapSections[idx]) {
 				CXMapSection *pMapSection = MapSections[idx].GetPtr();
 				if(pMapSection != NULL) {
@@ -632,37 +638,40 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pBuffer->Clear();
 		}
 	}
-	// draw border
-	for(idx=0; idx<MapSections.GetSize(); idx++) {
-		CXMapSection *pMapSection = MapSections[idx].GetPtr();
-		CXTOCMapSection TOC = pMapSection->GetTOC();
-		double dLonMin = TOC.GetLonMin();
-		double dLonMax = TOC.GetLonMax();
-		double dLatMin = TOC.GetLatMin();
-		double dLatMax = TOC.GetLatMax();
+	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawMapSectionBorders)) {
+		// draw border
+		MapSectionSize = MapSections.GetSize();
+		for(idx=0; idx<MapSectionSize; idx++) {
+			CXMapSection *pMapSection = MapSections[idx].GetPtr();
+			CXTOCMapSection TOC = pMapSection->GetTOC();
+			double dLonMin = TOC.GetLonMin();
+			double dLonMax = TOC.GetLonMax();
+			double dLatMin = TOC.GetLatMin();
+			double dLatMax = TOC.GetLatMax();
 
-		int Zone = 0;
-		char UTML = 0;
-		double E0 = 0;
-		double N0 = 0;
+			int Zone = 0;
+			char UTML = 0;
+			double E0 = 0;
+			double N0 = 0;
 
-		LLtoUTM(WGS84, dLonMin, dLatMin, UTMZoneCurrent, Zone, UTML, E0, N0);
-		CXCoorVector v0 = TMMap*CXCoorVector(E0, N0);
+			LLtoUTM(WGS84, dLonMin, dLatMin, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v0 = TMMap*CXCoorVector(E0, N0);
 
-		LLtoUTM(WGS84, dLonMin, dLatMax, UTMZoneCurrent, Zone, UTML, E0, N0);
-		CXCoorVector v1 = TMMap*CXCoorVector(E0, N0);
+			LLtoUTM(WGS84, dLonMin, dLatMax, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v1 = TMMap*CXCoorVector(E0, N0);
 
-		LLtoUTM(WGS84, dLonMax, dLatMax, UTMZoneCurrent, Zone, UTML, E0, N0);
-		CXCoorVector v2 = TMMap*CXCoorVector(E0, N0);
+			LLtoUTM(WGS84, dLonMax, dLatMax, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v2 = TMMap*CXCoorVector(E0, N0);
 
-		LLtoUTM(WGS84, dLonMax, dLatMin, UTMZoneCurrent, Zone, UTML, E0, N0);
-		CXCoorVector v3 = TMMap*CXCoorVector(E0, N0);
+			LLtoUTM(WGS84, dLonMax, dLatMin, UTMZoneCurrent, Zone, UTML, E0, N0);
+			CXCoorVector v3 = TMMap*CXCoorVector(E0, N0);
 
-		pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00)));
-		pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v1.GetIntX(), v1.GetIntY());
-		pBMP->DrawLine(v1.GetIntX(), v1.GetIntY(), v2.GetIntX(), v2.GetIntY());
-		pBMP->DrawLine(v2.GetIntX(), v2.GetIntY(), v3.GetIntX(), v3.GetIntY());
-		pBMP->DrawLine(v3.GetIntX(), v3.GetIntY(), v0.GetIntX(), v0.GetIntY());
+			pBMP->SetPen(CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00)));
+			pBMP->DrawLine(v0.GetIntX(), v0.GetIntY(), v1.GetIntX(), v1.GetIntY());
+			pBMP->DrawLine(v1.GetIntX(), v1.GetIntY(), v2.GetIntX(), v2.GetIntY());
+			pBMP->DrawLine(v2.GetIntX(), v2.GetIntY(), v3.GetIntX(), v3.GetIntY());
+			pBMP->DrawLine(v3.GetIntX(), v3.GetIntY(), v0.GetIntX(), v0.GetIntY());
+		}
 	}
 	StopDrawWays.SetNow();
 

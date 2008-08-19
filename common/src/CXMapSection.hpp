@@ -270,7 +270,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void RelocateUTMZone(int NewZone);
+	void RelocateUTM(int NewZone);
 };
 
 typedef CXSmartPtr<CXMapSection> TMapSectionPtr;

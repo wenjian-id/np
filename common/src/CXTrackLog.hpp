@@ -42,7 +42,8 @@ private:
 	unsigned int		m_MinDistance;	///< Min distance between last and new coordinate.
 	TCoorBuffer			m_Coordinates;	///< The coordinates.
 	static CXTrackLog	*m_pInstance;	///< oiu
-	CXRWLock			m_RWLock;		///< Synchronization object.
+	int					m_iCurrentZone;	///< oiu
+	mutable CXRWLock	m_RWLock;		///< Synchronization object.
 	//-------------------------------------
 	CXTrackLog(const CXTrackLog &);							///< Not used.
 	const CXTrackLog & operator = (const CXTrackLog &);		///< Not used.
@@ -99,9 +100,9 @@ public:
 	 * \brief Get coordinates.
 	 *
 	 * Get coordinates.
-	 * \return	const reference to coordinates.
+	 * \return	coordinates.
 	 */
-//	const TCoorBuffer & GetCoordinates() const;
+	const TCoorBuffer & GetCoordinates() const;
 	//-------------------------------------
 	/**
 	 * \brief Add coordinate.
@@ -117,6 +118,12 @@ public:
 	 *
 	 */
 	static CXTrackLog *Instance();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 */
+	CXRWLock & GetRWLock();
 };
 
 #endif // __CXTRACKLOG_HPP__
