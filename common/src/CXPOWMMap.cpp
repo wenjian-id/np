@@ -157,9 +157,11 @@ t_uint32 CXPOWMMap::GetCacheKeyFromCoor(double dLon, double dLat, unsigned char 
 	int NameLat = static_cast<int>(floor(dLat));
 	while(NameLon < -180)
 		NameLon += 360;
+	NameLon += 180;
 	NameLon = NameLon % 360;	// [0 - 360]
 	while(NameLat < -90)
 		NameLat += 180;
+	NameLat += 90;
 	NameLat = NameLat % 180;	// [0 - 180]
 	t_uint32 Result = NameLon << 16;
 	Result += NameLat << 8;
@@ -174,20 +176,16 @@ TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &De
 	CXMutexLocker L(&m_Mutex);
 	TMapSectionPtrArray Result;
 	// compute file name from coordinates
-	double dLonMin = 0;
-	double dLonMax = 0;
-	double dLatMin = 0;
-	double dLatMax = 0;
-	modf(Descr.GetLonMin(), &dLonMin);
-	modf(Descr.GetLonMax(), &dLonMax);
-	modf(Descr.GetLatMin(), &dLatMin);
-	modf(Descr.GetLatMax(), &dLatMax);
+	double dLonMin = Descr.GetLonMin();
+	double dLonMax = Descr.GetLonMax();
+	double dLatMin = Descr.GetLatMin();
+	double dLatMax = Descr.GetLatMax();
 	// increment cache counters
 	m_TOCCache.IncrementCounters();
 	// load all TOCMapContainer between 
 	CXBuffer<CXTOCMapSection*> MapSectionTOCs;
-	for(double dLon = dLonMin; dLon <= dLonMax; dLon++) {
-		for(double dLat = dLatMin; dLat <= dLatMax; dLat++) {
+	for(double dLon = dLonMin; dLon < dLonMax+1; dLon++) {
+		for(double dLat = dLatMin; dLat < dLatMax+1; dLat++) {
 			t_uint32 CacheKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
 			// get TOCMapContainer from cache
 			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CacheKey);
