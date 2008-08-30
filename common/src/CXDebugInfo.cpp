@@ -31,6 +31,7 @@ CXDebugInfo * CXDebugInfo::m_pInstance = NULL;
 CXDebugInfo::CXDebugInfo() :
 	m_LoadTimeNodes(0),
 	m_LoadTimeWays(0),
+	m_DrawTime(0),
 	m_LocatorTime(0),
 	m_ZoomLevel(0)
 {
@@ -69,6 +70,18 @@ int CXDebugInfo::GetLoadTimeWays() const {
 void CXDebugInfo::SetLoadTimeWays(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_LoadTimeWays = NewValue;
+}
+
+//-------------------------------------
+int CXDebugInfo::GetDrawTime() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_DrawTime;
+}
+
+//-------------------------------------
+void CXDebugInfo::SetDrawTime(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_DrawTime = NewValue;
 }
 
 //-------------------------------------

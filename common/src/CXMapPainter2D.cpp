@@ -469,7 +469,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXMutexLocker L(&m_Mutex);
 
-	CXExactTime Start;
+	CXExactTime StartTime;
 
 	// get copy of navigation data
 	CXNaviData NaviData = GetPosition();
@@ -481,6 +481,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// check if map
 	if(CXPOWMMap::Instance() == NULL)
 		return;
+
+	CXExactTime StopDrawTime;
 
 	CXExactTime StopGetMapSections;
 	CXExactTime StopLock;
@@ -713,10 +715,13 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	StopPos.SetNow();
 
+	StopDrawTime.SetNow();
+	CXDebugInfo::Instance()->SetDrawTime(StopDrawTime - StartTime);
+
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];
 		snprintf(	buf, sizeof(buf), "MS: %ld L:%ld Wy:%ld (%d) U:%ld TL:%ld POI:%ld",
-					StopGetMapSections - Start,
+					StopGetMapSections - StartTime,
 					StopLock - StopGetMapSections,
 					StopDrawWays-StopLock, WayCount, 
 					StopUnlock-StopDrawWays,

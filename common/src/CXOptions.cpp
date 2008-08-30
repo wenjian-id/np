@@ -68,7 +68,8 @@ CXOptions::CXOptions() :
 	m_SpeedThresholdBike(1),
 	m_SpeedThresholdPedestrian(1),
 	m_SpeedThresholdCaching(1),
-	m_SpeedThresholdMapping(1)
+	m_SpeedThresholdMapping(1),
+	m_GPSReceiverLag(0)
 {
 }
 
@@ -221,6 +222,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetSpeedThresholdPedestrian(atof(F.Get("SpeedThresholdPedestrian", "1").c_str()));
 	SetSpeedThresholdCaching(atof(F.Get("SpeedThresholdCaching", "1").c_str()));
 	SetSpeedThresholdMapping(atof(F.Get("SpeedThresholdMapping", "1").c_str()));
+	// GPS receiver lag
+	SetGPSReceiverLag(atoi(F.Get("GPSReceiverLag", "0").c_str()));
 	// Watchdog
 	SetWatchdogTimeout(Max(0, 1000*atoi(F.Get("WatchdogTimeout", "0").c_str())));
 	// POIs
@@ -795,4 +798,16 @@ double CXOptions::GetSpeedThresholdMapping() const {
 void CXOptions::SetSpeedThresholdMapping(double NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_SpeedThresholdMapping = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetGPSReceiverLag() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_GPSReceiverLag;
+}
+
+//-------------------------------------
+void CXOptions::SetGPSReceiverLag(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_GPSReceiverLag = NewValue;
 }

@@ -33,10 +33,11 @@
 class CXDebugInfo {
 private:
 	static CXDebugInfo	*m_pInstance;					///< oiu
-	int					m_LoadTimeNodes;
-	int					m_LoadTimeWays;
-	int					m_LocatorTime;
-	int					m_ZoomLevel;
+	int					m_LoadTimeNodes;				///< oiu
+	int					m_LoadTimeWays;					///< oiu
+	int					m_DrawTime;						///< oiu
+	int					m_LocatorTime;					///< oiu
+	int					m_ZoomLevel;					///< oiu
 	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXDebugInfo(const CXDebugInfo &);						///< Not used.
@@ -87,6 +88,18 @@ public:
 	 *
 	 */
 	void SetLoadTimeWays(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetDrawTime() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetDrawTime(int NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

@@ -41,8 +41,6 @@ const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
 static const double SQUARE_MAXDIST = 1600; // 40*40
 static const char * pcLastCoorFileName = "last.gps";
-/// \todo put to options...
-static const double GPSLAGMS = 1300; // ms
 
 
 //---------------------------------------------------------------------
@@ -276,8 +274,11 @@ void CXLocatorThread::OnThreadLoop() {
 		m_NaviData.SetFix(oHasFix);
 		// compute and set CorrectedGPSCoor
 		CXCoor CorrectedGPSCoor(m_NaviData.GetGPSCoor());
-		double dE = 1.0*GPSLAGMS/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetCos();
-		double dN = 1.0*GPSLAGMS/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetSin();
+		int GPSReceiverLag = CXOptions::Instance()->GetGPSReceiverLag();
+		// add last draw time.
+		int Lag = GPSReceiverLag + CXDebugInfo::Instance()->GetDrawTime();
+		double dE = 1.0*Lag/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetCos();
+		double dN = 1.0*Lag/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetSin();
 		CorrectedGPSCoor.OffsetCoor(dE, dN);
 		m_NaviData.SetCorrectedGPSCoor(CorrectedGPSCoor);
 	} else {

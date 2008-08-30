@@ -115,6 +115,7 @@ private:
 	double				m_SpeedThresholdPedestrian;		///< oiu
 	double				m_SpeedThresholdCaching;		///< oiu
 	double				m_SpeedThresholdMapping;		///< oiu
+	int					m_GPSReceiverLag;				///< oiu
 	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -718,6 +719,18 @@ public:
 	 *
 	 */
 	void SetSpeedThresholdMapping(double NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetGPSReceiverLag() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSReceiverLag(int NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__
