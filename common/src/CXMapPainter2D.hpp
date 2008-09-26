@@ -39,7 +39,6 @@ private:
 	int						m_ZoomLevel;			///< Current zoom level.
 	CXPenHolder				m_PenHolder;			///< oiu
 	CXBuffer<TWayBuffer *>	m_DrawWays;				///< oiu
-	CXBitmap				m_BmpPOI[MaxPOITypes];	///< Bitmaps for POIs
 	mutable CXMutex			m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
@@ -72,13 +71,13 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
+	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height);
+	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/**
 	 * \brief Draw map scale.

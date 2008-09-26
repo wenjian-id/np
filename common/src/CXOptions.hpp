@@ -109,7 +109,6 @@ private:
 	CXStringASCII		m_SavingOffFileName;			///< oiu
 	CXStringASCII		m_ZoomInFileName;				///< oiu
 	CXStringASCII		m_ZoomOutFileName;				///< oiu
-	CXStringASCII		m_POIFileNames[MaxPOITypes];	///< File names for POIs
 	double				m_SpeedThresholdCar;			///< oiu
 	double				m_SpeedThresholdBike;			///< oiu
 	double				m_SpeedThresholdPedestrian;		///< oiu
@@ -436,24 +435,6 @@ public:
 	 *
 	 */
 	void SetZoomOutFileName(const CXStringASCII & Value);
-	//-------------------------------------
-	/**
-	 * \brief Get filename for POIs part n bitmap.
-	 *
-	 *	Get filename for POIs part n bitmap.
-	 *	\param	Index	Index of Name.
-	 *	\return			Filename.
-	 */
-	CXStringASCII GetPOIFileName(size_t Index) const;
-	//-------------------------------------
-	/**
-	 * \brief Set filename for POIs part n bitmap.
-	 *
-	 *	Set filename for POIs part n bitmap.
-	 *	\param	Index	Index of Name.
-	 *	\param	Value	Filename.
-	 */
-	void SetPOIFileName(size_t Index, const CXStringASCII & Value);
 	//-------------------------------------
 	/**
 	 * \brief oiu

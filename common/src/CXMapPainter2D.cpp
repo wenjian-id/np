@@ -50,7 +50,7 @@ static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 8;
 static const int POICOUNTVERT	= 4;
-
+/*
 // for revision 0.2.0 enable only following POIs
 t_uint32 Rev020POI[MaxPOITypes] = {
 									// POI1
@@ -76,28 +76,28 @@ t_uint32 Rev020POI[MaxPOITypes] = {
 									0,
 									// POI8
 									0};
+*/
 
-
-CXWay::E_KEYHIGHWAY Order[CXWay::e_EnumCount] = {
-	CXWay::e_Unknown,
-	CXWay::e_LivingStreet,
-	CXWay::e_Steps,
-	CXWay::e_Pedestrian,
-	CXWay::e_Footway,
-	CXWay::e_Cycleway,
-	CXWay::e_Bridleway,
-	CXWay::e_Service,
-	CXWay::e_Residential,
-	CXWay::e_Track,
-	CXWay::e_PrimaryLink,
-	CXWay::e_TrunkLink,
-	CXWay::e_MotorwayLink,
-	CXWay::e_Unclassified,
-	CXWay::e_Tertiary,
-	CXWay::e_Secondary,
-	CXWay::e_Primary,
-	CXWay::e_Trunk,
-	CXWay::e_Motorway
+E_KEYHIGHWAY Order[e_EnumCount] = {
+	e_Unknown,
+	e_LivingStreet,
+	e_Steps,
+	e_Pedestrian,
+	e_Footway,
+	e_Cycleway,
+	e_Bridleway,
+	e_Service,
+	e_Residential,
+	e_Track,
+	e_PrimaryLink,
+	e_TrunkLink,
+	e_MotorwayLink,
+	e_Unclassified,
+	e_Tertiary,
+	e_Secondary,
+	e_Primary,
+	e_Trunk,
+	e_Motorway
 };
 
 //----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ CXMapPainter2D::CXMapPainter2D() :
 	m_MeterPerPixel(3),
 	m_ZoomLevel(0)
 {
-	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
+	for(size_t i=0; i<e_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
 	}
 	UpdateZoomLevel();
@@ -115,7 +115,7 @@ CXMapPainter2D::CXMapPainter2D() :
 //-------------------------------------
 CXMapPainter2D::~CXMapPainter2D() {
 	// delete arrays
-	for(size_t i=0; i<CXWay::e_EnumCount; i++) {
+	for(size_t i=0; i<e_EnumCount; i++) {
 		TWayBuffer *pBuffer = m_DrawWays[i];
 		delete pBuffer;
 	}
@@ -125,10 +125,13 @@ CXMapPainter2D::~CXMapPainter2D() {
 //-------------------------------------
 void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /*Height*/) {
 	// reload POI bitmaps
+	/// \todo implement
+/*
 	for(size_t i=0; i<MaxPOITypes; i++) {
 		m_BmpPOI[i].Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
 		m_BmpPOI[i].LoadFromFile(CXOptions::Instance()->GetPOIFileName(i));
 	}
+*/
 }
 
 //-------------------------------------
@@ -197,7 +200,7 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height) {
+void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height) {
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
@@ -226,7 +229,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHI
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, CXWay::E_KEYHIGHWAY eHighwayType, int Width, int Height) {
+void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height) {
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
@@ -314,17 +317,20 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 		int y = pNode->GetDisplayY();
 		// check if visible
 		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
-			for(size_t i=0; i<MaxPOITypes; i++) {
-				if(pNode->IsPOI(i) && ((pNode->GetPOIType(i) & Rev020POI[i]) != 0)) {
+			for(size_t i=0; i<pNode->GetPOITypeCount(); i++) {
+//				if(pNode->IsPOI(i) /*&& ((pNode->GetPOIType(i) & Rev020POI[i]) != 0)*/) {
 					int row = 0;
 					int col = 0;
 					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
 					// draw POI bitmap
+					/// \todo implement
+/*
 					pBMP->DrawTransparent(	&(m_BmpPOI[i]),
 											x-POIWIDTH/2, y-POIHEIGHT/2,
 											col*POIWIDTH, row*POIHEIGHT,
 											POIWIDTH, POIHEIGHT,
 											COLOR_TRANSPARENT);
+*/
 					// draw name
 					CXStringUTF8 Name = pNode->GetName();
 					if(!Name.IsEmpty()) {
@@ -333,7 +339,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 						pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
 					}
 				}
-			}
+//			}
 		}
 	}
 }
@@ -615,7 +621,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 						CXWay *pWay = NULL;
 						while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
 							if (IsWayPossiblyVisible(pWay, Width, Height)) {
-								CXWay::E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
+								E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
 								m_DrawWays[HighwayType]->Append(pWay);
 								WayCount++;
 							}
@@ -628,14 +634,14 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// we set size_t i=0; right here :-(((
 		size_t i=0;
 		// ok, now draw bg
-		for(i=0; i< CXWay::e_EnumCount; i++) {
+		for(i=0; i< e_EnumCount; i++) {
 			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
-		for(i=0; i< CXWay::e_EnumCount; i++) {
+		for(i=0; i< e_EnumCount; i++) {
 			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
 		// clear arrays
-		for(i=0; i<CXWay::e_EnumCount; i++) {
+		for(i=0; i<e_EnumCount; i++) {
 			TWayBuffer *pBuffer = m_DrawWays[i];
 			pBuffer->Clear();
 		}
@@ -731,12 +737,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
 		int bottom = TextRect.GetBottom();
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
-		snprintf(buf, sizeof(buf), "LoadTime Nodes: %d Ways: %d", CXDebugInfo::Instance()->GetLoadTimeNodes(), CXDebugInfo::Instance()->GetLoadTimeWays());
-		ttt = buf;
-		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-		TextRect.OffsetRect(0, bottom);
-		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
-		bottom = TextRect.GetBottom();
 		snprintf(buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);

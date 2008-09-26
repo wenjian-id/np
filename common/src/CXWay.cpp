@@ -44,7 +44,7 @@ t_uint64 CXWay::GetID() const {
 }
 
 //-------------------------------------
-CXWay::E_KEYHIGHWAY CXWay::GetHighwayType() const {
+E_KEYHIGHWAY CXWay::GetHighwayType() const {
 	return m_eHighwayType;
 }
 

@@ -33,8 +33,6 @@
 class CXDebugInfo {
 private:
 	static CXDebugInfo	*m_pInstance;					///< oiu
-	int					m_LoadTimeNodes;				///< oiu
-	int					m_LoadTimeWays;					///< oiu
 	int					m_DrawTime;						///< oiu
 	int					m_LocatorTime;					///< oiu
 	int					m_ZoomLevel;					///< oiu
@@ -64,30 +62,6 @@ public:
 	 *
 	 */
 	static CXDebugInfo *Instance();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetLoadTimeNodes() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLoadTimeNodes(int NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetLoadTimeWays() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLoadTimeWays(int NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

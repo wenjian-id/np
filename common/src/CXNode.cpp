@@ -90,9 +90,6 @@ void CXNode::SetDisplayY(int Y) {
 CXPOINode::CXPOINode(t_uint64 ID, double Lon, double Lat) :
 	CXNode(ID, Lon, Lat)
 {
-	for(size_t i=0; i<MaxPOITypes; i++) {
-		m_POI[i] = 0;
-	}
 }
 
 //-------------------------------------
@@ -100,30 +97,30 @@ CXPOINode::~CXPOINode() {
 }
 
 //-------------------------------------
-bool CXPOINode::IsPOI(size_t Index) const {
-	if(Index >= MaxPOITypes)
-		Index = 0;
-	return m_POI[Index] != 0;
+size_t CXPOINode::GetPOITypeCount() const {
+	return m_POITypes.GetSize();
 }
 
 //-------------------------------------
-t_uint32 CXPOINode::GetPOIType(size_t Index) const {
-	if(Index >= MaxPOITypes)
-		Index = 0;
-	return m_POI[Index];
+E_POI_TYPE CXPOINode::GetPOIType(size_t Index) const {
+	size_t idx = Index;
+	if(idx >= m_POITypes.GetSize())
+		return e_POI_None;
+	return m_POITypes[Index];
 }
 
 //-------------------------------------
-void CXPOINode::SetPOIType(size_t Index, t_uint32 NewValue) {
-	if(Index >= MaxPOITypes)
-		Index = 0;
-	m_POI[Index] = NewValue;
+void CXPOINode::SetPOIType(E_POI_TYPE ePOIType) {
+	/// \todo check if ePOIType already in list
+	m_POITypes.Append(ePOIType);
 }
 
 //-------------------------------------
-void CXPOINode::ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol) {
+void CXPOINode::ComputePOIPosInBMP(E_POI_TYPE ePOIType, int & rRow, int & rCol) {
 	rRow = 0;
 	rCol = 0;
+	/// \todo implement
+/*
 	t_uint32 tmp = POI;
 	if((tmp & 0xFFFF) == 0) {
 		// no lower 16 bits set
@@ -146,6 +143,7 @@ void CXPOINode::ComputePOIPosInBMP(t_uint32 POI, int & rRow, int & rCol) {
 			break;
 		}
 	}
+*/
 }
 
 //-------------------------------------

@@ -226,16 +226,6 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetGPSReceiverLag(atoi(F.Get("GPSReceiverLag", "0").c_str()));
 	// Watchdog
 	SetWatchdogTimeout(Max(0, 1000*atoi(F.Get("WatchdogTimeout", "0").c_str())));
-	// POIs
-	for(size_t i=0; i<MaxPOITypes; i++) {
-		char buf1[100];
-		char buf2[100];
-		snprintf(buf1, sizeof(buf1), "POI%dName", i+1);
-		snprintf(buf2, sizeof(buf2), "poi%d.bmp", i+1);
-		CXStringASCII POI=DirIcons;
-		POI+=F.Get(buf1, buf2);
-		SetPOIFileName(i, POI);
-	}
 	return true;
 }
 
@@ -575,21 +565,6 @@ void CXOptions::SetZoomOutFileName(const CXStringASCII & Value) {
 	m_ZoomOutFileName = Value;
 }
 
-//-------------------------------------
-CXStringASCII CXOptions::GetPOIFileName(size_t Index) const {
-	CXReadLocker RL(&m_RWLock);
-	if(Index >= MaxPOITypes)
-		Index = 0;
-	return m_POIFileNames[Index];
-}
-
-//-------------------------------------
-void CXOptions::SetPOIFileName(size_t Index, const CXStringASCII & Value) {
-	CXWriteLocker WL(&m_RWLock);
-	if(Index >= MaxPOITypes)
-		Index = 0;
-	m_POIFileNames[Index] = Value;
-}
 //-------------------------------------
 bool CXOptions::IsSaving() const {
 	CXReadLocker RL(&m_RWLock);

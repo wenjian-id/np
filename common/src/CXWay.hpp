@@ -35,34 +35,6 @@ class CXWay;
  *
  */
 class CXWay {
-public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	enum E_KEYHIGHWAY {	// must fit the values in the map file!!!
-		e_Unknown		=  0,	///< oiu
-		e_Motorway		=  1,	///< oiu
-		e_MotorwayLink	=  2,	///< oiu
-		e_Trunk			=  3,	///< oiu
-		e_TrunkLink		=  4,	///< oiu
-		e_Primary		=  5,	///< oiu
-		e_PrimaryLink	=  6,	///< oiu
-		e_Secondary		=  7,	///< oiu
-		e_Tertiary		=  8,	///< oiu
-		e_Unclassified	=  9,	///< oiu
-		e_Track			= 10,	///< oiu
-		e_Residential	= 11,	///< oiu
-		e_Service		= 12,	///< oiu
-		e_Bridleway		= 13,	///< oiu
-		e_Cycleway		= 14,	///< oiu
-		e_Footway		= 15,	///< oiu
-		e_Pedestrian	= 16,	///< oiu
-		e_Steps			= 17,	///< oiu
-		e_LivingStreet	= 18,	///< oiu
-		e_EnumCount		= 19,	///< oiu
-	};
 private:
 	t_uint64		m_ID;				///< oiu
 	E_KEYHIGHWAY	m_eHighwayType;		///< oiu

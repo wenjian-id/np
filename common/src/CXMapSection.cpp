@@ -275,9 +275,6 @@ bool CXMapSection::LoadMap() {
 bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	// node count
 
-	CXExactTime Time1;
-	Time1.SetNow();
-
 	// read POIs
 	t_uint32 POICount = 0;
 	if(!ReadUI32(InFile, POICount)) {
@@ -287,29 +284,27 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	for(t_uint32 ulPOI=0; ulPOI<POICount; ulPOI++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
-		unsigned char POIIdx = 0;
+		t_uint32 POICount = 0;
 		t_uint32 Lon = 0; 
 		t_uint32 Lat = 0;
-		t_uint32 POI = 0;
 		ReadUI64(InFile, ID);
 		ReadUI32(InFile, Lon);
 		ReadUI32(InFile, Lat);
-		ReadB(InFile, POIIdx);
-		ReadUI32(InFile, POI);
-
 		// compute lon
 		double dLon = ConvertSavedUI32(Lon);
 		double dLat = ConvertSavedUI32(Lat);
-
 		// create POI node
 		CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
-
-		for(size_t i=0; i<MaxPOITypes; i++) {
-			if((POIIdx % 2) == 1) {
-				pPOINode->SetPOIType(MaxPOITypes-i-1, POI);
-			}
-			POIIdx = POIIdx >> 1;
+		// read POI type stuff
+		ReadUI32(InFile, POICount);
+		for(t_uint32 cnt = 0; cnt < POICount; cnt++) {
+			t_uint32 POI = 0;
+			ReadUI32(InFile, POI);
+			E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
+			pPOINode->SetPOIType(POIType);
 		}
+
+		// read name
 		CXStringUTF8 Name;
 		ReadStringUTF8(InFile, Name);
 		pPOINode->SetName(Name);
@@ -343,8 +338,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		m_NodeMap.SetAt(ID, pNode);
 	}
 
-	CXExactTime Time2;
-	Time2.SetNow();
 	// way count
 	t_uint32 WayCount = 0;
 	if(!ReadUI32(InFile, WayCount)) {
@@ -362,9 +355,9 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		unsigned char MaxSpeed = 0;
 		ReadUI64(InFile, ID);
 		ReadB(InFile, HighwayType);
-		ReadStringUTF8(InFile, Name);
-		ReadStringUTF8(InFile, Ref);
-		ReadB(InFile, MaxSpeed);
+//		ReadStringUTF8(InFile, Name);
+//		ReadStringUTF8(InFile, Ref);
+//		ReadB(InFile, MaxSpeed);
 		unsigned char bLayer = 0;
 		ReadB(InFile, bLayer);
 		char Layer = 0;
@@ -376,7 +369,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(ID, static_cast<CXWay::E_KEYHIGHWAY>(HighwayType), Name, Ref);
+		CXWay *pWay = new CXWay(ID, static_cast<E_KEYHIGHWAY>(HighwayType), Name, Ref);
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way
@@ -408,11 +401,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		m_WayMapBuffer[Layer - MINLAYER] = pWayMap;
 	}
 
-	CXExactTime Time3;
-	Time3.SetNow();
-
-	CXDebugInfo::Instance()->SetLoadTimeNodes(Time2 - Time1);
-	CXDebugInfo::Instance()->SetLoadTimeWays(Time3 - Time2);
 	return true;
 }
 
