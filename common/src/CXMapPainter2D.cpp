@@ -78,26 +78,26 @@ t_uint32 Rev020POI[MaxPOITypes] = {
 									0};
 */
 
-E_KEYHIGHWAY Order[e_EnumCount] = {
-	e_Unknown,
-	e_LivingStreet,
-	e_Steps,
-	e_Pedestrian,
-	e_Footway,
-	e_Cycleway,
-	e_Bridleway,
-	e_Service,
-	e_Residential,
-	e_Track,
-	e_PrimaryLink,
-	e_TrunkLink,
-	e_MotorwayLink,
-	e_Unclassified,
-	e_Tertiary,
-	e_Secondary,
-	e_Primary,
-	e_Trunk,
-	e_Motorway
+E_KEYHIGHWAY Order[e_Highway_EnumCount] = {
+	e_Highway_Unknown,
+	e_Highway_LivingStreet,
+	e_Highway_Steps,
+	e_Highway_Pedestrian,
+	e_Highway_Footway,
+	e_Highway_Cycleway,
+	e_Highway_Bridleway,
+	e_Highway_Service,
+	e_Highway_Residential,
+	e_Highway_Track,
+	e_Highway_PrimaryLink,
+	e_Highway_TrunkLink,
+	e_Highway_MotorwayLink,
+	e_Highway_Unclassified,
+	e_Highway_Tertiary,
+	e_Highway_Secondary,
+	e_Highway_Primary,
+	e_Highway_Trunk,
+	e_Highway_Motorway
 };
 
 //----------------------------------------------------------------------------
@@ -106,7 +106,7 @@ CXMapPainter2D::CXMapPainter2D() :
 	m_MeterPerPixel(3),
 	m_ZoomLevel(0)
 {
-	for(size_t i=0; i<e_EnumCount; i++) {
+	for(size_t i=0; i<e_Highway_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
 	}
 	UpdateZoomLevel();
@@ -115,7 +115,7 @@ CXMapPainter2D::CXMapPainter2D() :
 //-------------------------------------
 CXMapPainter2D::~CXMapPainter2D() {
 	// delete arrays
-	for(size_t i=0; i<e_EnumCount; i++) {
+	for(size_t i=0; i<e_Highway_EnumCount; i++) {
 		TWayBuffer *pBuffer = m_DrawWays[i];
 		delete pBuffer;
 	}
@@ -634,14 +634,14 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// we set size_t i=0; right here :-(((
 		size_t i=0;
 		// ok, now draw bg
-		for(i=0; i< e_EnumCount; i++) {
+		for(i=0; i< e_Highway_EnumCount; i++) {
 			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
-		for(i=0; i< e_EnumCount; i++) {
+		for(i=0; i< e_Highway_EnumCount; i++) {
 			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
 		}
 		// clear arrays
-		for(i=0; i<e_EnumCount; i++) {
+		for(i=0; i<e_Highway_EnumCount; i++) {
 			TWayBuffer *pBuffer = m_DrawWays[i];
 			pBuffer->Clear();
 		}

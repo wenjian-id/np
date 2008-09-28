@@ -426,28 +426,49 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 /**
  * \brief oiu
  *
+ * oiu
+ */
+enum E_PLACE_TYPE {		// must fit the values in the map file!!!
+	e_Place_Continent	= 0x0001,	///< Continent.
+	e_Place_Coutry		= 0x0002,	///< Country.
+	e_Place_State		= 0x0004,	///< State.
+	e_Place_Region		= 0x0008,	///< Region.
+	e_Place_County		= 0x0010,	///< Country.
+	e_Place_City		= 0x0020,	///< City.
+	e_Place_Town		= 0x0040,	///< Town.
+	e_Place_Village		= 0x0080,	///< Village.
+	e_Place_Hamlet		= 0x0100,	///< Hamlet.
+	e_Place_Suburb		= 0x0200,	///< Suburb.
+	e_Place_Locality	= 0x0400,	///< Locality
+	e_Place_Island		= 0x0800,	///< Island.
+};
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
  */
 enum E_KEYHIGHWAY {	// must fit the values in the map file!!!
-	e_Unknown		=  0,	///< oiu
-	e_Motorway		=  1,	///< oiu
-	e_MotorwayLink	=  2,	///< oiu
-	e_Trunk			=  3,	///< oiu
-	e_TrunkLink		=  4,	///< oiu
-	e_Primary		=  5,	///< oiu
-	e_PrimaryLink	=  6,	///< oiu
-	e_Secondary		=  7,	///< oiu
-	e_Tertiary		=  8,	///< oiu
-	e_Unclassified	=  9,	///< oiu
-	e_Track			= 10,	///< oiu
-	e_Residential	= 11,	///< oiu
-	e_Service		= 12,	///< oiu
-	e_Bridleway		= 13,	///< oiu
-	e_Cycleway		= 14,	///< oiu
-	e_Footway		= 15,	///< oiu
-	e_Pedestrian	= 16,	///< oiu
-	e_Steps			= 17,	///< oiu
-	e_LivingStreet	= 18,	///< oiu
-	e_EnumCount		= 19,	///< oiu
+	e_Highway_Unknown		=  0,	///< oiu
+	e_Highway_Motorway		=  1,	///< oiu
+	e_Highway_MotorwayLink	=  2,	///< oiu
+	e_Highway_Trunk			=  3,	///< oiu
+	e_Highway_TrunkLink		=  4,	///< oiu
+	e_Highway_Primary		=  5,	///< oiu
+	e_Highway_PrimaryLink	=  6,	///< oiu
+	e_Highway_Secondary		=  7,	///< oiu
+	e_Highway_Tertiary		=  8,	///< oiu
+	e_Highway_Unclassified	=  9,	///< oiu
+	e_Highway_Track			= 10,	///< oiu
+	e_Highway_Residential	= 11,	///< oiu
+	e_Highway_Service		= 12,	///< oiu
+	e_Highway_Bridleway		= 13,	///< oiu
+	e_Highway_Cycleway		= 14,	///< oiu
+	e_Highway_Footway		= 15,	///< oiu
+	e_Highway_Pedestrian	= 16,	///< oiu
+	e_Highway_Steps			= 17,	///< oiu
+	e_Highway_LivingStreet	= 18,	///< oiu
+	e_Highway_EnumCount		= 19,	///< oiu
 };
 
 

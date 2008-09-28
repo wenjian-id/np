@@ -159,27 +159,6 @@ typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
  * This class encapsulates data and functionality for a node.
  */
 class CXPOINode : public CXNode {
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	enum E_PLACE_TYPE {		// must fit the values in the map file!!!
-		e_Place_Continent	= 0x0001,	///< Continent.
-		e_Place_Coutry		= 0x0002,	///< Country.
-		e_Place_State		= 0x0004,	///< State.
-		e_Place_Region		= 0x0008,	///< Region.
-		e_Place_County		= 0x0010,	///< Country.
-		e_Place_City		= 0x0020,	///< City.
-		e_Place_Town		= 0x0040,	///< Town.
-		e_Place_Village		= 0x0080,	///< Village.
-		e_Place_Hamlet		= 0x0100,	///< Hamlet.
-		e_Place_Suburb		= 0x0200,	///< Suburb.
-		e_Place_Locality	= 0x0400,	///< Locality
-		e_Place_Island		= 0x0800,	///< Island.
-	};
-
 private:
 	CXStringUTF8			m_Name;		///< oiu
 	CXBuffer<E_POI_TYPE>	m_POITypes;	///< POI 1 flags.
