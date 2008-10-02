@@ -116,37 +116,6 @@ void CXPOINode::SetPOIType(E_POI_TYPE ePOIType) {
 }
 
 //-------------------------------------
-void CXPOINode::ComputePOIPosInBMP(E_POI_TYPE ePOIType, int & rRow, int & rCol) {
-	rRow = 0;
-	rCol = 0;
-	/// \todo implement
-/*
-	t_uint32 tmp = POI;
-	if((tmp & 0xFFFF) == 0) {
-		// no lower 16 bits set
-		tmp = tmp >> 16;
-		rRow += 2;
-	}
-	if((tmp & 0xFF) == 0) {
-		// no lower 8 bits set
-		tmp = tmp >> 8;
-		rRow += 1;
-	}
-	// now compute column
-	for(int i=0; i<8; i++) {
-		if(tmp % 2 == 0) {
-			// not found. shift right
-			tmp = tmp >> 1;
-			rCol++;
-		} else {
-			// found.
-			break;
-		}
-	}
-*/
-}
-
-//-------------------------------------
 void CXPOINode::SetName(const CXStringUTF8 &NewValue) {
 	m_Name = NewValue;
 }

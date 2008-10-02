@@ -101,6 +101,29 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue) {
 }
 
 //-------------------------------------
+bool ReadUI16(CXFile & rInFile, t_uint16 & rValue) {
+	// reset value
+	rValue = 0;
+	unsigned char buf[2];
+	size_t r = 0;
+	// try to read 2 bytes
+	if(rInFile.Read(buf, 2, r) != CXFile::E_OK) {
+		// read failed
+		return false;
+	}
+	if(r != 2) {
+		// no 2 bytes read
+		return false;
+	}
+	// compute result in a platform independant way
+	rValue = 0;
+	rValue = (rValue << 8) + buf[0];
+	rValue = (rValue << 8) + buf[1];
+	// everything ok
+	return true;
+}
+
+//-------------------------------------
 bool ReadUI32(CXFile & rInFile, t_uint32 & rValue) {
 	// reset value
 	rValue = 0;
@@ -547,3 +570,11 @@ double ConvertSavedUI32(t_uint32 Value) {
 	Result = Result*Value/SCALE_FACTOR_UI32;
 	return Result;
 }
+
+//-------------------------------------
+void ComputePOIBMP(E_POI_TYPE ePOIType, size_t & BMPIdx, size_t & rRow, size_t & rCol) {
+	BMPIdx = ePOIType >> 8;
+	rRow = (ePOIType & 0xF0) >> 4;
+	rCol = ePOIType & 0x0F;
+}
+

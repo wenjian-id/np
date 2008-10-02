@@ -39,8 +39,9 @@ class CXPen;
  */
 class IBitmap {
 private:
-	int		m_Width;	///< oiu
-	int		m_Height;	///< oiu
+	int				m_Width;	///< oiu
+	int				m_Height;	///< oiu
+	CXStringASCII	m_FileName;	///< oiu
 	//-------------------------------------
 	IBitmap(const IBitmap &);							///< Not used.
 	const IBitmap & operator = (const IBitmap &);		///< Not used.
@@ -57,6 +58,12 @@ protected:
 	 *
 	 */
 	void SetHeight(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetFileName(const CXStringASCII & FileName);
 public:
 	//-------------------------------------
 	/**
@@ -84,6 +91,12 @@ public:
 	 *
 	 */
 	int GetHeight() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetFileName() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

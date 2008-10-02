@@ -284,7 +284,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	for(t_uint32 ulPOI=0; ulPOI<POICount; ulPOI++) {
 		// read node: IDX, LON, LAT
 		t_uint64 ID = 0;
-		t_uint32 POICount = 0;
+		unsigned char POICount = 0;
 		t_uint32 Lon = 0; 
 		t_uint32 Lat = 0;
 		ReadUI64(InFile, ID);
@@ -296,10 +296,10 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		// create POI node
 		CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
 		// read POI type stuff
-		ReadUI32(InFile, POICount);
+		ReadB(InFile, POICount);
 		for(t_uint32 cnt = 0; cnt < POICount; cnt++) {
-			t_uint32 POI = 0;
-			ReadUI32(InFile, POI);
+			t_uint16 POI = 0;
+			ReadUI16(InFile, POI);
 			E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
 			pPOINode->SetPOIType(POIType);
 		}

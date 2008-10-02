@@ -30,6 +30,10 @@
 class CXRGB;
 class QColor;
 
+#ifndef t_uint16
+typedef quint16 t_uint16;
+#endif
+
 #ifndef t_uint32
 typedef quint32 t_uint32;
 #endif

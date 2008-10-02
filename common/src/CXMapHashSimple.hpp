@@ -202,10 +202,6 @@ public:
 	 */
 	CXPOSMapHashSimple<tKey> GetNext(CXPOSMapHashSimple<tKey> & Pos, tValue &rValue) const;
 };
-/*
-template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::NPOS = CXPOSMapHashSimple<tKey>(0xffff, tMap<tKey, tValue>::NPOS);
-template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::START = CXPOSMapHashSimple<tKey>(0xffff, tMap<tKey, tValue>::START);
-*/
 
 template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::NPOS = CXPOSMapHashSimple<tKey>(0xffff, tPos<tKey>(~(size_t(0))));
 template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::START = CXPOSMapHashSimple<tKey>(0xffff, tPos<tKey>(~(size_t(1))));

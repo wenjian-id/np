@@ -46,6 +46,7 @@ bool CXBitmap::IsNull() {
 
 //-------------------------------------
 bool CXBitmap::Create(CXDeviceContext *pDC, int Width, int Height) {
+	Destroy();
 	if(pDC == NULL)
 		return false;
 	if(m_hDC != NULL)
@@ -75,6 +76,7 @@ void CXBitmap::Destroy() {
 	m_hDC = NULL;
 	m_hBMP = NULL;
 	m_hFont = NULL;
+	SetFileName("");
 }
 
 //-------------------------------------
@@ -408,6 +410,7 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 	}
 	// delete bitmap
 	::DeleteObject(HBmp);
+	SetFileName(FileName);
 	
 	return true;
 }

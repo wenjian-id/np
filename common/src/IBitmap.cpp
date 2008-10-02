@@ -45,6 +45,11 @@ void IBitmap::SetHeight(int NewValue) {
 }
 
 //-------------------------------------
+void IBitmap::SetFileName(const CXStringASCII & FileName) {
+	m_FileName = FileName;
+}
+
+//-------------------------------------
 int IBitmap::GetWidth() const {
 	return m_Width;
 }
@@ -52,6 +57,11 @@ int IBitmap::GetWidth() const {
 //-------------------------------------
 int IBitmap::GetHeight() const {
 	return m_Height;
+}
+
+//-------------------------------------
+CXStringASCII IBitmap::GetFileName() const {
+	return m_FileName;
 }
 
 //-------------------------------------

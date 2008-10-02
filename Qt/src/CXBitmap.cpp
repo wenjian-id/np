@@ -50,6 +50,7 @@ void CXBitmap::Destroy() {
 	delete m_pImage;
 	m_pPainter = NULL;
 	m_pImage = NULL;
+	SetFileName("");
 }
 
 //-------------------------------------
@@ -375,6 +376,7 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 		return false;
 	QRect tgt(0, 0, GetWidth(), GetHeight());
 	m_pPainter->drawImage(tgt, img);
+	SetFileName(FileName);
 
 	return true;
 }

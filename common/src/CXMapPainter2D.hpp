@@ -28,6 +28,9 @@
 #include "CXPOWMMap.hpp"
 #include "CXPenHolder.hpp"
 
+typedef CXMapHashSimple<unsigned short, CXBitmap *> TPOIBMPMap;
+typedef CXPOSMapHashSimple<unsigned short> TPOSPOIBMPMap;
+
 //----------------------------------------------------------------------------
 /**
  * \brief oiu
@@ -35,11 +38,12 @@
  */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
-	double					m_MeterPerPixel;		///< Current scale factor.
-	int						m_ZoomLevel;			///< Current zoom level.
-	CXPenHolder				m_PenHolder;			///< oiu
-	CXBuffer<TWayBuffer *>	m_DrawWays;				///< oiu
-	mutable CXMutex			m_Mutex;				///< Synchronization object.
+	double						m_MeterPerPixel;		///< Current scale factor.
+	int							m_ZoomLevel;			///< Current zoom level.
+	CXPenHolder					m_PenHolder;			///< oiu
+	CXBuffer<TWayBuffer *>		m_DrawWays;				///< oiu
+	CXBuffer<CXBitmap *>		m_POIBMPs;				///< oiu
+	mutable CXMutex				m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.
@@ -97,8 +101,7 @@ private:
 	 *	\param	ScreenWidth		Width of screen.
 	 *	\param	ScreenHeight	Height of screen.
 	 */
-	void DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight);
-	void DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight);
+	void DrawPOIs(IBitmap *pBMP, const TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight);
 	//-------------------------------------
 	/**
 	 * \brief Draw compass.

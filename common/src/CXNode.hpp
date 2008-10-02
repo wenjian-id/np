@@ -212,16 +212,6 @@ public:
 	void SetPOIType(E_POI_TYPE NewValue);
 	//-------------------------------------
 	/**
-	 * \brief Compute position in bitmap (row, column) of the most important POI only.
-	 *
-	 *	Compute position in bitmap (row, column) of the most important POI only.
-	 *	\param	POI			oiu
-	 *	\param	rRow		Computed row.
-	 *	\param	rCol		Computed column.
-	 */
-	void ComputePOIPosInBMP(E_POI_TYPE POI, int & rRow, int & rCol);
-	//-------------------------------------
-	/**
 	 * \brief Set name.
 	 *
 	 *	Set name.

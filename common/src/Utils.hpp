@@ -38,7 +38,7 @@ class CXGSVSatelliteInfo;
 
 const unsigned int MAPVERSION	= 0x00020001; // 0.2.0-dev1
 const unsigned int ZOOMVERSION	= 0x00010002; // 0.1.0-dev2
-const unsigned int SECTVERSION	= 0x00010002; // 0.1.0-dev2
+const unsigned int SECTVERSION	= 0x00010003; // 0.1.0-dev3
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
@@ -157,6 +157,18 @@ bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine);
  * \return				true if successfull.
  */
 bool ReadB(CXFile & rInFile, unsigned char & rValue);
+
+//-------------------------------------
+/**
+ * \brief Read a 16 bit unsigned integer from a file.
+ *
+ * Read a 16 bit unsigned integer from a file.
+ * \todo	use platform independent type
+ * \param	rInFile     The file to read from.
+ * \param	rValue		Value to fill with data.
+ * \return				true if successfull.
+ */
+bool ReadUI16(CXFile & rInFile, t_uint16 & rValue);
 
 //-------------------------------------
 /**
@@ -329,97 +341,83 @@ double ConvertSavedUI32(t_uint32 Value);
  */
 enum E_POI_TYPE {		// must fit the values in the map file!!!
 	// special values
-	e_POI_None					= 0x00000000,	///< Nothing.
-	e_POI_All					= 0xFFFFFFFF,	///< All.
+	e_POI_None					= 0x0000,	///< Nothing.
+	e_POI_All					= 0xFFFF,	///< All.
 
-	// amenities 0x0000****
-	e_POI_Parking				= 0x00000001,	///< Car park.
-	e_POI_Fuel					= 0x00000002,	///< Fuel.
-	e_POI_PlaceOfWorhsip		= 0x00000003,	///< Church, temple, etc.
-	e_POI_Restaurant			= 0x00000004,	///< Restaurant.
-	e_POI_School				= 0x00000005,	///< School.
-	e_POI_Recycling				= 0x00000006,	///< Recycling facilities.
-	e_POI_Telephone				= 0x00000007,	///< Public telephone
-	e_POI_PostBox				= 0x00000008,	///< Post box.
-	e_POI_Pharmacy				= 0x00000009,	///< Pharmacy.
-	e_POI_Bank					= 0x0000000A,	///< Bank.
-	e_POI_FastFood				= 0x0000000B,	///< Fast food.
-	e_POI_PublicBuilding		= 0x0000000C,	///< Public building.
-	e_POI_Pub					= 0x0000000D,	///< Pub.
-	e_POI_Hospital				= 0x0000000E,	///< Hospital.
-	e_POI_University			= 0x0000000F,	///< University campus and buildings.
-	e_POI_PostOffice			= 0x00000010,	///< Post office.
-	e_POI_FireStation			= 0x00000011,	///< Fire station.
-	e_POI_Police				= 0x00000012,	///< Police station.
-	e_POI_TownHall				= 0x00000013,	///< Town hall.
-	e_POI_GraveYard				= 0x00000014,	///< Grave yard.
-	e_POI_BusStation			= 0x00000015,	///< Bus station.
-	e_POI_Toilets				= 0x00000016,	///< Public toilets.
-	e_POI_Cafe					= 0x00000017,	///< Cafe.
-	e_POI_Library				= 0x00000018,	///< Library.
-	e_POI_Cinema				= 0x00000019,	///< Cinema.
-	e_POI_ATM					= 0x0000001A,	///< ATM, cash point.
-	e_POI_Theatre				= 0x0000001B,	///< Theatre or opera.
-	e_POI_Biergarten			= 0x0000001C,	///< Biergarten.
-	e_POI_BicycleParking		= 0x0000001D,	///< Parking for bicycles.
-	e_POI_Courthouse			= 0x0000001E,	///< Courthouse.
-	e_POI_Prison				= 0x0000001F,	///< Prison.
-	e_POI_College				= 0x00000020,	///< College.
-	e_POI_Taxi					= 0x00000021,	///< Taxi.
+	// amenities 0x00****
+	e_POI_Parking				= 0x0001,	///< Car park.
+	e_POI_Fuel					= 0x0002,	///< Fuel.
+	e_POI_PlaceOfWorhsip		= 0x0003,	///< Church, temple, etc.
+	e_POI_Restaurant			= 0x0004,	///< Restaurant.
+	e_POI_School				= 0x0005,	///< School.
+	e_POI_Telephone				= 0x0006,	///< Public telephone
+	e_POI_PostBox				= 0x0007,	///< Post box.
+	e_POI_Pharmacy				= 0x0008,	///< Pharmacy.
+	e_POI_Pub					= 0x0009,	///< Pub.
+	e_POI_Hospital				= 0x000A,	///< Hospital.
+	e_POI_PostOffice			= 0x000B,	///< Post office.
+	e_POI_FireStation			= 0x000C,	///< Fire station.
+	e_POI_Police				= 0x000D,	///< Police station.
+	e_POI_BusStation			= 0x000E,	///< Bus station.
+	e_POI_Toilets				= 0x000F,	///< Public toilets.
+	e_POI_Taxi					= 0x0010,	///< Taxi.
+	e_POI_Stop					= 0x0011,	///< Stop sign
+	e_POI_TrafficSignals		= 0x0012,	///< Traffic signals
+	e_POI_MotorwayJunction		= 0x0013,	///< Motorway junction
+	e_POI_BusStop				= 0x0014,	///< Bus stop.
+	e_POI_RailwayStation		= 0x0015,	///< Railway station.
+	e_POI_RailwayHalt			= 0x0016,	///< Railway halt.
+	e_POI_TramStop				= 0x0017,	///< Tram stop.
+	e_POI_SubwayEntrance		= 0x0018,	///< Subway entrance
+	e_POI_Crossing				= 0x0019,	///< Crossing
+	e_POI_LevelCrossing			= 0x001A,	///< Level crossing
+	e_POI_Aerodrome				= 0x001B,	///< Aerodrome
+	e_POI_Helipad				= 0x001C,	///< Helipad
+	e_POI_PowerTower			= 0x001D,	///< Power tower.
+	e_POI_PowerSubStation		= 0x001E,	///< Power sub station.
+	e_POI_Hotel					= 0x001F,	///< Hotel.
+	e_POI_Hostel				= 0x0020,	///< Hostel.
+	e_POI_CampSite				= 0x0021,	///< Camp site.
+	e_POI_Supermarket			= 0x0022,	///< Supermarket.
 
-	// highway 0x0001****
-	e_POI_Stop					= 0x00010001,	///< Stop sign
-	e_POI_TrafficSignals		= 0x00010002,	///< Traffic signals
-	e_POI_MotorwayJunction		= 0x00010003,	///< Motorway junction
-	e_POI_BusStop				= 0x00010004,	///< Bus stop.
 
-	// railway 0x0002****
-	e_POI_RailwayStation		= 0x00020001,	///< Railway station.
-	e_POI_RailwayHalt			= 0x00020002,	///< Railway halt.
-	e_POI_TramStop				= 0x00020003,	///< Tram stop.
-	e_POI_SubwayEntrance		= 0x00020004,	///< Subway entrance
-	e_POI_Crossing				= 0x00020005,	///< Crossing
-	e_POI_LevelCrossing			= 0x00020006,	///< Level crossing
-
-	// aeroway 0x0003****
-	e_POI_Aerodrome				= 0x00030001,	///< Aerodrome
-	e_POI_Helipad				= 0x00030002,	///< Helipad
-
-	// power 0x0004****
-	e_POI_PowerTower			= 0x00040001,	///< Power tower.
-	e_POI_PowerSubStation		= 0x00040002,	///< Power sub station.
-
-	// tourism 0x0005****
-	e_POI_Hotel					= 0x00050001,	///< Hotel.
-	e_POI_Attraction			= 0x00050002,	///< Attraction.
-	e_POI_Hostel				= 0x00050003,	///< Hostel.
-	e_POI_CampSite				= 0x00050004,	///< Camp site.
-	e_POI_ViewPoint				= 0x00050005,	///< Viewpoint.
-	e_POI_Information			= 0x00050006,	///< Information.
-	e_POI_Zoo					= 0x00050007,	///< Zoo.
-	e_POI_GuestHouse			= 0x00050008,	///< Guest house
-	e_POI_PicnicSite			= 0x00050009,	///< Picninc site.
-	e_POI_ThemePark				= 0x0005000A,	///< Theme park.
-	e_POI_CaravanSite			= 0x0005000B,	///< Caravan site.
-	e_POI_Motel					= 0x0005000C,	///< Motel.
-	e_POI_Museum				= 0x0005000D,	///< Museum.
-	e_POI_Artwork				= 0x0005000E,	///< Artwork.
-
-	// shop 0x0006****
-	e_POI_Supermarket			= 0x00060001,	///< Supermarket.
-	e_POI_ShopBakery			= 0x00060002,	///< Bakery
-	e_POI_ShopButcher			= 0x00060003,	///< Butcher.
-	e_POI_Kiosk					= 0x00060004,	///< Kiosk.
-	e_POI_ShopConvenience		= 0x00060005,	///< Shop convenience
-	e_POI_ShopDoItYourself		= 0x00060006,	///< Shop "do it yourself"
-	e_POI_ShopBicycle			= 0x00060007,	///< Shop bicycle.
-	e_POI_ShopOutdoor			= 0x00060008,	///< Shop Outdoor.
-
-	// leisure
-	// historic
-	// military
-	// natural
-	// 
+/*
+	e_POI_Recycling				= 0x0006,	///< Recycling facilities.
+	e_POI_Bank					= 0x000A,	///< Bank.
+	e_POI_FastFood				= 0x000B,	///< Fast food.
+	e_POI_PublicBuilding		= 0x000C,	///< Public building.
+	e_POI_University			= 0x000F,	///< University campus and buildings.
+	e_POI_TownHall				= 0x0013,	///< Town hall.
+	e_POI_GraveYard				= 0x0014,	///< Grave yard.
+	e_POI_Cafe					= 0x0017,	///< Cafe.
+	e_POI_Library				= 0x0018,	///< Library.
+	e_POI_Cinema				= 0x0019,	///< Cinema.
+	e_POI_ATM					= 0x001A,	///< ATM, cash point.
+	e_POI_Theatre				= 0x001B,	///< Theatre or opera.
+	e_POI_Biergarten			= 0x001C,	///< Biergarten.
+	e_POI_BicycleParking		= 0x001D,	///< Parking for bicycles.
+	e_POI_Courthouse			= 0x001E,	///< Courthouse.
+	e_POI_Prison				= 0x001F,	///< Prison.
+	e_POI_College				= 0x0020,	///< College.
+	e_POI_Attraction			= 0x0202,	///< Attraction.
+	e_POI_ViewPoint				= 0x0205,	///< Viewpoint.
+	e_POI_Information			= 0x0206,	///< Information.
+	e_POI_Zoo					= 0x0207,	///< Zoo.
+	e_POI_GuestHouse			= 0x0208,	///< Guest house
+	e_POI_PicnicSite			= 0x0209,	///< Picninc site.
+	e_POI_ThemePark				= 0x020A,	///< Theme park.
+	e_POI_CaravanSite			= 0x020B,	///< Caravan site.
+	e_POI_Motel					= 0x020C,	///< Motel.
+	e_POI_Museum				= 0x020D,	///< Museum.
+	e_POI_Artwork				= 0x020E,	///< Artwork.
+	e_POI_ShopBakery			= 0x0202,	///< Bakery
+	e_POI_ShopButcher			= 0x0203,	///< Butcher.
+	e_POI_Kiosk					= 0x0204,	///< Kiosk.
+	e_POI_ShopConvenience		= 0x0205,	///< Shop convenience
+	e_POI_ShopDoItYourself		= 0x0206,	///< Shop "do it yourself"
+	e_POI_ShopBicycle			= 0x0207,	///< Shop bicycle.
+	e_POI_ShopOutdoor			= 0x0208,	///< Shop Outdoor.
+*/
 };
 
 //-------------------------------------
@@ -471,5 +469,15 @@ enum E_KEYHIGHWAY {	// must fit the values in the map file!!!
 	e_Highway_EnumCount		= 19,	///< oiu
 };
 
+//-------------------------------------
+/**
+ * \brief Compute position in bitmap (row, column) of the most important POI only.
+ *
+ *	Compute position in bitmap (row, column) of the most important POI only.
+ *	\param	POI			oiu
+ *	\param	rRow		Computed row.
+ *	\param	rCol		Computed column.
+ */
+void ComputePOIBMP(E_POI_TYPE POI, size_t & BMPIdx, size_t & rRow, size_t & rCol);
 
 #endif // __UTILS_HPP__

@@ -48,8 +48,8 @@ const double MAXMETERPERPIXEL = 1000;	///< 1 km/pixel
 const double MINMETERPERPIXEL = 0.1;	///< 0.1 m/pixel
 static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
-static const int POICOUNTHORZ	= 8;
-static const int POICOUNTVERT	= 4;
+static const int POICOUNTHORZ	= 16;
+static const int POICOUNTVERT	= 16;
 /*
 // for revision 0.2.0 enable only following POIs
 t_uint32 Rev020POI[MaxPOITypes] = {
@@ -115,23 +115,44 @@ CXMapPainter2D::CXMapPainter2D() :
 //-------------------------------------
 CXMapPainter2D::~CXMapPainter2D() {
 	// delete arrays
-	for(size_t i=0; i<e_Highway_EnumCount; i++) {
+	size_t i=0;
+	for(i=0; i<e_Highway_EnumCount; i++) {
 		TWayBuffer *pBuffer = m_DrawWays[i];
 		delete pBuffer;
 	}
 	m_DrawWays.Clear();
+
+	// delete BMPs
+	for(i=0; i<m_POIBMPs.GetSize(); i++) {
+		delete m_POIBMPs[i];
+	}
 }
 
 //-------------------------------------
 void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /*Height*/) {
 	// reload POI bitmaps
-	/// \todo implement
-/*
-	for(size_t i=0; i<MaxPOITypes; i++) {
-		m_BmpPOI[i].Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
-		m_BmpPOI[i].LoadFromFile(CXOptions::Instance()->GetPOIFileName(i));
+	// iterate through BMPs
+	if(m_POIBMPs.GetSize() == 0) {
+		// create bitmaps
+		for(size_t i=0; i<1; i++) {
+			CXBitmap *pBMP = new CXBitmap();
+			m_POIBMPs.Append(pBMP);
+			pBMP->Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
+			CXStringASCII FileName = CXOptions::Instance()->GetDirectoryIcons();
+			char buf[100];
+			snprintf(buf,sizeof(buf),"poi%02X.bmp", i);
+			FileName += buf;
+			pBMP->LoadFromFile(FileName);
+		}
+	} else {
+		// bitmaps already created. reload
+		for(size_t i=0; i<m_POIBMPs.GetSize(); i++) {
+			CXBitmap *pBMP = m_POIBMPs[i];
+			CXStringASCII FileName = pBMP->GetFileName();
+			pBMP->Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
+			pBMP->LoadFromFile(FileName);
+		}
 	}
-*/
 }
 
 //-------------------------------------
@@ -291,22 +312,7 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) {
-	if(pBMP == NULL)
-		return;
-
-	if(!CXOptions::Instance()->MustShowPOIs())
-		return;
-
-	/// \todo implement
-/*
-	TPOINodeMap &POINodes = CXPOWMMap::Instance()->GetPOINodeMap();
-	DrawPOIs(pBMP, POINodes, ScreenWidth, ScreenHeight);
-*/
-}
-
-//-------------------------------------
-void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight) {
+void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight) {
 
 	TPOSPOINodeMap PosN = POINodes.GetStart();
 	CXPOINode *pNode = NULL;
@@ -318,28 +324,28 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, TPOINodeMap &POINodes, int ScreenWi
 		// check if visible
 		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
 			for(size_t i=0; i<pNode->GetPOITypeCount(); i++) {
-//				if(pNode->IsPOI(i) /*&& ((pNode->GetPOIType(i) & Rev020POI[i]) != 0)*/) {
-					int row = 0;
-					int col = 0;
-					pNode->ComputePOIPosInBMP(pNode->GetPOIType(i), row, col);
-					// draw POI bitmap
-					/// \todo implement
-/*
-					pBMP->DrawTransparent(	&(m_BmpPOI[i]),
+				size_t idx = 0;
+				size_t row = 0;
+				size_t col = 0;
+				ComputePOIBMP(pNode->GetPOIType(i), idx, row, col);
+				// draw POI bitmap
+				if(idx < m_POIBMPs.GetSize()) {
+					CXBitmap *pPOIBMP = m_POIBMPs[idx];
+					// Bitmap loaded
+					pBMP->DrawTransparent(	pPOIBMP,
 											x-POIWIDTH/2, y-POIHEIGHT/2,
 											col*POIWIDTH, row*POIHEIGHT,
 											POIWIDTH, POIHEIGHT,
 											COLOR_TRANSPARENT);
-*/
-					// draw name
-					CXStringUTF8 Name = pNode->GetName();
-					if(!Name.IsEmpty()) {
-						tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
-						NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
-						pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
-					}
 				}
-//			}
+				// draw name
+				CXStringUTF8 Name = pNode->GetName();
+				if(!Name.IsEmpty()) {
+					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
+					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
+					pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
+				}
+			}
 		}
 	}
 }
@@ -497,7 +503,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXExactTime StopTrackLog;
 	CXExactTime StopScale;
 	CXExactTime StopCompass;
-	CXExactTime StopPOI;
 	CXExactTime StopPos;
 
 
@@ -619,6 +624,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 					if(pWayMap != NULL) {
 						TPOSWayMap pos = pWayMap->GetStart();
 						CXWay *pWay = NULL;
+						//draw ways
 						while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
 							if (IsWayPossiblyVisible(pWay, Width, Height)) {
 								E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
@@ -626,6 +632,11 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 								WayCount++;
 							}
 						}
+					}
+					if(CXOptions::Instance()->MustShowPOIs()) {
+						// draw POIs
+						const TPOINodeMap &POINodes = pMapSection->GetPOINodeMap();
+						DrawPOIs(pBMP, POINodes, Width, Height);
 					}
 				}
 			}
@@ -700,10 +711,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	}
 	StopTrackLog.SetNow();
 
-	// draw POIs
-	DrawPOIs(pBMP, Width, Height);
-	StopPOI.SetNow();
-
 	// draw compass if necessary
 	if(CXOptions::Instance()->MustShowCompass()) {
 		DrawCompass(pBMP, TMCompass);
@@ -726,12 +733,12 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		char buf[200];
-		snprintf(	buf, sizeof(buf), "MS: %ld L:%ld Wy:%ld (%d) U:%ld TL:%ld POI:%ld",
+		snprintf(	buf, sizeof(buf), "MS: %ld L:%ld Wy:%ld (%d) U:%ld TL:%ld",
 					StopGetMapSections - StartTime,
 					StopLock - StopGetMapSections,
 					StopDrawWays-StopLock, WayCount, 
 					StopUnlock-StopDrawWays,
-					StopTrackLog-StopUnlock, StopPOI-StopTrackLog);
+					StopTrackLog-StopUnlock);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
