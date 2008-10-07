@@ -101,7 +101,7 @@ private:
 	 *	\param	ScreenWidth		Width of screen.
 	 *	\param	ScreenHeight	Height of screen.
 	 */
-	void DrawPOIs(IBitmap *pBMP, const TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight);
+	void DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight);
 	//-------------------------------------
 	/**
 	 * \brief Draw compass.

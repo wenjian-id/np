@@ -137,7 +137,6 @@ CXMapSection::~CXMapSection() {
 			delete pNode;
 	}
 	m_NodeMap.RemoveAll();
-	m_POINodes.RemoveAll();
 	// delete ways
 	size_t cnt = m_WayMapBuffer.GetSize();
 	for(size_t i=0; i<cnt; i++) {
@@ -179,7 +178,7 @@ void CXMapSection::SetTOC(const CXTOCMapSection &TOC) {
 }
 
 //-------------------------------------
-const TPOINodeMap &CXMapSection::GetPOINodeMap() const {
+const TPOINodeBuffer & CXMapSection::GetPOINodeMap() const {
 	return m_POINodes;
 }
 
@@ -310,7 +309,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		pPOINode->SetName(Name);
 
 		// add node to POI map
-		m_POINodes.SetAt(ID, pPOINode);
+		m_POINodes.Append(pPOINode);
 	}
 	// read nodes
 	t_uint32 NodeCount = 0;
@@ -454,14 +453,11 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 			pNode->SetDisplayY(v.GetIntY());
 		}
 	}
-	CXPOINode *pPOINode = NULL;
-	TPOSPOINodeMap PosPN = m_POINodes.GetStart();
-	while (m_POINodes.GetNext(PosPN, pPOINode) != TPOINodeMap::NPOS) {
-		if(pPOINode != NULL) {
-			CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
-			pPOINode->SetDisplayX(v.GetIntX());
-			pPOINode->SetDisplayY(v.GetIntY());
-		}
+	for(size_t i=0; i<m_POINodes.GetSize(); i++) {
+		CXPOINode *pPOINode = m_POINodes[i];
+		CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
+		pPOINode->SetDisplayX(v.GetIntX());
+		pPOINode->SetDisplayY(v.GetIntY());
 	}
 }
 
@@ -476,12 +472,8 @@ void CXMapSection::RelocateUTM(int NewZone) {
 				pNode->RelocateUTM(m_UTMZone);
 			}
 		}
-		CXPOINode *pPOINode = NULL;
-		TPOSPOINodeMap PosPN = m_POINodes.GetStart();
-		while (m_POINodes.GetNext(PosPN, pPOINode) != TPOINodeMap::NPOS) {
-			if(pPOINode != NULL) {
-				pPOINode->RelocateUTM(m_UTMZone);
-			}
+		for(size_t i=0; i<m_POINodes.GetSize(); i++) {
+			m_POINodes[i]->RelocateUTM(m_UTMZone);
 		}
 	}
 }

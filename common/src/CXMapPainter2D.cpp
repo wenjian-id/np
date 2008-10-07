@@ -312,13 +312,11 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeMap &POINodes, int ScreenWidth, int ScreenHeight) {
-
-	TPOSPOINodeMap PosN = POINodes.GetStart();
-	CXPOINode *pNode = NULL;
+void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
 
 	// iterate through POIs
-	while (POINodes.GetNext(PosN, pNode) != POINodes.NPOS) {
+	for(size_t n=0; n<POINodes.GetSize(); n++) {
+		CXPOINode *pNode = POINodes[n];
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
 		// check if visible
@@ -633,11 +631,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 							}
 						}
 					}
-					if(CXOptions::Instance()->MustShowPOIs()) {
-						// draw POIs
-						const TPOINodeMap &POINodes = pMapSection->GetPOINodeMap();
-						DrawPOIs(pBMP, POINodes, Width, Height);
-					}
 				}
 			}
 		}
@@ -655,6 +648,20 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		for(i=0; i<e_Highway_EnumCount; i++) {
 			TWayBuffer *pBuffer = m_DrawWays[i];
 			pBuffer->Clear();
+		}
+	}
+	// now draw POIs
+	if(CXOptions::Instance()->MustShowPOIs()) {
+		// iterate through map sections
+		for(size_t idx=0; idx<MapSectionSize; idx++) {
+			if(LockedMapSections[idx]) {
+				CXMapSection *pMapSection = MapSections[idx].GetPtr();
+				if(pMapSection != NULL) {
+					// draw POIs
+					const TPOINodeBuffer &POINodes = pMapSection->GetPOINodeMap();
+					DrawPOIs(pBMP, POINodes, Width, Height);
+				}
+			}
 		}
 	}
 	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawMapSectionBorders)) {

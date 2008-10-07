@@ -150,15 +150,15 @@ typedef CXArray<TTOCMapSectionPtr> TTOCMapSectionPtrArray;
  */
 class CXMapSection {
 private:
-	E_LOADING_STATUS	m_eLoadStatus;			///< oiu
-	int					m_UTMZone;				///< oiu
-	TNodeMap			m_NodeMap;				///< Map with all nodes.
-	TPOINodeMap			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
-	CXBuffer<TWayMap *>	m_WayMapBuffer;			///< Ways sorted by layer.
-	CXTOCMapSection		m_TOC;					///< oiu
+	E_LOADING_STATUS		m_eLoadStatus;			///< oiu
+	int						m_UTMZone;				///< oiu
+	TNodeMap				m_NodeMap;				///< Map with all nodes.
+	TPOINodeBuffer			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
+	CXBuffer<TWayMap *>		m_WayMapBuffer;			///< Ways sorted by layer.
+	CXTOCMapSection			m_TOC;					///< oiu
 	// synchronisation
-	mutable CXMutex		m_Mutex;				///< Synchronization object.
-	mutable CXRWLock	m_StatusRWLock;			///< Synchronization object for m_eLoadStatus.
+	mutable CXMutex			m_Mutex;				///< Synchronization object.
+	mutable CXRWLock		m_StatusRWLock;			///< Synchronization object for m_eLoadStatus.
 	//-------------------------------------
 	CXMapSection(const CXMapSection &);							///< Not used.
 	const CXMapSection & operator = (const CXMapSection &);		///< Not used.
@@ -204,7 +204,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	const TPOINodeMap & GetPOINodeMap() const;
+	const TPOINodeBuffer & GetPOINodeMap() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

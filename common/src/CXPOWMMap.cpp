@@ -106,33 +106,6 @@ void CXPOWMMap::SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread) {
 	m_pMapLoaderThread = pMapLoaderThread;
 }
 
-/*
-//-------------------------------------
-void CXPOWMMap::PositionChanged(double dLon, double dLat, bool oFix) {
-	CXMutexLocker L(&m_Mutex);
-	int NewZone = UTMZoneNone;
-	char UTMLetter = 0;
-	double UTME = 0;
-	double UTMN = 0;
-	LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, NewZone, UTMLetter, UTME, UTMN);
-	if((m_iCurrentZone == UTMZoneNone) || (NewZone != m_iCurrentZone)) {
-		// set new zone
-		m_iCurrentZone = NewZone;
-		// refresh x and y of every node
-		POS Pos = m_NodeMap.GetStart();
-		CXNode *pNode = NULL;
-		// go through all nodes and recompute xy
-		while (m_NodeMap.GetNext(Pos, pNode) != TNodeMap::NPOS) {
-			if(pNode != NULL) {
-				pNode->RelocateUTM(m_iCurrentZone);
-			}
-		}
-
-		// relocate tracklog
-		m_TrackLog.RelocateUTM(m_iCurrentZone);
-	}
-}
-*/
 
 //-------------------------------------
 CXStringASCII CXPOWMMap::GetFileNameFromCoor(double dLon, double dLat) {
