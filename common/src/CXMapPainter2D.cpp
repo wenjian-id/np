@@ -44,7 +44,7 @@ static const CXRGB POITEXTCOLOR(0x00, 0x00, 0xA0);
 static const CXRGB POIBGCOLOR(0xE2, 0xDE, 0xD8);
 
 const double ZoomFactor = 1.2;
-const double MAXMETERPERPIXEL = 1000;	///< 1 km/pixel
+const double MAXMETERPERPIXEL = 500;	///< 500 m/pixel
 const double MINMETERPERPIXEL = 0.1;	///< 0.1 m/pixel
 static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
@@ -794,26 +794,22 @@ void CXMapPainter2D::UpdateZoomLevel() {
 	char buf[100];
 	snprintf(buf, sizeof(buf), "m_MeterPerPixel = %.2f\n", m_MeterPerPixel);
 	DoOutputDebugString(buf);
-	if(m_MeterPerPixel <= 6)
+	if(m_MeterPerPixel <= 4)
 		m_ZoomLevel = 0;
-	else if(m_MeterPerPixel <= 10)
+	else if(m_MeterPerPixel <= 8)
 		m_ZoomLevel = 1;
-	else if(m_MeterPerPixel <= 15)
+	else if(m_MeterPerPixel <= 14)
 		m_ZoomLevel = 2;
-	else if(m_MeterPerPixel <= 20)
+	else if(m_MeterPerPixel <= 25)
 		m_ZoomLevel = 3;
-	else if(m_MeterPerPixel <= 30)
-		m_ZoomLevel = 4;
 	else if(m_MeterPerPixel <= 50)
-		m_ZoomLevel = 5;
+		m_ZoomLevel = 4;
 	else if(m_MeterPerPixel <= 100)
+		m_ZoomLevel = 5;
+	else if(m_MeterPerPixel <= 220)
 		m_ZoomLevel = 6;
-	else if(m_MeterPerPixel <= 300)
-		m_ZoomLevel = 7;
-	else if(m_MeterPerPixel <= 500)
-		m_ZoomLevel = 8;
 	else
-		m_ZoomLevel = 9;
+		m_ZoomLevel = 7;
 	CXDebugInfo::Instance()->SetZoomLevel(m_ZoomLevel);
 }
 

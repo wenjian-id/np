@@ -356,6 +356,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomInBtn.Resize(ZoomSize, ZoomSize);
 	m_ZoomOutBtn.Resize(ZoomSize, ZoomSize);
 
+	/// \todo make InfoBarCommon sitze configurable (width / height)
 	int InfoBarCommonWidth = 65;
 	int MaxSpeedSize = CXOptions::Instance()->GetMaxSpeedSize();
 	m_InfoBarSpeedPos.SetTop(IBTH);
