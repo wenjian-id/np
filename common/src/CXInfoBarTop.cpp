@@ -32,7 +32,9 @@ CXInfoBarTop::CXInfoBarTop() :
 	m_InfoRect(0,0,1,1),
 	m_QuitRect(0,0,1,1),
 	m_SatRect(0,0,1,1),
+	m_ZoomRect(0,0,1,1),
 	m_SaveRect(0,0,1,1),
+	m_TimeRect(0,0,1,1),
 	m_MinimizeRect(0,0,1,1)
 {
 }
@@ -79,9 +81,25 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		m_SatRect = Bmp.CalcTextRectASCII("XX", 4, 0);
 		m_SatRect.OffsetRect(Height, 0);
 		m_SatRect.SetBottom(Height);
-		m_SaveRect.SetLeft(m_SatRect.GetRight()+1);
-		m_SaveRect.SetRight(m_SaveRect.GetLeft() + Height);
+		// zoom rect
+		m_ZoomRect.SetLeft(m_SatRect.GetRight() + 1);
+		m_ZoomRect.SetBottom(Height);
+		m_ZoomRect.SetRight(m_ZoomRect.GetLeft() + 2*Height);
+		// time rect
+		m_TimeRect = Bmp.CalcTextRectASCII("99:99", 4, 0);
+		if(CXOptions::Instance()->MustShowMinimizeButton()) {
+			// ends on minimize button
+			m_TimeRect.OffsetRect(-m_TimeRect.GetRight() + m_MinimizeRect.GetLeft(), 0);
+		} else {
+			// ends on quit button
+			m_TimeRect.OffsetRect(-m_TimeRect.GetRight() + m_QuitRect.GetLeft(), 0);
+		}
+		m_TimeRect.SetBottom(Height);
+		// save rect
+		m_SaveRect.SetRight(m_TimeRect.GetLeft()-1);
+		m_SaveRect.SetLeft(m_SaveRect.GetRight() - Height);
 		m_SaveRect.SetBottom(Height);
+
 		// create new info bmp
 		m_InfoBmp.Create(pDC, m_InfoRect.GetWidth(), m_InfoRect.GetHeight());
 		m_InfoBmp.LoadFromFile(CXOptions::Instance()->GetInfoFileName());
@@ -116,22 +134,38 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		}
 		Bmp.DrawTextASCII(StrNSat, m_SatRect, NSatColor, BgColor);
 
+		// draw zoom level
+		int BarCount = 8;
+		int RectWidth = m_ZoomRect.GetWidth();
+		int dx = (RectWidth - (BarCount-1)) / BarCount;
+		int BarWidth = Max(0, dx-1);
+		int LeftOffset = (RectWidth - (BarCount*dx+(BarCount-1)))/2;
+		// start with rightmost bar
+		int StartOffset = LeftOffset + (BarCount-1)*dx;
+		int BorderY = 2;
+		int MaxBarHeight = Height - BorderY;
+		tIRect r(m_ZoomRect.GetLeft() + StartOffset, 0, BarWidth, MaxBarHeight);
+		int ZoomLevel = CXOptions::Instance()->GetZoomLevel();
+		CXRGB BarOnColor(0x00, 0xFF, 0x00);
+		CXRGB BarOffColor(0x00, 0x7F, 0x00);
+		for(int i=0; i<BarCount; i++) {
+			int BarHeight = (BarCount-i)*(MaxBarHeight/BarCount);
+			r.SetTop(r.GetBottom() - BarHeight);
+			if(i >= ZoomLevel) {
+				Bmp.DrawRect(r, BarOnColor, BarOnColor);
+			} else {
+				Bmp.DrawRect(r, BarOffColor, BarOffColor);
+			}
+			r.OffsetRect(-dx, 0);
+		}
+
 		// get current time
 		CXExactTime Now;
 		snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
 		CXStringASCII StrNow(buf);
 
 		// draw time
-		tIRect TimeRect = Bmp.CalcTextRectASCII(StrNow, 4, 0);
-		if(CXOptions::Instance()->MustShowMinimizeButton()) {
-			// ends on minimize button
-			TimeRect.OffsetRect(-TimeRect.GetRight() + m_MinimizeRect.GetLeft(), 0);
-		} else {
-			// ends on quit button
-			TimeRect.OffsetRect(-TimeRect.GetRight() + m_QuitRect.GetLeft(), 0);
-		}
-		TimeRect.SetBottom(Height);
-		Bmp.DrawTextASCII(StrNow, TimeRect, CXRGB(0xff, 0xff, 0x00), BgColor);
+		Bmp.DrawTextASCII(StrNow, m_TimeRect, CXRGB(0xff, 0xff, 0x00), BgColor);
 	}
 
 	// draw

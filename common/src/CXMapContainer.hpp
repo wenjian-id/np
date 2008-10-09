@@ -41,7 +41,7 @@ class CXTOCMapContainer {
 private:
 	E_LOADING_STATUS			m_eLoadStatus;		///< oiu
 	CXStringASCII				m_FileName;			///< oiu
-	CXTOCMapSection				**m_pTOCSections;	///< oiu
+	CXTOCMapSection				***m_pTOCSections;	///< oiu
 	double						m_dBaseLon;			///< oiu
 	double						m_dBaseLat;			///< oiu
 	size_t						m_Width;			///< oiu

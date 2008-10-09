@@ -43,7 +43,9 @@ private:
 	tIRect				m_InfoRect;		///< oiu
 	tIRect				m_QuitRect;		///< oiu
 	tIRect				m_SatRect;		///< oiu
+	tIRect				m_ZoomRect;		///< oiu
 	tIRect				m_SaveRect;		///< oiu
+	tIRect				m_TimeRect;		///< oiu
 	tIRect				m_MinimizeRect;	///< oiu
 	//-------------------------------------
 	CXInfoBarTop(const CXInfoBarTop &);						///< Not used.

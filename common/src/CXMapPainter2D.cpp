@@ -23,7 +23,6 @@
 #include "CXMapPainter2D.hpp"
 #include "Utils.hpp"
 #include "CXMutexLocker.hpp"
-#include "CXOptions.hpp"
 #include "CXExactTime.hpp"
 #include "CXOptions.hpp"
 #include "CoordConstants.h"
@@ -103,8 +102,7 @@ E_KEYHIGHWAY Order[e_Highway_EnumCount] = {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapPainter2D::CXMapPainter2D() :
-	m_MeterPerPixel(3),
-	m_ZoomLevel(0)
+	m_MeterPerPixel(3)
 {
 	for(size_t i=0; i<e_Highway_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
@@ -582,7 +580,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	double dLatMax = Max(Max(dLatTL, dLatTR), Max(dLatBL, dLatBR));
 
 	// now get map sections currently visible
-	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, m_ZoomLevel, TMMap);
+	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, CXOptions::Instance()->GetZoomLevel(), TMMap);
 	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSections(Descr);
 
 	StopGetMapSections.SetNow();
@@ -757,7 +755,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 		bottom = TextRect.GetBottom();
-		snprintf(buf, sizeof(buf), "Zoom: %d", CXDebugInfo::Instance()->GetZoomLevel());
+		snprintf(buf, sizeof(buf), "Zoom: %d", CXOptions::Instance()->GetZoomLevel());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
@@ -795,26 +793,19 @@ void CXMapPainter2D::UpdateZoomLevel() {
 	snprintf(buf, sizeof(buf), "m_MeterPerPixel = %.2f\n", m_MeterPerPixel);
 	DoOutputDebugString(buf);
 	if(m_MeterPerPixel <= 4)
-		m_ZoomLevel = 0;
+		CXOptions::Instance()->SetZoomLevel(0);
 	else if(m_MeterPerPixel <= 8)
-		m_ZoomLevel = 1;
+		CXOptions::Instance()->SetZoomLevel(1);
 	else if(m_MeterPerPixel <= 14)
-		m_ZoomLevel = 2;
+		CXOptions::Instance()->SetZoomLevel(2);
 	else if(m_MeterPerPixel <= 25)
-		m_ZoomLevel = 3;
+		CXOptions::Instance()->SetZoomLevel(3);
 	else if(m_MeterPerPixel <= 50)
-		m_ZoomLevel = 4;
+		CXOptions::Instance()->SetZoomLevel(4);
 	else if(m_MeterPerPixel <= 100)
-		m_ZoomLevel = 5;
+		CXOptions::Instance()->SetZoomLevel(5);
 	else if(m_MeterPerPixel <= 220)
-		m_ZoomLevel = 6;
+		CXOptions::Instance()->SetZoomLevel(6);
 	else
-		m_ZoomLevel = 7;
-	CXDebugInfo::Instance()->SetZoomLevel(m_ZoomLevel);
-}
-
-//-------------------------------------
-int CXMapPainter2D::GetZoomLevel() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_ZoomLevel;
+		CXOptions::Instance()->SetZoomLevel(7);
 }

@@ -35,7 +35,6 @@ private:
 	static CXDebugInfo	*m_pInstance;					///< oiu
 	int					m_DrawTime;						///< oiu
 	int					m_LocatorTime;					///< oiu
-	int					m_ZoomLevel;					///< oiu
 	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXDebugInfo(const CXDebugInfo &);						///< Not used.
@@ -86,18 +85,6 @@ public:
 	 *
 	 */
 	void SetLocatorTime(int NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetZoomLevel() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetZoomLevel(int NewValue);
 };
 
 #endif // __CXDEBUGINFO_HPP__

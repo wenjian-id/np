@@ -45,6 +45,9 @@ CXTOCMapContainer::~CXTOCMapContainer() {
 void CXTOCMapContainer::Clear() {
 	if(m_pTOCSections != NULL) {
 		for(size_t x=0; x<m_Width; x++) {
+			for(size_t y=0; y<m_Height; y++) {
+				delete m_pTOCSections[x][y];
+			}
 			delete [] m_pTOCSections[x];
 			m_pTOCSections[x] = NULL;
 		}
@@ -58,9 +61,12 @@ void CXTOCMapContainer::Resize(size_t Width, size_t Height) {
 	Clear();
 	m_Width = Width;
 	m_Height = Height;
-	m_pTOCSections = new CXTOCMapSection *[m_Width];
+	m_pTOCSections = new CXTOCMapSection **[m_Width];
 	for(size_t x=0; x<m_Width; x++) {
-		m_pTOCSections[x] = new CXTOCMapSection[m_Height];
+		m_pTOCSections[x] = new CXTOCMapSection*[m_Height];
+		for(size_t y=0; y<m_Height; y++) {
+			m_pTOCSections[x][y] = NULL;
+		}
 	}
 }
 
@@ -264,7 +270,7 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 			double dLonMax = dLonMin + 1.0/TOCSectionWidth;
 			double dLatMax = dLatMin + 1.0/TOCSectionHeight;
 			// append to array
-			m_pTOCSections[i][j] = CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset);
+			m_pTOCSections[i][j] = new CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset);
 		}
 	}
 	return true;
@@ -304,7 +310,7 @@ void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSect
 		idxYMax = Min(m_Height-1,idxYMax);
 		for(size_t xx=idxXMin; xx<=idxXMax; xx++) {
 			for(size_t yy=idxYMin; yy<=idxYMax; yy++) {
-				rResult.Append(new CXTOCMapSection(m_pTOCSections[xx][yy]));
+				rResult.Append(new CXTOCMapSection(*(m_pTOCSections[xx][yy])));
 			}
 		}
 	}

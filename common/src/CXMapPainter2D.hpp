@@ -39,7 +39,6 @@ typedef CXPOSMapHashSimple<unsigned short> TPOSPOIBMPMap;
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
 	double						m_MeterPerPixel;		///< Current scale factor.
-	int							m_ZoomLevel;			///< Current zoom level.
 	CXPenHolder					m_PenHolder;			///< oiu
 	CXBuffer<TWayBuffer *>		m_DrawWays;				///< oiu
 	CXBuffer<CXBitmap *>		m_POIBMPs;				///< oiu
@@ -182,12 +181,6 @@ public:
 	 *
 	 */
 	virtual bool ZoomOut();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetZoomLevel() const;
 };
 
 #endif // __CXMAPPAINTER2D_HPP__

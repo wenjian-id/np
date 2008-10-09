@@ -30,8 +30,7 @@ CXDebugInfo * CXDebugInfo::m_pInstance = NULL;
 //-------------------------------------
 CXDebugInfo::CXDebugInfo() :
 	m_DrawTime(0),
-	m_LocatorTime(0),
-	m_ZoomLevel(0)
+	m_LocatorTime(0)
 {
 }
 
@@ -68,16 +67,4 @@ int CXDebugInfo::GetLocatorTime() const {
 void CXDebugInfo::SetLocatorTime(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_LocatorTime = NewValue;
-}
-
-//-------------------------------------
-int CXDebugInfo::GetZoomLevel() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_ZoomLevel;
-}
-
-//-------------------------------------
-void CXDebugInfo::SetZoomLevel(int NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_ZoomLevel = NewValue;
 }
