@@ -81,13 +81,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXPen *GetPenBg(E_KEYHIGHWAY HighwayType);
+	CXPen *GetPenBg(E_KEYHIGHWAY_TYPE HighwayType);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	CXPen *GetPenFg(E_KEYHIGHWAY HighwayType);
+	CXPen *GetPenFg(E_KEYHIGHWAY_TYPE HighwayType);
 };
 
 #endif // __CXPENHOLDER_HPP__

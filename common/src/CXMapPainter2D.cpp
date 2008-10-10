@@ -77,8 +77,9 @@ t_uint32 Rev020POI[MaxPOITypes] = {
 									0};
 */
 
-E_KEYHIGHWAY Order[e_Highway_EnumCount] = {
+E_KEYHIGHWAY_TYPE Order[e_Highway_EnumCount] = {
 	e_Highway_Unknown,
+	e_Highway_Fading,
 	e_Highway_LivingStreet,
 	e_Highway_Steps,
 	e_Highway_Pedestrian,
@@ -219,7 +220,7 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height) {
+void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_TYPE eHighwayType, int Width, int Height) {
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
@@ -248,7 +249,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY e
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height) {
+void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_TYPE eHighwayType, int Width, int Height) {
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
@@ -623,7 +624,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 						//draw ways
 						while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
 							if (IsWayPossiblyVisible(pWay, Width, Height)) {
-								E_KEYHIGHWAY HighwayType = pWay->GetHighwayType();
+								E_KEYHIGHWAY_TYPE HighwayType = pWay->GetHighwayType();
 								m_DrawWays[HighwayType]->Append(pWay);
 								WayCount++;
 							}

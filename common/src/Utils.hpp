@@ -38,7 +38,7 @@ class CXGSVSatelliteInfo;
 
 const unsigned int MAPVERSION	= 0x00020001; // 0.2.0-dev1
 const unsigned int ZOOMVERSION	= 0x00010002; // 0.1.0-dev2
-const unsigned int SECTVERSION	= 0x00010003; // 0.1.0-dev3
+const unsigned int SECTVERSION	= 0x00010004; // 0.1.0-dev4
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
@@ -463,27 +463,28 @@ enum E_PLACE_TYPE {		// must fit the values in the map file!!!
  * \brief oiu
  *
  */
-enum E_KEYHIGHWAY {	// must fit the values in the map file!!!
-	e_Highway_Unknown		=  0,	///< oiu
-	e_Highway_Motorway		=  1,	///< oiu
-	e_Highway_MotorwayLink	=  2,	///< oiu
-	e_Highway_Trunk			=  3,	///< oiu
-	e_Highway_TrunkLink		=  4,	///< oiu
-	e_Highway_Primary		=  5,	///< oiu
-	e_Highway_PrimaryLink	=  6,	///< oiu
-	e_Highway_Secondary		=  7,	///< oiu
-	e_Highway_Tertiary		=  8,	///< oiu
-	e_Highway_Unclassified	=  9,	///< oiu
-	e_Highway_Track			= 10,	///< oiu
-	e_Highway_Residential	= 11,	///< oiu
-	e_Highway_Service		= 12,	///< oiu
-	e_Highway_Bridleway		= 13,	///< oiu
-	e_Highway_Cycleway		= 14,	///< oiu
-	e_Highway_Footway		= 15,	///< oiu
-	e_Highway_Pedestrian	= 16,	///< oiu
-	e_Highway_Steps			= 17,	///< oiu
-	e_Highway_LivingStreet	= 18,	///< oiu
-	e_Highway_EnumCount		= 19,	///< oiu
+enum E_KEYHIGHWAY_TYPE {	// must fit the values in the map file!!!
+	e_Highway_Fading		= 0x00,
+	e_Highway_Unknown		= 0x01,
+	e_Highway_Motorway		= 0x02,
+	e_Highway_MotorwayLink	= 0x03,
+	e_Highway_Trunk			= 0x04,
+	e_Highway_TrunkLink		= 0x05,
+	e_Highway_Primary		= 0x06,
+	e_Highway_PrimaryLink	= 0x07,
+	e_Highway_Secondary		= 0x08,
+	e_Highway_Tertiary		= 0x09,
+	e_Highway_Unclassified	= 0x0A,
+	e_Highway_Track			= 0x0B,
+	e_Highway_Residential	= 0x0C,
+	e_Highway_Service		= 0x0D,
+	e_Highway_Bridleway		= 0x0E,
+	e_Highway_Cycleway		= 0x0F,
+	e_Highway_Footway		= 0x10,
+	e_Highway_Pedestrian	= 0x11,
+	e_Highway_Steps			= 0x12,
+	e_Highway_LivingStreet	= 0x13,
+	e_Highway_EnumCount		= 0x14,
 };
 
 //-------------------------------------

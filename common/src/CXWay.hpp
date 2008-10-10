@@ -36,14 +36,14 @@ class CXWay;
  */
 class CXWay {
 private:
-	t_uint64		m_ID;				///< oiu
-	E_KEYHIGHWAY	m_eHighwayType;		///< oiu
-	CXStringUTF8	m_Name;				///< oiu
-	CXStringUTF8	m_Ref;				///< oiu
-	unsigned char	m_MaxSpeed;			///< oiu 0 means no max speed
-	char			m_Layer;			///< oiu
-	bool			m_oOSMValiFailed;	///< oiu
-	TNodeBuffer		m_Nodes;			///< oiu
+	t_uint64			m_ID;				///< oiu
+	E_KEYHIGHWAY_TYPE	m_eHighwayType;		///< oiu
+	CXStringUTF8		m_Name;				///< oiu
+	CXStringUTF8		m_Ref;				///< oiu
+	unsigned char		m_MaxSpeed;			///< oiu 0 means no max speed
+	char				m_Layer;			///< oiu
+	bool				m_oOSMValiFailed;	///< oiu
+	TNodeBuffer			m_Nodes;			///< oiu
 	//-------------------------------------
 	CXWay();									///< Not used.
 	CXWay(const CXWay &);						///< Not used.
@@ -55,7 +55,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
+	CXWay(t_uint64 ID, E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -74,7 +74,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	E_KEYHIGHWAY GetHighwayType() const;
+	E_KEYHIGHWAY_TYPE GetHighwayType() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

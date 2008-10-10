@@ -44,6 +44,10 @@ void CXPenHolder::CreatePens() {
 
 	// now create pens
 	// Mapnik
+	pPens = m_Pens[e_Highway_Fading];
+	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xB0, 0xB0, 0xB0));
+	pPens->m_pSegm		= NULL;
+
 	pPens = m_Pens[e_Highway_Unknown];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
@@ -136,13 +140,13 @@ void CXPenHolder::DestroyPens() {
 }
 
 //-------------------------------------
-CXPen *CXPenHolder::GetPenBg(E_KEYHIGHWAY HighwayType) {
+CXPen *CXPenHolder::GetPenBg(E_KEYHIGHWAY_TYPE HighwayType) {
 	CXPen *Result = m_Pens[HighwayType]->m_pBg;
 	return Result;
 }
 
 //-------------------------------------
-CXPen *CXPenHolder::GetPenFg(E_KEYHIGHWAY HighwayType) {
+CXPen *CXPenHolder::GetPenFg(E_KEYHIGHWAY_TYPE HighwayType) {
 	CXPen *Result = m_Pens[HighwayType]->m_pSegm;
 	return Result;
 }

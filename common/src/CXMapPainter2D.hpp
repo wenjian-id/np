@@ -74,13 +74,13 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height);
+	void DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_TYPE eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY eHighwayType, int Width, int Height);
+	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_TYPE eHighwayType, int Width, int Height);
 	//-------------------------------------
 	/**
 	 * \brief Draw map scale.

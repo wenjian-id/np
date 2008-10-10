@@ -23,7 +23,7 @@
 #include "CXWay.hpp"
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXWay::CXWay(t_uint64 ID, E_KEYHIGHWAY eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref):
+CXWay::CXWay(t_uint64 ID, E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref):
 	m_ID(ID),
 	m_eHighwayType(eHighwayType),
 	m_Name(Name),
@@ -44,7 +44,7 @@ t_uint64 CXWay::GetID() const {
 }
 
 //-------------------------------------
-E_KEYHIGHWAY CXWay::GetHighwayType() const {
+E_KEYHIGHWAY_TYPE CXWay::GetHighwayType() const {
 	return m_eHighwayType;
 }
 

@@ -368,7 +368,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(ID, static_cast<E_KEYHIGHWAY>(HighwayType), Name, Ref);
+		CXWay *pWay = new CXWay(ID, static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way

@@ -463,7 +463,7 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
 		POS Pos = pWayMap->GetStart();
 		CXWay *pWay = NULL;
 		while (pWayMap->GetNext(Pos, pWay) != TWayMap::NPOS) {
-			CXWay::E_KEYHIGHWAY Type = pWay->GetHighwayType();
+			CXWay::E_KEYHIGHWAY_TYPE Type = pWay->GetHighwayType();
 			bool oUseWay = false;
 			switch(CXOptions::Instance()->GetMode()) {
 				case CXOptions::e_ModeCar:
