@@ -135,21 +135,20 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		Bmp.DrawTextASCII(StrNSat, m_SatRect, NSatColor, BgColor);
 
 		// draw zoom level
-		int BarCount = 8;
 		int RectWidth = m_ZoomRect.GetWidth();
-		int dx = (RectWidth - (BarCount-1)) / BarCount;
+		int dx = (RectWidth - (e_ZoomLevel_Count-1)) / e_ZoomLevel_Count;
 		int BarWidth = Max(0, dx-1);
-		int LeftOffset = (RectWidth - (BarCount*dx+(BarCount-1)))/2;
+		int LeftOffset = (RectWidth - (e_ZoomLevel_Count*dx+(e_ZoomLevel_Count-1)))/2;
 		// start with rightmost bar
-		int StartOffset = LeftOffset + (BarCount-1)*dx;
+		int StartOffset = LeftOffset + (e_ZoomLevel_Count-1)*dx;
 		int BorderY = 2;
 		int MaxBarHeight = Height - BorderY;
 		tIRect r(m_ZoomRect.GetLeft() + StartOffset, 0, BarWidth, MaxBarHeight);
 		int ZoomLevel = CXOptions::Instance()->GetZoomLevel();
 		CXRGB BarOnColor(0x00, 0xFF, 0x00);
 		CXRGB BarOffColor(0x00, 0x7F, 0x00);
-		for(int i=0; i<BarCount; i++) {
-			int BarHeight = (BarCount-i)*(MaxBarHeight/BarCount);
+		for(int i=0; i<e_ZoomLevel_Count; i++) {
+			int BarHeight = (e_ZoomLevel_Count-i)*(MaxBarHeight/e_ZoomLevel_Count);
 			r.SetTop(r.GetBottom() - BarHeight);
 			if(i >= ZoomLevel) {
 				Bmp.DrawRect(r, BarOnColor, BarOnColor);

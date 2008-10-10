@@ -331,6 +331,23 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
  */
 double ConvertSavedUI32(t_uint32 Value);
 
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+enum E_ZOOM_LEVEL {
+	e_ZoomLevel_0		= 0,	///< oiu
+	e_ZoomLevel_1		= 1,	///< oiu
+	e_ZoomLevel_2		= 2,	///< oiu
+	e_ZoomLevel_3		= 3,	///< oiu
+	e_ZoomLevel_4		= 4,	///< oiu
+	e_ZoomLevel_5		= 5,	///< oiu
+	e_ZoomLevel_6		= 6,	///< oiu
+	e_ZoomLevel_7		= 7,	///< oiu
+	e_ZoomLevel_Count	= 8,	///< oiu
+};
+
 // Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
 // Correctness taken from http://wiki.openstreetmap.org/index.php/Map_Features
 //-------------------------------------

@@ -70,7 +70,7 @@ CXOptions::CXOptions() :
 	m_SpeedThresholdCaching(1),
 	m_SpeedThresholdMapping(1),
 	m_GPSReceiverLag(0),
-	m_ZoomLevel(0)
+	m_ZoomLevel(e_ZoomLevel_0)
 {
 }
 
@@ -789,13 +789,13 @@ void CXOptions::SetGPSReceiverLag(int NewValue) {
 }
 
 //-------------------------------------
-unsigned char CXOptions::GetZoomLevel() const {
+E_ZOOM_LEVEL CXOptions::GetZoomLevel() const {
 	CXReadLocker RL(&m_RWLock);
 	return m_ZoomLevel;
 }
 
 //-------------------------------------
-void CXOptions::SetZoomLevel(unsigned char NewValue) {
+void CXOptions::SetZoomLevel(E_ZOOM_LEVEL NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_ZoomLevel = NewValue;
 }

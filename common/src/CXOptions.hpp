@@ -115,7 +115,7 @@ private:
 	double				m_SpeedThresholdCaching;		///< oiu
 	double				m_SpeedThresholdMapping;		///< oiu
 	int					m_GPSReceiverLag;				///< oiu
-	unsigned char		m_ZoomLevel;					///< oiu
+	E_ZOOM_LEVEL		m_ZoomLevel;					///< oiu
 	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -718,13 +718,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	unsigned char GetZoomLevel() const;
+	E_ZOOM_LEVEL GetZoomLevel() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetZoomLevel(unsigned char NewValue);
+	void SetZoomLevel(E_ZOOM_LEVEL NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

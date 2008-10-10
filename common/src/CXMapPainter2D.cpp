@@ -793,19 +793,19 @@ void CXMapPainter2D::UpdateZoomLevel() {
 	snprintf(buf, sizeof(buf), "m_MeterPerPixel = %.2f\n", m_MeterPerPixel);
 	DoOutputDebugString(buf);
 	if(m_MeterPerPixel <= 4)
-		CXOptions::Instance()->SetZoomLevel(0);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_0);
 	else if(m_MeterPerPixel <= 8)
-		CXOptions::Instance()->SetZoomLevel(1);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_1);
 	else if(m_MeterPerPixel <= 14)
-		CXOptions::Instance()->SetZoomLevel(2);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_2);
 	else if(m_MeterPerPixel <= 25)
-		CXOptions::Instance()->SetZoomLevel(3);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_3);
 	else if(m_MeterPerPixel <= 50)
-		CXOptions::Instance()->SetZoomLevel(4);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_4);
 	else if(m_MeterPerPixel <= 100)
-		CXOptions::Instance()->SetZoomLevel(5);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_5);
 	else if(m_MeterPerPixel <= 220)
-		CXOptions::Instance()->SetZoomLevel(6);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_6);
 	else
-		CXOptions::Instance()->SetZoomLevel(7);
+		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_7);
 }
