@@ -90,6 +90,8 @@ private:
 	t_uint64			m_DebugInfo;					///< Holder for debug info flags.
 	int					m_InfoBarBottomHeight;			///< oiu
 	int					m_InfoBarTopHeight;				///< oiu
+	int					m_InfoBarCommonWidth;			///< oiu
+	int					m_InfoBarCommonHeight;			///< oiu
 	int					m_MaxSpeedSize;					///< oiu
 	int					m_CompassSize;					///< oiu
 	size_t				m_TrackLogSize;					///< oiu
@@ -116,6 +118,9 @@ private:
 	double				m_SpeedThresholdMapping;		///< oiu
 	int					m_GPSReceiverLag;				///< oiu
 	E_ZOOM_LEVEL		m_ZoomLevel;					///< oiu
+	int					m_POIFontSize;					///< oiu
+	int					m_ScaleFontSize;				///< oiu
+	int					m_DebugFontSize;				///< oiu
 	mutable CXRWLock	m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -220,6 +225,30 @@ public:
 	 *
 	 */
 	void SetInfoBarTopHeight(int Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetInfoBarCommonWidth() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetInfoBarCommonWidth(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetInfoBarCommonHeight() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetInfoBarCommonHeight(int NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -725,6 +754,42 @@ public:
 	 *
 	 */
 	void SetZoomLevel(E_ZOOM_LEVEL NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetPOIFontSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetPOIFontSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetScaleFontSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetScaleFontSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetDebugFontSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetDebugFontSize(int NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

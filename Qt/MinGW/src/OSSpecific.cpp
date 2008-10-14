@@ -26,3 +26,10 @@
 void TriggerWatchdog() {
 	/// \todo implement
 }
+
+//-------------------------------------
+size_t GetFreeMem() {
+	MEMORYSTATUS MS;
+	GlobalMemoryStatus(&MS);
+	return MS.dwAvailPhys;
+}

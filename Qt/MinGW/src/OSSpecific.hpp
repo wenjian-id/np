@@ -25,6 +25,8 @@
 
 #include <windows.h>
 
+#include "TargetIncludes.hpp"
+
 #ifndef PATHDELIMITER
 #define PATHDELIMITER '\\'
 #endif
@@ -35,5 +37,12 @@
  *
  */
 void TriggerWatchdog();
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+size_t GetFreeMem();
 
 #endif // __OSSPECIFIC_HPP__

@@ -23,6 +23,8 @@
 #ifndef __OSSPECIFIC_HPP__
 #define __OSSPECIFIC_HPP__
 
+#include "TargetIncludes.hpp"
+
 #ifndef PATHDELIMITER
 #define PATHDELIMITER '/'
 #endif
@@ -33,5 +35,12 @@
  *
  */
 void TriggerWatchdog();
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+size_t GetFreeMem();
 
 #endif // __OSSPECIFIC_HPP__

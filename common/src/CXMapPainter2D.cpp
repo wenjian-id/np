@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #include "CXMapPainter2D.hpp"
-#include "Utils.hpp"
+#include "OSSpecific.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXExactTime.hpp"
 #include "CXOptions.hpp"
@@ -383,6 +383,9 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 	if(pBMP == NULL)
 		return;
 
+	// set font
+	pBMP->SetFont(CXOptions::Instance()->GetScaleFontSize(), false);
+
 	// get scale dimensions
 	int ScaleWidth = CXOptions::Instance()->GetScaleWidth();
 	int ScaleHeight = CXOptions::Instance()->GetScaleHeight();
@@ -493,10 +496,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXExactTime StopDrawTime;
 
-	CXExactTime StopGetMapSections;
-	CXExactTime StopLock;
 	CXExactTime StopDrawWays;
-	CXExactTime StopUnlock;
 	CXExactTime StopTrackLog;
 	CXExactTime StopScale;
 	CXExactTime StopCompass;
@@ -510,7 +510,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// compute coordinate
 	double dLon = 0;
 	double dLat = 0;
-	if(CXOptions::Instance()->MustSnapToWay()) {
+	if(pOpt->MustSnapToWay()) {
 		// get coordinates from locator
 		dLon = NaviData.GetLocatedCoor().GetLon();
 		dLat = NaviData.GetLocatedCoor().GetLat();
@@ -581,10 +581,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	double dLatMax = Max(Max(dLatTL, dLatTR), Max(dLatBL, dLatBR));
 
 	// now get map sections currently visible
-	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, CXOptions::Instance()->GetZoomLevel(), TMMap);
+	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, pOpt->GetZoomLevel(), TMMap);
 	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSections(Descr);
-
-	StopGetMapSections.SetNow();
 
 	size_t idx=0;
 	// lock and prepare map sections
@@ -606,8 +604,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			LockedMapSections[idx] = false;
 		}
 	}
-
-	StopLock.SetNow();
 
 	// draw layer for layer to avoid artefacts on map section borders
 	MapSectionSize = MapSections.GetSize();
@@ -650,7 +646,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		}
 	}
 	// now draw POIs
-	if(CXOptions::Instance()->MustShowPOIs()) {
+	// set font size for POIs
+	pBMP->SetFont(pOpt->GetPOIFontSize(), false);
+	if(pOpt->MustShowPOIs()) {
 		// iterate through map sections
 		for(size_t idx=0; idx<MapSectionSize; idx++) {
 			if(LockedMapSections[idx]) {
@@ -663,7 +661,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			}
 		}
 	}
-	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawMapSectionBorders)) {
+	if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawMapSectionBorders)) {
 		// draw border
 		MapSectionSize = MapSections.GetSize();
 		for(idx=0; idx<MapSectionSize; idx++) {
@@ -709,22 +707,20 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		}
 	}
 	
-	StopUnlock.SetNow();
-
 	// draw TrackLog if neccessary
-	if(CXOptions::Instance()->MustShowTrackLog()) {
+	if(pOpt->MustShowTrackLog()) {
 		DrawTrackLog(pBMP, TMMap);
 	}
 	StopTrackLog.SetNow();
 
 	// draw compass if necessary
-	if(CXOptions::Instance()->MustShowCompass()) {
+	if(pOpt->MustShowCompass()) {
 		DrawCompass(pBMP, TMCompass);
 	}
 	StopCompass.SetNow();
 
 	// draw scale if necessary
-	if(CXOptions::Instance()->MustShowScale()) {
+	if(pOpt->MustShowScale()) {
 		DrawScale(pBMP, Width, Height);
 	}
 	StopScale.SetNow();
@@ -737,17 +733,16 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	StopDrawTime.SetNow();
 	CXDebugInfo::Instance()->SetDrawTime(StopDrawTime - StartTime);
 
-	if(CXOptions::Instance()->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
+	if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
+		// set font
+		pBMP->SetFont(pOpt->GetDebugFontSize(), false);
 		char buf[200];
-		snprintf(	buf, sizeof(buf), "MS: %ld L:%ld Wy:%ld (%d) U:%ld TL:%ld",
-					StopGetMapSections - StartTime,
-					StopLock - StopGetMapSections,
-					StopDrawWays-StopLock, WayCount, 
-					StopUnlock-StopDrawWays,
-					StopTrackLog-StopUnlock);
+		snprintf(	buf, sizeof(buf), "Wy:%ld (%d) TL:%ld",
+					StopDrawWays-StartTime, WayCount, 
+					StopTrackLog-StopDrawWays);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-		TextRect.OffsetRect(0, CXOptions::Instance()->GetCompassSize() + 20);
+		TextRect.OffsetRect(0, pOpt->GetCompassSize() + 20);
 		int bottom = TextRect.GetBottom();
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 		snprintf(buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
@@ -756,13 +751,19 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 		bottom = TextRect.GetBottom();
-		snprintf(buf, sizeof(buf), "Zoom: %d", CXOptions::Instance()->GetZoomLevel());
+		snprintf(buf, sizeof(buf), "Zoom: %d", pOpt->GetZoomLevel());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 		bottom = TextRect.GetBottom();
 		snprintf(buf, sizeof(buf), "m/pixel: %0.2f", m_MeterPerPixel);
+		ttt = buf;
+		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
+		TextRect.OffsetRect(0, bottom);
+		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		bottom = TextRect.GetBottom();
+		snprintf(buf, sizeof(buf), "MB: %0.2f", 1.0*GetFreeMem()/1024/1024);
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);

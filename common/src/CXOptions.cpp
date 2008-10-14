@@ -56,6 +56,8 @@ CXOptions::CXOptions() :
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
+	m_InfoBarCommonWidth(65),
+	m_InfoBarCommonHeight(60),
 	m_MaxSpeedSize(61),
 	m_CompassSize(50),
 	m_TrackLogSize(0),
@@ -70,7 +72,10 @@ CXOptions::CXOptions() :
 	m_SpeedThresholdCaching(1),
 	m_SpeedThresholdMapping(1),
 	m_GPSReceiverLag(0),
-	m_ZoomLevel(e_ZoomLevel_0)
+	m_ZoomLevel(e_ZoomLevel_0),
+	m_POIFontSize(16),
+	m_ScaleFontSize(16),
+	m_DebugFontSize(16)
 {
 }
 
@@ -122,6 +127,10 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
 	SetInfoBarTopHeight(atoi(F.Get("InfoBarTopHeight", "20").c_str()));
+	// InfoBar Common Width
+	SetInfoBarCommonWidth(atoi(F.Get("InfoBarCommonWidth", "65").c_str()));
+	// InfoBar Common Height
+	SetInfoBarCommonHeight(atoi(F.Get("InfoBarCommonHeight", "60").c_str()));
 	// MaxSpeed
 	SetShowMaxSpeedFlag(F.Get("ShowMaxSpeed", "on").ToUpper() == "ON");
 	// MaxSpeed size
@@ -227,6 +236,10 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetGPSReceiverLag(atoi(F.Get("GPSReceiverLag", "0").c_str()));
 	// Watchdog
 	SetWatchdogTimeout(Max(0, 1000*atoi(F.Get("WatchdogTimeout", "0").c_str())));
+	// Font Sizes
+	SetPOIFontSize(atoi(F.Get("POIFontSize", "16").c_str()));
+	SetScaleFontSize(atoi(F.Get("ScaleFontSize", "16").c_str()));
+	SetDebugFontSize(atoi(F.Get("DebugFontSize", "16").c_str()));
 	return true;
 }
 
@@ -300,6 +313,30 @@ void CXOptions::SetInfoBarBottomHeight(int Value) {
 void CXOptions::SetInfoBarTopHeight(int Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_InfoBarTopHeight = Value;
+}
+
+//-------------------------------------
+int CXOptions::GetInfoBarCommonWidth() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_InfoBarCommonWidth;
+}
+
+//-------------------------------------
+void CXOptions::SetInfoBarCommonWidth(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_InfoBarCommonWidth = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetInfoBarCommonHeight() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_InfoBarCommonHeight;
+}
+
+//-------------------------------------
+void CXOptions::SetInfoBarCommonHeight(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_InfoBarCommonHeight = NewValue;
 }
 
 //-------------------------------------
@@ -798,4 +835,40 @@ E_ZOOM_LEVEL CXOptions::GetZoomLevel() const {
 void CXOptions::SetZoomLevel(E_ZOOM_LEVEL NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_ZoomLevel = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetPOIFontSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_POIFontSize;
+}
+
+//-------------------------------------
+void CXOptions::SetPOIFontSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_POIFontSize = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetScaleFontSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_ScaleFontSize;
+}
+
+//-------------------------------------
+void CXOptions::SetScaleFontSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_ScaleFontSize = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetDebugFontSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_DebugFontSize;
+}
+
+//-------------------------------------
+void CXOptions::SetDebugFontSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_DebugFontSize = NewValue;
 }

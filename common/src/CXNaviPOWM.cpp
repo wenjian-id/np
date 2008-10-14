@@ -357,7 +357,8 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomOutBtn.Resize(ZoomSize, ZoomSize);
 
 	/// \todo make InfoBarCommon sitze configurable (width / height)
-	int InfoBarCommonWidth = 65;
+	int InfoBarCommonWidth = CXOptions::Instance()->GetInfoBarCommonWidth();
+	int InfoBarCommonHeight = CXOptions::Instance()->GetInfoBarCommonHeight();
 	int MaxSpeedSize = CXOptions::Instance()->GetMaxSpeedSize();
 	m_InfoBarSpeedPos.SetTop(IBTH);
 	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-MaxSpeedSize);
@@ -366,9 +367,9 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_pInfoBarSpeed->Resize(m_InfoBarSpeedPos.GetWidth(), m_InfoBarSpeedPos.GetHeight());
 
 	m_InfoBarCommonPos.SetTop(IBTH);
-	m_InfoBarCommonPos.SetLeft(Width-InfoBarCommonWidth);
 	m_InfoBarCommonPos.SetRight(Width);
-	m_InfoBarCommonPos.SetBottom(IBTH+4*20);
+	m_InfoBarCommonPos.SetLeft(m_InfoBarCommonPos.GetRight()-InfoBarCommonWidth);
+	m_InfoBarCommonPos.SetBottom(m_InfoBarCommonPos.GetTop()+InfoBarCommonHeight);
 	m_pInfoBarCommon->Resize(m_InfoBarCommonPos.GetWidth(), m_InfoBarCommonPos.GetHeight());
 	DoRequestRepaint();
 }

@@ -26,3 +26,9 @@
 void TriggerWatchdog() {
 	/// \todo implement
 }
+
+//-------------------------------------
+size_t GetFreeMem() {
+	/// \todo implement
+	return 0;
+}
