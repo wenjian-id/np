@@ -38,7 +38,7 @@ static const size_t MSCACHESIZE		= 200;		///< oiu
 //-------------------------------------
 CXVisibleMapSectionDescr::CXVisibleMapSectionDescr(	double dLonMin,double dLatMin,
 													double dLonMax,double dLatMax,
-													unsigned char ZoomLevel,
+													E_ZOOM_LEVEL ZoomLevel,
 													const CXTransformationMatrix2D &TMMap) :
 	m_dLonMin(dLonMin),
 	m_dLonMax(dLonMax),
@@ -74,7 +74,7 @@ double CXVisibleMapSectionDescr::GetLatMax() const {
 }
 
 //-------------------------------------
-unsigned char CXVisibleMapSectionDescr::GetZoomLevel() const {
+E_ZOOM_LEVEL CXVisibleMapSectionDescr::GetZoomLevel() const {
 	return m_ZoomLevel;
 }
 

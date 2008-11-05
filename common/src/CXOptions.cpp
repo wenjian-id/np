@@ -167,6 +167,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// DBGDrawMapSectionBorders
 	if(F.Get("DBGDrawMapSectionBorders", "off").ToUpper() == "ON")
 		SetDebugInfoFlag(e_DBGDrawMapSectionBorders);
+	// DBGDrawPositions
+	if(F.Get("DBGDrawPositions", "off").ToUpper() == "ON")
+		SetDebugInfoFlag(e_DBGDrawPositions);
 	// mode
 	CXStringASCII Mode = F.Get("Mode", "off").ToUpper();
 	if(Mode == "CAR")

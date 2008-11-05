@@ -47,7 +47,7 @@ private:
 	double						m_dLonMax;		///< oiu.
 	double						m_dLatMin;		///< oiu
 	double						m_dLatMax;		///< oiu
-	unsigned char				m_ZoomLevel;	///< oiu
+	E_ZOOM_LEVEL				m_ZoomLevel;	///< oiu
 	CXTransformationMatrix2D	m_Matrix;		///< oiu
 	//-------------------------------------
 	CXVisibleMapSectionDescr();															///< Not used.
@@ -63,7 +63,7 @@ public:
 	 */
 	CXVisibleMapSectionDescr(	double dLonMin, double dLatMin,
 								double dLonMax, double dLatMax,
-								unsigned char ZoomLevel,
+								E_ZOOM_LEVEL ZoomLevel,
 								const CXTransformationMatrix2D &TMMap);
 	//-------------------------------------
 	/**
@@ -103,7 +103,7 @@ public:
 	 * Get zoom level.
 	 * \return	Zoom level.
 	 */
-	unsigned char GetZoomLevel() const;
+	E_ZOOM_LEVEL GetZoomLevel() const;
 };
 
 

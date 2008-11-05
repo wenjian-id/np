@@ -67,6 +67,7 @@ public:
 	enum E_DEBUGINFO {
 		e_DBGDrawTimes				= 0x0001,		///< Display drawing times.
 		e_DBGDrawMapSectionBorders	= 0x0002,		///< Display map section borders.
+		e_DBGDrawPositions			= 0x0004,		///< Display all computed positions
 	};
 private:
 	static CXOptions	*m_pInstance;					///< oiu

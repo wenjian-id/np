@@ -728,6 +728,16 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// draw current position
 	DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);
 
+	// draw computed opsitions if neccessary
+	if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawPositions)) {
+		CXCoorVector GPSCoor = TMMap*CXCoorVector(NaviData.GetGPSCoor().GetUTMEasting(), NaviData.GetGPSCoor().GetUTMNorthing());
+		CXCoorVector CorrectedGPSCoor = TMMap*CXCoorVector(NaviData.GetCorrectedGPSCoor().GetUTMEasting(), NaviData.GetCorrectedGPSCoor().GetUTMNorthing());
+		CXCoorVector LocatedCoor = TMMap*CXCoorVector(NaviData.GetLocatedCoor().GetUTMEasting(), NaviData.GetLocatedCoor().GetUTMNorthing());
+		pBMP->DrawCircle(GPSCoor.GetIntX(), GPSCoor.GetIntY(), 3, CXRGB(0x00, 0x00, 0x00), CXRGB(0xFF, 0x00, 0x00));
+		pBMP->DrawCircle(CorrectedGPSCoor.GetIntX(), CorrectedGPSCoor.GetIntY(), 3, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+		pBMP->DrawCircle(LocatedCoor.GetIntX(), LocatedCoor.GetIntY(), 3, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0x00, 0xFF));
+	}
+
 	StopPos.SetNow();
 
 	StopDrawTime.SetNow();
