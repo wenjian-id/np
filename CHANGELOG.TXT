@@ -2,6 +2,7 @@ Version 0.2.0:
  - fixed bugs:
    - 1900169: QT Threading Assert Failure in r85
    - 1978789: DEMO mode doesn't accept absolute file paths to NMEA log file
+   - 2263120: Black display on less than 32 bit color depth
  - implemented feature requests:
    - 1834080: Start with last GPS position
    - 1834980: WM: send "still alive" to OS.

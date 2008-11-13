@@ -54,7 +54,7 @@ bool CXBitmap::Create(CXDeviceContext *pDC, int Width, int Height) {
 	m_hDC = CreateCompatibleDC(pDC->GetDC());
 	if(m_hDC != NULL) {
 		// create new bitmap
-		m_hBMP = ::CreateBitmap(GetWidth(), GetHeight(), 1, 32, NULL);
+		m_hBMP = ::CreateCompatibleBitmap(pDC->GetDC(), GetWidth(), GetHeight());
 		// and select it
 		::SelectObject(m_hDC, m_hBMP);
 	} else {
