@@ -38,8 +38,8 @@ class CXTransformationMatrix2D;
  */
 class CXNode {
 private:
-	t_uint64	m_ID;			///< ID of node.
 	CXCoor		m_Coor;			///< Coordinate of node
+	bool		m_oTerminator;	///< oiu
 	int			m_DisplayX;		///< X coordinate on display [pixel];
 	int			m_DisplayY;		///< Y coordinate on display [pixel];
 	//-------------------------------------
@@ -53,11 +53,11 @@ public:
 	 * \brief Constructor.
 	 *
 	 *	Constructor.
-	 *	\param	ID		ID of node.
-	 *	\param	Lon		Longitude of node [deg].
-	 *	\param	Lat		Latitude of node [deg].
+	 *	\param	oTerminator		Terminator node?.
+	 *	\param	Lon				Longitude of node [deg].
+	 *	\param	Lat				Latitude of node [deg].
 	 */
-	CXNode(t_uint64 ID, double Lon, double Lat);
+	CXNode(bool oTerminator, double Lon, double Lat);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -67,12 +67,12 @@ public:
 	virtual ~CXNode();
 	//-------------------------------------
 	/**
-	 * \brief Get ID.
+	 * \brief Check if node is terminator node.
 	 *
-	 *	Get ID.
-	 *	\return		ID
+	 *	Check if node is terminator node.
+	 *	\return		true if terminator node
 	 */
-	t_uint64 GetID() const;
+	bool IsTerminator() const;
 	//-------------------------------------
 	/**
 	 * \brief Get longitude.
@@ -147,8 +147,6 @@ public:
 	void SetDisplayY(int Y);
 };
 
-typedef CXMapHashSimple<t_uint64, CXNode *>		TNodeMap;		///< oiu
-typedef CXPOSMapHashSimple<t_uint64>			TPOSNodeMap;	///< oiu
 typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
 
 
@@ -173,11 +171,10 @@ public:
 	 * \brief Constructor.
 	 *
 	 *	Constructor.
-	 *	\param	ID		ID of node.
 	 *	\param	Lon		Longitude of node [deg].
 	 *	\param	Lat		Latitude of node [deg].
 	 */
-	CXPOINode(t_uint64 ID, double Lon, double Lat);
+	CXPOINode(double Lon, double Lat);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -228,8 +225,6 @@ public:
 	CXStringUTF8 GetName() const;
 };
 
-typedef CXMapHashSimple<t_uint64, CXPOINode *>		TPOINodeMap;		///< oiu
-typedef CXPOSMapHashSimple<t_uint64>				TPOSPOINodeMap;		///< oiu
 typedef CXBuffer<CXPOINode *>						TPOINodeBuffer;		///< oiu
 
 #endif // __CXNODE_HPP__

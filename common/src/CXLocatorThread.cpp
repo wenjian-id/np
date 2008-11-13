@@ -315,9 +315,9 @@ void CXLocatorThread::OnThreadLoop() {
 			t_uint64 ID = 0;
 			if(Locate(ID)) {
 				m_NaviData.SetLocated(true);
-				m_NaviData.SetWayID(ID);
 				/// \todo implement
 /*
+				m_NaviData.SetWayID(ID);
 				pPOWMMap->LockMap();
 				CXStringUTF8 Name;
 				CXStringUTF8 Ref;

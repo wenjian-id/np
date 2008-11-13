@@ -25,9 +25,9 @@
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXNode::CXNode(t_uint64 ID, double dLon, double dLat) :
-	m_ID(ID),
-	m_Coor(dLon, dLat)
+CXNode::CXNode(bool oTerminator, double dLon, double dLat) :
+	m_Coor(dLon, dLat),
+	m_oTerminator(oTerminator)
 {
 }
 
@@ -36,8 +36,8 @@ CXNode::~CXNode() {
 }
 
 //-------------------------------------
-t_uint64 CXNode::GetID() const {
-	return m_ID;
+bool CXNode::IsTerminator() const {
+	return m_oTerminator;
 }
 
 //-------------------------------------
@@ -87,8 +87,8 @@ void CXNode::SetDisplayY(int Y) {
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXPOINode::CXPOINode(t_uint64 ID, double Lon, double Lat) :
-	CXNode(ID, Lon, Lat)
+CXPOINode::CXPOINode(double Lon, double Lat) :
+	CXNode(false, Lon, Lat)
 {
 }
 

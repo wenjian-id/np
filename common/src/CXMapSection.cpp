@@ -123,36 +123,34 @@ CXMapSection::CXMapSection() :
 	m_UTMZone(UTMZoneNone)
 {
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
-		m_WayMapBuffer.Append(NULL);
+		m_LayeredWayBuffer.Append(NULL);
 	}
 }
 
 //-------------------------------------
 CXMapSection::~CXMapSection() {
 	// delete nodes
-	CXNode *pNode = NULL;
-	TPOSNodeMap PosN = m_NodeMap.GetStart();
-	while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+	size_t Size = m_Nodes.GetSize();
+	for(size_t idx = 0; idx < Size; idx++) {
+		CXNode *pNode = m_Nodes[idx];
 		if(pNode != NULL)
 			delete pNode;
 	}
-	m_NodeMap.RemoveAll();
 	// delete ways
-	size_t cnt = m_WayMapBuffer.GetSize();
+	size_t cnt = m_LayeredWayBuffer.GetSize();
 	for(size_t i=0; i<cnt; i++) {
-		TWayMap *pWayMap = m_WayMapBuffer[i];
-		if(pWayMap != NULL) {
-			TPOSWayMap PosW = pWayMap->GetStart();
-			CXWay *pWay = NULL;
-			while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
+		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[i];
+		if(pWayBuffer != NULL) {
+			size_t Size = pWayBuffer->GetSize();
+			for(size_t i=0; i<Size; i++) {
+				CXWay *pWay = (*pWayBuffer)[i];
 				if(pWay != NULL)
 					delete pWay;
 			}
-			pWayMap->RemoveAll();
-			delete pWayMap;
+			delete pWayBuffer;
 		}
 	}
-	m_WayMapBuffer.Clear();
+	m_LayeredWayBuffer.Clear();
 }
 
 //-------------------------------------
@@ -180,20 +178,6 @@ void CXMapSection::SetTOC(const CXTOCMapSection &TOC) {
 //-------------------------------------
 const TPOINodeBuffer & CXMapSection::GetPOINodeMap() const {
 	return m_POINodes;
-}
-
-//-------------------------------------
-CXWay *CXMapSection::GetWay(t_uint64 ID) {
-	CXWay *Result = NULL;
-	size_t cnt = m_WayMapBuffer.GetSize();
-	for(size_t i=0; i<cnt; i++) {
-		TWayMap *pWayMap = m_WayMapBuffer[i];
-		if(pWayMap != NULL) {
-			if(pWayMap->Lookup(ID, Result))
-				return Result;
-		}
-	}
-	return NULL;
 }
 
 //-------------------------------------
@@ -280,20 +264,19 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		DoOutputErrorMessage("Error reading POICount");
 		return false;
 	}
+	m_POINodes.Resize(POICount);
 	for(t_uint32 ulPOI=0; ulPOI<POICount; ulPOI++) {
-		// read node: IDX, LON, LAT
-		t_uint64 ID = 0;
+		// read node
 		unsigned char POICount = 0;
 		t_uint32 Lon = 0; 
 		t_uint32 Lat = 0;
-		ReadUI64(InFile, ID);
 		ReadUI32(InFile, Lon);
 		ReadUI32(InFile, Lat);
 		// compute lon
 		double dLon = ConvertSavedUI32(Lon);
 		double dLat = ConvertSavedUI32(Lat);
 		// create POI node
-		CXPOINode *pPOINode = new CXPOINode(ID, dLon, dLat);
+		CXPOINode *pPOINode = new CXPOINode(dLon, dLat);
 		// read POI type stuff
 		ReadB(InFile, POICount);
 		for(t_uint32 cnt = 0; cnt < POICount; cnt++) {
@@ -308,8 +291,8 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		ReadStringUTF8(InFile, Name);
 		pPOINode->SetName(Name);
 
-		// add node to POI map
-		m_POINodes.Append(pPOINode);
+		// add node to POI buffer
+		m_POINodes[ulPOI] = pPOINode;
 	}
 	// read nodes
 	t_uint32 NodeCount = 0;
@@ -317,12 +300,13 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		DoOutputErrorMessage("Error reading NodeCount");
 		return false;
 	}
+	m_Nodes.Resize(NodeCount);
 	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
 		// read node: IDX, LON, LAT
-		t_uint64 ID = 0;
 		t_uint32 Lon = 0; 
 		t_uint32 Lat = 0;
-		ReadUI64(InFile, ID);
+		unsigned char IsTerminator = 0;
+		ReadB(InFile, IsTerminator);
 		ReadUI32(InFile, Lon);
 		ReadUI32(InFile, Lat);
 
@@ -331,10 +315,10 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		double dLat = ConvertSavedUI32(Lat);
 
 		// create node
-		CXNode *pNode = new CXNode(ID, dLon, dLat);
+		CXNode *pNode = new CXNode((IsTerminator != 0), dLon, dLat);
 
-		// add node to node map
-		m_NodeMap.SetAt(ID, pNode);
+		// and to m_Nodes
+		m_Nodes[ulNode] = pNode;
 	}
 
 	// way count
@@ -343,16 +327,14 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		DoOutputErrorMessage("Error reading WayCount");
 		return false;
 	}
-	CXMapHashSimple<char, TWayMap *> Ways;
+	CXMapHashSimple<char, TWayBuffer *> Ways;
 	// read ways
 	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
-		t_uint64 ID = 0;
 		unsigned char HighwayType = 0;
 		CXStringUTF8 Name;
 		CXStringUTF8 Ref;
 		unsigned char MaxSpeed = 0;
-		ReadUI64(InFile, ID);
 		ReadB(InFile, HighwayType);
 //		ReadStringUTF8(InFile, Name);
 //		ReadStringUTF8(InFile, Ref);
@@ -368,36 +350,34 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(ID, static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
+		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way
-		TWayMap *pWayMap = NULL;
-		if(!Ways.Lookup(Layer, pWayMap)) {
-			Ways.SetAt(Layer, new TWayMap());
+		TWayBuffer *pWayBuffer = NULL;
+		if(!Ways.Lookup(Layer, pWayBuffer)) {
+			Ways.SetAt(Layer, new TWayBuffer());
 		}
-		Ways.Lookup(Layer, pWayMap);
-		pWayMap->SetAt(ID, pWay);
+		Ways.Lookup(Layer, pWayBuffer);
+		pWayBuffer->Append(pWay);
 		// 
 		t_uint32 NodeCount = 0;
 		ReadUI32(InFile, NodeCount);
 		for(t_uint32 ul=0; ul<NodeCount; ul++) {
-			t_uint64 SegID = 0;
-			ReadUI64(InFile, SegID);
-			CXNode *pNode = NULL;
-			if(!m_NodeMap.Lookup(SegID, pNode))
-				continue;
+			t_uint32 Idx = 0;
+			ReadUI32(InFile, Idx);
+			CXNode *pNode = m_Nodes[Idx];
 			pWay->AddNode(pNode);
 		}
 	}
 	// fill m_WayMapBuffer ordered by Layer ascending
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
-		TWayMap *pWayMap = NULL;
-		Ways.Lookup(Layer, pWayMap);
-		TWayMap *pOld = m_WayMapBuffer[Layer - MINLAYER];
+		TWayBuffer *pWayBuffer = NULL;
+		Ways.Lookup(Layer, pWayBuffer);
+		TWayBuffer *pOld = m_LayeredWayBuffer[Layer - MINLAYER];
 		if(pOld != NULL)
 			delete pOld;
-		m_WayMapBuffer[Layer - MINLAYER] = pWayMap;
+		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
 	}
 
 	return true;
@@ -405,14 +385,15 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 
 //-------------------------------------
 void CXMapSection::RunOSMVali() {
-	size_t cnt = m_WayMapBuffer.GetSize();
+	size_t cnt = m_LayeredWayBuffer.GetSize();
 	for(size_t i=0; i<cnt; i++) {
-		TWayMap *pWayMap = m_WayMapBuffer[i];
-		if(pWayMap != NULL) {
-			TPOSWayMap PosW = pWayMap->GetStart();
+		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[i];
+		if(pWayBuffer != NULL) {
 			CXWay *pWay = NULL;
 			t_uint64 eValiFlags = CXOptions::Instance()->GetOSMValiFlags();
-			while (pWayMap->GetNext(PosW, pWay) != TWayMap::NPOS) {
+			size_t Size = pWayBuffer->GetSize();
+			for(size_t idx=0; idx<Size; idx++) {
+				pWay = (*pWayBuffer)[idx];
 				bool Vali = true;
 				if(pWay != NULL) {
 					if((eValiFlags & CXOptions::e_OSMValiName) != 0) {
@@ -444,9 +425,9 @@ void CXMapSection::RunOSMVali() {
 //-------------------------------------
 void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM) {
 	// run coordinate transformation for every node
-	CXNode *pNode = NULL;
-	TPOSNodeMap PosN = m_NodeMap.GetStart();
-	while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+	size_t Size = m_Nodes.GetSize();
+	for(size_t idx = 0; idx < Size; idx++) {
+		CXNode *pNode = m_Nodes[idx];
 		if(pNode != NULL) {
 			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
 			pNode->SetDisplayX(v.GetIntX());
@@ -465,9 +446,9 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 void CXMapSection::RelocateUTM(int NewZone) {
 	if(NewZone != m_UTMZone) {
 		m_UTMZone = NewZone;
-		CXNode *pNode = NULL;
-		TPOSNodeMap PosN = m_NodeMap.GetStart();
-		while (m_NodeMap.GetNext(PosN, pNode) != TNodeMap::NPOS) {
+		size_t Size = m_Nodes.GetSize();
+		for(size_t idx = 0; idx < Size; idx++) {
+			CXNode *pNode = m_Nodes[idx];
 			if(pNode != NULL) {
 				pNode->RelocateUTM(m_UTMZone);
 			}

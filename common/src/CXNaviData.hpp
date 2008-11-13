@@ -45,7 +45,6 @@ private:
 	CXStringUTF8		m_StreetName;		///< Name of street.
 	CXStringUTF8		m_Ref;				///< Ref of street.
 	unsigned char		m_MaxSpeed;			///< Max. allowed speed.
-	t_uint64			m_WayID;			///< ID of last located way.
 	bool				m_oLocated;			///< Is located on a way or not.
 	mutable CXRWLock	m_RWLock;			///< Synchronization object.
 	//-------------------------------------
@@ -197,18 +196,6 @@ public:
 	 *
 	 */
 	void SetMaxSpeed(unsigned char MaxSpeed);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	t_uint64 GetWayID() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetWayID(t_uint64);
 	//-------------------------------------
 	/**
 	 * \brief oiu

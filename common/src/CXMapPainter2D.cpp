@@ -195,7 +195,7 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 	bool oTerminator = false;
 	for(size_t i=0; i<NodeCount; i++) {
 		CXNode *pNode = pWay->GetNode(i);
-		oTerminator = (pNode->GetID() == ID_NODE_TERMINATOR);
+		oTerminator = (pNode->IsTerminator());
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
 		if(!oTerminator && !oLastWasTerminator) {
@@ -613,12 +613,13 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 				CXMapSection *pMapSection = MapSections[idx].GetPtr();
 				if(pMapSection != NULL) {
 					// prepare drawing
-					TWayMap *pWayMap = pMapSection->GetWayMap(Layer);
-					if(pWayMap != NULL) {
-						TPOSWayMap pos = pWayMap->GetStart();
+					TWayBuffer *pWayBuffer = pMapSection->GetWayBuffer(Layer);
+					if(pWayBuffer != NULL) {
 						CXWay *pWay = NULL;
 						//draw ways
-						while (pWayMap->GetNext(pos, pWay) != TWayMap::NPOS) {
+						size_t ws = pWayBuffer->GetSize();
+						for(size_t w=0; w<ws; w++) {
+							pWay = (*pWayBuffer)[w];
 							if (IsWayPossiblyVisible(pWay, Width, Height)) {
 								E_KEYHIGHWAY_TYPE HighwayType = pWay->GetHighwayType();
 								m_DrawWays[HighwayType]->Append(pWay);
@@ -740,9 +741,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	StopPos.SetNow();
 
-	StopDrawTime.SetNow();
-	CXDebugInfo::Instance()->SetDrawTime(StopDrawTime - StartTime);
-
 	if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
 		// set font
 		pBMP->SetFont(pOpt->GetDebugFontSize(), false);
@@ -779,6 +777,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		TextRect.OffsetRect(0, bottom);
 		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
 	}
+
+	StopDrawTime.SetNow();
+	CXDebugInfo::Instance()->SetDrawTime(StopDrawTime - StartTime);
 }
 
 //-------------------------------------

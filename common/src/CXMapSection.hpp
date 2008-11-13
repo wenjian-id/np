@@ -152,9 +152,9 @@ class CXMapSection {
 private:
 	E_LOADING_STATUS		m_eLoadStatus;			///< oiu
 	int						m_UTMZone;				///< oiu
-	TNodeMap				m_NodeMap;				///< Map with all nodes.
-	TPOINodeBuffer			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_NodeMap.
-	CXBuffer<TWayMap *>		m_WayMapBuffer;			///< Ways sorted by layer.
+	TNodeBuffer				m_Nodes;				///< Map with all nodes.
+	TPOINodeBuffer			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_Nodes.
+	CXBuffer<TWayBuffer *>	m_LayeredWayBuffer;		///< Ways sorted by layer.
 	CXTOCMapSection			m_TOC;					///< oiu
 	// synchronisation
 	mutable CXMutex			m_Mutex;				///< Synchronization object.
@@ -216,12 +216,6 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXWay *GetWay(t_uint64 ID);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	void RunOSMVali();
 	//-------------------------------------
 	/**
@@ -250,8 +244,8 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	TWayMap *GetWayMap(char Layer) {
-		return m_WayMapBuffer[Layer-MINLAYER];
+	TWayBuffer *GetWayBuffer(char Layer) {
+		return m_LayeredWayBuffer[Layer-MINLAYER];
 	}
 	//-------------------------------------
 	/**

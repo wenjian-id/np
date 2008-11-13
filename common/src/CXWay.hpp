@@ -36,7 +36,6 @@ class CXWay;
  */
 class CXWay {
 private:
-	t_uint64			m_ID;				///< oiu
 	E_KEYHIGHWAY_TYPE	m_eHighwayType;		///< oiu
 	CXStringUTF8		m_Name;				///< oiu
 	CXStringUTF8		m_Ref;				///< oiu
@@ -55,7 +54,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXWay(t_uint64 ID, E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
+	CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -63,12 +62,6 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXWay();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	t_uint64 GetID() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -143,8 +136,6 @@ public:
 	void SetOSMVali(bool NewValue);
 };
 
-typedef CXMapHashSimple<t_uint64, CXWay *>		TWayMap;		///< oiu
-typedef CXPOSMapHashSimple<t_uint64>			TPOSWayMap;		///< oiu
 typedef CXBuffer<CXWay *>						TWayBuffer;		///< oiu
 
 #endif // __CXPOWMMAP_HPP__

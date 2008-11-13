@@ -30,7 +30,6 @@ CXNaviData::CXNaviData() :
 	m_oFix(false),
 	m_dHeight(0.0),
 	m_MaxSpeed(0),
-	m_WayID(0),
 	m_oLocated(false)
 {
 }
@@ -64,7 +63,6 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	m_StreetName		= rOther.m_StreetName;
 	m_Ref				= rOther.m_Ref;
 	m_MaxSpeed			= rOther.m_MaxSpeed;
-	m_WayID				= rOther.m_WayID;
 	m_oLocated			= rOther.m_oLocated;
 }
 
@@ -174,18 +172,6 @@ unsigned char CXNaviData::GetMaxSpeed() const {
 void CXNaviData::SetMaxSpeed(unsigned char MaxSpeed) {
 	CXWriteLocker WL(&m_RWLock);
 	m_MaxSpeed = MaxSpeed;
-}
-
-//-------------------------------------
-t_uint64 CXNaviData::GetWayID() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_WayID;
-}
-
-//-------------------------------------
-void CXNaviData::SetWayID(t_uint64 ID) {
-	CXWriteLocker WL(&m_RWLock);
-	m_WayID = ID;
 }
 
 //-------------------------------------
