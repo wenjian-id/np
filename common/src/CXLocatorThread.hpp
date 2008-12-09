@@ -99,7 +99,7 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	bool Locate(t_uint64 &rProxWay);
+	void Locate();
 	//-------------------------------------
 	/**
 	 * \brief oiu

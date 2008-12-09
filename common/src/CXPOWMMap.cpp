@@ -26,57 +26,6 @@
 #include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXTransformationMatrix.hpp"
-#include "CXMapLoaderThread.hpp"
-
-#include <math.h>
-
-static const size_t TOCCACHESIZE	= 100;		///< oiu
-static const size_t MSCACHESIZE		= 200;		///< oiu
-
-
-//----------------------------------------------------------------------------
-//-------------------------------------
-CXVisibleMapSectionDescr::CXVisibleMapSectionDescr(	double dLonMin,double dLatMin,
-													double dLonMax,double dLatMax,
-													E_ZOOM_LEVEL ZoomLevel,
-													const CXTransformationMatrix2D &TMMap) :
-	m_dLonMin(dLonMin),
-	m_dLonMax(dLonMax),
-	m_dLatMin(dLatMin),
-	m_dLatMax(dLatMax),
-	m_ZoomLevel(ZoomLevel),
-	m_Matrix(TMMap)
-{
-}
-
-//-------------------------------------
-CXVisibleMapSectionDescr::~CXVisibleMapSectionDescr() {
-}
-
-//-------------------------------------
-double CXVisibleMapSectionDescr::GetLonMin() const {
-	return m_dLonMin;
-}
-
-//-------------------------------------
-double CXVisibleMapSectionDescr::GetLatMin() const {
-	return m_dLatMin;
-}
-
-//-------------------------------------
-double CXVisibleMapSectionDescr::GetLonMax() const {
-	return m_dLonMax;
-}
-
-//-------------------------------------
-double CXVisibleMapSectionDescr::GetLatMax() const {
-	return m_dLatMax;
-}
-
-//-------------------------------------
-E_ZOOM_LEVEL CXVisibleMapSectionDescr::GetZoomLevel() const {
-	return m_ZoomLevel;
-}
 
 
 //----------------------------------------------------------------------------
@@ -84,8 +33,6 @@ CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 
 //-------------------------------------
 CXPOWMMap::CXPOWMMap() :
-	m_TOCCache(TOCCACHESIZE),
-	m_MapSectionCache(MSCACHESIZE),
 	m_pMapLoaderThread(NULL)
 {
 }
@@ -108,89 +55,6 @@ void CXPOWMMap::SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread) {
 
 
 //-------------------------------------
-CXStringASCII CXPOWMMap::GetFileNameFromCoor(double dLon, double dLat) {
-	int NameLon = static_cast<int>(floor(fabs(dLon)));
-	int NameLat = static_cast<int>(floor(fabs(dLat)));
-	char EW = 'E';
-	if(dLon < 0 )
-		EW = 'W';
-	char NS = 'N';
-	if(dLat < 0 )
-		NS = 'S';
-	char buf[100];
-	snprintf(buf, sizeof(buf), "%c%03d%c%02d.map", EW, NameLon, NS, NameLat);
-	CXStringASCII Result=CXOptions::Instance()->GetDirectoryMaps();
-	Result+=buf;
-	return Result;
-}
-
-//-------------------------------------
-t_uint32 CXPOWMMap::GetCacheKeyFromCoor(double dLon, double dLat, unsigned char ZoomLevel) {
-	int NameLon = static_cast<int>(floor(dLon));
-	int NameLat = static_cast<int>(floor(dLat));
-	while(NameLon < -180)
-		NameLon += 360;
-	NameLon += 180;
-	NameLon = NameLon % 360;	// [0 - 360]
-	while(NameLat < -90)
-		NameLat += 180;
-	NameLat += 90;
-	NameLat = NameLat % 180;	// [0 - 180]
-	t_uint32 Result = NameLon << 16;
-	Result += NameLat << 8;
-	Result += ZoomLevel;
-	return Result;
-}
-
-
-//-------------------------------------
-TMapSectionPtrArray CXPOWMMap::GetMapSections(const CXVisibleMapSectionDescr &Descr) {
-	/// \todo implement
-	CXMutexLocker L(&m_Mutex);
-	TMapSectionPtrArray Result;
-	// compute file name from coordinates
-	double dLonMin = Descr.GetLonMin();
-	double dLonMax = Descr.GetLonMax();
-	double dLatMin = Descr.GetLatMin();
-	double dLatMax = Descr.GetLatMax();
-	// increment cache counters
-	m_TOCCache.IncrementCounters();
-	// load all TOCMapContainer between 
-	CXBuffer<CXTOCMapSection*> MapSectionTOCs;
-	for(double dLon = dLonMin; dLon < dLonMax+1; dLon++) {
-		for(double dLat = dLatMin; dLat < dLatMax+1; dLat++) {
-			t_uint32 CacheKey = GetCacheKeyFromCoor(dLon, dLat, Descr.GetZoomLevel());
-			// get TOCMapContainer from cache
-			TTOCMapContainerPtr TOCMapContainerPtr = m_TOCCache.GetAt(CacheKey);
-			CXTOCMapContainer *pTOC = TOCMapContainerPtr.GetPtr();
-			if(pTOC->GetLoadStatus() == e_LSNotLoaded) {
-				// load TOC for map container at a specific zoom level
-				CXStringASCII FileName = GetFileNameFromCoor(dLon, dLat);
-				m_pMapLoaderThread->LoadTOCMapContainer(TOCMapContainerPtr, FileName, Descr.GetZoomLevel(), CacheKey);
-			}
-			// get fiting map sections from this container for specific zoom level
-			tDRect Rect(Descr.GetLonMin(), Descr.GetLatMin(), Descr.GetLonMax() - Descr.GetLonMin(), Descr.GetLatMax() - Descr.GetLatMin());
-			pTOC->GetMapSections(Rect, MapSectionTOCs);
-		}
-	}
-	// OK we now have the map section TOCs
-	// increment cache counters for map sections
-	m_MapSectionCache.IncrementCounters();
-	// check to see which have to be loaded in MapSectionCache
-	size_t cnt = MapSectionTOCs.GetSize();
-	for(size_t i=0; i<cnt; i++) {
-		CXTOCMapSection *pTOC = MapSectionTOCs[i];
-		if(pTOC != NULL) {
-			TMapSectionPtr MapSectionPtr = m_MapSectionCache.GetAt(pTOC->GetUID());
-			CXMapSection *pS = MapSectionPtr.GetPtr();
-			if(pS->GetLoadStatus() == e_LSNotLoaded) {
-				pS->SetTOC(*pTOC);
-				m_pMapLoaderThread->LoadMapSection(MapSectionPtr);
-			}
-			Result.Append(MapSectionPtr);
-			delete pTOC;
-			MapSectionTOCs[i] = NULL;
-		}
-	}
-	return Result;
+TMapSectionPtrArray CXPOWMMap::GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr) {
+	return m_pMapLoaderThread->GetMapSectionsDisplay(Descr);
 }

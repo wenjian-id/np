@@ -581,8 +581,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	double dLatMax = Max(Max(dLatTL, dLatTR), Max(dLatBL, dLatBR));
 
 	// now get map sections currently visible
-	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, pOpt->GetZoomLevel(), TMMap);
-	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSections(Descr);
+	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, pOpt->GetZoomLevel());
+	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSectionsDisplay(Descr);
 
 	size_t idx=0;
 	// lock and prepare map sections
@@ -656,7 +656,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 				CXMapSection *pMapSection = MapSections[idx].GetPtr();
 				if(pMapSection != NULL) {
 					// draw POIs
-					const TPOINodeBuffer &POINodes = pMapSection->GetPOINodeMap();
+					const TPOINodeBuffer &POINodes = pMapSection->GetPOINodes();
 					DrawPOIs(pBMP, POINodes, Width, Height);
 				}
 			}

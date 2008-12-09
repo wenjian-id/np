@@ -83,7 +83,7 @@ void CXTOCMapContainer::SetLoadStatus(E_LOADING_STATUS eStatus) {
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomLevel, t_uint32 Key) {
+bool CXTOCMapContainer::Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key) {
 	CXWriteLocker WL(&m_RWLock);
 	// set loaded flag
 	SetLoadStatus(e_LSLoading);
@@ -156,7 +156,7 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, unsigned char ZoomL
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile, t_uint32 Key) {
+bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel) {
 	t_uint32 MagicCode = 0;
 	t_uint32 ReqMagicCode = ('Z' << 24) + ('O' << 16) + ('O' << 8) + 'M';
 	if(!ReadUI32(rFile, MagicCode))
@@ -207,33 +207,33 @@ bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile, t_uint32 Key) {
 		return false;
 	} else {
 		// current version
-		Result = LoadTOCZoom_CurrentVersion(rFile, Key);
+		Result = LoadTOCZoom_CurrentVersion(rFile, Key, ZoomLevel);
 	}
 	return Result;
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel, t_uint32 Key) {
+bool CXTOCMapContainer::LoadTOCMapContainer_CurrentVersion(CXFile & rFile, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key) {
 	t_uint32 TOCZOOMCount = 0;
 	// read count and check it
 	if(!ReadUI32(rFile, TOCZOOMCount))
 		return false;
-	if(ZoomLevel >= TOCZOOMCount)
+	if((t_uint32)ZoomLevel >= TOCZOOMCount)
 		return false;
 	// read offset for specific zoom level
 	t_uint32 Offset = 0;
-	for(t_uint32 i=0; i<=ZoomLevel; i++)
+	for(t_uint32 i=0; i<=(t_uint32)ZoomLevel; i++)
 		if(!ReadUI32(rFile, Offset))
 			return false;
 	// now jump to offset
 	if(rFile.Seek(Offset) != CXFile::E_OK)
 		return false;
 	// and load toc for specific zoom level
-	return LoadTOCZoom(rFile, Key);
+	return LoadTOCZoom(rFile, Key, ZoomLevel);
 }
 
 //-------------------------------------
-bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key) {
+bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel) {
 	t_uint32 TOCSectionWidth = 0;
 	t_uint32 TOCSectionHeight = 0;
 	t_uint32 tmp = 0;
@@ -270,7 +270,7 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key)
 			double dLonMax = dLonMin + 1.0/TOCSectionWidth;
 			double dLatMax = dLatMin + 1.0/TOCSectionHeight;
 			// append to array
-			m_pTOCSections[i][j] = new CXTOCMapSection(Key64, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset);
+			m_pTOCSections[i][j] = new CXTOCMapSection(Key64, ZoomLevel, dLonMin, dLonMax, dLatMin, dLatMax, m_FileName, Offset);
 		}
 	}
 	return true;

@@ -40,6 +40,7 @@
 class CXTOCMapSection {
 private:
 	t_uint64		m_UID;			///< oiu
+	E_ZOOM_LEVEL	m_ZoomLevel;	///< oiu
 	double			m_dLonMin;		///< oiu
 	double			m_dLonMax;		///< oiu
 	double			m_dLatMin;		///< oiu
@@ -67,7 +68,8 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax, 
+	CXTOCMapSection(t_uint64 UID, E_ZOOM_LEVEL	m_ZoomLevel,
+					double dLonMin, double dLonMax, 
 					double dLatMin, double dLatMax, 
 					const CXStringASCII & FileName, t_uint32 Offset);
 	//-------------------------------------
@@ -100,6 +102,12 @@ public:
 	 *
 	 */
 	t_uint64 GetUID() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_ZOOM_LEVEL GetZoomLevel() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -150,11 +158,11 @@ typedef CXArray<TTOCMapSectionPtr> TTOCMapSectionPtrArray;
  */
 class CXMapSection {
 private:
-	E_LOADING_STATUS		m_eLoadStatus;			///< oiu
 	int						m_UTMZone;				///< oiu
 	TNodeBuffer				m_Nodes;				///< Map with all nodes.
 	TPOINodeBuffer			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_Nodes.
 	CXBuffer<TWayBuffer *>	m_LayeredWayBuffer;		///< Ways sorted by layer.
+	E_LOADING_STATUS		m_eLoadStatus;			///< oiu
 	CXTOCMapSection			m_TOC;					///< oiu
 	// synchronisation
 	mutable CXMutex			m_Mutex;				///< Synchronization object.
@@ -172,6 +180,13 @@ private:
 	 */
 	bool LoadMap_CurrentVersion(CXFile & InFile);
 protected:
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	const TNodeBuffer &GetNodes() const;
 public:
 	//-------------------------------------
 	/**
@@ -204,7 +219,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	const TPOINodeBuffer & GetPOINodeMap() const;
+	const TPOINodeBuffer & GetPOINodes() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -217,12 +232,6 @@ public:
 	 *
 	 */
 	void RunOSMVali();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -244,14 +253,6 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	TWayBuffer *GetWayBuffer(char Layer) {
-		return m_LayeredWayBuffer[Layer-MINLAYER];
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	CXTOCMapSection GetTOC() const;
 	//-------------------------------------
 	/**
@@ -265,6 +266,20 @@ public:
 	 *
 	 */
 	void RelocateUTM(int NewZone);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	TWayBuffer *GetWayBuffer(char Layer) {
+		return m_LayeredWayBuffer[Layer-MINLAYER];
+	}
 };
 
 typedef CXSmartPtr<CXMapSection> TMapSectionPtr;

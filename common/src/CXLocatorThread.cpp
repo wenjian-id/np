@@ -312,34 +312,8 @@ void CXLocatorThread::OnThreadLoop() {
 			if(oHasFix && CXOptions::Instance()->MustShowTrackLog()) {
 				CXTrackLog::Instance()->AddCoordinate(dLon, dLat);
 			}
-			t_uint64 ID = 0;
-			if(Locate(ID)) {
-				m_NaviData.SetLocated(true);
-				/// \todo implement
-/*
-				m_NaviData.SetWayID(ID);
-				pPOWMMap->LockMap();
-				CXStringUTF8 Name;
-				CXStringUTF8 Ref;
-				unsigned char MaxSpeed = 0;
-				CXWay *pWay = pPOWMMap->GetWay(ID);
-				if(pWay != NULL) {
-					Name = pWay->GetName();
-					Ref = pWay->GetRef();
-					MaxSpeed = pWay->GetMaxSpeed();
-				}
-				m_NaviData.SetStreetName(Name);
-				m_NaviData.SetRef(Ref);
-				m_NaviData.SetMaxSpeed(MaxSpeed);
-				pPOWMMap->UnlockMap();
-*/
-			} else {
-				m_NaviData.SetLocated(false);
-				m_NaviData.SetStreetName("");
-				m_NaviData.SetRef("");
-				m_NaviData.SetMaxSpeed(0);
-			}
-
+			// locate 
+			Locate();
 		}
 		if(m_pNaviPOWM != NULL)
 			m_pNaviPOWM->PositionChanged(m_NaviData);
@@ -412,14 +386,10 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
 
 
 //-------------------------------------
-bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
+void CXLocatorThread::Locate() {
+
 	// initialize LocatedCoor
 	m_NaviData.SetLocatedCoor(m_NaviData.GetCorrectedGPSCoor());
-
-/*
-	/// \todo implement
-	CXExactTime StartTime;
-	StartTime.SetNow();
 
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
     // The received coordinate is defined by P(x0, y0).
@@ -442,164 +412,229 @@ bool CXLocatorThread::Locate(t_uint64 &rProxWay) {
     double dSquareDist = 0;		// distance from x0,y0 to segment
     double dCos = 0;			// cosinus of angle between vector Node1->P and Node1->Node2
 
-	CXPOWMMap *pPOWMMap = CXPOWMMap::Instance();
-    pPOWMMap->LockMap();
-
-	char UTMLetter = 0;
-	double x0 = 0;
-	double y0 = 0;
-	int NewZone = UTMZoneNone;
-
-	int CurrentZone = pPOWMMap->GetCurrentZone();
 	double dLon = m_NaviData.GetCorrectedGPSCoor().GetLon();
 	double dLat = m_NaviData.GetCorrectedGPSCoor().GetLat();
-	LLtoUTM(WGS84, dLon, dLat, CurrentZone, NewZone, UTMLetter, x0, y0);
+	double dLonMin = dLon - 0.01;
+	double dLonMax = dLon + 0.01;
+	double dLatMin = dLat - 0.01;
+	double dLatMax = dLat + 0.01;
 
-    // Iterrate through ways
-	CXBuffer<TWayMap *> &Ways = pPOWMMap->GetWayMap();
-	size_t cnt = Ways.GetSize();
-	for(size_t i=0; i<cnt; i++) {
-		TWayMap *pWayMap = Ways[i];
-		POS Pos = pWayMap->GetStart();
-		CXWay *pWay = NULL;
-		while (pWayMap->GetNext(Pos, pWay) != TWayMap::NPOS) {
-			CXWay::E_KEYHIGHWAY_TYPE Type = pWay->GetHighwayType();
-			bool oUseWay = false;
-			switch(CXOptions::Instance()->GetMode()) {
-				case CXOptions::e_ModeCar:
-				{
-					oUseWay =	(Type == CXWay::e_Highway_Motorway) ||
-								(Type == CXWay::e_Highway_MotorwayLink) ||
-								(Type == CXWay::e_Highway_Trunk) ||
-								(Type == CXWay::e_Highway_TrunkLink) ||
-								(Type == CXWay::e_Highway_Primary) ||
-								(Type == CXWay::e_Highway_PrimaryLink) ||
-								(Type == CXWay::e_Highway_Secondary) ||
-								(Type == CXWay::e_Highway_Tertiary) ||
-								(Type == CXWay::e_Highway_Unclassified) ||
-								(Type == CXWay::e_Highway_Residential) ||
-								(Type == CXWay::e_Highway_Service) ||
-								(Type == CXWay::e_Highway_LivingStreet);
-					break;
-				}
-				case CXOptions::e_ModeBike:
-				{
-					// oiu todo
-					oUseWay =	(Type == CXWay::e_Highway_Motorway) ||
-								(Type == CXWay::e_Highway_MotorwayLink) ||
-								(Type == CXWay::e_Highway_Trunk) ||
-								(Type == CXWay::e_Highway_TrunkLink) ||
-								(Type == CXWay::e_Highway_Primary) ||
-								(Type == CXWay::e_Highway_PrimaryLink) ||
-								(Type == CXWay::e_Highway_Secondary) ||
-								(Type == CXWay::e_Highway_Tertiary) ||
-								(Type == CXWay::e_Highway_Unclassified) ||
-								(Type == CXWay::e_Highway_Track) ||
-								(Type == CXWay::e_Highway_Residential) ||
-								(Type == CXWay::e_Highway_Service) ||
-								(Type == CXWay::e_Highway_Cycleway) ||
-								(Type == CXWay::e_Highway_Footway) ||
-								(Type == CXWay::e_Highway_Pedestrian) ||
-								(Type == CXWay::e_Highway_Steps) ||
-								(Type == CXWay::e_Highway_LivingStreet);
+	// compute UTM coordinates
+	char UTMLetterCurrent = 0;
+	double x0 = 0;
+	double y0 = 0;
+	int UTMZoneCurrent = UTMZoneNone;
+	LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, x0, y0);
 
-					break;
-				}
-				case CXOptions::e_ModePedestrian:
-				{
-					// take all ways except "unknown"
-					oUseWay = (Type != CXWay::e_Highway_Unknown);
-					break;
-				}
-				case CXOptions::e_ModeCaching:
-				{
-					// take all ways except "unknown"
-					oUseWay = (Type != CXWay::e_Highway_Unknown);
-					break;
-				}
-				case CXOptions::e_ModeMapping:
-				{
-					// take all ways except "unknown"
-					oUseWay = (Type != CXWay::e_Highway_Unknown);
-					break;
-				}
-			}
-			if(oUseWay) {
-				size_t NodeCount = pWay->GetNodeCount();
-				// start with 1
-				for(size_t i=1; i<NodeCount; i++) {
-					// get first node
-					pNode1 = pWay->GetNode(i-1);
-					// get second node
-					pNode2 = pWay->GetNode(i);
-    				// get coordinates
-    				Node1x = pNode1->GetUTME();
-    				Node1y = pNode1->GetUTMN();
-    				Node2x = pNode2->GetUTME();
-    				Node2y = pNode2->GetUTMN();
+	// now get map sections for locator thread
+	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, e_ZoomLevel_0);
+	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSectionsDisplay(Descr);
 
-					// mx distance from endpoints to current position is 1000 m
-					double dMax = 1000;
-					if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
-						(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
-					{
-    					// compute SqSegLen
-    					SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
-    					// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
-    					if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
-    						// compute cos of angle
-        					dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
-    						if(dCos<0) {
-    							// projection of P on segment lies before Node1 so take Node1
-    							PSx = Node1x;
-    							PSy = Node1y;
-    						} else if (dCos>1) {
-    							// projection of P on segment lies after Node2 so take Node2
-    							PSx = Node2x;
-    							PSy = Node2y;
-    						} else {
-    							// projection of P on segment lies between Node1 and Node2
-    							PSx = Node1x + dCos*(Node2x-Node1x);
-    							PSy = Node1y + dCos*(Node2y-Node1y);
-    						}
-    					} else {
-    						// segment too short, so we take Node1
-    						dCos=0;
-    						PSx = Node1x;
-    						PSy = Node1y;
-    					}
-    					// compute square distance between P and PS
-    					dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
-    
-    					// check if new best fit
-    					if(first || (dSquareDist < dSquareMinDist)) {
-							first = false;
-    						// yes
-    						dSquareMinDist = dSquareDist;
-    						rProxWay = pWay->GetID();
-							PSProxx = PSx;
-							PSProxy = PSy;
-    					}
+	size_t idx=0;
+	// lock and prepare map sections
+	CXBuffer<bool> LockedMapSections;
+	LockedMapSections.Resize(MapSections.GetSize());
+	size_t MapSectionSize = MapSections.GetSize();
+	for(idx=0; idx<MapSectionSize; idx++) {
+		CXMapSection *pMapSection = MapSections[idx].GetPtr();
+		if(pMapSection->GetLoadStatus() == e_LSLoaded) {
+			// lock
+			pMapSection->Lock();
+			// relocate
+			pMapSection->RelocateUTM(UTMZoneCurrent);
+			CXTrackLog::Instance()->RelocateUTM(UTMZoneCurrent);
+			LockedMapSections[idx] = true;
+		} else {
+			LockedMapSections[idx] = false;
+		}
+	}
+
+	CXExactTime StartTime;
+	StartTime.SetNow();
+
+	CXWay *pProxWay = NULL;
+	MapSectionSize = MapSections.GetSize();
+	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
+		for(size_t idx=0; idx<MapSectionSize; idx++) {
+			if(LockedMapSections[idx]) {
+				CXMapSection *pMapSection = MapSections[idx].GetPtr();
+				if(pMapSection != NULL) {
+					// prepare locator
+					TWayBuffer *pWayBuffer = pMapSection->GetWayBuffer(Layer);
+					if(pWayBuffer != NULL) {
+						CXWay *pWay = NULL;
+						//iterate through ways
+						size_t ws = pWayBuffer->GetSize();
+						for(size_t w=0; w<ws; w++) {
+							pWay = (*pWayBuffer)[w];
+
+							E_KEYHIGHWAY_TYPE Type = pWay->GetHighwayType();
+							bool oUseWay = false;
+							switch(CXOptions::Instance()->GetMode()) {
+								case CXOptions::e_ModeCar:
+								{
+									oUseWay =	(Type == e_Highway_Motorway) ||
+												(Type == e_Highway_MotorwayLink) ||
+												(Type == e_Highway_Trunk) ||
+												(Type == e_Highway_TrunkLink) ||
+												(Type == e_Highway_Primary) ||
+												(Type == e_Highway_PrimaryLink) ||
+												(Type == e_Highway_Secondary) ||
+												(Type == e_Highway_Tertiary) ||
+												(Type == e_Highway_Unclassified) ||
+												(Type == e_Highway_Residential) ||
+												(Type == e_Highway_Service) ||
+												(Type == e_Highway_LivingStreet);
+									break;
+								}
+								case CXOptions::e_ModeBike:
+								{
+									// oiu todo
+									oUseWay =	(Type == e_Highway_Motorway) ||
+												(Type == e_Highway_MotorwayLink) ||
+												(Type == e_Highway_Trunk) ||
+												(Type == e_Highway_TrunkLink) ||
+												(Type == e_Highway_Primary) ||
+												(Type == e_Highway_PrimaryLink) ||
+												(Type == e_Highway_Secondary) ||
+												(Type == e_Highway_Tertiary) ||
+												(Type == e_Highway_Unclassified) ||
+												(Type == e_Highway_Track) ||
+												(Type == e_Highway_Residential) ||
+												(Type == e_Highway_Service) ||
+												(Type == e_Highway_Cycleway) ||
+												(Type == e_Highway_Footway) ||
+												(Type == e_Highway_Pedestrian) ||
+												(Type == e_Highway_Steps) ||
+												(Type == e_Highway_LivingStreet);
+
+									break;
+								}
+								case CXOptions::e_ModePedestrian:
+								{
+									// take all ways except "unknown"
+									oUseWay = (Type != e_Highway_Unknown);
+									break;
+								}
+								case CXOptions::e_ModeCaching:
+								{
+									// take all ways except "unknown"
+									oUseWay = (Type != e_Highway_Unknown);
+									break;
+								}
+								case CXOptions::e_ModeMapping:
+								{
+									// take all ways except "unknown"
+									oUseWay = (Type != e_Highway_Unknown);
+									break;
+								}
+							}
+							if(oUseWay) {
+								size_t NodeCount = pWay->GetNodeCount();
+								// start with 1
+								for(size_t i=1; i<NodeCount; i++) {
+									// get first node
+									pNode1 = pWay->GetNode(i-1);
+									// get second node
+									pNode2 = pWay->GetNode(i);
+    								// get coordinates
+    								Node1x = pNode1->GetUTME();
+    								Node1y = pNode1->GetUTMN();
+    								Node2x = pNode2->GetUTME();
+    								Node2y = pNode2->GetUTMN();
+
+									// mx distance from endpoints to current position is 1000 m
+									double dMax = 1000;
+									if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
+										(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
+									{
+    									// compute SqSegLen
+    									SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
+    									// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
+    									if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
+    										// compute cos of angle
+        									dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
+    										if(dCos<0) {
+    											// projection of P on segment lies before Node1 so take Node1
+    											PSx = Node1x;
+    											PSy = Node1y;
+    										} else if (dCos>1) {
+    											// projection of P on segment lies after Node2 so take Node2
+    											PSx = Node2x;
+    											PSy = Node2y;
+    										} else {
+    											// projection of P on segment lies between Node1 and Node2
+    											PSx = Node1x + dCos*(Node2x-Node1x);
+    											PSy = Node1y + dCos*(Node2y-Node1y);
+    										}
+    									} else {
+    										// segment too short, so we take Node1
+    										dCos=0;
+    										PSx = Node1x;
+    										PSy = Node1y;
+    									}
+    									// compute square distance between P and PS
+    									dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
+
+    									// check if new best fit
+    									if(first || (dSquareDist < dSquareMinDist)) {
+											first = false;
+    										// yes
+    										dSquareMinDist = dSquareDist;
+    										pProxWay = pWay;
+											PSProxx = PSx;
+											PSProxy = PSy;
+    									}
+									}
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 	}
 
-	pPOWMMap->UnlockMap();
-
 	CXExactTime StopTime;
 	StopTime.SetNow();
-
 	CXDebugInfo::Instance()->SetLocatorTime(StopTime-StartTime);
 
+	bool Located = false;
     if(first || (dSquareMinDist > SQUARE_MAXDIST)) {
     	// nothing found or too far from a way.
-    	return false;
-    }
+    	Located = false;
+    } else {
+		Located = true;
+	}
 
-	UTMtoLL(WGS84, PSProxx, PSProxy, CurrentZone, UTMLetter, dLon, dLat);
-	m_NaviData.SetLocatedCoor(CXCoor(dLon, dLat));
-*/
-	return true;
+	if(Located && (pProxWay != NULL)) {
+  		m_NaviData.SetLocated(true);
+		UTMtoLL(WGS84, PSProxx, PSProxy, UTMZoneCurrent, UTMLetterCurrent, dLon, dLat);
+		m_NaviData.SetLocatedCoor(CXCoor(dLon, dLat));
+		/// \todo implement
+		CXStringUTF8 Name;
+		CXStringUTF8 Ref;
+		unsigned char MaxSpeed = 0;
+		Name = pProxWay->GetName();
+		Ref = pProxWay->GetRef();
+		MaxSpeed = pProxWay->GetMaxSpeed();
+		m_NaviData.SetStreetName(Name);
+		m_NaviData.SetRef(Ref);
+		m_NaviData.SetMaxSpeed(MaxSpeed);
+	} else {
+		m_NaviData.SetLocated(false);
+		m_NaviData.SetStreetName("");
+		m_NaviData.SetRef("");
+		m_NaviData.SetMaxSpeed(0);
+	}
+
+	// unlockmap sections
+	for(idx=0; idx<MapSections.GetSize(); idx++) {
+		if(LockedMapSections[idx]) {
+			CXMapSection *pMapSection = MapSections[idx].GetPtr();
+			// unlock
+			pMapSection->Unlock();
+		}
+	}
+
 }

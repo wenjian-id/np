@@ -41,9 +41,10 @@ CXTOCMapSection::CXTOCMapSection() :
 }
 
 //-------------------------------------
-CXTOCMapSection::CXTOCMapSection(t_uint64 UID, double dLonMin, double dLonMax, 
+CXTOCMapSection::CXTOCMapSection(t_uint64 UID, E_ZOOM_LEVEL ZoomLevel, double dLonMin, double dLonMax, 
 								 double dLatMin, double dLatMax, const CXStringASCII & FileName, t_uint32 Offset):
 	m_UID(UID),
+	m_ZoomLevel(ZoomLevel),
 	m_dLonMin(dLonMin),
 	m_dLonMax(dLonMax),
 	m_dLatMin(dLatMin),
@@ -72,6 +73,7 @@ const CXTOCMapSection & CXTOCMapSection::operator = (const CXTOCMapSection &rOth
 //-------------------------------------
 void CXTOCMapSection::CopyFrom(const CXTOCMapSection & rOther) {
 	m_UID = rOther.m_UID;
+	m_ZoomLevel = rOther.m_ZoomLevel;
 	m_dLonMin = rOther.m_dLonMin;
 	m_dLonMax = rOther.m_dLonMax;
 	m_dLatMin = rOther.m_dLatMin;
@@ -84,6 +86,11 @@ void CXTOCMapSection::CopyFrom(const CXTOCMapSection & rOther) {
 //-------------------------------------
 t_uint64 CXTOCMapSection::GetUID() const {
 	return m_UID;
+}
+
+//-------------------------------------
+E_ZOOM_LEVEL CXTOCMapSection::GetZoomLevel() const {
+	return m_ZoomLevel;
 }
 
 //-------------------------------------
@@ -119,8 +126,8 @@ t_uint32 CXTOCMapSection::GetOffset() const{
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapSection::CXMapSection() :
-	m_eLoadStatus(e_LSNotLoaded),
-	m_UTMZone(UTMZoneNone)
+	m_UTMZone(UTMZoneNone),
+	m_eLoadStatus(e_LSNotLoaded)
 {
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
 		m_LayeredWayBuffer.Append(NULL);
@@ -176,8 +183,13 @@ void CXMapSection::SetTOC(const CXTOCMapSection &TOC) {
 }
 
 //-------------------------------------
-const TPOINodeBuffer & CXMapSection::GetPOINodeMap() const {
+const TPOINodeBuffer & CXMapSection::GetPOINodes() const {
 	return m_POINodes;
+}
+
+//-------------------------------------
+const TNodeBuffer &CXMapSection::GetNodes() const {
+	return m_Nodes;
 }
 
 //-------------------------------------
@@ -336,9 +348,12 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		CXStringUTF8 Ref;
 		unsigned char MaxSpeed = 0;
 		ReadB(InFile, HighwayType);
-//		ReadStringUTF8(InFile, Name);
-//		ReadStringUTF8(InFile, Ref);
-//		ReadB(InFile, MaxSpeed);
+		// load locator information only in zoom level 0
+		if(m_TOC.GetZoomLevel() == e_ZoomLevel_0) {
+			ReadStringUTF8(InFile, Name);
+			ReadStringUTF8(InFile, Ref);
+			ReadB(InFile, MaxSpeed);
+		}
 		unsigned char bLayer = 0;
 		ReadB(InFile, bLayer);
 		char Layer = 0;
@@ -379,7 +394,9 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			delete pOld;
 		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
 	}
-
+	// run OSMVali only on level 0
+	if(m_TOC.GetZoomLevel() == e_ZoomLevel_0)
+		RunOSMVali();
 	return true;
 }
 
@@ -423,26 +440,6 @@ void CXMapSection::RunOSMVali() {
 }
 
 //-------------------------------------
-void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM) {
-	// run coordinate transformation for every node
-	size_t Size = m_Nodes.GetSize();
-	for(size_t idx = 0; idx < Size; idx++) {
-		CXNode *pNode = m_Nodes[idx];
-		if(pNode != NULL) {
-			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
-			pNode->SetDisplayX(v.GetIntX());
-			pNode->SetDisplayY(v.GetIntY());
-		}
-	}
-	for(size_t i=0; i<m_POINodes.GetSize(); i++) {
-		CXPOINode *pPOINode = m_POINodes[i];
-		CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
-		pPOINode->SetDisplayX(v.GetIntX());
-		pPOINode->SetDisplayY(v.GetIntY());
-	}
-}
-
-//-------------------------------------
 void CXMapSection::RelocateUTM(int NewZone) {
 	if(NewZone != m_UTMZone) {
 		m_UTMZone = NewZone;
@@ -460,13 +457,24 @@ void CXMapSection::RelocateUTM(int NewZone) {
 }
 
 
-/*
-	// check return code and do other sutff
-	if(Result) {
-		// check OSMVali
-		if(CXOptions::Instance()->GetOSMValiFlags() != 0) {
-			// run vali;
-			RunOSMVali();
+//-------------------------------------
+void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM) {
+	// run coordinate transformation for every node
+	const TNodeBuffer & Nodes = GetNodes();
+	size_t Size = Nodes.GetSize();
+	for(size_t idx = 0; idx < Size; idx++) {
+		CXNode *pNode = Nodes[idx];
+		if(pNode != NULL) {
+			CXCoorVector v = TM*CXCoorVector(pNode->GetUTME(), pNode->GetUTMN());
+			pNode->SetDisplayX(v.GetIntX());
+			pNode->SetDisplayY(v.GetIntY());
 		}
 	}
-*/
+	const TPOINodeBuffer & POINodes = GetPOINodes();
+	for(size_t i=0; i<POINodes.GetSize(); i++) {
+		CXPOINode *pPOINode = POINodes[i];
+		CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
+		pPOINode->SetDisplayX(v.GetIntX());
+		pPOINode->SetDisplayY(v.GetIntY());
+	}
+}

@@ -71,21 +71,21 @@ private:
 	 *
 	 * oiu.
 	 */
-	bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, unsigned char ZoomLevel, t_uint32 Key);
+	bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key);
 	//-------------------------------------
 	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
 	 */
-	bool LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key);
+	bool LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel);
 	//-------------------------------------
 	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
 	 */
-	bool LoadTOCZoom(CXFile & rFile, t_uint32 Key);
+	bool LoadTOCZoom(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel);
 protected:
 public:
 	//-------------------------------------
@@ -122,7 +122,7 @@ public:
 	 *
 	 * oiu.
 	 */
-	bool Load(const CXStringASCII & FileName, unsigned char ZoomLevel, t_uint32 Key);
+	bool Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key);
 	//-------------------------------------
 	/**
 	 * \brief oiu.

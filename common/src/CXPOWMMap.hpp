@@ -31,80 +31,7 @@
 #include "CXArray.hpp"
 #include "CXTransformationMatrix.hpp"
 #include "CXRect.hpp"
-#include "CXCache.hpp"
-
-
-class CXMapLoaderThread;
-
-//---------------------------------------------------------------------
-/**
- * \brief oiu
- *
- */
-class CXVisibleMapSectionDescr {
-private:
-	double						m_dLonMin;		///< oiu
-	double						m_dLonMax;		///< oiu.
-	double						m_dLatMin;		///< oiu
-	double						m_dLatMax;		///< oiu
-	E_ZOOM_LEVEL				m_ZoomLevel;	///< oiu
-	CXTransformationMatrix2D	m_Matrix;		///< oiu
-	//-------------------------------------
-	CXVisibleMapSectionDescr();															///< Not used.
-	CXVisibleMapSectionDescr(const CXVisibleMapSectionDescr &);							///< Not used.
-	const CXVisibleMapSectionDescr & operator = (const CXVisibleMapSectionDescr &);		///< Not used.
-protected:
-public:
-	//-------------------------------------
-	/**
-	 * \brief Only allowed constructor.
-	 *
-	 * Only allowed constructor.
-	 */
-	CXVisibleMapSectionDescr(	double dLonMin, double dLatMin,
-								double dLonMax, double dLatMax,
-								E_ZOOM_LEVEL ZoomLevel,
-								const CXTransformationMatrix2D &TMMap);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXVisibleMapSectionDescr();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetLonMin() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 */
-	double GetLatMin() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetLonMax() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 */
-	double GetLatMax() const;
-	//-------------------------------------
-	/**
-	 * \brief Get zoom level.
-	 *
-	 * Get zoom level.
-	 * \return	Zoom level.
-	 */
-	E_ZOOM_LEVEL GetZoomLevel() const;
-};
+#include "CXMapLoaderThread.hpp"
 
 
 //---------------------------------------------------------------------
@@ -115,26 +42,10 @@ public:
 class CXPOWMMap {
 private:
 	static CXPOWMMap						*m_pInstance;			///< oiu
-	CXCache<t_uint32, CXTOCMapContainer>	m_TOCCache;				///< oiu
-	CXCache<t_uint64, CXMapSection>			m_MapSectionCache;		///< oiu
 	CXMapLoaderThread						*m_pMapLoaderThread;	///< oiu
-	// synchronisation
-	mutable CXMutex							m_Mutex;				///< Synchronization object.
 	//-------------------------------------
 	CXPOWMMap(const CXPOWMMap &);						///< Not used.
 	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringASCII GetFileNameFromCoor(double dLon, double dLat);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	t_uint32 GetCacheKeyFromCoor(double dLon, double dLat, unsigned char ZoomLevel);
 protected:
 public:
 	//-------------------------------------
@@ -168,7 +79,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	TMapSectionPtrArray GetMapSections(const CXVisibleMapSectionDescr &Descr);
+	TMapSectionPtrArray GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr);
 };
 
 #endif // __CXPOWMMAP_HPP__
