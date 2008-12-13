@@ -28,6 +28,7 @@
 #include "Utils.hpp"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 const size_t LASTUTCBUFFERSIZE = 3;
