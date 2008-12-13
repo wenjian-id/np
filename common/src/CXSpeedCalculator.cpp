@@ -25,11 +25,12 @@
 #include "CXWriteLocker.hpp"
 #include "CoordConversion.h"
 #include "TargetIncludes.hpp"
-#include <stdio.h>
+#include "Utils.hpp"
 
+#include <stdio.h>
 #include <math.h>
 
-const double EPSILON = 0.01;
+const size_t LASTUTCBUFFERSIZE = 3;
 
 //-------------------------------------
 CXSpeedCalculator::CXSpeedCalculator(size_t BufferSize) :
@@ -156,11 +157,22 @@ void CXSpeedCalculator::SetData(const CXTimeStampData<CXCoor> &Coor) {
 
 //-------------------------------------
 void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor) {
-	if(m_LastUTC != UTC) {
+	double dUTC = atof(UTC.c_str());
+	bool oNew = true;
+	for(size_t i=0; i< m_LastUTCs.GetSize(); i++) {
+		if(fabs(m_LastUTCs[i] - dUTC) <= EPSILON) {
+			oNew = false;
+			break;
+		}
+	}
+	if(oNew) {
+		if(m_LastUTCs.GetSize() >= LASTUTCBUFFERSIZE) {
+			m_LastUTCs.RemoveAt(0);
+		}
 		// new coordinates arrived
 		SetData(Coor);
-		m_LastUTC = UTC;
 		m_oNewDataArrived = true;
+		m_LastUTCs.Append(dUTC);
 	}
 }
 
@@ -170,12 +182,22 @@ void CXSpeedCalculator::SetRMCData(const CXStringASCII &UTC, const CXTimeStampDa
 	m_eSpeedSource = e_RMC_Packet;
 	// and RMC speed
 	m_dRMCSpeed = dRMCSpeed;
-	// check if we must 
-	if(m_LastUTC != UTC) {
+	double dUTC = atof(UTC.c_str());
+	bool oNew = true;
+	for(size_t i=0; i< m_LastUTCs.GetSize(); i++) {
+		if(fabs(m_LastUTCs[i] - dUTC) <= EPSILON) {
+			oNew = false;
+			break;
+		}
+	}
+	if(oNew) {
+		if(m_LastUTCs.GetSize() >= LASTUTCBUFFERSIZE) {
+			m_LastUTCs.RemoveAt(0);
+		}
 		// new coordinates arrived
 		SetData(Coor);
-		m_LastUTC = UTC;
 		m_oNewDataArrived = true;
+		m_LastUTCs.Append(dUTC);
 	}
 }
 
@@ -194,7 +216,7 @@ void CXSpeedCalculator::ResetData() {
 	m_oNewDataArrived = false;
 	m_LastValidSpeed.Reset();
 	m_SpeedThreshold = 1;
-	m_LastUTC.Empty();
+	m_LastUTCs.Clear();
 }
 
 //-------------------------------------

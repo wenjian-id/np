@@ -44,6 +44,7 @@ const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
 const char MAXLAYER = 10;							///< oiu
 
+const double EPSILON = 0.01;
 
 //-------------------------------------
 /**

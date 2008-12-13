@@ -27,8 +27,8 @@
 #include <math.h>
 
 
-static const size_t TOCCACHESIZE		= 100;		///< oiu
-static const size_t MSDISPLAYCACHESIZE	= 200;		///< oiu
+static const size_t TOCCACHESIZE		= 20;		///< oiu
+static const size_t MSDISPLAYCACHESIZE	= 50;		///< oiu
 static const size_t MSLOCATORCACHESIZE	= 16;		///< oiu
 
 

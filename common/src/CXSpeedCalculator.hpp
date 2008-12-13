@@ -62,7 +62,7 @@ private:
 	bool						m_oNewDataArrived;	///< oiu.
 	CXUTMSpeed					m_LastValidSpeed;	///< Last valid computed speed.
 	double						m_SpeedThreshold;	///< Min speed which is recognised as "moving".
-	CXStringASCII				m_LastUTC;			///< oiu
+	CXBuffer<double>			m_LastUTCs;			///< oiu
 	// sync stuff
 	mutable CXRWLock	m_RWLock;					///< Synchronization object.
 	//-------------------------------------
