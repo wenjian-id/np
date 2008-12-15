@@ -166,6 +166,12 @@ private:
 	 *
 	 */
 	CXStringASCII GetFileNameFromCoor(double dLon, double dLat);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	TMapSectionPtrArray GetMapSectionsXYZ(const CXVisibleMapSectionDescr &Descr, CXCache<t_uint64, CXMapSection> &Cache);
 protected:
 public:
 	//-------------------------------------
@@ -212,6 +218,12 @@ public:
 	 *
 	 */
 	TMapSectionPtrArray GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	TMapSectionPtrArray GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr);
 };
 
 #endif // __CXMAPLOADERTHREAD_HPP__

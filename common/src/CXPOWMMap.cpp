@@ -52,8 +52,12 @@ void CXPOWMMap::SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread) {
 	m_pMapLoaderThread = pMapLoaderThread;
 }
 
-
 //-------------------------------------
 TMapSectionPtrArray CXPOWMMap::GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr) {
 	return m_pMapLoaderThread->GetMapSectionsDisplay(Descr);
+}
+
+//-------------------------------------
+TMapSectionPtrArray CXPOWMMap::GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr) {
+	return m_pMapLoaderThread->GetMapSectionsLocator(Descr);
 }

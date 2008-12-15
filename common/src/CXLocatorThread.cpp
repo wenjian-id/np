@@ -428,7 +428,7 @@ void CXLocatorThread::Locate() {
 
 	// now get map sections for locator thread
 	CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, e_ZoomLevel_0);
-	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSectionsDisplay(Descr);
+	TMapSectionPtrArray MapSections = CXPOWMMap::Instance()->GetMapSectionsLocator(Descr);
 
 	size_t idx=0;
 	// lock and prepare map sections

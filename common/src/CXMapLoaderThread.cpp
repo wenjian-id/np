@@ -203,9 +203,8 @@ CXStringASCII CXMapLoaderThread::GetFileNameFromCoor(double dLon, double dLat) {
 	return Result;
 }
 
-
 //-------------------------------------
-TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr) {
+TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsXYZ(const CXVisibleMapSectionDescr &Descr, CXCache<t_uint64, CXMapSection> &Cache) {
 	CXMutexLocker L(&m_CacheMutex);
 	TMapSectionPtrArray Result;
 	// compute file name from coordinates
@@ -235,13 +234,13 @@ TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsDisplay(const CXVisibleMapS
 	}
 	// OK we now have the map section TOCs
 	// increment cache counters for map sections
-	m_MapSectionDisplayCache.IncrementCounters();
+	Cache.IncrementCounters();
 	// check to see which have to be loaded in MapSectionCache
 	size_t cnt = MapSectionTOCs.GetSize();
 	for(size_t i=0; i<cnt; i++) {
 		CXTOCMapSection *pTOC = MapSectionTOCs[i];
 		if(pTOC != NULL) {
-			TMapSectionPtr MapSectionPtr = m_MapSectionDisplayCache.GetAt(pTOC->GetUID());
+			TMapSectionPtr MapSectionPtr = Cache.GetAt(pTOC->GetUID());
 			CXMapSection *pS = MapSectionPtr.GetPtr();
 			if(pS->GetLoadStatus() == e_LSNotLoaded) {
 				pS->SetTOC(*pTOC);
@@ -253,4 +252,14 @@ TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsDisplay(const CXVisibleMapS
 		}
 	}
 	return Result;
+}
+
+//-------------------------------------
+TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr) {
+	return GetMapSectionsXYZ(Descr, m_MapSectionDisplayCache);
+}
+
+//-------------------------------------
+TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr) {
+	return GetMapSectionsXYZ(Descr, m_MapSectionLocatorCache);
 }

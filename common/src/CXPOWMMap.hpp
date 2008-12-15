@@ -79,6 +79,12 @@ public:
 	 *
 	 */
 	TMapSectionPtrArray GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	TMapSectionPtrArray GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr);
 };
 
 #endif // __CXPOWMMAP_HPP__
