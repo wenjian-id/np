@@ -24,7 +24,6 @@
 #define __CXPOWMMAP_HPP__
 
 #include "Utils.hpp"
-#include "CXMutex.hpp"
 #include "CXMapSection.hpp"
 #include "CXMapContainer.hpp"
 #include "CXFile.hpp"

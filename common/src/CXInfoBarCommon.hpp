@@ -39,7 +39,9 @@ class CXStringUTF8;
  */
 class CXInfoBarCommon : public CXInfoBar {
 private:
-	CXNaviData			m_NaviData;	///< Navigation data.
+	CXNaviData			m_NaviData;			///< Navigation data.
+	int					m_TextHeightCoor;	///< oiu
+	int					m_TextHeightSpeed;	///< oiu
 	//-------------------------------------
 	CXInfoBarCommon(const CXInfoBarCommon &);						///< Not used.
 	const CXInfoBarCommon & operator = (const CXInfoBarCommon &);	///< Not used.
@@ -65,6 +67,13 @@ private:
 	 * \return			Font height.
 	 */
 	int CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	void CalcFontHeights(CXDeviceContext *pDC);
 protected:
 public:
 	//-------------------------------------

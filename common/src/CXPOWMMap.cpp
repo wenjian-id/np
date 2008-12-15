@@ -22,7 +22,6 @@
 
 #include "CXPOWMMap.hpp"
 #include "CXOptions.hpp"
-#include "CXMutexLocker.hpp"
 #include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXTransformationMatrix.hpp"

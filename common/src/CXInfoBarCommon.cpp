@@ -33,7 +33,10 @@ static const CXRGB FGCOLOR(0xff, 0xff, 0x00);
 
 
 //-------------------------------------
-CXInfoBarCommon::CXInfoBarCommon() {
+CXInfoBarCommon::CXInfoBarCommon() :
+	m_TextHeightCoor(20),
+	m_TextHeightSpeed(20)
+{
 }
 
 //-------------------------------------
@@ -64,9 +67,35 @@ int CXInfoBarCommon::CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRe
 }
 
 //-------------------------------------
+void CXInfoBarCommon::CalcFontHeights(CXDeviceContext *pDC) {
+	int Width = GetWidth();
+	int Height = GetHeight();
+	// create bitmap
+	tIRect ClientRect(0,0,Width,Height);
+	CXBitmap Bmp;
+	Bmp.Create(pDC, ClientRect.GetWidth(), ClientRect.GetHeight());
+
+	// calc coor font height
+	tIRect LonRect(0, 0, Width, Height);
+	CXStringUTF8 StrLon;
+	StrLon = "-180.99999";
+	StrLon.Append(DegUTF8, sizeof(DegUTF8));
+	m_TextHeightCoor = CalcFontHeight(Bmp, StrLon, LonRect);
+
+	// calc speed font height
+	tIRect SpeedRect(0, 0, Width, Height);
+	CXStringUTF8 StrSpeed;
+	m_TextHeightSpeed = CalcFontHeight(Bmp, "999 kmh", SpeedRect);
+}
+
+//-------------------------------------
 void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	int Width = GetWidth();
 	int Height = GetHeight();
+
+	if(SizeChanged()) {
+		CalcFontHeights(pDC);
+	}
 
 	if(!CXOptions::Instance()->MustShowLogo()) {
 
@@ -75,60 +104,50 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		CXBitmap Bmp;
 		Bmp.Create(pDC, ClientRect.GetWidth(), ClientRect.GetHeight());
 
-		// set rect
 		// draw backgound
 		Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
 
 		char buf[100];
-
-		// calc lon rect
-		tIRect LonRect(0, 0, Width, Height);
-		CXStringUTF8 StrLon;
-		StrLon = "-180.99999";
-		StrLon.Append(DegUTF8, sizeof(DegUTF8));
-		int FHLon = CalcFontHeight(Bmp, StrLon, LonRect);
 		CXCoor Coor = m_NaviData.GetGPSCoor();
 		snprintf(buf, sizeof(buf), "%0.5f", Coor.GetLon());
-		StrLon = buf;
+		CXStringUTF8 StrLon = buf;
 		StrLon.Append(DegUTF8, sizeof(DegUTF8));
-		LonRect = Bmp.CalcTextRectUTF8(StrLon, 4, 0);
-		LonRect.OffsetRect(Width - LonRect.GetRight(), 0);
-
-		// calc lat rect
-		tIRect LatRect(0, 0, Width, Height);
-		CXStringUTF8 StrLat;
 		snprintf(buf, sizeof(buf), "%0.5f", Coor.GetLat());
-		StrLat = buf;
+		CXStringUTF8 StrLat = buf;
 		StrLat.Append(DegUTF8, sizeof(DegUTF8));
-		LatRect = Bmp.CalcTextRectUTF8(StrLat, 4, 0);
-		LatRect.OffsetRect(Width - LatRect.GetRight(), LonRect.GetBottom());
-
-		// calc height rect
-		tIRect HeightRect(0, 0, Width, Height);
-		CXStringUTF8 StrHeight;
 		snprintf(buf, sizeof(buf), "%0.0f m", m_NaviData.GetHeight());
-		StrHeight = buf;
-		HeightRect = Bmp.CalcTextRectUTF8(StrHeight, 4, 0);
-		HeightRect.OffsetRect(Width - HeightRect.GetRight(), LatRect.GetBottom());
-
-		// calc speed rect
-		tIRect SpeedRect(0, 0, Width, Height);
-		CXStringUTF8 StrSpeed;
-		int FHSpeed = CalcFontHeight(Bmp, "999 kmh", SpeedRect);
+		CXStringUTF8 StrHeight = buf;
 		CXUTMSpeed UTMSpeed = m_NaviData.GetUTMSpeed();
 		int Speed = static_cast<int>(floor(3.6*UTMSpeed.GetSpeed()));
 		snprintf(buf, sizeof(buf), "%d kmh", Speed);
-		StrSpeed = buf;
-		SpeedRect = Bmp.CalcTextRectUTF8(StrSpeed, 4, 0);
+		CXStringUTF8 StrSpeed = buf;
+
+		Bmp.SetFont(m_TextHeightCoor, false);
+
+		// calc lon rect
+		tIRect LonRect = Bmp.CalcTextRectUTF8(StrLon, 4, 0);
+		LonRect.OffsetRect(Width - LonRect.GetWidth(), 0);
+
+		// calc lat rect
+		tIRect LatRect = Bmp.CalcTextRectUTF8(StrLat, 4, 0);
+		LatRect.OffsetRect(Width - LatRect.GetWidth(), LonRect.GetBottom());
+
+		// calc height rect
+		tIRect HeightRect = Bmp.CalcTextRectUTF8(StrHeight, 4, 0);
+		HeightRect.OffsetRect(Width - HeightRect.GetWidth(), LatRect.GetBottom());
+
+		Bmp.SetFont(m_TextHeightSpeed, false);
+
+		// calc speed rect
+		tIRect SpeedRect = Bmp.CalcTextRectUTF8(StrSpeed, 4, 0);
 		SpeedRect.OffsetRect(Width - SpeedRect.GetRight(), HeightRect.GetBottom());
 
-
 		// now draw data
-		Bmp.SetFont(FHLon, false);
+		Bmp.SetFont(m_TextHeightCoor, false);
 		Bmp.DrawTextUTF8(StrLon, LonRect, FGCOLOR, BGCOLOR);
 		Bmp.DrawTextUTF8(StrLat, LatRect, FGCOLOR, BGCOLOR);
 		Bmp.DrawTextUTF8(StrHeight, HeightRect, FGCOLOR, BGCOLOR);
-		Bmp.SetFont(FHSpeed, false);
+		Bmp.SetFont(m_TextHeightSpeed, false);
 		Bmp.DrawTextUTF8(StrSpeed, SpeedRect, FGCOLOR, BGCOLOR);
 
 		// blend to device context

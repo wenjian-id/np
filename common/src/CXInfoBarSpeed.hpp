@@ -25,6 +25,7 @@
 
 #include "CXInfoBar.hpp"
 #include "CXNaviData.hpp"
+#include "CXBitmap.hpp"
 
 //----------------------------------------------------------------------------
 /**
@@ -33,7 +34,10 @@
  */
 class CXInfoBarSpeed : public CXInfoBar {
 private:
-	CXNaviData			m_NaviData;	///< oiu
+	CXNaviData			m_NaviData;		///< oiu
+	CXBitmap			m_CircleBmp;	///< oiu
+	tIRect				m_TextRect;		///< oiu
+	int					m_FontSize;		///< oiu
 	//-------------------------------------
 	CXInfoBarSpeed(const CXInfoBarSpeed &);						///< Not used.
 	const CXInfoBarSpeed & operator = (const CXInfoBarSpeed &);	///< Not used.
@@ -43,6 +47,12 @@ private:
 	 *
 	 */
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void CreateBitmaps(CXDeviceContext *pDC);
 protected:
 public:
 	//-------------------------------------

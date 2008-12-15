@@ -23,7 +23,7 @@
 #ifndef __IWORKREQUESTTHREAD_HPP__
 #define __IWORKREQUESTTHREAD_HPP__
 
-#include <CXMutex.hpp>
+#include <CXRWLock.hpp>
 #include <CXThread.hpp>
 
 //---------------------------------------------------------------------
@@ -34,7 +34,7 @@
 class IWorkRequestThread : public CXThread {
 private:
 	bool				m_oWorkRequestFlag;	///< oiu
-	mutable CXMutex		m_Mutex;			///< Synchronization object.
+	mutable CXRWLock	m_RWLock;			///< Synchronization object.
 	//-------------------------------------
 	IWorkRequestThread(const IWorkRequestThread &);							///< Not used.
 	const IWorkRequestThread & operator = (const IWorkRequestThread &);		///< Not used.

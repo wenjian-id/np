@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "IWorkRequestThread.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 //-------------------------------------
 IWorkRequestThread::IWorkRequestThread() :
@@ -42,13 +43,13 @@ IWorkRequestThread::~IWorkRequestThread() {
 
 //-------------------------------------
 void IWorkRequestThread::SetWorkRequestFlag(bool NewValue) {
-	CXMutexLocker ML(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oWorkRequestFlag = NewValue;
 }
 
 //-------------------------------------
 bool IWorkRequestThread::GetWorkRequestFlag() const {
-	CXMutexLocker ML(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oWorkRequestFlag;
 }
 

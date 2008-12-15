@@ -23,7 +23,6 @@
 #ifndef __CXWAY_HPP__
 #define __CXWAY_HPP__
 
-#include "CXMutex.hpp"
 #include "CXNode.hpp"
 #include "CXStringUTF8.hpp"
 

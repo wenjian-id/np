@@ -24,7 +24,7 @@
 #define __CXINFOBAR_HPP__
 
 #include "Utils.hpp"
-#include "CXMutex.hpp"
+#include "CXRWLock.hpp"
 
 class CXDeviceContext;
 
@@ -38,7 +38,7 @@ private:
 	int					m_Width;		///< oiu
 	int					m_Height;		///< oiu
 	bool				m_oSizeChanged;	///< oiu
-	mutable CXMutex		m_Mutex;		///< Synchronization object.
+	mutable CXRWLock	m_RWLock;		///< Synchronization object.
 	//-------------------------------------
 	CXInfoBar(const CXInfoBar &);						///< Not used.
 	const CXInfoBar & operator = (const CXInfoBar &);	///< Not used.

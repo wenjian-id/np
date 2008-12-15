@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "CXInfoBar.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 //-------------------------------------
 CXInfoBar::CXInfoBar() :
@@ -37,19 +38,19 @@ CXInfoBar::~CXInfoBar() {
 
 //-------------------------------------
 int CXInfoBar::GetWidth() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_Width;
 }
 
 //-------------------------------------
 int CXInfoBar::GetHeight() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_Height;
 }
 
 //-------------------------------------
 void CXInfoBar::Resize(int Width, int Height) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_Width = Width;
 	m_Height = Height;
 	m_oSizeChanged = true;
@@ -57,7 +58,7 @@ void CXInfoBar::Resize(int Width, int Height) {
 
 //-------------------------------------
 bool CXInfoBar::SizeChanged() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oSizeChanged;
 }
 
@@ -68,7 +69,7 @@ void CXInfoBar::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	OnPaint(pDC, OffsetX, OffsetY);
 	{
 		// reset size changed flag
-		CXMutexLocker L(&m_Mutex);
+		CXWriteLocker WL(&m_RWLock);
 		m_oSizeChanged = false;
 	}
 }
@@ -80,6 +81,6 @@ E_COMMAND CXInfoBar::OnInternalMouseDown(int /*X*/, int /*Y*/) {
 
 //-------------------------------------
 E_COMMAND CXInfoBar::OnMouseDown(int X, int Y) {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return OnInternalMouseDown(X, Y);
 }
