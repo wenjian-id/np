@@ -21,7 +21,7 @@
  ***************************************************************************/
 
 #include "CXMapPainterThread.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXWriteLocker.hpp"
 #include "CXMapPainter2D.hpp"
 #include "CXMapPainterTest.hpp"
 #include "CXNaviPOWM.hpp"
@@ -43,7 +43,7 @@ CXMapPainterThread::~CXMapPainterThread() {
 
 //-------------------------------------
 void CXMapPainterThread::SetNaviPOWM(CXNaviPOWM *pNaviPOWM) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_pNaviPOWM = pNaviPOWM;
 }
 

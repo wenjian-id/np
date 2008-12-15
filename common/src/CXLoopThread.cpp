@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "CXLoopThread.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 //-------------------------------------
 CXLoopThread::CXLoopThread() :
@@ -42,13 +43,13 @@ CXLoopThread::~CXLoopThread() {
 
 //-------------------------------------
 void CXLoopThread::SetSleepTime(size_t SleepTime) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_SleepTime = SleepTime;
 }
 
 //-------------------------------------
 size_t CXLoopThread::GetSleepTime() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_SleepTime;
 }
 

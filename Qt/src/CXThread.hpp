@@ -24,7 +24,6 @@
 #define __CXTHREAD_HPP__
 
 #include <IThread.hpp>
-#include "CXMutex.hpp"
 #include <TargetIncludes.hpp>
 
 #include <qthread.h>

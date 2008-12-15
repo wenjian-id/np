@@ -23,7 +23,7 @@
 #ifndef __CXLOOPTHREAD_HPP__
 #define __CXLOOPTHREAD_HPP__
 
-#include <CXMutex.hpp>
+#include <CXRWLock.hpp>
 #include <CXThread.hpp>
 
 //----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
 class CXLoopThread : public CXThread {
 private:
 	size_t				m_SleepTime;	///< oiu
-	mutable CXMutex		m_Mutex;		///< Synchronization object.
+	mutable CXRWLock	m_RWLock;		///< Synchronization object.
 	//-------------------------------------
 	CXLoopThread(const CXLoopThread &);							///< Not used.
 	const CXLoopThread & operator = (const CXLoopThread &);		///< Not used.

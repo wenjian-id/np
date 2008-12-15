@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "IThread.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 //-------------------------------------
 IThread::IThread() :
@@ -36,25 +37,25 @@ IThread::~IThread() {
 
 //-------------------------------------
 bool IThread::MustStopThread() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oStopThread;
 }
 
 //-------------------------------------
 void IThread::StopThread() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oStopThread = true;
 }
 
 //-------------------------------------
 bool IThread::IsRunning() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oRunning;
 }
 
 //-------------------------------------
 void IThread::SetRunning(bool NewValue) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oRunning = NewValue;
 }
 

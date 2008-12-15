@@ -42,7 +42,7 @@ private:
 	CXPenHolder					m_PenHolder;			///< oiu
 	CXBuffer<TWayBuffer *>		m_DrawWays;				///< oiu
 	CXBuffer<CXBitmap *>		m_POIBMPs;				///< oiu
-	mutable CXMutex				m_Mutex;				///< Synchronization object.
+	mutable CXRWLock			m_RWLock;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.

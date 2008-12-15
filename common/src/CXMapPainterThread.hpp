@@ -25,7 +25,7 @@
 
 #include "CXNaviData.hpp"
 #include "CXWorkRequestThread.hpp"
-#include "CXMutex.hpp"
+#include "CXRWLock.hpp"
 
 class CXMapPainter;
 class CXNaviPOWM;
@@ -40,7 +40,7 @@ class CXMapPainterThread : public CXWorkRequestThread {
 private:
 	CXMapPainter		*m_pMapPainter;		///< oiu
 	CXNaviPOWM			*m_pNaviPOWM;		///< oiu
-	mutable CXMutex		m_Mutex;			///< Synchronization object.
+	mutable CXRWLock	m_RWLock;			///< Synchronization object.
 	//-------------------------------------
 	CXMapPainterThread(const CXMapPainterThread &);						///< Not used.
 	const CXMapPainterThread & operator = (const CXMapPainterThread &);	///< Not used.

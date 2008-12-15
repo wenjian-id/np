@@ -21,7 +21,8 @@
  ***************************************************************************/
 
 #include "CXMapPainter.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 #include "CXFile.hpp"
 
 //-------------------------------------
@@ -36,25 +37,25 @@ CXMapPainter::~CXMapPainter() {
 
 //-------------------------------------
 bool CXMapPainter::MustRepaint() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_oMustRepaint;
 }
 
 //-------------------------------------
 void CXMapPainter::SetMustRepaint(bool Value) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_oMustRepaint = Value;
 }
 
 //-------------------------------------
 void CXMapPainter::PositionChanged(const CXNaviData &NewNaviData) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_NaviData = NewNaviData;
 }
 
 //-------------------------------------
 CXNaviData CXMapPainter::GetPosition() const {
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	return m_NaviData;
 }
 

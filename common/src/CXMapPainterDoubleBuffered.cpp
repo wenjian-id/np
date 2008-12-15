@@ -24,7 +24,8 @@
 #include "CXDeviceContext.hpp"
 #include "CXExactTime.hpp"
 #include "CXOptions.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXReadLocker.hpp"
+#include "CXWriteLocker.hpp"
 
 #include <stdio.h>
 
@@ -44,7 +45,7 @@ CXMapPainterDoubleBuffered::~CXMapPainterDoubleBuffered() {
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::Resize(int Width, int Height) {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	m_Width = Width;
 	m_Height = Height;
 	m_Bitmap1.Destroy();
@@ -54,26 +55,30 @@ void CXMapPainterDoubleBuffered::Resize(int Width, int Height) {
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::OnDoWork() {
-	CXMutexLocker L(&m_Mutex);
-	// check if we can paint
-	if(m_pDrawBitmap != NULL) {
-		if(!m_Bitmap1.IsNull()) {
-			CXNaviData Data = GetPosition();
-			if(!CXOptions::Instance()->MustShowLogo()) {
-				// call internal painting routine, since we must not display logo
-				OnInternalPaint(m_pDrawBitmap, m_Width, m_Height);
-			}
-			// now switch buffers
-			SwitchBuffers();
-			// set flag
-			SetMustRepaint(true);
+	{
+		// start read locker
+		CXReadLocker RL(&m_RWLock);
+		// check if we can paint
+		if(m_pDrawBitmap == NULL)
+			return;
+		if(m_Bitmap1.IsNull())
+			return;
+		CXNaviData Data = GetPosition();
+		if(!CXOptions::Instance()->MustShowLogo()) {
+			// call internal painting routine, since we must not display logo
+			OnInternalPaint(m_pDrawBitmap, m_Width, m_Height);
 		}
+		// end read locker
 	}
+	// now switch buffers
+	SwitchBuffers();
+	// set flag
+	SetMustRepaint(true);
 }
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::SwitchBuffers() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	if(m_iSwitchFlag == 1) {
 		m_pDrawBitmap = &m_Bitmap2;
 		m_pFinishedBitmap = &m_Bitmap1;
@@ -102,7 +107,7 @@ void CXMapPainterDoubleBuffered::CreateBuffers(CXDeviceContext *pDC, int Width, 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	// protect from switching buffers
-	CXMutexLocker L(&m_Mutex);
+	CXReadLocker RL(&m_RWLock);
 	if(pDC == NULL)
 		return;
 	if(m_Bitmap1.IsNull()) {

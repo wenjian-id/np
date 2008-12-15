@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "CXThread.hpp"
-#include <CXMutexLocker.hpp>
 
 //-------------------------------------
 CXThread::CXThreadHelper::CXThreadHelper(CXThread *pThread) :

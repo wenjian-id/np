@@ -24,7 +24,7 @@
 #define __CXMAPPAINTER_HPP__
 
 #include "CXNaviData.hpp"
-#include "CXMutex.hpp"
+#include "CXRWLock.hpp"
 
 class CXDeviceContext;
 
@@ -37,7 +37,7 @@ class CXMapPainter {
 private:
 	CXNaviData			m_NaviData;			///< oiu
 	bool				m_oMustRepaint;		///< oiu
-	mutable CXMutex		m_Mutex;			///< Synchronization object.
+	mutable CXRWLock	m_RWLock;			///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter(const CXMapPainter &);						///< Not used.
 	const CXMapPainter & operator = (const CXMapPainter &);	///< Not used.

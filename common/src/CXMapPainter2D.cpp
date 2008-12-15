@@ -22,7 +22,7 @@
 
 #include "CXMapPainter2D.hpp"
 #include "OSSpecific.hpp"
-#include "CXMutexLocker.hpp"
+#include "CXWriteLocker.hpp"
 #include "CXExactTime.hpp"
 #include "CXOptions.hpp"
 #include "CoordConstants.h"
@@ -479,7 +479,7 @@ void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 //-------------------------------------
 void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 
 	CXExactTime StartTime;
 
@@ -784,7 +784,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 //-------------------------------------
 bool CXMapPainter2D::ZoomIn() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	double dNewMeterPerPixel = m_MeterPerPixel / ZoomFactor;
 	m_MeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
 	UpdateZoomLevel();
@@ -793,7 +793,7 @@ bool CXMapPainter2D::ZoomIn() {
 
 //-------------------------------------
 bool CXMapPainter2D::ZoomOut() {
-	CXMutexLocker L(&m_Mutex);
+	CXWriteLocker WL(&m_RWLock);
 	double dNewMeterPerPixel = m_MeterPerPixel * ZoomFactor;
 	m_MeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
 	UpdateZoomLevel();

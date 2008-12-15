@@ -23,7 +23,7 @@
 #ifndef __ITHREAD_HPP__
 #define __ITHREAD_HPP__
 
-#include <CXMutex.hpp>
+#include <CXRWLock.hpp>
 
 //---------------------------------------------------------------------
 /**
@@ -33,9 +33,9 @@
  */
 class IThread {
 private:
-	bool			m_oRunning;		///< Flag indicating if thread is running
-	bool			m_oStopThread;	///< Flag indicating that thread must stop ASAP
-	mutable CXMutex	m_Mutex;		///< Synchronization object.
+	bool				m_oRunning;		///< Flag indicating if thread is running
+	bool				m_oStopThread;	///< Flag indicating that thread must stop ASAP
+	mutable CXRWLock	m_RWLock;		///< Synchronization object.
 	//-------------------------------------
 	IThread(const IThread&);						///< Not used.
 	const IThread & operator = (const IThread&);	///< Not used.

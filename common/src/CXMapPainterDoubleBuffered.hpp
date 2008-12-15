@@ -43,7 +43,7 @@ private:
 	CXBitmap			*m_pDrawBitmap;			///< oiu
 	CXBitmap			*m_pFinishedBitmap;		///< oiu
 	int					m_iSwitchFlag;			///< oiu
-	mutable CXMutex		m_Mutex;				///< Synchronization object.
+	mutable CXRWLock	m_RWLock;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainterDoubleBuffered(const CXMapPainterDoubleBuffered &);						///< Not used.
 	const CXMapPainterDoubleBuffered & operator = (const CXMapPainterDoubleBuffered &);	///< Not used.
