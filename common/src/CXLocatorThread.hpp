@@ -30,6 +30,7 @@
 #include "CXExactTime.hpp"
 #include "CXStringASCII.hpp"
 #include "CXSpeedCalculator.hpp"
+#include "CXMutex.hpp"
 
 class CXNaviPOWM;
 

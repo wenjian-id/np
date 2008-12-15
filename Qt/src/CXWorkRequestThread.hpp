@@ -26,6 +26,7 @@
 #include <IWorkRequestThread.hpp>
 
 #include <qwaitcondition.h>
+#include <qmutex.h>
 
 //---------------------------------------------------------------------
 /**
