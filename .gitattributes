@@ -123,7 +123,7 @@ WindowsMobile/src/OSSpecific.hpp -text
 WindowsMobile/src/TargetIncludes.cpp -text
 WindowsMobile/src/TargetIncludes.hpp -text
 common/Config/navipowm.ini -text
-common/Demo/E0071N509.map -text
+common/Demo/E007N50.map -text
 common/Demo/demo01.txt -text
 common/Images/Icons20x20.xcf -text
 common/Images/MainIcon.ico -text

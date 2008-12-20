@@ -49,8 +49,6 @@ Compiling under Linux with Qt:
 4. run make 
 
 
-
-
 ======================
 Running NaviPOWM
 ======================
@@ -68,77 +66,20 @@ To work properly, NaviPOWM needs the following subdirectories (case sensitive!):
 3. Save
 
 The following files must be copied:
-1. common/Images/info.bmp to Icons/info.bmp
-2. common/Images/quit.bmp to Icons/quit.bmp
-3. common/Images/saveon.bmp to Icons/saveon.bmp
-4. common/Images/saveoff.bmp to Icons/saveoff.bmp
-5. common/Images/logo.bmp to Icons/logo.bmp
-5. common/Images/zoomin.bmp to Icons/zoomin.bmp
-5. common/Images/zoomout.bmp to Icons/zoomout.bmp
-6. common/Config/navipowm.ini to navipowm.ini
-7. and finally the executable itself
+ 1. common/Images/info.bmp to Icons/info.bmp
+ 2. common/Images/logo.bmp to Icons/logo.bmp
+ 3. common/Images/minimize.bmp to Icons/minimize.bmp
+ 4. common/Images/poi00.bmp to Icons/poi00.bmp
+ 5. common/Images/quit.bmp to Icons/quit.bmp
+ 6. common/Images/saveoff.bmp to Icons/saveoff.bmp
+ 7. common/Images/saveon.bmp to Icons/saveon.bmp
+ 8. common/Images/zoomin.bmp to Icons/zoomin.bmp
+ 9. common/Images/zoomout.bmp to Icons/zoomout.bmp
+10. common/Config/navipowm.ini to navipowm.ini
+11. and finally the executable itself
 
 
----------
-INI file:
----------
-[directories]
-DirectoryIcons -> Subdirectory with icons
-DirectoryMaps -> Subdirectory from which maps are loaded
-DirectorySave -> Subdirectory in which GPS data is saved
-
-[icons]
-LogoName -> icon for start logo
-InfoName -> icon for info button
-QuitName -> icon for quit button
-SaveOnName -> icon for save active state
-SaveOffName -> icon for save inactive state
-ZoomInName -> icon for zoom in button
-ZoomOutName -> icon for zoom out button
-
-[config]
-LogoTime -> time in ms for displaying logo when starting
-FullScreen -> if on, a frameless maximized window is used, when off a normal window is used [on/off]
-Northing -> if on, north is alway on top, else heading is on top [on/off]
-ShowZoomButtons -> if on, the zoom buttons are shown and you can zoom by clicking them [on/off]
-InfoBarBottomHeight -> please don't touch [20]
-InfoBarTopHeight -> please don't touch [20]
-ShowMaxSpeed -> if a max permitted speed is avalable it will be shown [on/off]
-MaxSpeedSize -> size of permitted speed circle in pixel 
-ShowCompass -> if on, a compas will be shown in upper left corner [on/off]
-CompassSize -> size of compass in pixel 
-
-[scale]
-ShowScale -> if on, a scale is shown in the bottom part of the screen [on/off]
-ScaleWidth -> width of scale in pixel
-ScaleHeight -> height of scale in pixel
-
-[tracklog]
-ShowTrackLog = -> if on, a tracklog is displayed in blue [on/off]
-TrackLogSize -> number of points in tracklog (FIFO). 0 shows all points.
-TrackLogMinDist -> min distance to previous point to add a point to the tracklog [m] 
-
-[OSM validation]
-OSMValiName -> if on, ways without name are displayed in red [on/off]
-OSMValiRef -> if on, ways without ref are displayed in red [on/off]
-OSMValiMaxSpeed -> if on, ways without maxspeed are displayed in red [on/off]
-
-[debug informations]
-DBGDrawTimes -> if on, debug information about drawing is dispalyed [on/off]
-
-
-[Serial port for GPS input]
-SerialPort -> serial port from which NMEA data is read.
-Here some examples:
-Windows: SerialPort = COM1;4800;8;N;1
-Windows Mobile (with trailing ':'): SerialPort = COM5:;4800;8;N;1
-Linux: SerialPort = /dev/ttyS1;9600;7;O;2
-DEMO mode: SerialPort = DEMO;demo01.txt;1
-DEMO mode: SerialPort = DEMO;demo01.txt;1000ms
-Baudrate, data bits, parity and stop bits must be configured too.
-When using DEMO mode, the first part is DEMO, followed by the filename and the
-timeout (in seconds or milliseconds) between two GGA packets. Please take a closer
-look at the used file. Make sure the provided .map file is copied(moved) to Maps!
+A description of the ini file can be found at http://navipowm.wiki.sourceforge.net/NaviPOWM
 
 
 -------------------
@@ -152,5 +93,5 @@ Operating NaviPOWM:
 3. A red floppy disk indicates "NO SAVING", a green one indicates that NaviPOWM 
    is saving all received NMEA data.
 4. The exit button terminates NaviPOWM.
-5. By clicking on the NaviPOWM icon in the top left corner a info screen is 
-   displayed. 
+5. By clicking on the number of sattelites in the top left corner a screen with
+   the position of satellites i view is displayed. 

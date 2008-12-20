@@ -4,14 +4,7 @@ copy ..\..\Qt\MinGW\Release\NaviPOWM.exe Common
 copy ..\..\common\Images\info.bmp Icons
 copy ..\..\common\Images\logo.bmp Icons
 copy ..\..\common\Images\minimize.bmp Icons
-copy ..\..\common\Images\poi1.bmp Icons
-copy ..\..\common\Images\poi2.bmp Icons
-copy ..\..\common\Images\poi3.bmp Icons
-copy ..\..\common\Images\poi4.bmp Icons
-copy ..\..\common\Images\poi5.bmp Icons
-copy ..\..\common\Images\poi6.bmp Icons
-copy ..\..\common\Images\poi7.bmp Icons
-copy ..\..\common\Images\poi8.bmp Icons
+copy ..\..\common\Images\poi00.bmp Icons
 copy ..\..\common\Images\quit.bmp Icons
 copy ..\..\common\Images\saveoff.bmp Icons
 copy ..\..\common\Images\saveon.bmp Icons
@@ -19,4 +12,4 @@ copy ..\..\common\Images\zoomin.bmp Icons
 copy ..\..\common\Images\zoomout.bmp Icons
 copy ..\..\common\Config\navipowm.ini Common
 copy ..\..\common\Demo\demo01.txt Common
-copy ..\..\common\Demo\E0071N509.map Common
+copy ..\..\common\Demo\E007N50.map Common

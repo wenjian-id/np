@@ -181,7 +181,7 @@ public:
 				}
 			}
 			// check if we can remove maximum
-			if(MaxCount > 1) {
+			if(MaxCount > 2) {
 				// now remove maximum
 				m_Values.RemoveAt(DelKey);
 				// and delete element

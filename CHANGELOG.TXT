@@ -6,6 +6,7 @@ Version 0.2.0:
  - implemented feature requests:
    - 1834080: Start with last GPS position
    - 1834980: WM: send "still alive" to OS.
+   - 1837397: Make rendering faster (esp on Pocket PCs)
    - 1957886: Snap position to nearest way
    - 1957887: Don't react on gps coordinates when vehicle is stopped
    - 2150972: Make font size for map artifacts configurable

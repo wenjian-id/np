@@ -6,7 +6,7 @@
 ; The name of the installer
 Name "NaviPOWM"
 
-!define Version "0.1.3"             ; version string
+!define Version "0.2.0"             ; version string
 
 ; Result of compiler
 OutFile "Install\NaviPOWM-MinGW-${Version}-Setup.exe"
@@ -43,7 +43,6 @@ Section "" ;start with this
     File "Common\NaviPOWM.exe"
     File "Common\NaviPOWM.INI"
     File "Common\demo01.txt"
-    File "Common\E0071N509.map"
     File "..\..\LICENSE.TXT"
     File "..\..\README.TXT"
     File "..\..\CHANGELOG.TXT"
@@ -54,14 +53,7 @@ Section "" ;start with this
     File "Icons\info.bmp"
     File "Icons\logo.bmp"
     File "Icons\minimize.bmp"
-    File "Icons\poi1.bmp"
-    File "Icons\poi2.bmp"
-    File "Icons\poi3.bmp"
-    File "Icons\poi4.bmp"
-    File "Icons\poi5.bmp"
-    File "Icons\poi6.bmp"
-    File "Icons\poi7.bmp"
-    File "Icons\poi8.bmp"
+    File "Icons\poi00.bmp"
     File "Icons\quit.bmp"
     File "Icons\saveoff.bmp"
     File "Icons\saveon.bmp"
@@ -69,10 +61,10 @@ Section "" ;start with this
     File "Icons\zoomout.bmp"
 
 
-    SetOutPath Icons 
-
     ; Maps
     CreateDirectory $INSTDIR\Maps
+    SetOutPath $INSTDIR\Maps 
+    File "Common\E007N50.map"
 
     ; Save
     CreateDirectory $INSTDIR\Save
@@ -100,20 +92,14 @@ Section "Uninstall"
     RmDir $INSTDIR\Save ; will be deleted only if empty
 
     ; Maps
+    Delete "$INSTDIR\Maps\E007N50.map"
     RmDir $INSTDIR\Maps ; will be deleted only if empty
 
     ; Icons
     Delete "$INSTDIR\Icons\info.bmp"
     Delete "$INSTDIR\Icons\logo.bmp"
     Delete "$INSTDIR\Icons\minimize.bmp"
-    Delete "$INSTDIR\Icons\poi1.bmp"
-    Delete "$INSTDIR\Icons\poi2.bmp"
-    Delete "$INSTDIR\Icons\poi3.bmp"
-    Delete "$INSTDIR\Icons\poi4.bmp"
-    Delete "$INSTDIR\Icons\poi5.bmp"
-    Delete "$INSTDIR\Icons\poi6.bmp"
-    Delete "$INSTDIR\Icons\poi7.bmp"
-    Delete "$INSTDIR\Icons\poi8.bmp"
+    Delete "$INSTDIR\Icons\poi00.bmp"
     Delete "$INSTDIR\Icons\quit.bmp"
     Delete "$INSTDIR\Icons\saveoff.bmp"
     Delete "$INSTDIR\Icons\saveon.bmp"
@@ -125,7 +111,6 @@ Section "Uninstall"
     Delete "$INSTDIR\NaviPOWM.exe"
     Delete "$INSTDIR\NaviPOWM.INI"
     Delete "$INSTDIR\demo01.txt"
-    Delete "$INSTDIR\E0071N509.map"
     Delete "$INSTDIR\LICENSE.TXT"
     Delete "$INSTDIR\README.TXT"
     Delete "$INSTDIR\CHANGELOG.TXT"

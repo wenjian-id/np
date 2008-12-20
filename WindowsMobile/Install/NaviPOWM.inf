@@ -37,18 +37,11 @@ LICENSE.TXT = 2
 README.TXT = 2
 CHANGELOG.TXT = 2
 demo01.txt = 2
-E0071N509.map = 2
+E007N50.map = 2
 info.bmp = 3
 logo.bmp = 3
 minimize.bmp = 3
-poi1.bmp = 3
-poi2.bmp = 3
-poi3.bmp = 3
-poi4.bmp = 3
-poi5.bmp = 3
-poi6.bmp = 3
-poi7.bmp = 3
-poi8.bmp = 3
+poi00.bmp = 3
 quit.bmp = 3
 saveoff.bmp = 3
 saveon.bmp = 3
@@ -68,26 +61,18 @@ Startmenu = 0,  %CE11%
 DefaultDestDir = 0, %InstallDir%
 
 [CommonFiles]
-"NaviPOWM.exe"
-"navipowm.txt"
-"LICENSE.TXT"
-"README.TXT"
-"CHANGELOG.TXT"
-"demo01.txt"
-"E0071N509.map"
+NaviPOWM.exe
+navipowm.txt
+LICENSE.TXT
+README.TXT
+CHANGELOG.TXT
+demo01.txt
 
 [Icons]
 info.bmp
 logo.bmp
 minimize.bmp
-poi1.bmp
-poi2.bmp
-poi3.bmp
-poi4.bmp
-poi5.bmp
-poi6.bmp
-poi7.bmp
-poi8.bmp
+poi00.bmp
 quit.bmp
 saveoff.bmp
 saveon.bmp
@@ -98,7 +83,7 @@ zoomout.bmp
 DELETEME.TXT
 
 [Maps]
-DELETEME.TXT
+E007N50.map
 
 [Startmenu]
 "NaviPOWM", 0, "NaviPOWM.exe"

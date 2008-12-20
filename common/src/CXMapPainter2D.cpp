@@ -49,33 +49,6 @@ static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 16;
 static const int POICOUNTVERT	= 16;
-/*
-// for revision 0.2.0 enable only following POIs
-t_uint32 Rev020POI[MaxPOITypes] = {
-									// POI1
-									CXPOINode::e_POI1_Parking |
-									CXPOINode::e_POI1_Fuel | 
-									CXPOINode::e_POI1_Restaurant | 
-									CXPOINode::e_POI1_Pub | 
-									CXPOINode::e_POI1_Hospital |
-									CXPOINode::e_POI1_Toilets,
-									// POI2
-									CXPOINode::e_POI2_PowerTower |
-									CXPOINode::e_POI2_PowerSubStation |
-									CXPOINode::e_POI2_Hotel,
-									// POI3
-									0,
-									// POI4
-									0,
-									// POI5
-									0,
-									// POI6
-									0,
-									// POI7
-									0,
-									// POI8
-									0};
-*/
 
 E_KEYHIGHWAY_TYPE Order[e_Highway_EnumCount] = {
 	e_Highway_Unknown,
