@@ -34,6 +34,7 @@ CXFileIni::~CXFileIni() {
 
 //-------------------------------------
 void CXFileIni::Clear() {
+	// cleanup
 	m_Content.RemoveAll();
 }
 
@@ -78,7 +79,7 @@ bool CXFileIni::Read(const CXStringASCII & FileName) {
 
 //-------------------------------------
 CXStringASCII CXFileIni::Get(const CXStringASCII & Key, const CXStringASCII & Default) {
-	/// \todo implement
+	// search for key and value
 	CXStringASCII Result;
 	if(m_Content.Lookup(Key.ToUpper(), Result))
 		// found something

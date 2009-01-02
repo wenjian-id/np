@@ -40,8 +40,6 @@ Qt/src/TargetIncludes.hpp -text
 /README.TXT -text
 Windows/Install/NaviPOWM.nsi -text
 Windows/Install/README.TXT -text
-Windows/Install/update.bat -text
-Windows/Install/updateqt.bat -text
 Windows/MinGW/NaviPOWM.mdsp -text
 Windows/MinGW/NaviPOWM.rc -text
 Windows/MinGW/resource.h -text

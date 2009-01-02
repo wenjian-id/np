@@ -35,7 +35,6 @@
  */
 class CXOptions {
 public:
-	void oiu(int ID, CXStringASCII WP);
 	//-------------------------------------
 	/**
 	 * \brief oiu
