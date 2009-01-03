@@ -2,7 +2,8 @@
 
 !include "MUI.nsh"
 
-!define USE_QT
+; uncomment for Qt version
+;!define USE_QT
 
 ; The name of the installer
 Name "NaviPOWM"
@@ -13,12 +14,16 @@ Name "NaviPOWM"
     !define QtDLLPath "C:\Qt\${QtVersion}\bin\"                     ; path for Qt DLLs
 !endif
 
-!define MainPath "..\.."                                            ; main path 
+!define MainPath "..\..\"                                           ; main path 
 !ifdef USE_QT
     !define ExePath "${MainPath}\Qt\MinGW\Release\"                 ; path where the executable lies
 !else
     !define ExePath "${MainPath}\Windows\MinGW\Release\"            ; path where the executable lies
 !endif
+!define ImagePath "${MainPath}\common\Images\"                      ; path with images
+!define ConfigPath "${MainPath}\common\Config\"                     ; path with config files
+!define DemoPath "${MainPath}\common\Demo\"                         ; path with demo files
+
 
 !ifdef USE_QT
     ; file names
@@ -75,8 +80,8 @@ Section "NaviPOWM (required)" SECT_NaviPOWM     ;
   
     ; Main path
     File "${ExePath}\NaviPOWM.exe"
-    File "${MainPath}\common\Config\NaviPOWM.INI"
-    File "${MainPath}\common\Demo\demo01.txt"
+    File "${ConfigPath}\NaviPOWM.INI"
+    File "${DemoPath}\demo01.txt"
     File "${MainPath}\LICENSE.TXT"
     File "${MainPath}\README.TXT"
     File "${MainPath}\CHANGELOG.TXT"
@@ -84,21 +89,21 @@ Section "NaviPOWM (required)" SECT_NaviPOWM     ;
     ; Icons
     CreateDirectory $INSTDIR\Icons
     SetOutPath $INSTDIR\Icons 
-    File "${MainPath}\common\Images\info.bmp"
-    File "${MainPath}\common\Images\logo.bmp"
-    File "${MainPath}\common\Images\minimize.bmp"
-    File "${MainPath}\common\Images\poi00.bmp"
-    File "${MainPath}\common\Images\quit.bmp"
-    File "${MainPath}\common\Images\saveoff.bmp"
-    File "${MainPath}\common\Images\saveon.bmp"
-    File "${MainPath}\common\Images\zoomin.bmp"
-    File "${MainPath}\common\Images\zoomout.bmp"
+    File "${ImagePath}\info.bmp"
+    File "${ImagePath}\logo.bmp"
+    File "${ImagePath}\minimize.bmp"
+    File "${ImagePath}\poi00.bmp"
+    File "${ImagePath}\quit.bmp"
+    File "${ImagePath}\saveoff.bmp"
+    File "${ImagePath}\saveon.bmp"
+    File "${ImagePath}\zoomin.bmp"
+    File "${ImagePath}\zoomout.bmp"
 
 
     ; Maps
     CreateDirectory $INSTDIR\Maps
     SetOutPath $INSTDIR\Maps 
-    File "${MainPath}\common\Demo\E007N50.map"
+    File "${DemoPath}\E007N50.map"
 
     ; Save
     CreateDirectory $INSTDIR\Save
@@ -181,6 +186,7 @@ Section "Uninstall"
     Delete "$INSTDIR\LICENSE.TXT"
     Delete "$INSTDIR\README.TXT"
     Delete "$INSTDIR\CHANGELOG.TXT"
+    Delete "$INSTDIR\last.gps"
     RmDir $INSTDIR ; will be deleted only if empty
 
 SectionEnd
