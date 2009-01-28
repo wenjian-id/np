@@ -53,21 +53,30 @@ CXStringASCII::CXStringASCII(const char *pcChar, size_t Len) :
 
 //-------------------------------------
 CXStringASCII::~CXStringASCII() {
+	ClearSTRBuffers();
+}
+
+//-------------------------------------
+void CXStringASCII::ClearSTRBuffers() {
 	delete [] m_pcstr;
 	m_pcstr = NULL;
 }
 
 //-------------------------------------
 const CXStringASCII & CXStringASCII::operator = (const CXStringASCII &rOther) {
-	if(this != &rOther)
+	if(this != &rOther) {
 		tCBuffer::operator = (rOther);
+		ClearSTRBuffers();
+	}
 	return *this;
 }
 
 //-------------------------------------
 const CXStringASCII & CXStringASCII::operator = (const tCBuffer &rOther) {
-	if(this != &rOther)
+	if(this != &rOther) {
 		tCBuffer::operator = (rOther);
+		ClearSTRBuffers();
+	}
 	return *this;
 }
 
@@ -84,11 +93,13 @@ bool CXStringASCII::operator != (const CXStringASCII &rOther) const {
 //-------------------------------------
 void CXStringASCII::operator += (char c) {
 	Append(c);
+	ClearSTRBuffers();
 }
 
 //-------------------------------------
 void CXStringASCII::operator += (const CXStringASCII &rOther) {
 	Append(rOther.GetBuffer(), rOther.GetSize());
+	ClearSTRBuffers();
 }
 
 //-------------------------------------
@@ -120,19 +131,28 @@ size_t CXStringASCII::ReverseFind(char cFind) const {
 
 //-------------------------------------
 void CXStringASCII::TrimLeft() {
+	size_t OldSize = GetSize();
 	while((GetSize() > 0) && ((*this)[0] == ' '))
 		DeleteFirst(1);
+	// check if size changed
+	if(OldSize != GetSize())
+		ClearSTRBuffers();
 }
 
 //-------------------------------------
 void CXStringASCII::TrimRight() {
+	size_t OldSize = GetSize();
 	while((GetSize() > 0) && ((*this)[GetSize()-1] == ' '))
 		DeleteLast(1);
+	// check if size changed
+	if(OldSize != GetSize())
+		ClearSTRBuffers();
 }
 
 //-------------------------------------
 void CXStringASCII::Empty() {
 	Clear();
+	ClearSTRBuffers();
 }
 
 //-------------------------------------
@@ -162,10 +182,11 @@ CXStringASCII CXStringASCII::ToLower() const {
 
 //-------------------------------------
 const char *CXStringASCII::c_str() const {
-	delete [] m_pcstr;
-	size_t Len = GetSize() + 1;
-	m_pcstr = new char[Len];
-	memset(m_pcstr, 0, Len);
-	memcpy(m_pcstr, GetBuffer(), GetSize());
+	if(m_pcstr == NULL) {
+		size_t Size = GetSize()+1; // + trailing 0
+		m_pcstr = new char[Size];
+		m_pcstr[Size-1] = 0;
+		memmove(m_pcstr, GetBuffer(), Size-1);
+	}
 	return m_pcstr;
 }

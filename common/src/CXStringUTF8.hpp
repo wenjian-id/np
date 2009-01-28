@@ -35,6 +35,13 @@ class  CXStringUTF8 : public tUCBuffer {
 private:
 	mutable wchar_t			*m_wbuf;	///< oiu
 	mutable unsigned char	*m_ucbuf;	///< oiu
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ClearSTRBuffers();
 protected:
 public:
 	//-------------------------------------

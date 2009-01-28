@@ -34,6 +34,13 @@
 class  CXStringASCII : public tCBuffer {
 private:
 	mutable char	*m_pcstr;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ClearSTRBuffers();
 protected:
 public:
 	//-------------------------------------

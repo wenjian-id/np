@@ -72,6 +72,11 @@ CXStringUTF8::CXStringUTF8(const char *pcChar, size_t Len) :
 
 //-------------------------------------
 CXStringUTF8::~CXStringUTF8() {
+	ClearSTRBuffers();
+}
+
+//-------------------------------------
+void CXStringUTF8::ClearSTRBuffers() {
 	delete [] m_wbuf;
 	m_wbuf = NULL;
 	delete [] m_ucbuf;
@@ -80,15 +85,19 @@ CXStringUTF8::~CXStringUTF8() {
 
 //-------------------------------------
 const CXStringUTF8 & CXStringUTF8::operator = (const CXStringUTF8 &rOther) {
-	if(this != &rOther)
+	if(this != &rOther) {
 		tUCBuffer::operator = (rOther);
+		ClearSTRBuffers();
+	}
 	return *this;
 }
 
 //-------------------------------------
 const CXStringUTF8 & CXStringUTF8::operator = (const tUCBuffer &rOther) {
-	if(this != &rOther)
+	if(this != &rOther) {
 		tUCBuffer::operator = (rOther);
+		ClearSTRBuffers();
+	}
 	return *this;
 }
 
@@ -105,6 +114,7 @@ bool CXStringUTF8::operator != (const CXStringUTF8 &rOther) {
 //-------------------------------------
 void CXStringUTF8::Empty() {
 	Clear();
+	ClearSTRBuffers();	
 }
 
 #define		MASKBITS		0x3F
@@ -114,50 +124,52 @@ void CXStringUTF8::Empty() {
 
 //-------------------------------------
 wchar_t *CXStringUTF8::w_str() const {
-	CXBuffer<wchar_t> tmp;
-
-	const unsigned char *pBuf = GetBuffer();
-
-	for(size_t i=0; i < GetSize();) {
-		wchar_t wt = 0;
-
-		// 1110xxxx 10xxxxxx 10xxxxxx
-		if((pBuf[i] & MASK3BYTES) == MASK3BYTES) {
-			wt = ((pBuf[i] & 0x0F) << 12) | ((pBuf[i+1] & MASKBITS) << 6) | (pBuf[i+2] & MASKBITS);
-			i += 3;
+	if(m_wbuf == NULL) {
+		CXBuffer<wchar_t> tmp;
+	
+		const unsigned char *pBuf = GetBuffer();
+	
+		for(size_t i=0; i < GetSize();) {
+			wchar_t wt = 0;
+	
+			// 1110xxxx 10xxxxxx 10xxxxxx
+			if((pBuf[i] & MASK3BYTES) == MASK3BYTES) {
+				wt = ((pBuf[i] & 0x0F) << 12) | ((pBuf[i+1] & MASKBITS) << 6) | (pBuf[i+2] & MASKBITS);
+				i += 3;
+			}
+			// 110xxxxx 10xxxxxx
+			else if((pBuf[i] & MASK2BYTES) == MASK2BYTES) {
+				wt = ((pBuf[i] & 0x1F) << 6) | (pBuf[i+1] & MASKBITS);
+				i += 2;
+			}
+			// 0xxxxxxx
+			else if(pBuf[i] < MASKBYTE) {
+				wt = pBuf[i];
+				i += 1;
+			}
+			else {
+				continue;
+			}
+	
+			tmp.Append(wt);
 		}
-		// 110xxxxx 10xxxxxx
-		else if((pBuf[i] & MASK2BYTES) == MASK2BYTES) {
-			wt = ((pBuf[i] & 0x1F) << 6) | (pBuf[i+1] & MASKBITS);
-			i += 2;
-		}
-		// 0xxxxxxx
-		else if(pBuf[i] < MASKBYTE) {
-			wt = pBuf[i];
-			i += 1;
-		}
-		else {
-			continue;
-		}
-
-		tmp.Append(wt);
+	
+		// convert to wchar_t.
+		size_t Size = tmp.GetSize() + 1;
+		m_wbuf = new wchar_t[Size];
+		m_wbuf[Size-1] = 0;
+		memmove(m_wbuf, tmp.GetBuffer(), tmp.GetSize()*sizeof(wchar_t));
 	}
-
-	// convert to wchar_t.
-	delete [] m_wbuf;
-	size_t Len = tmp.GetSize() + 1;
-	m_wbuf = new wchar_t[Len];
-	memset(m_wbuf, 0, Len*sizeof(wchar_t));
-	memcpy(m_wbuf, tmp.GetBuffer(), tmp.GetSize()*sizeof(wchar_t));
 	return m_wbuf;
 }
 
 //-------------------------------------
 unsigned char *CXStringUTF8::uc_str() const {
-	delete [] m_ucbuf;
-	size_t Len = GetSize() + 1;
-	m_ucbuf = new unsigned char[Len];
-	memset(m_ucbuf, 0, Len);
-	memcpy(m_ucbuf, GetBuffer(), GetSize());
+	if(m_ucbuf == NULL) {
+		size_t Size = GetSize() + 1;
+		m_ucbuf = new unsigned char[Size];
+		m_ucbuf[Size-1] = 0;
+		memmove(m_ucbuf, GetBuffer(), Size-1);
+	}
 	return m_ucbuf;
 }
