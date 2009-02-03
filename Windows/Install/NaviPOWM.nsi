@@ -10,7 +10,7 @@ Name "NaviPOWM"
 
 !define Version "0.2.1"                                             ; version string
 !ifdef USE_QT
-    !define QtVersion "4.4.0"                                       ; version of Qt
+    !define QtVersion "4.4.3"                                       ; version of Qt
     !define QtDLLPath "C:\Qt\${QtVersion}\bin\"                     ; path for Qt DLLs
 !endif
 
