@@ -322,6 +322,14 @@ void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdL
  */
 double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
 
+//-------------------------------------
+/**
+ * \brief oiu.
+ *
+ * oiu.
+ */
+void CalcAngle(const CXCoor &Coor1, const CXCoor &Coor2, double & rdCos, double &rdSin);
+
 
 //-------------------------------------
 /**

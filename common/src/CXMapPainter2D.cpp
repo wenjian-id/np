@@ -483,15 +483,23 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// compute coordinate
 	double dLon = 0;
 	double dLat = 0;
+	CXCoor Coor;
 	if(pOpt->MustSnapToWay()) {
 		// get coordinates from locator
-		dLon = NaviData.GetLocatedCoor().GetLon();
-		dLat = NaviData.GetLocatedCoor().GetLat();
+		Coor = NaviData.GetLocatedCoor();
 	} else {
 		// get gps coordinates
-		dLon = NaviData.GetCorrectedGPSCoor().GetLon();
-		dLat = NaviData.GetCorrectedGPSCoor().GetLat();
+		Coor = NaviData.GetCorrectedGPSCoor();
 	}
+	dLon = Coor.GetLon();
+	dLat = Coor.GetLat();
+
+	// calc devaition for geographic north.
+	CXCoor TmpCoor(dLon + 0.001, dLat);
+	double dCos = 0;
+	double dSin = 0;
+	CalcAngle(Coor, TmpCoor, dCos, dSin);
+
 	// compute UTM coordinates
 	char UTMLetterCurrent = 0;
 	double UTME = 0;
@@ -514,6 +522,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		yc = Height/2;
 		TMCurrentPos.Rotate(UTMSpeed.GetCos(), UTMSpeed.GetSin());
 		TMCurrentPos.Rotate(-UTMPI/2);
+		// correct for geographic north
+		TMMap.Rotate(dCos, -dSin);
+		TMCurrentPos.Rotate(dCos, -dSin);
 	} else {
 		xc = Width/2;
 		yc = 3*Height/4;
@@ -522,6 +533,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// rotate 90 to left, since 0 is east and we want it point to north
 		TMMap.Rotate(UTMPI/2);
 		TMCompass.Rotate(UTMPI/2);
+		// correct for geographic north
+		TMCompass.Rotate(dCos, -dSin);
 	}
 
 	TMMap.Scale(1.0/m_MeterPerPixel, -1.0/m_MeterPerPixel);		// do scaling (negative for y!)

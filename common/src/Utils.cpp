@@ -559,6 +559,26 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2) {
 }
 
 //-------------------------------------
+void CalcAngle(const CXCoor &Coor1, const CXCoor &Coor2, double & rdCos, double &rdSin) {
+	// check if in same UTMZone
+	double Result = 0;
+	if(Coor1.GetUTMZone() != Coor2.GetUTMZone()) {
+		// no, so create a temporary coordinate from Coor2
+		CXCoor tmp(Coor2);
+		// and relocate it to UTMZone from Coor1
+		tmp.RelocateUTM(Coor1.GetUTMZone());
+		// now compute angle
+		CalcAngle(Coor1, tmp, rdCos, rdSin);
+	} else {
+		double d = CalcDistance(Coor1, Coor2);
+		double dx = Coor2.GetUTMEasting() - Coor1.GetUTMEasting();
+		double dy = Coor2.GetUTMNorthing() - Coor1.GetUTMNorthing();
+		rdCos = dx/d;
+		rdSin = dy/d;
+	}
+}
+
+//-------------------------------------
 double ConvertSavedUI32(t_uint32 Value) {
 	double Result = 1.0;
 	if((Value & 0x80000000) != 0) {
