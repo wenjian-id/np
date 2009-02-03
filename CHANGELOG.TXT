@@ -1,6 +1,7 @@
 Version 0.2.1:
  - fixed bugs:
    - 2480626: Add needed Qt DLLs in NaviPOWM package
+   - 2458457: Make compass point to geographic north
  - implemented feature requests:
  - other:
 
