@@ -225,6 +225,7 @@ extraResourceOptions=
 78=..\..\common\src\CXNode.hpp
 79=..\..\common\src\CXWay.hpp
 80=..\..\common\src\CXMapLoaderThread.hpp
+81=..\..\common\src\CXHysterezis.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

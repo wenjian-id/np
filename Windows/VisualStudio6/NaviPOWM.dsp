@@ -250,6 +250,10 @@ SOURCE=..\..\common\src\CXGPSRecvThread.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXHysterezis.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXInfoBar.hpp
 # End Source File
 # Begin Source File

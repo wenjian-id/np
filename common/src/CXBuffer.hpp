@@ -257,12 +257,12 @@ public:
 	bool CompareBegin(const tClass *pBuf, size_t ulCount) const;
 };
 
-typedef CXBuffer<unsigned char>		tUCBuffer;
-typedef CXBuffer<char>				tCBuffer;
-typedef CXBuffer<unsigned short>	tUSBuffer;
+typedef CXBuffer<unsigned char>		tUCBuffer;									///< oiu
+typedef CXBuffer<char>				tCBuffer;									///< oiu
+typedef CXBuffer<unsigned short>	tUSBuffer;									///< oiu
 
-static const size_t BUFFER_GROWSIZE = 16;
-template<class tClass> const size_t CXBuffer<tClass> ::NPOS = ~(size_t(0));
+static const size_t BUFFER_GROWSIZE = 16;										///< oiu
+template<class tClass> const size_t CXBuffer<tClass> ::NPOS = ~(size_t(0));		///< oiu
 
 //-------------------------------------
 template<class tClass> CXBuffer<tClass> ::CXBuffer() :

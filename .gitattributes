@@ -151,6 +151,7 @@ common/src/CXFileIni.cpp -text
 common/src/CXFileIni.hpp -text
 common/src/CXGPSRecvThread.cpp -text
 common/src/CXGPSRecvThread.hpp -text
+common/src/CXHysterezis.hpp -text
 common/src/CXInfoBar.cpp -text
 common/src/CXInfoBar.hpp -text
 common/src/CXInfoBarBottom.cpp -text

@@ -39,12 +39,6 @@ private:
 	//-------------------------------------
 	const CXWindow & operator = (const CXWindow &);		///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnPaint();
 public:
 	//-------------------------------------
 	/**

@@ -30,7 +30,8 @@ static TCHAR buf[1024];
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
-	/// \todo tests
+	if(pcBuf == NULL)
+		return;
 	for(size_t i=0; i<strlen(pcBuf); i++) {
 		wsprintf(buf, _T("%c"), pcBuf[i]);
 		OutputDebugString(buf);
@@ -39,8 +40,10 @@ void DoOutputDebugString(const char *pcBuf) {
 
 //-------------------------------------
 void DoOutputErrorMessage(const char *pcBuf) {
-	/// \todo tests
-	::MessageBox(NULL, ASCII2UCS2(pcBuf, strlen(pcBuf), buf, 1024) , _T("NaviPOWM error"), MB_OK | MB_ICONERROR);
+	if(pcBuf == NULL)
+		return;
+	ASCII2UCS2(pcBuf, strlen(pcBuf), buf, 1024);
+	::MessageBox(NULL, buf, _T("NaviPOWM error"), MB_OK | MB_ICONERROR);
 }
 
 //-------------------------------------
@@ -54,22 +57,40 @@ COLORREF CXRGB2COLORREF(const CXRGB & Color) {
 }
 
 //-------------------------------------
-TCHAR *ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen) {
-	/// \todo tests
+void ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen) {
+	// do some tests
+	if(Buf == NULL)
+		return;
+	if(pcBuffer == NULL) {
+		*Buf = 0x00;
+		return;
+	}
+	if((InLen == 0) || (OutLen <= 1)) {
+		*Buf = 0x00;
+		return;
+	}
 	size_t L = Min(InLen, OutLen-1);
 	for(size_t i=0; i<L; i++)
 		Buf[i] = pcBuffer[i];
 	Buf[L] = 0x00;
-	return Buf;
 }
 
 //-------------------------------------
-char *UCS22ASCII(const TCHAR *pusBuffer, size_t InLen, char *Buf, size_t OutLen) {
-	/// \todo tests
+void UCS22ASCII(const TCHAR *pusBuffer, size_t InLen, char *Buf, size_t OutLen) {
+	// do some tests
+	if(pusBuffer == NULL) {
+		return;
+	if(Buf == NULL)
+		*Buf = 0x00;
+		return;
+	}
+	if((InLen == 0) || (OutLen <= 1)) {
+		*Buf = 0x00;
+		return;
+	}
 	size_t L = Min(InLen, OutLen-1);
 	for(size_t i=0; i<L; i++)
 		Buf[i] = (pusBuffer[i] & 0xff);
 	Buf[L] = 0x00;
-	return Buf;
 }
 

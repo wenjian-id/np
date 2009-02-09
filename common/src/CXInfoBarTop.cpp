@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXInfoBarTop.hpp"
+#include "CXPen.hpp"
 #include "CXDeviceContext.hpp"
 #include "CXStringUTF8.hpp"
 #include "CXExactTime.hpp"
@@ -147,6 +148,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		int ZoomLevel = CXOptions::Instance()->GetZoomLevel();
 		CXRGB BarOnColor(0x00, 0xFF, 0x00);
 		CXRGB BarOffColor(0x00, 0x7F, 0x00);
+		CXRGB AutomaticColor(0xFF, 0xFF, 0x00);
 		for(int i=0; i<e_ZoomLevel_Count; i++) {
 			int BarHeight = (e_ZoomLevel_Count-i)*(MaxBarHeight/e_ZoomLevel_Count);
 			r.SetTop(r.GetBottom() - BarHeight);
@@ -156,6 +158,15 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 				Bmp.DrawRect(r, BarOffColor, BarOffColor);
 			}
 			r.OffsetRect(-dx, 0);
+		}
+		if(CXOptions::Instance()->AutomaticZoom()) {
+			// draw an "A"
+			Bmp.SetPen(CXPen(CXPen::e_Solid, 1, AutomaticColor));
+			Bmp.DrawLine(m_ZoomRect.GetLeft(), Height/2, m_ZoomRect.GetLeft(), BorderY);
+			Bmp.DrawLine(m_ZoomRect.GetLeft(), BorderY, m_ZoomRect.GetLeft() + dx , BorderY);
+			Bmp.DrawLine(m_ZoomRect.GetLeft() + dx, Height/2, m_ZoomRect.GetLeft() + dx, BorderY);
+			Bmp.DrawLine(m_ZoomRect.GetLeft() + dx , BorderY, m_ZoomRect.GetLeft(), BorderY);
+			Bmp.DrawLine(m_ZoomRect.GetLeft(), BorderY + (Height/2-BorderY)/2, m_ZoomRect.GetLeft() + dx, BorderY + (Height/2-BorderY)/2);
 		}
 
 		// get current time
@@ -195,6 +206,8 @@ E_COMMAND CXInfoBarTop::OnInternalMouseDown(int X, int Y) {
 		return e_CmdSat;
 	if(m_QuitRect.Contains(X, Y))
 		return e_CmdQuit;
+	if(m_ZoomRect.Contains(X, Y))
+		return e_CmdAutoZoom;
 	if(CXOptions::Instance()->MustShowMinimizeButton()) {
 		if(m_MinimizeRect.Contains(X, Y))
 			return e_CmdMinimize;

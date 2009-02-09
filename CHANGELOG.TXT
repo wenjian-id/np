@@ -3,6 +3,7 @@ Version 0.2.1:
    - 2480626: Add needed Qt DLLs in NaviPOWM package
    - 2458457: Make compass point to geographic north
  - implemented feature requests:
+   - 1836295: dynamic zool level depends on speed
  - other:
 
 Version 0.2.0:

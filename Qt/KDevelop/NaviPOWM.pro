@@ -142,6 +142,7 @@ HEADERS += ../../common/src/CoordConstants.h \
  ../../common/src/CXMutexLocker.hpp \
  ../../common/src/CXRGB.hpp \
  ../../common/src/CXMapSimple.hpp \
+ ../../common/src/CXHysterezis.hpp \
  ../../Qt/src/CXRWLock.hpp \
  ../../Qt/src/CXMainWindow.hpp \
  ../../Qt/src/TargetIncludes.hpp \

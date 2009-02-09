@@ -88,6 +88,7 @@ enum E_COMMAND {
 	e_CmdZoomOut,	///< Zoom out
 	e_CmdSat,		///< Sat info.
 	e_CmdMinimize,	///< Minimize.
+	e_CmdAutoZoom,	///< Auto zoom
 };
 
 
@@ -163,7 +164,6 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue);
  * \brief Read a 16 bit unsigned integer from a file.
  *
  * Read a 16 bit unsigned integer from a file.
- * \todo	use platform independent type
  * \param	rInFile     The file to read from.
  * \param	rValue		Value to fill with data.
  * \return				true if successfull.
@@ -175,7 +175,6 @@ bool ReadUI16(CXFile & rInFile, t_uint16 & rValue);
  * \brief Read a 32 bit unsigned integer from a file.
  *
  * Read a 32 bit unsigned integer from a file.
- * \todo	use platform independent type
  * \param	rInFile     The file to read from.
  * \param	rValue		Value to fill with data.
  * \return				true if successfull.
@@ -187,7 +186,6 @@ bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
  * \brief Write a 32 bit unsigned integer to a file.
  *
  * Write a 32 bit unsigned integer to a file.
- * \todo	use platform independent type
  * \param	rOutFile	The file to write to .
  * \param	Value		Value to write.
  * \return				true if successfull.

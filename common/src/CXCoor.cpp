@@ -27,6 +27,7 @@ CXCoor::CXCoor() :
 	m_dLon(0),
 	m_dLat(0)
 {
+	RelocateUTM(UTMZoneNone);
 }
 
 //-------------------------------------

@@ -27,6 +27,7 @@
 #include "CXMapPainterDoubleBuffered.hpp"
 #include "CXPOWMMap.hpp"
 #include "CXPenHolder.hpp"
+#include "CXHysterezis.hpp"
 
 typedef CXMapHashSimple<unsigned short, CXBitmap *> TPOIBMPMap;
 typedef CXPOSMapHashSimple<unsigned short> TPOSPOIBMPMap;
@@ -38,11 +39,13 @@ typedef CXPOSMapHashSimple<unsigned short> TPOSPOIBMPMap;
  */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
-	double						m_MeterPerPixel;		///< Current scale factor.
-	CXPenHolder					m_PenHolder;			///< oiu
-	CXBuffer<TWayBuffer *>		m_DrawWays;				///< oiu
-	CXBuffer<CXBitmap *>		m_POIBMPs;				///< oiu
-	mutable CXRWLock			m_RWLock;				///< Synchronization object.
+	double							m_MeterPerPixel;		///< Current scale factor.
+	CXPenHolder						m_PenHolder;			///< oiu
+	CXBuffer<TWayBuffer *>			m_DrawWays;				///< oiu
+	CXBuffer<CXBitmap *>			m_POIBMPs;				///< oiu
+	double							m_LastSpeed;			///< oiu
+	CXHysterezis<double, double>	m_AutoZoomLevels;		///< oiu
+	mutable CXRWLock				m_RWLock;				///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.
@@ -129,6 +132,12 @@ private:
 	 *	\param	TMCurrentPos	Transformation matrix.
 	 */
 	void DrawCurrentPosition(IBitmap *pBMP, const CXNaviData &NaviData, const CXTransformationMatrix2D &TMCurrentPos);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void ComputeZoomBySpeed(double dSpeed);
 protected:
 	//-------------------------------------
 	/**

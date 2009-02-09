@@ -29,13 +29,17 @@
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
-	/// \todo tests
+	// do some tests
+	if(pcBuf == NULL)
+		return;
 	printf(pcBuf);
 }
 
 //-------------------------------------
 void DoOutputErrorMessage(const char *pcBuf) {
-	/// \todo tests
+	// do some tests
+	if(pcBuf == NULL)
+		return;
 	QMessageBox::critical(NULL, "NaviPOWM error", pcBuf);
 }
 

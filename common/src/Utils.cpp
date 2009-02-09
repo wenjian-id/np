@@ -561,7 +561,6 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2) {
 //-------------------------------------
 void CalcAngle(const CXCoor &Coor1, const CXCoor &Coor2, double & rdCos, double &rdSin) {
 	// check if in same UTMZone
-	double Result = 0;
 	if(Coor1.GetUTMZone() != Coor2.GetUTMZone()) {
 		// no, so create a temporary coordinate from Coor2
 		CXCoor tmp(Coor2);

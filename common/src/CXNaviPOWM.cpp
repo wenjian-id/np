@@ -281,7 +281,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		}
 		m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
 		// paint zoom buttons
-		if(CXOptions::Instance()->MustShowZoomButtons()) {
+		if(CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom()) {
 			m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
 			m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
 		}
@@ -401,10 +401,13 @@ void CXNaviPOWM::OnChar(int /*TheChar*/) {
 void CXNaviPOWM::OnKeyDown(int TheChar) {
 	if(m_pMapPainterThread == NULL)
 		return;
-	if(TheChar == NP_LEFT)
-		m_pMapPainterThread->ZoomOut();
-	else if(TheChar == NP_RIGHT)
-		m_pMapPainterThread->ZoomIn();
+	if(!CXOptions::Instance()->AutomaticZoom()) {
+		if(TheChar == NP_LEFT) {
+			m_pMapPainterThread->ZoomOut();
+		} else if(TheChar == NP_RIGHT) {
+			m_pMapPainterThread->ZoomIn();
+		}
+	}
 }
 
 //-------------------------------------
@@ -481,6 +484,10 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 								if(m_pMapPainterThread != NULL)
 									m_pMapPainterThread->ZoomOut();
 								break;
+							}
+		case e_CmdAutoZoom:	{
+								// switch automatic zoom
+								CXOptions::Instance()->SetAutomaticZoomFlag(!CXOptions::Instance()->AutomaticZoom());
 							}
 		default:			break;
 	}

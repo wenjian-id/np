@@ -79,18 +79,29 @@ char UTMLetterDesignator(double dLat);
  */
 class Ellipsoid {
 public:
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
 	Ellipsoid(){};
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
 	Ellipsoid(int Id, const char* name, double radius, double ecc) {
 		id = Id;
 		ellipsoidName = name; 
 		EquatorialRadius = radius;
 		eccentricitySquared = ecc;
 	}
-
-	int id;
-	const char* ellipsoidName;
-	double EquatorialRadius; 
-	double eccentricitySquared;  
+	int id;							///< oiu
+	const char* ellipsoidName;		///< oiu
+	double EquatorialRadius;		///< oiu
+	double eccentricitySquared;		///< oiu
 };
 
 

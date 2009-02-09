@@ -158,8 +158,8 @@ public:
 	const tClass & operator[] (size_t ulPos) const;
 };
 
-static const size_t ARRAY_GROWSIZE = 16;
-template<class tClass> const size_t CXArray<tClass> ::NPOS = ~(size_t(0));
+static const size_t ARRAY_GROWSIZE = 16;									///< oiu
+template<class tClass> const size_t CXArray<tClass> ::NPOS = ~(size_t(0));	///< oiu
 
 //-------------------------------------
 template<class tClass> CXArray<tClass> ::CXArray() :

@@ -44,12 +44,6 @@ protected:
 	 * \brief oiu
 	 *
 	 */
-	virtual void OnPaint();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	virtual void paintEvent(QPaintEvent *event);
 	//-------------------------------------
 	/**

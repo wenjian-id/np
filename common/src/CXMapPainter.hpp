@@ -47,6 +47,12 @@ private:
 	 *
 	 */
 	virtual void OnDoWork() = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void ComputeZoomBySpeed(double dSpeed) = 0;
 protected:
 	//-------------------------------------
 	CXNaviData GetPosition() const;

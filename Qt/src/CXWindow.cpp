@@ -93,8 +93,3 @@ void CXWindow::ShowMinimized() {
 	showMinimized();
 }
 
-//-------------------------------------
-void CXWindow::OnPaint() {
-	/// \todo needed?
-}
-

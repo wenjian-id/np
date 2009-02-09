@@ -49,6 +49,9 @@ static const int POIWIDTH		= 20;
 static const int POIHEIGHT		= 20;
 static const int POICOUNTHORZ	= 16;
 static const int POICOUNTVERT	= 16;
+static const double HYSTMAXOFFSETABS	= 1.4; ///< 1.4 m/s
+static const double HYSTMAXOFFSETREL	= 0.1; ///< 10%
+
 
 E_KEYHIGHWAY_TYPE Order[e_Highway_EnumCount] = {
 	e_Highway_Unknown,
@@ -82,6 +85,17 @@ CXMapPainter2D::CXMapPainter2D() :
 		m_DrawWays.Append(new TWayBuffer());
 	}
 	UpdateZoomLevel();
+	// create hysterezis
+	CXStringASCII AutoZoomString = CXOptions::Instance()->GetAutomaticZoomString();
+	bool oAutoZoom = ExtractFirstToken(AutoZoomString, ';') == "ON";
+	while(!AutoZoomString.IsEmpty()) {
+		double dSpeed = atof(ExtractFirstToken(AutoZoomString, ';').c_str());
+		double dMeterPerPixel = atof(ExtractFirstToken(AutoZoomString, ';').c_str());
+		// compute delta
+		double delta = Min(HYSTMAXOFFSETABS, HYSTMAXOFFSETREL*dSpeed);
+		m_AutoZoomLevels.AddInterval(dSpeed-delta, dSpeed+delta, dMeterPerPixel);
+	}
+	CXOptions::Instance()->SetAutomaticZoomFlag(oAutoZoom);
 }
 
 //-------------------------------------
@@ -515,6 +529,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	CXUTMSpeed UTMSpeed = NaviData.GetUTMSpeed();
 
+	double dSpeed = UTMSpeed.GetSpeed();
+	if(pOpt->AutomaticZoom())
+		ComputeZoomBySpeed(dSpeed);
+
 	TMMap.Translate(-UTME, -UTMN);			// UTME, UTMN is center of visible universe
 	// rotate
 	if(pOpt->IsNorthing()) {
@@ -538,10 +556,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	}
 
 	TMMap.Scale(1.0/m_MeterPerPixel, -1.0/m_MeterPerPixel);		// do scaling (negative for y!)
-	TMMap.Translate(xc, yc);			// display it centered on screen
-	TMCompass.Scale(1, -1);				// do scaling (negative for y!)
-	TMCurrentPos.Scale(1, -1);			// do scaling (negative for y!)
-	TMCurrentPos.Translate(xc, yc);		// an position it on screen
+	TMMap.Translate(xc, yc);									// display it centered on screen
+	TMCompass.Scale(1, -1);										// do scaling (negative for y!)
+	TMCurrentPos.Scale(1, -1);									// do scaling (negative for y!)
+	TMCurrentPos.Translate(xc, yc);								// an position it on screen
 
 	// compute inverse to TMMap
 	CXTransformationMatrix2D Inv = TMMap.Inverse();
@@ -766,6 +784,16 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	StopDrawTime.SetNow();
 	CXDebugInfo::Instance()->SetDrawTime(StopDrawTime - StartTime);
+}
+
+//-------------------------------------
+void CXMapPainter2D::ComputeZoomBySpeed(double dSpeed) {
+	double dNewMeterPerPixel = m_AutoZoomLevels.GetHysterezisValue(dSpeed);
+	dNewMeterPerPixel  = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
+	if(dNewMeterPerPixel != m_MeterPerPixel) {
+		m_MeterPerPixel = dNewMeterPerPixel;
+		UpdateZoomLevel();
+	}
 }
 
 //-------------------------------------

@@ -81,14 +81,14 @@ COLORREF CXRGB2COLORREF(const CXRGB & Color);
  * \brief oiu
  *
  */
-TCHAR *ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen);
+void ASCII2UCS2(const char *pcBuffer, size_t InLen, TCHAR *Buf, size_t OutLen);
 
 //-------------------------------------
 /**
  * \brief oiu
  *
  */
-char *UCS22ASCII(const TCHAR *pusBuffer, size_t InLen, char *Buf, size_t OutLen);
+void UCS22ASCII(const TCHAR *pusBuffer, size_t InLen, char *Buf, size_t OutLen);
 
 
 #endif

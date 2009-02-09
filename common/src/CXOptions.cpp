@@ -36,6 +36,7 @@ CXOptions * CXOptions::m_pInstance = NULL;
 
 static const int TO = 2000;
 
+//---------------------------------------------------------------------
 //-------------------------------------
 CXOptions::CXOptions() :
 	m_oNorthing(false),
@@ -43,6 +44,7 @@ CXOptions::CXOptions() :
 	m_oShowLogo(true),
 	m_oSaving(false),
 	m_oShowZoomButtons(false),
+	m_oAutomaticZoom(false),
 	m_oShowMaxSpeed(true),
 	m_oShowCompass(false),
 	m_oShowTrackLog(false),
@@ -123,6 +125,7 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
 	// showzoom
 	SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
+	SetAutomaticZoomString(F.Get("AutoZoom", "off").ToUpper());
 	// InfoBar Bottom Height
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
@@ -640,6 +643,30 @@ bool CXOptions::MustShowZoomButtons() const {
 void CXOptions::SetShowZoomButtonsFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oShowZoomButtons = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::AutomaticZoom() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oAutomaticZoom;
+}
+
+//-------------------------------------
+void CXOptions::SetAutomaticZoomFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oAutomaticZoom = NewValue;
+}
+
+//-------------------------------------
+CXStringASCII CXOptions::GetAutomaticZoomString() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_AutomaticZoomString;
+}
+
+//-------------------------------------
+void CXOptions::SetAutomaticZoomString(const CXStringASCII & NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_AutomaticZoomString = NewValue;
 }
 
 //-------------------------------------

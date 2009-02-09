@@ -28,12 +28,10 @@
 CXWindow::CXWindow() :
 	m_hWnd(NULL)
 {
-	/// \todo implement
 }
 
 //-------------------------------------
 CXWindow::~CXWindow() {
-	/// \todo implement
 }
 
 //-------------------------------------
@@ -52,13 +50,6 @@ void CXWindow::RequestRepaint() {
 		return;
 	InvalidateRect(m_hWnd, NULL, TRUE);
 	UpdateWindow(m_hWnd);
-}
-
-//-------------------------------------
-void CXWindow::OnPaint() {
-	if(m_hWnd == NULL)
-		return;
-	/// \todo needed?
 }
 
 //-------------------------------------
