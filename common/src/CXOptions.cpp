@@ -220,6 +220,14 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	CXStringASCII SaveOff=DirIcons;
 	SaveOff+=F.Get("SaveOffName", "saveoff.bmp");
 	SetSaveOffFileName(SaveOff);
+	// Move bmp
+	CXStringASCII Move=DirIcons;
+	Move+=F.Get("MoveName", "move.bmp");
+	SetMoveFileName(Move);
+	// CurrentPos bmp
+	CXStringASCII CurrentPos=DirIcons;
+	CurrentPos+=F.Get("CurrentPosName", "currentpos.bmp");
+	SetCurrentPosFileName(CurrentPos);
 	// zoom bmps
 	CXStringASCII ZoomIn=DirIcons;
 	ZoomIn+=F.Get("ZoomInName", "zoomin.bmp");
@@ -596,6 +604,30 @@ CXStringASCII CXOptions::GetSaveOffFileName() const {
 void CXOptions::SetSaveOffFileName(const CXStringASCII & Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_SavingOffFileName = Value;
+}
+
+//-------------------------------------
+CXStringASCII CXOptions::GetMoveFileName() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_MoveFileName;
+}
+
+//-------------------------------------
+void CXOptions::SetMoveFileName(const CXStringASCII & Value) {
+	CXWriteLocker WL(&m_RWLock);
+	m_MoveFileName = Value;
+}
+
+//-------------------------------------
+CXStringASCII CXOptions::GetCurrentPosFileName() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_CurrentPosFileName;
+}
+
+//-------------------------------------
+void CXOptions::SetCurrentPosFileName(const CXStringASCII & Value) {
+	CXWriteLocker WL(&m_RWLock);
+	m_CurrentPosFileName = Value;
 }
 
 //-------------------------------------

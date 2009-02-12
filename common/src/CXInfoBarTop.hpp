@@ -34,19 +34,22 @@
  */
 class CXInfoBarTop : public CXInfoBar {
 private:
-	CXNaviData			m_NaviData;		///< oiu
-	CXBitmap			m_InfoBmp;		///< oiu
-	CXBitmap			m_QuitBmp;		///< oiu
-	CXBitmap			m_SaveOnBmp;	///< oiu
-	CXBitmap			m_SaveOffBmp;	///< oiu
-	CXBitmap			m_MinimizeBmp;	///< oiu
-	tIRect				m_InfoRect;		///< oiu
-	tIRect				m_QuitRect;		///< oiu
-	tIRect				m_SatRect;		///< oiu
-	tIRect				m_ZoomRect;		///< oiu
-	tIRect				m_SaveRect;		///< oiu
-	tIRect				m_TimeRect;		///< oiu
-	tIRect				m_MinimizeRect;	///< oiu
+	CXNaviData			m_NaviData;			///< oiu
+	CXBitmap			m_InfoBmp;			///< oiu
+	CXBitmap			m_QuitBmp;			///< oiu
+	CXBitmap			m_SaveOnBmp;		///< oiu
+	CXBitmap			m_SaveOffBmp;		///< oiu
+	CXBitmap			m_MinimizeBmp;		///< oiu
+	CXBitmap			m_MoveBmp;			///< oiu
+	CXBitmap			m_CurrentPosBmp;	///< oiu
+	tIRect				m_InfoRect;			///< oiu
+	tIRect				m_QuitRect;			///< oiu
+	tIRect				m_SatRect;			///< oiu
+	tIRect				m_ZoomRect;			///< oiu
+	tIRect				m_MoveRect;			///< oiu
+	tIRect				m_SaveRect;			///< oiu
+	tIRect				m_TimeRect;			///< oiu
+	tIRect				m_MinimizeRect;		///< oiu
 	//-------------------------------------
 	CXInfoBarTop(const CXInfoBarTop &);						///< Not used.
 	const CXInfoBarTop & operator = (const CXInfoBarTop &);	///< Not used.

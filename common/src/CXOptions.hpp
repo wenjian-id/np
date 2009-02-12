@@ -114,6 +114,8 @@ private:
 	CXStringASCII			m_SavingOffFileName;			///< oiu
 	CXStringASCII			m_ZoomInFileName;				///< oiu
 	CXStringASCII			m_ZoomOutFileName;				///< oiu
+	CXStringASCII			m_MoveFileName;					///< oiu
+	CXStringASCII			m_CurrentPosFileName;			///< oiu
 	double					m_SpeedThresholdCar;			///< oiu
 	double					m_SpeedThresholdBike;			///< oiu
 	double					m_SpeedThresholdPedestrian;		///< oiu
@@ -444,6 +446,30 @@ public:
 	 *
 	 */
 	void SetSaveOffFileName(const CXStringASCII & Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetMoveFileName() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetMoveFileName(const CXStringASCII & Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetCurrentPosFileName() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetCurrentPosFileName(const CXStringASCII & Value);
 	//-------------------------------------
 	/**
 	 * \brief oiu

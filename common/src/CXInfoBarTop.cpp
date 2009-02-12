@@ -34,6 +34,7 @@ CXInfoBarTop::CXInfoBarTop() :
 	m_QuitRect(0,0,1,1),
 	m_SatRect(0,0,1,1),
 	m_ZoomRect(0,0,1,1),
+	m_MoveRect(0,0,1,1),
 	m_SaveRect(0,0,1,1),
 	m_TimeRect(0,0,1,1),
 	m_MinimizeRect(0,0,1,1)
@@ -86,6 +87,10 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		m_ZoomRect.SetLeft(m_SatRect.GetRight() + 1);
 		m_ZoomRect.SetBottom(Height);
 		m_ZoomRect.SetRight(m_ZoomRect.GetLeft() + 2*Height);
+		// move rect
+		m_MoveRect.SetLeft(m_ZoomRect.GetRight() + 1);
+		m_MoveRect.SetBottom(Height);
+		m_MoveRect.SetRight(m_MoveRect.GetLeft() + Height);
 		// time rect
 		m_TimeRect = Bmp.CalcTextRectASCII("99:99", 4, 0);
 		if(CXOptions::Instance()->MustShowMinimizeButton()) {
@@ -115,6 +120,12 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		m_SaveOnBmp.LoadFromFile(CXOptions::Instance()->GetSaveOnFileName());
 		m_SaveOffBmp.Create(pDC, m_SaveRect.GetWidth(), m_SaveRect.GetHeight());
 		m_SaveOffBmp.LoadFromFile(CXOptions::Instance()->GetSaveOffFileName());
+		// create new move bmp
+		m_MoveBmp.Create(pDC, m_MoveRect.GetWidth(), m_MoveRect.GetHeight());
+		m_MoveBmp.LoadFromFile(CXOptions::Instance()->GetMoveFileName());
+		// create new move bmp
+		m_CurrentPosBmp.Create(pDC, m_MoveRect.GetWidth(), m_MoveRect.GetHeight());
+		m_CurrentPosBmp.LoadFromFile(CXOptions::Instance()->GetCurrentPosFileName());
 	}
 
 	if(!CXOptions::Instance()->MustShowLogo()) {
@@ -169,6 +180,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 			Bmp.DrawLine(m_ZoomRect.GetLeft(), BorderY + (Height/2-BorderY)/2, m_ZoomRect.GetLeft() + dx, BorderY + (Height/2-BorderY)/2);
 		}
 
+
 		// get current time
 		CXExactTime Now;
 		snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
@@ -195,6 +207,13 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 			pDC->Draw(&m_SaveOnBmp, m_SaveRect.GetLeft(), m_SaveRect.GetTop());
 		else
 			pDC->Draw(&m_SaveOffBmp, m_SaveRect.GetLeft(), m_SaveRect.GetTop());
+		if(CXOptions::Instance()->IsMapMovingManually()) {
+			// draw move bitmap
+			pDC->Draw(&m_MoveBmp, m_MoveRect.GetLeft(), m_MoveRect.GetTop());
+		} else {
+			// draw position bitmap
+			pDC->Draw(&m_CurrentPosBmp, m_MoveRect.GetLeft(), m_MoveRect.GetTop());
+		}
 	}
 }
 
@@ -208,7 +227,8 @@ E_COMMAND CXInfoBarTop::OnInternalMouseDown(int X, int Y) {
 		return e_CmdQuit;
 	if(m_ZoomRect.Contains(X, Y))
 		return e_CmdAutoZoom;
-//		return e_CmdMapMoveManually;
+	if(m_MoveRect.Contains(X, Y))
+		return e_CmdMapMoveManually;
 	if(CXOptions::Instance()->MustShowMinimizeButton()) {
 		if(m_MinimizeRect.Contains(X, Y))
 			return e_CmdMinimize;
