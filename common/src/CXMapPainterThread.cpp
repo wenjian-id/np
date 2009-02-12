@@ -72,6 +72,14 @@ void CXMapPainterThread::ZoomOut() {
 }
 
 //-------------------------------------
+void CXMapPainterThread::RequestRepaint() {
+	if(m_pMapPainter == NULL)
+		return;
+	m_pMapPainter->SetMustRepaint(true);
+	RequestWork();
+}
+
+//-------------------------------------
 void CXMapPainterThread::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	if(m_pMapPainter != NULL)
 		m_pMapPainter->Paint(pDC, OffsetX, OffsetY);

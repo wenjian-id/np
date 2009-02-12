@@ -97,7 +97,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		CalcFontHeights(pDC);
 	}
 
-	if(!CXOptions::Instance()->MustShowLogo()) {
+	if(!CXOptions::Instance()->MustShowLogo() && !CXOptions::Instance()->IsMapMovingManually()) {
 
 		// create bitmap
 		tIRect ClientRect(0,0,Width,Height);

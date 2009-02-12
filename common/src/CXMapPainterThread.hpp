@@ -103,6 +103,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void RequestRepaint();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	virtual void OnThreadStarted();
 	//-------------------------------------
 	/**

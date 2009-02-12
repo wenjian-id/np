@@ -70,6 +70,18 @@ protected:
 	 *
 	 */
 	virtual void OnMouseDown(int X, int Y) = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnMouseUp(int X, int Y) = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnMouseMove(int X, int Y) = 0;
 public:
 	//-------------------------------------
 	/**

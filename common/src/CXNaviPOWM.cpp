@@ -281,7 +281,9 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		}
 		m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
 		// paint zoom buttons
-		if(CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom()) {
+		if(	CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom() &&
+			!CXOptions::Instance()->IsMapMovingManually())
+		{
 			m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
 			m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
 		}
@@ -356,7 +358,6 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomInBtn.Resize(ZoomSize, ZoomSize);
 	m_ZoomOutBtn.Resize(ZoomSize, ZoomSize);
 
-	/// \todo make InfoBarCommon sitze configurable (width / height)
 	int InfoBarCommonWidth = CXOptions::Instance()->GetInfoBarCommonWidth();
 	int InfoBarCommonHeight = CXOptions::Instance()->GetInfoBarCommonHeight();
 	int MaxSpeedSize = CXOptions::Instance()->GetMaxSpeedSize();
@@ -386,11 +387,17 @@ void CXNaviPOWM::PositionChanged(const CXNaviData & NewData) {
 		return;
 	if(m_pInfoBarCommon == NULL)
 		return;
-	m_pInfoBarTop->PositionChanged(NewData);
-	m_pInfoBarBottom->PositionChanged(NewData);
-	m_pMapPainterThread->PositionChanged(NewData);
-	m_pInfoBarSpeed->PositionChanged(NewData);
-	m_pInfoBarCommon->PositionChanged(NewData);
+	if(CXOptions::Instance()->IsMapMovingManually()) {
+		// only new data for map painter thread
+		m_pMapPainterThread->PositionChanged(NewData);
+	} else {
+		// dispatch new data
+		m_pInfoBarTop->PositionChanged(NewData);
+		m_pInfoBarBottom->PositionChanged(NewData);
+		m_pMapPainterThread->PositionChanged(NewData);
+		m_pInfoBarSpeed->PositionChanged(NewData);
+		m_pInfoBarCommon->PositionChanged(NewData);
+	}
 }
 
 //-------------------------------------
@@ -452,43 +459,63 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		SetDisplayMode(e_ModeMap);
 	eDisplayMode = GetDisplayMode();
 	switch(Cmd) {
-		case e_CmdQuit:		m_pLocatorThread->SaveLastReceivedGPSCoordinate(); m_pMainWindow->RequestTermination(); break;
-		case e_CmdMinimize:	m_pMainWindow->ShowMinimized(); break;
-		case e_CmdInfo:		{
-								if(eDisplayMode == e_ModeInfo)
-									// switch back top map mode
-									SetDisplayMode(e_ModeMap);
-								else
-									// switch to info mode
-									SetDisplayMode(e_ModeInfo);
-								DoRequestRepaint();
-								break;
-							}
-		case e_CmdSat:		{
-								if(eDisplayMode == e_ModeSatInfo)
-									// switch back top map mode
-									SetDisplayMode(e_ModeMap);
-								else
-									// switch to Sat mode
-									SetDisplayMode(e_ModeSatInfo);
-								DoRequestRepaint();
-								break;
-							}
-		case e_CmdSave:		CXOptions::Instance()->ToggleSaving(); DoRequestRepaint(); break;
-		case e_CmdZoomIn:	{
-								if(m_pMapPainterThread != NULL)
-									m_pMapPainterThread->ZoomIn();
-								break;
-							}
-		case e_CmdZoomOut:	{
-								if(m_pMapPainterThread != NULL)
-									m_pMapPainterThread->ZoomOut();
-								break;
-							}
-		case e_CmdAutoZoom:	{
-								// switch automatic zoom
-								CXOptions::Instance()->SetAutomaticZoomFlag(!CXOptions::Instance()->AutomaticZoom());
-							}
-		default:			break;
+		case e_CmdQuit:				m_pLocatorThread->SaveLastReceivedGPSCoordinate(); m_pMainWindow->RequestTermination(); break;
+		case e_CmdMinimize:			m_pMainWindow->ShowMinimized(); break;
+		case e_CmdInfo:				{
+										if(eDisplayMode == e_ModeInfo)
+											// switch back top map mode
+											SetDisplayMode(e_ModeMap);
+										else
+											// switch to info mode
+											SetDisplayMode(e_ModeInfo);
+										DoRequestRepaint();
+										break;
+									}
+		case e_CmdSat:				{
+										if(eDisplayMode == e_ModeSatInfo)
+											// switch back top map mode
+											SetDisplayMode(e_ModeMap);
+										else
+											// switch to Sat mode
+											SetDisplayMode(e_ModeSatInfo);
+										DoRequestRepaint();
+										break;
+									}
+		case e_CmdSave:				CXOptions::Instance()->ToggleSaving(); DoRequestRepaint(); break;
+		case e_CmdZoomIn:			{
+										if(m_pMapPainterThread != NULL)
+											m_pMapPainterThread->ZoomIn();
+										break;
+									}
+		case e_CmdZoomOut:			{
+										if(m_pMapPainterThread != NULL)
+											m_pMapPainterThread->ZoomOut();
+										break;
+									}
+		case e_CmdAutoZoom:			{
+										// switch automatic zoom
+										CXOptions::Instance()->SetAutomaticZoomFlag(!CXOptions::Instance()->AutomaticZoom());
+										break;
+									}
+		case e_CmdMapMoveManually:	{
+										// switch map moving
+										CXOptions::Instance()->SetMapMovingManually(!CXOptions::Instance()->IsMapMovingManually());
+										// force redrawing of maps
+										m_pMapPainterThread->RequestRepaint();
+										// redraw window
+										DoRequestRepaint();
+										break;
+									}
+		default:					break;
+	}
+}
+
+//-------------------------------------
+void CXNaviPOWM::OnMouseUp(int X, int Y) {
+}
+
+//-------------------------------------
+void CXNaviPOWM::OnMouseMove(int X, int Y) {
+	if(CXOptions::Instance()->IsMapMovingManually()) {
 	}
 }

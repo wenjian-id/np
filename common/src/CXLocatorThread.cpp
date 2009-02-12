@@ -169,6 +169,7 @@ void CXLocatorThread::OnThreadStarted() {
 
 //-------------------------------------
 void CXLocatorThread::OnThreadLoop() {
+
 	// check if new data arriwed
 	CXExactTime Now;
 	bool NewDataRMC = GetFlag_NewDataGPSRMC();
@@ -239,6 +240,7 @@ void CXLocatorThread::OnThreadLoop() {
 	}
 	bool oLoadMap = true;
 	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix;
+
 	if(oNewDataArrived) {
 		// set speed thresholds for speed calculator
 		switch(CXOptions::Instance()->GetMode()) {
@@ -312,9 +314,9 @@ void CXLocatorThread::OnThreadLoop() {
 			if(oHasFix && CXOptions::Instance()->MustShowTrackLog()) {
 				CXTrackLog::Instance()->AddCoordinate(dLon, dLat);
 			}
-			// locate 
-			Locate();
 		}
+		// locate 
+		Locate();
 		if(m_pNaviPOWM != NULL)
 			m_pNaviPOWM->PositionChanged(m_NaviData);
 	}
@@ -390,6 +392,9 @@ void CXLocatorThread::Locate() {
 
 	// initialize LocatedCoor
 	m_NaviData.SetLocatedCoor(m_NaviData.GetCorrectedGPSCoor());
+
+	if(CXPOWMMap::Instance() == NULL)
+		return;
 
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
     // The received coordinate is defined by P(x0, y0).

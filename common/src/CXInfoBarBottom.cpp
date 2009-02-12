@@ -59,7 +59,7 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 	// draw backgound
 	Bmp.DrawRect(ClientRect, BgColor, BgColor);
-	if(!CXOptions::Instance()->MustShowLogo()) {
+	if(!CXOptions::Instance()->MustShowLogo() && !CXOptions::Instance()->IsMapMovingManually()) {
 		CXStringUTF8 Name = m_NaviData.GetStreetName();
 		CXStringUTF8 Ref = m_NaviData.GetRef();
 		// draw ref

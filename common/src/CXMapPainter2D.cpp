@@ -269,6 +269,9 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 	if(pBMP == NULL)
 		return;
 
+	if(CXOptions::Instance()->IsMapMovingManually())
+		return;
+
 	int CompassSize = CXOptions::Instance()->GetCompassSize();
 	tIRect CompassRect(0,0,CompassSize,CompassSize);
 
@@ -368,6 +371,8 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 //-------------------------------------
 void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) {
 	if(pBMP == NULL)
+		return;
+	if(CXOptions::Instance()->IsMapMovingManually())
 		return;
 
 	// set font
@@ -495,32 +500,37 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	int xc = 0;
 	int yc = 0;
 	// compute coordinate
-	double dLon = 0;
-	double dLat = 0;
-	CXCoor Coor;
+	CXCoor ImageCenter;
+	CXCoor Position;
 	if(pOpt->MustSnapToWay()) {
 		// get coordinates from locator
-		Coor = NaviData.GetLocatedCoor();
+		Position = NaviData.GetLocatedCoor();
 	} else {
 		// get gps coordinates
-		Coor = NaviData.GetCorrectedGPSCoor();
+		Position = NaviData.GetCorrectedGPSCoor();
 	}
-	dLon = Coor.GetLon();
-	dLat = Coor.GetLat();
+	if(pOpt->IsMapMovingManually()) {
+		ImageCenter = CXCoor(7,51);
+	} else {
+		ImageCenter = Position;
+	}
+	double dLonImageCenter = ImageCenter.GetLon();
+	double dLatImageCenter = ImageCenter.GetLat();
 
-	// calc devaition for geographic north.
-	CXCoor TmpCoor(dLon + 0.001, dLat);
+	// calc deviation for geographic north.
+	CXCoor TmpCoor(dLonImageCenter + 0.001, dLatImageCenter);
 	double dCos = 0;
 	double dSin = 0;
-	CalcAngle(Coor, TmpCoor, dCos, dSin);
+	CalcAngle(ImageCenter, TmpCoor, dCos, dSin);
 
-	// compute UTM coordinates
+	// compute UTM coordinates of image center
 	char UTMLetterCurrent = 0;
 	double UTME = 0;
 	double UTMN = 0;
 	int UTMZoneCurrent = UTMZoneNone;
-	LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, UTME, UTMN);
-	// OK, we have the coordinates
+	LLtoUTM(WGS84, dLonImageCenter, dLatImageCenter, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, UTME, UTMN);
+	// OK, we have the coordinates of the image center
+	// now compute coordinates of position
 
 	// now compute all transformation matrices
 	CXTransformationMatrix2D TMMap;				// for the map
@@ -535,7 +545,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	TMMap.Translate(-UTME, -UTMN);			// UTME, UTMN is center of visible universe
 	// rotate
-	if(pOpt->IsNorthing()) {
+	if(pOpt->IsNorthing() || pOpt->IsMapMovingManually()) {
 		xc = Width/2;
 		yc = Height/2;
 		TMCurrentPos.Rotate(UTMSpeed.GetCos(), UTMSpeed.GetSin());
@@ -559,7 +569,20 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	TMMap.Translate(xc, yc);									// display it centered on screen
 	TMCompass.Scale(1, -1);										// do scaling (negative for y!)
 	TMCurrentPos.Scale(1, -1);									// do scaling (negative for y!)
-	TMCurrentPos.Translate(xc, yc);								// an position it on screen
+
+	// compute position of current position on map
+	// we could always use the computations from the "if" branch,
+	// but to avoid jitter of current position we use xc and yc for the "else" branch
+	if(pOpt->IsMapMovingManually()) {
+		int Zone = 0;
+		LLtoUTM(WGS84, Position.GetLon(), Position.GetLat(), UTMZoneCurrent, Zone, UTMLetterCurrent, UTME, UTMN);
+		CXCoorVector v = TMMap*CXCoorVector(UTME, UTMN);
+		// adjust TMCurrentPos
+		TMCurrentPos.Translate(v.GetIntX(), v.GetIntY());
+	} else {
+		// adjust TMCurrentPos
+		TMCurrentPos.Translate(xc, yc);
+	}
 
 	// compute inverse to TMMap
 	CXTransformationMatrix2D Inv = TMMap.Inverse();

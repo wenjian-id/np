@@ -87,6 +87,7 @@ private:
 	bool					m_oShowPOIs;					///< Show some POIs.
 	bool					m_oSnapToWay;					///< oiu
 	bool					m_oStartWithLastPosition;		///< oiu
+	bool					m_oMapMovingManually;			///< oiu
 	int						m_WatchdogTimeout;				///< oiu
 	t_uint64				m_OSMVali;						///< oiu
 	t_uint64				m_DebugInfo;					///< Holder for debug info flags.
@@ -611,6 +612,18 @@ public:
 	 *
 	 */
 	void SetStartWithLastPositionFlag(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool IsMapMovingManually() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetMapMovingManually(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

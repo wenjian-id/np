@@ -96,7 +96,7 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	if(SizeChanged()) {
 		CreateBitmaps(pDC);
 	}
-	if(!CXOptions::Instance()->MustShowLogo() && (m_NaviData.GetMaxSpeed() != 0)) {
+	if(!CXOptions::Instance()->MustShowLogo() && (m_NaviData.GetMaxSpeed() != 0) && !CXOptions::Instance()->IsMapMovingManually()) {
 		// draw data
 		CXBitmap Bmp;
 		Bmp.Create(pDC, Width, Height);

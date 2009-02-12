@@ -112,11 +112,18 @@ LRESULT CALLBACK CXMainWindow::TheWndProc(HWND hWnd, UINT message, WPARAM wParam
 			}
 		case WM_LBUTTONDOWN:
 			{
-				
 				int X = LOWORD(lParam);
 				int Y = HIWORD(lParam);
 				if(m_pInstance != NULL)
 					m_pInstance->OnMouseDown(X, Y);
+				break;
+			}
+		case WM_LBUTTONUP:
+			{
+				int X = LOWORD(lParam);
+				int Y = HIWORD(lParam);
+				if(m_pInstance != NULL)
+					m_pInstance->OnMouseUp(X, Y);
 				break;
 			}
 		case WM_ACTIVATE:

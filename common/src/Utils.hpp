@@ -80,15 +80,16 @@ const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< oiu;
  * Possible command.
  */
 enum E_COMMAND {
-	e_CmdNone,		///< No command.
-	e_CmdQuit,		///< Quit.
-	e_CmdInfo,		///< Info.
-	e_CmdSave,		///< Toggle save.
-	e_CmdZoomIn,	///< Zoom in
-	e_CmdZoomOut,	///< Zoom out
-	e_CmdSat,		///< Sat info.
-	e_CmdMinimize,	///< Minimize.
-	e_CmdAutoZoom,	///< Auto zoom
+	e_CmdNone,				///< No command.
+	e_CmdQuit,				///< Quit.
+	e_CmdInfo,				///< Info.
+	e_CmdSave,				///< Toggle save.
+	e_CmdZoomIn,			///< Zoom in
+	e_CmdZoomOut,			///< Zoom out
+	e_CmdSat,				///< Sat info.
+	e_CmdMinimize,			///< Minimize.
+	e_CmdAutoZoom,			///< Auto zoom.
+	e_CmdMapMoveManually,	///< Move map around.
 };
 
 

@@ -91,3 +91,15 @@ void IMainWindow::OnMouseDown(int X, int Y) {
 	if(m_pNaviPOWM != NULL)
 		m_pNaviPOWM->OnMouseDown(X, Y);
 }
+
+//-------------------------------------
+void IMainWindow::OnMouseUp(int X, int Y) {
+	if(m_pNaviPOWM != NULL)
+		m_pNaviPOWM->OnMouseUp(X, Y);
+}
+
+//-------------------------------------
+void IMainWindow::OnMouseMove(int X, int Y) {
+	if(m_pNaviPOWM != NULL)
+		m_pNaviPOWM->OnMouseMove(X, Y);
+}

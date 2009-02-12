@@ -136,6 +136,13 @@ CXCoorVector CXTransformationMatrix2D::operator * (const CXCoorVector &Value) co
 }
 
 //-------------------------------------
+CXTransformationMatrix2D CXTransformationMatrix2D::operator * (const CXTransformationMatrix2D &Value) const {
+	CXTransformationMatrix2D Result(*this);
+	Result.Multiply(Value);
+	return Result;
+}
+
+//-------------------------------------
 void CXTransformationMatrix2D::Multiply(const CXTransformationMatrix2D &rOther) {
 	double a11 = m_a11*rOther.m_a11 + m_a12*rOther.m_a21 + m_a13*rOther.m_a31;
 	double a12 = m_a11*rOther.m_a12 + m_a12*rOther.m_a22 + m_a13*rOther.m_a32;

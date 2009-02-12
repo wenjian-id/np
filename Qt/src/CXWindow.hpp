@@ -69,6 +69,12 @@ protected:
 	 *
 	 */
 	virtual void mousePressEvent(QMouseEvent * event);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void mouseReleaseEvent(QMouseEvent * event);
 public:
 	//-------------------------------------
 	/**

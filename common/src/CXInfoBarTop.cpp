@@ -208,6 +208,7 @@ E_COMMAND CXInfoBarTop::OnInternalMouseDown(int X, int Y) {
 		return e_CmdQuit;
 	if(m_ZoomRect.Contains(X, Y))
 		return e_CmdAutoZoom;
+//		return e_CmdMapMoveManually;
 	if(CXOptions::Instance()->MustShowMinimizeButton()) {
 		if(m_MinimizeRect.Contains(X, Y))
 			return e_CmdMinimize;

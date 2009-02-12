@@ -187,6 +187,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	CXTransformationMatrix2D operator * (const CXTransformationMatrix2D &Value) const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void Rotate(double dRad);
 	//-------------------------------------
 	/**

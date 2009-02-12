@@ -53,6 +53,7 @@ CXOptions::CXOptions() :
 	m_oShowPOIs(false),
 	m_oSnapToWay(false),
 	m_oStartWithLastPosition(false),
+	m_oMapMovingManually(false),
 	m_WatchdogTimeout(0),
 	m_OSMVali(0),
 	m_DebugInfo(0),
@@ -547,6 +548,18 @@ bool CXOptions::MustStartWithLastPosition() const {
 void CXOptions::SetStartWithLastPositionFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oStartWithLastPosition = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::IsMapMovingManually() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oMapMovingManually;
+}
+
+//-------------------------------------
+void CXOptions::SetMapMovingManually(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oMapMovingManually = NewValue;
 }
 
 //-------------------------------------
