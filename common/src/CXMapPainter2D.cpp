@@ -33,6 +33,7 @@
 #include "CXTrackLog.hpp"
 #include "CXReadLocker.hpp"
 #include "CXDebugInfo.hpp"
+#include "CXMapMovingDetails.hpp"
 
 #include <math.h>
 
@@ -510,9 +511,12 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		Position = NaviData.GetCorrectedGPSCoor();
 	}
 	if(pOpt->IsMapMovingManually()) {
-		ImageCenter = CXCoor(7,51);
+		// get position from MapMovingDetails
+		ImageCenter = CXMapMovingDetails::Instance()->GetPosition();
 	} else {
 		ImageCenter = Position;
+		// set position also to MapMovingDetails
+		CXMapMovingDetails::Instance()->SetPosition(Position);
 	}
 	double dLonImageCenter = ImageCenter.GetLon();
 	double dLatImageCenter = ImageCenter.GetLat();
@@ -569,6 +573,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	TMMap.Translate(xc, yc);									// display it centered on screen
 	TMCompass.Scale(1, -1);										// do scaling (negative for y!)
 	TMCurrentPos.Scale(1, -1);									// do scaling (negative for y!)
+
+	// set transformation matrix also to MapMovingDetails
+	CXMapMovingDetails::Instance()->SetMatrix(TMMap);
 
 	// compute position of current position on map
 	// we could always use the computations from the "if" branch,

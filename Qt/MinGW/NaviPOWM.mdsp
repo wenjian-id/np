@@ -144,6 +144,7 @@ extraResourceOptions=
 62=..\..\common\src\CXNode.cpp
 63=..\..\common\src\CXWay.cpp
 64=..\..\common\src\CXMapLoaderThread.cpp
+65=..\..\common\src\CXMapMovingDetails.cpp
 [Header]
 1=..\src\CXMutex.hpp
 2=..\src\CXRWLock.hpp
@@ -225,6 +226,7 @@ extraResourceOptions=
 78=..\..\common\src\CXWay.hpp
 79=..\..\common\src\CXMapLoaderThread.hpp
 80=..\..\common\src\CXHysterezis.hpp
+81=..\..\common\src\CXMapMovingDetails.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

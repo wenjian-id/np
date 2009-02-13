@@ -61,6 +61,7 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXMapPainterDoubleBuffered.cpp \
 ../../common/src/CXTransformationMatrix.cpp \
 ../../common/src/ISerial.cpp \
+../../common/src/CXMapMovingDetails.cpp \
 ../../Qt/src/CXMutex.cpp \
 ../../Qt/src/TargetIncludes.cpp \
 ../../Qt/src/CXDeviceContext.cpp \
@@ -143,6 +144,7 @@ HEADERS += ../../common/src/CoordConstants.h \
  ../../common/src/CXRGB.hpp \
  ../../common/src/CXMapSimple.hpp \
  ../../common/src/CXHysterezis.hpp \
+ ../../common/src/CXMapMovingDetails.hpp \
  ../../Qt/src/CXRWLock.hpp \
  ../../Qt/src/CXMainWindow.hpp \
  ../../Qt/src/TargetIncludes.hpp \

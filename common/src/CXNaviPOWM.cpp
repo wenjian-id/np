@@ -37,6 +37,7 @@
 #include "CXOptions.hpp"
 #include "CXDeviceContext.hpp"
 #include "CXPOWMMap.hpp"
+#include "CXMapMovingDetails.hpp"
 
 const char * VERSIONSTRING ="NaviPOWM 0.2.1-dev1";
 const char * INFOSTRING1 ="(C) Doru Julian Bugariu";
@@ -95,8 +96,14 @@ CXNaviPOWM::CXNaviPOWM() :
 	m_InfoBarCommonPos(0,0,1,1),
 	m_ZoomInPos(0,0,1,1),
 	m_ZoomOutPos(0,0,1,1),
+	m_MapPos(0,0,1,1),
 	m_ZoomInBtn(e_CmdZoomIn),
-	m_ZoomOutBtn(e_CmdZoomOut)
+	m_ZoomOutBtn(e_CmdZoomOut),
+	m_oMouseDown(false),
+	m_StartMoveX(0),
+	m_StartMoveY(0),
+	m_CurrentPosMoveX(0),
+	m_CurrentPosMoveY(0)
 {
 }
 
@@ -268,7 +275,13 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 	E_DISPLAY_MODE eDisplayMode = GetDisplayMode();
 	if(eDisplayMode == e_ModeMap) {
 		// paint map
-		m_pMapPainterThread->Paint(pDC, 0, m_InfoBarTopPos.GetBottom());
+		int OffsetX = 0;
+		int OffsetY = m_MapPos.GetTop();
+		if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
+			OffsetX = OffsetX + m_CurrentPosMoveX - m_StartMoveX;
+			OffsetY = OffsetY + m_CurrentPosMoveY - m_StartMoveY;
+		}
+		m_pMapPainterThread->Paint(pDC, OffsetX, OffsetY);
 	} else if (eDisplayMode == e_ModeSatInfo) {
 		CXSatelliteData::Instance()->Paint(	pDC, 0, m_InfoBarTopPos.GetBottom(),
 											GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
@@ -335,11 +348,16 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_InfoBarTopPos.SetTop(0);
 	m_InfoBarTopPos.SetRight(Width);
 	m_InfoBarTopPos.SetBottom(IBTH);
-	
+
 	m_InfoBarBottomPos.SetLeft(0);
 	m_InfoBarBottomPos.SetTop(Height - IBBH);
 	m_InfoBarBottomPos.SetRight(Width);
 	m_InfoBarBottomPos.SetBottom(Height);
+
+	m_MapPos.SetLeft(0);
+	m_MapPos.SetTop(m_InfoBarTopPos.GetBottom()+1);
+	m_MapPos.SetRight(Width);
+	m_MapPos.SetBottom(m_InfoBarBottomPos.GetTop() - 1);
 
 	const int ZoomSize = 40;
 	m_ZoomInPos.SetBottom(m_InfoBarBottomPos.GetTop());
@@ -352,7 +370,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomOutPos.SetLeft(0);
 	m_ZoomOutPos.SetRight(ZoomSize);
 
-	m_pMapPainterThread->Resize(Width, Height - IBBH - IBTH);
+	m_pMapPainterThread->Resize(m_MapPos.GetWidth(), m_MapPos.GetHeight());
 	m_pInfoBarBottom->Resize(Width, IBBH);
 	m_pInfoBarTop->Resize(Width, IBTH);
 	m_ZoomInBtn.Resize(ZoomSize, ZoomSize);
@@ -506,16 +524,36 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 										DoRequestRepaint();
 										break;
 									}
-		default:					break;
+		default:					{
+										if(CXOptions::Instance()->IsMapMovingManually()) {
+											if(m_MapPos.Contains(X, Y))
+												m_oMouseDown = true;
+												m_StartMoveX = X;
+												m_StartMoveY = Y;
+												m_CurrentPosMoveX = X;
+												m_CurrentPosMoveY = Y;
+										}
+										break;
+									}
 	}
 }
 
 //-------------------------------------
 void CXNaviPOWM::OnMouseUp(int X, int Y) {
+	if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
+		/// \todo implement
+		CXMapMovingDetails::Instance()->OffsetPosition(-(X - m_StartMoveX), -(Y - m_StartMoveY));
+	}
+	m_oMouseDown = false;
 }
 
 //-------------------------------------
 void CXNaviPOWM::OnMouseMove(int X, int Y) {
-	if(CXOptions::Instance()->IsMapMovingManually()) {
+	if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
+		//// \todo implement
+		m_CurrentPosMoveX = X;
+		m_CurrentPosMoveY = Y;
+		// redraw window
+		DoRequestRepaint();
 	}
 }

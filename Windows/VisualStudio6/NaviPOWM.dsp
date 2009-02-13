@@ -298,6 +298,10 @@ SOURCE=..\..\common\src\CXMapLoaderThread.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXMapMovingDetails.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXMapPainter.hpp
 # End Source File
 # Begin Source File
@@ -539,6 +543,10 @@ SOURCE=..\..\common\src\CXMapContainer.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXMapLoaderThread.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXMapMovingDetails.cpp
 # End Source File
 # Begin Source File
 

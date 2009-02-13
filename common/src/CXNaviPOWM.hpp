@@ -125,8 +125,14 @@ private:
 	tIRect				m_InfoBarCommonPos;			///< oiu
 	tIRect				m_ZoomInPos;				///< oiu
 	tIRect				m_ZoomOutPos;				///< oiu
+	tIRect				m_MapPos;					///< oiu
 	CXZoomBtn			m_ZoomInBtn;				///< oiu
 	CXZoomBtn			m_ZoomOutBtn;				///< oiu
+	bool				m_oMouseDown;				///< oiu
+	int					m_StartMoveX;				///< oiu
+	int					m_StartMoveY;				///< oiu
+	int					m_CurrentPosMoveX;			///< oiu
+	int					m_CurrentPosMoveY;			///< oiu
 	mutable CXMutex		m_Mutex;					///< Synchronization object.
 	//-------------------------------------
 	CXNaviPOWM(const CXNaviPOWM &);						///< Not used.
