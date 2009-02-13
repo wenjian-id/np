@@ -280,6 +280,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
 			OffsetX = OffsetX + m_CurrentPosMoveX - m_StartMoveX;
 			OffsetY = OffsetY + m_CurrentPosMoveY - m_StartMoveY;
+			pDC->DrawRect(m_MapPos, MAPBGCOLOR, MAPBGCOLOR);
 		}
 		m_pMapPainterThread->Paint(pDC, OffsetX, OffsetY);
 	} else if (eDisplayMode == e_ModeSatInfo) {

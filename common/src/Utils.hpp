@@ -46,6 +46,13 @@ const char MAXLAYER = 10;							///< oiu
 
 const double EPSILON = 0.01;
 
+// Mapnik colors
+const CXRGB MAPBGCOLOR(0xE2, 0xDE, 0xD8);
+const CXRGB MAPFGCOLOR(0x00, 0x00, 0x00);
+const CXRGB MAPPOITEXTCOLOR(0x00, 0x00, 0xA0);
+const CXRGB MAPPOIBGCOLOR(0xE2, 0xDE, 0xD8);
+
+
 //-------------------------------------
 /**
  * \brief oiu

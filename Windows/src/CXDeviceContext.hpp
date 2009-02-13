@@ -71,6 +71,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
 	//-------------------------------------
 	/**

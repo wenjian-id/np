@@ -23,8 +23,11 @@
 #ifndef __IDEVICECONTEXT_HPP__
 #define __IDEVICECONTEXT_HPP__
 
+#include "CXRect.hpp"
+
 class CXBitmap;
 class CXRGB;
+
 
 //---------------------------------------------------------------------
 /**
@@ -60,6 +63,12 @@ public:
 	 *
 	 */
 	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor) = 0;
 	//-------------------------------------
 	/**
 	 * \brief oiu

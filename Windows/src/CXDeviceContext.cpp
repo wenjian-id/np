@@ -51,6 +51,28 @@ void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
 }
 
 //-------------------------------------
+void CXDeviceContext::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor) {
+	if(m_hDC == NULL)
+		return;
+
+	// create new pen and brush
+	HPEN NewPen = ::CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
+	HBRUSH NewBrush = ::CreateSolidBrush(CXRGB2COLORREF(BrushColor));
+
+	// get old pen and brush
+	HPEN OldPen = (HPEN)::SelectObject(m_hDC, NewPen); 
+	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_hDC, NewBrush);
+	// draw rectangle
+	::Rectangle(m_hDC, TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight(), TheRect.GetBottom());
+
+	// restore old pen and brush
+	::SelectObject(m_hDC, OldBrush);
+	::SelectObject(m_hDC, OldPen);
+	::DeleteObject(NewPen);
+	::DeleteObject(NewBrush);
+}
+
+//-------------------------------------
 void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
 	if(m_hDC == NULL)
 		return;

@@ -37,12 +37,6 @@
 
 #include <math.h>
 
-// Mapnik colors
-static const CXRGB BGCOLOR(0xE2, 0xDE, 0xD8);
-static const CXRGB FGCOLOR(0x00, 0x00, 0x00);
-static const CXRGB POITEXTCOLOR(0x00, 0x00, 0xA0);
-static const CXRGB POIBGCOLOR(0xE2, 0xDE, 0xD8);
-
 const double ZoomFactor = 1.2;
 const double MAXMETERPERPIXEL = 500;	///< 500 m/pixel
 const double MINMETERPERPIXEL = 0.1;	///< 0.1 m/pixel
@@ -331,7 +325,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 				if(!Name.IsEmpty()) {
 					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
 					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
-					pBMP->DrawTextUTF8(Name, NameRect, POITEXTCOLOR, POIBGCOLOR);
+					pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
 				}
 			}
 		}
@@ -428,7 +422,7 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
 	TextRect.OffsetRect(	ScreenWidth/2 - TextRect.GetWidth()/2,
 							BlackRect.GetTop() - TextRect.GetHeight() - 1);
 	// and draw it
-	pBMP->DrawTextASCII(buf, TextRect, CXRGB(0x00, 0x00, 0x00), BGCOLOR);
+	pBMP->DrawTextASCII(buf, TextRect, CXRGB(0x00, 0x00, 0x00), MAPBGCOLOR);
 }
 
 
@@ -466,7 +460,7 @@ void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 	if(pBMP == NULL)
 		return;
 	// clear wisible rect
-	pBMP->DrawRect(tIRect(0,0, Width, Height), BGCOLOR, BGCOLOR);
+	pBMP->DrawRect(tIRect(0,0, Width, Height), MAPBGCOLOR, MAPBGCOLOR);
 }
 
 //-------------------------------------
@@ -786,30 +780,30 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, pOpt->GetCompassSize() + 20);
 		int bottom = TextRect.GetBottom();
-		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
 		snprintf(buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
-		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
 		bottom = TextRect.GetBottom();
 		snprintf(buf, sizeof(buf), "Zoom: %d", pOpt->GetZoomLevel());
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
-		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
 		bottom = TextRect.GetBottom();
 		snprintf(buf, sizeof(buf), "m/pixel: %0.2f", m_MeterPerPixel);
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
-		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
 		bottom = TextRect.GetBottom();
 		snprintf(buf, sizeof(buf), "MB: %0.2f", 1.0*GetFreeMem()/1024/1024);
 		ttt = buf;
 		TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
 		TextRect.OffsetRect(0, bottom);
-		pBMP->DrawTextASCII(ttt, TextRect, FGCOLOR, BGCOLOR); 
+		pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
 	}
 
 	StopDrawTime.SetNow();

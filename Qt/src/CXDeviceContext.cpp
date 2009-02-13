@@ -53,6 +53,35 @@ void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
 }
 
 //-------------------------------------
+void CXDeviceContext::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor) {
+	if(m_pPainter == NULL)
+		return;
+
+	// get old pen and brush
+	QPen OldPen = m_pPainter->pen();
+	QBrush OldBrush = m_pPainter->brush();
+	
+	// create new pen
+	QPen NewPen(Qt::SolidLine);
+	NewPen.setWidth(1);
+	NewPen.setColor(CXRGB2QColor(PenColor));
+
+	// create new brush
+	QBrush NewBrush(CXRGB2QColor(BrushColor), Qt::SolidPattern);
+	
+	// select new pen and brush
+	m_pPainter->setBrush(NewBrush);
+	m_pPainter->setPen(NewPen);
+
+	// draw rectangle
+	m_pPainter->drawRect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth() - 1, TheRect.GetHeight() - 1);
+
+	// restore old pen and brush
+	m_pPainter->setPen(OldPen);
+	m_pPainter->setBrush(OldBrush);
+}
+
+//-------------------------------------
 void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
 	if(m_pPainter == NULL)
 		return;

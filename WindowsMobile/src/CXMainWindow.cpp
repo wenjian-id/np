@@ -126,6 +126,14 @@ LRESULT CALLBACK CXMainWindow::TheWndProc(HWND hWnd, UINT message, WPARAM wParam
 					m_pInstance->OnMouseUp(X, Y);
 				break;
 			}
+		case WM_MOUSEMOVE:
+			{
+				int X = LOWORD(lParam);
+				int Y = HIWORD(lParam);
+				if(m_pInstance != NULL)
+					m_pInstance->OnMouseMove(X, Y);
+				break;
+			}
 		case WM_ACTIVATE:
 			{
 				// call DefWindowProc
