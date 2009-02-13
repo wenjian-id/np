@@ -78,6 +78,12 @@ void CXWindow::mouseReleaseEvent(QMouseEvent * event) {
 }
 
 //-------------------------------------
+void CXWindow::mouseMoveEvent(QMouseEvent * event) {
+	QWidget::mouseMoveEvent(event);
+	OnMouseMove(event->x(), event->y());
+}
+
+//-------------------------------------
 void CXWindow::ShowMaximized() {
 	showMaximized();
 	update();
