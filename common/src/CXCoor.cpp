@@ -123,4 +123,6 @@ void CXCoor::OffsetCoor(double dUTME, double dUTMN) {
 	m_UTMCoor.OffsetCoor(dUTME, dUTMN);
 	// and compute lon / lat
 	UTMtoLL(WGS84, m_UTMCoor.GetUTMEasting(), m_UTMCoor.GetUTMNorthing(), m_UTMCoor.GetUTMZone(), m_UTMCoor.GetUTMLetter(), m_dLon, m_dLat);
+	// relocate for new UTM zone
+	RelocateUTM(UTMZoneNone);
 }
