@@ -25,6 +25,8 @@
 
 #include "CXMapSort.hpp"
 
+static const int MIN_AGE_PURGE = 5;		///< Min age of elemnts that can be purged.
+
 //---------------------------------------------------------------------
 /**
  * \brief oiu
@@ -162,31 +164,40 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void Purge() {
+		CXCacheHelper *pTmp = NULL;
+		CXCacheHelper *pDel = NULL;
+		CXPOSMapSort<tKey> Pos = m_Values.GetStart();
+		int MaxCount = -1;
+		tKey DelKey;
+		while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
+			if(pTmp->GetCounter() > MaxCount) {
+				// found new maximum
+				DelKey = Pos.m_key;
+				MaxCount = pTmp->GetCounter();
+				pDel = pTmp;
+			}
+		}
+		// check if we can remove maximum
+		if(MaxCount > MIN_AGE_PURGE) {
+			// now remove maximum
+			m_Values.RemoveAt(DelKey);
+			// and delete element
+			delete pDel;
+		}
+
+	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	CXSmartPtr<tValue> GetAt(const tKey & Key) {
 		CXCacheHelper *pResult = NULL;
 		// check if we have to remove a Element
 		if(m_Values.GetSize() >= m_NominalCacheSize) {
-			// remove rarely used element
-			CXCacheHelper *pTmp = NULL;
-			CXCacheHelper *pDel = NULL;
-			CXPOSMapSort<tKey> Pos = m_Values.GetStart();
-			int MaxCount = -1;
-			tKey DelKey;
-			while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
-				if(pTmp->GetCounter() > MaxCount) {
-					// found new maximum
-					DelKey = Pos.m_key;
-					MaxCount = pTmp->GetCounter();
-					pDel = pTmp;
-				}
-			}
-			// check if we can remove maximum
-			if(MaxCount > 2) {
-				// now remove maximum
-				m_Values.RemoveAt(DelKey);
-				// and delete element
-				delete pDel;
-			}
+			// remove rarely used elements
+			Purge();
 		}
 		// check if value exists
 		if(!m_Values.Lookup(Key, pResult)) {

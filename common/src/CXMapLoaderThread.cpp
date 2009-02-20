@@ -23,6 +23,7 @@
 #include "CXMapLoaderThread.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
+#include "OSSpecific.hpp"
 
 #include <math.h>
 
@@ -103,6 +104,14 @@ void CXMapLoaderThread::OnThreadStopped() {
 
 //-------------------------------------
 void CXMapLoaderThread::OnWorkFunc() {
+	// check if enaugh memory left
+	int Mem = GetFreeMem()/1024/1024;
+	if((Mem > 0) && (Mem < 10)) {
+		// purge caches
+		m_TOCCache.Purge();
+		m_MapSectionDisplayCache.Purge();
+		m_MapSectionLocatorCache.Purge();
+	}
 	bool oFurtherWork = false;
 	bool oLoadTOC = false;
 	CXTOCDescr *pTOCDescr = NULL;
