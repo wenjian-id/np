@@ -101,7 +101,7 @@ void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, 
 		return;
 	if(pBmp == NULL)
 		return;
-	QImage cpy = *pBmp->GetImage();
+	QImage cpy = pBmp->GetImage()->copy();
 	QImage mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskOutColor);
 	cpy.setAlphaChannel(mask);
 	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
