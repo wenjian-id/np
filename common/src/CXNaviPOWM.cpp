@@ -295,8 +295,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		}
 		m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
 		// paint zoom buttons
-		if(	CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom() &&
-			!CXOptions::Instance()->IsMapMovingManually())
+		if(CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom())
 		{
 			m_ZoomInBtn.Paint(pDC, m_ZoomInPos.GetLeft(), m_ZoomInPos.GetTop());
 			m_ZoomOutBtn.Paint(pDC, m_ZoomOutPos.GetLeft(), m_ZoomOutPos.GetTop());
@@ -465,7 +464,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 	// check Info bar buttons
 	Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
 	// check for zoom buttons
-	if((eDisplayMode == e_ModeMap) && (CXOptions::Instance()->MustShowZoomButtons()) && (Cmd == e_CmdNone)) {
+	if((eDisplayMode == e_ModeMap) && CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom() && (Cmd == e_CmdNone)) {
 		Cmd = m_ZoomInBtn.OnMouseDown(X - m_ZoomInPos.GetLeft(), Y - m_ZoomInPos.GetTop());
 		if(Cmd == e_CmdNone)
 			Cmd = m_ZoomOutBtn.OnMouseDown(X - m_ZoomOutPos.GetLeft(), Y - m_ZoomOutPos.GetTop());
