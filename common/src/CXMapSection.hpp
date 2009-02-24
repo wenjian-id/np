@@ -178,6 +178,15 @@ private:
 	 *	\param	InFile		File with map data.
 	 *	\return				true on success
 	 */
+	bool LoadMap_0_1_0(CXFile & InFile);
+	//-------------------------------------
+	/**
+	 * \brief Load map current version
+	 *
+	 *	Load map current version
+	 *	\param	InFile		File with map data.
+	 *	\return				true on success
+	 */
 	bool LoadMap_CurrentVersion(CXFile & InFile);
 protected:
 	//-------------------------------------

@@ -222,16 +222,11 @@ bool CXMapSection::LoadMap() {
 	// decide which load function to call
 	// first of all check older versions
 	if(Result) {
-/*
-		if(Version == 0x00000100) {
-			// v 0.1.1
-			Result = LoadMap0_1_1(InFile, FileName);
-		} else if(Version == 0x00010200) {
-			// v 0.1.2
-			Result = LoadMap0_1_2(InFile, FileName);
+
+		if(Version == 0x00010000) {
+			// v 0.1.0
+			Result = LoadMap_0_1_0(InFile);
 		} else if(Version != ReqVersion) {
-*/
-		if(Version != ReqVersion) {
 			// not supported version
 /*
 			CXStringASCII ErrorMsg(FileName);
@@ -268,6 +263,147 @@ bool CXMapSection::LoadMap() {
 
 //-------------------------------------
 bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
+	// node count
+
+	// read POIs
+	t_uint32 POICount = 0;
+	if(!ReadUI32(InFile, POICount)) {
+		DoOutputErrorMessage("Error reading POICount");
+		return false;
+	}
+	m_POINodes.Resize(POICount);
+	for(t_uint32 ulPOI=0; ulPOI<POICount; ulPOI++) {
+		// read node
+		unsigned char POICount = 0;
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+		// compute lon
+		double dLon = ConvertSavedUI32(Lon);
+		double dLat = ConvertSavedUI32(Lat);
+		// create POI node
+		CXPOINode *pPOINode = new CXPOINode(dLon, dLat);
+		// read POI type stuff
+		ReadB(InFile, POICount);
+		for(t_uint32 cnt = 0; cnt < POICount; cnt++) {
+			t_uint16 POI = 0;
+			ReadUI16(InFile, POI);
+			E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
+			pPOINode->SetPOIType(POIType);
+		}
+
+		// read name
+		CXStringUTF8 Name;
+		ReadStringUTF8(InFile, Name);
+		pPOINode->SetName(Name);
+
+		// add node to POI buffer
+		m_POINodes[ulPOI] = pPOINode;
+	}
+	// read nodes
+	t_uint32 NodeCount = 0;
+	if(!ReadUI32(InFile, NodeCount)) {
+		DoOutputErrorMessage("Error reading NodeCount");
+		return false;
+	}
+	m_Nodes.Resize(NodeCount);
+	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
+		// read node: IDX, LON, LAT
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
+		unsigned char IsTerminator = 0;
+		ReadB(InFile, IsTerminator);
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+
+		// compute lon
+		double dLon = ConvertSavedUI32(Lon);
+		double dLat = ConvertSavedUI32(Lat);
+
+		// create node
+		CXNode *pNode = new CXNode((IsTerminator != 0), dLon, dLat);
+
+		// and to m_Nodes
+		m_Nodes[ulNode] = pNode;
+	}
+
+	// way count
+	t_uint32 WayCount = 0;
+	if(!ReadUI32(InFile, WayCount)) {
+		DoOutputErrorMessage("Error reading WayCount");
+		return false;
+	}
+	CXMapHashSimple<char, TWayBuffer *> Ways;
+	// read ways
+	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
+		// read Way: Idx, Name, node count, node ids
+		unsigned char HighwayType = 0;
+		CXStringUTF8 Name;
+		CXStringUTF8 Ref;
+		unsigned char MaxSpeed = 0;
+		ReadB(InFile, HighwayType);
+		// load locator information only in zoom level 0
+		if(m_TOC.GetZoomLevel() == e_ZoomLevel_0) {
+			ReadStringUTF8(InFile, Name);
+			ReadStringUTF8(InFile, Ref);
+			ReadB(InFile, MaxSpeed);
+		}
+		unsigned char bLayer = 0;
+		ReadB(InFile, bLayer);
+		char Layer = 0;
+		if((bLayer & 0x80) != 0)
+			// negative value
+			Layer = - (bLayer & 0x7F);
+		else {
+			// positive value
+			Layer = bLayer;
+		}
+		// create way
+		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
+		pWay->SetMaxSpeed(MaxSpeed);
+		pWay->SetLayer(Layer);
+		// add way
+		TWayBuffer *pWayBuffer = NULL;
+		if(!Ways.Lookup(Layer, pWayBuffer)) {
+			Ways.SetAt(Layer, new TWayBuffer());
+		}
+		Ways.Lookup(Layer, pWayBuffer);
+		pWayBuffer->Append(pWay);
+		// 
+		t_uint32 NodeCount = 0;
+		ReadUI32(InFile, NodeCount);
+		for(t_uint32 ul=0; ul<NodeCount; ul++) {
+			t_uint32 Idx = 0;
+			ReadUI32(InFile, Idx);
+			CXNode *pNode = m_Nodes[Idx];
+			pWay->AddNode(pNode);
+		}
+	}
+	// read area count
+	t_uint32 AreaCount = 0;
+	if(!ReadUI32(InFile, WayCount)) {
+		DoOutputErrorMessage("Error reading AreaCount");
+		return false;
+	}
+	/// \todo read areas
+	// fill m_WayMapBuffer ordered by Layer ascending
+	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
+		TWayBuffer *pWayBuffer = NULL;
+		Ways.Lookup(Layer, pWayBuffer);
+		TWayBuffer *pOld = m_LayeredWayBuffer[Layer - MINLAYER];
+		if(pOld != NULL)
+			delete pOld;
+		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
+	}
+	// run OSMVali only on level 0
+	if(m_TOC.GetZoomLevel() == e_ZoomLevel_0)
+		RunOSMVali();
+	return true;
+}
+
+//-------------------------------------
+bool CXMapSection::LoadMap_0_1_0(CXFile & InFile) {
 	// node count
 
 	// read POIs

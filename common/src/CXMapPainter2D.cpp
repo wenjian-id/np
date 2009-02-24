@@ -840,9 +840,6 @@ bool CXMapPainter2D::ZoomOut() {
 
 //-------------------------------------
 void CXMapPainter2D::UpdateZoomLevel() {
-	char buf[100];
-	snprintf(buf, sizeof(buf), "m_MeterPerPixel = %.2f\n", m_MeterPerPixel);
-	DoOutputDebugString(buf);
 	if(m_MeterPerPixel <= 4)
 		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_0);
 	else if(m_MeterPerPixel <= 8)
