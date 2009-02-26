@@ -38,9 +38,11 @@ README.TXT = 2
 CHANGELOG.TXT = 2
 demo01.txt = 2
 E007N50.map = 2
+currentpos.bmp = 3
 info.bmp = 3
 logo.bmp = 3
 minimize.bmp = 3
+move.bmp = 3
 poi00.bmp = 3
 quit.bmp = 3
 saveoff.bmp = 3
@@ -69,9 +71,11 @@ CHANGELOG.TXT
 demo01.txt
 
 [Icons]
+currentpos.bmp
 info.bmp
 logo.bmp
 minimize.bmp
+move.bmp
 poi00.bmp
 quit.bmp
 saveoff.bmp

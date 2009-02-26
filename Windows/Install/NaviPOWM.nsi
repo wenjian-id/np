@@ -89,9 +89,11 @@ Section "NaviPOWM (required)" SECT_NaviPOWM     ;
     ; Icons
     CreateDirectory $INSTDIR\Icons
     SetOutPath $INSTDIR\Icons 
+    File "${ImagePath}\currentpos.bmp"
     File "${ImagePath}\info.bmp"
     File "${ImagePath}\logo.bmp"
     File "${ImagePath}\minimize.bmp"
+    File "${ImagePath}\move.bmp"
     File "${ImagePath}\poi00.bmp"
     File "${ImagePath}\quit.bmp"
     File "${ImagePath}\saveoff.bmp"
@@ -161,9 +163,11 @@ Section "Uninstall"
     RmDir $INSTDIR\Maps ; will be deleted only if empty
 
     ; Icons
+    Delete "$INSTDIR\Icons\currentpos.bmp"
     Delete "$INSTDIR\Icons\info.bmp"
     Delete "$INSTDIR\Icons\logo.bmp"
     Delete "$INSTDIR\Icons\minimize.bmp"
+    Delete "$INSTDIR\Icons\move.bmp"
     Delete "$INSTDIR\Icons\poi00.bmp"
     Delete "$INSTDIR\Icons\quit.bmp"
     Delete "$INSTDIR\Icons\saveoff.bmp"

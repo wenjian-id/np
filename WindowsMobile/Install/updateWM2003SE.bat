@@ -7,9 +7,11 @@ copy ..\..\CHANGELOG.TXT Common
 copy ..\..\common\Demo\demo01.txt Common
 copy ..\..\common\Demo\E007N50.map Common
 copy ..\..\common\Config\navipowm.ini Common\navipowm.txt
+copy ..\..\common\Images\currentpos.bmp Icons
 copy ..\..\common\Images\info.bmp Icons
 copy ..\..\common\Images\logosmall.bmp Icons\logo.bmp
 copy ..\..\common\Images\minimize.bmp Icons
+copy ..\..\common\Images\move.bmp Icons
 copy ..\..\common\Images\poi00.bmp Icons
 copy ..\..\common\Images\quit.bmp Icons
 copy ..\..\common\Images\saveoff.bmp Icons

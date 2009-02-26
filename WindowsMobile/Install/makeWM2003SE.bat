@@ -1,4 +1,4 @@
 cabwiz NaviPOWM.inf
-ezsetup.exe -l english -i NaviPOWM.ini -r InstReadMe.txt -e ..\..\LICENSE.TXT -o NaviPOWM-Mobile-WM2003SE-0.2.0-Setup.exe
-move NaviPOWM-Mobile-WM2003SE-0.2.0-Setup.exe Install
-move NaviPOWM.cab Install\NaviPOWM-Mobile-WM2003SE-0.2.0-Setup.cab
+ezsetup.exe -l english -i NaviPOWM.ini -r InstReadMe.txt -e ..\..\LICENSE.TXT -o NaviPOWM-Mobile-WM2003SE-0.2.1-Setup.exe
+move NaviPOWM-Mobile-WM2003SE-0.2.1-Setup.exe Install
+move NaviPOWM.cab Install\NaviPOWM-Mobile-WM2003SE-0.2.1-Setup.cab
