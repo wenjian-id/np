@@ -4,6 +4,7 @@ Version 0.2.1:
    - 2458457: Make compass point to geographic north
  - implemented feature requests:
    - 1836295: dynamic zool level depends on speed
+   - 1834082: Move map around
  - other:
 
 Version 0.2.0:
