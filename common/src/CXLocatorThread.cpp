@@ -447,7 +447,6 @@ void CXLocatorThread::Locate() {
 			pMapSection->Lock();
 			// relocate
 			pMapSection->RelocateUTM(UTMZoneCurrent);
-			CXTrackLog::Instance()->RelocateUTM(UTMZoneCurrent);
 			LockedMapSections[idx] = true;
 		} else {
 			LockedMapSections[idx] = false;

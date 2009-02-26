@@ -624,7 +624,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			pMapSection->Lock();
 			// relocate
 			pMapSection->RelocateUTM(UTMZoneCurrent);
-			CXTrackLog::Instance()->RelocateUTM(UTMZoneCurrent);
 			// compute display coordinates
 			pMapSection->ComputeDisplayCoordinates(TMMap);
 			LockedMapSections[idx] = true;
@@ -632,6 +631,9 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			LockedMapSections[idx] = false;
 		}
 	}
+
+	// relocate track log
+	CXTrackLog::Instance()->RelocateUTM(UTMZoneCurrent);
 
 	// draw layer for layer to avoid artefacts on map section borders
 	MapSectionSize = MapSections.GetSize();
@@ -759,11 +761,19 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	// draw computed opsitions if neccessary
 	if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawPositions)) {
-		CXCoorVector GPSCoor = TMMap*CXCoorVector(NaviData.GetGPSCoor().GetUTMEasting(), NaviData.GetGPSCoor().GetUTMNorthing());
-		CXCoorVector CorrectedGPSCoor = TMMap*CXCoorVector(NaviData.GetCorrectedGPSCoor().GetUTMEasting(), NaviData.GetCorrectedGPSCoor().GetUTMNorthing());
-		CXCoorVector LocatedCoor = TMMap*CXCoorVector(NaviData.GetLocatedCoor().GetUTMEasting(), NaviData.GetLocatedCoor().GetUTMNorthing());
+		CXCoor Coor = NaviData.GetGPSCoor();
+		Coor.RelocateUTM(UTMZoneCurrent);
+		CXCoorVector GPSCoor = TMMap*CXCoorVector(Coor.GetUTMEasting(), Coor.GetUTMNorthing());
 		pBMP->DrawCircle(GPSCoor.GetIntX(), GPSCoor.GetIntY(), 3, CXRGB(0x00, 0x00, 0x00), CXRGB(0xFF, 0x00, 0x00));
+
+		Coor = NaviData.GetCorrectedGPSCoor();
+		Coor.RelocateUTM(UTMZoneCurrent);
+		CXCoorVector CorrectedGPSCoor = TMMap*CXCoorVector(Coor.GetUTMEasting(), Coor.GetUTMNorthing());
 		pBMP->DrawCircle(CorrectedGPSCoor.GetIntX(), CorrectedGPSCoor.GetIntY(), 3, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0xFF, 0x00));
+
+		Coor = NaviData.GetLocatedCoor();
+		Coor.RelocateUTM(UTMZoneCurrent);
+		CXCoorVector LocatedCoor = TMMap*CXCoorVector(Coor.GetUTMEasting(), Coor.GetUTMNorthing());
 		pBMP->DrawCircle(LocatedCoor.GetIntX(), LocatedCoor.GetIntY(), 3, CXRGB(0x00, 0x00, 0x00), CXRGB(0x00, 0x00, 0xFF));
 	}
 
