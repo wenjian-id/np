@@ -31,7 +31,8 @@
 CXMapPainterThread::CXMapPainterThread() :
 	m_pMapPainter(NULL),
 	m_pNaviPOWM(NULL),
-	m_oIgnoreRepaintRequests(false)
+	m_oIgnoreRepaintRequests(false),
+	m_oIgnoreRepaintRequestsChanged(false)
 {
 	m_pMapPainter = new CXMapPainter2D();
 //	m_pMapPainter = new CXMapPainterTest();
@@ -78,6 +79,12 @@ void CXMapPainterThread::RequestRepaint() {
 	if(m_pMapPainter == NULL)
 		return;
 	m_pMapPainter->SetMustRepaint(true);
+}
+
+//-------------------------------------
+void CXMapPainterThread::RedrawMap() {
+	if(m_pMapPainter == NULL)
+		return;
 	RequestWork();
 }
 
@@ -103,7 +110,21 @@ bool CXMapPainterThread::MustIgnoreRepaints() const {
 //-------------------------------------
 void CXMapPainterThread::SetMustIgnoreRepaints(bool Value) {
 	CXWriteLocker WL(&m_RWLock);
+	if(m_oIgnoreRepaintRequests != Value)
+		m_oIgnoreRepaintRequestsChanged = true;
 	m_oIgnoreRepaintRequests = Value;
+}
+
+//-------------------------------------
+bool CXMapPainterThread::MustIgnoreRepaintsChanged() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oIgnoreRepaintRequestsChanged;
+}
+
+//-------------------------------------
+void CXMapPainterThread::ResetMustIgnoreRepaintsChanged() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oIgnoreRepaintRequestsChanged = false;
 }
 
 //-------------------------------------
@@ -120,14 +141,22 @@ void CXMapPainterThread::OnThreadStopped() {
 void CXMapPainterThread::OnWorkFunc() {
 	if(m_pMapPainter == NULL)
 		return;
-	// do work
+	if(m_pNaviPOWM == NULL)
+		return;
+	// check if we must do some work
 	if(!MustIgnoreRepaints()) {
+		// do work
 		m_pMapPainter->DoWork();
-		// check if paint needed
-		if(m_pMapPainter->MustRepaint() && (m_pNaviPOWM != NULL)) {
-			if(!MustIgnoreRepaints())
+		// check if paint allowed.
+		if(m_pMapPainter->MustRepaint()) {
+			// if MustIgnoreRepaintsChanged returns true here,
+			// the time spent moving the map was shorter than drawing the map,
+			// so we ignore it to avoid flickering around
+			if(!MustIgnoreRepaintsChanged()) {
 				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
+			}
 		}
+		ResetMustIgnoreRepaintsChanged();
 	}
 }
 

@@ -520,7 +520,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 										// switch map moving
 										CXOptions::Instance()->SetMapMovingManually(!CXOptions::Instance()->IsMapMovingManually());
 										// force redrawing of maps
-										m_pMapPainterThread->RequestRepaint();
+										m_pMapPainterThread->RedrawMap();
 										// redraw window
 										DoRequestRepaint();
 										break;
@@ -549,7 +549,7 @@ void CXNaviPOWM::OnMouseUp(int X, int Y) {
 		// turn off repaint request ignoration
 		m_pMapPainterThread->SetMustIgnoreRepaints(false);
 		// force redrawing of maps
-		m_pMapPainterThread->RequestRepaint();
+		m_pMapPainterThread->RedrawMap();
 	}
 	m_oMouseDown = false;
 }

@@ -38,15 +38,28 @@ class CXDeviceContext;
  */
 class CXMapPainterThread : public CXWorkRequestThread {
 private:
-	CXMapPainter		*m_pMapPainter;				///< oiu
-	CXNaviPOWM			*m_pNaviPOWM;				///< oiu
-	bool				m_oIgnoreRepaintRequests;	///< oiu
-	mutable CXRWLock	m_RWLock;					///< Synchronization object.
+	CXMapPainter		*m_pMapPainter;						///< oiu
+	CXNaviPOWM			*m_pNaviPOWM;						///< oiu
+	bool				m_oIgnoreRepaintRequests;			///< oiu
+	bool				m_oIgnoreRepaintRequestsChanged;	///< oiu
+	mutable CXRWLock	m_RWLock;							///< Synchronization object.
 	//-------------------------------------
 	CXMapPainterThread(const CXMapPainterThread &);						///< Not used.
 	const CXMapPainterThread & operator = (const CXMapPainterThread &);	///< Not used.
 	//-------------------------------------
 	virtual void OnWorkFunc();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustIgnoreRepaintsChanged() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ResetMustIgnoreRepaintsChanged();
 protected:
 public:
 	//-------------------------------------
@@ -117,6 +130,12 @@ public:
 	 *
 	 */
 	void RequestRepaint();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void RedrawMap();
 	//-------------------------------------
 	/**
 	 * \brief oiu
