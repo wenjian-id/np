@@ -501,7 +501,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// get coordinates from locator
 		Position = NaviData.GetLocatedCoor();
 	} else {
-		// get gps coordinates
+		// get corrected gps coordinates
 		Position = NaviData.GetCorrectedGPSCoor();
 	}
 	if(pOpt->IsMapMovingManually()) {

@@ -39,7 +39,7 @@
 #include "CXPOWMMap.hpp"
 #include "CXMapMovingDetails.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.2.1-dev2";
+const char * VERSIONSTRING ="NaviPOWM 0.2.1";
 const char * INFOSTRING1 ="(C) Doru Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 
@@ -513,6 +513,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		case e_CmdAutoZoom:			{
 										// switch automatic zoom
 										CXOptions::Instance()->SetAutomaticZoomFlag(!CXOptions::Instance()->AutomaticZoom());
+										DoRequestRepaint();
 										break;
 									}
 		case e_CmdMapMoveManually:	{
@@ -543,6 +544,8 @@ void CXNaviPOWM::OnMouseUp(int X, int Y) {
 	if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
 		/// \todo implement
 		CXMapMovingDetails::Instance()->OffsetPosition(-(X - m_StartMoveX), -(Y - m_StartMoveY));
+		// force redrawing of maps
+		m_pMapPainterThread->RequestRepaint();
 	}
 	m_oMouseDown = false;
 }
@@ -550,7 +553,6 @@ void CXNaviPOWM::OnMouseUp(int X, int Y) {
 //-------------------------------------
 void CXNaviPOWM::OnMouseMove(int X, int Y) {
 	if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
-		//// \todo implement
 		m_CurrentPosMoveX = X;
 		m_CurrentPosMoveY = Y;
 		// redraw window
