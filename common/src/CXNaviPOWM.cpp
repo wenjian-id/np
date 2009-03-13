@@ -529,10 +529,13 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 										if(CXOptions::Instance()->IsMapMovingManually()) {
 											if(m_MapPos.Contains(X, Y))
 												m_oMouseDown = true;
+												// remember coordinates
 												m_StartMoveX = X;
 												m_StartMoveY = Y;
 												m_CurrentPosMoveX = X;
 												m_CurrentPosMoveY = Y;
+												// turn off repaint request ignoration
+												m_pMapPainterThread->SetMustIgnoreRepaints(true);
 										}
 										break;
 									}
@@ -542,8 +545,9 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 //-------------------------------------
 void CXNaviPOWM::OnMouseUp(int X, int Y) {
 	if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
-		/// \todo implement
 		CXMapMovingDetails::Instance()->OffsetPosition(-(X - m_StartMoveX), -(Y - m_StartMoveY));
+		// turn off repaint request ignoration
+		m_pMapPainterThread->SetMustIgnoreRepaints(false);
 		// force redrawing of maps
 		m_pMapPainterThread->RequestRepaint();
 	}

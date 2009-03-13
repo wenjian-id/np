@@ -22,6 +22,7 @@
 
 #include "CXMapPainterThread.hpp"
 #include "CXWriteLocker.hpp"
+#include "CXReadLocker.hpp"
 #include "CXMapPainter2D.hpp"
 #include "CXMapPainterTest.hpp"
 #include "CXNaviPOWM.hpp"
@@ -29,7 +30,8 @@
 //-------------------------------------
 CXMapPainterThread::CXMapPainterThread() :
 	m_pMapPainter(NULL),
-	m_pNaviPOWM(NULL)
+	m_pNaviPOWM(NULL),
+	m_oIgnoreRepaintRequests(false)
 {
 	m_pMapPainter = new CXMapPainter2D();
 //	m_pMapPainter = new CXMapPainterTest();
@@ -93,6 +95,18 @@ void CXMapPainterThread::Resize(int Width, int Height) {
 }
 
 //-------------------------------------
+bool CXMapPainterThread::MustIgnoreRepaints() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oIgnoreRepaintRequests;
+}
+
+//-------------------------------------
+void CXMapPainterThread::SetMustIgnoreRepaints(bool Value) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oIgnoreRepaintRequests = Value;
+}
+
+//-------------------------------------
 void CXMapPainterThread::OnThreadStarted() {
 	// nothing to do
 }
@@ -107,10 +121,13 @@ void CXMapPainterThread::OnWorkFunc() {
 	if(m_pMapPainter == NULL)
 		return;
 	// do work
-	m_pMapPainter->DoWork();
-	// check if paint needed
-	if(m_pMapPainter->MustRepaint() && (m_pNaviPOWM != NULL)) {
-		m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
+	if(!MustIgnoreRepaints()) {
+		m_pMapPainter->DoWork();
+		// check if paint needed
+		if(m_pMapPainter->MustRepaint() && (m_pNaviPOWM != NULL)) {
+			if(!MustIgnoreRepaints())
+				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
+		}
 	}
 }
 
