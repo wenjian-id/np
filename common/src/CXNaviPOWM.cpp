@@ -419,6 +419,14 @@ void CXNaviPOWM::PositionChanged(const CXNaviData & NewData) {
 }
 
 //-------------------------------------
+void CXNaviPOWM::StopMapMove() {
+	if(CXOptions::Instance()->IsMapMovingManually()) {
+		// turn off repaint request ignoration
+		m_pMapPainterThread->SetMustIgnoreRepaints(false);
+	}
+}
+
+//-------------------------------------
 void CXNaviPOWM::OnChar(int /*TheChar*/) {
 }
 
@@ -480,6 +488,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		case e_CmdQuit:				m_pLocatorThread->SaveLastReceivedGPSCoordinate(); m_pMainWindow->RequestTermination(); break;
 		case e_CmdMinimize:			m_pMainWindow->ShowMinimized(); break;
 		case e_CmdInfo:				{
+										StopMapMove();
 										if(eDisplayMode == e_ModeInfo)
 											// switch back top map mode
 											SetDisplayMode(e_ModeMap);
@@ -490,6 +499,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 										break;
 									}
 		case e_CmdSat:				{
+										StopMapMove();
 										if(eDisplayMode == e_ModeSatInfo)
 											// switch back top map mode
 											SetDisplayMode(e_ModeMap);
@@ -519,6 +529,8 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 		case e_CmdMapMoveManually:	{
 										// switch map moving
 										CXOptions::Instance()->SetMapMovingManually(!CXOptions::Instance()->IsMapMovingManually());
+										if(!CXOptions::Instance()->IsMapMovingManually())
+										   StopMapMove();
 										// force redrawing of maps
 										m_pMapPainterThread->RedrawMap();
 										// redraw window
@@ -544,10 +556,10 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 
 //-------------------------------------
 void CXNaviPOWM::OnMouseUp(int X, int Y) {
-	if(CXOptions::Instance()->IsMapMovingManually() && m_oMouseDown) {
+	if(m_oMouseDown) {
+		// set new position
 		CXMapMovingDetails::Instance()->OffsetPosition(-(X - m_StartMoveX), -(Y - m_StartMoveY));
-		// turn off repaint request ignoration
-		m_pMapPainterThread->SetMustIgnoreRepaints(false);
+		StopMapMove();
 		// force redrawing of maps
 		m_pMapPainterThread->RedrawMap();
 	}

@@ -179,6 +179,12 @@ private:
 	 *
 	 */
 	void DoRequestRepaint();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void StopMapMove();
 protected:
 public:
 	//-------------------------------------
