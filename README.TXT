@@ -94,4 +94,8 @@ Operating NaviPOWM:
    is saving all received NMEA data.
 4. The exit button terminates NaviPOWM.
 5. By clicking on the number of sattelites in the top left corner a screen with
-   the position of satellites i view is displayed. 
+   the position of satellites in view is displayed. 
+6. Automatic scaling can be turned on and off by pressing the scale bars in the 
+   top left corner of the screen.
+7. Moving map can be done by dragging the map around, after map moving has been
+   enabled by pressing the blue triangle in the top bar.
