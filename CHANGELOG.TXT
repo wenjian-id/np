@@ -1,3 +1,9 @@
+Version 0.2.2:
+ - fixed bugs:
+ - implemented feature requests:
+   - 2726789: Red color for satellites in top bar too dark.
+ - other:
+
 Version 0.2.1:
  - fixed bugs:
    - 2480626: Add needed Qt DLLs in NaviPOWM package

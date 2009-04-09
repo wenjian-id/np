@@ -138,7 +138,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		// compute color
 		CXRGB NSatColor;
 		if(NSat <= 5) {
-			NSatColor = CXRGB(0xff, 0x00, 0x00);
+			NSatColor = CXRGB(0xff, 0x80, 0x80);
 		} else if(NSat <= 8) {
 			NSatColor = CXRGB(0xff, 0xff, 0x00);
 		} else {
