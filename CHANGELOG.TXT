@@ -1,6 +1,12 @@
 Version 0.2.2:
  - fixed bugs:
  - implemented feature requests:
+ - other:
+   - changed to Qt 4.5.0
+
+Version 0.2.2:
+ - fixed bugs:
+ - implemented feature requests:
    - 2726789: Red color for satellites in top bar too dark.
  - other:
 
