@@ -206,7 +206,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_T
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
-	CXPen *pPen = m_PenHolder.GetPenBg(eHighwayType);
+	CXPen *pPen = m_PenHolder.GetScaledPenBg(eHighwayType);
 	bool OSMValiEnabled = CXOptions::Instance()->GetOSMValiFlags() != 0;
 	size_t cnt = pWays->GetSize();
 	if((cnt != 0) && (pPen != NULL)) {
@@ -235,7 +235,7 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_T
 	if(pWays == NULL)
 		return;
 	// get pen for this type of way
-	CXPen *pPen = m_PenHolder.GetPenFg(eHighwayType);
+	CXPen *pPen = m_PenHolder.GetScaledPenFg(eHighwayType);
 	bool OSMValiEnabled = CXOptions::Instance()->GetOSMValiFlags() != 0;
 	size_t cnt = pWays->GetSize();
 	if((cnt != 0) && (pPen != NULL)) {
@@ -866,4 +866,6 @@ void CXMapPainter2D::UpdateZoomLevel() {
 		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_6);
 	else
 		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_7);
+	// scale pens
+	m_PenHolder.ScalePens(4.0/m_MeterPerPixel);
 }

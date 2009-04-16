@@ -37,10 +37,10 @@ CXPenHolder::~CXPenHolder() {
 void CXPenHolder::CreatePens() {
 
 	for(size_t i=0; i<e_Highway_EnumCount; i++) {
-		m_Pens.Append(new SPens());
+		m_Pens.Append(new CXPens());
 	}
 		
-	SPens *pPens = NULL;
+	CXPens *pPens = NULL;
 
 	// now create pens
 	// Mapnik
@@ -126,17 +126,22 @@ void CXPenHolder::CreatePens() {
 	pPens = m_Pens[e_Highway_LivingStreet];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
+	
+	for(size_t i=0; i<e_Highway_EnumCount; i++) {
+		m_ScaledPens.Append(new CXPens(*m_Pens[i]));
+	}
 }
 
 //-------------------------------------
 void CXPenHolder::DestroyPens() {
 	for(size_t i=0; i<e_Highway_EnumCount; i++) {
-		SPens *pPens = m_Pens[i];
-		delete pPens->m_pBg;
-		delete pPens->m_pSegm;
+		CXPens *pPens = m_Pens[i];
+		delete pPens;
+		pPens = m_ScaledPens[i];
 		delete pPens;
 	}
 	m_Pens.Clear();
+	m_ScaledPens.Clear();
 }
 
 //-------------------------------------
@@ -151,3 +156,35 @@ CXPen *CXPenHolder::GetPenFg(E_KEYHIGHWAY_TYPE HighwayType) {
 	return Result;
 }
 
+//-------------------------------------
+void CXPenHolder::ScalePens(double ScaleFactor) {
+	for(size_t i=0; i<e_Highway_EnumCount; i++) {
+		CXPens *pPens = m_Pens[i];
+		CXPens *pScaledPens = m_ScaledPens[i];
+		if(ScaleFactor > 1) {
+			// scale
+			if(pPens->m_pBg != NULL)
+				pScaledPens->m_pBg->SetWidth(static_cast<int>(ScaleFactor*pPens->m_pBg->GetWidth()));
+			if(pPens->m_pSegm != NULL)
+				pScaledPens->m_pSegm->SetWidth(static_cast<int>(ScaleFactor*m_Pens[i]->m_pSegm->GetWidth()));
+		} else {
+			// do not scale
+			if(pPens->m_pBg != NULL)
+				pScaledPens->m_pBg->SetWidth(pPens->m_pBg->GetWidth());
+			if(pPens->m_pSegm != NULL)
+				pScaledPens->m_pSegm->SetWidth(pPens->m_pSegm->GetWidth());
+		}
+	}
+}
+
+//-------------------------------------
+CXPen *CXPenHolder::GetScaledPenBg(E_KEYHIGHWAY_TYPE HighwayType) {
+	CXPen *Result = m_ScaledPens[HighwayType]->m_pBg;
+	return Result;
+}
+
+//-------------------------------------
+CXPen *CXPenHolder::GetScaledPenFg(E_KEYHIGHWAY_TYPE HighwayType) {
+	CXPen *Result = m_ScaledPens[HighwayType]->m_pSegm;
+	return Result;
+}

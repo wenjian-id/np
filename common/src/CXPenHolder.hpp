@@ -25,8 +25,8 @@
 
 #include "CXBuffer.hpp"
 #include "CXPOWMMap.hpp"
+#include "CXPen.hpp"
 
-class CXPen;
 
 //----------------------------------------------------------------------------
 /**
@@ -40,11 +40,48 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	struct SPens {
+	class CXPens {
+	private:
+		const CXPens & operator = (const CXPens &);		///< Not used.
+	public:
 		CXPen	*m_pBg;			///< oiu
 		CXPen	*m_pSegm;		///< oiu
+		//-------------------------------------
+		/**
+		 * \brief oiu
+		 *
+		 */
+		CXPens() {
+			m_pBg = NULL;
+			m_pSegm = NULL;
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu
+		 *
+		 */
+		CXPens(const CXPens &rOther) {
+			if(rOther.m_pBg == NULL)
+				m_pBg = NULL;
+			else
+				m_pBg = new CXPen(*rOther.m_pBg);
+			if(rOther.m_pSegm == NULL)
+				m_pSegm = NULL;
+			else
+				m_pSegm = new CXPen(*rOther.m_pSegm);
+		}
+		//-------------------------------------
+		/**
+		 * \brief oiu
+		 *
+		 */
+		virtual ~CXPens() {
+			delete m_pBg;
+			delete m_pSegm;
+		}
 	};
-	CXBuffer<SPens *>		m_Pens;		///< oiu
+	CXBuffer<CXPens *>		m_Pens;			///< oiu
+	CXBuffer<CXPens *>		m_ScaledPens;	///< oiu
 	//-------------------------------------
 	CXPenHolder(const CXPenHolder &);						///< Not used.
 	const CXPenHolder & operator = (const CXPenHolder &);	///< Not used.
@@ -88,6 +125,24 @@ public:
 	 *
 	 */
 	CXPen *GetPenFg(E_KEYHIGHWAY_TYPE HighwayType);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ScalePens(double ScaleFactor);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXPen *GetScaledPenBg(E_KEYHIGHWAY_TYPE HighwayType);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXPen *GetScaledPenFg(E_KEYHIGHWAY_TYPE HighwayType);
 };
 
 #endif // __CXPENHOLDER_HPP__
