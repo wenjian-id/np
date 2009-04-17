@@ -217,20 +217,6 @@ void CXBitmap::DrawLine(int x0, int y0, int x1, int y1) {
 }
 
 //-------------------------------------
-void CXBitmap::MoveTo(int x, int y) {
-	if(IsNull())
-		return;
-	::MoveToEx(m_hDC, x, y, NULL);
-}
-
-//-------------------------------------
-void CXBitmap::LineTo(int x, int y) {
-	if(IsNull())
-		return;
-	::LineTo(m_hDC, x, y);
-}
-
-//-------------------------------------
 bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
 	if(IsNull())
 		return false;

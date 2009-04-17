@@ -174,13 +174,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void MoveTo(int x, int y) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LineTo(int x, int y) = 0;
+	virtual void DrawLine(size_t Count, const int *pX, const int *pY) = 0;
 	//-------------------------------------
 	/**
 	 * \brief oiu

@@ -33,14 +33,17 @@
 CXBitmap::CXBitmap() :
 	m_pImage(NULL),
 	m_pPainter(NULL),
-	m_LineStartX(0),
-	m_LineStartY(0)
+	m_pLinePoints(NULL),
+	m_LinePointsSize(0)
 {
 }
 
 //-------------------------------------
 CXBitmap::~CXBitmap() {
 	Destroy();
+	delete [] m_pLinePoints;
+	m_pLinePoints = NULL;
+	m_LinePointsSize = 0;
 }
 
 //-------------------------------------
@@ -222,20 +225,20 @@ void CXBitmap::DrawLine(int x0, int y0, int x1, int y1) {
 }
 
 //-------------------------------------
-void CXBitmap::MoveTo(int x, int y) {
+void CXBitmap::DrawLine(size_t Count, const int *pX, const int *pY) {
 	if(IsNull())
 		return;
-	m_LineStartX = x;
-	m_LineStartY = y;
-}
+	if(Count > m_LinePointsSize) {
+		delete [] m_pLinePoints;
+		m_LinePointsSize = Count;
+		m_pLinePoints = new QPoint[m_LinePointsSize];
+	}
+	for(size_t i=0; i<Count; i++) {
+		m_pLinePoints[i].setX(pX[i]);
+		m_pLinePoints[i].setY(pY[i]);
+	}
 
-//-------------------------------------
-void CXBitmap::LineTo(int x, int y) {
-	if(IsNull())
-		return;
-	DrawLine(m_LineStartX, m_LineStartY, x, y);
-	m_LineStartX = x;
-	m_LineStartY = y;
+	m_pPainter->drawPolyline(m_pLinePoints, Count);
 }
 
 //-------------------------------------
@@ -352,6 +355,8 @@ void CXBitmap::SetPen(const CXPen &Pen) {
 	qPen.setStyle(Style);
 	qPen.setWidth(Pen.GetWidth());
 	qPen.setColor(CXRGB2QColor(Pen.GetColor()));
+//	qPen.setJoinStyle(Qt::RoundJoin);
+	qPen.setCapStyle(Qt::RoundCap);
 
 	m_pPainter->setPen(qPen);
 }

@@ -34,10 +34,10 @@
  */
 class CXBitmap : public IBitmap {
 private:
-	QImage			*m_pImage;		///< oiu
-	QPainter		*m_pPainter;	///< oiu
-	int				m_LineStartX;
-	int				m_LineStartY;
+	QImage			*m_pImage;			///< oiu
+	QPainter		*m_pPainter;		///< oiu
+	QPoint			*m_pLinePoints;		///< oiu
+	size_t			m_LinePointsSize;	///< oiu
 	//-------------------------------------
 	CXBitmap(const CXBitmap &);							///< Not used.
 	const CXBitmap & operator = (const CXBitmap &);		///< Not used.
@@ -146,13 +146,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void MoveTo(int x, int y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LineTo(int x, int y);
+	virtual void DrawLine(size_t Count, const int *pX, const int *pY);
 	//-------------------------------------
 	/**
 	 * \brief oiu

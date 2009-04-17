@@ -4,7 +4,6 @@ CONFIG += warn_on \
           qt \
           thread \
           rtti \
- debug
 QMAKE_CXXFLAGS_DEBUG += -Wall
 INCLUDEPATH += src \
  ../../common/src/ \

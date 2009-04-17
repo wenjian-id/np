@@ -132,18 +132,6 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void MoveTo(int x, int y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LineTo(int x, int y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	virtual bool DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor);
 	//-------------------------------------
 	/**

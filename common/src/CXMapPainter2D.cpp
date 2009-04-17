@@ -165,6 +165,8 @@ bool CXMapPainter2D::IsWayPossiblyVisible(CXWay *pWay, int Width, int Height) {
 	return false;
 }
 
+int pX[1024];
+int pY[1024];
 
 //-------------------------------------
 void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) {
@@ -175,12 +177,13 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 	int y0 = 0;
 	bool oLastWasTerminator = false;
 	bool oTerminator = false;
+	size_t Count = 0;
 	for(size_t i=0; i<NodeCount; i++) {
 		CXNode *pNode = pWay->GetNode(i);
 		oTerminator = (pNode->IsTerminator());
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
-		if(!oTerminator && !oLastWasTerminator) {
+		if(!oTerminator && !oLastWasTerminator && (i != 0)) {
 			// check if it is worth drawing
 			if(	((x0 < 0) && (x < 0)) ||
 				((x0 > Width) && (x > Width)) ||
@@ -188,16 +191,32 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 				((y0 > Height) && (y > Height)))
 			{
 				// no
-				// do nothing
+				// check if we have something to draw
+				if(Count != 0) {
+					pBMP->DrawLine(Count, pX, pY);
+					Count = 0;
+				}
 			} else {
-				// yes
-				if(i != 0)
-					pBMP->DrawLine(x0, y0, x, y);
+				// yes, this segment is worth to be drawn
+				if(Count == 0) {
+					// add last point too
+					pX[Count] = x0;
+					pY[Count] = y0;
+					Count++;
+				}
+				// add current point
+				pX[Count] = x;
+				pY[Count] = y;
+				Count++;
 			}
 		}
 		x0 = x;
 		y0 = y;
 		oLastWasTerminator = oTerminator;
+	}
+	if(Count != 0) {
+		pBMP->DrawLine(Count, pX, pY);
+		Count = 0;
 	}
 }
 
