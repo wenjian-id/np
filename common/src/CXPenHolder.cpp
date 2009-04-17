@@ -127,8 +127,8 @@ void CXPenHolder::CreatePens() {
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
 	
-	for(size_t i=0; i<e_Highway_EnumCount; i++) {
-		m_ScaledPens.Append(new CXPens(*m_Pens[i]));
+	for(size_t j=0; j<e_Highway_EnumCount; j++) {
+		m_ScaledPens.Append(new CXPens(*m_Pens[j]));
 	}
 }
 
@@ -163,12 +163,21 @@ void CXPenHolder::ScalePens(double ScaleFactor) {
 		CXPens *pScaledPens = m_ScaledPens[i];
 		if(ScaleFactor > 1) {
 			// scale
-			if(pPens->m_pBg != NULL)
-				pScaledPens->m_pBg->SetWidth(static_cast<int>(ScaleFactor*pPens->m_pBg->GetWidth()));
-			if(pPens->m_pSegm != NULL)
-				pScaledPens->m_pSegm->SetWidth(static_cast<int>(ScaleFactor*m_Pens[i]->m_pSegm->GetWidth()));
+			if(pPens->m_pBg != NULL) {
+				// try to make background only 2 pixel wider than segment,
+				// so that border is only 1 pixel
+				int BgWidth = static_cast<int>(ScaleFactor*pPens->m_pBg->GetWidth());
+				int SegmWidth = Max(0, BgWidth -2);
+				pScaledPens->m_pBg->SetWidth(BgWidth);
+				if(pPens->m_pSegm != NULL)
+					pScaledPens->m_pSegm->SetWidth(SegmWidth);
+			} else {
+				// no background width, scale segment width accordingly
+				if(pPens->m_pSegm != NULL)
+					pScaledPens->m_pSegm->SetWidth(static_cast<int>(ScaleFactor*m_Pens[i]->m_pSegm->GetWidth()));
+			}
 		} else {
-			// do not scale
+			// do not scale. take default widths
 			if(pPens->m_pBg != NULL)
 				pScaledPens->m_pBg->SetWidth(pPens->m_pBg->GetWidth());
 			if(pPens->m_pSegm != NULL)

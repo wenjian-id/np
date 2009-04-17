@@ -867,5 +867,5 @@ void CXMapPainter2D::UpdateZoomLevel() {
 	else
 		CXOptions::Instance()->SetZoomLevel(e_ZoomLevel_7);
 	// scale pens
-	m_PenHolder.ScalePens(4.0/m_MeterPerPixel);
+	m_PenHolder.ScalePens(3.0/m_MeterPerPixel);
 }
