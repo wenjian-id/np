@@ -28,13 +28,18 @@
 CXBitmap::CXBitmap() :
 	m_hDC(NULL),
 	m_hBMP(NULL),
-	m_hFont(NULL)
+	m_hFont(NULL),
+	m_pLinePoints(NULL),
+	m_LinePointsSize(0)
 {
 }
 
 //-------------------------------------
 CXBitmap::~CXBitmap() {
 	Destroy();
+	delete [] m_pLinePoints;
+	m_pLinePoints = NULL;
+	m_LinePointsSize = 0;
 }
 
 //-------------------------------------
@@ -214,6 +219,28 @@ void CXBitmap::DrawLine(int x0, int y0, int x1, int y1) {
 		return;
 	::MoveToEx(m_hDC, x0, y0, NULL);
 	::LineTo(m_hDC, x1, y1);
+}
+
+//-------------------------------------
+void CXBitmap::DrawLine(size_t Count, const int *pX, const int *pY) {
+	if(IsNull())
+		return;
+	if(Count < 2)
+		return;
+	if(pX == NULL)
+		return;
+	if(pY == NULL)
+		return;
+	if(Count > m_LinePointsSize) {
+		delete [] m_pLinePoints;
+		m_LinePointsSize = Count;
+		m_pLinePoints = new POINT[m_LinePointsSize];
+	}
+	for(size_t i=0; i<Count; i++) {
+		m_pLinePoints[i].x=pX[i];
+		m_pLinePoints[i].y =pY[i];
+	}
+	::Polyline(m_hDC, m_pLinePoints, Count);
 }
 
 //-------------------------------------

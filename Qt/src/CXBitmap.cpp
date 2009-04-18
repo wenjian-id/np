@@ -228,6 +228,12 @@ void CXBitmap::DrawLine(int x0, int y0, int x1, int y1) {
 void CXBitmap::DrawLine(size_t Count, const int *pX, const int *pY) {
 	if(IsNull())
 		return;
+	if(Count < 2)
+		return;
+	if(pX == NULL)
+		return;
+	if(pY == NULL)
+		return;
 	if(Count > m_LinePointsSize) {
 		delete [] m_pLinePoints;
 		m_LinePointsSize = Count;

@@ -34,9 +34,11 @@
  */
 class CXBitmap : public IBitmap {
 private:
-	HDC			m_hDC;		///< oiu
-	HBITMAP		m_hBMP;		///< oiu
-	HFONT		m_hFont;	///< oiu
+	HDC			m_hDC;				///< oiu
+	HBITMAP		m_hBMP;				///< oiu
+	HFONT		m_hFont;			///< oiu
+	POINT		*m_pLinePoints;		///< oiu
+	size_t		m_LinePointsSize;	///< oiu
 	//-------------------------------------
 	CXBitmap(const CXBitmap &);							///< Not used.
 	const CXBitmap & operator = (const CXBitmap &);		///< Not used.
@@ -128,6 +130,12 @@ public:
 	 *
 	 */
 	virtual void DrawLine(int x0, int y0, int x1, int y1);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawLine(size_t Count, const int *pX, const int *pY);
 	//-------------------------------------
 	/**
 	 * \brief oiu
