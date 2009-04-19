@@ -242,8 +242,8 @@ void CXBitmap::DrawLine(size_t Count, const int *pX, const int *pY) {
 		m_pLinePoints = new POINT[m_LinePointsSize];
 	}
 	for(size_t i=0; i<Count; i++) {
-		m_pLinePoints[i].x=pX[i];
-		m_pLinePoints[i].y =pY[i];
+		m_pLinePoints[i].x = pX[i];
+		m_pLinePoints[i].y = pY[i];
 	}
 	::Polyline(m_hDC, m_pLinePoints, Count);
 }

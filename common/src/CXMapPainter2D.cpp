@@ -183,31 +183,38 @@ void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) 
 		oTerminator = (pNode->IsTerminator());
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
-		if(!oTerminator && !oLastWasTerminator && (i != 0)) {
-			// check if it is worth drawing
-			if(	((x0 < 0) && (x < 0)) ||
-				((x0 > Width) && (x > Width)) ||
-				((y0 < 0) && (y < 0)) ||
-				((y0 > Height) && (y > Height)))
-			{
-				// no
-				// check if we have something to draw
-				if(Count != 0) {
-					pBMP->DrawLine(Count, pX, pY);
-					Count = 0;
-				}
-			} else {
-				// yes, this segment is worth to be drawn
-				if(Count == 0) {
-					// add last point too
-					pX[Count] = x0;
-					pY[Count] = y0;
+		if(!oTerminator && !oLastWasTerminator) {
+			if(i != 0) {
+				// check if it is worth drawing
+				if(	((x0 < 0) && (x < 0)) ||
+					((x0 > Width) && (x > Width)) ||
+					((y0 < 0) && (y < 0)) ||
+					((y0 > Height) && (y > Height)))
+				{
+					// no, nothing to draw.
+					// check if we have something to draw
+					if(Count != 0) {
+						pBMP->DrawLine(Count, pX, pY);
+						Count = 0;
+					}
+				} else {
+					// yes, this segment is worth to be drawn
+					if(Count == 0) {
+						// add last point too, since it is first segment
+						pX[Count] = x0;
+						pY[Count] = y0;
+						Count++;
+					}
+					// add current point
+					pX[Count] = x;
+					pY[Count] = y;
 					Count++;
 				}
-				// add current point
-				pX[Count] = x;
-				pY[Count] = y;
-				Count++;
+			}
+		} else {
+			if(Count != 0) {
+				pBMP->DrawLine(Count, pX, pY);
+				Count = 0;
 			}
 		}
 		x0 = x;
