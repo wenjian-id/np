@@ -136,6 +136,20 @@ CXMapSection::CXMapSection() :
 
 //-------------------------------------
 CXMapSection::~CXMapSection() {
+	// delete places
+	size_t Size_pl = m_PlaceNodes.GetSize();
+	for(size_t idx_pl = 0; idx_pl < Size_pl; idx_pl++) {
+		CXNode *pNode = m_PlaceNodes[idx_pl];
+		if(pNode != NULL)
+			delete pNode;
+	}
+	// delete POIs
+	size_t Size_poi = m_POINodes.GetSize();
+	for(size_t idx_poi = 0; idx_poi < Size_poi; idx_poi++) {
+		CXNode *pNode = m_POINodes[idx_poi];
+		if(pNode != NULL)
+			delete pNode;
+	}
 	// delete nodes
 	size_t Size = m_Nodes.GetSize();
 	for(size_t idx = 0; idx < Size; idx++) {
@@ -180,6 +194,11 @@ CXTOCMapSection CXMapSection::GetTOC() const {
 //-------------------------------------
 void CXMapSection::SetTOC(const CXTOCMapSection &TOC) {
 	m_TOC = TOC;
+}
+
+//-------------------------------------
+const TPOINodeBuffer & CXMapSection::GetPlaceNodes() const {
+	return m_PlaceNodes;
 }
 
 //-------------------------------------
@@ -263,7 +282,39 @@ bool CXMapSection::LoadMap() {
 
 //-------------------------------------
 bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
-	// node count
+
+	// Place count
+	t_uint32 PlaceCount = 0;
+	if(!ReadUI32(InFile, PlaceCount)) {
+		DoOutputErrorMessage("Error reading PlaceCount");
+		return false;
+	}
+	m_PlaceNodes.Resize(PlaceCount);
+	for(t_uint32 ulPlace=0; ulPlace<PlaceCount; ulPlace++) {
+		// read node
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+		// compute lon
+		double dLon = ConvertSavedUI32(Lon);
+		double dLat = ConvertSavedUI32(Lat);
+		// create Place node
+		CXPOINode *pPlaceNode = new CXPOINode(dLon, dLat);
+		// read Place type stuff
+		t_uint16 POI = 0;
+		ReadUI16(InFile, POI);
+		E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
+		pPlaceNode->SetPOIType(POIType);
+
+		// read name
+		CXStringUTF8 Name;
+		ReadStringUTF8(InFile, Name);
+		pPlaceNode->SetName(Name);
+
+		// add node to Place buffer
+		m_PlaceNodes[ulPlace] = pPlaceNode;
+	}
 
 	// read POIs
 	t_uint32 POICount = 0;
@@ -612,5 +663,12 @@ void CXMapSection::ComputeDisplayCoordinates(const CXTransformationMatrix2D & TM
 		CXCoorVector v = TM*CXCoorVector(pPOINode->GetUTME(), pPOINode->GetUTMN());
 		pPOINode->SetDisplayX(v.GetIntX());
 		pPOINode->SetDisplayY(v.GetIntY());
+	}
+	const TPOINodeBuffer & PlaceNodes = GetPlaceNodes();
+	for(size_t j=0; j<PlaceNodes.GetSize(); j++) {
+		CXPOINode *pPlaceNode = PlaceNodes[j];
+		CXCoorVector v = TM*CXCoorVector(pPlaceNode->GetUTME(), pPlaceNode->GetUTMN());
+		pPlaceNode->SetDisplayX(v.GetIntX());
+		pPlaceNode->SetDisplayY(v.GetIntY());
 	}
 }

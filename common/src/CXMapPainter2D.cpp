@@ -359,6 +359,49 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 }
 
 //-------------------------------------
+void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes, int ScreenWidth, int ScreenHeight) {
+
+	// iterate through Places
+	for(size_t n=0; n<PlaceNodes.GetSize(); n++) {
+		CXPOINode *pNode = PlaceNodes[n];
+		int x = pNode->GetDisplayX();
+		int y = pNode->GetDisplayY();
+		// check if visible
+		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
+			size_t idx = 0;
+			size_t row = 0;
+			size_t col = 0;
+			ComputePOIBMP(pNode->GetPOIType(0), idx, row, col);
+			// draw POI bitmap
+			if(idx < m_POIBMPs.GetSize()) {
+				CXBitmap *pPOIBMP = m_POIBMPs[idx];
+				// Bitmap loaded
+				pBMP->DrawTransparent(	pPOIBMP,
+										x-POIWIDTH/2, y-POIHEIGHT/2,
+										col*POIWIDTH, row*POIHEIGHT,
+										POIWIDTH, POIHEIGHT,
+										COLOR_TRANSPARENT);
+			}
+			// draw name
+			CXStringUTF8 Name = pNode->GetName();
+			if(!Name.IsEmpty()) {
+				// set font size for Places
+				int FontSize = 16;
+				switch(pNode->GetPOIType(0)) {
+					case e_POI_PlaceSmall: 	FontSize = 20; break;
+					case e_POI_PlaceMedium:	FontSize = 24; break;
+					case e_POI_PlaceLarge:	FontSize = 28; break;
+				}
+				pBMP->SetFont(FontSize, false);
+				tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
+				NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
+				pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
+			}
+		}
+	}
+}
+
+//-------------------------------------
 void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D &TMMap) {
 	if(pBMP == NULL)
 		return;
@@ -715,6 +758,18 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 					const TPOINodeBuffer &POINodes = pMapSection->GetPOINodes();
 					DrawPOIs(pBMP, POINodes, Width, Height);
 				}
+			}
+		}
+	}
+	// now draw Places
+	// iterate through map sections
+	for(size_t idx=0; idx<MapSectionSize; idx++) {
+		if(LockedMapSections[idx]) {
+			CXMapSection *pMapSection = MapSections[idx].GetPtr();
+			if(pMapSection != NULL) {
+				// draw Places
+				const TPOINodeBuffer &PlaceNodes = pMapSection->GetPlaceNodes();
+				DrawPlaces(pBMP, PlaceNodes, Width, Height);
 			}
 		}
 	}

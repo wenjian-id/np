@@ -106,6 +106,16 @@ private:
 	void DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight);
 	//-------------------------------------
 	/**
+	 * \brief Draw Places.
+	 *
+	 *	Draw Places.
+	 *	\param	pBMP			Pointer to bitmap.
+	 *	\param	ScreenWidth		Width of screen.
+	 *	\param	ScreenHeight	Height of screen.
+	 */
+	void DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes, int ScreenWidth, int ScreenHeight);
+	//-------------------------------------
+	/**
 	 * \brief Draw compass.
 	 *
 	 *	Draw compass.

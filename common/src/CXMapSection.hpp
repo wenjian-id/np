@@ -160,7 +160,8 @@ class CXMapSection {
 private:
 	int						m_UTMZone;				///< oiu
 	TNodeBuffer				m_Nodes;				///< Map with all nodes.
-	TPOINodeBuffer			m_POINodes;				///< POIs. No need to delete the elements: they will be deleted from m_Nodes.
+	TPOINodeBuffer			m_POINodes;				///< POIs.
+	TPOINodeBuffer			m_PlaceNodes;			///< Places.
 	CXBuffer<TWayBuffer *>	m_LayeredWayBuffer;		///< Ways sorted by layer.
 	E_LOADING_STATUS		m_eLoadStatus;			///< oiu
 	CXTOCMapSection			m_TOC;					///< oiu
@@ -223,6 +224,12 @@ public:
 	 *
 	 */
 	void SetLoadStatus(E_LOADING_STATUS eStatus);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	const TPOINodeBuffer & GetPlaceNodes() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

@@ -38,7 +38,7 @@ class CXGSVSatelliteInfo;
 
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010102; // 0.1.1-dev2
+const unsigned int SECTVERSION	= 0x00010103; // 0.1.1-dev3
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
@@ -410,6 +410,9 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_Hostel				= 0x0020,	///< Hostel.
 	e_POI_CampSite				= 0x0021,	///< Camp site.
 	e_POI_Supermarket			= 0x0022,	///< Supermarket.
+	e_POI_PlaceSmall			= 0x0023,	///< Place small.
+	e_POI_PlaceMedium			= 0x0024,	///< Place medium.
+	e_POI_PlaceLarge			= 0x0025,	///< Place large.
 
 
 /*
@@ -449,27 +452,6 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_ShopBicycle			= 0x0207,	///< Shop bicycle.
 	e_POI_ShopOutdoor			= 0x0208,	///< Shop Outdoor.
 */
-};
-
-//-------------------------------------
-/**
- * \brief oiu
- *
- * oiu
- */
-enum E_PLACE_TYPE {		// must fit the values in the map file!!!
-	e_Place_Continent	= 0x0001,	///< Continent.
-	e_Place_Coutry		= 0x0002,	///< Country.
-	e_Place_State		= 0x0004,	///< State.
-	e_Place_Region		= 0x0008,	///< Region.
-	e_Place_County		= 0x0010,	///< Country.
-	e_Place_City		= 0x0020,	///< City.
-	e_Place_Town		= 0x0040,	///< Town.
-	e_Place_Village		= 0x0080,	///< Village.
-	e_Place_Hamlet		= 0x0100,	///< Hamlet.
-	e_Place_Suburb		= 0x0200,	///< Suburb.
-	e_Place_Locality	= 0x0400,	///< Locality
-	e_Place_Island		= 0x0800,	///< Island.
 };
 
 //-------------------------------------
