@@ -97,8 +97,8 @@ void CXPenHolder::CreatePens() {
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
 
 	pPens = m_Pens[e_Highway_Service];
-	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
-	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xE0, 0xE0, 0xE0));
+	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xAA, 0xAA, 0xAA));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xE0, 0xE0, 0xE0));
 
 	pPens = m_Pens[e_Highway_Bridleway];
 	/// \todo implement
@@ -125,7 +125,7 @@ void CXPenHolder::CreatePens() {
 
 	pPens = m_Pens[e_Highway_LivingStreet];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
-	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xD0, 0xD0, 0xD0));
 	
 	for(size_t j=0; j<e_Highway_EnumCount; j++) {
 		m_ScaledPens.Append(new CXPens(*m_Pens[j]));
