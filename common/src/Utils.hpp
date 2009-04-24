@@ -38,7 +38,7 @@ class CXGSVSatelliteInfo;
 
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010103; // 0.1.1-dev3
+const unsigned int SECTVERSION	= 0x00010104; // 0.1.1-dev4
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
@@ -51,7 +51,7 @@ const CXRGB MAPBGCOLOR(0xE2, 0xDE, 0xD8);
 const CXRGB MAPFGCOLOR(0x00, 0x00, 0x00);
 const CXRGB MAPPOITEXTCOLOR(0x00, 0x00, 0xA0);
 const CXRGB MAPPOIBGCOLOR(0xE2, 0xDE, 0xD8);
-
+const CXRGB MAPCITYTEXTCOLOR(0x00, 0x00, 0x00);
 
 //-------------------------------------
 /**

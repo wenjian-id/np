@@ -7,6 +7,7 @@ Version 0.2.2:
  - other:
    - changed to Qt 4.5.0
    - fixed some minor drawing bugs
+   - fixed a small memory leak
 
 Version 0.2.1:
  - fixed bugs:

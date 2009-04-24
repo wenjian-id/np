@@ -388,14 +388,15 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 				// set font size for Places
 				int FontSize = 16;
 				switch(pNode->GetPOIType(0)) {
-					case e_POI_PlaceSmall: 	FontSize = 20; break;
-					case e_POI_PlaceMedium:	FontSize = 24; break;
-					case e_POI_PlaceLarge:	FontSize = 28; break;
+					case e_POI_PlaceSmall: 	FontSize = 16; break;
+					case e_POI_PlaceMedium:	FontSize = 18; break;
+					case e_POI_PlaceLarge:	FontSize = 20; break;
+					default:				break;
 				}
 				pBMP->SetFont(FontSize, false);
 				tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
 				NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
-				pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
+				pBMP->DrawTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPPOIBGCOLOR);
 			}
 		}
 	}
@@ -840,7 +841,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// draw current position
 	DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);
 
-	// draw computed opsitions if neccessary
+	// draw computed positions if neccessary
 	if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawPositions)) {
 		CXCoor Coor = NaviData.GetGPSCoor();
 		Coor.RelocateUTM(UTMZoneCurrent);

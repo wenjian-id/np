@@ -640,6 +640,9 @@ void CXMapSection::RelocateUTM(int NewZone) {
 		for(size_t i=0; i<m_POINodes.GetSize(); i++) {
 			m_POINodes[i]->RelocateUTM(m_UTMZone);
 		}
+		for(size_t j=0; j<m_PlaceNodes.GetSize(); j++) {
+			m_PlaceNodes[j]->RelocateUTM(m_UTMZone);
+		}
 	}
 }
 
