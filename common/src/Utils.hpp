@@ -36,29 +36,37 @@ class CXGSVSatelliteInfo;
 
 
 
+// Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010104; // 0.1.1-dev4
+const unsigned int SECTVERSION	= 0x00010105; // 0.1.1-dev5
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
 const char MAXLAYER = 10;							///< oiu
 
-const double EPSILON = 0.01;
+const double EPSILON = 0.01;						///< oiu
+const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< oiu;
+
 
 // Mapnik colors
-const CXRGB MAPBGCOLOR(0xE2, 0xDE, 0xD8);
-const CXRGB MAPFGCOLOR(0x00, 0x00, 0x00);
-const CXRGB MAPPOITEXTCOLOR(0x00, 0x00, 0xA0);
-const CXRGB MAPPOIBGCOLOR(0xE2, 0xDE, 0xD8);
-const CXRGB MAPCITYTEXTCOLOR(0x00, 0x00, 0x00);
-const CXRGB MAPCITYBGCOLOR(0xff, 0xff, 0x00);
+const CXRGB MAPBGCOLOR(0xE2, 0xDE, 0xD8);			///< oiu
+const CXRGB MAPFGCOLOR(0x00, 0x00, 0x00);			///< oiu
+const CXRGB MAPPOITEXTCOLOR(0x00, 0x00, 0xA0);		///< oiu
+const CXRGB MAPPOIBGCOLOR(0xE2, 0xDE, 0xD8);		///< oiu
+const CXRGB MAPCITYTEXTCOLOR(0x00, 0x00, 0x00);		///< oiu
+const CXRGB MAPCITYBGCOLOR(0xff, 0xff, 0x00);		///< oiu
+
+const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);	///< oiu
 
 //-------------------------------------
 /**
- * \brief oiu
+ * \brief Compute maximum of two values.
  *
- * oiu.
+ * Compute maximum of two values.
+ * \param	a	First value.
+ * \param	b	Second value.
+ * \return		Maximum.
  */
 template <class t> t Max(const t &a, const t&b) {
 	if(a < b)
@@ -68,18 +76,18 @@ template <class t> t Max(const t &a, const t&b) {
 
 //-------------------------------------
 /**
- * \brief oiu
+ * \brief Compute minimum of two values.
  *
- * oiu.
+ * Compute minimum of two values.
+ * \param	a	First value.
+ * \param	b	Second value.
+ * \return		Minimum.
  */
 template <class t> t Min(const t &a, const t&b) {
 	if(a < b)
 		return a;
 	return b;
 }
-
-const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);	///< oiu
-const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< oiu;
 
 //-------------------------------------
 /**
@@ -103,9 +111,9 @@ enum E_COMMAND {
 
 //-------------------------------------
 /**
- * \brief oiu
+ * \brief Loading status. 
  *
- * oiu.
+ * Loading status for map container and map section.
  */
 enum E_LOADING_STATUS {
 	e_LSNotLoaded,	///< Not loaded yet.
@@ -335,7 +343,7 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
  *
  * oiu.
  */
-void CalcAngle(const CXCoor &Coor1, const CXCoor &Coor2, double & rdCos, double &rdSin);
+void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, double & rdCos, double &rdSin);
 
 
 //-------------------------------------
@@ -461,27 +469,27 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
  *
  */
 enum E_KEYHIGHWAY_TYPE {	// must fit the values in the map file!!!
-	e_Highway_Fading		= 0x00,
-	e_Highway_Unknown		= 0x01,
-	e_Highway_Motorway		= 0x02,
-	e_Highway_MotorwayLink	= 0x03,
-	e_Highway_Trunk			= 0x04,
-	e_Highway_TrunkLink		= 0x05,
-	e_Highway_Primary		= 0x06,
-	e_Highway_PrimaryLink	= 0x07,
-	e_Highway_Secondary		= 0x08,
-	e_Highway_Tertiary		= 0x09,
-	e_Highway_Unclassified	= 0x0A,
-	e_Highway_Track			= 0x0B,
-	e_Highway_Residential	= 0x0C,
-	e_Highway_Service		= 0x0D,
-	e_Highway_Bridleway		= 0x0E,
-	e_Highway_Cycleway		= 0x0F,
-	e_Highway_Footway		= 0x10,
-	e_Highway_Pedestrian	= 0x11,
-	e_Highway_Steps			= 0x12,
-	e_Highway_LivingStreet	= 0x13,
-	e_Highway_EnumCount		= 0x14,
+	e_Highway_Fading		= 0x00,		///< oiu
+	e_Highway_Unknown		= 0x01,		///< oiu
+	e_Highway_Motorway		= 0x02,		///< oiu
+	e_Highway_MotorwayLink	= 0x03,		///< oiu
+	e_Highway_Trunk			= 0x04,		///< oiu
+	e_Highway_TrunkLink		= 0x05,		///< oiu
+	e_Highway_Primary		= 0x06,		///< oiu
+	e_Highway_PrimaryLink	= 0x07,		///< oiu
+	e_Highway_Secondary		= 0x08,		///< oiu
+	e_Highway_Tertiary		= 0x09,		///< oiu
+	e_Highway_Unclassified	= 0x0A,		///< oiu
+	e_Highway_Track			= 0x0B,		///< oiu
+	e_Highway_Residential	= 0x0C,		///< oiu
+	e_Highway_Service		= 0x0D,		///< oiu
+	e_Highway_Bridleway		= 0x0E,		///< oiu
+	e_Highway_Cycleway		= 0x0F,		///< oiu
+	e_Highway_Footway		= 0x10,		///< oiu
+	e_Highway_Pedestrian	= 0x11,		///< oiu
+	e_Highway_Steps			= 0x12,		///< oiu
+	e_Highway_LivingStreet	= 0x13,		///< oiu
+	e_Highway_EnumCount		= 0x14,		///< oiu
 };
 
 //-------------------------------------
@@ -489,10 +497,10 @@ enum E_KEYHIGHWAY_TYPE {	// must fit the values in the map file!!!
  * \brief Compute position in bitmap (row, column) of the most important POI only.
  *
  *	Compute position in bitmap (row, column) of the most important POI only.
- *	\param	POI			oiu
+ *	\param	ePOIType	POI type
  *	\param	rRow		Computed row.
  *	\param	rCol		Computed column.
  */
-void ComputePOIBMP(E_POI_TYPE POI, size_t & BMPIdx, size_t & rRow, size_t & rCol);
+void ComputePOIBMP(E_POI_TYPE ePOIType, size_t & BMPIdx, size_t & rRow, size_t & rCol);
 
 #endif // __UTILS_HPP__

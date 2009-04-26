@@ -594,7 +594,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXCoor TmpCoor(dLonImageCenter + 0.001, dLatImageCenter);
 	double dCos = 0;
 	double dSin = 0;
-	CalcAngle(ImageCenter, TmpCoor, dCos, dSin);
+	ComputeRelativeUTMAngle(ImageCenter, TmpCoor, dCos, dSin);
 
 	// compute UTM coordinates of image center
 	char UTMLetterCurrent = 0;

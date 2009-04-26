@@ -431,13 +431,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			pWay->AddNode(pNode);
 		}
 	}
-	// read area count
-	t_uint32 AreaCount = 0;
-	if(!ReadUI32(InFile, WayCount)) {
-		DoOutputErrorMessage("Error reading AreaCount");
-		return false;
-	}
-	/// \todo read areas
 	// fill m_WayMapBuffer ordered by Layer ascending
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
 		TWayBuffer *pWayBuffer = NULL;

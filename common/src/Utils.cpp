@@ -559,19 +559,19 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2) {
 }
 
 //-------------------------------------
-void CalcAngle(const CXCoor &Coor1, const CXCoor &Coor2, double & rdCos, double &rdSin) {
+void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, double & rdCos, double &rdSin) {
 	// check if in same UTMZone
-	if(Coor1.GetUTMZone() != Coor2.GetUTMZone()) {
-		// no, so create a temporary coordinate from Coor2
-		CXCoor tmp(Coor2);
-		// and relocate it to UTMZone from Coor1
-		tmp.RelocateUTM(Coor1.GetUTMZone());
+	if(BaseCoor.GetUTMZone() != TargetCoor.GetUTMZone()) {
+		// no, so create a temporary coordinate from TargetCoor
+		CXCoor tmp(TargetCoor);
+		// and relocate it to UTMZone from BaseCoor
+		tmp.RelocateUTM(BaseCoor.GetUTMZone());
 		// now compute angle
-		CalcAngle(Coor1, tmp, rdCos, rdSin);
+		ComputeRelativeUTMAngle(BaseCoor, tmp, rdCos, rdSin);
 	} else {
-		double d = CalcDistance(Coor1, Coor2);
-		double dx = Coor2.GetUTMEasting() - Coor1.GetUTMEasting();
-		double dy = Coor2.GetUTMNorthing() - Coor1.GetUTMNorthing();
+		double d = CalcDistance(BaseCoor, TargetCoor);
+		double dx = TargetCoor.GetUTMEasting() - BaseCoor.GetUTMEasting();
+		double dy = TargetCoor.GetUTMNorthing() - BaseCoor.GetUTMNorthing();
 		rdCos = dx/d;
 		rdSin = dy/d;
 	}
