@@ -85,6 +85,7 @@ private:
 	bool					m_oShowScale;					///< oiu
 	bool					m_oShowMinimizeButton;			///< oiu
 	bool					m_oShowPOIs;					///< Show some POIs.
+	bool					m_oShowCities;					///< Show some POIs.
 	bool					m_oSnapToWay;					///< oiu
 	bool					m_oStartWithLastPosition;		///< oiu
 	bool					m_oMapMovingManually;			///< oiu
@@ -126,6 +127,9 @@ private:
 	int						m_POIFontSize;					///< oiu
 	int						m_ScaleFontSize;				///< oiu
 	int						m_DebugFontSize;				///< oiu
+	int						m_CitySmallFontSize;			///< oiu
+	int						m_CityMediumFontSize;			///< oiu
+	int						m_CityLargeFontSize;			///< oiu
 	mutable CXRWLock		m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -619,6 +623,18 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	bool MustShowCities() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetShowCitiesFlag(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	bool MustSnapToWay() const;
 	//-------------------------------------
 	/**
@@ -855,6 +871,42 @@ public:
 	 *
 	 */
 	void SetDebugFontSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetCitySmallFontSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetCitySmallFontSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetCityMediumFontSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetCityMediumFontSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetCityLargeFontSize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetCityLargeFontSize(int NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

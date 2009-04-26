@@ -3,6 +3,7 @@ Version 0.2.2:
  - implemented feature requests:
    - 2726789: Red color for satellites in top bar too dark.
    - 2726792: Make streets wider in low zoom
+   - 2736694: Show the Name of the city
    - 2779556: Distinguish between residential and living_street.
  - other:
    - changed to Qt 4.5.0

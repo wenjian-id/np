@@ -51,6 +51,7 @@ CXOptions::CXOptions() :
 	m_oShowScale(false),
 	m_oShowMinimizeButton(false),
 	m_oShowPOIs(false),
+	m_oShowCities(true),
 	m_oSnapToWay(false),
 	m_oStartWithLastPosition(false),
 	m_oMapMovingManually(false),
@@ -78,7 +79,10 @@ CXOptions::CXOptions() :
 	m_ZoomLevel(e_ZoomLevel_0),
 	m_POIFontSize(16),
 	m_ScaleFontSize(16),
-	m_DebugFontSize(16)
+	m_DebugFontSize(16),
+	m_CitySmallFontSize(16),
+	m_CityMediumFontSize(18),
+	m_CityLargeFontSize(20)
 {
 }
 
@@ -237,6 +241,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetZoomOutFileName(ZoomOut);
 	// POIs
 	SetShowPOIsFlag(F.Get("ShowPOIs", "off").ToUpper() == "ON");
+	// Cities
+	SetShowCitiesFlag(F.Get("ShowCities", "on").ToUpper() == "ON");
 	// SnapToWay
 	SetSnapToWayFlag(F.Get("SnapToWay", "off").ToUpper() == "ON");
 	// StartWithLastPosition
@@ -255,6 +261,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetPOIFontSize(atoi(F.Get("POIFontSize", "16").c_str()));
 	SetScaleFontSize(atoi(F.Get("ScaleFontSize", "16").c_str()));
 	SetDebugFontSize(atoi(F.Get("DebugFontSize", "16").c_str()));
+	SetCitySmallFontSize(atoi(F.Get("CitySmallFontSize", "16").c_str()));
+	SetCityMediumFontSize(atoi(F.Get("CityMediumFontSize", "18").c_str()));
+	SetCityLargeFontSize(atoi(F.Get("CityLargeFontSize", "20").c_str()));
 	return true;
 }
 
@@ -532,6 +541,18 @@ bool CXOptions::MustShowPOIs() const {
 void CXOptions::SetShowPOIsFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oShowPOIs = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowCities() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowCities;
+}
+
+//-------------------------------------
+void CXOptions::SetShowCitiesFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowCities = NewValue;
 }
 
 //-------------------------------------
@@ -947,3 +968,40 @@ void CXOptions::SetDebugFontSize(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_DebugFontSize = NewValue;
 }
+
+//-------------------------------------
+int CXOptions::GetCitySmallFontSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_CitySmallFontSize;
+}
+
+//-------------------------------------
+void CXOptions::SetCitySmallFontSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_CitySmallFontSize = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetCityMediumFontSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_CityMediumFontSize;
+}
+
+//-------------------------------------
+void CXOptions::SetCityMediumFontSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_CityMediumFontSize = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetCityLargeFontSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_CityLargeFontSize;
+}
+
+//-------------------------------------
+void CXOptions::SetCityLargeFontSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_CityLargeFontSize = NewValue;
+}
+

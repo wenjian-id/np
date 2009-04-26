@@ -361,6 +361,10 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 //-------------------------------------
 void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes, int ScreenWidth, int ScreenHeight) {
 
+	int FontSizeSmall = CXOptions::Instance()->GetCitySmallFontSize();
+	int FontSizeMedium = CXOptions::Instance()->GetCityMediumFontSize();
+	int FontSizeLarge = CXOptions::Instance()->GetCityLargeFontSize();
+
 	// iterate through Places
 	for(size_t n=0; n<PlaceNodes.GetSize(); n++) {
 		CXPOINode *pNode = PlaceNodes[n];
@@ -384,19 +388,20 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 			}
 			// draw name
 			CXStringUTF8 Name = pNode->GetName();
+			bool oBold = false;
 			if(!Name.IsEmpty()) {
 				// set font size for Places
 				int FontSize = 16;
 				switch(pNode->GetPOIType(0)) {
-					case e_POI_PlaceSmall: 	FontSize = 16; break;
-					case e_POI_PlaceMedium:	FontSize = 18; break;
-					case e_POI_PlaceLarge:	FontSize = 20; break;
+					case e_POI_PlaceSmall: 	FontSize = FontSizeSmall; oBold = false; break;
+					case e_POI_PlaceMedium:	FontSize = FontSizeMedium; oBold = true; break;
+					case e_POI_PlaceLarge:	FontSize = FontSizeLarge; oBold = true; break;
 					default:				break;
 				}
-				pBMP->SetFont(FontSize, false);
+				pBMP->SetFont(FontSize, oBold);
 				tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
 				NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
-				pBMP->DrawTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPPOIBGCOLOR);
+				pBMP->DrawTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPCITYBGCOLOR);
 			}
 		}
 	}
@@ -708,7 +713,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	// draw layer for layer to avoid artefacts on map section borders
 	MapSectionSize = MapSections.GetSize();
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
-		for(size_t idx=0; idx<MapSectionSize; idx++) {
+		for(idx=0; idx<MapSectionSize; idx++) {
 			if(LockedMapSections[idx]) {
 				CXMapSection *pMapSection = MapSections[idx].GetPtr();
 				if(pMapSection != NULL) {
@@ -751,7 +756,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	pBMP->SetFont(pOpt->GetPOIFontSize(), false);
 	if(pOpt->MustShowPOIs()) {
 		// iterate through map sections
-		for(size_t idx=0; idx<MapSectionSize; idx++) {
+		for(idx=0; idx<MapSectionSize; idx++) {
 			if(LockedMapSections[idx]) {
 				CXMapSection *pMapSection = MapSections[idx].GetPtr();
 				if(pMapSection != NULL) {
@@ -763,14 +768,16 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		}
 	}
 	// now draw Places
-	// iterate through map sections
-	for(size_t idx=0; idx<MapSectionSize; idx++) {
-		if(LockedMapSections[idx]) {
-			CXMapSection *pMapSection = MapSections[idx].GetPtr();
-			if(pMapSection != NULL) {
-				// draw Places
-				const TPOINodeBuffer &PlaceNodes = pMapSection->GetPlaceNodes();
-				DrawPlaces(pBMP, PlaceNodes, Width, Height);
+	if(pOpt->MustShowCities()) {
+		// iterate through map sections
+		for(idx=0; idx<MapSectionSize; idx++) {
+			if(LockedMapSections[idx]) {
+				CXMapSection *pMapSection = MapSections[idx].GetPtr();
+				if(pMapSection != NULL) {
+					// draw Places
+					const TPOINodeBuffer &PlaceNodes = pMapSection->GetPlaceNodes();
+					DrawPlaces(pBMP, PlaceNodes, Width, Height);
+				}
 			}
 		}
 	}
