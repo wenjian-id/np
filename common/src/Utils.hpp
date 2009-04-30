@@ -39,7 +39,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010105; // 0.1.1-dev5
+const unsigned int SECTVERSION	= 0x00010100; // 0.1.1
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
