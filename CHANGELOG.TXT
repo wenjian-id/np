@@ -6,7 +6,7 @@ Version 0.2.2:
    - 2736694: Show the Name of the city
    - 2779556: Distinguish between residential and living_street.
  - other:
-   - changed to Qt 4.5.0
+   - switched Qt runtime dlls to 4.5.1
    - fixed some minor drawing bugs
    - fixed a small memory leak
 
