@@ -65,7 +65,7 @@ bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine) {
 	rNewLine.Empty();
 	for(;;){
 		// read next character
-		if(!ReadB(rInFile, c)) {
+		if(!ReadUI8(rInFile, c)) {
 			if(rNewLine.IsEmpty()) {
 				return false;
 			}
@@ -87,7 +87,30 @@ bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine) {
 }
 
 //-------------------------------------
-bool ReadB(CXFile & rInFile, unsigned char & rValue) {
+bool ReadUI(CXFile & rInFile, E_BIT_COUNT eBitCount, t_uint32 & rValue) {
+	bool Result = false;
+	switch(eBitCount) {
+		case e_BC_8:	{
+							unsigned char cValue = 0;
+							Result = ReadUI8(rInFile, cValue);
+							rValue = cValue;
+							break;
+						}
+		case e_BC_16:	{
+							t_uint16 usValue = 0;
+							Result = ReadUI16(rInFile, usValue);
+							rValue = usValue;
+							break;
+						}
+		case e_BC_24:	Result = ReadUI24(rInFile, rValue); break;
+		case e_BC_32:	Result = ReadUI32(rInFile, rValue); break;
+	}
+	return Result;
+}
+
+
+//-------------------------------------
+bool ReadUI8(CXFile & rInFile, unsigned char & rValue) {
 	// reset value
 	rValue = 0;
 	size_t r = 0;
@@ -119,6 +142,30 @@ bool ReadUI16(CXFile & rInFile, t_uint16 & rValue) {
 	rValue = 0;
 	rValue = (rValue << 8) + buf[0];
 	rValue = (rValue << 8) + buf[1];
+	// everything ok
+	return true;
+}
+
+//-------------------------------------
+bool ReadUI24(CXFile & rInFile, t_uint32 & rValue) {
+	// reset value
+	rValue = 0;
+	unsigned char buf[3];
+	size_t r = 0;
+	// try to read 4 bytes
+	if(rInFile.Read(buf, 3, r) != CXFile::E_OK) {
+		// read failed
+		return false;
+	}
+	if(r != 3) {
+		// no 3 bytes read
+		return false;
+	}
+	// compute result in a platform independant way
+	rValue = 0;
+	rValue = (rValue << 8) + buf[0];
+	rValue = (rValue << 8) + buf[1];
+	rValue = (rValue << 8) + buf[2];
 	// everything ok
 	return true;
 }
@@ -199,7 +246,7 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue) {
 	rValue.Empty();
 	do {
 		// read next byte
-		if(!ReadB(rInFile, c)) {
+		if(!ReadUI8(rInFile, c)) {
 			// read error
 			return false;
 		}

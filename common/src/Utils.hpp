@@ -39,7 +39,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010100; // 0.1.1
+const unsigned int SECTVERSION	= 0x00010201; // 0.1.2-dev1
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< oiu
@@ -123,6 +123,17 @@ enum E_LOADING_STATUS {
 	e_LSLoaded,		///< Alerady loaded.
 };
 
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+enum E_BIT_COUNT {
+	e_BC_8,		///< oiu
+	e_BC_16,	///< oiu
+	e_BC_24,	///< oiu
+	e_BC_32,	///< oiu
+};
 
 //-------------------------------------
 /**
@@ -174,7 +185,18 @@ bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine);
  * \param	rValue		Byte to read into.
  * \return				true if successfull.
  */
-bool ReadB(CXFile & rInFile, unsigned char & rValue);
+bool ReadUI(CXFile & rInFile, E_BIT_COUNT eBitCount, t_uint32 & rValue);
+
+//-------------------------------------
+/**
+ * \brief Read one byte from a file.
+ *
+ * Read a byte (unsigned char) from a file.
+ * \param	rInFile     The file to read from.
+ * \param	rValue		Byte to read into.
+ * \return				true if successfull.
+ */
+bool ReadUI8(CXFile & rInFile, unsigned char & rValue);
 
 //-------------------------------------
 /**
@@ -186,6 +208,17 @@ bool ReadB(CXFile & rInFile, unsigned char & rValue);
  * \return				true if successfull.
  */
 bool ReadUI16(CXFile & rInFile, t_uint16 & rValue);
+
+//-------------------------------------
+/**
+ * \brief Read a 24 bit unsigned integer from a file.
+ *
+ * Read a 24 bit unsigned integer from a file.
+ * \param	rInFile     The file to read from.
+ * \param	rValue		Value to fill with data.
+ * \return				true if successfull.
+ */
+bool ReadUI24(CXFile & rInFile, t_uint32 & rValue);
 
 //-------------------------------------
 /**
