@@ -25,19 +25,25 @@
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXNode::CXNode(bool oTerminator, double dLon, double dLat) :
+CXNode::CXNode(double dLon, double dLat) :
 	m_Coor(dLon, dLat),
-	m_oTerminator(oTerminator)
+	m_DisplayX(0),
+	m_DisplayY(0),
+	m_oTerminator(false)
+{
+}
+
+//-------------------------------------
+CXNode::CXNode(const CXNode &rOther) :
+	m_Coor(rOther.m_Coor),
+	m_DisplayX(rOther.m_DisplayX),
+	m_DisplayY(rOther.m_DisplayY),
+	m_oTerminator(rOther.m_oTerminator)
 {
 }
 
 //-------------------------------------
 CXNode::~CXNode() {
-}
-
-//-------------------------------------
-bool CXNode::IsTerminator() const {
-	return m_oTerminator;
 }
 
 //-------------------------------------
@@ -85,10 +91,26 @@ void CXNode::SetDisplayY(int Y) {
 	m_DisplayY = Y;
 }
 
+//-------------------------------------
+bool CXNode::IsTerminator() const {
+	return m_oTerminator;
+}
+
+//-------------------------------------
+void CXNode::SetTerminator() {
+	m_oTerminator = true;
+}
+
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXPOINode::CXPOINode(double Lon, double Lat) :
-	CXNode(false, Lon, Lat)
+	CXNode(Lon, Lat)
+{
+}
+
+//-------------------------------------
+CXPOINode::CXPOINode(const CXNode &rNode) :
+	CXNode(rNode)
 {
 }
 

@@ -39,14 +39,14 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010201; // 0.1.2-dev1
+const unsigned int SECTVERSION	= 0x00010202; // 0.1.2-dev2
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
-const char MINLAYER = -10;							///< oiu
-const char MAXLAYER = 10;							///< oiu
+const char MINLAYER = -10;							///< Minimum value or layer.
+const char MAXLAYER = 10;							///< Maximum value for layer.
 
 const double EPSILON = 0.01;						///< oiu
-const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< oiu;
+const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< UTF8 characters for degree sign.
 
 
 // Mapnik colors
@@ -377,7 +377,6 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
  * oiu.
  */
 void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, double & rdCos, double &rdSin);
-
 
 //-------------------------------------
 /**

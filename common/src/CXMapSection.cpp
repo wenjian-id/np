@@ -285,6 +285,42 @@ bool CXMapSection::LoadMap() {
 
 //-------------------------------------
 bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
+	// Node count type
+	unsigned char NodeCountType = 0;
+	if(!ReadUI8(InFile, NodeCountType)) {
+		DoOutputErrorMessage("Error reading NodeCountType");
+		return false;
+	}
+	E_BIT_COUNT eNodeCountType=static_cast<E_BIT_COUNT>(NodeCountType);
+	// read place count
+	t_uint32 NodeCount = 0;
+	if(!ReadUI(InFile, eNodeCountType, NodeCount)) {
+		DoOutputErrorMessage("Error reading NodeCount");
+		return false;
+	}
+	if(NodeCount == 0) {
+		// no further data to read
+		return true;
+	}
+	m_Nodes.Resize(NodeCount);
+	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
+		// read node
+		t_uint32 Lon = 0; 
+		t_uint32 Lat = 0;
+		ReadUI32(InFile, Lon);
+		ReadUI32(InFile, Lat);
+		// compute lon
+		double dLon = ConvertSavedUI32(Lon);
+		double dLat = ConvertSavedUI32(Lat);
+		// create node
+		CXNode *pNode = new CXNode(dLon, dLat);
+
+		// add node to Node buffer
+		m_Nodes[ulNode] = pNode;
+		// first node is terminator node
+		if(ulNode == 0)
+			pNode->SetTerminator();
+	}
 
 	// Place count type
 	unsigned char PlaceCountType = 0;
@@ -301,16 +337,12 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	}
 	m_PlaceNodes.Resize(PlaceCount);
 	for(t_uint32 ulPlace=0; ulPlace<PlaceCount; ulPlace++) {
-		// read node
-		t_uint32 Lon = 0; 
-		t_uint32 Lat = 0;
-		ReadUI32(InFile, Lon);
-		ReadUI32(InFile, Lat);
-		// compute lon
-		double dLon = ConvertSavedUI32(Lon);
-		double dLat = ConvertSavedUI32(Lat);
+		// read node index
+		t_uint32 NodeIdx = 0;
+		ReadUI(InFile, eNodeCountType, NodeIdx);
+
 		// create Place node
-		CXPOINode *pPlaceNode = new CXPOINode(dLon, dLat);
+		CXPOINode *pPlaceNode = new CXPOINode(*m_Nodes[NodeIdx]);
 		// read Place type stuff
 		t_uint16 POI = 0;
 		ReadUI16(InFile, POI);
@@ -326,6 +358,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		m_PlaceNodes[ulPlace] = pPlaceNode;
 	}
 
+
 	// read POIs
 	unsigned char POICountType = 0;
 	if(!ReadUI8(InFile, POICountType)) {
@@ -340,20 +373,16 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	}
 	m_POINodes.Resize(POICount);
 	for(t_uint32 ulPOI=0; ulPOI<POICount; ulPOI++) {
-		// read node
-		unsigned char POICount = 0;
-		t_uint32 Lon = 0; 
-		t_uint32 Lat = 0;
-		ReadUI32(InFile, Lon);
-		ReadUI32(InFile, Lat);
-		// compute lon
-		double dLon = ConvertSavedUI32(Lon);
-		double dLat = ConvertSavedUI32(Lat);
+		// read node index
+		t_uint32 NodeIdx = 0;
+		ReadUI(InFile, eNodeCountType, NodeIdx);
+
 		// create POI node
-		CXPOINode *pPOINode = new CXPOINode(dLon, dLat);
+		CXPOINode *pPOINode = new CXPOINode(*m_Nodes[NodeIdx]);
 		// read POI type stuff
-		ReadUI8(InFile, POICount);
-		for(t_uint32 cnt = 0; cnt < POICount; cnt++) {
+		unsigned char POITypeCount = 0;
+		ReadUI8(InFile, POITypeCount);
+		for(t_uint32 cnt = 0; cnt < POITypeCount; cnt++) {
 			t_uint16 POI = 0;
 			ReadUI16(InFile, POI);
 			E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
@@ -367,38 +396,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 
 		// add node to POI buffer
 		m_POINodes[ulPOI] = pPOINode;
-	}
-	// read nodes
-	unsigned char NodeCountType = 0;
-	if(!ReadUI8(InFile, NodeCountType)) {
-		DoOutputErrorMessage("Error reading NodeCountType");
-		return false;
-	}
-	E_BIT_COUNT eNodeCountType=static_cast<E_BIT_COUNT>(NodeCountType);
-	t_uint32 NodeCount = 0;
-	if(!ReadUI(InFile, eNodeCountType, NodeCount)) {
-		DoOutputErrorMessage("Error reading NodeCount");
-		return false;
-	}
-	m_Nodes.Resize(NodeCount);
-	for(t_uint32 ulNode=0; ulNode<NodeCount; ulNode++) {
-		// read node: IDX, LON, LAT
-		t_uint32 Lon = 0; 
-		t_uint32 Lat = 0;
-		unsigned char IsTerminator = 0;
-		ReadUI8(InFile, IsTerminator);
-		ReadUI32(InFile, Lon);
-		ReadUI32(InFile, Lat);
-
-		// compute lon
-		double dLon = ConvertSavedUI32(Lon);
-		double dLat = ConvertSavedUI32(Lat);
-
-		// create node
-		CXNode *pNode = new CXNode((IsTerminator != 0), dLon, dLat);
-
-		// and to m_Nodes
-		m_Nodes[ulNode] = pNode;
 	}
 
 	// way count
@@ -449,7 +446,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		}
 		Ways.Lookup(Layer, pWayBuffer);
 		pWayBuffer->Append(pWay);
-		// 
+		// read nodes of way
 		ReadUI(InFile, eNodeCountType, NodeCount);
 		for(t_uint32 ul=0; ul<NodeCount; ul++) {
 			t_uint32 Idx = 0;
@@ -467,6 +464,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			delete pOld;
 		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
 	}
+	
 	// run OSMVali only on level 0
 	if(m_TOC.GetZoomLevel() == e_ZoomLevel_0)
 		RunOSMVali();
@@ -475,7 +473,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 
 //-------------------------------------
 bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
-
 	// Place count
 	t_uint32 PlaceCount = 0;
 	if(!ReadUI32(InFile, PlaceCount)) {
@@ -565,10 +562,14 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 		double dLon = ConvertSavedUI32(Lon);
 		double dLat = ConvertSavedUI32(Lat);
 
+		CXNode *pNode = new CXNode(dLon, dLat);
 		// create node
-		CXNode *pNode = new CXNode((IsTerminator != 0), dLon, dLat);
+		if(IsTerminator != 0) {
+			// terminator node
+			pNode->SetTerminator();
+		}
 
-		// and to m_Nodes
+		// and add to m_Nodes
 		m_Nodes[ulNode] = pNode;
 	}
 
@@ -700,9 +701,14 @@ bool CXMapSection::LoadMap_0_1_0(CXFile & InFile) {
 		double dLat = ConvertSavedUI32(Lat);
 
 		// create node
-		CXNode *pNode = new CXNode((IsTerminator != 0), dLon, dLat);
+		CXNode *pNode = new CXNode(dLon, dLat);
+		// create node
+		if(IsTerminator != 0) {
+			// terminator node
+			pNode->SetTerminator();
+		}
 
-		// and to m_Nodes
+		// and add to m_Nodes
 		m_Nodes[ulNode] = pNode;
 	}
 
@@ -770,6 +776,7 @@ bool CXMapSection::LoadMap_0_1_0(CXFile & InFile) {
 	// run OSMVali only on level 0
 	if(m_TOC.GetZoomLevel() == e_ZoomLevel_0)
 		RunOSMVali();
+
 	return true;
 }
 

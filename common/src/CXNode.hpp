@@ -39,12 +39,11 @@ class CXTransformationMatrix2D;
 class CXNode {
 private:
 	CXCoor		m_Coor;			///< Coordinate of node
-	bool		m_oTerminator;	///< oiu
 	int			m_DisplayX;		///< X coordinate on display [pixel];
 	int			m_DisplayY;		///< Y coordinate on display [pixel];
+	bool		m_oTerminator;	///< oiu
 	//-------------------------------------
 	CXNode();										///< Not used.
-	CXNode(const CXNode &);							///< Not used.
 	const CXNode & operator = (const CXNode &);		///< Not used.
 protected:
 public:
@@ -53,11 +52,18 @@ public:
 	 * \brief Constructor.
 	 *
 	 *	Constructor.
-	 *	\param	oTerminator		Terminator node?.
 	 *	\param	Lon				Longitude of node [deg].
 	 *	\param	Lat				Latitude of node [deg].
 	 */
-	CXNode(bool oTerminator, double Lon, double Lat);
+	CXNode(double Lon, double Lat);
+	//-------------------------------------
+	/**
+	 * \brief Copy constructor.
+	 *
+	 *	Copy constructor.
+	 *	\param	rOther	Node to copy.
+	 */
+	CXNode(const CXNode &rOther);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -65,14 +71,6 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXNode();
-	//-------------------------------------
-	/**
-	 * \brief Check if node is terminator node.
-	 *
-	 *	Check if node is terminator node.
-	 *	\return		true if terminator node
-	 */
-	bool IsTerminator() const;
 	//-------------------------------------
 	/**
 	 * \brief Get longitude.
@@ -145,6 +143,21 @@ public:
 	 *	\param	Y	Y coordinate on display [pixel].
 	 */
 	void SetDisplayY(int Y);
+	//-------------------------------------
+	/**
+	 * \brief Check if node is terminator node.
+	 *
+	 *	Check if node is terminator node.
+	 *	\return		true if terminator node
+	 */
+	bool IsTerminator() const;
+	//-------------------------------------
+	/**
+	 * \brief Set terminator flag.
+	 *
+	 *	Set terminator flag.
+	 */
+	void SetTerminator();
 };
 
 typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
@@ -175,6 +188,14 @@ public:
 	 *	\param	Lat		Latitude of node [deg].
 	 */
 	CXPOINode(double Lon, double Lat);
+	//-------------------------------------
+	/**
+	 * \brief Constructor.
+	 *
+	 *	Constructor.
+	 *	\param	rNode	Node to copy from.
+	 */
+	CXPOINode(const CXNode &rNode);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
