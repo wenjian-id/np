@@ -37,6 +37,7 @@ private:
 	HDC			m_hDC;				///< oiu
 	HBITMAP		m_hBMP;				///< oiu
 	HFONT		m_hFont;			///< oiu
+	HFONT		m_hGlowFont;		///< oiu
 	POINT		*m_pLinePoints;		///< oiu
 	size_t		m_LinePointsSize;	///< oiu
 	//-------------------------------------
@@ -124,6 +125,12 @@ public:
 	 *
 	 */
 	virtual void DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & GlowColor, int GlowSize);
 	//-------------------------------------
 	/**
 	 * \brief oiu

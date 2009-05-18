@@ -23,6 +23,7 @@
 #include "CXBitmap.hpp"
 #include "CXPen.hpp"
 #include "CXDeviceContext.hpp"
+#include "Utils.hpp"
 
 static TCHAR buf[1024];
 
@@ -31,6 +32,7 @@ CXBitmap::CXBitmap() :
 	m_hDC(NULL),
 	m_hBMP(NULL),
 	m_hFont(NULL),
+	m_hGlowFont(NULL),
 	m_pLinePoints(NULL),
 	m_LinePointsSize(0)
 {
@@ -78,9 +80,12 @@ void CXBitmap::Destroy() {
 		::DeleteObject(m_hBMP);
 	if(m_hFont != NULL)
 		::DeleteObject(m_hFont);
+	if(m_hGlowFont != NULL)
+		::DeleteObject(m_hGlowFont);
 	m_hDC = NULL;
 	m_hBMP = NULL;
 	m_hFont = NULL;
+	m_hGlowFont = NULL;
 	SetFileName("");
 }
 
@@ -216,6 +221,59 @@ void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, c
 //-------------------------------------
 void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor) {
 	DrawTextUTF8(Text, TheRect, FgColor, COLORREF2CXRGB(::GetBkColor(m_hDC)));
+}
+
+//-------------------------------------
+void CXBitmap::DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & GlowColor, int GlowSize) {
+	if(IsNull())
+		return;
+	int Width = TheRect.GetWidth();
+	int Height = TheRect.GetHeight();
+	// create temporary bitmap
+	HDC hDC = CreateCompatibleDC(m_hDC);
+	// create new bitmap
+	HBITMAP hBMP = ::CreateCompatibleBitmap(m_hDC, Width, Height);
+	// and select it
+	::SelectObject(hDC, hBMP);
+	// set font
+	HFONT OldFont = (HFONT)SelectObject(hDC, m_hGlowFont);
+	// set colors
+	::SetTextColor(hDC, CXRGB2COLORREF(GlowColor));
+	::SetBkColor(hDC, CXRGB2COLORREF(COLOR_TRANSPARENT));
+
+	RECT tmp;
+	tmp.left = 0;
+	tmp.top = 0;
+	tmp.right = Width;
+	tmp.bottom = Height;
+
+	// draw glow
+	::DrawTextW(hDC, Text.w_str(), -1, &tmp, DT_CENTER | DT_VCENTER | DT_SINGLELINE); 
+	// now create glow
+	for(int dx=-GlowSize; dx<=GlowSize; dx++) {
+		for(int dy=-GlowSize; dy<=GlowSize; dy++) {
+			if((dx != 0) || (dy != 0)) {
+				::TransparentBlt(	m_hDC, TheRect.GetLeft()+dx, TheRect.GetTop()+dy, Width, Height,
+									hDC, 0, 0, Width, Height,
+									CXRGB2COLORREF(COLOR_TRANSPARENT));
+			}
+		}
+	}
+	// draw text
+	::SetTextColor(hDC, CXRGB2COLORREF(FgColor));
+	::DrawTextW(hDC, Text.w_str(), -1, &tmp, DT_CENTER | DT_VCENTER | DT_SINGLELINE); 
+	::TransparentBlt(	m_hDC, TheRect.GetLeft(), TheRect.GetTop(), Width, Height,
+						hDC, 0, 0, Width, Height,
+						CXRGB2COLORREF(COLOR_TRANSPARENT));
+	// restore font
+	SelectObject(hDC, OldFont);
+
+	// delete stuff
+	if(hDC != NULL)
+		::DeleteObject(hDC);
+	if(hBMP!=NULL)
+		::DeleteObject(hBMP);
+
 }
 
 //-------------------------------------
@@ -394,6 +452,8 @@ void CXBitmap::SetFont(int FontHeight, bool Bold) {
 		HFONT OldFont = (HFONT)SelectObject(m_hDC, m_hFont);
 		DeleteObject(OldFont);
 	}
+	lf.lfQuality = DRAFT_QUALITY;
+	m_hGlowFont = CreateFontIndirect(&lf);
 }
 
 //-------------------------------------

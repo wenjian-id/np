@@ -168,6 +168,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & GlowColor, int GlowSize) = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	virtual void DrawLine(int x0, int y0, int x1, int y1) = 0;
 	//-------------------------------------
 	/**

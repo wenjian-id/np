@@ -351,7 +351,8 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 				if(!Name.IsEmpty()) {
 					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
 					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
-					pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
+					pBMP->DrawGlowTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR, 1);
+//					pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
 				}
 			}
 		}

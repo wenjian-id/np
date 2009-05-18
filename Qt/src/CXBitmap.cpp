@@ -24,6 +24,7 @@
 #include "CXDeviceContext.hpp"
 #include "CXPen.hpp"
 #include "TargetIncludes.hpp"
+#include "Utils.hpp"
 
 #include <qcolor.h>
 #include <qpainter.h>
@@ -214,6 +215,69 @@ void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, c
 //-------------------------------------
 void CXBitmap::DrawTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor) {
 	DrawTextUTF8(Text, TheRect, FgColor, QColor2CXRGB(m_pPainter->background().color()));
+}
+
+//-------------------------------------
+void CXBitmap::DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRect, const CXRGB & FgColor, const CXRGB & GlowColor, int GlowSize) {
+	if(IsNull())
+		return;
+
+	/// \todo write optimized version
+
+	// create temporary QImage like in Create()
+	QImage TmpImage(GetWidth(), GetHeight(), QImage::Format_RGB32);
+	// create painter
+	QPainter TmpPainter(&TmpImage);
+	TmpPainter.setRenderHint(QPainter::Antialiasing, false);
+	QFont font = m_pPainter->font();
+	TmpPainter.setFont(font);
+	// create pen
+	QPen TmpPen(Qt::SolidLine);
+	TmpPen.setWidth(1);
+	// create brush
+	QBrush TmpBrush(CXRGB2QColor(COLOR_TRANSPARENT), Qt::SolidPattern);
+	// select new pen and brush
+	TmpPainter.setPen(TmpPen);
+	TmpPainter.setBrush(TmpBrush);
+	// create rect
+	QRect Rect(0, 0, TheRect.GetWidth()-1, TheRect.GetHeight()-1);
+	// create string
+	QString qText = QString::fromUtf8(reinterpret_cast<const char *>(Text.uc_str()));
+
+	// draw background in "transparent color"
+	TmpPen.setColor(CXRGB2QColor(COLOR_TRANSPARENT));
+	TmpPainter.setPen(TmpPen);
+	// draw rectangle
+	TmpPainter.drawRect(Rect);
+	
+	// draw text in glow color on temporary QImage
+	TmpPen.setColor(CXRGB2QColor(GlowColor));
+	TmpPainter.setPen(TmpPen);
+	TmpPainter.drawText(Rect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextSingleLine, qText, NULL);
+
+	// create image mask
+	QImage cpy = TmpImage.copy(Rect);
+	QImage mask = cpy.createMaskFromColor(qRgb(COLOR_TRANSPARENT.GetR(), COLOR_TRANSPARENT.GetG(), COLOR_TRANSPARENT.GetB()), Qt::MaskOutColor);
+	cpy.setAlphaChannel(mask);
+
+	// now create glow
+	for(int dx=-GlowSize; dx<=GlowSize; dx++) {
+		for(int dy=-GlowSize; dy<=GlowSize; dy++) {
+			if((dx != 0) || (dy != 0)) {
+				QRect tgt(TheRect.GetLeft()+dx, TheRect.GetTop()+dy, TheRect.GetWidth()-1, TheRect.GetHeight()-1);
+				m_pPainter->drawImage(tgt, cpy, Rect);
+			}
+		}
+	}
+
+	// draw text
+	TmpPen.setColor(CXRGB2QColor(FgColor));
+	TmpPainter.setPen(TmpPen);
+	TmpPainter.drawText(Rect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextSingleLine, qText, NULL);
+	QRect tgt(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth()-1, TheRect.GetHeight()-1);
+	cpy = TmpImage.copy(Rect);
+	cpy.setAlphaChannel(mask);
+	m_pPainter->drawImage(tgt, cpy, Rect);
 }
 
 //-------------------------------------
