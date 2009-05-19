@@ -39,7 +39,7 @@
 
 const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
-static const double SQUARE_MAXDIST = 1600; // 40*40
+static const double MAXDIST = 50; // 50m
 static const char * pcLastCoorFileName = "last.gps";
 
 
@@ -390,6 +390,7 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
 //-------------------------------------
 void CXLocatorThread::Locate() {
 
+	CXUTMSpeed UTMSpeed = m_NaviData.GetUTMSpeed();
 	// initialize LocatedCoor
 	m_NaviData.SetLocatedCoor(m_NaviData.GetCorrectedGPSCoor());
 
@@ -404,7 +405,7 @@ void CXLocatorThread::Locate() {
     double PSy = 0;
     double PSProxx = 0;
     double PSProxy = 0;
-    double dSquareMinDist = -1;	// smallest distance from x0,y0 to a segment
+    double dMaxFitness = -1;
 	bool first = true;
     
 	CXNode *pNode1 = NULL;
@@ -547,12 +548,12 @@ void CXLocatorThread::Locate() {
     								Node2x = pNode2->GetUTME();
     								Node2y = pNode2->GetUTMN();
 
-									// mx distance from endpoints to current position is 1000 m
+									// max distance from endpoints to current position is 1000 m
 									double dMax = 1000;
 									if(	(fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
 										(fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
 									{
-    									// compute SqSegLen
+    									// compute square segment length
     									SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
     									// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
     									if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
@@ -579,12 +580,20 @@ void CXLocatorThread::Locate() {
     									}
     									// compute square distance between P and PS
     									dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
-
+										double dDist = sqrt(dSquareDist);
+										// compute cos of angle between move vector and segment
+										double dUTMX = UTMSpeed.GetCos();
+										double dUTMY = UTMSpeed.GetSin();
+										dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);
+										// calc fitness
+										double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
+										/// \todo take into account oneways!
+										double dFitness = dFactor*fabs(dCos) + (1-dFactor)*dFactor;
     									// check if new best fit
-    									if(first || (dSquareDist < dSquareMinDist)) {
+    									if(first || (dFitness > dMaxFitness)) {
 											first = false;
     										// yes
-    										dSquareMinDist = dSquareDist;
+    										dMaxFitness = dFitness;
     										pProxWay = pWay;
 											PSProxx = PSx;
 											PSProxy = PSy;
@@ -604,7 +613,7 @@ void CXLocatorThread::Locate() {
 	CXDebugInfo::Instance()->SetLocatorTime(StopTime-StartTime);
 
 	bool Located = false;
-    if(first || (dSquareMinDist > SQUARE_MAXDIST)) {
+    if(first || (dMaxFitness <= 0)) {
     	// nothing found or too far from a way.
     	Located = false;
     } else {

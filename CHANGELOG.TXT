@@ -1,3 +1,9 @@
+Version 0.2.3:
+ - fixed bugs:
+   - 2793291: snap to road
+ - implemented feature requests:
+ - other:
+
 Version 0.2.2:
  - fixed bugs:
  - implemented feature requests:
