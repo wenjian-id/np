@@ -230,6 +230,8 @@ void CXBitmap::DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRec
 	QPainter TmpPainter(&TmpImage);
 	TmpPainter.setRenderHint(QPainter::Antialiasing, false);
 	QFont font = m_pPainter->font();
+	// do not use antialiasing
+	font.setStyleStrategy(QFont::NoAntialias);
 	TmpPainter.setFont(font);
 	// create pen
 	QPen TmpPen(Qt::SolidLine);
