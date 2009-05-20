@@ -424,7 +424,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		E_ONEWAY_TYPE eOneway = e_Oneway_None;
 		// load locator information only in zoom level 0
 		if(m_TOC.GetZoomLevel() == e_ZoomLevel_0) {
-			unsigned short DataType = 0;
+			t_uint16 DataType = 0;
 			ReadUI16(InFile, DataType);
 			if((DataType & e_Tag_Name) != 0)
 				ReadStringUTF8(InFile, Name);
