@@ -23,12 +23,14 @@
 #include "CXWay.hpp"
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXWay::CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref):
+CXWay::CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef):
 	m_eHighwayType(eHighwayType),
 	m_Name(Name),
 	m_Ref(Ref),
+	m_IntRef(IntRef),
 	m_MaxSpeed(0),
 	m_Layer(0),
+	m_eOneway(e_Oneway_None),
 	m_oOSMValiFailed(false)
 {
 }
@@ -53,6 +55,11 @@ CXStringUTF8 CXWay::GetRef() const {
 }
 
 //-------------------------------------
+CXStringUTF8 CXWay::GetIntRef() const {
+	return m_IntRef;
+}
+
+//-------------------------------------
 void CXWay::SetMaxSpeed(unsigned char NewValue) {
 	m_MaxSpeed = NewValue;
 }
@@ -70,6 +77,16 @@ void CXWay::SetLayer(char NewValue) {
 //-------------------------------------
 unsigned char CXWay::GetLayer() const {
 	return m_Layer;
+}
+
+//-------------------------------------
+void CXWay::SetOneway(E_ONEWAY_TYPE NewValue) {
+	m_eOneway = NewValue;
+}
+
+//-------------------------------------
+E_ONEWAY_TYPE CXWay::GetOneway() const {
+	return m_eOneway;
 }
 
 //-------------------------------------

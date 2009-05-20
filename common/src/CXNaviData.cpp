@@ -62,6 +62,7 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	m_UTMSpeed			= rOther.m_UTMSpeed;
 	m_StreetName		= rOther.m_StreetName;
 	m_Ref				= rOther.m_Ref;
+	m_IntRef			= rOther.m_IntRef;
 	m_MaxSpeed			= rOther.m_MaxSpeed;
 	m_oLocated			= rOther.m_oLocated;
 }
@@ -160,6 +161,18 @@ CXStringUTF8 CXNaviData::GetRef() const {
 void CXNaviData::SetRef(const CXStringUTF8 & Ref) {
 	CXWriteLocker WL(&m_RWLock);
 	m_Ref = Ref;
+}
+
+//-------------------------------------
+CXStringUTF8 CXNaviData::GetIntRef() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_IntRef;
+}
+
+//-------------------------------------
+void CXNaviData::SetIntRef(const CXStringUTF8 & IntRef) {
+	CXWriteLocker WL(&m_RWLock);
+	m_IntRef = IntRef;
 }
 
 //-------------------------------------

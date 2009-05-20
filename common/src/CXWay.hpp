@@ -38,8 +38,10 @@ private:
 	E_KEYHIGHWAY_TYPE	m_eHighwayType;		///< oiu
 	CXStringUTF8		m_Name;				///< oiu
 	CXStringUTF8		m_Ref;				///< oiu
+	CXStringUTF8		m_IntRef;			///< oiu
 	unsigned char		m_MaxSpeed;			///< oiu 0 means no max speed
 	char				m_Layer;			///< oiu
+	E_ONEWAY_TYPE		m_eOneway;			///< oiu
 	bool				m_oOSMValiFailed;	///< oiu
 	TNodeBuffer			m_Nodes;			///< oiu
 	//-------------------------------------
@@ -53,7 +55,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref);
+	CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -84,6 +86,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	CXStringUTF8 GetIntRef() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void SetMaxSpeed(unsigned char NewValue);
 	//-------------------------------------
 	/**
@@ -103,6 +111,18 @@ public:
 	 *
 	 */
 	unsigned char GetLayer() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetOneway(E_ONEWAY_TYPE NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_ONEWAY_TYPE GetOneway() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

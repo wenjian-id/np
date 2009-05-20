@@ -39,7 +39,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010202; // 0.1.2-dev2
+const unsigned int SECTVERSION	= 0x00010203; // 0.1.2-dev3
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -133,6 +133,32 @@ enum E_BIT_COUNT {
 	e_BC_16,	///< oiu
 	e_BC_24,	///< oiu
 	e_BC_32,	///< oiu
+};
+
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+enum E_TAG_TYPE {
+	e_Tag_Name			= 0x0001,	///< oiu
+	e_Tag_Ref			= 0x0002,	///< oiu
+	e_Tag_IntRef		= 0x0004,	///< oiu
+	e_Tag_Layer			= 0x0008,	///< oiu
+	e_Tag_MaxSpeed		= 0x0010,	///< oiu
+	e_Tag_Oneway		= 0x0020,	///< oiu
+};
+
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+enum E_ONEWAY_TYPE {
+	e_Oneway_None		= 0x00,	///< oiu
+	e_Oneway_Normal		= 0x01,	///< oiu
+	e_Oneway_Inverse	= 0x02,	///< oiu
+//	e_Oneway_NotSet		= 0x03,	///< oiu. not used in here
 };
 
 //-------------------------------------

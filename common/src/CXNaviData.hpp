@@ -44,6 +44,7 @@ private:
 	CXUTMSpeed			m_UTMSpeed;			///< UTM speed.
 	CXStringUTF8		m_StreetName;		///< Name of street.
 	CXStringUTF8		m_Ref;				///< Ref of street.
+	CXStringUTF8		m_IntRef;			///< Int Ref of street.
 	unsigned char		m_MaxSpeed;			///< Max. allowed speed.
 	bool				m_oLocated;			///< Is located on a way or not.
 	mutable CXRWLock	m_RWLock;			///< Synchronization object.
@@ -184,6 +185,18 @@ public:
 	 *
 	 */
 	void SetRef(const CXStringUTF8 & Ref);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringUTF8 GetIntRef() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetIntRef(const CXStringUTF8 & IntRef);
 	//-------------------------------------
 	/**
 	 * \brief oiu

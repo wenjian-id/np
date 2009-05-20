@@ -474,6 +474,7 @@ void CXLocatorThread::Locate() {
 							pWay = (*pWayBuffer)[w];
 
 							E_KEYHIGHWAY_TYPE Type = pWay->GetHighwayType();
+							E_ONEWAY_TYPE eOneway = pWay->GetOneway();
 							bool oUseWay = false;
 							switch(CXOptions::Instance()->GetMode()) {
 								case CXOptions::e_ModeCar:
@@ -587,8 +588,13 @@ void CXLocatorThread::Locate() {
 										dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);
 										// calc fitness
 										double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
-										/// \todo take into account oneways!
-										double dFitness = dFactor*fabs(dCos) + (1-dFactor)*dFactor;
+										/// \todo take into account mode for oneways!
+										switch(eOneway) {
+											case e_Oneway_None:		dCos = fabs(dCos); break;	// no oneway
+											case e_Oneway_Normal:	break;						// leave dCos how it is
+											case e_Oneway_Inverse:	dCos = -dCos; break;		// invert since oneway is in the other direction
+										}
+										double dFitness = dFactor*dCos + (1-dFactor)*dFactor;
     									// check if new best fit
     									if(first || (dFitness > dMaxFitness)) {
 											first = false;
@@ -627,17 +633,21 @@ void CXLocatorThread::Locate() {
 		/// \todo implement
 		CXStringUTF8 Name;
 		CXStringUTF8 Ref;
+		CXStringUTF8 IntRef;
 		unsigned char MaxSpeed = 0;
 		Name = pProxWay->GetName();
 		Ref = pProxWay->GetRef();
+		IntRef = pProxWay->GetIntRef();
 		MaxSpeed = pProxWay->GetMaxSpeed();
 		m_NaviData.SetStreetName(Name);
 		m_NaviData.SetRef(Ref);
+		m_NaviData.SetIntRef(IntRef);
 		m_NaviData.SetMaxSpeed(MaxSpeed);
 	} else {
 		m_NaviData.SetLocated(false);
 		m_NaviData.SetStreetName("");
 		m_NaviData.SetRef("");
+		m_NaviData.SetIntRef("");
 		m_NaviData.SetMaxSpeed(0);
 	}
 

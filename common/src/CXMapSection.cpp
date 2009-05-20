@@ -417,16 +417,33 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		unsigned char HighwayType = 0;
 		CXStringUTF8 Name;
 		CXStringUTF8 Ref;
+		CXStringUTF8 IntRef;
 		unsigned char MaxSpeed = 0;
 		ReadUI8(InFile, HighwayType);
+		unsigned char bLayer = 0;
+		E_ONEWAY_TYPE eOneway = e_Oneway_None;
 		// load locator information only in zoom level 0
 		if(m_TOC.GetZoomLevel() == e_ZoomLevel_0) {
-			ReadStringUTF8(InFile, Name);
-			ReadStringUTF8(InFile, Ref);
-			ReadUI8(InFile, MaxSpeed);
+			unsigned short DataType = 0;
+			ReadUI16(InFile, DataType);
+			if((DataType & e_Tag_Name) != 0)
+				ReadStringUTF8(InFile, Name);
+			if((DataType & e_Tag_Ref) != 0)
+				ReadStringUTF8(InFile, Ref);
+			if((DataType & e_Tag_IntRef) != 0)
+				ReadStringUTF8(InFile, IntRef);
+			if((DataType & e_Tag_MaxSpeed) != 0)
+				ReadUI8(InFile, MaxSpeed);
+			if((DataType & e_Tag_Layer) != 0)
+				ReadUI8(InFile, bLayer);
+			if((DataType & e_Tag_Oneway) != 0) {
+				unsigned char Oneway = 0;
+				ReadUI8(InFile, Oneway);
+				eOneway = static_cast<E_ONEWAY_TYPE>(Oneway);
+			}
+		} else {
+			ReadUI8(InFile, bLayer);
 		}
-		unsigned char bLayer = 0;
-		ReadUI8(InFile, bLayer);
 		char Layer = 0;
 		if((bLayer & 0x80) != 0)
 			// negative value
@@ -436,9 +453,10 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
+		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref, IntRef);
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
+		pWay->SetOneway(eOneway);
 		// add way
 		TWayBuffer *pWayBuffer = NULL;
 		if(!Ways.Lookup(Layer, pWayBuffer)) {
@@ -605,7 +623,7 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
+		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref, "");
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way
@@ -744,7 +762,7 @@ bool CXMapSection::LoadMap_0_1_0(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref);
+		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref, "");
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way

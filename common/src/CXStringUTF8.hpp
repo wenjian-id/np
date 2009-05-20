@@ -119,6 +119,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void operator += (const CXStringUTF8 &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void Empty();
 	//-------------------------------------
 	/**

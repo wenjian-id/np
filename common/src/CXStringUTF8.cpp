@@ -112,6 +112,12 @@ bool CXStringUTF8::operator != (const CXStringUTF8 &rOther) {
 }
 
 //-------------------------------------
+void CXStringUTF8::operator += (const CXStringUTF8 &rOther) {
+	Append(rOther.GetBuffer(), rOther.GetSize());
+	ClearSTRBuffers();
+}
+
+//-------------------------------------
 void CXStringUTF8::Empty() {
 	Clear();
 	ClearSTRBuffers();	

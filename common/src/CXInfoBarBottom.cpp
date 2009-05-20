@@ -62,10 +62,19 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	if(!CXOptions::Instance()->MustShowLogo() && !CXOptions::Instance()->IsMapMovingManually()) {
 		CXStringUTF8 Name = m_NaviData.GetStreetName();
 		CXStringUTF8 Ref = m_NaviData.GetRef();
-		// draw ref
-		tIRect RefRect = Bmp.CalcTextRectUTF8(Ref, 4, 0);
+		CXStringUTF8 IntRef = m_NaviData.GetIntRef();
+		CXStringUTF8 CombinedRef = Ref;
+		if(!IntRef.IsEmpty()) {
+			if(Ref.IsEmpty())
+				CombinedRef = IntRef;
+			else
+				CombinedRef += CXStringUTF8(" / ");
+				CombinedRef += IntRef;
+		}
+		// draw combined ref
+		tIRect RefRect = Bmp.CalcTextRectUTF8(CombinedRef, 4, 0);
 		RefRect.OffsetRect(Width -RefRect.GetWidth(), 0);
-		Bmp.DrawTextUTF8(Ref, RefRect, CXRGB(0xff, 0xff, 0x00), BgColor);
+		Bmp.DrawTextUTF8(CombinedRef, RefRect, CXRGB(0xff, 0xff, 0x00), BgColor);
 		// draw name
 		tIRect NameRect = Bmp.CalcTextRectUTF8(Name, 0, 0);
 		// check if name fits if displayed centered
