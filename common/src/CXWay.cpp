@@ -31,7 +31,7 @@ CXWay::CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CX
 	m_MaxSpeed(0),
 	m_Layer(0),
 	m_eOneway(e_Oneway_None),
-	m_oOSMValiFailed(false)
+	m_oOSMValiOK(true)
 {
 }
 
@@ -107,11 +107,11 @@ CXNode *CXWay::GetNode(size_t Index) const {
 }
 
 //-------------------------------------
-bool CXWay::GetOSMValiState() const {
-	return m_oOSMValiFailed;
+bool CXWay::IsOSMValiOK() const {
+	return m_oOSMValiOK;
 }
 
 //-------------------------------------
-void CXWay::SetOSMVali(bool NewValue) {
-	m_oOSMValiFailed = NewValue;
+void CXWay::SetOSMValiOK(bool NewValue) {
+	m_oOSMValiOK = NewValue;
 }

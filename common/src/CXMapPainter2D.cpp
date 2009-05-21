@@ -244,7 +244,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_T
 		// now iterate through ways
 		for(size_t i=0; i<cnt; i++) {
 			CXWay *pWay = (*pWays)[i];
-			bool oUseRedPen = OSMValiEnabled && !pWay->GetOSMValiState();
+			bool oUseRedPen = OSMValiEnabled && !pWay->IsOSMValiOK();
 			// set red pen
 			if(oUseRedPen)
 				pBMP->SetPen(RedPen);
@@ -273,7 +273,7 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_KEYHIGHWAY_T
 		// now iterate through ways
 		for(size_t i=0; i<cnt; i++) {
 			CXWay *pWay = (*pWays)[i];
-			bool oUseRedPen = OSMValiEnabled && !pWay->GetOSMValiState();
+			bool oUseRedPen = OSMValiEnabled && !pWay->IsOSMValiOK();
 			// set red pen
 			if(oUseRedPen)
 				pBMP->SetPen(RedPen);

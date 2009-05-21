@@ -1,5 +1,6 @@
 Version 0.2.3:
  - fixed bugs:
+   - 2783863: OSM validation failure
    - 2793291: snap to road
  - implemented feature requests:
  - other:

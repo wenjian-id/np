@@ -830,7 +830,7 @@ void CXMapSection::RunOSMVali() {
 						}
 					}
 					// set result
-					pWay->SetOSMVali(Vali);
+					pWay->SetOSMValiOK(Vali);
 				}
 			}
 		}

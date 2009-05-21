@@ -42,7 +42,7 @@ private:
 	unsigned char		m_MaxSpeed;			///< oiu 0 means no max speed
 	char				m_Layer;			///< oiu
 	E_ONEWAY_TYPE		m_eOneway;			///< oiu
-	bool				m_oOSMValiFailed;	///< oiu
+	bool				m_oOSMValiOK;		///< oiu
 	TNodeBuffer			m_Nodes;			///< oiu
 	//-------------------------------------
 	CXWay();									///< Not used.
@@ -146,13 +146,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool GetOSMValiState() const;
+	bool IsOSMValiOK() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetOSMVali(bool NewValue);
+	void SetOSMValiOK(bool NewValue);
 };
 
 typedef CXBuffer<CXWay *>						TWayBuffer;		///< oiu
