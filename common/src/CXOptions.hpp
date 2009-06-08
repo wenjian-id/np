@@ -85,7 +85,7 @@ private:
 	bool					m_oShowScale;					///< oiu
 	bool					m_oShowMinimizeButton;			///< oiu
 	bool					m_oShowPOIs;					///< Show some POIs.
-	bool					m_oShowCities;					///< Show some POIs.
+	bool					m_oShowCities;					///< Show Cities.
 	bool					m_oSnapToWay;					///< oiu
 	bool					m_oStartWithLastPosition;		///< oiu
 	bool					m_oMapMovingManually;			///< oiu

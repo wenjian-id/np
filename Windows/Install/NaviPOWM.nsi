@@ -1,6 +1,7 @@
 ;--------------------------------
 
 !include "MUI.nsh"
+CRCCheck force                                                      ; force CRC check
 
 ; uncomment for Qt version
 ;!define USE_QT
