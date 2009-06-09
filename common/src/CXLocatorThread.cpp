@@ -581,29 +581,31 @@ void CXLocatorThread::Locate() {
     									}
     									// compute square distance between P and PS
     									dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
-										double dDist = sqrt(dSquareDist);
-										// compute cos of angle between move vector and segment
-										double dUTMX = UTMSpeed.GetCos();
-										double dUTMY = UTMSpeed.GetSin();
-										dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);
-										// calc fitness
-										double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
-										/// \todo take into account mode for oneways!
-										switch(eOneway) {
-											case e_Oneway_None:		dCos = fabs(dCos); break;	// no oneway
-											case e_Oneway_Normal:	break;						// leave dCos how it is
-											case e_Oneway_Inverse:	dCos = -dCos; break;		// invert since oneway is in the other direction
+										if(dSquareDist <= MAXDIST*MAXDIST) {
+											double dDist = sqrt(dSquareDist);
+											// compute cos of angle between move vector and segment
+											double dUTMX = UTMSpeed.GetCos();
+											double dUTMY = UTMSpeed.GetSin();
+											dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);
+											// calc fitness
+											double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
+											/// \todo take into account mode for oneways!
+											switch(eOneway) {
+												case e_Oneway_None:		dCos = fabs(dCos); break;	// no oneway
+												case e_Oneway_Normal:	break;						// leave dCos how it is
+												case e_Oneway_Inverse:	dCos = -dCos; break;		// invert since oneway is in the other direction
+											}
+											double dFitness = dFactor*dCos + (1-dFactor)*dFactor;
+    										// check if new best fit
+    										if(first || (dFitness > dMaxFitness)) {
+												first = false;
+    											// yes
+    											dMaxFitness = dFitness;
+    											pProxWay = pWay;
+												PSProxx = PSx;
+												PSProxy = PSy;
+    										}
 										}
-										double dFitness = dFactor*dCos + (1-dFactor)*dFactor;
-    									// check if new best fit
-    									if(first || (dFitness > dMaxFitness)) {
-											first = false;
-    										// yes
-    										dMaxFitness = dFitness;
-    										pProxWay = pWay;
-											PSProxx = PSx;
-											PSProxy = PSy;
-    									}
 									}
 								}
 							}
