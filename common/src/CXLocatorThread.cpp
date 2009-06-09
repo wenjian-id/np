@@ -473,65 +473,65 @@ void CXLocatorThread::Locate() {
 						for(size_t w=0; w<ws; w++) {
 							pWay = (*pWayBuffer)[w];
 
-							E_KEYHIGHWAY_TYPE Type = pWay->GetHighwayType();
+							E_WAY_TYPE Type = pWay->GetWayType();
 							E_ONEWAY_TYPE eOneway = pWay->GetOneway();
 							bool oUseWay = false;
 							switch(CXOptions::Instance()->GetMode()) {
 								case CXOptions::e_ModeCar:
 								{
-									oUseWay =	(Type == e_Highway_Motorway) ||
-												(Type == e_Highway_MotorwayLink) ||
-												(Type == e_Highway_Trunk) ||
-												(Type == e_Highway_TrunkLink) ||
-												(Type == e_Highway_Primary) ||
-												(Type == e_Highway_PrimaryLink) ||
-												(Type == e_Highway_Secondary) ||
-												(Type == e_Highway_Tertiary) ||
-												(Type == e_Highway_Unclassified) ||
-												(Type == e_Highway_Residential) ||
-												(Type == e_Highway_Service) ||
-												(Type == e_Highway_LivingStreet);
+									oUseWay =	(Type == e_Way_Motorway) ||
+												(Type == e_Way_MotorwayLink) ||
+												(Type == e_Way_Trunk) ||
+												(Type == e_Way_TrunkLink) ||
+												(Type == e_Way_Primary) ||
+												(Type == e_Way_PrimaryLink) ||
+												(Type == e_Way_Secondary) ||
+												(Type == e_Way_Tertiary) ||
+												(Type == e_Way_Unclassified) ||
+												(Type == e_Way_Residential) ||
+												(Type == e_Way_Service) ||
+												(Type == e_Way_LivingStreet);
 									break;
 								}
 								case CXOptions::e_ModeBike:
 								{
 									// oiu todo
-									oUseWay =	(Type == e_Highway_Motorway) ||
-												(Type == e_Highway_MotorwayLink) ||
-												(Type == e_Highway_Trunk) ||
-												(Type == e_Highway_TrunkLink) ||
-												(Type == e_Highway_Primary) ||
-												(Type == e_Highway_PrimaryLink) ||
-												(Type == e_Highway_Secondary) ||
-												(Type == e_Highway_Tertiary) ||
-												(Type == e_Highway_Unclassified) ||
-												(Type == e_Highway_Track) ||
-												(Type == e_Highway_Residential) ||
-												(Type == e_Highway_Service) ||
-												(Type == e_Highway_Cycleway) ||
-												(Type == e_Highway_Footway) ||
-												(Type == e_Highway_Pedestrian) ||
-												(Type == e_Highway_Steps) ||
-												(Type == e_Highway_LivingStreet);
+									oUseWay =	(Type == e_Way_Motorway) ||
+												(Type == e_Way_MotorwayLink) ||
+												(Type == e_Way_Trunk) ||
+												(Type == e_Way_TrunkLink) ||
+												(Type == e_Way_Primary) ||
+												(Type == e_Way_PrimaryLink) ||
+												(Type == e_Way_Secondary) ||
+												(Type == e_Way_Tertiary) ||
+												(Type == e_Way_Unclassified) ||
+												(Type == e_Way_Track) ||
+												(Type == e_Way_Residential) ||
+												(Type == e_Way_Service) ||
+												(Type == e_Way_Cycleway) ||
+												(Type == e_Way_Footway) ||
+												(Type == e_Way_Pedestrian) ||
+												(Type == e_Way_Steps) ||
+												(Type == e_Way_LivingStreet);
 
 									break;
 								}
 								case CXOptions::e_ModePedestrian:
 								{
 									// take all ways except "unknown"
-									oUseWay = (Type != e_Highway_Unknown);
+									oUseWay = (Type != e_Way_Unknown);
 									break;
 								}
 								case CXOptions::e_ModeCaching:
 								{
 									// take all ways except "unknown"
-									oUseWay = (Type != e_Highway_Unknown);
+									oUseWay = (Type != e_Way_Unknown);
 									break;
 								}
 								case CXOptions::e_ModeMapping:
 								{
 									// take all ways except "unknown"
-									oUseWay = (Type != e_Highway_Unknown);
+									oUseWay = (Type != e_Way_Unknown);
 									break;
 								}
 							}

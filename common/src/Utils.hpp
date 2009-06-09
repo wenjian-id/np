@@ -39,7 +39,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010203; // 0.1.2-dev3
+const unsigned int SECTVERSION	= 0x00010204; // 0.1.2-dev4
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -526,28 +526,29 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
  * \brief oiu
  *
  */
-enum E_KEYHIGHWAY_TYPE {	// must fit the values in the map file!!!
-	e_Highway_Fading		= 0x00,		///< oiu
-	e_Highway_Unknown		= 0x01,		///< oiu
-	e_Highway_Motorway		= 0x02,		///< oiu
-	e_Highway_MotorwayLink	= 0x03,		///< oiu
-	e_Highway_Trunk			= 0x04,		///< oiu
-	e_Highway_TrunkLink		= 0x05,		///< oiu
-	e_Highway_Primary		= 0x06,		///< oiu
-	e_Highway_PrimaryLink	= 0x07,		///< oiu
-	e_Highway_Secondary		= 0x08,		///< oiu
-	e_Highway_Tertiary		= 0x09,		///< oiu
-	e_Highway_Unclassified	= 0x0A,		///< oiu
-	e_Highway_Track			= 0x0B,		///< oiu
-	e_Highway_Residential	= 0x0C,		///< oiu
-	e_Highway_Service		= 0x0D,		///< oiu
-	e_Highway_Bridleway		= 0x0E,		///< oiu
-	e_Highway_Cycleway		= 0x0F,		///< oiu
-	e_Highway_Footway		= 0x10,		///< oiu
-	e_Highway_Pedestrian	= 0x11,		///< oiu
-	e_Highway_Steps			= 0x12,		///< oiu
-	e_Highway_LivingStreet	= 0x13,		///< oiu
-	e_Highway_EnumCount		= 0x14,		///< oiu
+enum E_WAY_TYPE {	// must fit the values in the map file!!!
+	e_Way_Fading			= 0x00,		///< oiu
+	e_Way_Unknown			= 0x01,		///< oiu
+	e_Way_Motorway			= 0x02,		///< oiu
+	e_Way_MotorwayLink		= 0x03,		///< oiu
+	e_Way_Trunk				= 0x04,		///< oiu
+	e_Way_TrunkLink			= 0x05,		///< oiu
+	e_Way_Primary			= 0x06,		///< oiu
+	e_Way_PrimaryLink		= 0x07,		///< oiu
+	e_Way_Secondary			= 0x08,		///< oiu
+	e_Way_Tertiary			= 0x09,		///< oiu
+	e_Way_Unclassified		= 0x0A,		///< oiu
+	e_Way_Track				= 0x0B,		///< oiu
+	e_Way_Residential		= 0x0C,		///< oiu
+	e_Way_Service			= 0x0D,		///< oiu
+	e_Way_Bridleway			= 0x0E,		///< oiu
+	e_Way_Cycleway			= 0x0F,		///< oiu
+	e_Way_Footway			= 0x10,		///< oiu
+	e_Way_Pedestrian		= 0x11,		///< oiu
+	e_Way_Steps				= 0x12,		///< oiu
+	e_Way_LivingStreet		= 0x13,		///< oiu
+	e_Way_NationalBorder	= 0x14,		///< oiu
+	e_Way_EnumCount			= 0x15,		///< oiu
 };
 
 //-------------------------------------

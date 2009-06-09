@@ -118,13 +118,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXPen *GetPenBg(E_KEYHIGHWAY_TYPE HighwayType);
+	CXPen *GetPenBg(E_WAY_TYPE WayType);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	CXPen *GetPenFg(E_KEYHIGHWAY_TYPE HighwayType);
+	CXPen *GetPenFg(E_WAY_TYPE WayType);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -136,13 +136,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXPen *GetScaledPenBg(E_KEYHIGHWAY_TYPE HighwayType);
+	CXPen *GetScaledPenBg(E_WAY_TYPE WayType);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	CXPen *GetScaledPenFg(E_KEYHIGHWAY_TYPE HighwayType);
+	CXPen *GetScaledPenFg(E_WAY_TYPE WayType);
 };
 
 #endif // __CXPENHOLDER_HPP__

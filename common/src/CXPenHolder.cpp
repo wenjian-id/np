@@ -36,7 +36,7 @@ CXPenHolder::~CXPenHolder() {
 //-------------------------------------
 void CXPenHolder::CreatePens() {
 
-	for(size_t i=0; i<e_Highway_EnumCount; i++) {
+	for(size_t i=0; i<e_Way_EnumCount; i++) {
 		m_Pens.Append(new CXPens());
 	}
 		
@@ -44,97 +44,101 @@ void CXPenHolder::CreatePens() {
 
 	// now create pens
 	// Mapnik
-	pPens = m_Pens[e_Highway_Fading];
+	pPens = m_Pens[e_Way_Fading];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xB0, 0xB0, 0xB0));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[e_Highway_Unknown];
+	pPens = m_Pens[e_Way_Unknown];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[e_Highway_Motorway];
+	pPens = m_Pens[e_Way_Motorway];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x50, 0x60, 0x76));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x80, 0x9B, 0xC0));
 
-	pPens = m_Pens[e_Highway_MotorwayLink];
+	pPens = m_Pens[e_Way_MotorwayLink];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x50, 0x60, 0x76));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x80, 0x9B, 0xC0));
 
-	pPens = m_Pens[e_Highway_Trunk];
+	pPens = m_Pens[e_Way_Trunk];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x47, 0x71, 0x47));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x7E, 0xC8, 0x7E));
 
-	pPens = m_Pens[e_Highway_TrunkLink];
+	pPens = m_Pens[e_Way_TrunkLink];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 7, CXRGB(0x47, 0x71, 0x47));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x7E, 0xC8, 0x7E));
 
-	pPens = m_Pens[e_Highway_Primary];
+	pPens = m_Pens[e_Way_Primary];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x92, 0x46, 0x49));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xE3, 0x60, 0x70));
 
-	pPens = m_Pens[e_Highway_PrimaryLink];
+	pPens = m_Pens[e_Way_PrimaryLink];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x92, 0x46, 0x49));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xE3, 0x6C, 0x70));
 
-	pPens = m_Pens[e_Highway_Secondary];
+	pPens = m_Pens[e_Way_Secondary];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xA5, 0x7D, 0x49));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFC, 0xBE, 0x6E));
 
-	pPens = m_Pens[e_Highway_Tertiary];
+	pPens = m_Pens[e_Way_Tertiary];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xCB));
 
-	pPens = m_Pens[e_Highway_Unclassified];
+	pPens = m_Pens[e_Way_Unclassified];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xDD));
 
-	pPens = m_Pens[e_Highway_Track];
+	pPens = m_Pens[e_Way_Track];
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 2, CXRGB(0xD7, 0x93, 0x31));
 
-	pPens = m_Pens[e_Highway_Residential];
+	pPens = m_Pens[e_Way_Residential];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xFE, 0xFE, 0xFE));
 
-	pPens = m_Pens[e_Highway_Service];
+	pPens = m_Pens[e_Way_Service];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xE0, 0xE0, 0xE0));
 
-	pPens = m_Pens[e_Highway_Bridleway];
+	pPens = m_Pens[e_Way_Bridleway];
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[e_Highway_Cycleway];
+	pPens = m_Pens[e_Way_Cycleway];
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x80, 0x00));
 
-	pPens = m_Pens[e_Highway_Footway];
+	pPens = m_Pens[e_Way_Footway];
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 1, CXRGB(0xD7, 0x93, 0x31));
 
-	pPens = m_Pens[e_Highway_Pedestrian];
+	pPens = m_Pens[e_Way_Pedestrian];
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[e_Highway_Steps];
+	pPens = m_Pens[e_Way_Steps];
 	/// \todo implement
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
 	pPens->m_pSegm		= NULL;
 
-	pPens = m_Pens[e_Highway_LivingStreet];
+	pPens = m_Pens[e_Way_LivingStreet];
 	pPens->m_pBg		= new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0xD0, 0xD0, 0xD0));
 	
-	for(size_t j=0; j<e_Highway_EnumCount; j++) {
+	pPens = m_Pens[e_Way_NationalBorder];
+	pPens->m_pBg		= NULL;
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 9, CXRGB(0xDD, 0x00, 0x00));
+	
+	for(size_t j=0; j<e_Way_EnumCount; j++) {
 		m_ScaledPens.Append(new CXPens(*m_Pens[j]));
 	}
 }
 
 //-------------------------------------
 void CXPenHolder::DestroyPens() {
-	for(size_t i=0; i<e_Highway_EnumCount; i++) {
+	for(size_t i=0; i<e_Way_EnumCount; i++) {
 		CXPens *pPens = m_Pens[i];
 		delete pPens;
 		pPens = m_ScaledPens[i];
@@ -145,20 +149,20 @@ void CXPenHolder::DestroyPens() {
 }
 
 //-------------------------------------
-CXPen *CXPenHolder::GetPenBg(E_KEYHIGHWAY_TYPE HighwayType) {
-	CXPen *Result = m_Pens[HighwayType]->m_pBg;
+CXPen *CXPenHolder::GetPenBg(E_WAY_TYPE eWayType) {
+	CXPen *Result = m_Pens[eWayType]->m_pBg;
 	return Result;
 }
 
 //-------------------------------------
-CXPen *CXPenHolder::GetPenFg(E_KEYHIGHWAY_TYPE HighwayType) {
-	CXPen *Result = m_Pens[HighwayType]->m_pSegm;
+CXPen *CXPenHolder::GetPenFg(E_WAY_TYPE eWayType) {
+	CXPen *Result = m_Pens[eWayType]->m_pSegm;
 	return Result;
 }
 
 //-------------------------------------
 void CXPenHolder::ScalePens(double ScaleFactor) {
-	for(size_t i=0; i<e_Highway_EnumCount; i++) {
+	for(size_t i=0; i<e_Way_EnumCount; i++) {
 		CXPens *pPens = m_Pens[i];
 		CXPens *pScaledPens = m_ScaledPens[i];
 		if(ScaleFactor > 1) {
@@ -187,13 +191,13 @@ void CXPenHolder::ScalePens(double ScaleFactor) {
 }
 
 //-------------------------------------
-CXPen *CXPenHolder::GetScaledPenBg(E_KEYHIGHWAY_TYPE HighwayType) {
-	CXPen *Result = m_ScaledPens[HighwayType]->m_pBg;
+CXPen *CXPenHolder::GetScaledPenBg(E_WAY_TYPE eWayType) {
+	CXPen *Result = m_ScaledPens[eWayType]->m_pBg;
 	return Result;
 }
 
 //-------------------------------------
-CXPen *CXPenHolder::GetScaledPenFg(E_KEYHIGHWAY_TYPE HighwayType) {
-	CXPen *Result = m_ScaledPens[HighwayType]->m_pSegm;
+CXPen *CXPenHolder::GetScaledPenFg(E_WAY_TYPE eWayType) {
+	CXPen *Result = m_ScaledPens[eWayType]->m_pSegm;
 	return Result;
 }

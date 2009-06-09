@@ -414,12 +414,12 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 	// read ways
 	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
-		unsigned char HighwayType = 0;
+		unsigned char WayType = 0;
 		CXStringUTF8 Name;
 		CXStringUTF8 Ref;
 		CXStringUTF8 IntRef;
 		unsigned char MaxSpeed = 0;
-		ReadUI8(InFile, HighwayType);
+		ReadUI8(InFile, WayType);
 		unsigned char bLayer = 0;
 		E_ONEWAY_TYPE eOneway = e_Oneway_None;
 		// load locator information only in zoom level 0
@@ -453,7 +453,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref, IntRef);
+		CXWay *pWay = new CXWay(static_cast<E_WAY_TYPE>(WayType), Name, Ref, IntRef);
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		pWay->SetOneway(eOneway);
@@ -601,11 +601,11 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 	// read ways
 	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
-		unsigned char HighwayType = 0;
+		unsigned char WayType = 0;
 		CXStringUTF8 Name;
 		CXStringUTF8 Ref;
 		unsigned char MaxSpeed = 0;
-		ReadUI8(InFile, HighwayType);
+		ReadUI8(InFile, WayType);
 		// load locator information only in zoom level 0
 		if(m_TOC.GetZoomLevel() == e_ZoomLevel_0) {
 			ReadStringUTF8(InFile, Name);
@@ -623,7 +623,7 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref, "");
+		CXWay *pWay = new CXWay(static_cast<E_WAY_TYPE>(WayType), Name, Ref, "");
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way
@@ -740,11 +740,11 @@ bool CXMapSection::LoadMap_0_1_0(CXFile & InFile) {
 	// read ways
 	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
 		// read Way: Idx, Name, node count, node ids
-		unsigned char HighwayType = 0;
+		unsigned char WayType = 0;
 		CXStringUTF8 Name;
 		CXStringUTF8 Ref;
 		unsigned char MaxSpeed = 0;
-		ReadUI8(InFile, HighwayType);
+		ReadUI8(InFile, WayType);
 		// load locator information only in zoom level 0
 		if(m_TOC.GetZoomLevel() == e_ZoomLevel_0) {
 			ReadStringUTF8(InFile, Name);
@@ -762,7 +762,7 @@ bool CXMapSection::LoadMap_0_1_0(CXFile & InFile) {
 			Layer = bLayer;
 		}
 		// create way
-		CXWay *pWay = new CXWay(static_cast<E_KEYHIGHWAY_TYPE>(HighwayType), Name, Ref, "");
+		CXWay *pWay = new CXWay(static_cast<E_WAY_TYPE>(WayType), Name, Ref, "");
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		// add way

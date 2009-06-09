@@ -35,7 +35,7 @@ class CXWay;
  */
 class CXWay {
 private:
-	E_KEYHIGHWAY_TYPE	m_eHighwayType;		///< oiu
+	E_WAY_TYPE			m_eWayType;			///< oiu
 	CXStringUTF8		m_Name;				///< oiu
 	CXStringUTF8		m_Ref;				///< oiu
 	CXStringUTF8		m_IntRef;			///< oiu
@@ -55,7 +55,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXWay(E_KEYHIGHWAY_TYPE eHighwayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef);
+	CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
@@ -68,7 +68,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	E_KEYHIGHWAY_TYPE GetHighwayType() const;
+	E_WAY_TYPE GetWayType() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
