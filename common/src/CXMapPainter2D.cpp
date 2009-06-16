@@ -51,6 +51,8 @@ static const double HYSTMAXOFFSETREL	= 0.1; ///< 10%
 E_WAY_TYPE Order[e_Way_EnumCount] = {
 	e_Way_Unknown,
 	e_Way_Fading,
+	e_Way_Railway_Thin,
+	e_Way_Railway_Thick,
 	e_Way_LivingStreet,
 	e_Way_Steps,
 	e_Way_Pedestrian,

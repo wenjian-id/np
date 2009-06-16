@@ -39,7 +39,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010204; // 0.1.2-dev4
+const unsigned int SECTVERSION	= 0x00010205; // 0.1.2-dev5
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -548,7 +548,9 @@ enum E_WAY_TYPE {	// must fit the values in the map file!!!
 	e_Way_Steps				= 0x12,		///< oiu
 	e_Way_LivingStreet		= 0x13,		///< oiu
 	e_Way_NationalBorder	= 0x14,		///< oiu
-	e_Way_EnumCount			= 0x15,		///< oiu
+	e_Way_Railway_Thick		= 0x15,		///< oiu
+	e_Way_Railway_Thin		= 0x16,		///< oiu
+	e_Way_EnumCount			= 0x17,		///< oiu
 };
 
 //-------------------------------------

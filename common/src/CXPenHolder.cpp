@@ -131,6 +131,14 @@ void CXPenHolder::CreatePens() {
 	pPens->m_pBg		= NULL;
 	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 9, CXRGB(0xDD, 0x00, 0x00));
 	
+	pPens = m_Pens[e_Way_Railway_Thick];
+	pPens->m_pBg		= NULL;
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x50, 0x50, 0x50));
+	
+	pPens = m_Pens[e_Way_Railway_Thin];
+	pPens->m_pBg		= NULL;
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0x50, 0x50, 0x50));
+	
 	for(size_t j=0; j<e_Way_EnumCount; j++) {
 		m_ScaledPens.Append(new CXPens(*m_Pens[j]));
 	}
