@@ -131,6 +131,8 @@ private:
 	int						m_CityMediumFontSize;			///< oiu
 	int						m_CityLargeFontSize;			///< oiu
 	int						m_POIDisplaySize;				///< oiu
+	E_BACKGROUND_TYPE		m_ePOIBGType;					///< oiu
+	E_BACKGROUND_TYPE		m_eCityBGType;					///< oiu
 	mutable CXRWLock		m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -920,6 +922,30 @@ public:
 	 *
 	 */
 	void SetPOIDisplaySize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_BACKGROUND_TYPE GetPOIBGType() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetPOIBGType(E_BACKGROUND_TYPE NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_BACKGROUND_TYPE GetCityBGType() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetCityBGType(E_BACKGROUND_TYPE NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

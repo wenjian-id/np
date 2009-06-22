@@ -6,6 +6,7 @@ Version 0.2.3:
    - 2726788: Show country boundaries
    - 2807231: Show railways / trams
    - 2810233: Make POI icon size configurable.
+   - 2810495: Make text background configurable for POIs: area or glow
  - other:
 
 Version 0.2.2:

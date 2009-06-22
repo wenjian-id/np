@@ -328,7 +328,8 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
 
-	int POIDisplaySize = CXOptions::Instance()->GetPOIDisplaySize();
+	CXOptions *pOptions = CXOptions::Instance();
+	int POIDisplaySize = pOptions->GetPOIDisplaySize();
 	// iterate through POIs
 	for(size_t n=0; n<POINodes.GetSize(); n++) {
 		CXPOINode *pNode = POINodes[n];
@@ -356,8 +357,10 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 				if(!Name.IsEmpty()) {
 					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
 					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIDisplaySize/2 - NameRect.GetHeight());
-					pBMP->DrawGlowTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR, 1);
-//					pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
+					switch(pOptions->GetPOIBGType()) {
+						case e_BG_AREA:		pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR); break;
+						case e_BG_GLOW:		pBMP->DrawGlowTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR, 1); break;
+					}
 				}
 			}
 		}
@@ -367,10 +370,11 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 //-------------------------------------
 void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes, int ScreenWidth, int ScreenHeight) {
 
-	int FontSizeSmall = CXOptions::Instance()->GetCitySmallFontSize();
-	int FontSizeMedium = CXOptions::Instance()->GetCityMediumFontSize();
-	int FontSizeLarge = CXOptions::Instance()->GetCityLargeFontSize();
-	int POIDisplaySize = CXOptions::Instance()->GetPOIDisplaySize();
+	CXOptions *pOptions = CXOptions::Instance();
+	int FontSizeSmall = pOptions->GetCitySmallFontSize();
+	int FontSizeMedium = pOptions->GetCityMediumFontSize();
+	int FontSizeLarge = pOptions->GetCityLargeFontSize();
+	int POIDisplaySize = pOptions->GetPOIDisplaySize();
 
 	// iterate through Places
 	for(size_t n=0; n<PlaceNodes.GetSize(); n++) {
@@ -408,7 +412,10 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 				pBMP->SetFont(FontSize, oBold);
 				tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
 				NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIDisplaySize/2 - NameRect.GetHeight());
-				pBMP->DrawTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPCITYBGCOLOR);
+				switch(pOptions->GetCityBGType()) {
+					case e_BG_AREA:		pBMP->DrawTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPCITYBGCOLOR); break;
+					case e_BG_GLOW:		pBMP->DrawGlowTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPCITYBGCOLOR, 1); break;
+				}
 			}
 		}
 	}
@@ -449,15 +456,16 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight) {
 	if(pBMP == NULL)
 		return;
-	if(CXOptions::Instance()->IsMapMovingManually())
+	CXOptions *pOptions = CXOptions::Instance();
+	if(pOptions->IsMapMovingManually())
 		return;
 
 	// set font
-	pBMP->SetFont(CXOptions::Instance()->GetScaleFontSize(), false);
+	pBMP->SetFont(pOptions->GetScaleFontSize(), false);
 
 	// get scale dimensions
-	int ScaleWidth = CXOptions::Instance()->GetScaleWidth();
-	int ScaleHeight = CXOptions::Instance()->GetScaleHeight();
+	int ScaleWidth = pOptions->GetScaleWidth();
+	int ScaleHeight = pOptions->GetScaleHeight();
 	if(m_MeterPerPixel > MAXMETERPERPIXEL)
 		return;
 	// get optimal scale display

@@ -128,6 +128,17 @@ enum E_LOADING_STATUS {
  * \brief oiu
  *
  */
+enum E_BACKGROUND_TYPE {
+	e_BG_AREA,		///< oiu
+	e_BG_GLOW,		///< oiu
+};
+
+
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
 enum E_BIT_COUNT {
 	e_BC_8,		///< oiu
 	e_BC_16,	///< oiu
@@ -411,6 +422,15 @@ void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, d
  * oiu.
  */
 double ConvertSavedUI32(t_uint32 Value);
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ *	oiu
+ */
+E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value);
+
 
 //-------------------------------------
 /*

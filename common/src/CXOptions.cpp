@@ -83,7 +83,9 @@ CXOptions::CXOptions() :
 	m_CitySmallFontSize(16),
 	m_CityMediumFontSize(18),
 	m_CityLargeFontSize(20),
-	m_POIDisplaySize(20)
+	m_POIDisplaySize(20),
+	m_ePOIBGType(e_BG_AREA),
+	m_eCityBGType(e_BG_AREA)
 {
 }
 
@@ -267,6 +269,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetCityLargeFontSize(atoi(F.Get("CityLargeFontSize", "20").c_str()));
 	// POI display size
 	SetPOIDisplaySize(atoi(F.Get("POIDisplaySize", "20").c_str()));
+	// Background
+	SetPOIBGType(Str2BGType(F.Get("POIBackgroundType", "Glow")));
+	SetCityBGType(Str2BGType(F.Get("CityBackgroundType", "Area")));
 	return true;
 }
 
@@ -1018,5 +1023,29 @@ int CXOptions::GetPOIDisplaySize() const {
 void CXOptions::SetPOIDisplaySize(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_POIDisplaySize = NewValue;
+}
+
+//-------------------------------------
+E_BACKGROUND_TYPE CXOptions::GetPOIBGType() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_ePOIBGType;
+}
+
+//-------------------------------------
+void CXOptions::SetPOIBGType(E_BACKGROUND_TYPE NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_ePOIBGType = NewValue;
+}
+
+//-------------------------------------
+E_BACKGROUND_TYPE CXOptions::GetCityBGType() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_eCityBGType;
+}
+
+//-------------------------------------
+void CXOptions::SetCityBGType(E_BACKGROUND_TYPE NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_eCityBGType = NewValue;
 }
 

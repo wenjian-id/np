@@ -644,3 +644,12 @@ void ComputePOIBMP(E_POI_TYPE ePOIType, size_t & BMPIdx, size_t & rRow, size_t &
 	rCol = ePOIType & 0x0F;
 }
 
+//-------------------------------------
+E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value) {
+	if(Value.ToUpper() == "AREA")
+		return e_BG_AREA;
+	else if(Value.ToUpper() == "GLOW")
+		return e_BG_GLOW;
+	else
+		return e_BG_AREA;
+}
