@@ -133,11 +133,11 @@ void CXPenHolder::CreatePens() {
 	
 	pPens = m_Pens[e_Way_Railway_Thick];
 	pPens->m_pBg		= NULL;
-	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 5, CXRGB(0x50, 0x50, 0x50));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 4, CXRGB(0x50, 0x50, 0x50));
 	
 	pPens = m_Pens[e_Way_Railway_Thin];
 	pPens->m_pBg		= NULL;
-	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 3, CXRGB(0x50, 0x50, 0x50));
+	pPens->m_pSegm		= new CXPen(CXPen::e_Solid, 2, CXRGB(0x50, 0x50, 0x50));
 	
 	pPens = m_Pens[e_Way_Water_Thick];
 	pPens->m_pBg		= NULL;
