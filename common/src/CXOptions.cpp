@@ -270,7 +270,7 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// POI display size
 	SetPOIDisplaySize(atoi(F.Get("POIDisplaySize", "20").c_str()));
 	// Background
-	SetPOIBGType(Str2BGType(F.Get("POIBackgroundType", "Glow")));
+	SetPOIBGType(Str2BGType(F.Get("POIBackgroundType", "Area")));
 	SetCityBGType(Str2BGType(F.Get("CityBackgroundType", "Area")));
 	return true;
 }
