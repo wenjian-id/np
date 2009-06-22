@@ -37,15 +37,13 @@
 
 #include <math.h>
 
-const double ZoomFactor = 1.2;
-const double MAXMETERPERPIXEL = 500;	///< 500 m/pixel
-const double MINMETERPERPIXEL = 0.1;	///< 0.1 m/pixel
-static const int POIWIDTH		= 20;
-static const int POIHEIGHT		= 20;
-static const int POICOUNTHORZ	= 16;
-static const int POICOUNTVERT	= 16;
-static const double HYSTMAXOFFSETABS	= 1.4; ///< 1.4 m/s
-static const double HYSTMAXOFFSETREL	= 0.1; ///< 10%
+const double ZoomFactor					= 1.2;	///< oiu
+const double MAXMETERPERPIXEL			= 500;	///< 500 m/pixel
+const double MINMETERPERPIXEL			= 0.1;	///< 0.1 m/pixel
+static const int POICOUNTHORZ			= 16;	///< Number of POIs in a row in bitmap file.
+static const int POICOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
+static const double HYSTMAXOFFSETABS	= 1.4;	///< 1.4 m/s
+static const double HYSTMAXOFFSETREL	= 0.1;	///< 10%
 
 
 E_WAY_TYPE Order[e_Way_EnumCount] = {
@@ -117,13 +115,14 @@ CXMapPainter2D::~CXMapPainter2D() {
 //-------------------------------------
 void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /*Height*/) {
 	// reload POI bitmaps
+	int POIDisplaySize = CXOptions::Instance()->GetPOIDisplaySize();
 	// iterate through BMPs
 	if(m_POIBMPs.GetSize() == 0) {
 		// create bitmaps
 		for(size_t i=0; i<1; i++) {
 			CXBitmap *pBMP = new CXBitmap();
 			m_POIBMPs.Append(pBMP);
-			pBMP->Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
+			pBMP->Create(pDC, POIDisplaySize*POICOUNTHORZ, POIDisplaySize*POICOUNTVERT);
 			CXStringASCII FileName = CXOptions::Instance()->GetDirectoryIcons();
 			char buf[100];
 			snprintf(buf,sizeof(buf),"poi%02X.bmp", i);
@@ -135,7 +134,7 @@ void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /
 		for(size_t i=0; i<m_POIBMPs.GetSize(); i++) {
 			CXBitmap *pBMP = m_POIBMPs[i];
 			CXStringASCII FileName = pBMP->GetFileName();
-			pBMP->Create(pDC, POIWIDTH*POICOUNTHORZ, POIHEIGHT*POICOUNTVERT);
+			pBMP->Create(pDC, POIDisplaySize*POICOUNTHORZ, POIDisplaySize*POICOUNTVERT);
 			pBMP->LoadFromFile(FileName);
 		}
 	}
@@ -329,13 +328,14 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
 
+	int POIDisplaySize = CXOptions::Instance()->GetPOIDisplaySize();
 	// iterate through POIs
 	for(size_t n=0; n<POINodes.GetSize(); n++) {
 		CXPOINode *pNode = POINodes[n];
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
 		// check if visible
-		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
+		if((x >= -POIDisplaySize/2) && (x < ScreenWidth+POIDisplaySize/2) && (y >= -POIDisplaySize/2) && (y < ScreenHeight+POIDisplaySize/2)) {
 			for(size_t i=0; i<pNode->GetPOITypeCount(); i++) {
 				size_t idx = 0;
 				size_t row = 0;
@@ -346,16 +346,16 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 					CXBitmap *pPOIBMP = m_POIBMPs[idx];
 					// Bitmap loaded
 					pBMP->DrawTransparent(	pPOIBMP,
-											x-POIWIDTH/2, y-POIHEIGHT/2,
-											col*POIWIDTH, row*POIHEIGHT,
-											POIWIDTH, POIHEIGHT,
+											x-POIDisplaySize/2, y-POIDisplaySize/2,
+											col*POIDisplaySize, row*POIDisplaySize,
+											POIDisplaySize, POIDisplaySize,
 											COLOR_TRANSPARENT);
 				}
 				// draw name
 				CXStringUTF8 Name = pNode->GetName();
 				if(!Name.IsEmpty()) {
 					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
-					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
+					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIDisplaySize/2 - NameRect.GetHeight());
 					pBMP->DrawGlowTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR, 1);
 //					pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR);
 				}
@@ -370,6 +370,7 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 	int FontSizeSmall = CXOptions::Instance()->GetCitySmallFontSize();
 	int FontSizeMedium = CXOptions::Instance()->GetCityMediumFontSize();
 	int FontSizeLarge = CXOptions::Instance()->GetCityLargeFontSize();
+	int POIDisplaySize = CXOptions::Instance()->GetPOIDisplaySize();
 
 	// iterate through Places
 	for(size_t n=0; n<PlaceNodes.GetSize(); n++) {
@@ -377,7 +378,7 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
 		// check if visible
-		if((x >= -POIWIDTH/2) && (x < ScreenWidth+POIWIDTH/2) && (y >= -POIHEIGHT/2) && (y < ScreenHeight+POIHEIGHT/2)) {
+		if((x >= -POIDisplaySize/2) && (x < ScreenWidth+POIDisplaySize/2) && (y >= -POIDisplaySize/2) && (y < ScreenHeight+POIDisplaySize/2)) {
 			size_t idx = 0;
 			size_t row = 0;
 			size_t col = 0;
@@ -387,9 +388,9 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 				CXBitmap *pPOIBMP = m_POIBMPs[idx];
 				// Bitmap loaded
 				pBMP->DrawTransparent(	pPOIBMP,
-										x-POIWIDTH/2, y-POIHEIGHT/2,
-										col*POIWIDTH, row*POIHEIGHT,
-										POIWIDTH, POIHEIGHT,
+										x-POIDisplaySize/2, y-POIDisplaySize/2,
+										col*POIDisplaySize, row*POIDisplaySize,
+										POIDisplaySize, POIDisplaySize,
 										COLOR_TRANSPARENT);
 			}
 			// draw name
@@ -406,7 +407,7 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 				}
 				pBMP->SetFont(FontSize, oBold);
 				tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
-				NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIHEIGHT/2 - NameRect.GetHeight());
+				NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIDisplaySize/2 - NameRect.GetHeight());
 				pBMP->DrawTextUTF8(Name, NameRect, MAPCITYTEXTCOLOR, MAPCITYBGCOLOR);
 			}
 		}

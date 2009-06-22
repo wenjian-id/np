@@ -130,6 +130,7 @@ private:
 	int						m_CitySmallFontSize;			///< oiu
 	int						m_CityMediumFontSize;			///< oiu
 	int						m_CityLargeFontSize;			///< oiu
+	int						m_POIDisplaySize;				///< oiu
 	mutable CXRWLock		m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -907,6 +908,18 @@ public:
 	 *
 	 */
 	void SetCityLargeFontSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetPOIDisplaySize() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetPOIDisplaySize(int NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

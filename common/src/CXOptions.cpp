@@ -82,7 +82,8 @@ CXOptions::CXOptions() :
 	m_DebugFontSize(16),
 	m_CitySmallFontSize(16),
 	m_CityMediumFontSize(18),
-	m_CityLargeFontSize(20)
+	m_CityLargeFontSize(20),
+	m_POIDisplaySize(20)
 {
 }
 
@@ -264,6 +265,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetCitySmallFontSize(atoi(F.Get("CitySmallFontSize", "16").c_str()));
 	SetCityMediumFontSize(atoi(F.Get("CityMediumFontSize", "18").c_str()));
 	SetCityLargeFontSize(atoi(F.Get("CityLargeFontSize", "20").c_str()));
+	// POI display size
+	SetPOIDisplaySize(atoi(F.Get("POIDisplaySize", "20").c_str()));
 	return true;
 }
 
@@ -1003,5 +1006,17 @@ int CXOptions::GetCityLargeFontSize() const {
 void CXOptions::SetCityLargeFontSize(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_CityLargeFontSize = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetPOIDisplaySize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_POIDisplaySize;
+}
+
+//-------------------------------------
+void CXOptions::SetPOIDisplaySize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_POIDisplaySize = NewValue;
 }
 
