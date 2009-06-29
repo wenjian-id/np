@@ -153,5 +153,5 @@ E_MAP_PLACE_TYPE CXPOINode::GetPlaceType() const {
 }
 //-------------------------------------
 void CXPOINode::SetPlaceType(E_MAP_PLACE_TYPE ePlaceType) {
-	m_ePlaceType;
+	m_ePlaceType = ePlaceType;
 }

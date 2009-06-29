@@ -41,9 +41,9 @@ const double ZoomFactor					= 1.2;	///< oiu
 const double MAXMETERPERPIXEL			= 500;	///< 500 m/pixel
 const double MINMETERPERPIXEL			= 0.1;	///< 0.1 m/pixel
 static const int POICOUNTHORZ			= 16;	///< Number of POIs in a row in bitmap file.
-static const int PLACECOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
-static const int PLACECOUNTHORZ			= 16;	///< Number of places in a row in bitmap file.
-static const int POICOUNTVERT			= 16;	///< Number of places in a column in bitmap file.
+static const int POICOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
+static const int PLACECOUNTHORZ			= 4;	///< Number of places in a row in bitmap file.
+static const int PLACECOUNTVERT			= 1;	///< Number of places in a column in bitmap file.
 static const double HYSTMAXOFFSETABS	= 1.4;	///< 1.4 m/s
 static const double HYSTMAXOFFSETREL	= 0.1;	///< 10%
 
@@ -153,7 +153,7 @@ void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /
 	} else {
 		// bitmaps already created. reload
 		CXStringASCII FileName = m_pPlaceBMP->GetFileName();
-		m_pPlaceBMP->Create(pDC, POIDisplaySize*POICOUNTHORZ, POIDisplaySize*POICOUNTVERT);
+		m_pPlaceBMP->Create(pDC, POIDisplaySize*PLACECOUNTHORZ, POIDisplaySize*PLACECOUNTVERT);
 		m_pPlaceBMP->LoadFromFile(FileName);
 	}
 }
@@ -345,7 +345,6 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
-return;
 	CXOptions *pOptions = CXOptions::Instance();
 	int POIDisplaySize = pOptions->GetPOIDisplaySize();
 	// iterate through POIs
