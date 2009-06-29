@@ -43,6 +43,7 @@ private:
 	CXPenHolder						m_PenHolder;			///< oiu
 	CXBuffer<TWayBuffer *>			m_DrawWays;				///< oiu
 	CXBuffer<CXBitmap *>			m_POIBMPs;				///< oiu
+	CXBitmap 						*m_pPlaceBMP;			///< oiu
 	double							m_LastSpeed;			///< oiu
 	CXHysterezis<double, double>	m_AutoZoomLevels;		///< oiu
 	mutable CXRWLock				m_RWLock;				///< Synchronization object.

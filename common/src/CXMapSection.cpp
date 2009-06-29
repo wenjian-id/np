@@ -344,10 +344,10 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		// create Place node
 		CXPOINode *pPlaceNode = new CXPOINode(*m_Nodes[NodeIdx]);
 		// read Place type stuff
-		t_uint16 POI = 0;
-		ReadUI16(InFile, POI);
-		E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
-		pPlaceNode->SetPOIType(POIType);
+		unsigned char Place = 0;
+		ReadUI8(InFile, Place);
+		E_MAP_PLACE_TYPE PlaceType = static_cast<E_MAP_PLACE_TYPE>(Place);
+		pPlaceNode->SetPlaceType(PlaceType);
 
 		// read name
 		CXStringUTF8 Name;
@@ -513,7 +513,16 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 		t_uint16 POI = 0;
 		ReadUI16(InFile, POI);
 		E_POI_TYPE POIType = static_cast<E_POI_TYPE>(POI);
-		pPlaceNode->SetPOIType(POIType);
+		E_MAP_PLACE_TYPE PlaceType = e_MapPlace_Small;
+		// convert old POI values to new place values
+		if(POIType == 0x23) {
+			PlaceType = e_MapPlace_Small;
+		} else if(POIType == 0x24) {
+			PlaceType = e_MapPlace_Medium;
+		} else if(POIType == 0x25) {
+			PlaceType = e_MapPlace_Large;
+		}
+		pPlaceNode->SetPlaceType(PlaceType);
 
 		// read name
 		CXStringUTF8 Name;

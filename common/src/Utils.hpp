@@ -39,7 +39,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010206; // 0.1.2-dev6
+const unsigned int SECTVERSION	= 0x00010207; // 0.1.2-dev7
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -431,6 +431,17 @@ double ConvertSavedUI32(t_uint32 Value);
  */
 E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value);
 
+//-------------------------------------
+/*
+ * \brief oiu
+ *
+ */
+enum E_MAP_PLACE_TYPE {
+	e_MapPlace_None				= 0x00,		///< No place.
+	e_MapPlace_Small			= 0x01,		///< Place small.
+	e_MapPlace_Medium			= 0x02,		///< Place medium.
+	e_MapPlace_Large			= 0x03,		///< Place large.
+};
 
 //-------------------------------------
 /*
@@ -497,9 +508,6 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_Hostel				= 0x0020,	///< Hostel.
 	e_POI_CampSite				= 0x0021,	///< Camp site.
 	e_POI_Supermarket			= 0x0022,	///< Supermarket.
-	e_POI_PlaceSmall			= 0x0023,	///< Place small.
-	e_POI_PlaceMedium			= 0x0024,	///< Place medium.
-	e_POI_PlaceLarge			= 0x0025,	///< Place large.
 
 
 /*

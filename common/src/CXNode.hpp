@@ -171,8 +171,9 @@ typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
  */
 class CXPOINode : public CXNode {
 private:
-	CXStringUTF8			m_Name;		///< oiu
-	CXBuffer<E_POI_TYPE>	m_POITypes;	///< POI 1 flags.
+	CXStringUTF8			m_Name;			///< oiu
+	CXBuffer<E_POI_TYPE>	m_POITypes;		///< POI flags.
+	E_MAP_PLACE_TYPE		m_ePlaceType;	///< oiu
 	//-------------------------------------
 	CXPOINode();										///< Not used.
 	CXPOINode(const CXPOINode &);						///< Not used.
@@ -244,6 +245,22 @@ public:
 	 *	\return	Name.
 	 */
 	CXStringUTF8 GetName() const;
+	//-------------------------------------
+	/**
+	 * \brief Get place type.
+	 *
+	 *	Get place type.
+	 *	\return	place type.
+	 */
+	E_MAP_PLACE_TYPE GetPlaceType() const;
+	//-------------------------------------
+	/**
+	 * \brief Set place type.
+	 *
+	 *	Set place type.
+	 *	\param	NewValue	Place type.
+	 */
+	void SetPlaceType(E_MAP_PLACE_TYPE ePlaceType);
 };
 
 typedef CXBuffer<CXPOINode *>						TPOINodeBuffer;		///< oiu

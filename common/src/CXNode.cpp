@@ -146,3 +146,12 @@ void CXPOINode::SetName(const CXStringUTF8 &NewValue) {
 CXStringUTF8 CXPOINode::GetName() const {
 	return m_Name;
 }
+
+//-------------------------------------
+E_MAP_PLACE_TYPE CXPOINode::GetPlaceType() const {
+	return m_ePlaceType;
+}
+//-------------------------------------
+void CXPOINode::SetPlaceType(E_MAP_PLACE_TYPE ePlaceType) {
+	m_ePlaceType;
+}

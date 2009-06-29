@@ -41,7 +41,9 @@ const double ZoomFactor					= 1.2;	///< oiu
 const double MAXMETERPERPIXEL			= 500;	///< 500 m/pixel
 const double MINMETERPERPIXEL			= 0.1;	///< 0.1 m/pixel
 static const int POICOUNTHORZ			= 16;	///< Number of POIs in a row in bitmap file.
-static const int POICOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
+static const int PLACECOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
+static const int PLACECOUNTHORZ			= 16;	///< Number of places in a row in bitmap file.
+static const int POICOUNTVERT			= 16;	///< Number of places in a column in bitmap file.
 static const double HYSTMAXOFFSETABS	= 1.4;	///< 1.4 m/s
 static const double HYSTMAXOFFSETREL	= 0.1;	///< 10%
 
@@ -77,7 +79,8 @@ E_WAY_TYPE Order[e_Way_EnumCount] = {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapPainter2D::CXMapPainter2D() :
-	m_MeterPerPixel(3)
+	m_MeterPerPixel(3),
+	m_pPlaceBMP(NULL)
 {
 	for(size_t i=0; i<e_Way_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
@@ -110,6 +113,8 @@ CXMapPainter2D::~CXMapPainter2D() {
 	for(i=0; i<m_POIBMPs.GetSize(); i++) {
 		delete m_POIBMPs[i];
 	}
+	delete m_pPlaceBMP;
+	m_pPlaceBMP = NULL;
 }
 
 //-------------------------------------
@@ -137,6 +142,19 @@ void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /
 			pBMP->Create(pDC, POIDisplaySize*POICOUNTHORZ, POIDisplaySize*POICOUNTVERT);
 			pBMP->LoadFromFile(FileName);
 		}
+	}
+	if(m_pPlaceBMP == NULL) {
+		// create bitmap
+		m_pPlaceBMP = new CXBitmap();
+		m_pPlaceBMP->Create(pDC, POIDisplaySize*PLACECOUNTHORZ, POIDisplaySize*PLACECOUNTVERT);
+		CXStringASCII FileName = CXOptions::Instance()->GetDirectoryIcons();
+		FileName += "places.bmp";
+		m_pPlaceBMP->LoadFromFile(FileName);
+	} else {
+		// bitmaps already created. reload
+		CXStringASCII FileName = m_pPlaceBMP->GetFileName();
+		m_pPlaceBMP->Create(pDC, POIDisplaySize*POICOUNTHORZ, POIDisplaySize*POICOUNTVERT);
+		m_pPlaceBMP->LoadFromFile(FileName);
 	}
 }
 
@@ -327,7 +345,7 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
-
+return;
 	CXOptions *pOptions = CXOptions::Instance();
 	int POIDisplaySize = pOptions->GetPOIDisplaySize();
 	// iterate through POIs
@@ -383,30 +401,24 @@ void CXMapPainter2D::DrawPlaces(IBitmap *pBMP, const TPOINodeBuffer &PlaceNodes,
 		int y = pNode->GetDisplayY();
 		// check if visible
 		if((x >= -POIDisplaySize/2) && (x < ScreenWidth+POIDisplaySize/2) && (y >= -POIDisplaySize/2) && (y < ScreenHeight+POIDisplaySize/2)) {
-			size_t idx = 0;
+			size_t col = pNode->GetPlaceType();
 			size_t row = 0;
-			size_t col = 0;
-			ComputePOIBMP(pNode->GetPOIType(0), idx, row, col);
 			// draw POI bitmap
-			if(idx < m_POIBMPs.GetSize()) {
-				CXBitmap *pPOIBMP = m_POIBMPs[idx];
-				// Bitmap loaded
-				pBMP->DrawTransparent(	pPOIBMP,
-										x-POIDisplaySize/2, y-POIDisplaySize/2,
-										col*POIDisplaySize, row*POIDisplaySize,
-										POIDisplaySize, POIDisplaySize,
-										COLOR_TRANSPARENT);
-			}
+			pBMP->DrawTransparent(	m_pPlaceBMP,
+									x-POIDisplaySize/2, y-POIDisplaySize/2,
+									col*POIDisplaySize, row*POIDisplaySize,
+									POIDisplaySize, POIDisplaySize,
+									COLOR_TRANSPARENT);
 			// draw name
 			CXStringUTF8 Name = pNode->GetName();
 			bool oBold = false;
 			if(!Name.IsEmpty()) {
 				// set font size for Places
 				int FontSize = 16;
-				switch(pNode->GetPOIType(0)) {
-					case e_POI_PlaceSmall: 	FontSize = FontSizeSmall; oBold = false; break;
-					case e_POI_PlaceMedium:	FontSize = FontSizeMedium; oBold = true; break;
-					case e_POI_PlaceLarge:	FontSize = FontSizeLarge; oBold = true; break;
+				switch(pNode->GetPlaceType()) {
+					case e_MapPlace_Small: 	FontSize = FontSizeSmall; oBold = false; break;
+					case e_MapPlace_Medium:	FontSize = FontSizeMedium; oBold = true; break;
+					case e_MapPlace_Large:	FontSize = FontSizeLarge; oBold = true; break;
 					default:				break;
 				}
 				pBMP->SetFont(FontSize, oBold);
