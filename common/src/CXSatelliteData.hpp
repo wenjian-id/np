@@ -43,10 +43,14 @@ private:
 	CXBuffer<CXGSVSatelliteInfo *>	m_TmpSatInfo;			///< oiu
 	int								m_LastReceivedGSVTel;	///< oiu
 	int								m_TmpNrSat;				///< oiu
+	double							m_HDOP;					///< oiu
+	double							m_VDOP;					///< oiu
 	bool							m_oRMCDataReceived;		///< oiu
 	bool							m_oGGADataReceived;		///< oiu
 	bool							m_oGSADataReceived;		///< oiu
 	bool							m_oGSVDataReceived;		///< oiu
+	bool							m_oHDOPReceived;		///< oiu
+	bool							m_oVDOPReceived;		///< oiu
 	mutable CXRWLock				m_RWLock;				///< Synchronization object.
 	//-------------------------------------
 	CXSatelliteData(const CXSatelliteData &);						///< Not used.
@@ -111,6 +115,18 @@ public:
 	void SetGSVData(int NTelegrams, int NCurrentTelegram, int NSat, int NInfos, 
 					const CXGSVSatelliteInfo &Info1, const CXGSVSatelliteInfo &Info2,
 					const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetHDOP(double NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetVDOP(double NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

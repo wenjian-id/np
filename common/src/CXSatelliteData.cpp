@@ -40,10 +40,14 @@ CXSatelliteData::CXSatelliteData() :
 	m_NrSat(0),
 	m_LastReceivedGSVTel(0),
 	m_TmpNrSat(0),
+	m_HDOP(0),
+	m_VDOP(0),
 	m_oRMCDataReceived(false),
 	m_oGGADataReceived(false),
 	m_oGSADataReceived(false),
-	m_oGSVDataReceived(false)
+	m_oGSVDataReceived(false),
+	m_oHDOPReceived(false),
+	m_oVDOPReceived(false)
 {
 }
 
@@ -145,6 +149,20 @@ void CXSatelliteData::SetGSVData(	int NTelegrams, int NCurrentTelegram, int NSat
 }
 
 //-------------------------------------
+void CXSatelliteData::SetHDOP(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_HDOP = NewValue;
+	m_oHDOPReceived = true;
+}
+
+//-------------------------------------
+void CXSatelliteData::SetVDOP(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_VDOP = NewValue;
+	m_oVDOPReceived = true;
+}
+
+//-------------------------------------
 void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height) {
 	CXReadLocker RL(&m_RWLock);
 
@@ -186,7 +204,7 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	Bmp.DrawLine(CX, CY + Radius, CX, CY - Radius);
 	Bmp.DrawLine(CX - Radius, CY, CX + Radius, CY);
 	// numbers
-	// "45°"
+	// "45"
 	CXStringUTF8 Str("45");
 	Str.Append(DegUTF8, sizeof(DegUTF8));
 	tIRect StrRect = Bmp.CalcTextRectUTF8(Str, 4, 2);
@@ -278,10 +296,19 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	tIRect GGARect = Bmp.CalcTextRectUTF8("GPGGA", 2, 2);
 	tIRect GSARect = Bmp.CalcTextRectUTF8("GPGSA", 2, 2);
 	tIRect GSVRect = Bmp.CalcTextRectUTF8("GPGSV", 2, 2);
+	char HDOPbuf[25];
+	snprintf(HDOPbuf, sizeof(HDOPbuf), "HDOP: %0.2f", m_HDOP);
+	tIRect HDOPRect = Bmp.CalcTextRectASCII(HDOPbuf, 2, 2);
+	char VDOPbuf[25];
+	snprintf(VDOPbuf, sizeof(VDOPbuf), "VDOP: %0.2f", m_VDOP);
+	tIRect VDOPRect = Bmp.CalcTextRectASCII(VDOPbuf, 2, 2);
+	int DOPWidth = Max(HDOPRect.GetWidth(), VDOPRect.GetWidth());
 	// move rectangles
 	GGARect.OffsetRect(0, RMCRect.GetHeight());
 	GSARect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight());
 	GSVRect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight() + GSARect.GetHeight());
+	HDOPRect.OffsetRect(Width - DOPWidth, 0);
+	VDOPRect.OffsetRect(Width - DOPWidth, HDOPRect.GetHeight());
 	CXRGB TextColor = TelegramNotReceivedColor;
 
 	if(m_oRMCDataReceived) {
@@ -314,6 +341,20 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	}
 	// draw
 	Bmp.DrawTextUTF8("GPGSV", GSVRect, TextColor, BgColor);
+	if(m_oHDOPReceived) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8(HDOPbuf, HDOPRect, TextColor, BgColor);
+	if(m_oVDOPReceived) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8(VDOPbuf, VDOPRect, TextColor, BgColor);
 
 	pDC->Draw(&Bmp, OffsetX, OffsetY);
 

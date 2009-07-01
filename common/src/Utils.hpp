@@ -32,6 +32,7 @@
 class CXCoor;
 class CXGGAPacket;
 class CXRMCPacket;
+class CXGSAPacket;
 class CXGSVSatelliteInfo;
 
 
@@ -343,10 +344,10 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
  * Extract information from a GSA packet. The information extracted
  * consists of an array of the PRN of active satellites.
  * \param	NMEAPacket		String containing the NMEA packet including CR LF 
- * \param	rSatellites		Buffer with PRN of active satellites
+ * \param	rGSAPacket		Extracted data.
  * \return					true if successfull.
  */
-bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXBuffer<int> &rSatellites);
+bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket);
 
 //-------------------------------------
 /**

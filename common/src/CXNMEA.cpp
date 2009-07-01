@@ -79,6 +79,16 @@ void CXGGAPacket::SetHeight(double NewValue) {
 }
 
 //-------------------------------------
+double CXGGAPacket::GetHDOP() const {
+	return m_dHDOP;
+}
+
+//-------------------------------------
+void CXGGAPacket::SetHDOP(double NewValue) {
+	m_dHDOP = NewValue;
+}
+
+//-------------------------------------
 double CXGGAPacket::GetLon() const {
 	return m_dLon;
 }
@@ -174,6 +184,53 @@ void CXRMCPacket::SetCourse(double NewValue) {
 	m_dCourse = NewValue;
 }
 
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXGSAPacket::CXGSAPacket() :
+	m_HDOP(0),
+	m_VDOP(0)
+{
+}
+
+//-------------------------------------
+CXGSAPacket::~CXGSAPacket() {
+}
+
+//-------------------------------------
+void CXGSAPacket::ClearSatellites() {
+	m_Satellites.Clear();
+}
+
+//-------------------------------------
+void CXGSAPacket::AddSatellite(int SatNr) {
+	m_Satellites.Append(SatNr);
+}
+
+//-------------------------------------
+const CXBuffer<int> & CXGSAPacket::GetSatellites() const {
+	return m_Satellites;
+}
+
+//-------------------------------------
+double CXGSAPacket::GetHDOP() const {
+	return m_HDOP;
+}
+
+//-------------------------------------
+void CXGSAPacket::SetHDOP(double NewValue) {
+	m_HDOP = NewValue;
+}
+
+//-------------------------------------
+double CXGSAPacket::GetVDOP() const {
+	return m_VDOP;
+}
+
+//-------------------------------------
+void CXGSAPacket::SetVDOP(double NewValue) {
+	m_VDOP = NewValue;
+}
 
 //----------------------------------------------------------------------------
 //-------------------------------------

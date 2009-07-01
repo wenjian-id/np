@@ -109,12 +109,15 @@ void CXLocatorThread::SetGPSDataRMC(const tUCBuffer & Buffer) {
 void CXLocatorThread::SetGPSDataGSA(const tUCBuffer & Buffer) {
 	CXMutexLocker L(&m_MutexInputData);
 	// process GSA packet
-	CXBuffer<int> Sat;
+	CXGSAPacket GSAPacket;
 	CXStringASCII Line(reinterpret_cast<const char *>(Buffer.GetBuffer()), Buffer.GetSize());
-	if(ExtractGSAData(Line, Sat)) {
+	if(ExtractGSAData(Line, GSAPacket)) {
 		// data extracted and OK
 		// now set it
-		CXSatelliteData::Instance()->SetActiveSatellites(Sat);
+		CXSatelliteData::Instance()->SetActiveSatellites(GSAPacket.GetSatellites());
+		// set HDOP and VDOP
+		CXSatelliteData::Instance()->SetHDOP(GSAPacket.GetHDOP());
+		CXSatelliteData::Instance()->SetVDOP(GSAPacket.GetVDOP());
 		// request repaint
 		if(m_pNaviPOWM != NULL)
 			m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
@@ -221,6 +224,8 @@ void CXLocatorThread::OnThreadLoop() {
 			m_LastReceivedPosition.SetNow();
 			// set number of satellites
 			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
+			// set HDOP
+			CXSatelliteData::Instance()->SetHDOP(GGAData.GetHDOP());
 			// check fix
 			if(oHasFix) {
 				m_oGPSFixAtLeastOnce = true;

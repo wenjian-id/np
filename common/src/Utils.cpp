@@ -333,7 +333,10 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
 	int NSat = atoi(ExtractFirstToken(s, ',').c_str());
 	rGGAPacket.SetNSat(NSat);
 	// HDOP
-	ExtractFirstToken(s, ',');
+	CXStringASCII SHDOP = ExtractFirstToken(s, ',');
+	double dHDOP = 0;
+	sscanf(SHDOP.c_str(), "%lf", &dHDOP);
+	rGGAPacket.SetHDOP(dHDOP);
 	// height
 	double Height = 0;
 	sscanf(ExtractFirstToken(s, ',').c_str(), "%lf", &Height);
@@ -452,7 +455,7 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
 }
 
 //-------------------------------------
-bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXBuffer<int> &rSatellites) {
+bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket) {
 	// check if this NMEAPacket contains a GSA packet
 
 	// length must be greater than 11 $ G P G S A * x x CR LF
@@ -486,12 +489,24 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXBuffer<int> &rSatellites)
 	// fix
 	ExtractFirstToken(s, ',');
 	// now extract 12 satellite PRN
-	rSatellites.Clear();
+	rGSAPacket.ClearSatellites();
 	for(size_t j=0; j<12; j++) {
 		CXStringASCII SPRN = ExtractFirstToken(s, ',');
 		if(!SPRN.IsEmpty())
-			rSatellites.Append(atoi(SPRN.c_str()));
+			rGSAPacket.AddSatellite(atoi(SPRN.c_str()));
 	}
+	// PDOP
+	ExtractFirstToken(s, ',');
+	// HDOP
+	CXStringASCII SHDOP = ExtractFirstToken(s, ',');
+	double dHDOP = 0;
+	sscanf(SHDOP.c_str(), "%lf", &dHDOP);
+	rGSAPacket.SetHDOP(dHDOP);
+	// VDOP
+	CXStringASCII SVDOP = ExtractFirstToken(s, ',');
+	double dVDOP = 0;
+	sscanf(SVDOP.c_str(), "%lf", &dVDOP);
+	rGSAPacket.SetVDOP(dVDOP);
 	return true;
 }
 

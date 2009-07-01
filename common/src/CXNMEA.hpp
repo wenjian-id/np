@@ -38,6 +38,7 @@ private:
 	double			m_dLon;		///< oiu
 	double			m_dLat;		///< oiu
 	double			m_dHeight;	///< oiu
+	double			m_dHDOP;	///< oiu
 	//-------------------------------------
 	CXGGAPacket(const CXGGAPacket &);						///< Not used.
 	const CXGGAPacket & operator = (const CXGGAPacket &);	///< Not used.
@@ -129,6 +130,18 @@ public:
 	 *
 	 */
 	void SetHeight(double NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetHDOP() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetHDOP(double NewValue);
 };
 
 //---------------------------------------------------------------------
@@ -244,6 +257,9 @@ public:
  */
 class CXGSAPacket {
 private:
+	CXBuffer<int>		m_Satellites;	///< oiu
+	int					m_HDOP;			///< oiu
+	int					m_VDOP;			///< oiu
 	//-------------------------------------
 	CXGSAPacket(const CXGSAPacket &);						///< Not used.
 	const CXGSAPacket & operator = (const CXGSAPacket &);	///< Not used.
@@ -263,6 +279,48 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXGSAPacket();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ClearSatellites();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void AddSatellite(int SatNr);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	const CXBuffer<int> & GetSatellites() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetHDOP() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetHDOP(double NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetVDOP() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetVDOP(double NewValue);
 };
 
 //---------------------------------------------------------------------
