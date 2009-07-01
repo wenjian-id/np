@@ -258,8 +258,8 @@ public:
 class CXGSAPacket {
 private:
 	CXBuffer<int>		m_Satellites;	///< oiu
-	int					m_HDOP;			///< oiu
-	int					m_VDOP;			///< oiu
+	double				m_HDOP;			///< oiu
+	double				m_VDOP;			///< oiu
 	//-------------------------------------
 	CXGSAPacket(const CXGSAPacket &);						///< Not used.
 	const CXGSAPacket & operator = (const CXGSAPacket &);	///< Not used.
