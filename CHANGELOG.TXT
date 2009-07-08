@@ -7,6 +7,7 @@ Version 0.2.3:
    - 2807231: Show railways / trams
    - 2810233: Make POI icon size configurable.
    - 2810495: Make text background configurable for POIs: area or glow
+   - 2798586: Show HDOP and Sunset/Sunraise
  - other:
 
 Version 0.2.2:
