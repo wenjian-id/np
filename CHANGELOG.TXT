@@ -9,6 +9,7 @@ Version 0.2.3:
    - 2810495: Make text background configurable for POIs: area or glow
    - 2798586: Show HDOP and Sunset/Sunraise
  - other:
+   - extracted city images from POI images
 
 Version 0.2.2:
  - fixed bugs:
