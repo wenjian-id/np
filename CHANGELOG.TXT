@@ -4,10 +4,11 @@ Version 0.2.3:
    - 2793291: snap to road
  - implemented feature requests:
    - 2726788: Show country boundaries
+   - 2798586: Show HDOP and Sunset/Sunraise
    - 2807231: Show railways / trams
    - 2810233: Make POI icon size configurable.
    - 2810495: Make text background configurable for POIs: area or glow
-   - 2798586: Show HDOP and Sunset/Sunraise
+   - 2822063: POIs: Distinguish between religions
  - other:
    - extracted city images from POI images
 

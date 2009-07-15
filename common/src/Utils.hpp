@@ -40,7 +40,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010207; // 0.1.2-dev7
+const unsigned int SECTVERSION	= 0x00010208; // 0.1.2-dev8
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -477,7 +477,7 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	// amenities 0x00****
 	e_POI_Parking				= 0x0001,	///< Car park.
 	e_POI_Fuel					= 0x0002,	///< Fuel.
-	e_POI_PlaceOfWorhsip		= 0x0003,	///< Church, temple, etc.
+	e_POI_PlcOfWrshp_Christian	= 0x0003,	///< Christian church, temple, etc.
 	e_POI_Restaurant			= 0x0004,	///< Restaurant.
 	e_POI_School				= 0x0005,	///< School.
 	e_POI_Telephone				= 0x0006,	///< Public telephone
@@ -509,6 +509,13 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_Hostel				= 0x0020,	///< Hostel.
 	e_POI_CampSite				= 0x0021,	///< Camp site.
 	e_POI_Supermarket			= 0x0022,	///< Supermarket.
+	e_POI_PlcOfWrshp_Jewish		= 0x0023,	///< Jewish church, temple, etc.
+	e_POI_PlcOfWrshp_Muslim		= 0x0024,	///< Muslim church, temple, etc.
+	e_POI_PlcOfWrshp_Hindu		= 0x0025,	///< Hindu church, temple, etc.
+	e_POI_PlcOfWrshp_Buddhist	= 0x0026,	///< Buddhist church, temple, etc.
+	e_POI_PlcOfWrshp_Shinto		= 0x0027,	///< Shinto church, temple, etc.
+	e_POI_PlcOfWrshp_Taoist		= 0x0028,	///< Taoist church, temple, etc.
+	e_POI_PlcOfWrshp_Unknown	= 0x0029,	///< Unknown church, temple, etc.
 
 
 /*
