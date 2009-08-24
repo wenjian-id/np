@@ -229,6 +229,8 @@ common/src/CXTrackLog.cpp -text
 common/src/CXTrackLog.hpp -text
 common/src/CXTransformationMatrix.cpp -text
 common/src/CXTransformationMatrix.hpp -text
+common/src/CXUTCTime.cpp -text
+common/src/CXUTCTime.hpp -text
 common/src/CXUTMCoor.cpp -text
 common/src/CXUTMCoor.hpp -text
 common/src/CXUTMSpeed.cpp -text

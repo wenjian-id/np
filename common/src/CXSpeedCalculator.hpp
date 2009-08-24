@@ -81,10 +81,11 @@ private:
 	 * \brief Set new data.
 	 *
 	 * Set new data.
+	 * \para	UTC			UTC time.
 	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetData(const CXTimeStampData<CXCoor> &Coor);
+	void SetData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor);
 protected:
 public:
 	//-------------------------------------

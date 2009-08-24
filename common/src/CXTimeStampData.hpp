@@ -24,11 +24,19 @@
 #define __CXTIMESTAMPDATA_HPP__
 
 #include "CXExactTime.hpp"
+#include "CXUTCTime.hpp"
 
+//---------------------------------------------------------------------
+/**
+ * \brief oiu.
+ *
+ * oiu.
+ */
 template<class tData> class CXTimeStampData {
 private:
 	tData			m_Data;
 	CXExactTime		m_TimeStamp;
+	CXUTCTime		m_UTCTime;
 	//-------------------------------------
 	/**
 	 * \brief Copy from other instance to self.
@@ -111,7 +119,21 @@ public:
 	 *
 	 * oiu
 	 */
+	const CXUTCTime & UTCTime() const;
+	//-------------------------------------
+	/**
+	 * \brief	oiu
+	 *
+	 * oiu
+	 */
 	void SetNow();
+	//-------------------------------------
+	/**
+	 * \brief	oiu
+	 *
+	 * oiu
+	 */
+	void SetUTCTime(const CXStringASCII &UTCTime);
 };
 
 
@@ -140,6 +162,7 @@ template<class tData> CXTimeStampData<tData>::~CXTimeStampData() {
 template<class tData> void CXTimeStampData<tData>::CopyFrom(const CXTimeStampData &rOther) {
 	m_Data = rOther.m_Data;
 	m_TimeStamp = rOther.m_TimeStamp;
+	m_UTCTime = rOther.m_UTCTime;
 }
 
 //-------------------------------------
@@ -170,9 +193,18 @@ template<class tData> const CXExactTime & CXTimeStampData<tData>::TimeStamp() co
 }
 
 //-------------------------------------
+template<class tData> const CXUTCTime & CXTimeStampData<tData>::UTCTime() const {
+	return m_UTCTime;
+}
+
+//-------------------------------------
 template<class tData> void CXTimeStampData<tData>::SetNow() {
 	m_TimeStamp.SetNow();
 }
 
+//-------------------------------------
+template<class tData> void CXTimeStampData<tData>::SetUTCTime(const CXStringASCII &UTCTime) {
+	m_UTCTime.SetUTCTime(UTCTime);
+}
 
 #endif // __CXTIMESTAMPDATA_HPP__

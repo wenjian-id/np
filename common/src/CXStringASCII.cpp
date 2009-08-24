@@ -36,6 +36,13 @@ CXStringASCII::CXStringASCII(const CXStringASCII &rOther) :
 }
 
 //-------------------------------------
+CXStringASCII::CXStringASCII(const tCBuffer &rOther) :
+	tCBuffer(rOther),
+	m_pcstr(NULL)
+{
+}
+
+//-------------------------------------
 CXStringASCII::CXStringASCII(const char *pcChar) :
 	m_pcstr(NULL)
 {

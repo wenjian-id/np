@@ -60,6 +60,14 @@ public:
 	CXStringASCII(const CXStringASCII &rOther);
 	//-------------------------------------
 	/**
+	 * \brief Constructor.
+	 *
+	 * Constructor.
+	 * \param	rOther	Buffer to copy from.
+	 */
+	CXStringASCII(const tCBuffer &rOther);
+	//-------------------------------------
+	/**
 	 * \brief oiu
 	 *
 	 */
