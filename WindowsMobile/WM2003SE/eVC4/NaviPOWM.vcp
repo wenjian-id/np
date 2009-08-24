@@ -5241,6 +5241,10 @@ SOURCE=..\..\..\common\src\CXTransformationMatrix.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\src\CXUTCTime.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\src\CXUTMCoor.hpp
 # End Source File
 # Begin Source File
@@ -24555,6 +24559,229 @@ DEP_CPP_CXTRAN=\
 
 DEP_CPP_CXTRAN=\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXUTCTime.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
+
+DEP_CPP_CXUTC=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ENDIF 

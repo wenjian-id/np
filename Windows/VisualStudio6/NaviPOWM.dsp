@@ -414,6 +414,10 @@ SOURCE=..\..\common\src\CXTransformationMatrix.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXUTCTime.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXUTMCoor.hpp
 # End Source File
 # Begin Source File
@@ -639,6 +643,10 @@ SOURCE=..\..\common\src\CXTrackLog.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXTransformationMatrix.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXUTCTime.cpp
 # End Source File
 # Begin Source File
 
