@@ -2,6 +2,7 @@ Version 0.2.3:
  - fixed bugs:
    - 2783863: OSM validation failure
    - 2793291: snap to road
+   - 2832238: displayed speed wrong in demo mode
  - implemented feature requests:
    - 2726788: Show country boundaries
    - 2798586: Show HDOP and Sunset/Sunraise
