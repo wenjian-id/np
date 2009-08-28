@@ -32,7 +32,7 @@ void DoOutputDebugString(const char *pcBuf) {
 	// do some tests
 	if(pcBuf == NULL)
 		return;
-	printf(pcBuf);
+	printf("%s", pcBuf);
 }
 
 //-------------------------------------
