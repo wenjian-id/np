@@ -23,6 +23,7 @@
 #ifndef __CXOPTIONS_HPP__
 #define __CXOPTIONS_HPP__
 
+#include "CXPOIVisibilityDescriptor.hpp"
 #include "CXStringASCII.hpp"
 #include "CXRWLock.hpp"
 #include "ISerial.hpp"
@@ -39,6 +40,7 @@ public:
 	/**
 	 * \brief oiu
 	 *
+	 * oiu
 	 */
 	enum E_OSM_VALI {
 		e_OSMValiName		= 0x0001,		///< oiu
@@ -49,6 +51,7 @@ public:
 	/**
 	 * \brief oiu
 	 *
+	 * oiu
 	 */
 	enum E_MODE {
 		e_ModeCar,			///< oiu
@@ -69,71 +72,72 @@ public:
 		e_DBGDrawPositions			= 0x0004,		///< Display all computed positions
 	};
 private:
-	static CXOptions		*m_pInstance;					///< oiu
-	CXStringASCII			m_StartPath;					///< oiu
-	CXSerialPortConfig		m_SerialPortConfig;				///< oiu
-	bool					m_oNorthing;					///< oiu
-	bool					m_oFullScreen;					///< oiu
-	bool					m_oShowLogo;					///< Show logo.
-	bool					m_oSaving;						///< oiu
-	bool					m_oShowZoomButtons;				///< oiu
-	bool					m_oAutomaticZoom;				///< oiu
-	CXStringASCII			m_AutomaticZoomString;			///< oiu
-	bool					m_oShowMaxSpeed;				///< oiu
-	bool					m_oShowCompass;					///< oiu
-	bool					m_oShowTrackLog;				///< oiu
-	bool					m_oShowScale;					///< oiu
-	bool					m_oShowMinimizeButton;			///< oiu
-	bool					m_oShowPOIs;					///< Show some POIs.
-	bool					m_oShowCities;					///< Show Cities.
-	bool					m_oSnapToWay;					///< oiu
-	bool					m_oStartWithLastPosition;		///< oiu
-	bool					m_oMapMovingManually;			///< oiu
-	int						m_WatchdogTimeout;				///< oiu
-	t_uint64				m_OSMVali;						///< oiu
-	t_uint64				m_DebugInfo;					///< Holder for debug info flags.
-	int						m_InfoBarBottomHeight;			///< oiu
-	int						m_InfoBarTopHeight;				///< oiu
-	int						m_InfoBarCommonWidth;			///< oiu
-	int						m_InfoBarCommonHeight;			///< oiu
-	int						m_MaxSpeedSize;					///< oiu
-	int						m_CompassSize;					///< oiu
-	size_t					m_TrackLogSize;					///< oiu
-	int						m_TrackLogMinDist;				///< oiu
-	int						m_ScaleWidth;					///< oiu
-	int						m_ScaleHeight;					///< oiu
-	E_MODE					m_eMode;						///< oiu
-	CXStringASCII			m_DirectoryMaps;				///< oiu
-	CXStringASCII			m_DirectorySave;				///< oiu
-	CXStringASCII			m_DirectoryIcons;				///< oiu
-	unsigned long			m_LogoTime;						///< oiu
-	CXStringASCII			m_LogoFileName;					///< oiu
-	CXStringASCII			m_InfoFileName;					///< oiu
-	CXStringASCII			m_QuitFileName;					///< oiu
-	CXStringASCII			m_MinimizeFileName;				///< oiu
-	CXStringASCII			m_SavingOnFileName;				///< oiu
-	CXStringASCII			m_SavingOffFileName;			///< oiu
-	CXStringASCII			m_ZoomInFileName;				///< oiu
-	CXStringASCII			m_ZoomOutFileName;				///< oiu
-	CXStringASCII			m_MoveFileName;					///< oiu
-	CXStringASCII			m_CurrentPosFileName;			///< oiu
-	double					m_SpeedThresholdCar;			///< oiu
-	double					m_SpeedThresholdBike;			///< oiu
-	double					m_SpeedThresholdPedestrian;		///< oiu
-	double					m_SpeedThresholdCaching;		///< oiu
-	double					m_SpeedThresholdMapping;		///< oiu
-	int						m_GPSReceiverLag;				///< oiu
-	E_ZOOM_LEVEL			m_ZoomLevel;					///< oiu
-	int						m_POIFontSize;					///< oiu
-	int						m_ScaleFontSize;				///< oiu
-	int						m_DebugFontSize;				///< oiu
-	int						m_CitySmallFontSize;			///< oiu
-	int						m_CityMediumFontSize;			///< oiu
-	int						m_CityLargeFontSize;			///< oiu
-	int						m_POIDisplaySize;				///< oiu
-	E_BACKGROUND_TYPE		m_ePOIBGType;					///< oiu
-	E_BACKGROUND_TYPE		m_eCityBGType;					///< oiu
-	mutable CXRWLock		m_RWLock;						///< Synchronization object.
+	static CXOptions			*m_pInstance;					///< oiu
+	CXStringASCII				m_StartPath;					///< oiu
+	CXSerialPortConfig			m_SerialPortConfig;				///< oiu
+	bool						m_oNorthing;					///< oiu
+	bool						m_oFullScreen;					///< oiu
+	bool						m_oShowLogo;					///< Show logo.
+	bool						m_oSaving;						///< oiu
+	bool						m_oShowZoomButtons;				///< oiu
+	bool						m_oAutomaticZoom;				///< oiu
+	CXStringASCII				m_AutomaticZoomString;			///< oiu
+	bool						m_oShowMaxSpeed;				///< oiu
+	bool						m_oShowCompass;					///< oiu
+	bool						m_oShowTrackLog;				///< oiu
+	bool						m_oShowScale;					///< oiu
+	bool						m_oShowMinimizeButton;			///< oiu
+	bool						m_oShowPOIs;					///< Show some POIs.
+	bool						m_oShowCities;					///< Show Cities.
+	bool						m_oSnapToWay;					///< oiu
+	bool						m_oStartWithLastPosition;		///< oiu
+	bool						m_oMapMovingManually;			///< oiu
+	int							m_WatchdogTimeout;				///< oiu
+	t_uint64					m_OSMVali;						///< oiu
+	t_uint64					m_DebugInfo;					///< Holder for debug info flags.
+	int							m_InfoBarBottomHeight;			///< oiu
+	int							m_InfoBarTopHeight;				///< oiu
+	int							m_InfoBarCommonWidth;			///< oiu
+	int							m_InfoBarCommonHeight;			///< oiu
+	int							m_MaxSpeedSize;					///< oiu
+	int							m_CompassSize;					///< oiu
+	size_t						m_TrackLogSize;					///< oiu
+	int							m_TrackLogMinDist;				///< oiu
+	int							m_ScaleWidth;					///< oiu
+	int							m_ScaleHeight;					///< oiu
+	E_MODE						m_eMode;						///< oiu
+	CXStringASCII				m_DirectoryMaps;				///< oiu
+	CXStringASCII				m_DirectorySave;				///< oiu
+	CXStringASCII				m_DirectoryIcons;				///< oiu
+	unsigned long				m_LogoTime;						///< oiu
+	CXStringASCII				m_LogoFileName;					///< oiu
+	CXStringASCII				m_InfoFileName;					///< oiu
+	CXStringASCII				m_QuitFileName;					///< oiu
+	CXStringASCII				m_MinimizeFileName;				///< oiu
+	CXStringASCII				m_SavingOnFileName;				///< oiu
+	CXStringASCII				m_SavingOffFileName;			///< oiu
+	CXStringASCII				m_ZoomInFileName;				///< oiu
+	CXStringASCII				m_ZoomOutFileName;				///< oiu
+	CXStringASCII				m_MoveFileName;					///< oiu
+	CXStringASCII				m_CurrentPosFileName;			///< oiu
+	double						m_SpeedThresholdCar;			///< oiu
+	double						m_SpeedThresholdBike;			///< oiu
+	double						m_SpeedThresholdPedestrian;		///< oiu
+	double						m_SpeedThresholdCaching;		///< oiu
+	double						m_SpeedThresholdMapping;		///< oiu
+	int							m_GPSReceiverLag;				///< oiu
+	E_ZOOM_LEVEL				m_ZoomLevel;					///< oiu
+	int							m_POIFontSize;					///< oiu
+	int							m_ScaleFontSize;				///< oiu
+	int							m_DebugFontSize;				///< oiu
+	int							m_CitySmallFontSize;			///< oiu
+	int							m_CityMediumFontSize;			///< oiu
+	int							m_CityLargeFontSize;			///< oiu
+	int							m_POIDisplaySize;				///< oiu
+	E_BACKGROUND_TYPE			m_ePOIBGType;					///< oiu
+	E_BACKGROUND_TYPE			m_eCityBGType;					///< oiu
+	CXPOIVisibilityDescriptor	m_POIVisibilityDescriptor;		///< oiu
+	mutable CXRWLock			m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
 	const CXOptions & operator = (const CXOptions &);	///< Not used.
@@ -946,6 +950,12 @@ public:
 	 *
 	 */
 	void SetCityBGType(E_BACKGROUND_TYPE NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXPOIVisibilityDescriptor & GetPOIVisibilityDescriptorByRef(); 
 };
 
 #endif // __CXOPTIONS_HPP__

@@ -516,7 +516,7 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_PlcOfWrshp_Shinto		= 0x0027,	///< Shinto church, temple, etc.
 	e_POI_PlcOfWrshp_Taoist		= 0x0028,	///< Taoist church, temple, etc.
 	e_POI_PlcOfWrshp_Unknown	= 0x0029,	///< Unknown church, temple, etc.
-
+	e_POI_EnumCount				= 0x002A,	///< Number of entries
 
 /*
 	e_POI_Recycling				= 0x0006,	///< Recycling facilities.

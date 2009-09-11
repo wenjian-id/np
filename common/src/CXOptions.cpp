@@ -272,6 +272,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// Background
 	SetPOIBGType(Str2BGType(F.Get("POIBackgroundType", "Area")));
 	SetCityBGType(Str2BGType(F.Get("CityBackgroundType", "Area")));
+	// POI visibility
+	m_POIVisibilityDescriptor.SetShowAll(F.Get("POIShowAll", "off").ToUpper() == "ON");
 	return true;
 }
 
@@ -1049,3 +1051,8 @@ void CXOptions::SetCityBGType(E_BACKGROUND_TYPE NewValue) {
 	m_eCityBGType = NewValue;
 }
 
+//-------------------------------------
+CXPOIVisibilityDescriptor & CXOptions::GetPOIVisibilityDescriptorByRef() {
+	CXWriteLocker WL(&m_RWLock);
+	return m_POIVisibilityDescriptor;
+}

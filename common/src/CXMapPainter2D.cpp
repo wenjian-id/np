@@ -346,6 +346,7 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
 	CXOptions *pOptions = CXOptions::Instance();
+	CXPOIVisibilityDescriptor POIVisDescr = pOptions->GetPOIVisibilityDescriptorByRef();
 	int POIDisplaySize = pOptions->GetPOIDisplaySize();
 	// iterate through POIs
 	for(size_t n=0; n<POINodes.GetSize(); n++) {
@@ -358,25 +359,29 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 				size_t idx = 0;
 				size_t row = 0;
 				size_t col = 0;
-				ComputePOIBMP(pNode->GetPOIType(i), idx, row, col);
-				// draw POI bitmap
-				if(idx < m_POIBMPs.GetSize()) {
-					CXBitmap *pPOIBMP = m_POIBMPs[idx];
-					// Bitmap loaded
-					pBMP->DrawTransparent(	pPOIBMP,
-											x-POIDisplaySize/2, y-POIDisplaySize/2,
-											col*POIDisplaySize, row*POIDisplaySize,
-											POIDisplaySize, POIDisplaySize,
-											COLOR_TRANSPARENT);
-				}
-				// draw name
-				CXStringUTF8 Name = pNode->GetName();
-				if(!Name.IsEmpty()) {
-					tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
-					NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIDisplaySize/2 - NameRect.GetHeight());
-					switch(pOptions->GetPOIBGType()) {
-						case e_BG_AREA:		pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR); break;
-						case e_BG_GLOW:		pBMP->DrawGlowTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR, 1); break;
+				E_POI_TYPE ePOIType = pNode->GetPOIType(i);
+				bool oVisible = POIVisDescr.MustShowAll() /* || POIVisDescr.*/;
+				if(oVisible) {
+					ComputePOIBMP(ePOIType, idx, row, col);
+					// draw POI bitmap
+					if(idx < m_POIBMPs.GetSize()) {
+						CXBitmap *pPOIBMP = m_POIBMPs[idx];
+						// Bitmap loaded
+						pBMP->DrawTransparent(	pPOIBMP,
+												x-POIDisplaySize/2, y-POIDisplaySize/2,
+												col*POIDisplaySize, row*POIDisplaySize,
+												POIDisplaySize, POIDisplaySize,
+												COLOR_TRANSPARENT);
+					}
+					// draw name
+					CXStringUTF8 Name = pNode->GetName();
+					if(!Name.IsEmpty()) {
+						tIRect NameRect = pBMP->CalcTextRectUTF8(Name, 0, 0);
+						NameRect.OffsetRect(x - NameRect.GetWidth()/2, y - POIDisplaySize/2 - NameRect.GetHeight());
+						switch(pOptions->GetPOIBGType()) {
+							case e_BG_AREA:		pBMP->DrawTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR); break;
+							case e_BG_GLOW:		pBMP->DrawGlowTextUTF8(Name, NameRect, MAPPOITEXTCOLOR, MAPPOIBGCOLOR, 1); break;
+						}
 					}
 				}
 			}

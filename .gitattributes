@@ -204,6 +204,8 @@ common/src/CXNode.cpp -text
 common/src/CXNode.hpp -text
 common/src/CXOptions.cpp -text
 common/src/CXOptions.hpp -text
+common/src/CXPOIVisibilityDescriptor.cpp -text
+common/src/CXPOIVisibilityDescriptor.hpp -text
 common/src/CXPOWMMap.cpp -text
 common/src/CXPOWMMap.hpp -text
 common/src/CXPen.cpp -text
