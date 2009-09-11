@@ -274,6 +274,15 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetCityBGType(Str2BGType(F.Get("CityBackgroundType", "Area")));
 	// POI visibility
 	m_POIVisibilityDescriptor.SetShowAll(F.Get("POIShowAll", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowParking(F.Get("POIShowParking", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowFuel(F.Get("POIShowFuel", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowTrafficSignals(F.Get("POIShowTrafficSignals", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowAmenities(F.Get("POIShowAmenities", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowPublicTransport(F.Get("POIShowPublicTransport", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowFoodDrink(F.Get("POIShowFoodDrink", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowAccomodation(F.Get("POIShowAccomodation", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowChurches(F.Get("POIShowChurches", "off").ToUpper() == "ON");
+	m_POIVisibilityDescriptor.SetShowOther(F.Get("POIShowOther", "off").ToUpper() == "ON");
 	return true;
 }
 

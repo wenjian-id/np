@@ -360,7 +360,7 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 				size_t row = 0;
 				size_t col = 0;
 				E_POI_TYPE ePOIType = pNode->GetPOIType(i);
-				bool oVisible = POIVisDescr.MustShowAll() /* || POIVisDescr.*/;
+				bool oVisible = POIVisDescr.MustShowAll() || POIVisDescr.MustShowPOIType(ePOIType);
 				if(oVisible) {
 					ComputePOIBMP(ePOIType, idx, row, col);
 					// draw POI bitmap
