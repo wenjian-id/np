@@ -1298,6 +1298,7 @@ DEP_CPP_CXBIT=\
 
 DEP_CPP_CXBIT=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
@@ -1305,6 +1306,7 @@ DEP_CPP_CXBIT=\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IDeviceContext.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXBitmap.hpp"\
 	"..\..\src\CXDeviceContext.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
@@ -2686,6 +2688,7 @@ DEP_CPP_CXMAI=\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -3797,8 +3800,12 @@ DEP_CPP_CXTHR=\
 DEP_CPP_CXTHR=\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
@@ -4072,12 +4079,10 @@ DEP_CPP_CXWIN=\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
-	
-NODEP_CPP_CXWIN=\
-	".\hellsdk.h"\
-	".\hsdkstc.h"\
-	".\ipapi.h"\
-	".\ygshell.h"\
+	{$(INCLUDE)}"aygshell.h"\
+	{$(INCLUDE)}"shellsdk.h"\
+	{$(INCLUDE)}"shsdkstc.h"\
+	{$(INCLUDE)}"sipapi.h"\
 	
 
 !ENDIF 
@@ -4313,9 +4318,13 @@ DEP_CPP_CXWOR=\
 
 DEP_CPP_CXWOR=\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXThread.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
@@ -4669,6 +4678,7 @@ DEP_CPP_MAIN_=\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
@@ -4837,6 +4847,7 @@ DEP_CPP_OSSPE=\
 
 DEP_CPP_OSSPE=\
 	"..\..\src\OSSpecific.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
 	
 
 !ENDIF 
@@ -5028,7 +5039,12 @@ DEP_CPP_TARGE=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_TARGE=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -5190,6 +5206,10 @@ SOURCE=..\..\..\common\src\CXPen.hpp
 # Begin Source File
 
 SOURCE=..\..\..\common\src\CXPenHolder.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXPOIVisibilityDescriptor.hpp
 # End Source File
 # Begin Source File
 
@@ -6879,11 +6899,13 @@ DEP_CPP_CXGPS=\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNMEA.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTimeStampData.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
@@ -7261,13 +7283,18 @@ DEP_CPP_CXINF=\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -7887,6 +7914,7 @@ DEP_CPP_CXINFO=\
 	"..\..\..\common\src\CXInfoBarBottom.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -8573,6 +8601,7 @@ DEP_CPP_CXINFOB=\
 	"..\..\..\common\src\CXInfoBarCommon.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -9262,6 +9291,7 @@ DEP_CPP_CXINFOBA=\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -9947,6 +9977,8 @@ DEP_CPP_CXINFOBAR=\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNMEA.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPen.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSatelliteData.hpp"\
@@ -10808,7 +10840,9 @@ DEP_CPP_CXLOC=\
 DEP_CPP_CXLOC=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
@@ -10816,25 +10850,34 @@ DEP_CPP_CXLOC=\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMapSort.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
 	"..\..\..\common\src\CXNMEA.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSatelliteData.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTimeStampData.hpp"\
 	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
@@ -10842,6 +10885,7 @@ DEP_CPP_CXLOC=\
 	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\ISerial.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXBitmap.hpp"\
 	"..\..\src\CXExactTime.hpp"\
@@ -10849,6 +10893,7 @@ DEP_CPP_CXLOC=\
 	"..\..\src\CXRWLock.hpp"\
 	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -11121,10 +11166,15 @@ DEP_CPP_CXLOO=\
 
 DEP_CPP_CXLOO=\
 	"..\..\..\common\src\CXLoopThread.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
@@ -12959,6 +13009,7 @@ DEP_CPP_CXMAPL=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -12970,6 +13021,8 @@ DEP_CPP_CXMAPL=\
 	"..\..\..\common\src\CXMapSort.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNode.hpp"\
+	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSmartPtr.hpp"\
@@ -12980,6 +13033,7 @@ DEP_CPP_CXMAPL=\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
+	"..\..\..\common\src\ISerial.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
@@ -12988,6 +13042,7 @@ DEP_CPP_CXMAPL=\
 	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXThread.hpp"\
 	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\OSSpecific.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -13913,11 +13968,12 @@ DEP_CPP_CXMAPP=\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
@@ -14707,43 +14763,61 @@ DEP_CPP_CXMAPPA=\
 DEP_CPP_CXMAPPA=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXHysterezis.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
+	"..\..\..\common\src\CXMapMovingDetails.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMapSort.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
 	"..\..\..\common\src\CXPenHolder.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\ISerial.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXBitmap.hpp"\
 	"..\..\src\CXExactTime.hpp"\
 	"..\..\src\CXMutex.hpp"\
 	"..\..\src\CXRWLock.hpp"\
 	"..\..\src\CXSemaphore.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\OSSpecific.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -15385,15 +15459,17 @@ DEP_CPP_CXMAPPAI=\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IDeviceContext.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
@@ -16939,31 +17015,43 @@ DEP_CPP_CXMAPPAINT=\
 DEP_CPP_CXMAPPAINT=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXHysterezis.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainter2D.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
 	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMapSort.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
+	"..\..\..\common\src\CXPen.hpp"\
 	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
@@ -17948,6 +18036,7 @@ DEP_CPP_CXMAPS=\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
@@ -19608,7 +19697,9 @@ NODEP_CPP_CXNAVI=\
 DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXGPSRecvThread.hpp"\
@@ -19617,24 +19708,39 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXInfoBarCommon.hpp"\
 	"..\..\..\common\src\CXInfoBarSpeed.hpp"\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
+	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
+	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
+	"..\..\..\common\src\CXMapMovingDetails.hpp"\
 	"..\..\..\common\src\CXMapPainterThread.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
+	"..\..\..\common\src\CXMapSimple.hpp"\
+	"..\..\..\common\src\CXMapSort.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
 	"..\..\..\common\src\CXNMEA.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSatelliteData.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTimeStampData.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\CXWatchdogThread.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IDeviceContext.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
@@ -20855,31 +20961,46 @@ DEP_CPP_CXOPT=\
 DEP_CPP_CXOPT=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXFileIni.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMapSort.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTrackLog.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
 	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\ISerial.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXMutex.hpp"\
 	"..\..\src\CXRWLock.hpp"\
 	"..\..\src\CXSemaphore.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\OSSpecific.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
@@ -21625,24 +21746,361 @@ DEP_CPP_CXPENH=\
 DEP_CPP_CXPENH=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMapSort.hpp"\
+	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
 	"..\..\..\common\src\CXPenHolder.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXTransformationMatrix.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\src\CXPOIVisibilityDescriptor.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTrackLog.hpp"\
-	"..\..\..\common\src\CXUTMCoor.hpp"\
-	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
-	"..\..\src\CXMutex.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
+
+DEP_CPP_CXPOI=\
+	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -22213,33 +22671,46 @@ DEP_CPP_CXPOW=\
 DEP_CPP_CXPOW=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
+	"..\..\..\common\src\CXMapContainer.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
+	"..\..\..\common\src\CXMapLoaderThread.hpp"\
+	"..\..\..\common\src\CXMapSection.hpp"\
 	"..\..\..\common\src\CXMapSimple.hpp"\
 	"..\..\..\common\src\CXMapSort.hpp"\
 	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXNode.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXPOWMMap.hpp"\
+	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
-	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXWay.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\ISerial.hpp"\
+	"..\..\..\common\src\IThread.hpp"\
+	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXExactTime.hpp"\
 	"..\..\src\CXMutex.hpp"\
 	"..\..\src\CXRWLock.hpp"\
 	"..\..\src\CXSemaphore.hpp"\
+	"..\..\src\CXThread.hpp"\
+	"..\..\src\CXWorkRequestThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -23707,10 +24178,14 @@ DEP_CPP_CXSPE=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
+	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTimeStampData.hpp"\
+	"..\..\..\common\src\CXUTCTime.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	"..\..\..\common\src\CXWriteLocker.hpp"\
@@ -23718,6 +24193,7 @@ DEP_CPP_CXSPE=\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
+	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXExactTime.hpp"\
 	"..\..\src\CXMutex.hpp"\
 	"..\..\src\CXRWLock.hpp"\
@@ -24401,12 +24877,23 @@ DEP_CPP_CXTRA=\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXTrackLog.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
+	"..\..\..\common\src\ISerial.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -25723,16 +26210,19 @@ DEP_CPP_CXWAT=\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
+	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXWatchdogThread.hpp"\
+	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
 	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\ISerial.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXExactTime.hpp"\
 	"..\..\src\CXMutex.hpp"\
 	"..\..\src\CXRWLock.hpp"\
 	"..\..\src\CXSemaphore.hpp"\
@@ -26318,9 +26808,7 @@ DEP_CPP_CXWAY=\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXWay.hpp"\
-	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
-	"..\..\src\CXMutex.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -27333,10 +27821,14 @@ DEP_CPP_IMAIN=\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IMainWindow.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\IWindow.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXBitmap.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
@@ -27969,10 +28461,15 @@ DEP_CPP_ITHRE=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_ITHRE=\
-	"..\..\..\common\src\CXMutexLocker.hpp"\
+	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -28194,10 +28691,16 @@ DEP_CPP_IWORK=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_IWORK=\
+	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\IThread.hpp"\
 	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\CXThread.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	

@@ -366,6 +366,10 @@ SOURCE=..\..\common\src\CXPenHolder.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXPOIVisibilityDescriptor.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXPOWMMap.hpp
 # End Source File
 # Begin Source File
@@ -607,6 +611,10 @@ SOURCE=..\..\common\src\CXPen.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXPenHolder.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXPOIVisibilityDescriptor.cpp
 # End Source File
 # Begin Source File
 
