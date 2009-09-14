@@ -82,6 +82,8 @@ private:
 	bool						m_oShowZoomButtons;				///< oiu
 	bool						m_oAutomaticZoom;				///< oiu
 	CXStringASCII				m_AutomaticZoomString;			///< oiu
+	double						m_HystMaxOffsetAbs;				///< oiu
+	double						m_HystMaxOffsetRel;				///< oiu
 	bool						m_oShowMaxSpeed;				///< oiu
 	bool						m_oShowCompass;					///< oiu
 	bool						m_oShowTrackLog;				///< oiu
@@ -565,6 +567,30 @@ public:
 	 *
 	 */
 	void SetAutomaticZoomString(const CXStringASCII & NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetHystMaxOffsetAbs() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetHystMaxOffsetAbs(double NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetHystMaxOffsetRel() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetHystMaxOffsetRel(double NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

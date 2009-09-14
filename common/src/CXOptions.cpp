@@ -45,6 +45,8 @@ CXOptions::CXOptions() :
 	m_oSaving(false),
 	m_oShowZoomButtons(false),
 	m_oAutomaticZoom(false),
+	m_HystMaxOffsetAbs(0.7),
+	m_HystMaxOffsetRel(0.1),
 	m_oShowMaxSpeed(true),
 	m_oShowCompass(false),
 	m_oShowTrackLog(false),
@@ -134,6 +136,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// showzoom
 	SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
 	SetAutomaticZoomString(F.Get("AutoZoom", "off").ToUpper());
+	SetHystMaxOffsetRel(atof(F.Get("HystMaxOffsetRel", "10").c_str())/10);
+	SetHystMaxOffsetAbs(atof(F.Get("HystMaxOffsetAbs", "0.7").c_str()));
 	// InfoBar Bottom Height
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
@@ -752,6 +756,30 @@ CXStringASCII CXOptions::GetAutomaticZoomString() const {
 void CXOptions::SetAutomaticZoomString(const CXStringASCII & NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_AutomaticZoomString = NewValue;
+}
+
+//-------------------------------------
+double CXOptions::GetHystMaxOffsetAbs() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_HystMaxOffsetAbs;
+}
+
+//-------------------------------------
+void CXOptions::SetHystMaxOffsetAbs(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_HystMaxOffsetAbs = NewValue;
+}
+
+//-------------------------------------
+double CXOptions::GetHystMaxOffsetRel() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_HystMaxOffsetRel;
+}
+
+//-------------------------------------
+void CXOptions::SetHystMaxOffsetRel(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_HystMaxOffsetRel = NewValue;
 }
 
 //-------------------------------------

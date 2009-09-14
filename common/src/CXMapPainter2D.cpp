@@ -44,8 +44,6 @@ static const int POICOUNTHORZ			= 16;	///< Number of POIs in a row in bitmap fil
 static const int POICOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
 static const int PLACECOUNTHORZ			= 4;	///< Number of places in a row in bitmap file.
 static const int PLACECOUNTVERT			= 1;	///< Number of places in a column in bitmap file.
-static const double HYSTMAXOFFSETABS	= 1.4;	///< 1.4 m/s
-static const double HYSTMAXOFFSETREL	= 0.1;	///< 10%
 
 
 E_WAY_TYPE Order[e_Way_EnumCount] = {
@@ -88,12 +86,14 @@ CXMapPainter2D::CXMapPainter2D() :
 	UpdateZoomLevel();
 	// create hysterezis
 	CXStringASCII AutoZoomString = CXOptions::Instance()->GetAutomaticZoomString();
+	double HystMaxOffsetAbs	= CXOptions::Instance()->GetHystMaxOffsetAbs();
+	double HystMaxOffsetRel	= CXOptions::Instance()->GetHystMaxOffsetRel();
 	bool oAutoZoom = ExtractFirstToken(AutoZoomString, ';') == "ON";
 	while(!AutoZoomString.IsEmpty()) {
 		double dSpeed = atof(ExtractFirstToken(AutoZoomString, ';').c_str());
 		double dMeterPerPixel = atof(ExtractFirstToken(AutoZoomString, ';').c_str());
 		// compute delta
-		double delta = Min(HYSTMAXOFFSETABS, HYSTMAXOFFSETREL*dSpeed);
+		double delta = Min(HystMaxOffsetAbs, HystMaxOffsetRel*dSpeed);
 		m_AutoZoomLevels.AddInterval(dSpeed-delta, dSpeed+delta, dMeterPerPixel);
 	}
 	CXOptions::Instance()->SetAutomaticZoomFlag(oAutoZoom);
