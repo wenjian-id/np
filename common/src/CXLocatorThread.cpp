@@ -36,6 +36,7 @@
 #include "CXTrackLog.hpp"
 
 #include <math.h>
+#include <iostream>
 
 const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
@@ -263,7 +264,7 @@ void CXLocatorThread::OnThreadLoop() {
 			m_NaviData.SetGPSCoor(m_LastReceivedCoor);
 		} else {
 			// no GPS fix yet
-			if(CXOptions::Instance()->MustStartWithLastPosition()) {
+			if(CXOptions::Instance()->GetStartWithLastPosition() != CXOptions::e_SWLP_None) {
 				if(m_oStartCoordinatesValid) {
 					// use start cordinates
 					m_NaviData.SetGPSCoor(m_StartCoordinates);
@@ -273,7 +274,7 @@ void CXLocatorThread::OnThreadLoop() {
 					oLoadMap = false;
 				}
 			} else {
-				// no fix yet and not starting with last saved coordinates
+				// no fix yet and not starting with last saved coordinates or custom coordinates
 				// so do not load map
 				oLoadMap = false;
 			}
@@ -366,27 +367,34 @@ void CXLocatorThread::SaveLastReceivedGPSCoordinate() {
 
 //-------------------------------------
 bool CXLocatorThread::LoadStartGPSCoordinates() {
-	CXFile InFile;
-	CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
-	FileName += pcLastCoorFileName;
-	if(InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
-		// read data
-		t_uint32 ulLon = 0; 
-		t_uint32 ulLat = 0;
-		if(ReadUI32(InFile, ulLon) && ReadUI32(InFile, ulLat)) {
-			// compute lon
-			double dLon = ConvertSavedUI32(ulLon);
-			// compute lat
-			double dLat = ConvertSavedUI32(ulLat);
-			m_StartCoordinates = CXCoor(dLon, dLat);
-			m_oStartCoordinatesValid = true;
+	m_oStartCoordinatesValid = false;
+	if(CXOptions::Instance()->GetStartWithLastPosition() == CXOptions::e_SWLP_LastPos) {
+		CXFile InFile;
+		CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
+		FileName += pcLastCoorFileName;
+		if(InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
+			// read data
+			t_uint32 ulLon = 0; 
+			t_uint32 ulLat = 0;
+			if(ReadUI32(InFile, ulLon) && ReadUI32(InFile, ulLat)) {
+				// compute lon
+				double dLon = ConvertSavedUI32(ulLon);
+				// compute lat
+				double dLat = ConvertSavedUI32(ulLat);
+				m_StartCoordinates = CXCoor(dLon, dLat);
+				m_oStartCoordinatesValid = true;
+			} else {
+				// read error
+				m_oStartCoordinatesValid = false;
+			}
 		} else {
-			// read error
+			// open error
 			m_oStartCoordinatesValid = false;
 		}
-	} else {
-		// open error
-		m_oStartCoordinatesValid = false;
+	} else if(CXOptions::Instance()->GetStartWithLastPosition() == CXOptions::e_SWLP_Custom) {
+		// start with custom coordinates
+		m_StartCoordinates = CXOptions::Instance()->GetStartPosition();
+		m_oStartCoordinatesValid = true;
 	}
 	return m_oStartCoordinatesValid;
 }

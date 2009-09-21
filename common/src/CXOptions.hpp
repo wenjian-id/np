@@ -25,6 +25,7 @@
 
 #include "CXPOIVisibilityDescriptor.hpp"
 #include "CXStringASCII.hpp"
+#include "CXCoor.hpp"
 #include "CXRWLock.hpp"
 #include "ISerial.hpp"
 #include "Utils.hpp"
@@ -71,6 +72,17 @@ public:
 		e_DBGDrawMapSectionBorders	= 0x0002,		///< Display map section borders.
 		e_DBGDrawPositions			= 0x0004,		///< Display all computed positions
 	};
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_START_WITH_LAST_POS {
+		e_SWLP_None,		///< oiu
+		e_SWLP_LastPos,		///< oiu
+		e_SWLP_Custom,		///< oiu
+	};
 private:
 	static CXOptions			*m_pInstance;					///< oiu
 	CXStringASCII				m_StartPath;					///< oiu
@@ -92,7 +104,8 @@ private:
 	bool						m_oShowPOIs;					///< Show some POIs.
 	bool						m_oShowCities;					///< Show Cities.
 	bool						m_oSnapToWay;					///< oiu
-	bool						m_oStartWithLastPosition;		///< oiu
+	E_START_WITH_LAST_POS		m_eStartWithLastPosition;		///< oiu
+	CXCoor						m_StartPosition;
 	bool						m_oMapMovingManually;			///< oiu
 	int							m_WatchdogTimeout;				///< oiu
 	t_uint64					m_OSMVali;						///< oiu
@@ -680,13 +693,25 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool MustStartWithLastPosition() const;
+	E_START_WITH_LAST_POS GetStartWithLastPosition() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetStartWithLastPositionFlag(bool NewValue);
+	void SetStartWithLastPosition(E_START_WITH_LAST_POS NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXCoor GetStartPosition() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetStartPosition(const CXCoor & NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

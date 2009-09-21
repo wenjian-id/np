@@ -55,7 +55,7 @@ CXOptions::CXOptions() :
 	m_oShowPOIs(false),
 	m_oShowCities(true),
 	m_oSnapToWay(false),
-	m_oStartWithLastPosition(false),
+	m_eStartWithLastPosition(e_SWLP_None),
 	m_oMapMovingManually(false),
 	m_WatchdogTimeout(0),
 	m_OSMVali(0),
@@ -253,7 +253,22 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	// SnapToWay
 	SetSnapToWayFlag(F.Get("SnapToWay", "off").ToUpper() == "ON");
 	// StartWithLastPosition
-	SetStartWithLastPositionFlag(F.Get("StartWithLastPosition", "off").ToUpper() == "ON");
+	CXStringASCII SWLP = F.Get("StartWithLastPosition", "off").ToUpper();
+	if(SWLP == "OFF") {
+		// do not start with last position
+		SetStartWithLastPosition(e_SWLP_None);
+	} else if (SWLP == "ON") {
+		// start with last position
+		SetStartWithLastPosition(e_SWLP_LastPos);
+	} else {
+		// start with custom position
+		SetStartWithLastPosition(e_SWLP_Custom);
+		CXStringASCII LonStr = ExtractFirstToken(SWLP, ';');
+		CXStringASCII LatStr = ExtractFirstToken(SWLP, ';');
+		double dLon = atof(LonStr.c_str());
+		double dLat = atof(LatStr.c_str());
+		SetStartPosition(CXCoor(dLon, dLat));
+	}
 	// Speed thresholds
 	SetSpeedThresholdCar(atof(F.Get("SpeedThresholdCar", "2").c_str()));
 	SetSpeedThresholdBike(atof(F.Get("SpeedThresholdBike", "1.5").c_str()));
@@ -591,15 +606,27 @@ void CXOptions::SetSnapToWayFlag(bool NewValue) {
 }
 
 //-------------------------------------
-bool CXOptions::MustStartWithLastPosition() const {
+CXOptions::E_START_WITH_LAST_POS CXOptions::GetStartWithLastPosition() const {
 	CXReadLocker RL(&m_RWLock);
-	return m_oStartWithLastPosition;
+	return m_eStartWithLastPosition;
 }
 
 //-------------------------------------
-void CXOptions::SetStartWithLastPositionFlag(bool NewValue) {
+void CXOptions::SetStartWithLastPosition(E_START_WITH_LAST_POS NewValue) {
 	CXWriteLocker WL(&m_RWLock);
-	m_oStartWithLastPosition = NewValue;
+	m_eStartWithLastPosition = NewValue;
+}
+
+//-------------------------------------
+CXCoor CXOptions::GetStartPosition() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_StartPosition;
+}
+
+//-------------------------------------
+void CXOptions::SetStartPosition(const CXCoor & NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_StartPosition = NewValue;
 }
 
 //-------------------------------------
