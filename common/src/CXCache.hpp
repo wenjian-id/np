@@ -34,6 +34,11 @@ static const int MIN_AGE_PURGE = 5;		///< Min age of elemnts that can be purged.
  */
 template <class tKey, class tValue> class CXCache {
 private:
+	//---------------------------------------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	class CXCacheHelper {
 	private:
 		int					m_Counter;	///< oiu

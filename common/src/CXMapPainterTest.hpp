@@ -26,6 +26,10 @@
 #include "CXMapPainterDoubleBuffered.hpp"
 
 //----------------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
 class CXMapPainterTest : public CXMapPainterDoubleBuffered {
 private:
 	//-------------------------------------
