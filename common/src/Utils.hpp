@@ -125,7 +125,7 @@ enum E_LOADING_STATUS {
 };
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -136,7 +136,7 @@ enum E_BACKGROUND_TYPE {
 
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -148,7 +148,7 @@ enum E_BIT_COUNT {
 };
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -162,7 +162,7 @@ enum E_TAG_TYPE {
 };
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -433,7 +433,7 @@ double ConvertSavedUI32(t_uint32 Value);
 E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value);
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -445,7 +445,7 @@ enum E_MAP_PLACE_TYPE {
 };
 
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  */
@@ -464,7 +464,7 @@ enum E_ZOOM_LEVEL {
 // Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
 // Correctness taken from http://wiki.openstreetmap.org/index.php/Map_Features
 //-------------------------------------
-/*
+/**
  * \brief oiu
  *
  *	oiu
