@@ -818,8 +818,39 @@ void CXMapSection::RunOSMVali() {
 			size_t Size = pWayBuffer->GetSize();
 			for(size_t idx=0; idx<Size; idx++) {
 				pWay = (*pWayBuffer)[idx];
+				// check if way should be used for OSM validation
+				E_WAY_TYPE eWayType = pWay->GetWayType();
+				bool oUseForVali = false;
+				switch(eWayType) {
+					case e_Way_Fading:			break;	// no
+					case e_Way_Unknown:			break;	// no
+					case e_Way_Motorway:		oUseForVali = true; break; // yes
+					case e_Way_MotorwayLink:	oUseForVali = true; break; // yes
+					case e_Way_Trunk:			oUseForVali = true; break; // yes
+					case e_Way_TrunkLink:		oUseForVali = true; break; // yes
+					case e_Way_Primary:			oUseForVali = true; break; // yes
+					case e_Way_PrimaryLink:		oUseForVali = true; break; // yes
+					case e_Way_Secondary:		oUseForVali = true; break; // yes
+					case e_Way_Tertiary:		oUseForVali = true; break; // yes
+					case e_Way_Unclassified:	oUseForVali = true; break; // yes
+					case e_Way_Track:			break;	// no
+					case e_Way_Residential:		oUseForVali = true; break; // yes
+					case e_Way_Service:			oUseForVali = true; break; // yes
+					case e_Way_Bridleway:		break;	// no
+					case e_Way_Cycleway:		break;	// no
+					case e_Way_Footway:			break;	// no
+					case e_Way_Pedestrian:		break;	// no
+					case e_Way_Steps:			break;	// no
+					case e_Way_LivingStreet:	oUseForVali = true; break; // yes
+					case e_Way_NationalBorder:	break;	// no
+					case e_Way_Railway_Thick:	oUseForVali = true; break; // yes
+					case e_Way_Railway_Thin:	oUseForVali = true; break; // yes
+					case e_Way_Water_Thick:		break;	// no
+					case e_Way_Water_Thin:		break;	// no
+					case e_Way_EnumCount:		break;	// no
+				}
 				bool Vali = true;
-				if(pWay != NULL) {
+				if((pWay != NULL) && oUseForVali) {
 					if((eValiFlags & CXOptions::e_OSMValiName) != 0) {
 						// check name
 						if(pWay->GetName().IsEmpty()) {
