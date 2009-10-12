@@ -179,7 +179,7 @@ CXMapSection::~CXMapSection() {
 	// delete areas
 	size_t Size_Areas = m_LayeredAreaBuffer.GetSize();
 	for(size_t idx_a=0; idx_a<Size_Areas; idx_a++) {
-		TAreaBuffer *pAreaBuffer = m_LayeredAreaBuffer[Size_Areas];
+		TAreaBuffer *pAreaBuffer = m_LayeredAreaBuffer[idx_a];
 		if(pAreaBuffer != NULL) {
 			size_t Size = pAreaBuffer->GetSize();
 			for(size_t i=0; i<Size; i++) {
