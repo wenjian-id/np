@@ -142,6 +142,10 @@ common/Images/saveoff.bmp -text
 common/Images/saveon.bmp -text
 common/Images/zoomin.bmp -text
 common/Images/zoomout.bmp -text
+common/src/CXArea.cpp -text
+common/src/CXArea.hpp -text
+common/src/CXAreaColorHolder.cpp -text
+common/src/CXAreaColorHolder.hpp -text
 common/src/CXArray.hpp -text
 common/src/CXBuffer.hpp -text
 common/src/CXCache.hpp -text

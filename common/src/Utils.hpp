@@ -40,7 +40,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010200; // 0.1.2
+const unsigned int SECTVERSION	= 0x00010301; // 0.1.3-dev1
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -589,6 +589,18 @@ enum E_WAY_TYPE {	// must fit the values in the map file!!!
 	e_Way_Water_Thick		= 0x17,		///< oiu
 	e_Way_Water_Thin		= 0x18,		///< oiu
 	e_Way_EnumCount			= 0x19,		///< oiu
+};
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+enum E_AREA_TYPE {	// must fit the values in NaviPOWM!!!
+	e_Area_None			= 0x0000,		///< oiu
+	e_Area_Water		= 0x0001,		///< oiu
+	e_Area_Wood			= 0x0002,		///< oiu
+	e_Area_EnumCount	= 0x0003,		///< oiu
 };
 
 //-------------------------------------

@@ -27,6 +27,7 @@
 #include "CXMapPainterDoubleBuffered.hpp"
 #include "CXPOWMMap.hpp"
 #include "CXPenHolder.hpp"
+#include "CXAreaColorHolder.hpp"
 #include "CXHysterezis.hpp"
 
 typedef CXMapHashSimple<unsigned short, CXBitmap *> TPOIBMPMap;
@@ -41,7 +42,9 @@ class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
 	double							m_MeterPerPixel;		///< Current scale factor.
 	CXPenHolder						m_PenHolder;			///< oiu
+	CXAreaColorHolder				m_AreaColorHolder;		///< oiu
 	CXBuffer<TWayBuffer *>			m_DrawWays;				///< oiu
+	CXBuffer<TAreaBuffer *>			m_DrawAreas;			///< oiu
 	CXBuffer<CXBitmap *>			m_POIBMPs;				///< oiu
 	CXBitmap 						*m_pPlaceBMP;			///< oiu
 	double							m_LastSpeed;			///< oiu
@@ -85,6 +88,12 @@ private:
 	 *
 	 */
 	void DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWayType, int Width, int Height);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType);
 	//-------------------------------------
 	/**
 	 * \brief Draw map scale.

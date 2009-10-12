@@ -25,6 +25,7 @@
 
 #include "Utils.hpp"
 #include "CXWay.hpp"
+#include "CXArea.hpp"
 #include "CXNode.hpp"
 #include "CXMutex.hpp"
 #include "CXRWLock.hpp"
@@ -163,6 +164,7 @@ private:
 	TPOINodeBuffer			m_POINodes;				///< POIs.
 	TPOINodeBuffer			m_PlaceNodes;			///< Places.
 	CXBuffer<TWayBuffer *>	m_LayeredWayBuffer;		///< Ways sorted by layer.
+	CXBuffer<TAreaBuffer *>	m_LayeredAreaBuffer;	///< Areas sorted by layer.
 	E_LOADING_STATUS		m_eLoadStatus;			///< oiu
 	CXTOCMapSection			m_TOC;					///< oiu
 	// synchronisation
@@ -179,16 +181,16 @@ private:
 	 *	\param	InFile		File with map data.
 	 *	\return				true on success
 	 */
-	bool LoadMap_0_1_1(CXFile & InFile);
+	bool LoadMap_0_1_2(CXFile & InFile);
 	//-------------------------------------
 	/**
-	 * \brief Load map version 0.1.0
+	 * \brief Load map version 0.1.1
 	 *
-	 *	Load map version 0.1.0
+	 *	Load map version 0.1.1
 	 *	\param	InFile		File with map data.
 	 *	\return				true on success
 	 */
-	bool LoadMap_0_1_0(CXFile & InFile);
+	bool LoadMap_0_1_1(CXFile & InFile);
 	//-------------------------------------
 	/**
 	 * \brief Load map current version
@@ -304,6 +306,14 @@ public:
 	 */
 	TWayBuffer *GetWayBuffer(char Layer) {
 		return m_LayeredWayBuffer[Layer-MINLAYER];
+	}
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	TAreaBuffer *GetAreaBuffer(char Layer) {
+		return m_LayeredAreaBuffer[Layer-MINLAYER];
 	}
 };
 

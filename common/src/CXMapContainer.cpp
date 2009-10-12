@@ -88,7 +88,6 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLe
 	// set loaded flag
 	SetLoadStatus(e_LSLoading);
 	m_FileName = FileName;
-
 	// try to load TOC
 	bool Result = true;
 	CXFile InFile;

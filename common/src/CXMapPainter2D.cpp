@@ -46,7 +46,7 @@ static const int PLACECOUNTHORZ			= 4;	///< Number of places in a row in bitmap 
 static const int PLACECOUNTVERT			= 1;	///< Number of places in a column in bitmap file.
 
 
-E_WAY_TYPE Order[e_Way_EnumCount] = {
+E_WAY_TYPE WayOrder[e_Way_EnumCount] = {
 	e_Way_Unknown,
 	e_Way_Fading,
 	e_Way_Water_Thin,
@@ -74,14 +74,24 @@ E_WAY_TYPE Order[e_Way_EnumCount] = {
 	e_Way_NationalBorder,
 };
 
+E_AREA_TYPE AreaOrder[e_Area_EnumCount] = {
+	e_Area_None,
+	e_Area_Water,
+	e_Area_Wood,
+};
+
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapPainter2D::CXMapPainter2D() :
 	m_MeterPerPixel(3),
 	m_pPlaceBMP(NULL)
 {
-	for(size_t i=0; i<e_Way_EnumCount; i++) {
+	size_t i=0;
+	for(i=0; i<e_Way_EnumCount; i++) {
 		m_DrawWays.Append(new TWayBuffer());
+	}
+	for(i=0; i<e_Area_EnumCount; i++) {
+		m_DrawAreas.Append(new TAreaBuffer());
 	}
 	UpdateZoomLevel();
 	// create hysterezis
@@ -108,6 +118,11 @@ CXMapPainter2D::~CXMapPainter2D() {
 		delete pBuffer;
 	}
 	m_DrawWays.Clear();
+	for(i=0; i<e_Area_EnumCount; i++) {
+		TAreaBuffer *pBuffer = m_DrawAreas[i];
+		delete pBuffer;
+	}
+	m_DrawAreas.Clear();
 
 	// delete BMPs
 	for(i=0; i<m_POIBMPs.GetSize(); i++) {
@@ -303,6 +318,28 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWa
 			// set old pen
 			if(oUseRedPen)
 				pBMP->SetPen(*pPen);
+		}
+	}
+}
+
+//-------------------------------------
+void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType) {
+	if(pAreas == NULL)
+		return;
+	
+	CXRGB Color = m_AreaColorHolder.GetColor(eAreaType);
+	size_t cnt = pAreas->GetSize();
+	if(cnt != 0) {
+		// now iterate through Areas
+		for(size_t i=0; i<cnt; i++) {
+			CXArea *pArea = (*pAreas)[i];
+			size_t NodeCount = pArea->GetNodeCount();
+			for(size_t j=0; j<NodeCount; j++) {
+				CXNode *pNode = pArea->GetNode(j);
+				pX[j] = pNode->GetDisplayX();
+				pY[j] = pNode->GetDisplayY();
+			}
+			pBMP->Polygon(pX, pY, NodeCount, Color, Color);
 		}
 	}
 }
@@ -598,6 +635,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	// get zone
 	int WayCount = 0;
+	int AreaCount = 0;
 	int xc = 0;
 	int yc = 0;
 	// compute coordinate
@@ -748,7 +786,20 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 			if(LockedMapSections[idx]) {
 				CXMapSection *pMapSection = MapSections[idx].GetPtr();
 				if(pMapSection != NULL) {
-					// prepare drawing
+					// draw areas
+					TAreaBuffer *pAreaBuffer = pMapSection->GetAreaBuffer(Layer);
+					if(pAreaBuffer != NULL) {
+						CXArea *pArea = NULL;
+						//draw Areas
+						size_t ws = pAreaBuffer->GetSize();
+						for(size_t w=0; w<ws; w++) {
+							pArea = (*pAreaBuffer)[w];
+							E_AREA_TYPE eAreaType = pArea->GetAreaType();
+							m_DrawAreas[eAreaType]->Append(pArea);
+							AreaCount++;
+						}
+					}
+					// draw ways
 					TWayBuffer *pWayBuffer = pMapSection->GetWayBuffer(Layer);
 					if(pWayBuffer != NULL) {
 						CXWay *pWay = NULL;
@@ -769,16 +820,25 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// since not all compilers can handle multiple for(size_t i=...)
 		// we set size_t i=0; right here :-(((
 		size_t i=0;
-		// ok, now draw bg
-		for(i=0; i< e_Way_EnumCount; i++) {
-			DrawWaysBg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+		// draw areas
+		for(i=0; i< e_Area_EnumCount; i++) {
+			DrawAreas(pBMP, m_DrawAreas[AreaOrder[i]], AreaOrder[i]);
 		}
+		// now draw way bg
 		for(i=0; i< e_Way_EnumCount; i++) {
-			DrawWaysFg(pBMP, m_DrawWays[Order[i]], Order[i], Width, Height);
+			DrawWaysBg(pBMP, m_DrawWays[WayOrder[i]], WayOrder[i], Width, Height);
+		}
+		// and fg
+		for(i=0; i< e_Way_EnumCount; i++) {
+			DrawWaysFg(pBMP, m_DrawWays[WayOrder[i]], WayOrder[i], Width, Height);
 		}
 		// clear arrays
 		for(i=0; i<e_Way_EnumCount; i++) {
 			TWayBuffer *pBuffer = m_DrawWays[i];
+			pBuffer->Clear();
+		}
+		for(i=0; i<e_Area_EnumCount; i++) {
+			TAreaBuffer *pBuffer = m_DrawAreas[i];
 			pBuffer->Clear();
 		}
 	}
@@ -903,8 +963,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// set font
 		pBMP->SetFont(pOpt->GetDebugFontSize(), false);
 		char buf[200];
-		snprintf(	buf, sizeof(buf), "Wy:%ld (%d) TL:%ld",
-					StopDrawWays-StartTime, WayCount, 
+		snprintf(	buf, sizeof(buf), "W:%ld (%d), A: (%d)  TL:%ld",
+					StopDrawWays-StartTime, WayCount, AreaCount,
 					StopTrackLog-StopDrawWays);
 		CXStringASCII ttt = buf;
 		tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);

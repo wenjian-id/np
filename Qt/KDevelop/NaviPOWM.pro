@@ -38,6 +38,7 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXPen.cpp \
 ../../common/src/CXOptions.cpp \
 ../../common/src/CXWay.cpp \
+../../common/src/CXArea.cpp \
 ../../common/src/CXMapLoaderThread.cpp \
 ../../common/src/CXMapPainterThread.cpp \
 ../../common/src/CXInfoBarCommon.cpp \
@@ -45,6 +46,7 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXLocatorThread.cpp \
 ../../common/src/CXNaviPOWM.cpp \
 ../../common/src/CXPenHolder.cpp \
+../../common/src/CXAreaColorHolder.cpp \
 ../../common/src/CXGPSRecvThread.cpp \
 ../../common/src/CXRGB.cpp \
 ../../common/src/IMainWindow.cpp \
@@ -128,7 +130,9 @@ HEADERS += ../../common/src/CoordConstants.h \
 ../../common/src/CXRect.hpp \
 ../../common/src/CXFile.hpp \
 ../../common/src/CXWay.hpp \
+../../common/src/CXArea.hpp \
 ../../common/src/CXPenHolder.hpp \
+../../common/src/CXAreaColorHolder.hpp \
 ../../common/src/ISemaphore.hpp \
 ../../common/src/CXCache.hpp \
 ../../common/src/CXSmartPtr.hpp \
