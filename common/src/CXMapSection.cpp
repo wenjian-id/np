@@ -155,16 +155,16 @@ CXMapSection::~CXMapSection() {
 			delete pNode;
 	}
 	// delete nodes
-	size_t Size = m_Nodes.GetSize();
-	for(size_t idx = 0; idx < Size; idx++) {
-		CXNode *pNode = m_Nodes[idx];
+	size_t Size_nodes = m_Nodes.GetSize();
+	for(size_t idx_n = 0; idx_n < Size_nodes; idx_n++) {
+		CXNode *pNode = m_Nodes[idx_n];
 		if(pNode != NULL)
 			delete pNode;
 	}
 	// delete ways
-	size_t cnt = m_LayeredWayBuffer.GetSize();
-	for(size_t i=0; i<cnt; i++) {
-		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[i];
+	size_t Size_ways = m_LayeredWayBuffer.GetSize();
+	for(size_t idx_w=0; idx_w<Size_ways; idx_w++) {
+		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[idx_w];
 		if(pWayBuffer != NULL) {
 			size_t Size = pWayBuffer->GetSize();
 			for(size_t i=0; i<Size; i++) {
@@ -177,9 +177,9 @@ CXMapSection::~CXMapSection() {
 	}
 	m_LayeredWayBuffer.Clear();
 	// delete areas
-	cnt = m_LayeredAreaBuffer.GetSize();
-	for(size_t i=0; i<cnt; i++) {
-		TAreaBuffer *pAreaBuffer = m_LayeredAreaBuffer[i];
+	size_t Size_Areas = m_LayeredAreaBuffer.GetSize();
+	for(size_t idx_a=0; idx_a<Size_Areas; idx_a++) {
+		TAreaBuffer *pAreaBuffer = m_LayeredAreaBuffer[Size_Areas];
 		if(pAreaBuffer != NULL) {
 			size_t Size = pAreaBuffer->GetSize();
 			for(size_t i=0; i<Size; i++) {
@@ -492,8 +492,9 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			pWay->AddNode(pNode);
 		}
 	}
+	char Layer = 0;
 	// fill m_WayMapBuffer ordered by Layer ascending
-	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
+	for(Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
 		TWayBuffer *pWayBuffer = NULL;
 		Ways.Lookup(Layer, pWayBuffer);
 		TWayBuffer *pOld = m_LayeredWayBuffer[Layer - MINLAYER];
@@ -552,7 +553,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		}
 	}
 	// fill m_AreaMapBuffer ordered by Layer ascending
-	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
+	for(Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
 		TAreaBuffer *pAreaBuffer = NULL;
 		Areas.Lookup(Layer, pAreaBuffer);
 		TAreaBuffer *pOld = m_LayeredAreaBuffer[Layer - MINLAYER];

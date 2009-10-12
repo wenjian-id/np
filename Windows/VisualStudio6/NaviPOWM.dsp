@@ -218,6 +218,14 @@ SOURCE=..\..\common\src\CoordConversion.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXArea.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXAreaColorHolder.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXArray.hpp
 # End Source File
 # Begin Source File
@@ -495,6 +503,14 @@ SOURCE=..\..\common\src\Utils.hpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CoordConversion.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXArea.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXAreaColorHolder.cpp
 # End Source File
 # Begin Source File
 

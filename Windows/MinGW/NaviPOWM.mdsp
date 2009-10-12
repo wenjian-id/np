@@ -147,6 +147,8 @@ extraResourceOptions=
 65=..\..\common\src\CXMapMovingDetails.cpp
 66=..\..\common\src\CXUTCTime.cpp
 67=..\..\common\src\CXPOIVisibilityDescriptor.cpp
+68=..\..\common\src\CXArea.cpp
+69=..\..\common\src\CXAreaColorHolder.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -232,6 +234,8 @@ extraResourceOptions=
 82=..\..\common\src\CXMapMovingDetails.hpp
 83=..\..\common\src\CXUTCTime.hpp
 84=..\..\common\src\CXPOIVisibilityDescriptor.hpp
+85=..\..\common\src\CXArea.hpp
+86=..\..\common\src\CXAreaColorHolder.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

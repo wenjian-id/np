@@ -36,7 +36,6 @@
 #include "CXTrackLog.hpp"
 
 #include <math.h>
-#include <iostream>
 
 const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
