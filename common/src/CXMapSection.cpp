@@ -28,6 +28,8 @@
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 
+#include <iostream>
+
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXTOCMapSection::CXTOCMapSection() :
@@ -161,17 +163,17 @@ CXMapSection::~CXMapSection() {
 		if(pNode != NULL)
 			delete pNode;
 	}
-	// delete ways
-	size_t Size_ways = m_LayeredWayBuffer.GetSize();
-	for(size_t idx_w=0; idx_w<Size_ways; idx_w++) {
-		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[idx_w];
+	size_t Size_ways = m_Ways.GetSize();
+	for(size_t idx_w = 0; idx_w < Size_ways; idx_w++) {
+		CXWay *pWay = m_Ways[idx_w];
+		if(pWay != NULL)
+			delete pWay;
+	}
+	// delete waybuffers
+	size_t Size_waybuffers = m_LayeredWayBuffer.GetSize();
+	for(size_t idx_wb=0; idx_wb<Size_waybuffers; idx_wb++) {
+		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[idx_wb];
 		if(pWayBuffer != NULL) {
-			size_t Size = pWayBuffer->GetSize();
-			for(size_t i=0; i<Size; i++) {
-				CXWay *pWay = (*pWayBuffer)[i];
-				if(pWay != NULL)
-					delete pWay;
-			}
 			delete pWayBuffer;
 		}
 	}
@@ -429,6 +431,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		DoOutputErrorMessage("Error reading WayCount");
 		return false;
 	}
+	m_Ways.Resize(WayCount);
 	CXMapHashSimple<char, TWayBuffer *> Ways;
 	// read ways
 	for(t_uint32 ulWay=0; ulWay<WayCount; ulWay++) {
@@ -473,6 +476,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		}
 		// create way
 		CXWay *pWay = new CXWay(static_cast<E_WAY_TYPE>(WayType), Name, Ref, IntRef);
+		m_Ways[ulWay] = pWay;
 		pWay->SetMaxSpeed(MaxSpeed);
 		pWay->SetLayer(Layer);
 		pWay->SetOneway(eOneway);
@@ -521,20 +525,28 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		// read Area: Idx, node count, node ids
 		unsigned char AreaType = 0;
 		ReadUI8(InFile, AreaType);
-		unsigned char bLayer = 0;
-		// load locator information only in zoom level 0
-		ReadUI8(InFile, bLayer);
-		char Layer = 0;
-		if((bLayer & 0x80) != 0)
-			// negative value
-			Layer = - (bLayer & 0x7F);
-		else {
-			// positive value
-			Layer = bLayer;
-		}
 		// create Area
 		CXArea *pArea = new CXArea(static_cast<E_AREA_TYPE>(AreaType));
-		pArea->SetLayer(Layer);
+
+		// read outer way
+		t_uint32 Idx = 0;
+		ReadUI(InFile, eWayCountType, Idx);
+		std::cout << "idx = " << Idx << std::endl;
+		CXWay *pOuterWay = m_Ways[Idx];
+		pArea->SetOuterWay(pOuterWay);
+		// read hole count
+		t_uint32 HoleCount = 0;
+		ReadUI(InFile, eWayCountType, HoleCount);
+		std::cout << "HoleCount = " << HoleCount << std::endl;
+		// read holes
+		for(size_t h=0; h<HoleCount; h++) {
+			t_uint32 IdxH = 0;
+			ReadUI(InFile, eWayCountType, IdxH);
+			CXWay *pHole = m_Ways[IdxH];
+			pArea->AddHole(pHole);
+		}
+		// now insert area into Areas structure
+		Layer = pOuterWay->GetLayer();
 		// add Area
 		TAreaBuffer *pAreaBuffer = NULL;
 		if(!Areas.Lookup(Layer, pAreaBuffer)) {
@@ -542,15 +554,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		}
 		Areas.Lookup(Layer, pAreaBuffer);
 		pAreaBuffer->Append(pArea);
-
-		// read nodes of Area
-		ReadUI(InFile, eNodeCountType, NodeCount);
-		for(t_uint32 ul=0; ul<NodeCount; ul++) {
-			t_uint32 Idx = 0;
-			ReadUI(InFile, eNodeCountType, Idx);
-			CXNode *pNode = m_Nodes[Idx];
-			pArea->AddNode(pNode);
-		}
 	}
 	// fill m_AreaMapBuffer ordered by Layer ascending
 	for(Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {

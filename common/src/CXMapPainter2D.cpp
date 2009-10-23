@@ -333,9 +333,11 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 		// now iterate through Areas
 		for(size_t i=0; i<cnt; i++) {
 			CXArea *pArea = (*pAreas)[i];
-			size_t NodeCount = pArea->GetNodeCount();
+			/// \todo implement holes
+			CXWay *pOuterWay = pArea->GetOuterWay();
+			size_t NodeCount = pOuterWay->GetNodeCount();
 			for(size_t j=0; j<NodeCount; j++) {
-				CXNode *pNode = pArea->GetNode(j);
+				CXNode *pNode = pOuterWay->GetNode(j);
 				pX[j] = pNode->GetDisplayX();
 				pY[j] = pNode->GetDisplayY();
 			}

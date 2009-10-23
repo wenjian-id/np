@@ -161,6 +161,7 @@ class CXMapSection {
 private:
 	int						m_UTMZone;				///< oiu
 	TNodeBuffer				m_Nodes;				///< Map with all nodes.
+	TWayBuffer				m_Ways;				///< Map with all nodes.
 	TPOINodeBuffer			m_POINodes;				///< POIs.
 	TPOINodeBuffer			m_PlaceNodes;			///< Places.
 	CXBuffer<TWayBuffer *>	m_LayeredWayBuffer;		///< Ways sorted by layer.

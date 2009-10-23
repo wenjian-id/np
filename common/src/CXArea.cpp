@@ -25,7 +25,7 @@
 //-------------------------------------
 CXArea::CXArea(E_AREA_TYPE eAreaType):
 	m_eAreaType(eAreaType),
-	m_Layer(0)
+	m_pOuterWay(NULL)
 {
 }
 
@@ -39,27 +39,26 @@ E_AREA_TYPE CXArea::GetAreaType() const {
 }
 
 //-------------------------------------
-void CXArea::SetLayer(char NewValue) {
-	m_Layer = NewValue;
+void CXArea::SetOuterWay(CXWay *pWay) {
+	m_pOuterWay = pWay;
 }
 
 //-------------------------------------
-unsigned char CXArea::GetLayer() const {
-	return m_Layer;
-}
-//-------------------------------------
-void CXArea::AddNode(CXNode *pNode) {
-	if(pNode != NULL) {
-		m_Nodes.Append(pNode);
-	}
+CXWay *CXArea::GetOuterWay() const {
+	return m_pOuterWay;
 }
 
 //-------------------------------------
-size_t CXArea::GetNodeCount() const {
-	return m_Nodes.GetSize();
+void CXArea::AddHole(CXWay *pWay) {
+	m_Holes.Append(pWay);
 }
 
 //-------------------------------------
-CXNode *CXArea::GetNode(size_t Index) const {
-	return m_Nodes[Index];
+size_t CXArea::GetHoleCount() {
+	return m_Holes.GetSize();
+}
+
+//-------------------------------------
+CXWay *CXArea::GetHole(size_t Index) {
+	return m_Holes[Index];
 }

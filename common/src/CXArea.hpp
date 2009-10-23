@@ -23,7 +23,7 @@
 #ifndef __CXAREA_HPP__
 #define __CXAREA_HPP__
 
-#include "CXNode.hpp"
+#include "CXWay.hpp"
 
 //---------------------------------------------------------------------
 /**
@@ -32,9 +32,9 @@
  */
 class CXArea {
 private:
-	E_AREA_TYPE			m_eAreaType;			///< oiu
-	char				m_Layer;			///< oiu
-	TNodeBuffer			m_Nodes;			///< oiu
+	E_AREA_TYPE			m_eAreaType;	///< oiu
+	CXWay				*m_pOuterWay;	///< oiu
+	TWayBuffer			m_Holes;		///< oiu
 	//-------------------------------------
 	CXArea();									///< Not used.
 	CXArea(const CXArea &);						///< Not used.
@@ -65,31 +65,31 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetLayer(char NewValue);
+	void SetOuterWay(CXWay *pWay);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	unsigned char GetLayer() const;
+	CXWay *GetOuterWay() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void AddNode(CXNode *pNode);
+	void AddHole(CXWay *pWay);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	size_t GetNodeCount() const;
+	size_t GetHoleCount();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	CXNode *GetNode(size_t Index) const;
+	CXWay *GetHole(size_t Index);
 };
 
 typedef CXBuffer<CXArea *>						TAreaBuffer;		///< oiu
