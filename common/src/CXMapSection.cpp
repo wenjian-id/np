@@ -28,8 +28,6 @@
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 
-#include <iostream>
-
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXTOCMapSection::CXTOCMapSection() :
@@ -531,13 +529,11 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		// read outer way
 		t_uint32 Idx = 0;
 		ReadUI(InFile, eWayCountType, Idx);
-		std::cout << "idx = " << (int)Idx << std::endl;
 		CXWay *pOuterWay = m_Ways[Idx];
 		pArea->SetOuterWay(pOuterWay);
 		// read hole count
 		t_uint32 HoleCount = 0;
 		ReadUI(InFile, eWayCountType, HoleCount);
-		std::cout << "HoleCount = " << (int)HoleCount << std::endl;
 		// read holes
 		for(size_t h=0; h<HoleCount; h++) {
 			t_uint32 IdxH = 0;
