@@ -84,6 +84,7 @@ E_AREA_TYPE AreaOrder[e_Area_EnumCount] = {
 //-------------------------------------
 CXMapPainter2D::CXMapPainter2D() :
 	m_MeterPerPixel(3),
+	m_RequestedMeterPerPixel(m_MeterPerPixel),
 	m_pPlaceBMP(NULL)
 {
 	size_t i=0;
@@ -611,13 +612,16 @@ void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 //-------------------------------------
 void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
-	CXWriteLocker WL(&m_RWLock);
-
 	CXExactTime StartTime;
-
+	
 	// get copy of navigation data
 	CXNaviData NaviData = GetPosition();
 	CXOptions *pOpt = CXOptions::Instance();
+	double dReqMPP = GetRequestedMeterPerPixel();
+	if(!pOpt->AutomaticZoom() && (dReqMPP != m_MeterPerPixel)) {
+		m_MeterPerPixel = dReqMPP;
+		UpdateZoomLevel();
+	}
 
 	// draw background
 	PaintPackground(pBMP, Width, Height);
@@ -684,8 +688,10 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	CXUTMSpeed UTMSpeed = NaviData.GetUTMSpeed();
 
 	double dSpeed = UTMSpeed.GetSpeed();
-	if(pOpt->AutomaticZoom())
+	if(pOpt->AutomaticZoom()) {
+		SetRequestedMeterPerPixel(m_MeterPerPixel);
 		ComputeZoomBySpeed(dSpeed);
+	}
 
 	TMMap.Translate(-UTME, -UTMN);			// UTME, UTMN is center of visible universe
 	// rotate
@@ -1013,11 +1019,22 @@ void CXMapPainter2D::ComputeZoomBySpeed(double dSpeed) {
 }
 
 //-------------------------------------
+double CXMapPainter2D::GetRequestedMeterPerPixel() {
+	CXReadLocker RL(&m_RWLock);
+	return m_RequestedMeterPerPixel;
+}
+
+//-------------------------------------
+void CXMapPainter2D::SetRequestedMeterPerPixel(double NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_RequestedMeterPerPixel = NewValue;
+}
+
+//-------------------------------------
 bool CXMapPainter2D::ZoomIn() {
 	CXWriteLocker WL(&m_RWLock);
 	double dNewMeterPerPixel = m_MeterPerPixel / ZoomFactor;
-	m_MeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
-	UpdateZoomLevel();
+	m_RequestedMeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
 	return true;
 }
 
@@ -1025,8 +1042,7 @@ bool CXMapPainter2D::ZoomIn() {
 bool CXMapPainter2D::ZoomOut() {
 	CXWriteLocker WL(&m_RWLock);
 	double dNewMeterPerPixel = m_MeterPerPixel * ZoomFactor;
-	m_MeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
-	UpdateZoomLevel();
+	m_RequestedMeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
 	return true;
 }
 

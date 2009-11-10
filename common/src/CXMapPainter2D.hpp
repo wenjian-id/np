@@ -40,16 +40,17 @@ typedef CXPOSMapHashSimple<unsigned short> TPOSPOIBMPMap;
  */
 class CXMapPainter2D : public CXMapPainterDoubleBuffered {
 private:
-	double							m_MeterPerPixel;		///< Current scale factor.
-	CXPenHolder						m_PenHolder;			///< oiu
-	CXAreaColorHolder				m_AreaColorHolder;		///< oiu
-	CXBuffer<TWayBuffer *>			m_DrawWays;				///< oiu
-	CXBuffer<TAreaBuffer *>			m_DrawAreas;			///< oiu
-	CXBuffer<CXBitmap *>			m_POIBMPs;				///< oiu
-	CXBitmap 						*m_pPlaceBMP;			///< oiu
-	double							m_LastSpeed;			///< oiu
-	CXHysterezis<double, double>	m_AutoZoomLevels;		///< oiu
-	mutable CXRWLock				m_RWLock;				///< Synchronization object.
+	double							m_MeterPerPixel;			///< Current scale factor.
+	double							m_RequestedMeterPerPixel;	///< Current scale factor.
+	CXPenHolder						m_PenHolder;				///< oiu
+	CXAreaColorHolder				m_AreaColorHolder;			///< oiu
+	CXBuffer<TWayBuffer *>			m_DrawWays;					///< oiu
+	CXBuffer<TAreaBuffer *>			m_DrawAreas;				///< oiu
+	CXBuffer<CXBitmap *>			m_POIBMPs;					///< oiu
+	CXBitmap 						*m_pPlaceBMP;				///< oiu
+	double							m_LastSpeed;				///< oiu
+	CXHysterezis<double, double>	m_AutoZoomLevels;			///< oiu
+	mutable CXRWLock				m_RWLock;					///< Synchronization object.
 	//-------------------------------------
 	CXMapPainter2D(const CXMapPainter2D &);						///< Not used.
 	const CXMapPainter2D & operator = (const CXMapPainter2D &);	///< Not used.
@@ -158,6 +159,18 @@ private:
 	 *
 	 */
 	virtual void ComputeZoomBySpeed(double dSpeed);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetRequestedMeterPerPixel();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetRequestedMeterPerPixel(double NewValue);
 protected:
 	//-------------------------------------
 	/**

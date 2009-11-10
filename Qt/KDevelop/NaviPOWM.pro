@@ -6,8 +6,8 @@ CONFIG += warn_on \
           rtti \
 QMAKE_CXXFLAGS += -Wall
 INCLUDEPATH += src \
- ../../common/src/ \
- ../src/
+               ../../common/src/ \
+               ../src/
 CONFIG += release
 CONFIG -= debug
 
