@@ -25,7 +25,7 @@
 //-------------------------------------
 CXArea::CXArea(E_AREA_TYPE eAreaType):
 	m_eAreaType(eAreaType),
-	m_pOuterWay(NULL)
+	m_pOuterNodeList(NULL)
 {
 }
 
@@ -39,18 +39,18 @@ E_AREA_TYPE CXArea::GetAreaType() const {
 }
 
 //-------------------------------------
-void CXArea::SetOuterWay(CXWay *pWay) {
-	m_pOuterWay = pWay;
+void CXArea::SetOuterNodeList(CXOrderedNodeList *pNodeList) {
+	m_pOuterNodeList = pNodeList;
 }
 
 //-------------------------------------
-CXWay *CXArea::GetOuterWay() const {
-	return m_pOuterWay;
+CXOrderedNodeList *CXArea::GetOuterNodeList() const {
+	return m_pOuterNodeList;
 }
 
 //-------------------------------------
-void CXArea::AddHole(CXWay *pWay) {
-	m_Holes.Append(pWay);
+void CXArea::AddHole(CXOrderedNodeList *pNodeList) {
+	m_Holes.Append(pNodeList);
 }
 
 //-------------------------------------
@@ -59,6 +59,6 @@ size_t CXArea::GetHoleCount() {
 }
 
 //-------------------------------------
-CXWay *CXArea::GetHole(size_t Index) {
+CXOrderedNodeList *CXArea::GetHole(size_t Index) {
 	return m_Holes[Index];
 }

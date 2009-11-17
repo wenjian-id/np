@@ -263,6 +263,49 @@ public:
 	void SetPlaceType(E_MAP_PLACE_TYPE ePlaceType);
 };
 
-typedef CXBuffer<CXPOINode *>						TPOINodeBuffer;		///< oiu
+typedef CXBuffer<CXPOINode *>	TPOINodeBuffer;		///< oiu
+
+//---------------------------------------------------------------------
+class CXOrderedNodeList {
+private:
+	TNodeBuffer		m_Nodes;	///< oiu
+	//-------------------------------------
+	CXOrderedNodeList(const CXOrderedNodeList &); 						///< Not used.
+	const CXOrderedNodeList & operator = (const CXOrderedNodeList &);	///< Not used.
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXOrderedNodeList();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXOrderedNodeList();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void AddNode(CXNode *pNode);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	size_t GetNodeCount() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXNode *GetNode(size_t Index) const;
+};
+
+typedef CXBuffer<CXOrderedNodeList *>	TNodeListBuffer;		///< oiu
 
 #endif // __CXNODE_HPP__

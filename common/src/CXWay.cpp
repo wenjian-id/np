@@ -31,12 +31,23 @@ CXWay::CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 
 	m_MaxSpeed(0),
 	m_Layer(0),
 	m_eOneway(e_Oneway_None),
-	m_oOSMValiOK(true)
+	m_oOSMValiOK(true),
+	m_pNodeList(NULL)
 {
 }
 
 //-------------------------------------
 CXWay::~CXWay() {
+}
+
+//-------------------------------------
+CXOrderedNodeList *CXWay::GetNodeList() const {
+	return m_pNodeList;
+}
+
+//-------------------------------------
+void CXWay::SetNodeList(CXOrderedNodeList *pNodeList) {
+	m_pNodeList = pNodeList;
 }
 
 //-------------------------------------
@@ -87,23 +98,6 @@ void CXWay::SetOneway(E_ONEWAY_TYPE NewValue) {
 //-------------------------------------
 E_ONEWAY_TYPE CXWay::GetOneway() const {
 	return m_eOneway;
-}
-
-//-------------------------------------
-void CXWay::AddNode(CXNode *pNode) {
-	if(pNode != NULL) {
-		m_Nodes.Append(pNode);
-	}
-}
-
-//-------------------------------------
-size_t CXWay::GetNodeCount() const {
-	return m_Nodes.GetSize();
-}
-
-//-------------------------------------
-CXNode *CXWay::GetNode(size_t Index) const {
-	return m_Nodes[Index];
 }
 
 //-------------------------------------

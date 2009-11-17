@@ -181,9 +181,9 @@ bool CXMapPainter2D::IsWayPossiblyVisible(CXWay *pWay, int Width, int Height) {
 
 	int x0 = 0;
 	int y0 = 0;
-	size_t NodeCount = pWay->GetNodeCount();
+	size_t NodeCount = pWay->GetNodeList()->GetNodeCount();
 	for(size_t i=0; i<NodeCount; i++) {
-		CXNode *pNode = pWay->GetNode(i);
+		CXNode *pNode = pWay->GetNodeList()->GetNode(i);
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
 		// check if it is worth drawing
@@ -210,14 +210,14 @@ int pY[1024];
 void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) {
 	if(pWay == NULL)
 		return;
-	size_t NodeCount = pWay->GetNodeCount();
+	size_t NodeCount = pWay->GetNodeList()->GetNodeCount();
 	int x0 = 0;
 	int y0 = 0;
 	bool oLastWasTerminator = false;
 	bool oTerminator = false;
 	size_t Count = 0;
 	for(size_t i=0; i<NodeCount; i++) {
-		CXNode *pNode = pWay->GetNode(i);
+		CXNode *pNode = pWay->GetNodeList()->GetNode(i);
 		oTerminator = (pNode->IsTerminator());
 		int x = pNode->GetDisplayX();
 		int y = pNode->GetDisplayY();
@@ -335,14 +335,14 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 		for(size_t i=0; i<cnt; i++) {
 			CXArea *pArea = (*pAreas)[i];
 			/// \todo implement holes
-			CXWay *pOuterWay = pArea->GetOuterWay();
-			size_t NodeCount = pOuterWay->GetNodeCount();
+			CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
+			size_t NodeCount = pOuterNodeList->GetNodeCount();
 			for(size_t j=0; j<NodeCount; j++) {
-				CXNode *pNode = pOuterWay->GetNode(j);
+				CXNode *pNode = pOuterNodeList->GetNode(j);
 				pX[j] = pNode->GetDisplayX();
 				pY[j] = pNode->GetDisplayY();
 			}
-			pBMP->Polygon(pX, pY, NodeCount, Color, Color);
+			pBMP->Polygon(pX, pY, NodeCount, /*Color*/CXRGB(0x00, 0x00, 0x00), Color);
 		}
 	}
 }

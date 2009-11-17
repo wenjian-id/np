@@ -548,13 +548,13 @@ void CXLocatorThread::Locate() {
 								}
 							}
 							if(oUseWay) {
-								size_t NodeCount = pWay->GetNodeCount();
+								size_t NodeCount = pWay->GetNodeList()->GetNodeCount();
 								// start with 1
 								for(size_t i=1; i<NodeCount; i++) {
 									// get first node
-									pNode1 = pWay->GetNode(i-1);
+									pNode1 = pWay->GetNodeList()->GetNode(i-1);
 									// get second node
-									pNode2 = pWay->GetNode(i);
+									pNode2 = pWay->GetNodeList()->GetNode(i);
     								// get coordinates
     								Node1x = pNode1->GetUTME();
     								Node1y = pNode1->GetUTMN();

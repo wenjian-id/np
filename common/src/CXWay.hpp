@@ -43,7 +43,7 @@ private:
 	char				m_Layer;			///< oiu
 	E_ONEWAY_TYPE		m_eOneway;			///< oiu
 	bool				m_oOSMValiOK;		///< oiu
-	TNodeBuffer			m_Nodes;			///< oiu
+	CXOrderedNodeList	*m_pNodeList;			///< oiu
 	//-------------------------------------
 	CXWay();									///< Not used.
 	CXWay(const CXWay &);						///< Not used.
@@ -63,6 +63,18 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXWay();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXOrderedNodeList *GetNodeList() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetNodeList(CXOrderedNodeList *pNodeList);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -123,24 +135,6 @@ public:
 	 *
 	 */
 	E_ONEWAY_TYPE GetOneway() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void AddNode(CXNode *pNode);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	size_t GetNodeCount() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXNode *GetNode(size_t Index) const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

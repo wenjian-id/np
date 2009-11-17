@@ -161,7 +161,8 @@ class CXMapSection {
 private:
 	int						m_UTMZone;				///< oiu
 	TNodeBuffer				m_Nodes;				///< Map with all nodes.
-	TWayBuffer				m_Ways;				///< Map with all nodes.
+	TWayBuffer				m_Ways;					///< Map with all nodes.
+	TNodeListBuffer			m_NodeLists;			///< Map with all node lists.
 	TPOINodeBuffer			m_POINodes;				///< POIs.
 	TPOINodeBuffer			m_PlaceNodes;			///< Places.
 	CXBuffer<TWayBuffer *>	m_LayeredWayBuffer;		///< Ways sorted by layer.
@@ -182,7 +183,7 @@ private:
 	 *	\param	InFile		File with map data.
 	 *	\return				true on success
 	 */
-	bool LoadMap_0_1_2(CXFile & InFile);
+//	bool LoadMap_0_1_2(CXFile & InFile);
 	//-------------------------------------
 	/**
 	 * \brief Load map version 0.1.1
@@ -191,7 +192,7 @@ private:
 	 *	\param	InFile		File with map data.
 	 *	\return				true on success
 	 */
-	bool LoadMap_0_1_1(CXFile & InFile);
+//	bool LoadMap_0_1_1(CXFile & InFile);
 	//-------------------------------------
 	/**
 	 * \brief Load map current version

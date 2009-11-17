@@ -161,6 +161,12 @@ CXMapSection::~CXMapSection() {
 		if(pNode != NULL)
 			delete pNode;
 	}
+	size_t Size_nodelists = m_NodeLists.GetSize();
+	for(size_t idx_nl = 0; idx_nl < Size_nodelists; idx_nl++) {
+		CXOrderedNodeList *pNodeList = m_NodeLists[idx_nl];
+		if(pNodeList != NULL)
+			delete pNodeList;
+	}
 	size_t Size_ways = m_Ways.GetSize();
 	for(size_t idx_w = 0; idx_w < Size_ways; idx_w++) {
 		CXWay *pWay = m_Ways[idx_w];
@@ -263,31 +269,12 @@ bool CXMapSection::LoadMap() {
 
 		if(Version == 0x00010100) {
 			// v 0.1.1
-			Result = LoadMap_0_1_1(InFile);
+//			Result = LoadMap_0_1_1(InFile);
 		} else if(Version == 0x00010200) {
 			// v 0.1.1
-			Result = LoadMap_0_1_2(InFile);
+//			Result = LoadMap_0_1_2(InFile);
 		} else if(Version != ReqVersion) {
 			// not supported version
-/*
-			CXStringASCII ErrorMsg(FileName);
-			ErrorMsg += " has wrong Version: ";
-			char buf[100];
-			if((Version & 0xff) == 0) {
-				snprintf(	buf, sizeof(buf), "%d.%d.%d", 
-							static_cast<unsigned char>((Version & 0xff000000) >> 24),
-							static_cast<unsigned char>((Version & 0xff0000) >> 16),
-							static_cast<unsigned char>((Version & 0xff00) >> 8));
-			} else {
-				snprintf(	buf, sizeof(buf), "%d.%d.%d-dev%d", 
-							static_cast<unsigned char>((Version & 0xff000000) >> 24),
-							static_cast<unsigned char>((Version & 0xff0000) >> 16),
-							static_cast<unsigned char>((Version & 0xff00) >> 8),
-							static_cast<unsigned char>((Version & 0xff)));
-			}
-			ErrorMsg += buf;
-			DoOutputErrorMessage(ErrorMsg.c_str());
-*/
 			Result = false;
 		} else {
 			// current version
@@ -417,6 +404,33 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		m_POINodes[ulPOI] = pPOINode;
 	}
 
+	// node list count
+	unsigned char NodeListCountType = 0;
+	if(!ReadUI8(InFile, NodeListCountType)) {
+		DoOutputErrorMessage("Error reading NodeListCountType");
+		return false;
+	}
+	E_BIT_COUNT eNodeListCountType=static_cast<E_BIT_COUNT>(NodeListCountType);
+	t_uint32 NodeListCount = 0;
+	if(!ReadUI(InFile, eNodeListCountType, NodeListCount)) {
+		DoOutputErrorMessage("Error reading NodeListCount");
+		return false;
+	}
+	m_NodeLists.Resize(NodeListCount);
+	// read node lists
+	for(t_uint32 ulNodeList=0; ulNodeList<NodeListCount; ulNodeList++) {
+		// create node list
+		CXOrderedNodeList *pNodeList = new CXOrderedNodeList();
+		m_NodeLists[ulNodeList] = pNodeList;
+		ReadUI(InFile, eNodeCountType, NodeCount);
+		for(t_uint32 ul=0; ul<NodeCount; ul++) {
+			t_uint32 Idx = 0;
+			ReadUI(InFile, eNodeCountType, Idx);
+			CXNode *pNode = m_Nodes[Idx];
+			pNodeList->AddNode(pNode);
+		}
+	}
+	
 	// way count
 	unsigned char WayCountType = 0;
 	if(!ReadUI8(InFile, WayCountType)) {
@@ -485,14 +499,11 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		}
 		Ways.Lookup(Layer, pWayBuffer);
 		pWayBuffer->Append(pWay);
-		// read nodes of way
-		ReadUI(InFile, eNodeCountType, NodeCount);
-		for(t_uint32 ul=0; ul<NodeCount; ul++) {
-			t_uint32 Idx = 0;
-			ReadUI(InFile, eNodeCountType, Idx);
-			CXNode *pNode = m_Nodes[Idx];
-			pWay->AddNode(pNode);
-		}
+		// read node list of way
+		t_uint32 Idx = 0;
+		ReadUI(InFile, eNodeListCountType, Idx);
+		CXOrderedNodeList *pNodeList = m_NodeLists[Idx];
+		pWay->SetNodeList(pNodeList);
 	}
 	char Layer = 0;
 	// fill m_WayMapBuffer ordered by Layer ascending
@@ -528,21 +539,22 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 
 		// read outer way
 		t_uint32 Idx = 0;
-		ReadUI(InFile, eWayCountType, Idx);
-		CXWay *pOuterWay = m_Ways[Idx];
-		pArea->SetOuterWay(pOuterWay);
+		ReadUI(InFile, eNodeListCountType, Idx);
+		CXOrderedNodeList *pOuterNodeList = m_NodeLists[Idx];
+		pArea->SetOuterNodeList(pOuterNodeList);
 		// read hole count
 		t_uint32 HoleCount = 0;
-		ReadUI(InFile, eWayCountType, HoleCount);
+		ReadUI(InFile, eNodeListCountType, HoleCount);
 		// read holes
 		for(size_t h=0; h<HoleCount; h++) {
 			t_uint32 IdxH = 0;
-			ReadUI(InFile, eWayCountType, IdxH);
-			CXWay *pHole = m_Ways[IdxH];
+			ReadUI(InFile, eNodeListCountType, IdxH);
+			CXOrderedNodeList *pHole = m_NodeLists[IdxH];
 			pArea->AddHole(pHole);
 		}
 		// now insert area into Areas structure
-		Layer = pOuterWay->GetLayer();
+		/// \todo layers for areas
+		Layer = 0;
 		// add Area
 		TAreaBuffer *pAreaBuffer = NULL;
 		if(!Areas.Lookup(Layer, pAreaBuffer)) {
@@ -566,7 +578,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		RunOSMVali();
 	return true;
 }
-
+/*
 //-------------------------------------
 bool CXMapSection::LoadMap_0_1_2(CXFile & InFile) {
 	// Node count type
@@ -950,7 +962,7 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 		RunOSMVali();
 	return true;
 }
-
+*/
 //-------------------------------------
 void CXMapSection::RunOSMVali() {
 	size_t cnt = m_LayeredWayBuffer.GetSize();

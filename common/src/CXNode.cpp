@@ -155,3 +155,31 @@ E_MAP_PLACE_TYPE CXPOINode::GetPlaceType() const {
 void CXPOINode::SetPlaceType(E_MAP_PLACE_TYPE ePlaceType) {
 	m_ePlaceType = ePlaceType;
 }
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXOrderedNodeList::CXOrderedNodeList() {
+}
+
+//-------------------------------------
+CXOrderedNodeList::~CXOrderedNodeList() {
+}
+
+//-------------------------------------
+void CXOrderedNodeList::AddNode(CXNode *pNode) {
+	if(pNode != NULL) {
+		m_Nodes.Append(pNode);
+	}
+}
+
+//-------------------------------------
+size_t CXOrderedNodeList::GetNodeCount() const {
+	return m_Nodes.GetSize();
+}
+
+//-------------------------------------
+CXNode *CXOrderedNodeList::GetNode(size_t Index) const {
+	return m_Nodes[Index];
+}
+
