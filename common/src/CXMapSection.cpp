@@ -536,7 +536,18 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		ReadUI8(InFile, AreaType);
 		// create Area
 		CXArea *pArea = new CXArea(static_cast<E_AREA_TYPE>(AreaType));
-
+		// layer
+		unsigned char bLayer = 0;
+		ReadUI8(InFile, bLayer);
+		char Layer = 0;
+		if((bLayer & 0x80) != 0)
+			// negative value
+			Layer = - (bLayer & 0x7F);
+		else {
+			// positive value
+			Layer = bLayer;
+		}
+		pArea->SetLayer(Layer);
 		// read outer way
 		t_uint32 Idx = 0;
 		ReadUI(InFile, eNodeListCountType, Idx);
@@ -553,9 +564,6 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 			pArea->AddHole(pHole);
 		}
 		// now insert area into Areas structure
-		/// \todo layers for areas
-		Layer = 0;
-		// add Area
 		TAreaBuffer *pAreaBuffer = NULL;
 		if(!Areas.Lookup(Layer, pAreaBuffer)) {
 			Areas.SetAt(Layer, new TAreaBuffer());

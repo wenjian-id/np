@@ -25,6 +25,7 @@
 //-------------------------------------
 CXArea::CXArea(E_AREA_TYPE eAreaType):
 	m_eAreaType(eAreaType),
+	m_Layer(0),
 	m_pOuterNodeList(NULL)
 {
 }
@@ -36,6 +37,16 @@ CXArea::~CXArea() {
 //-------------------------------------
 E_AREA_TYPE CXArea::GetAreaType() const {
 	return m_eAreaType;
+}
+
+//-------------------------------------
+unsigned char CXArea::GetLayer() const {
+	return m_Layer;
+}
+
+//-------------------------------------
+void CXArea::SetLayer(unsigned char Layer) {
+	m_Layer = Layer;
 }
 
 //-------------------------------------

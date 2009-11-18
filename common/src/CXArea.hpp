@@ -33,6 +33,7 @@
 class CXArea {
 private:
 	E_AREA_TYPE			m_eAreaType;		///< oiu
+	unsigned char		m_Layer;			///< oiu
 	CXOrderedNodeList	*m_pOuterNodeList;	///< oiu
 	TNodeListBuffer		m_Holes;			///< oiu
 	//-------------------------------------
@@ -60,6 +61,18 @@ public:
 	 *
 	 */
 	E_AREA_TYPE GetAreaType() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	unsigned char GetLayer() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetLayer(unsigned char Layer);
 	//-------------------------------------
 	/**
 	 * \brief oiu
