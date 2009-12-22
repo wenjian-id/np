@@ -203,8 +203,9 @@ bool CXMapPainter2D::IsWayPossiblyVisible(CXWay *pWay, int Width, int Height) {
 	return false;
 }
 
-int pX[1024];
-int pY[1024];
+/// \todo resize on demand?
+int pX[1024000];
+int pY[1024000];
 
 //-------------------------------------
 void CXMapPainter2D::DrawWay(IBitmap *pBMP, CXWay *pWay, int Width, int Height) {
