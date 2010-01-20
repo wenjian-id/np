@@ -22,6 +22,8 @@
 
 #include "OSSpecific.hpp"
 
+#include <sys/sysinfo.h>
+
 //-------------------------------------
 void TriggerWatchdog() {
 	/// \todo implement
@@ -29,6 +31,11 @@ void TriggerWatchdog() {
 
 //-------------------------------------
 size_t GetFreeMem() {
-	/// \todo implement
-	return 0;
+	struct sysinfo SINFO;
+	memset(&SINFO, 0, sizeof(SINFO));
+	int res = sysinfo(&SINFO); 
+	if(res < 0)
+		return 0;
+	int FreeMem = SINFO.freeram + SINFO.sharedram + SINFO.bufferram;
+	return FreeMem;
 }
