@@ -43,7 +43,7 @@ void CXAreaColorHolder::CreateColors() {
 	// area none
 	*m_Colors[e_Area_None]		= CXRGB(0x00, 0x00, 0x00);
 	// water
-	*m_Colors[e_Area_Water]		= CXRGB(0x00, 0x00, 0xFF);
+	*m_Colors[e_Area_Water]		= CXRGB(0x00, 0x00, 0xD0);
 	// wood
 	*m_Colors[e_Area_Wood]		= CXRGB(0x00, 0xFF, 0x00);
 }
