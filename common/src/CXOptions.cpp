@@ -58,6 +58,7 @@ CXOptions::CXOptions() :
 	m_eStartWithLastPosition(e_SWLP_None),
 	m_oMapMovingManually(false),
 	m_WatchdogTimeout(0),
+	m_GPSReconnectTimeout(1000),
 	m_OSMVali(0),
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
@@ -279,6 +280,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetGPSReceiverLag(atoi(F.Get("GPSReceiverLag", "0").c_str()));
 	// Watchdog
 	SetWatchdogTimeout(Max(0, 1000*atoi(F.Get("WatchdogTimeout", "0").c_str())));
+	// GPSReconnectTimeout
+	SetGPSReconnectTimeout(Max(0, atoi(F.Get("GPSReconnectTimeout", "1000").c_str())));
 	// Font Sizes
 	SetPOIFontSize(atoi(F.Get("POIFontSize", "16").c_str()));
 	SetScaleFontSize(atoi(F.Get("ScaleFontSize", "16").c_str()));
@@ -651,6 +654,18 @@ int CXOptions::GetWatchdogTimeout() const {
 void CXOptions::SetWatchdogTimeout(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_WatchdogTimeout = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetGPSReconnectTimeout() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_GPSReconnectTimeout;
+}
+
+//-------------------------------------
+void CXOptions::SetGPSReconnectTimeout(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_GPSReconnectTimeout = NewValue;
 }
 
 //-------------------------------------

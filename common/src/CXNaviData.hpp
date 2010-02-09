@@ -36,6 +36,7 @@
  */
 class CXNaviData {
 private:
+	bool				m_oConnected;		///< oiu
 	bool				m_oFix;				///< oiu
 	double				m_dHeight;			///< Height [m].
 	CXCoor				m_GPSCoor;			///< Received GPS coordinate.
@@ -89,6 +90,18 @@ public:
 	 * \return			Const reference to self.
 	 */
 	const CXNaviData & operator = (const CXNaviData &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool IsConnected() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetConnected(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

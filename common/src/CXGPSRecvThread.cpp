@@ -38,6 +38,7 @@ static const unsigned char GSVBEGIN[6]	= {'$', 'G', 'P', 'G', 'S', 'V'};
 CXGPSRecvThread::CXGPSRecvThread() :
 	m_oDemoMode(false),
 	m_DemoTimeout(1000),
+	m_LastGPSConnectTimeout(1000),
 	m_pLocator(NULL),
 	m_oSaving(false)
 {
@@ -53,6 +54,7 @@ CXGPSRecvThread::~CXGPSRecvThread() {
 //-------------------------------------
 void CXGPSRecvThread::OpenSerial() {
 	CXMutexLocker L(&m_Mutex);
+	m_LastGPSConnectTimeout = CXOptions::Instance()->GetGPSReconnectTimeout();
 	CXSerialPortConfig Cfg = CXOptions::Instance()->GetSerialPortConfig();
 	CXStringASCII Port = Cfg.GetPort();
 	// look for "DEMO:"
@@ -107,6 +109,8 @@ void CXGPSRecvThread::CloseSerial() {
 void CXGPSRecvThread::OnThreadStarted() {
 	CXMutexLocker L(&m_Mutex);
 	OpenSerial();
+	// set connection status to locator thread
+	m_pLocator->SetConnected(IsOpen());
 }
 
 
@@ -213,6 +217,19 @@ void CXGPSRecvThread::OnThreadLoop() {
 					m_pLocator->SetGPSDataGSV(m_LastPacket);
 			}
 		}
+	} else {
+		if(!IsOpen()) {
+			// channel not open
+			CXExactTime Now;
+			size_t TO = Now - m_LastGPSConnect;
+			if(TO > m_LastGPSConnectTimeout) {
+				// try to reopen channel
+				ReopenSerial();
+				m_LastGPSConnect.SetNow();
+				// set connection status to locator thread
+				m_pLocator->SetConnected(IsOpen());
+			}
+		}
 	}
 }
 
@@ -274,7 +291,12 @@ bool CXGPSRecvThread::ProcessData() {
 //-------------------------------------
 bool CXGPSRecvThread::IsOpen() const {
 	CXMutexLocker L(&m_Mutex);
-	return m_Serial.IsOpen();
+	bool Result = false;
+	if(m_oDemoMode)
+		Result = m_DemoFile.IsOpen();
+	else
+		Result = m_Serial.IsOpen();
+	return Result;
 }
 
 //-------------------------------------

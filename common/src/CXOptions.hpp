@@ -108,6 +108,7 @@ private:
 	CXCoor						m_StartPosition;
 	bool						m_oMapMovingManually;			///< oiu
 	int							m_WatchdogTimeout;				///< oiu
+	int							m_GPSReconnectTimeout;			///< oiu
 	t_uint64					m_OSMVali;						///< oiu
 	t_uint64					m_DebugInfo;					///< Holder for debug info flags.
 	int							m_InfoBarBottomHeight;			///< oiu
@@ -736,6 +737,18 @@ public:
 	 *
 	 */
 	void SetWatchdogTimeout(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetGPSReconnectTimeout() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSReconnectTimeout(int NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

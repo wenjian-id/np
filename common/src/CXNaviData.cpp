@@ -27,6 +27,7 @@
 
 //-------------------------------------
 CXNaviData::CXNaviData() :
+	m_oConnected(false),
 	m_oFix(false),
 	m_dHeight(0.0),
 	m_MaxSpeed(0),
@@ -54,6 +55,7 @@ const CXNaviData & CXNaviData::operator = (const CXNaviData &rOther) {
 void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	CXReadLocker RL(&rOther.m_RWLock);
 	CXWriteLocker WL(&m_RWLock);
+	m_oConnected		= rOther.m_oConnected;
 	m_oFix				= rOther.m_oFix;
 	m_dHeight			= rOther.m_dHeight;
 	m_GPSCoor			= rOther.m_GPSCoor;
@@ -65,6 +67,18 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	m_IntRef			= rOther.m_IntRef;
 	m_MaxSpeed			= rOther.m_MaxSpeed;
 	m_oLocated			= rOther.m_oLocated;
+}
+
+//-------------------------------------
+bool CXNaviData::IsConnected() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oConnected;
+}
+
+//-------------------------------------
+void CXNaviData::SetConnected(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oConnected = NewValue;
 }
 
 //-------------------------------------

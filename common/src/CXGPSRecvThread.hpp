@@ -39,17 +39,19 @@ class CXLocatorThread;
  */
 class CXGPSRecvThread : public CXLoopThread {
 private:
-	CXSerial			m_Serial;		///< oiu
-	bool				m_oDemoMode;	///< oiu
-	CXFile				m_DemoFile;		///< oiu
-	size_t				m_DemoTimeout;	///< oiu
-	CXExactTime			m_LastDemoGGA;	///< oiu
-	tUCBuffer			m_Buffer;		///< oiu
-	tUCBuffer			m_LastPacket;	///< oiu
-	CXLocatorThread		*m_pLocator;	///< oiu
-	bool				m_oSaving;		///< oiu
-	CXFile				m_SaveFile;		///< oiu
-	mutable CXMutex		m_Mutex;		///< Synchronization object.
+	CXSerial			m_Serial;					///< oiu
+	bool				m_oDemoMode;				///< oiu
+	CXFile				m_DemoFile;					///< oiu
+	size_t				m_DemoTimeout;				///< oiu
+	size_t				m_LastGPSConnectTimeout;	///< oiu
+	CXExactTime			m_LastDemoGGA;				///< oiu
+	CXExactTime			m_LastGPSConnect;			///< oiu
+	tUCBuffer			m_Buffer;					///< oiu
+	tUCBuffer			m_LastPacket;				///< oiu
+	CXLocatorThread		*m_pLocator;				///< oiu
+	bool				m_oSaving;					///< oiu
+	CXFile				m_SaveFile;					///< oiu
+	mutable CXMutex		m_Mutex;					///< Synchronization object.
 	//-------------------------------------
 	CXGPSRecvThread(const CXGPSRecvThread &);						///< Not used.
 	const CXGPSRecvThread & operator = (const CXGPSRecvThread &);	///< Not used.

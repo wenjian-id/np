@@ -131,20 +131,24 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 	if(!CXOptions::Instance()->MustShowLogo()) {
 
 		char buf[10];
-		// draw satellite count
-		int NSat = CXSatelliteData::Instance()->GetNrSat();
-		snprintf(buf, 10, "%d", NSat);
-		CXStringASCII StrNSat(buf);
-		// compute color
-		CXRGB NSatColor;
-		if(NSat <= 5) {
-			NSatColor = CXRGB(0xff, 0x80, 0x80);
-		} else if(NSat <= 8) {
-			NSatColor = CXRGB(0xff, 0xff, 0x00);
+		if(m_NaviData.IsConnected()) {
+			// draw satellite count
+			int NSat = CXSatelliteData::Instance()->GetNrSat();
+			snprintf(buf, 10, "%d", NSat);
+			CXStringASCII StrNSat(buf);
+			// compute color
+			CXRGB NSatColor;
+			if(NSat <= 5) {
+				NSatColor = CXRGB(0xff, 0x80, 0x80);
+			} else if(NSat <= 8) {
+				NSatColor = CXRGB(0xff, 0xff, 0x00);
+			} else {
+				NSatColor = CXRGB(0x00, 0xff, 0x00);
+			}
+			Bmp.DrawTextASCII(StrNSat, m_SatRect, NSatColor, BgColor);
 		} else {
-			NSatColor = CXRGB(0x00, 0xff, 0x00);
+			Bmp.DrawTextASCII("--", m_SatRect, CXRGB(0xff, 0x80, 0x80), BgColor);
 		}
-		Bmp.DrawTextASCII(StrNSat, m_SatRect, NSatColor, BgColor);
 
 		// draw zoom level
 		int RectWidth = m_ZoomRect.GetWidth();

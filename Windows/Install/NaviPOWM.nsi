@@ -194,6 +194,7 @@ Section "Uninstall"
     Delete "$INSTDIR\README.TXT"
     Delete "$INSTDIR\CHANGELOG.TXT"
     Delete "$INSTDIR\last.gps"
+    Delete "$INSTDIR\Save\last.gps"
     RmDir $INSTDIR ; will be deleted only if empty
 
 SectionEnd

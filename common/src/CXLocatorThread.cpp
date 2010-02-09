@@ -46,6 +46,8 @@ static const char * pcLastCoorFileName = "last.gps";
 //---------------------------------------------------------------------
 //-------------------------------------
 CXLocatorThread::CXLocatorThread() :
+	m_oConnected(false),
+	m_oNewDataConnection(false),
 	m_oNewDataGPSGGA(false),
 	m_oNewDataGPSRMC(false),
 	m_SpeedCalculator(4),
@@ -62,6 +64,25 @@ CXLocatorThread::~CXLocatorThread() {
 }
 
 //-------------------------------------
+bool CXLocatorThread::IsConnected() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_oConnected;
+}
+
+//-------------------------------------
+void CXLocatorThread::SetConnected(bool NewValue) {
+	CXMutexLocker L(&m_MutexInputData);
+	m_oConnected = NewValue;
+	SetFlag_NewDataConnection(true);
+}
+
+//-------------------------------------
+void CXLocatorThread::SetFlag_NewDataConnection(bool NewValue) {
+	CXMutexLocker L(&m_MutexInputData);
+	m_oNewDataConnection = NewValue;
+}
+
+//-------------------------------------
 void CXLocatorThread::SetFlag_NewDataGPSGGA(bool NewValue) {
 	CXMutexLocker L(&m_MutexInputData);
 	m_oNewDataGPSGGA = NewValue;
@@ -71,6 +92,12 @@ void CXLocatorThread::SetFlag_NewDataGPSGGA(bool NewValue) {
 void CXLocatorThread::SetFlag_NewDataGPSRMC(bool NewValue) {
 	CXMutexLocker L(&m_MutexInputData);
 	m_oNewDataGPSRMC = NewValue;
+}
+
+//-------------------------------------
+bool CXLocatorThread::GetFlag_NewDataConnection() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_oNewDataConnection;
 }
 
 //-------------------------------------
@@ -178,7 +205,10 @@ void CXLocatorThread::OnThreadLoop() {
 	bool NewDataRMC = GetFlag_NewDataGPSRMC();
 	bool NewDataGGA = GetFlag_NewDataGPSGGA();
 	bool oHasFix = false;
-	bool oNewDataNoFix = false;
+	bool oNewDataNoFix = GetFlag_NewDataConnection();
+	SetFlag_NewDataConnection(false);
+	// set connection status in m_NaviData
+	m_NaviData.SetConnected(IsConnected());
 	// process new data
 	if(NewDataRMC) {
 		// process it
@@ -292,8 +322,11 @@ void CXLocatorThread::OnThreadLoop() {
 		// no data arrived
 		unsigned long Delta = Now - m_LastReceivedPosition;
 		if(Delta > 1000*TIMEOUT_RECEIVE) {
-			// oiu
-			CXSatelliteData::Instance()->SetNrSatGGA(0);
+			// if still connected reset number of satellites to zero. maybe we are in a tunnel or so.
+			// if not connected, do not reset number of satellites
+			if(IsConnected()) {
+				CXSatelliteData::Instance()->SetNrSatGGA(0);
+			}
 			if(m_pNaviPOWM != NULL)
 				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
 		}
@@ -352,7 +385,7 @@ void CXLocatorThread::SaveLastReceivedGPSCoordinate() {
 			ulLat |= 0x80000000;
 		}
 		CXFile OutFile;
-		CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
+		CXStringASCII FileName = CXOptions::Instance()->GetDirectorySave();
 		FileName += pcLastCoorFileName;
 		if(OutFile.Open(FileName.c_str(), CXFile::E_WRITE) == CXFile::E_OK) {
 			// write data
@@ -369,7 +402,7 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
 	m_oStartCoordinatesValid = false;
 	if(CXOptions::Instance()->GetStartWithLastPosition() == CXOptions::e_SWLP_LastPos) {
 		CXFile InFile;
-		CXStringASCII FileName = CXOptions::Instance()->GetStartPath();
+		CXStringASCII FileName = CXOptions::Instance()->GetDirectorySave();
 		FileName += pcLastCoorFileName;
 		if(InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
 			// read data

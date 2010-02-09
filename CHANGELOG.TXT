@@ -1,6 +1,8 @@
 Version 0.2.4:
  - fixed bugs:
    - 2863322: Switch for starting with last received / predefined coords
+   - 2864847: last.gps should be saved in SAVE
+   - 2864848: reopen serial port if open not successfully
    - 2865065: buildings & OSM validation
  - implemented feature requests:
  - other:

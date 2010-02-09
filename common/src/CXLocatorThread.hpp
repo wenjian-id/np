@@ -43,6 +43,8 @@ class CXLocatorThread : public CXLoopThread {
 private:
 	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;		///< oiu
 	CXTimeStampData<tUCBuffer>		m_InputBufferGPSRMC;		///< oiu
+	bool							m_oConnected;				///< oiu
+	bool							m_oNewDataConnection;		///< oiu
 	bool							m_oNewDataGPSGGA;			///< oiu
 	bool							m_oNewDataGPSRMC;			///< oiu
 	CXSpeedCalculator				m_SpeedCalculator;			///< oiu
@@ -64,6 +66,12 @@ private:
 	 * \brief oiu
 	 *
 	 */
+	void SetFlag_NewDataConnection(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void SetFlag_NewDataGPSGGA(bool NewValue);
 	//-------------------------------------
 	/**
@@ -71,6 +79,12 @@ private:
 	 *
 	 */
 	void SetFlag_NewDataGPSRMC(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool GetFlag_NewDataConnection() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -141,6 +155,18 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXLocatorThread();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool IsConnected() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetConnected(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
