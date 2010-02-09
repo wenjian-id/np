@@ -8,8 +8,8 @@ QMAKE_CXXFLAGS += -Wall
 INCLUDEPATH += src \
                ../../common/src/ \
                ../src/
-CONFIG -= release
-CONFIG += debug
+CONFIG += release
+CONFIG -= debug
 
 SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXMapSection.cpp \
