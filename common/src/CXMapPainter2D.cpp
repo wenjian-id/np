@@ -1044,7 +1044,7 @@ void CXMapPainter2D::SetRequestedMeterPerPixel(double NewValue) {
 //-------------------------------------
 bool CXMapPainter2D::ZoomIn() {
 	CXWriteLocker WL(&m_RWLock);
-	double dNewMeterPerPixel = m_MeterPerPixel / ZoomFactor;
+	double dNewMeterPerPixel = m_RequestedMeterPerPixel / ZoomFactor;
 	m_RequestedMeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
 	return true;
 }
@@ -1052,7 +1052,7 @@ bool CXMapPainter2D::ZoomIn() {
 //-------------------------------------
 bool CXMapPainter2D::ZoomOut() {
 	CXWriteLocker WL(&m_RWLock);
-	double dNewMeterPerPixel = m_MeterPerPixel * ZoomFactor;
+	double dNewMeterPerPixel = m_RequestedMeterPerPixel * ZoomFactor;
 	m_RequestedMeterPerPixel = Min(MAXMETERPERPIXEL, Max(dNewMeterPerPixel, MINMETERPERPIXEL));
 	return true;
 }
