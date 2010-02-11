@@ -44,6 +44,7 @@ CXOptions::CXOptions() :
 	m_oShowLogo(true),
 	m_oSaving(false),
 	m_oShowZoomButtons(false),
+	m_ZoomButtonSize(40),
 	m_oAutomaticZoom(false),
 	m_HystMaxOffsetAbs(0.7),
 	m_HystMaxOffsetRel(0.1),
@@ -136,6 +137,7 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
 	// showzoom
 	SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
+	SetZoomButtonSize(atoi(F.Get("ZoomButtonSize", "40").c_str()));
 	SetAutomaticZoomString(F.Get("AutoZoom", "off").ToUpper());
 	SetHystMaxOffsetRel(atof(F.Get("HystMaxOffsetRel", "10").c_str())/10);
 	SetHystMaxOffsetAbs(atof(F.Get("HystMaxOffsetAbs", "0.7").c_str()));
@@ -774,6 +776,18 @@ bool CXOptions::MustShowZoomButtons() const {
 void CXOptions::SetShowZoomButtonsFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oShowZoomButtons = NewValue;
+}
+
+//-------------------------------------
+void CXOptions::SetZoomButtonSize(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_ZoomButtonSize = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetZoomButtonSize() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_ZoomButtonSize;
 }
 
 //-------------------------------------

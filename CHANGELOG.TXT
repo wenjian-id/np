@@ -5,6 +5,7 @@ Version 0.2.4:
    - 2864848: reopen serial port if open not successfully
    - 2865065: buildings & OSM validation
  - implemented feature requests:
+   - 2949605: Make size of zoom button configurable
  - other:
 
 Version 0.2.3:

@@ -92,6 +92,7 @@ private:
 	bool						m_oShowLogo;					///< Show logo.
 	bool						m_oSaving;						///< oiu
 	bool						m_oShowZoomButtons;				///< oiu
+	int							m_ZoomButtonSize;				///< oiu
 	bool						m_oAutomaticZoom;				///< oiu
 	CXStringASCII				m_AutomaticZoomString;			///< oiu
 	double						m_HystMaxOffsetAbs;				///< oiu
@@ -557,6 +558,18 @@ public:
 	 *
 	 */
 	void SetShowZoomButtonsFlag(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetZoomButtonSize(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetZoomButtonSize() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

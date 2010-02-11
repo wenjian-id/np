@@ -359,7 +359,7 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_MapPos.SetRight(Width);
 	m_MapPos.SetBottom(m_InfoBarBottomPos.GetTop() - 1);
 
-	const int ZoomSize = 40;
+	const int ZoomSize = CXOptions::Instance()->GetZoomButtonSize();
 	m_ZoomInPos.SetBottom(m_InfoBarBottomPos.GetTop());
 	m_ZoomInPos.SetTop(m_ZoomInPos.GetBottom() - ZoomSize);
 	m_ZoomInPos.SetRight(Width);

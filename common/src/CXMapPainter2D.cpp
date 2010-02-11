@@ -352,7 +352,7 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 					pX[j] = pNode->GetDisplayX();
 					pY[j] = pNode->GetDisplayY();
 				}
-				pBMP->Polygon(pX, pY, HoleNodeCount, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff,0x00, 0x00));
+				pBMP->Polygon(pX, pY, HoleNodeCount, CXRGB(0xff, 0xff, 0x00), CXRGB(0xff,0x00, 0x00));
 			}
 		}
 	}
