@@ -50,18 +50,22 @@ bool CXBitmap::IsNull() {
 }
 
 //-------------------------------------
-bool CXBitmap::Create(CXDeviceContext *pDC, int Width, int Height) {
+bool CXBitmap::Create(IDeviceContext *pDC, int Width, int Height) {
 	Destroy();
 	if(pDC == NULL)
 		return false;
 	if(m_hDC != NULL)
 		return true;
+	SetDeviceContext(pDC);
+	CXDeviceContext *pDeviceContext = dynamic_cast<CXDeviceContext *>(pDC);
+	if(pDeviceContext == NULL)
+		return false;
 	SetWidth(Width);
 	SetHeight(Height);
-	m_hDC = CreateCompatibleDC(pDC->GetDC());
+	m_hDC = CreateCompatibleDC(pDeviceContext->GetDC());
 	if(m_hDC != NULL) {
 		// create new bitmap
-		m_hBMP = ::CreateCompatibleBitmap(pDC->GetDC(), GetWidth(), GetHeight());
+		m_hBMP = ::CreateCompatibleBitmap(pDeviceContext->GetDC(), GetWidth(), GetHeight());
 		// and select it
 		::SelectObject(m_hDC, m_hBMP);
 	} else {
@@ -487,43 +491,52 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 }
 
 //-------------------------------------
-void CXBitmap::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
+void CXBitmap::Draw(IBitmap *pBmp, int OffsetX, int OffsetY) {
 	if(IsNull())
 		return;
 	if(pBmp == NULL)
 		return;
-	if(pBmp->GetDC() == NULL)
+	CXBitmap *pBitmap = dynamic_cast<CXBitmap *>(pBmp);
+	if(pBitmap == NULL)
 		return;
-	::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
+	if(pBitmap->GetDC() == NULL)
+		return;
+	::BitBlt(m_hDC, OffsetX, OffsetY, pBitmap->GetWidth(), pBitmap->GetHeight(), pBitmap->GetDC(), 0, 0, SRCCOPY);
 }
 
 //-------------------------------------
-void CXBitmap::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
+void CXBitmap::Blend(IBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
 	if(IsNull())
 		return;
 	if(pBmp == NULL)
 		return;
-	if(pBmp->GetDC() == NULL)
+	CXBitmap *pBitmap = dynamic_cast<CXBitmap *>(pBmp);
+	if(pBitmap == NULL)
+		return;
+	if(pBitmap->GetDC() == NULL)
 		return;
 	BLENDFUNCTION bf;
 	bf.BlendOp = AC_SRC_OVER;
 	bf.BlendFlags = 0;
 	bf.SourceConstantAlpha = static_cast<unsigned char>(256.0*Alpha/100);
 	bf.AlphaFormat = 0;
-	::AlphaBlend(	m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), 
-					pBmp->GetDC(), 0, 0, pBmp->GetWidth(), pBmp->GetHeight(), 
+	::AlphaBlend(	m_hDC, OffsetX, OffsetY, pBitmap->GetWidth(), pBitmap->GetHeight(), 
+					pBitmap->GetDC(), 0, 0, pBitmap->GetWidth(), pBitmap->GetHeight(), 
 					bf);
 }
 
 //-------------------------------------
-void CXBitmap::DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) {
+void CXBitmap::DrawTransparent(IBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) {
 	if(IsNull())
 		return;
 	if(pBmp == NULL)
 		return;
-	if(pBmp->GetDC() == NULL)
+	CXBitmap *pBitmap = dynamic_cast<CXBitmap *>(pBmp);
+	if(pBitmap == NULL)
+		return;
+	if(pBitmap->GetDC() == NULL)
 		return;
 	::TransparentBlt(	m_hDC, XTarget, YTarget, Width, Height,
-						pBmp->GetDC(), XSource, YSource, Width, Height, 
+						pBitmap->GetDC(), XSource, YSource, Width, Height, 
 						CXRGB2COLORREF(TrColor));
 }
