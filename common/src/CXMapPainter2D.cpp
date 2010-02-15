@@ -34,6 +34,7 @@
 #include "CXReadLocker.hpp"
 #include "CXDebugInfo.hpp"
 #include "CXMapMovingDetails.hpp"
+#include "CXDeviceContext.hpp"
 
 #include <math.h>
 
@@ -331,30 +332,53 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 	
 	CXRGB Color = m_AreaColorHolder.GetColor(eAreaType);
 	size_t cnt = pAreas->GetSize();
-	if(cnt != 0) {
-		// now iterate through Areas
-		for(size_t i=0; i<cnt; i++) {
-			CXArea *pArea = (*pAreas)[i];
-			/// \todo implement holes
-			CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
-			size_t NodeCount = pOuterNodeList->GetNodeCount();
-			for(size_t j=0; j<NodeCount; j++) {
-				CXNode *pNode = pOuterNodeList->GetNode(j);
+	if(cnt == 0)
+		return;
+
+	// check if we must draw some holes
+	bool oHolesPresent = false;
+	for(size_t a=0; a<cnt; a++) {
+		CXArea *pArea = (*pAreas)[a];
+		if(pArea->GetHoleCount() != 0) {
+			oHolesPresent = true;
+			break;
+		}
+	}
+
+	IBitmap *pDrawBMP = pBMP;
+	if(oHolesPresent) {
+		pDrawBMP = new CXBitmap();
+		pDrawBMP->Create(pBMP->GetDeviceContext(), pBMP->GetWidth(), pBMP->GetHeight());
+		tIRect ClientRect(0,0,pDrawBMP->GetWidth(),pDrawBMP->GetHeight());
+		// draw backgound
+		pDrawBMP->DrawRect(ClientRect, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
+	}
+	// now iterate through Areas
+	for(size_t i=0; i<cnt; i++) {
+		CXArea *pArea = (*pAreas)[i];
+		CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
+		size_t NodeCount = pOuterNodeList->GetNodeCount();
+		for(size_t j=0; j<NodeCount; j++) {
+			CXNode *pNode = pOuterNodeList->GetNode(j);
+			pX[j] = pNode->GetDisplayX();
+			pY[j] = pNode->GetDisplayY();
+		}
+		pDrawBMP->Polygon(pX, pY, NodeCount, Color, Color);
+		for(size_t h=0; h<pArea->GetHoleCount(); h++) {
+			CXOrderedNodeList *pHole = pArea->GetHole(h);
+			size_t HoleNodeCount = pHole->GetNodeCount();
+			for(size_t j=0; j<HoleNodeCount; j++) {
+				CXNode *pNode = pHole->GetNode(j);
 				pX[j] = pNode->GetDisplayX();
 				pY[j] = pNode->GetDisplayY();
 			}
-			pBMP->Polygon(pX, pY, NodeCount, /*Color*/CXRGB(0x00, 0x00, 0x00), Color);
-			for(size_t h=0; h<pArea->GetHoleCount(); h++) {
-				CXOrderedNodeList *pHole = pArea->GetHole(h);
-				size_t HoleNodeCount = pHole->GetNodeCount();
-				for(size_t j=0; j<HoleNodeCount; j++) {
-					CXNode *pNode = pHole->GetNode(j);
-					pX[j] = pNode->GetDisplayX();
-					pY[j] = pNode->GetDisplayY();
-				}
-				pBMP->Polygon(pX, pY, HoleNodeCount, CXRGB(0xff, 0xff, 0x00), CXRGB(0xff,0x00, 0x00));
-			}
+			pDrawBMP->Polygon(pX, pY, HoleNodeCount, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
 		}
+	}
+	if(oHolesPresent) {
+		/// \todo DrawTransparent only for modified region
+		pBMP->DrawTransparent(pDrawBMP, 0, 0, 0, 0, pDrawBMP->GetWidth(), pDrawBMP->GetHeight(), COLOR_TRANSPARENT);
+		delete pDrawBMP;
 	}
 }
 

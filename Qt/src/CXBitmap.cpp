@@ -63,9 +63,10 @@ bool CXBitmap::IsNull() {
 }
 
 //-------------------------------------
-bool CXBitmap::Create(CXDeviceContext * /*pDC*/, int Width, int Height) {
+bool CXBitmap::Create(IDeviceContext *pDC, int Width, int Height) {
 	Destroy();
 	// create new image and new painter
+	SetDeviceContext(pDC);
 	SetWidth(Width);
 	SetHeight(Height);
 	m_pImage =new QImage(GetWidth(), GetHeight(), QImage::Format_RGB32);
@@ -459,41 +460,49 @@ bool CXBitmap::LoadFromFile(const CXStringASCII & FileName) {
 }
 
 //-------------------------------------
-void CXBitmap::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
+void CXBitmap::Draw(IBitmap *pBmp, int OffsetX, int OffsetY) {
 	if(IsNull())
 		return;
 	if(pBmp == NULL)
 		return;
-
-	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
-	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
-	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+	CXBitmap *pBitmap = dynamic_cast<CXBitmap *>(pBmp);
+	if(pBitmap == NULL)
+		return;
+	QRect src(0, 0, pBitmap->GetWidth(), pBitmap->GetHeight());
+	QRect tgt(OffsetX, OffsetY, pBitmap->GetWidth(), pBitmap->GetHeight());
+	m_pPainter->drawImage(tgt, *pBitmap->GetImage(), src);
 }
 
 //-------------------------------------
-void CXBitmap::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
+void CXBitmap::Blend(IBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
 	if(IsNull())
 		return;
 	if(pBmp == NULL)
 		return;
+	CXBitmap *pBitmap = dynamic_cast<CXBitmap *>(pBmp);
+	if(pBitmap == NULL)
+		return;
 
-	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
-	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+	QRect src(0, 0, pBitmap->GetWidth(), pBitmap->GetHeight());
+	QRect tgt(OffsetX, OffsetY, pBitmap->GetWidth(), pBitmap->GetHeight());
 	qreal Opacity = m_pPainter->opacity();
 	m_pPainter->setOpacity(Alpha/100.0);
-	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+	m_pPainter->drawImage(tgt, *pBitmap->GetImage(), src);
 	m_pPainter->setOpacity(Opacity);
 }
 
 //-------------------------------------
-void CXBitmap::DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) {
+void CXBitmap::DrawTransparent(IBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) {
 	if(IsNull())
 		return;
 	if(pBmp == NULL)
 		return;
+	CXBitmap *pBitmap = dynamic_cast<CXBitmap *>(pBmp);
+	if(pBitmap == NULL)
+		return;
 
 	QRect src(XSource, YSource, Width, Height);
-	QImage cpy = pBmp->GetImage()->copy(src);
+	QImage cpy = pBitmap->GetImage()->copy(src);
 	QImage mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskOutColor);
 	cpy.setAlphaChannel(mask);
 	src = QRect(0, 0, Width, Height);

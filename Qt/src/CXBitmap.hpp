@@ -74,7 +74,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual bool Create(CXDeviceContext *pDC, int Width, int Height);
+	virtual bool Create(IDeviceContext *pDC, int Width, int Height);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -194,19 +194,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
+	virtual void Draw(IBitmap *pBmp, int OffsetX, int OffsetY);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
+	virtual void Blend(IBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	virtual void DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor);
+	virtual void DrawTransparent(IBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor);
 };
 
 #endif // __IBITMAP_HPP__

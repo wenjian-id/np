@@ -28,8 +28,7 @@
 #include "CXStringASCII.hpp"
 #include "CXStringUTF8.hpp"
 
-class CXDeviceContext;
-class CXBitmap;
+class IDeviceContext;
 class CXPen;
 
 //---------------------------------------------------------------------
@@ -39,13 +38,20 @@ class CXPen;
  */
 class IBitmap {
 private:
-	int				m_Width;	///< oiu
-	int				m_Height;	///< oiu
-	CXStringASCII	m_FileName;	///< oiu
+	IDeviceContext	*m_pDeviceContext;	///< oiu
+	int				m_Width;			///< oiu
+	int				m_Height;			///< oiu
+	CXStringASCII	m_FileName;			///< oiu
 	//-------------------------------------
 	IBitmap(const IBitmap &);							///< Not used.
 	const IBitmap & operator = (const IBitmap &);		///< Not used.
 protected:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetDeviceContext(IDeviceContext *NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -84,6 +90,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	IDeviceContext *GetDeviceContext() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	int GetWidth() const;
 	//-------------------------------------
 	/**
@@ -102,7 +114,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual bool Create(CXDeviceContext *pDC, int Width, int Height) = 0;
+	virtual bool Create(IDeviceContext *pDC, int Width, int Height) = 0;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -120,7 +132,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void Resize(CXDeviceContext *pDC, int Width, int Height);
+	virtual void Resize(IDeviceContext *pDC, int Width, int Height);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -222,19 +234,19 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) = 0;
+	virtual void Draw(IBitmap *pBmp, int OffsetX, int OffsetY) = 0;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) = 0;
+	virtual void Blend(IBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) = 0;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	virtual void DrawTransparent(CXBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) = 0;
+	virtual void DrawTransparent(IBitmap *pBmp, int XTarget, int YTarget, int XSource, int YSource, int Width, int Height, const CXRGB & TrColor) = 0;
 };
 
 #endif // __IBITMAP_HPP__

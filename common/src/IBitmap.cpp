@@ -21,10 +21,11 @@
  ***************************************************************************/
 
 #include "IBitmap.hpp"
-#include "CXDeviceContext.hpp"
+#include "IDeviceContext.hpp"
 
 //-------------------------------------
 IBitmap::IBitmap() :
+	m_pDeviceContext(NULL),
 	m_Width(0),
 	m_Height(0)
 {
@@ -32,6 +33,11 @@ IBitmap::IBitmap() :
 
 //-------------------------------------
 IBitmap::~IBitmap() {
+}
+
+//-------------------------------------
+void IBitmap::SetDeviceContext(IDeviceContext *NewValue) {
+	m_pDeviceContext = NewValue;
 }
 
 //-------------------------------------
@@ -50,6 +56,11 @@ void IBitmap::SetFileName(const CXStringASCII & FileName) {
 }
 
 //-------------------------------------
+IDeviceContext *IBitmap::GetDeviceContext() const {
+	return m_pDeviceContext;
+}
+
+//-------------------------------------
 int IBitmap::GetWidth() const {
 	return m_Width;
 }
@@ -65,7 +76,7 @@ CXStringASCII IBitmap::GetFileName() const {
 }
 
 //-------------------------------------
-void IBitmap::Resize(CXDeviceContext *pDC, int Width, int Height) {
+void IBitmap::Resize(IDeviceContext *pDC, int Width, int Height) {
 	// destroy old bitmap
 	Destroy();
 	if(pDC == NULL)
