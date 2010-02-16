@@ -9,9 +9,9 @@ CRCCheck force                                                      ; force CRC 
 ; The name of the installer
 Name "NaviPOWM"
 
-!define Version "0.2.3"                                             ; version string
+!define Version "0.2.4"                                             ; version string
 !ifdef USE_QT
-    !define QtVersion "4.5.1"                                       ; version of Qt
+    !define QtVersion "4.6.2"                                       ; version of Qt
     !define QtDLLPath "C:\Qt\${QtVersion}\bin\"                     ; path for Qt DLLs
 !endif
 

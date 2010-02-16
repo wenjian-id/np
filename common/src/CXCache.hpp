@@ -134,6 +134,7 @@ private:
 private:
 	size_t								m_NominalCacheSize;		///< oiu
 	CXMapSort<tKey, CXCacheHelper *>	m_Values;				///< oiu
+	static const tKey					NPOS;					///< oiu
 	//-------------------------------------
 	CXCache();										///< Not used.
 	CXCache(const CXCache &);						///< Not used.
@@ -174,7 +175,7 @@ public:
 		CXCacheHelper *pDel = NULL;
 		CXPOSMapSort<tKey> Pos = m_Values.GetStart();
 		int MaxCount = -1;
-		tKey DelKey;
+		tKey DelKey = NPOS;
 		while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
 			if(pTmp->GetCounter() > MaxCount) {
 				// found new maximum
@@ -237,5 +238,7 @@ public:
 		}
 	}
 };
+
+template<class tKey, class tValue> const tKey CXCache<tKey, tValue>::NPOS = (~(tKey(0)));	///< oiu
 
 #endif //__CXCACHE_HPP__
