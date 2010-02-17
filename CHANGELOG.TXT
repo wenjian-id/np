@@ -7,6 +7,8 @@ Version 0.2.4:
  - implemented feature requests:
    - 2949605: Make size of zoom button configurable
  - other:
+   - switched to Qt 4.6.2 and MinGW with g++ 4.4.0 on Windows
+   - implemented coastlines
 
 Version 0.2.3:
  - fixed bugs:
