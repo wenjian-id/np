@@ -32,8 +32,12 @@
 
 //-------------------------------------
 CXInfoBarSpeed::CXInfoBarSpeed() :
-	m_TextRect(0,0,1,1),
-	m_FontSize(20)
+	m_TextRect1(0,0,1,1),
+	m_TextRect2(0,0,1,1),
+	m_TextRect3(0,0,1,1),
+	m_FontSize1(20),
+	m_FontSize2(20),
+	m_FontSize3(20)
 {
 }
 
@@ -66,28 +70,39 @@ void CXInfoBarSpeed::CreateBitmaps(CXDeviceContext *pDC) {
 	m_CircleBmp.DrawCircle(Width/2, Height/2, static_cast<int>(floor(WhiteRadius)), CXRGB(0xFF, 0xFF, 0xFF), CXRGB(0xFF, 0xFF, 0xFF));
 
 	// calc text size
-	char buf[10];
-	sprintf(buf, "%d", 999);
+	CalcFonts("9", WhiteRadius, m_TextRect1, m_FontSize1);
+	// position speed
+	m_TextRect1.OffsetRect((ClientRect.GetWidth() - m_TextRect1.GetWidth())/2, (ClientRect.GetHeight() - m_TextRect1.GetHeight())/2);
+	// calc text size
+	CalcFonts("99", WhiteRadius, m_TextRect2, m_FontSize2);
+	// position speed
+	m_TextRect2.OffsetRect((ClientRect.GetWidth() - m_TextRect2.GetWidth())/2, (ClientRect.GetHeight() - m_TextRect2.GetHeight())/2);
+	// calc text size
+	CalcFonts("999", WhiteRadius, m_TextRect3, m_FontSize3);
+	// position speed
+	m_TextRect3.OffsetRect((ClientRect.GetWidth() - m_TextRect3.GetWidth())/2, (ClientRect.GetHeight() - m_TextRect3.GetHeight())/2);
 
+}
+
+//-------------------------------------
+void CXInfoBarSpeed::CalcFonts(const CXStringASCII &SpeedStr, double WhiteRadius, tIRect & rRect, int & rFontSize) {
 	// fit text to white circle
 	double Radius = 1.5*WhiteRadius;
-	m_FontSize = static_cast<int>(floor(Radius));
+	rFontSize = static_cast<int>(floor(Radius));
 	for(;;) {
-		m_CircleBmp.SetFont(static_cast<int>(floor(m_FontSize)), true);
-		m_TextRect = m_CircleBmp.CalcTextRectASCII(buf, 2, 2);
-		if(m_TextRect.GetWidth()*m_TextRect.GetWidth() + m_TextRect.GetHeight()*m_TextRect.GetHeight() > 4*WhiteRadius*WhiteRadius) {
+		m_CircleBmp.SetFont(static_cast<int>(floor(rFontSize)), true);
+		rRect = m_CircleBmp.CalcTextRectASCII(SpeedStr, 2, 2);
+		if(rRect.GetWidth()*rRect.GetWidth() + rRect.GetHeight()*rRect.GetHeight() > 4*WhiteRadius*WhiteRadius) {
 			// does not fit
-			m_FontSize--;
+			rFontSize--;
 		} else {
 			break;
 		}
-		if(m_FontSize <= 5)
+		if(rFontSize <= 5)
 			break;
 	}
-	// position speed
-	m_TextRect.OffsetRect((ClientRect.GetWidth() - m_TextRect.GetWidth())/2, (ClientRect.GetHeight() - m_TextRect.GetHeight())/2);
-
 }
+
 
 //-------------------------------------
 void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
@@ -101,10 +116,19 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		CXBitmap Bmp;
 		Bmp.Create(pDC, Width, Height);
 		Bmp.Draw(&m_CircleBmp, 0, 0);
-		Bmp.SetFont(m_FontSize, true);
+		int MaxSpeed = static_cast<int>(m_NaviData.GetMaxSpeed());
 		char buf[10];
-		sprintf(buf, "%d", static_cast<int>(m_NaviData.GetMaxSpeed()));
-		Bmp.DrawTextASCII(buf, m_TextRect, CXRGB(0x00, 0x00, 0x00));
+		sprintf(buf, "%d", MaxSpeed);
+		if(MaxSpeed < 10) {
+			Bmp.SetFont(m_FontSize1, true);
+			Bmp.DrawTextASCII(buf, m_TextRect1, CXRGB(0x00, 0x00, 0x00));
+		} else if(MaxSpeed < 100) {
+			Bmp.SetFont(m_FontSize2, true);
+			Bmp.DrawTextASCII(buf, m_TextRect2, CXRGB(0x00, 0x00, 0x00));
+		} else {
+			Bmp.SetFont(m_FontSize3, true);
+			Bmp.DrawTextASCII(buf, m_TextRect3, CXRGB(0x00, 0x00, 0x00));
+		}
 		pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
 	}
 }

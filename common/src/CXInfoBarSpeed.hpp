@@ -36,8 +36,12 @@ class CXInfoBarSpeed : public CXInfoBar {
 private:
 	CXNaviData			m_NaviData;		///< oiu
 	CXBitmap			m_CircleBmp;	///< oiu
-	tIRect				m_TextRect;		///< oiu
-	int					m_FontSize;		///< oiu
+	tIRect				m_TextRect1;	///< oiu
+	tIRect				m_TextRect2;	///< oiu
+	tIRect				m_TextRect3;	///< oiu
+	int					m_FontSize1;	///< oiu
+	int					m_FontSize2;	///< oiu
+	int					m_FontSize3;	///< oiu
 	//-------------------------------------
 	CXInfoBarSpeed(const CXInfoBarSpeed &);						///< Not used.
 	const CXInfoBarSpeed & operator = (const CXInfoBarSpeed &);	///< Not used.
@@ -53,6 +57,12 @@ private:
 	 *
 	 */
 	void CreateBitmaps(CXDeviceContext *pDC);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void CalcFonts(const CXStringASCII &SpeedStr, double WhiteRadius, tIRect & rRect, int & rFontSize);
 protected:
 public:
 	//-------------------------------------

@@ -40,7 +40,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010305; // 0.1.3-dev5
+const unsigned int SECTVERSION	= 0x00010306; // 0.1.3-dev6
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -153,12 +153,13 @@ enum E_BIT_COUNT {
  *
  */
 enum E_TAG_TYPE {
-	e_Tag_Name			= 0x0001,	///< oiu
-	e_Tag_Ref			= 0x0002,	///< oiu
-	e_Tag_IntRef		= 0x0004,	///< oiu
-	e_Tag_Layer			= 0x0008,	///< oiu
-	e_Tag_MaxSpeed		= 0x0010,	///< oiu
-	e_Tag_Oneway		= 0x0020,	///< oiu
+	e_Tag_Name				= 0x0001,	///< oiu
+	e_Tag_Ref				= 0x0002,	///< oiu
+	e_Tag_IntRef			= 0x0004,	///< oiu
+	e_Tag_Layer				= 0x0008,	///< oiu
+	e_Tag_MaxSpeedForward	= 0x0010,	///< oiu
+	e_Tag_MaxSpeedBackward	= 0x0020,	///< oiu
+	e_Tag_Oneway			= 0x0040,	///< oiu
 };
 
 //-------------------------------------
@@ -583,12 +584,14 @@ enum E_WAY_TYPE {	// must fit the values in the map file!!!
 	e_Way_Pedestrian		= 0x11,		///< oiu
 	e_Way_Steps				= 0x12,		///< oiu
 	e_Way_LivingStreet		= 0x13,		///< oiu
-	e_Way_NationalBorder	= 0x14,		///< oiu
-	e_Way_Railway_Thick		= 0x15,		///< oiu
-	e_Way_Railway_Thin		= 0x16,		///< oiu
-	e_Way_Water_Thick		= 0x17,		///< oiu
-	e_Way_Water_Thin		= 0x18,		///< oiu
-	e_Way_EnumCount			= 0x19,		///< oiu
+	e_Way_Railway_Thick		= 0x14,		///< oiu
+	e_Way_Railway_Thin		= 0x15,		///< oiu
+	e_Way_Water_Thick		= 0x16,		///< oiu
+	e_Way_Water_Thin		= 0x17,		///< oiu
+	e_Way_BorderThick		= 0x18,		///< oiu
+	e_Way_BorderMedium		= 0x19,		///< oiu
+	e_Way_BorderThin		= 0x1A,		///< oiu
+	e_Way_EnumCount			= 0x1B,		///< oiu
 };
 
 //-------------------------------------

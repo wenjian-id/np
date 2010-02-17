@@ -28,7 +28,8 @@ CXWay::CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 
 	m_Name(Name),
 	m_Ref(Ref),
 	m_IntRef(IntRef),
-	m_MaxSpeed(0),
+	m_MaxSpeedForward(0),
+	m_MaxSpeedBackward(0),
 	m_Layer(0),
 	m_eOneway(e_Oneway_None),
 	m_oOSMValiOK(true),
@@ -71,13 +72,23 @@ CXStringUTF8 CXWay::GetIntRef() const {
 }
 
 //-------------------------------------
-void CXWay::SetMaxSpeed(unsigned char NewValue) {
-	m_MaxSpeed = NewValue;
+void CXWay::SetMaxSpeedForward(unsigned char NewValue) {
+	m_MaxSpeedForward = NewValue;
 }
 
 //-------------------------------------
-unsigned char CXWay::GetMaxSpeed() const {
-	return m_MaxSpeed;
+unsigned char CXWay::GetMaxSpeedForward() const {
+	return m_MaxSpeedForward;
+}
+
+//-------------------------------------
+void CXWay::SetMaxSpeedBackward(unsigned char NewValue) {
+	m_MaxSpeedBackward = NewValue;
+}
+
+//-------------------------------------
+unsigned char CXWay::GetMaxSpeedBackward() const {
+	return m_MaxSpeedBackward;
 }
 
 //-------------------------------------

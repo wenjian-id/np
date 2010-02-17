@@ -39,7 +39,8 @@ private:
 	CXStringUTF8		m_Name;				///< oiu
 	CXStringUTF8		m_Ref;				///< oiu
 	CXStringUTF8		m_IntRef;			///< oiu
-	unsigned char		m_MaxSpeed;			///< oiu 0 means no max speed
+	unsigned char		m_MaxSpeedForward;	///< oiu 0 means no max speed
+	unsigned char		m_MaxSpeedBackward;	///< oiu 0 means no max speed
 	char				m_Layer;			///< oiu
 	E_ONEWAY_TYPE		m_eOneway;			///< oiu
 	bool				m_oOSMValiOK;		///< oiu
@@ -104,13 +105,25 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetMaxSpeed(unsigned char NewValue);
+	void SetMaxSpeedForward(unsigned char NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	unsigned char GetMaxSpeed() const;
+	unsigned char GetMaxSpeedForward() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetMaxSpeedBackward(unsigned char NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	unsigned char GetMaxSpeedBackward() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

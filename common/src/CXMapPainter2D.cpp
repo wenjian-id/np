@@ -72,7 +72,9 @@ E_WAY_TYPE WayOrder[e_Way_EnumCount] = {
 	e_Way_Primary,
 	e_Way_Trunk,
 	e_Way_Motorway,
-	e_Way_NationalBorder,
+	e_Way_BorderThick,
+	e_Way_BorderMedium,
+	e_Way_BorderThin,
 };
 
 E_AREA_TYPE AreaOrder[e_Area_EnumCount] = {

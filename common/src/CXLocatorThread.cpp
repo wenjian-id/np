@@ -503,6 +503,7 @@ void CXLocatorThread::Locate() {
 	StartTime.SetNow();
 
 	CXWay *pProxWay = NULL;
+	bool oForward = true;
 	MapSectionSize = MapSections.GetSize();
 	for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
 		for(size_t idx=0; idx<MapSectionSize; idx++) {
@@ -634,6 +635,8 @@ void CXLocatorThread::Locate() {
 											dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);
 											// calc fitness
 											double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
+											// check if we move forward on way
+											bool oFwdNMove = (dCos >= 0);
 											/// \todo take into account mode for oneways!
 											switch(eOneway) {
 												case e_Oneway_None:		dCos = fabs(dCos); break;	// no oneway
@@ -649,6 +652,7 @@ void CXLocatorThread::Locate() {
     											pProxWay = pWay;
 												PSProxx = PSx;
 												PSProxy = PSy;
+												oForward = oFwdNMove;
     										}
 										}
 									}
@@ -685,7 +689,10 @@ void CXLocatorThread::Locate() {
 		Name = pProxWay->GetName();
 		Ref = pProxWay->GetRef();
 		IntRef = pProxWay->GetIntRef();
-		MaxSpeed = pProxWay->GetMaxSpeed();
+		if(oForward)
+			MaxSpeed = pProxWay->GetMaxSpeedForward();
+		else
+			MaxSpeed = pProxWay->GetMaxSpeedBackward();
 		m_NaviData.SetStreetName(Name);
 		m_NaviData.SetRef(Ref);
 		m_NaviData.SetIntRef(IntRef);
