@@ -5,10 +5,12 @@ Version 0.2.4:
    - 2864848: reopen serial port if open not successfully
    - 2865065: buildings & OSM validation
  - implemented feature requests:
+   - 2865072: country boundaries too thick
    - 2949605: Make size of zoom button configurable
  - other:
    - switched to Qt 4.6.2 and MinGW with g++ 4.4.0 on Windows
    - implemented coastlines
+   - more boundary types
 
 Version 0.2.3:
  - fixed bugs:
