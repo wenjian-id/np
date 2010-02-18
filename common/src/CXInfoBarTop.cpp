@@ -192,16 +192,20 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 			StrTime = buf;
 		} else {
 			CXStringASCII Tmp = m_NaviData.GetUTC();
-			CXStringASCII Chunk = Tmp.Left(2);
-			int Hour = 0;
-			sscanf(Chunk.c_str(), "%d", &Hour);
-			Tmp.DeleteFirst(2);
-			// minutes
-			Chunk = Tmp.Left(2);
-			int Minute = 0;
-			sscanf(Chunk.c_str(), "%d", &Minute);
-			snprintf(buf, 10, "%02d:%02d", Hour, Minute);
-			StrTime = buf;
+			if(Tmp.IsEmpty()) {
+				StrTime = "--:--";
+			} else {
+				CXStringASCII Chunk = Tmp.Left(2);
+				int Hour = 0;
+				sscanf(Chunk.c_str(), "%d", &Hour);
+				Tmp.DeleteFirst(2);
+				// minutes
+				Chunk = Tmp.Left(2);
+				int Minute = 0;
+				sscanf(Chunk.c_str(), "%d", &Minute);
+				snprintf(buf, 10, "%02d:%02d", Hour, Minute);
+				StrTime = buf;
+			}
 		}
 
 		// draw time
