@@ -184,14 +184,28 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 			Bmp.DrawLine(m_ZoomRect.GetLeft(), BorderY + (Height/2-BorderY)/2, m_ZoomRect.GetLeft() + dx, BorderY + (Height/2-BorderY)/2);
 		}
 
-
-		// get current time
-		CXExactTime Now;
-		snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
-		CXStringASCII StrNow(buf);
+		CXStringASCII StrTime;
+		if(CXOptions::Instance()->MustShowCurrentTime()) {
+			// get current time
+			CXExactTime Now;
+			snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
+			StrTime = buf;
+		} else {
+			CXStringASCII Tmp = m_NaviData.GetUTC();
+			CXStringASCII Chunk = Tmp.Left(2);
+			int Hour = 0;
+			sscanf(Chunk.c_str(), "%d", &Hour);
+			Tmp.DeleteFirst(2);
+			// minutes
+			Chunk = Tmp.Left(2);
+			int Minute = 0;
+			sscanf(Chunk.c_str(), "%d", &Minute);
+			snprintf(buf, 10, "%02d:%02d", Hour, Minute);
+			StrTime = buf;
+		}
 
 		// draw time
-		Bmp.DrawTextASCII(StrNow, m_TimeRect, CXRGB(0xff, 0xff, 0x00), BgColor);
+		Bmp.DrawTextASCII(StrTime, m_TimeRect, CXRGB(0xff, 0xff, 0x00), BgColor);
 	}
 
 	// draw
@@ -223,6 +237,8 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
 //-------------------------------------
 E_COMMAND CXInfoBarTop::OnInternalMouseDown(int X, int Y) {
+	if(m_TimeRect.Contains(X, Y))
+		  return e_CmdClock;
 	if(m_InfoRect.Contains(X, Y))
 		return e_CmdInfo;
 	if(m_SatRect.Contains(X, Y))

@@ -67,6 +67,7 @@ void CXNaviData::CopyFrom(const CXNaviData &rOther) {
 	m_IntRef			= rOther.m_IntRef;
 	m_MaxSpeed			= rOther.m_MaxSpeed;
 	m_oLocated			= rOther.m_oLocated;
+	m_UTC				= rOther.m_UTC;
 }
 
 //-------------------------------------
@@ -140,6 +141,19 @@ void CXNaviData::SetLocatedCoor(const CXCoor &Coor) {
 	CXWriteLocker WL(&m_RWLock);
 	m_LocatedCoor = Coor;
 }
+
+//-------------------------------------
+CXStringASCII CXNaviData::GetUTC() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_UTC;
+}
+
+//-------------------------------------
+void CXNaviData::SetUTC(const CXStringASCII &NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_UTC = NewValue;
+}
+
 
 //-------------------------------------
 CXUTMSpeed CXNaviData::GetUTMSpeed() const {

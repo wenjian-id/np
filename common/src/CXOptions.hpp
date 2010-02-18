@@ -105,6 +105,7 @@ private:
 	bool						m_oShowPOIs;					///< Show some POIs.
 	bool						m_oShowCities;					///< Show Cities.
 	bool						m_oSnapToWay;					///< oiu
+	bool						m_oShowCurrentTime;				///< oiu
 	E_START_WITH_LAST_POS		m_eStartWithLastPosition;		///< oiu
 	CXCoor						m_StartPosition;
 	bool						m_oMapMovingManually;			///< oiu
@@ -702,6 +703,18 @@ public:
 	 *
 	 */
 	void SetSnapToWayFlag(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowCurrentTime() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void ToggleShowCurrentTime();
 	//-------------------------------------
 	/**
 	 * \brief oiu

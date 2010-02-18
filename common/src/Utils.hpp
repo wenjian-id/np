@@ -107,6 +107,7 @@ enum E_COMMAND {
 	e_CmdMinimize,			///< Minimize.
 	e_CmdAutoZoom,			///< Auto zoom.
 	e_CmdMapMoveManually,	///< Move map around.
+	e_CmdClock,				///< Switch clock display.
 };
 
 

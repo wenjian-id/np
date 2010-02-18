@@ -222,6 +222,8 @@ void CXLocatorThread::OnThreadLoop() {
 		CXRMCPacket RMCData;
 		if(ExtractRMCData(Line, RMCData)) {
 			// OK, valid data arrived
+			// set UTC
+			m_NaviData.SetUTC(RMCData.GetUTC());
 			oHasFix = RMCData.HasFix();
 			m_LastReceivedPosition.SetNow();
 			// check fix
@@ -250,6 +252,8 @@ void CXLocatorThread::OnThreadLoop() {
 		CXGGAPacket GGAData;
 		if(ExtractGGAData(Line, GGAData)) {
 			// OK, valid GGA data arrived
+			// set UTC
+			m_NaviData.SetUTC(GGAData.GetUTC());
 			oHasFix = GGAData.HasFix();
 			m_LastReceivedPosition.SetNow();
 			// set number of satellites

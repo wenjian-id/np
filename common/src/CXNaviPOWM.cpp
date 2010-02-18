@@ -537,6 +537,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
 										DoRequestRepaint();
 										break;
 									}
+		case e_CmdClock:			CXOptions::Instance()->ToggleShowCurrentTime(); DoRequestRepaint(); break;
 		default:					{
 										if(CXOptions::Instance()->IsMapMovingManually()) {
 											if(m_MapPos.Contains(X, Y))

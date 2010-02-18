@@ -27,6 +27,7 @@
 #include "CXCoor.hpp"
 #include "CXUTMSpeed.hpp"
 #include "CXStringUTF8.hpp"
+#include "CXStringASCII.hpp"
 #include <TargetIncludes.hpp>
 
 //----------------------------------------------------------------------------
@@ -48,6 +49,7 @@ private:
 	CXStringUTF8		m_IntRef;			///< Int Ref of street.
 	unsigned char		m_MaxSpeed;			///< Max. allowed speed.
 	bool				m_oLocated;			///< Is located on a way or not.
+	CXStringASCII		m_UTC;				///< UTC
 	mutable CXRWLock	m_RWLock;			///< Synchronization object.
 	//-------------------------------------
 	/**
@@ -162,6 +164,18 @@ public:
 	 *
 	 */
 	void SetLocatedCoor(const CXCoor &Coor);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetUTC() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetUTC(const CXStringASCII &NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

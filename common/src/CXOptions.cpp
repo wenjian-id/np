@@ -56,6 +56,7 @@ CXOptions::CXOptions() :
 	m_oShowPOIs(false),
 	m_oShowCities(true),
 	m_oSnapToWay(false),
+	m_oShowCurrentTime(true),
 	m_eStartWithLastPosition(e_SWLP_None),
 	m_oMapMovingManually(false),
 	m_WatchdogTimeout(0),
@@ -608,6 +609,18 @@ bool CXOptions::MustSnapToWay() const {
 void CXOptions::SetSnapToWayFlag(bool NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oSnapToWay = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowCurrentTime() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowCurrentTime;
+}
+
+//-------------------------------------
+void CXOptions::ToggleShowCurrentTime() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowCurrentTime = !m_oShowCurrentTime;
 }
 
 //-------------------------------------
