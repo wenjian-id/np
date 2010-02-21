@@ -12,6 +12,7 @@ Version 0.2.4:
    - switched to Qt 4.6.2 and MinGW with g++ 4.4.0 on Windows
    - implemented coastlines
    - more boundary types
+   - more POI types
 
 Version 0.2.3:
  - fixed bugs:
