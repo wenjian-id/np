@@ -99,7 +99,10 @@ bool CXPOIVisibilityDescriptor::MustShowPOIType(E_POI_TYPE ePOIType) const {
 		case e_POI_PostOffice:
 		case e_POI_Telephone:
 		case e_POI_PostBox:
-		case e_POI_Toilets:					oVisible = m_oShowAmenities; break;
+		case e_POI_Toilets:
+		case e_POI_Shelter:
+		case e_POI_College:
+		case e_POI_University:				oVisible = m_oShowAmenities; break;
 
 		// public transport
 		case e_POI_BusStop:
@@ -135,7 +138,6 @@ bool CXPOIVisibilityDescriptor::MustShowPOIType(E_POI_TYPE ePOIType) const {
 		case e_POI_PowerTower:
 		case e_POI_PowerSubStation:			oVisible = m_oShowOther; break;
 
-		case e_POI_EnumCount:
 		case e_POI_None:
 		case e_POI_All:						break;
 	}

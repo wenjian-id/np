@@ -40,7 +40,7 @@ class CXGSVSatelliteInfo;
 // Versions
 const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010306; // 0.1.3-dev6
+const unsigned int SECTVERSION	= 0x00010307; // 0.1.3-dev7
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
 const char MINLAYER = -10;							///< Minimum value or layer.
@@ -518,14 +518,15 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_PlcOfWrshp_Shinto		= 0x0027,	///< Shinto church, temple, etc.
 	e_POI_PlcOfWrshp_Taoist		= 0x0028,	///< Taoist church, temple, etc.
 	e_POI_PlcOfWrshp_Unknown	= 0x0029,	///< Unknown church, temple, etc.
-	e_POI_EnumCount				= 0x002A,	///< Number of entries
+	e_POI_Shelter				= 0x002A,	///< Shelter.
+	e_POI_College				= 0x002B,	///< College.
+	e_POI_University			= 0x002C,	///< University.
 
 /*
 	e_POI_Recycling				= 0x0006,	///< Recycling facilities.
 	e_POI_Bank					= 0x000A,	///< Bank.
 	e_POI_FastFood				= 0x000B,	///< Fast food.
 	e_POI_PublicBuilding		= 0x000C,	///< Public building.
-	e_POI_University			= 0x000F,	///< University campus and buildings.
 	e_POI_TownHall				= 0x0013,	///< Town hall.
 	e_POI_GraveYard				= 0x0014,	///< Grave yard.
 	e_POI_Cafe					= 0x0017,	///< Cafe.
@@ -537,7 +538,6 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_BicycleParking		= 0x001D,	///< Parking for bicycles.
 	e_POI_Courthouse			= 0x001E,	///< Courthouse.
 	e_POI_Prison				= 0x001F,	///< Prison.
-	e_POI_College				= 0x0020,	///< College.
 	e_POI_Attraction			= 0x0202,	///< Attraction.
 	e_POI_ViewPoint				= 0x0205,	///< Viewpoint.
 	e_POI_Information			= 0x0206,	///< Information.
