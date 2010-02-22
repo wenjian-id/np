@@ -668,3 +668,36 @@ E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value) {
 	else
 		return e_BG_AREA;
 }
+
+//-------------------------------------
+E_WAY_TYPE WayType012ToCurrentWayType(E_WAY_TYPE_0_1_2 Value) {
+	E_WAY_TYPE Result = e_Way_Unknown;
+	switch(Value) {
+		case e_Way_Fading_0_1_2:			Result = e_Way_Fading; break;
+		case e_Way_Unknown_0_1_2:			Result = e_Way_Unknown; break;
+		case e_Way_Motorway_0_1_2:			Result = e_Way_Motorway; break;
+		case e_Way_MotorwayLink_0_1_2:		Result = e_Way_MotorwayLink; break;
+		case e_Way_Trunk_0_1_2:				Result = e_Way_Trunk; break;
+		case e_Way_TrunkLink_0_1_2:			Result = e_Way_TrunkLink; break;
+		case e_Way_Primary_0_1_2:			Result = e_Way_Primary; break;
+		case e_Way_PrimaryLink_0_1_2:		Result = e_Way_PrimaryLink; break;
+		case e_Way_Secondary_0_1_2:			Result = e_Way_Secondary; break;
+		case e_Way_Tertiary_0_1_2:			Result = e_Way_Tertiary; break;
+		case e_Way_Unclassified_0_1_2:		Result = e_Way_Unclassified; break;
+		case e_Way_Track_0_1_2:				Result = e_Way_Track; break;
+		case e_Way_Residential_0_1_2:		Result = e_Way_Residential; break;
+		case e_Way_Service_0_1_2:			Result = e_Way_Service; break;
+		case e_Way_Bridleway_0_1_2:			Result = e_Way_Bridleway; break;
+		case e_Way_Cycleway_0_1_2:			Result = e_Way_Cycleway; break;
+		case e_Way_Footway_0_1_2:			Result = e_Way_Footway; break;
+		case e_Way_Pedestrian_0_1_2:		Result = e_Way_Pedestrian; break;
+		case e_Way_Steps_0_1_2:				Result = e_Way_Steps; break;
+		case e_Way_LivingStreet_0_1_2:		Result = e_Way_LivingStreet; break;
+		case e_Way_NationalBorder_0_1_2:	Result = e_Way_BorderThick; break;
+		case e_Way_Railway_Thick_0_1_2:		Result = e_Way_Railway_Thick; break;
+		case e_Way_Railway_Thin_0_1_2:		Result = e_Way_Railway_Thin; break;
+		case e_Way_Water_Thick_0_1_2:		Result = e_Way_Water_Thick; break;
+		case e_Way_Water_Thin_0_1_2:		Result = e_Way_Water_Thin; break;
+	}
+	return Result;
+}

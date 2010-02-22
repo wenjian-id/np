@@ -153,6 +153,20 @@ enum E_BIT_COUNT {
  * \brief oiu
  *
  */
+enum E_TAG_TYPE_0_1_2 {
+	e_Tag_Name_0_1_2		= 0x0001,	///< oiu
+	e_Tag_Ref_0_1_2			= 0x0002,	///< oiu
+	e_Tag_IntRef_0_1_2		= 0x0004,	///< oiu
+	e_Tag_Layer_0_1_2		= 0x0008,	///< oiu
+	e_Tag_MaxSpeed_0_1_2	= 0x0010,	///< oiu
+	e_Tag_Oneway_0_1_2		= 0x0020,	///< oiu
+};
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
 enum E_TAG_TYPE {
 	e_Tag_Name				= 0x0001,	///< oiu
 	e_Tag_Ref				= 0x0002,	///< oiu
@@ -564,6 +578,39 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
  * \brief oiu
  *
  */
+enum E_WAY_TYPE_0_1_2 {	// must fit the values in the map file!!!
+	e_Way_Fading_0_1_2			= 0x00,		///< oiu
+	e_Way_Unknown_0_1_2			= 0x01,		///< oiu
+	e_Way_Motorway_0_1_2		= 0x02,		///< oiu
+	e_Way_MotorwayLink_0_1_2	= 0x03,		///< oiu
+	e_Way_Trunk_0_1_2			= 0x04,		///< oiu
+	e_Way_TrunkLink_0_1_2		= 0x05,		///< oiu
+	e_Way_Primary_0_1_2			= 0x06,		///< oiu
+	e_Way_PrimaryLink_0_1_2		= 0x07,		///< oiu
+	e_Way_Secondary_0_1_2		= 0x08,		///< oiu
+	e_Way_Tertiary_0_1_2		= 0x09,		///< oiu
+	e_Way_Unclassified_0_1_2	= 0x0A,		///< oiu
+	e_Way_Track_0_1_2			= 0x0B,		///< oiu
+	e_Way_Residential_0_1_2		= 0x0C,		///< oiu
+	e_Way_Service_0_1_2			= 0x0D,		///< oiu
+	e_Way_Bridleway_0_1_2		= 0x0E,		///< oiu
+	e_Way_Cycleway_0_1_2		= 0x0F,		///< oiu
+	e_Way_Footway_0_1_2			= 0x10,		///< oiu
+	e_Way_Pedestrian_0_1_2		= 0x11,		///< oiu
+	e_Way_Steps_0_1_2			= 0x12,		///< oiu
+	e_Way_LivingStreet_0_1_2	= 0x13,		///< oiu
+	e_Way_NationalBorder_0_1_2	= 0x14,		///< oiu
+	e_Way_Railway_Thick_0_1_2	= 0x15,		///< oiu
+	e_Way_Railway_Thin_0_1_2	= 0x16,		///< oiu
+	e_Way_Water_Thick_0_1_2		= 0x17,		///< oiu
+	e_Way_Water_Thin_0_1_2		= 0x18,		///< oiu
+};
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
 enum E_WAY_TYPE {	// must fit the values in the map file!!!
 	e_Way_Fading			= 0x00,		///< oiu
 	e_Way_Unknown			= 0x01,		///< oiu
@@ -594,6 +641,14 @@ enum E_WAY_TYPE {	// must fit the values in the map file!!!
 	e_Way_BorderThin		= 0x1A,		///< oiu
 	e_Way_EnumCount			= 0x1B,		///< oiu
 };
+
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+E_WAY_TYPE WayType012ToCurrentWayType(E_WAY_TYPE_0_1_2 Value);
+
 
 //-------------------------------------
 /**
