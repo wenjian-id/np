@@ -24,6 +24,7 @@ Name "NaviPOWM"
 !define ImagePath "${MainPath}\common\Images\"                      ; path with images
 !define ConfigPath "${MainPath}\common\Config\"                     ; path with config files
 !define DemoPath "${MainPath}\common\Demo\"                         ; path with demo files
+!define MinGWPath "C:\MinGWStudio\MinGW\bin\"                       ; path with MinGW stuff
 
 
 !ifdef USE_QT
@@ -37,6 +38,10 @@ Name "NaviPOWM"
     !define QtGui4File "${QtDLLPath}\${QtGui4FileName}"
     !define mingwm10File "${QtDLLPath}\${mingwm10FileName}"
 !endif
+
+!define LIBGCC_S_DW2-1FileName "LIBGCC_S_DW2-1.DLL"                  ; LIBGCC_S_DW2-1.DLL
+!define LIBGCC_S_DW2-1File "${MinGWPath}\${LIBGCC_S_DW2-1FileName}"
+
 
 ; Result of compiler
 !ifdef USE_QT
@@ -86,6 +91,7 @@ Section "NaviPOWM (required)" SECT_NaviPOWM     ;
     File "${MainPath}\LICENSE.TXT"
     File "${MainPath}\README.TXT"
     File "${MainPath}\CHANGELOG.TXT"
+    File ${LIBGCC_S_DW2-1File}
 
     ; Icons
     CreateDirectory $INSTDIR\Icons
@@ -195,6 +201,7 @@ Section "Uninstall"
     Delete "$INSTDIR\CHANGELOG.TXT"
     Delete "$INSTDIR\last.gps"
     Delete "$INSTDIR\Save\last.gps"
+    Delete "$INSTDIR\${LIBGCC_S_DW2-1FileName}"
     RmDir $INSTDIR ; will be deleted only if empty
 
 SectionEnd
