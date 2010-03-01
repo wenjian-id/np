@@ -26,8 +26,6 @@
  *   conversion between different coordinate systems                       *
  ***************************************************************************/
 
-/// \todo check correctness of transformations
-
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
