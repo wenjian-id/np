@@ -135,7 +135,7 @@ tIRect CXBitmap::CalcTextRectASCII(const CXStringASCII & Text, int AddWidth, int
 	Rect.top = 0;
 
 	ASCII2UCS2(Text.c_str(), Text.GetSize(), buf, 1024);
-	int res = ::DrawText(m_hDC, buf, -1, &Rect, DT_CALCRECT); 
+	::DrawText(m_hDC, buf, -1, &Rect, DT_CALCRECT); 
 	Result = tIRect(Rect.left, Rect.top, Rect.right - Rect.left + AddWidth, Rect.bottom - Rect.top + AddHeight);
 	// make sure it starts at 0, 0
 	Result.OffsetRect(-Result.GetLeft(), -Result.GetTop());
@@ -188,7 +188,7 @@ tIRect CXBitmap::CalcTextRectUTF8(const CXStringUTF8 & Text, int AddWidth, int A
 	RECT Rect;
 	Rect.left = 0;
 	Rect.top = 0;
-	int res = ::DrawTextW(m_hDC, Text.w_str(), -1, &Rect, DT_CALCRECT); 
+	::DrawTextW(m_hDC, Text.w_str(), -1, &Rect, DT_CALCRECT); 
 	Result = tIRect(Rect.left, Rect.top, Rect.right - Rect.left + AddWidth, Rect.bottom - Rect.top + AddHeight);
 	// make sure it starts at 0, 0
 	Result.OffsetRect(-Result.GetLeft(), -Result.GetTop());

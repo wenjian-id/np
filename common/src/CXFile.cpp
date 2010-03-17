@@ -42,8 +42,7 @@ CXFile::~CXFile() {
 
 //-------------------------------------
 void CXFile::Clear() {
-	if(m_pBuffer != NULL)
-		delete [] m_pBuffer;
+	delete [] m_pBuffer;
 	m_pBuffer = NULL;
 	Close();
 }
@@ -51,8 +50,8 @@ void CXFile::Clear() {
 //-------------------------------------
 void CXFile::ReallocateReadAheadBuffer() {
 	// delete old buffer
-	if(m_pBuffer != NULL)
-		delete [] m_pBuffer;
+	delete [] m_pBuffer;
+	m_pBuffer = NULL;
 	// reallocate buffer
 	m_pBuffer = new unsigned char [m_ReadAheadSize];
 }

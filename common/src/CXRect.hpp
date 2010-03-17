@@ -49,13 +49,6 @@ protected:
 public:
 	//-------------------------------------
 	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXRect();
-	//-------------------------------------
-	/**
 	 * \brief oiu
 	 *
 	 */
@@ -172,11 +165,6 @@ public:
 
 typedef CXRect<int>		tIRect;
 typedef CXRect<double>	tDRect;
-
-//-------------------------------------
-template<class tClass> CXRect<tClass> ::CXRect() {
-	// leave values uninitialized
-}
 
 //-------------------------------------
 template<class tClass> CXRect<tClass> ::CXRect(const tClass &Left, const tClass &Top, const tClass &Width, const tClass &Height) :

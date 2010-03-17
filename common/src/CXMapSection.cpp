@@ -32,6 +32,7 @@
 //-------------------------------------
 CXTOCMapSection::CXTOCMapSection() :
 	m_UID(0),
+	m_ZoomLevel(e_ZoomLevel_0),
 	m_dLonMin(0),
 	m_dLonMax(0),
 	m_dLatMin(0),
@@ -144,42 +145,35 @@ CXMapSection::~CXMapSection() {
 	size_t Size_pl = m_PlaceNodes.GetSize();
 	for(size_t idx_pl = 0; idx_pl < Size_pl; idx_pl++) {
 		CXNode *pNode = m_PlaceNodes[idx_pl];
-		if(pNode != NULL)
-			delete pNode;
+		delete pNode;
 	}
 	// delete POIs
 	size_t Size_poi = m_POINodes.GetSize();
 	for(size_t idx_poi = 0; idx_poi < Size_poi; idx_poi++) {
 		CXNode *pNode = m_POINodes[idx_poi];
-		if(pNode != NULL)
-			delete pNode;
+		delete pNode;
 	}
 	// delete nodes
 	size_t Size_nodes = m_Nodes.GetSize();
 	for(size_t idx_n = 0; idx_n < Size_nodes; idx_n++) {
 		CXNode *pNode = m_Nodes[idx_n];
-		if(pNode != NULL)
-			delete pNode;
+		delete pNode;
 	}
 	size_t Size_nodelists = m_NodeLists.GetSize();
 	for(size_t idx_nl = 0; idx_nl < Size_nodelists; idx_nl++) {
 		CXOrderedNodeList *pNodeList = m_NodeLists[idx_nl];
-		if(pNodeList != NULL)
-			delete pNodeList;
+		delete pNodeList;
 	}
 	size_t Size_ways = m_Ways.GetSize();
 	for(size_t idx_w = 0; idx_w < Size_ways; idx_w++) {
 		CXWay *pWay = m_Ways[idx_w];
-		if(pWay != NULL)
-			delete pWay;
+		delete pWay;
 	}
 	// delete waybuffers
 	size_t Size_waybuffers = m_LayeredWayBuffer.GetSize();
 	for(size_t idx_wb=0; idx_wb<Size_waybuffers; idx_wb++) {
 		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[idx_wb];
-		if(pWayBuffer != NULL) {
-			delete pWayBuffer;
-		}
+		delete pWayBuffer;
 	}
 	m_LayeredWayBuffer.Clear();
 	// delete areas
@@ -190,8 +184,7 @@ CXMapSection::~CXMapSection() {
 			size_t Size = pAreaBuffer->GetSize();
 			for(size_t i=0; i<Size; i++) {
 				CXArea *pArea = (*pAreaBuffer)[i];
-				if(pArea != NULL)
-					delete pArea;
+				delete pArea;
 			}
 			delete pAreaBuffer;
 		}
@@ -515,8 +508,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		TWayBuffer *pWayBuffer = NULL;
 		Ways.Lookup(Layer, pWayBuffer);
 		TWayBuffer *pOld = m_LayeredWayBuffer[Layer - MINLAYER];
-		if(pOld != NULL)
-			delete pOld;
+		delete pOld;
 		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
 	}
 	
@@ -580,8 +572,7 @@ bool CXMapSection::LoadMap_CurrentVersion(CXFile & InFile) {
 		TAreaBuffer *pAreaBuffer = NULL;
 		Areas.Lookup(Layer, pAreaBuffer);
 		TAreaBuffer *pOld = m_LayeredAreaBuffer[Layer - MINLAYER];
-		if(pOld != NULL)
-			delete pOld;
+		delete pOld;
 		m_LayeredAreaBuffer[Layer - MINLAYER] = pAreaBuffer;
 	}
 
@@ -794,8 +785,7 @@ bool CXMapSection::LoadMap_0_1_2(CXFile & InFile) {
 		TWayBuffer *pWayBuffer = NULL;
 		Ways.Lookup(Layer, pWayBuffer);
 		TWayBuffer *pOld = m_LayeredWayBuffer[Layer - MINLAYER];
-		if(pOld != NULL)
-			delete pOld;
+		delete pOld;
 		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
 	}
 	
@@ -980,8 +970,7 @@ bool CXMapSection::LoadMap_0_1_1(CXFile & InFile) {
 		TWayBuffer *pWayBuffer = NULL;
 		Ways.Lookup(Layer, pWayBuffer);
 		TWayBuffer *pOld = m_LayeredWayBuffer[Layer - MINLAYER];
-		if(pOld != NULL)
-			delete pOld;
+		delete pOld;
 		m_LayeredWayBuffer[Layer - MINLAYER] = pWayBuffer;
 	}
 	// run OSMVali only on level 0
@@ -997,7 +986,6 @@ void CXMapSection::RunOSMVali() {
 		TWayBuffer *pWayBuffer = m_LayeredWayBuffer[i];
 		if(pWayBuffer != NULL) {
 			CXWay *pWay = NULL;
-			t_uint64 eValiFlags = CXOptions::Instance()->GetOSMValiFlags();
 			size_t Size = pWayBuffer->GetSize();
 			for(size_t idx=0; idx<Size; idx++) {
 				pWay = (*pWayBuffer)[idx];
@@ -1036,19 +1024,19 @@ void CXMapSection::RunOSMVali() {
 				}
 				bool Vali = true;
 				if((pWay != NULL) && oUseForVali) {
-					if((eValiFlags & CXOptions::e_OSMValiName) != 0) {
+					if(CXOptions::Instance()->IsOSMValiFlagSet(CXOptions::e_OSMValiName)) {
 						// check name
 						if(pWay->GetName().IsEmpty()) {
 							Vali = false;
 						}
 					}
-					if((eValiFlags & CXOptions::e_OSMValiRef) != 0) {
+					if(CXOptions::Instance()->IsOSMValiFlagSet(CXOptions::e_OSMValiRef)) {
 						// check ref
 						if(pWay->GetRef().IsEmpty()) {
 							Vali = false;
 						}
 					}
-					if((eValiFlags & CXOptions::e_OSMValiMaxSpeed) != 0) {
+					if(CXOptions::Instance()->IsOSMValiFlagSet(CXOptions::e_OSMValiMaxSpeed)) {
 						// check max speed
 						if((pWay->GetMaxSpeedForward() == 0) || (pWay->GetMaxSpeedBackward() == 0)) {
 							Vali = false;

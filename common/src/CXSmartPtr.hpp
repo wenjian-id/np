@@ -74,7 +74,7 @@ private:
 		/**
 		 * \brief oiu
 		 * 
-		 * iou.
+		 * oiu.
 		 */
 		size_t AddRef() {
 			CXMutexLocker ML(&m_Mutex);

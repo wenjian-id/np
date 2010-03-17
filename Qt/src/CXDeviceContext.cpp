@@ -37,11 +37,6 @@ CXDeviceContext::~CXDeviceContext() {
 }
 
 //-------------------------------------
-QPainter *CXDeviceContext::GetPainter() const {
-	return m_pPainter;
-}
-
-//-------------------------------------
 void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
 	if(m_pPainter == NULL)
 		return;

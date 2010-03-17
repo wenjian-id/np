@@ -205,7 +205,8 @@ void CXLocatorThread::OnThreadLoop() {
 	bool NewDataRMC = GetFlag_NewDataGPSRMC();
 	bool NewDataGGA = GetFlag_NewDataGPSGGA();
 	bool oHasFix = false;
-	bool oNewDataNoFix = GetFlag_NewDataConnection();
+	bool oNewDataNoFix = false;
+	bool oNewDataConnection = GetFlag_NewDataConnection();
 	SetFlag_NewDataConnection(false);
 	// set connection status in m_NaviData
 	m_NaviData.SetConnected(IsConnected());
@@ -277,8 +278,7 @@ void CXLocatorThread::OnThreadLoop() {
 			}
 		}
 	}
-	bool oLoadMap = true;
-	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix;
+	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix || oNewDataConnection;
 
 	if(oNewDataArrived) {
 		// set speed thresholds for speed calculator
@@ -303,13 +303,9 @@ void CXLocatorThread::OnThreadLoop() {
 					m_NaviData.SetGPSCoor(m_StartCoordinates);
 				} else {
 					// could not load start coordinates
-					// so do not load map
-					oLoadMap = false;
 				}
 			} else {
 				// no fix yet and not starting with last saved coordinates or custom coordinates
-				// so do not load map
-				oLoadMap = false;
 			}
 		}
 		m_NaviData.SetFix(oHasFix);

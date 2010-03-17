@@ -107,7 +107,7 @@ private:
 	bool						m_oSnapToWay;					///< oiu
 	bool						m_oShowCurrentTime;				///< oiu
 	E_START_WITH_LAST_POS		m_eStartWithLastPosition;		///< oiu
-	CXCoor						m_StartPosition;
+	CXCoor						m_StartPosition;				///< oiu
 	bool						m_oMapMovingManually;			///< oiu
 	int							m_WatchdogTimeout;				///< oiu
 	int							m_GPSReconnectTimeout;			///< oiu
@@ -159,6 +159,12 @@ private:
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
 	const CXOptions & operator = (const CXOptions &);	///< Not used.
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool InterpretCoordinates(CXStringASCII CoorString, CXCoor &Coor);
 protected:
 public:
 	//-------------------------------------

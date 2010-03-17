@@ -33,6 +33,6 @@ ISemaphore::~ISemaphore() {
 }
 
 //-------------------------------------
-size_t ISemaphore::GetMaxCount() {
+size_t ISemaphore::GetMaxCount() const {
 	return m_MaxCount;
 }

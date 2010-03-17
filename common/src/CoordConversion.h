@@ -83,13 +83,6 @@ public:
 	 *
 	 * oiu.
 	 */
-	Ellipsoid(){};
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
 	Ellipsoid(int Id, const char* name, double radius, double ecc) {
 		id = Id;
 		ellipsoidName = name; 

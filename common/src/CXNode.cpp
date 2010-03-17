@@ -104,13 +104,15 @@ void CXNode::SetTerminator() {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXPOINode::CXPOINode(double Lon, double Lat) :
-	CXNode(Lon, Lat)
+	CXNode(Lon, Lat),
+	m_ePlaceType(e_MapPlace_None)
 {
 }
 
 //-------------------------------------
 CXPOINode::CXPOINode(const CXNode &rNode) :
-	CXNode(rNode)
+	CXNode(rNode),
+	m_ePlaceType(e_MapPlace_None)
 {
 }
 

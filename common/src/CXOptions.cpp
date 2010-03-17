@@ -267,11 +267,10 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	} else {
 		// start with custom position
 		SetStartWithLastPosition(e_SWLP_Custom);
-		CXStringASCII LonStr = ExtractFirstToken(SWLP, ';');
-		CXStringASCII LatStr = ExtractFirstToken(SWLP, ';');
-		double dLon = atof(LonStr.c_str());
-		double dLat = atof(LatStr.c_str());
-		SetStartPosition(CXCoor(dLon, dLat));
+		CXCoor Coor;
+		if(InterpretCoordinates(SWLP, Coor)){
+			SetStartPosition(Coor);
+		}
 	}
 	// Speed thresholds
 	SetSpeedThresholdCar(atof(F.Get("SpeedThresholdCar", "2").c_str()));
@@ -308,6 +307,32 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	m_POIVisibilityDescriptor.SetShowAccomodation(F.Get("POIShowAccomodation", "off").ToUpper() == "ON");
 	m_POIVisibilityDescriptor.SetShowChurches(F.Get("POIShowChurches", "off").ToUpper() == "ON");
 	m_POIVisibilityDescriptor.SetShowOther(F.Get("POIShowOther", "off").ToUpper() == "ON");
+	// Routing
+	CXStringASCII TargetStr = F.Get("Target", "none").ToUpper();
+	if(TargetStr == "NONE") {
+		// no target
+	} else {
+		// extract target coordinates
+		CXCoor Coor;
+		if(InterpretCoordinates(TargetStr, Coor)){
+			SetStartPosition(Coor);
+		}
+	}
+	return true;
+}
+
+//-------------------------------------
+bool CXOptions::InterpretCoordinates(CXStringASCII CoorString, CXCoor &Coor) {
+	CXStringASCII LonStr = ExtractFirstToken(CoorString, ';');
+	if(LonStr.IsEmpty())
+		return false;
+	CXStringASCII LatStr = ExtractFirstToken(CoorString, ';');
+	if(LatStr.IsEmpty())
+		return false;
+	/// \todo check for deg mode
+	double dLon = atof(LonStr.c_str());
+	double dLat = atof(LatStr.c_str());
+	Coor = CXCoor(dLon, dLat);
 	return true;
 }
 

@@ -97,11 +97,11 @@ void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<
 	for(size_t j=0; j<m_iBufferSize; j++)
 		if(m_pBuffer[j] != NULL)
 			count++;
-	double x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-	size_t dt1 = 0, dt2 = 0;
-	double dUTCt1 = 0, dUTCt2 = 0;
 	if(count > 1) {
 		// compute speed
+		double x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+		size_t dt1 = 0, dt2 = 0;
+		double dUTCt1 = 0, dUTCt2 = 0;
 		// take care, when more than one second between measurements
 		CXExactTime StartTime = m_pBuffer[count-1]->TimeStamp();
 		CXUTCTime UTCStartTime = m_pBuffer[count-1]->UTCTime();
@@ -130,41 +130,28 @@ void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<
 		// OK we have x,y, and time
 		double dx = x1 - x2;
 		double dy = y1 - y2;
-		size_t  dt = dt1 - dt2;
 		double dUTCt = dUTCt1 - dUTCt2;
 		// convert to seconds
 		dUTCt = dUTCt*24*60*60;
 		// compute speed
-		double dSpeed = 0;
 		double dUTCSpeed = 0;
 		double dUnnormedSpeed = 0;
-		if((fabs(dt) >= EPSILON) && (fabs(dUTCt) >= EPSILON)) {
+		if(fabs(dUTCt) >= EPSILON) {
 			dUnnormedSpeed = sqrt(dx*dx+dy*dy);
-			// nor to m/s
-			dSpeed = dUnnormedSpeed*1000/dt;
+			// normate to m/s
 			dUTCSpeed = dUnnormedSpeed/dUTCt;
 		}
 		// compute direction
 		// 0 is east, so use dx and dy
 		double dCos = dx / dUnnormedSpeed;
 		double dSin = dy / dUnnormedSpeed;
-		double dUsedSpeed = 0;
-		if((fabs(dSpeed) >= EPSILON) && (fabs(dUTCSpeed) >= EPSILON)) {
-			double dFactor = fabs(dSpeed) / fabs(dUTCSpeed);
-			if((dFactor > 0.9) && (dFactor < 1.1))
-				// take dSpeed
-				dUsedSpeed = dSpeed;
-			else
-				// take dUTCSpeed
-				dUsedSpeed = dUTCSpeed;
-		}
 		m_Speed.SetSpeed(dUTCSpeed);
 		// now check if we have a standstill. Take rmc speed into account
 		switch(m_eSpeedSource) {
 			case e_GGA_Packet:	break;
-			case e_RMC_Packet:	dSpeed = m_dRMCSpeed; break;
+			case e_RMC_Packet:	dUTCSpeed = m_dRMCSpeed; break;
 		}
-		if(dSpeed < m_SpeedThreshold) {
+		if(dUTCSpeed < m_SpeedThreshold) {
 			// standstill. Do not touch direction to avoid turning map around
 		} else {
 			// moving. Set direction.
@@ -260,12 +247,6 @@ CXUTMSpeed CXSpeedCalculator::GetSpeed() const {
 		case e_RMC_Packet:	Result.SetSpeed(m_dRMCSpeed); break;	// set RMC speed
 	}
 	return Result;
-}
-
-//-------------------------------------
-double CXSpeedCalculator::GetSpeedThreshold() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_SpeedThreshold;
 }
 
 //-------------------------------------

@@ -433,12 +433,12 @@ void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int
 		// check if visible
 		if((x >= -POIDisplaySize/2) && (x < ScreenWidth+POIDisplaySize/2) && (y >= -POIDisplaySize/2) && (y < ScreenHeight+POIDisplaySize/2)) {
 			for(size_t i=0; i<pNode->GetPOITypeCount(); i++) {
-				size_t idx = 0;
-				size_t row = 0;
-				size_t col = 0;
 				E_POI_TYPE ePOIType = pNode->GetPOIType(i);
 				bool oVisible = POIVisDescr.MustShowAll() || POIVisDescr.MustShowPOIType(ePOIType);
 				if(oVisible) {
+					size_t idx = 0;
+					size_t row = 0;
+					size_t col = 0;
 					ComputePOIBMP(ePOIType, idx, row, col);
 					// draw POI bitmap
 					if(idx < m_POIBMPs.GetSize()) {
@@ -519,8 +519,6 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 	if(pBMP == NULL)
 		return;
 
-	CXCoorVector v;
-
 	/// \todo oiu redesign locking stuff...
 	CXRWLock & RWLock = CXTrackLog::Instance()->GetRWLock();
 	CXReadLocker RL(&RWLock);
@@ -532,6 +530,7 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 	if(Size > 1) {
 		int *pX = new int[Size];
 		int *pY = new int[Size];
+		CXCoorVector v;
 		for(size_t i=0; i<Size; i++) {
 			CXCoor *pCoor = CoorBuffer[i];
 			v = TMMap*CXCoorVector(pCoor->GetUTMEasting(), pCoor->GetUTMNorthing());

@@ -138,14 +138,6 @@ public:
 	CXUTMSpeed GetSpeed() const;
 	//-------------------------------------
 	/**
-	 * \brief Get speed threshold.
-	 *
-	 * Get speed threshold.
-	 * \return	Speed threshold.
-	 */
-	double GetSpeedThreshold() const;
-	//-------------------------------------
-	/**
 	 * \brief Set speed threshold.
 	 *
 	 * Set speed threshold.

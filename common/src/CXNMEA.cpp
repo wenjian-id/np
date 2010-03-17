@@ -30,7 +30,8 @@ CXGGAPacket::CXGGAPacket() :
 	m_NSat(0),
 	m_dLon(0),
 	m_dLat(0),
-	m_dHeight(0)
+	m_dHeight(0),
+	m_dHDOP(0)
 {
 }
 

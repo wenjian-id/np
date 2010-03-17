@@ -61,12 +61,6 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	QPainter *GetPainter() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
 	//-------------------------------------
 	/**

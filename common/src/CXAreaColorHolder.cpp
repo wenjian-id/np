@@ -57,6 +57,6 @@ void CXAreaColorHolder::DestroyColors() {
 }
 
 //-------------------------------------
-CXRGB CXAreaColorHolder::GetColor(E_AREA_TYPE eAreaType) {
+CXRGB CXAreaColorHolder::GetColor(E_AREA_TYPE eAreaType) const {
 	return *m_Colors[eAreaType];
 }

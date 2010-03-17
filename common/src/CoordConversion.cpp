@@ -43,16 +43,16 @@ void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const
 	double eccSquared = ellipsoid[ReferenceEllipsoid].eccentricitySquared;
 	double k0 = 0.9996;
 
-	double LongOrigin;
-	double eccPrimeSquared;
-	double N, T, C, A, M;
+	double LongOrigin=0;
+	double eccPrimeSquared=0;
+	double N=0, T=0, C=0, A=0, M=0;
 
 	//Make sure the longitude is between -180.00 .. 179.9
 	double LongTemp = (dLon+180)-int((dLon+180)/360)*360-180; // -180.00 .. 179.9;
 
 	double LatRad = dLat*deg2rad;
 	double LongRad = LongTemp*deg2rad;
-	double LongOriginRad;
+	double LongOriginRad=0;
 
 	ZoneNumber = int((LongTemp + 180)/6) + 1;
   
@@ -97,8 +97,6 @@ void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const
 
 	UTMNorthing = (double)(k0*(M+N*tan(LatRad)*(A*A/2+(5-T+9*C+4*C*C)*A*A*A*A/24
 	 + (61-58*T+T*T+600*C-330*eccPrimeSquared)*A*A*A*A*A*A/720)));
-//oiu	if(dLat < 0)
-//oiu		UTMNorthing += 10000000.0; //10000000 meter offset for southern hemisphere
 }
 
 char UTMLetterDesignator(double dLat)
@@ -165,21 +163,15 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
 	double k0 = 0.9996;
 	double a = ellipsoid[ReferenceEllipsoid].EquatorialRadius;
 	double eccSquared = ellipsoid[ReferenceEllipsoid].eccentricitySquared;
-	double eccPrimeSquared;
+	double eccPrimeSquared=0;
 	double e1 = (1-sqrt(1-eccSquared))/(1+sqrt(1-eccSquared));
-	double N1, T1, C1, R1, D, M;
-	double LongOrigin;
-	double mu, phi1, phi1Rad;
-	double x, y;
+	double N1=0, T1=0, C1=0, R1=0, D=0, M=0;
+	double LongOrigin=0;
+	double mu=0,  phi1Rad=0;
+	double x=0, y=0;
 
 	x = UTMEasting - 500000.0; //remove 500,000 meter offset for longitude
 	y = UTMNorthing;
-
-	if((UTMLetter - 'N') >= 0) {
-		//point is in northern hemisphere
-	} else {
-//oiu		y -= 10000000.0;//remove 10,000,000 meter offset used for southern hemisphere
-	}
 
 	LongOrigin = (ZoneNumber - 1)*6 - 180 + 3;  //+3 puts origin in middle of zone
 
@@ -191,7 +183,6 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
 	phi1Rad = mu+ (3*e1/2-27*e1*e1*e1/32)*sin(2*mu) 
 	+ (21*e1*e1/16-55*e1*e1*e1*e1/32)*sin(4*mu)
 	+(151*e1*e1*e1/96)*sin(6*mu);
-	phi1 = phi1Rad*rad2deg;
 
 	N1 = a/sqrt(1-eccSquared*sin(phi1Rad)*sin(phi1Rad));
 	T1 = tan(phi1Rad)*tan(phi1Rad);

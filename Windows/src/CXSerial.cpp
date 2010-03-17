@@ -61,7 +61,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     	case CXSerialPortConfig::SCP_EVEN:	ucParity = EVENPARITY; break;
     	case CXSerialPortConfig::SCP_ODD:	ucParity = ODDPARITY; break;
     	case CXSerialPortConfig::SCP_MARK:	ucParity = MARKPARITY; break;
-		default :							Close(); return RC_WRONG_ARGUMENT; break;
+		default :							Close(); return RC_WRONG_ARGUMENT;
     }
     dcb.Parity = ucParity;
     // stop bits
@@ -70,7 +70,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     	case CXSerialPortConfig::SCS_ONE:		ucStopBits = ONESTOPBIT; break;
     	case CXSerialPortConfig::SCS_ONEFIVE:	ucStopBits = ONE5STOPBITS; break;
     	case CXSerialPortConfig::SCS_TWO:		ucStopBits = TWOSTOPBITS; break;
-		default :								Close(); return RC_WRONG_ARGUMENT; break;
+		default :								Close(); return RC_WRONG_ARGUMENT;
     }
     dcb.StopBits = ucStopBits;
     

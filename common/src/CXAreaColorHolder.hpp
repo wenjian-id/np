@@ -71,7 +71,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	CXRGB GetColor(E_AREA_TYPE AreaType);
+	CXRGB GetColor(E_AREA_TYPE AreaType) const;
 };
 
 #endif // __CXAREACOLORHOLDER_HPP__

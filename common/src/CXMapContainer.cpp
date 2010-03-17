@@ -31,6 +31,8 @@
 CXTOCMapContainer::CXTOCMapContainer() :
 	m_eLoadStatus(e_LSNotLoaded),
 	m_pTOCSections(NULL),
+	m_dBaseLon(0),
+	m_dBaseLat(0),
 	m_Width(0),
 	m_Height(0)
 {
