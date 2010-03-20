@@ -346,7 +346,7 @@ void CXLocatorThread::OnThreadLoop() {
 		// notify listeners
 		if(pPOWMMap != NULL) {
 			// position has changed
-			CXCoor Coor = m_NaviData.GetCorrectedGPSCoor();
+			CXCoor Coor = m_NaviData.GetGPSCoor();
 			double dLon = Coor.GetLon();
 			double dLat = Coor.GetLat();
 			if(oHasFix && CXOptions::Instance()->MustShowTrackLog()) {
@@ -541,7 +541,7 @@ void CXLocatorThread::Locate() {
 								}
 								case CXOptions::e_ModeBike:
 								{
-									// oiu todo
+									/// todo implement
 									oUseWay =	(Type == e_Way_Motorway) ||
 												(Type == e_Way_MotorwayLink) ||
 												(Type == e_Way_Trunk) ||
@@ -637,7 +637,7 @@ void CXLocatorThread::Locate() {
 											double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
 											// check if we move forward on way
 											bool oFwdNMove = (dCos >= 0);
-											/// \todo take into account mode for oneways!
+											// take into account mode for oneways
 											switch(eOneway) {
 												case e_Oneway_None:		dCos = fabs(dCos); break;	// no oneway
 												case e_Oneway_Normal:	break;						// leave dCos how it is

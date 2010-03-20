@@ -1,5 +1,6 @@
 Version 0.2.5:
  - fixed bugs:
+   - 2973833: TrackLog must show real GPSCoor
  - implemented feature requests:
  - other:
 

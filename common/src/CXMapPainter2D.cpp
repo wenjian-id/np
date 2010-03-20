@@ -347,6 +347,11 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 		}
 	}
 
+	int xMin = 0;
+	int xMax = 0;
+	int yMin = 0;
+	int yMax = 0;
+	bool oFirst = true;
 	IBitmap *pDrawBMP = pBMP;
 	if(oHolesPresent) {
 		pDrawBMP = new CXBitmap();
@@ -362,8 +367,22 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 		size_t NodeCount = pOuterNodeList->GetNodeCount();
 		for(size_t j=0; j<NodeCount; j++) {
 			CXNode *pNode = pOuterNodeList->GetNode(j);
-			pX[j] = pNode->GetDisplayX();
-			pY[j] = pNode->GetDisplayY();
+			int x = pNode->GetDisplayX();
+			int y = pNode->GetDisplayY();
+			pX[j] = x;
+			pY[j] = y;
+			if(oFirst) {
+				xMin = x;
+				xMax = x;
+				yMin = y;
+				yMax = y;
+				oFirst = false;
+			} else {
+				xMin = Min(xMin, x);
+				xMax = Max(xMax, x);
+				yMin = Min(yMin, y);
+				yMax = Max(yMax, y);
+			}
 		}
 		pDrawBMP->Polygon(pX, pY, NodeCount, Color, Color);
 		for(size_t h=0; h<pArea->GetHoleCount(); h++) {
@@ -378,8 +397,8 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
 		}
 	}
 	if(oHolesPresent) {
-		/// \todo DrawTransparent only for modified region
-		pBMP->DrawTransparent(pDrawBMP, 0, 0, 0, 0, pDrawBMP->GetWidth(), pDrawBMP->GetHeight(), COLOR_TRANSPARENT);
+		// DrawTransparent only for modified region
+		pBMP->DrawTransparent(pDrawBMP, xMin, yMin, xMin, yMin, xMax-xMin+1, yMax-yMin+1, COLOR_TRANSPARENT);
 		delete pDrawBMP;
 	}
 }
