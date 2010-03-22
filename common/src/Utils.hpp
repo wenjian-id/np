@@ -186,7 +186,6 @@ enum E_ONEWAY_TYPE {
 	e_Oneway_None		= 0x00,	///< oiu
 	e_Oneway_Normal		= 0x01,	///< oiu
 	e_Oneway_Inverse	= 0x02,	///< oiu
-//	e_Oneway_NotSet		= 0x03,	///< oiu. not used in here
 };
 
 //-------------------------------------
