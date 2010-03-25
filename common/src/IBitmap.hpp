@@ -210,12 +210,6 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	virtual bool PolyLine(int *pX, int *pY, size_t Count) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
 	virtual void SetPen(const CXPen &Pen) = 0;
 	//-------------------------------------
 	/**

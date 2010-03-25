@@ -557,7 +557,7 @@ void CXMapPainter2D::DrawTrackLog(IBitmap *pBMP, const CXTransformationMatrix2D 
 			pY[i] = v.GetIntY();
 		}
 
-		pBMP->PolyLine(pX, pY, Size);
+		pBMP->DrawLine(Size, pX, pY);
 		delete [] pX;
 		delete [] pY;
 	}

@@ -390,31 +390,6 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
 }
 
 //-------------------------------------
-bool CXBitmap::PolyLine(int *pX, int *pY, size_t Count) {
-	if(IsNull())
-		return false;
-	if(pX == NULL)
-		return false;
-	if(pY == NULL)
-		return false;
-	if(Count == 0)
-		return false;
-
-	QPoint *pPoints = new QPoint[Count];
-	for(size_t i=0; i<Count; i++) {
-		pPoints[i].setX(pX[i]);
-		pPoints[i].setY(pY[i]);
-	}
-
-	// draw poly line
-	m_pPainter->drawPolyline(pPoints, Count);
-
-	delete [] pPoints;
-
-	return true;
-}
-
-//-------------------------------------
 void CXBitmap::SetPen(const CXPen &Pen) {
 	if(IsNull())
 		return;
