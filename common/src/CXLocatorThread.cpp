@@ -461,7 +461,6 @@ void CXLocatorThread::Locate() {
     double Node2y = 0;
     double SqSegLen = 0;		// square length of segment
     double dSquareDist = 0;		// distance from x0,y0 to segment
-    double dCos = 0;			// cosinus of angle between vector Node1->P and Node1->Node2
 
 	double dLon = m_NaviData.GetCorrectedGPSCoor().GetLon();
 	double dLat = m_NaviData.GetCorrectedGPSCoor().GetLat();
@@ -604,24 +603,23 @@ void CXLocatorThread::Locate() {
     									SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
     									// only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
     									if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
-    										// compute cos of angle
-        									dCos = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
-    										if(dCos<0) {
+    										// compute factor (Node1->PS)/SegLen = PS.Segment/(SegLen*SegLen)
+        									double dFactor = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
+    										if(dFactor<0) {
     											// projection of P on segment lies before Node1 so take Node1
     											PSx = Node1x;
     											PSy = Node1y;
-    										} else if (dCos>1) {
+    										} else if (dFactor>1) {
     											// projection of P on segment lies after Node2 so take Node2
     											PSx = Node2x;
     											PSy = Node2y;
     										} else {
     											// projection of P on segment lies between Node1 and Node2
-    											PSx = Node1x + dCos*(Node2x-Node1x);
-    											PSy = Node1y + dCos*(Node2y-Node1y);
+    											PSx = Node1x + dFactor*(Node2x-Node1x);
+    											PSy = Node1y + dFactor*(Node2y-Node1y);
     										}
     									} else {
     										// segment too short, so we take Node1
-    										dCos=0;
     										PSx = Node1x;
     										PSy = Node1y;
     									}
@@ -632,6 +630,8 @@ void CXLocatorThread::Locate() {
 											// compute cos of angle between move vector and segment
 											double dUTMX = UTMSpeed.GetCos();
 											double dUTMY = UTMSpeed.GetSin();
+											// compute cosinus of angle between vector Node1->P and Node1->Node2
+											double dCos = 0;
 											dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);
 											// calc fitness
 											double dFactor = Max(0.0, 1-dDist/MAXDIST);  // = 0 when far away, 1 if near
