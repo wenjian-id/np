@@ -187,6 +187,9 @@ CXPen *CXPenHolder::GetPenFg(E_WAY_TYPE eWayType) {
 //-------------------------------------
 void CXPenHolder::ScalePens(double ScaleFactor) {
 	for(size_t i=0; i<e_Way_EnumCount; i++) {
+		if(i == e_Way_Unknown)
+			// do not scale pen for way of type e_Way_Unknown
+			continue;
 		CXPens *pPens = m_Pens[i];
 		CXPens *pScaledPens = m_ScaledPens[i];
 		if(ScaleFactor > 1) {
