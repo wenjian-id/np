@@ -106,6 +106,7 @@ private:
 	bool						m_oShowCities;					///< Show Cities.
 	bool						m_oSnapToWay;					///< oiu
 	bool						m_oShowCurrentTime;				///< oiu
+	bool						m_oShowOneways;					///< oiu
 	E_START_WITH_LAST_POS		m_eStartWithLastPosition;		///< oiu
 	CXCoor						m_StartPosition;				///< oiu
 	bool						m_oMapMovingManually;			///< oiu
@@ -721,6 +722,18 @@ public:
 	 *
 	 */
 	void ToggleShowCurrentTime();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowOneways() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetShowOnewaysFlag(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

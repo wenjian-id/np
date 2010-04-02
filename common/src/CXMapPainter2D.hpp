@@ -94,6 +94,12 @@ private:
 	 * \brief oiu
 	 *
 	 */
+	void DrawOneways(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWayType, int Width, int Height);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType);
 	//-------------------------------------
 	/**

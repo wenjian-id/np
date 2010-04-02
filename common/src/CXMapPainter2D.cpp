@@ -45,7 +45,7 @@ static const int POICOUNTHORZ			= 16;	///< Number of POIs in a row in bitmap fil
 static const int POICOUNTVERT			= 16;	///< Number of POIS in a column in bitmap file.
 static const int PLACECOUNTHORZ			= 4;	///< Number of places in a row in bitmap file.
 static const int PLACECOUNTVERT			= 1;	///< Number of places in a column in bitmap file.
-
+static const CXRGB COLOR_RED(0xff, 0x00, 0x00);	///< oiu
 
 E_WAY_TYPE WayOrder[e_Way_EnumCount] = {
 	e_Way_Unknown,
@@ -280,7 +280,7 @@ void CXMapPainter2D::DrawWaysBg(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWa
 	if((cnt != 0) && (pPen != NULL)) {
 		// create red pen
 		CXPen RedPen = *pPen;
-		RedPen.SetColor(CXRGB(0xff, 0x00, 0x00));
+		RedPen.SetColor(COLOR_RED);
 		// set normal pen
 		pBMP->SetPen(*pPen);
 		// now iterate through ways
@@ -309,7 +309,7 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWa
 	if((cnt != 0) && (pPen != NULL)) {
 		// create red pen
 		CXPen RedPen = *pPen;
-		RedPen.SetColor(CXRGB(0xff, 0x00, 0x00));
+		RedPen.SetColor(COLOR_RED);
 		// set normal pen
 		pBMP->SetPen(*pPen);
 		// now iterate through ways
@@ -323,6 +323,102 @@ void CXMapPainter2D::DrawWaysFg(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWa
 			// set old pen
 			if(oUseRedPen)
 				pBMP->SetPen(*pPen);
+		}
+	}
+}
+
+//-------------------------------------
+void CXMapPainter2D::DrawOneways(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eWayType, int Width, int Height) {
+	// skip if nothing to draw
+	/// \todo what does this mean?
+	if(	(pWays == NULL) ||
+		(	(eWayType != e_Way_Motorway) && (eWayType != e_Way_MotorwayLink) &&
+			(eWayType != e_Way_Trunk) && (eWayType != e_Way_TrunkLink) && (eWayType != e_Way_Primary) &&
+			(eWayType != e_Way_PrimaryLink) && (eWayType != e_Way_Secondary) && (eWayType != e_Way_Tertiary) &&
+			(eWayType != e_Way_Unclassified) && (eWayType != e_Way_Residential) && (eWayType != e_Way_Service) &&
+			(eWayType != e_Way_Cycleway) && (eWayType != e_Way_LivingStreet)
+		)
+	  )
+	{
+		return;
+	}
+	size_t cnt = pWays->GetSize();
+	if(cnt == 0)
+		return;
+	// get pen for this type of way
+	CXPen *pPenFg = m_PenHolder.GetScaledPenFg(eWayType);
+	CXPen *pPenBg = m_PenHolder.GetScaledPenBg(eWayType);
+	// take background pen for width
+	// if this does not succeed take foreground pen width
+	double ArrowSize = 0;
+	if(pPenBg != NULL) {
+		ArrowSize = pPenBg->GetWidth();
+	} else if(pPenFg != NULL) {
+		ArrowSize = pPenFg->GetWidth();
+	} else {
+		return;
+	}
+	// now iterate through ways
+	for(size_t i=0; i<cnt; i++) {
+		CXWay *pWay = (*pWays)[i];
+		// check if oneway
+		if(pWay->GetOneway() != e_Oneway_None) {
+			size_t NodeCount = pWay->GetNodeList()->GetNodeCount();
+			// get first node
+			CXNode *pNode = pWay->GetNodeList()->GetNode(0);
+			int x0 = pNode->GetDisplayX();
+			int y0 = pNode->GetDisplayY();
+			int prev_x = x0;
+			int prev_y = y0;
+			// now iterate through segments
+			for(size_t j=1; j<NodeCount; j++) {
+				pNode = pWay->GetNodeList()->GetNode(j);
+				int x1 = pNode->GetDisplayX();
+				int y1 = pNode->GetDisplayY();
+				int x = (x0+x1)/2;
+				int y = (y0+y1)/2;
+				// skip if out of screen
+				if((x >= 0) && (x <= Width) && (y >= 0) && (y <= Height)) {
+					// skip if too close
+					/// \todo why NodeCount - 1 ?
+					/// \todo 900 configurable
+					if(	((((x-prev_x)*(x-prev_x) + (y-prev_y)*(y-prev_y)) > 900) && ((j < NodeCount - 1))) ||
+						(((x-x1)*(x-x1) + (y-y1)*(y-y1)) > 900))
+					{
+						// compute arrow position
+						CXTransformationMatrix2D TMOneway;
+						double seglen=sqrt((x0-x1)*(x0-x1) + (y0-y1)*(y0-y1));
+						/// \todo minseglen
+						const int minseglen = 5;
+						if(seglen >= minseglen) {
+							if(pWay->GetOneway() == e_Oneway_Inverse)
+								TMOneway.Rotate((y0-y1)/seglen, (x1-x0)/seglen);
+							else
+								TMOneway.Rotate((y1-y0)/seglen, (x0-x1)/seglen);
+							TMOneway.Translate(x, y);
+							// draw directional arrow
+							CXCoorVector v;
+							int X[3];
+							int Y[3];
+							v = TMOneway*CXCoorVector(0, ArrowSize);
+							X[0] = v.GetIntX();
+							Y[0] = v.GetIntY();
+							v = TMOneway*CXCoorVector(0.4*ArrowSize, -0.4*ArrowSize);
+							X[1] = v.GetIntX();
+							Y[1] = v.GetIntY();
+							v = TMOneway*CXCoorVector(-0.4*ArrowSize, -0.4*ArrowSize);
+							X[2] = v.GetIntX();
+							Y[2] = v.GetIntY();
+							/// \todo colors
+							pBMP->Polygon(X, Y, 3, CXRGB(0x00, 0x00, 0xFF), CXRGB(0xFF, 0xFF, 0xFF));
+							prev_x = x;
+							prev_y = y;
+						}
+					}
+				}
+				x0 = x1;
+				y0 = y1;
+			}
 		}
 	}
 }
@@ -894,6 +990,12 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		// and fg
 		for(i=0; i< e_Way_EnumCount; i++) {
 			DrawWaysFg(pBMP, m_DrawWays[WayOrder[i]], WayOrder[i], Width, Height);
+		}
+		// and oneway arrows
+		if(pOpt->MustShowOneways()) {
+			for(i=0; i< e_Way_EnumCount; i++) {
+				DrawOneways(pBMP, m_DrawWays[WayOrder[i]], WayOrder[i], Width, Height);
+			}
 		}
 		// clear arrays
 		for(i=0; i<e_Way_EnumCount; i++) {

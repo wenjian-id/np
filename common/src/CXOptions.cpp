@@ -57,6 +57,7 @@ CXOptions::CXOptions() :
 	m_oShowCities(true),
 	m_oSnapToWay(false),
 	m_oShowCurrentTime(true),
+	m_oShowOneways(true),
 	m_eStartWithLastPosition(e_SWLP_None),
 	m_oMapMovingManually(false),
 	m_WatchdogTimeout(0),
@@ -256,6 +257,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetShowCitiesFlag(F.Get("ShowCities", "on").ToUpper() == "ON");
 	// SnapToWay
 	SetSnapToWayFlag(F.Get("SnapToWay", "off").ToUpper() == "ON");
+	// SnapToWay
+	SetShowOnewaysFlag(F.Get("ShowOneways", "on").ToUpper() == "ON");
 	// StartWithLastPosition
 	CXStringASCII SWLP = F.Get("StartWithLastPosition", "off").ToUpper();
 	if(SWLP == "OFF") {
@@ -646,6 +649,18 @@ bool CXOptions::MustShowCurrentTime() const {
 void CXOptions::ToggleShowCurrentTime() {
 	CXWriteLocker WL(&m_RWLock);
 	m_oShowCurrentTime = !m_oShowCurrentTime;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowOneways() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowOneways;
+}
+
+//-------------------------------------
+void CXOptions::SetShowOnewaysFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowOneways = NewValue;
 }
 
 //-------------------------------------
