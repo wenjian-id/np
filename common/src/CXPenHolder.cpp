@@ -23,6 +23,8 @@
 #include "CXPenHolder.hpp"
 #include "CXPen.hpp"
 
+const int MAXPENWIDTH = 19;
+
 //-------------------------------------
 CXPenHolder::CXPenHolder() {
 	CreatePens();
@@ -197,7 +199,7 @@ void CXPenHolder::ScalePens(double ScaleFactor) {
 			if(pPens->m_pBg != NULL) {
 				// try to make background only 2 pixel wider than segment,
 				// so that border is only 1 pixel
-				int BgWidth = static_cast<int>(ScaleFactor*pPens->m_pBg->GetWidth());
+				int BgWidth = Min(MAXPENWIDTH, static_cast<int>(ScaleFactor*pPens->m_pBg->GetWidth()));
 				int SegmWidth = Max(0, BgWidth -2);
 				pScaledPens->m_pBg->SetWidth(BgWidth);
 				if(pPens->m_pSegm != NULL)
@@ -205,7 +207,7 @@ void CXPenHolder::ScalePens(double ScaleFactor) {
 			} else {
 				// no background width, scale segment width accordingly
 				if(pPens->m_pSegm != NULL)
-					pScaledPens->m_pSegm->SetWidth(static_cast<int>(ScaleFactor*m_Pens[i]->m_pSegm->GetWidth()));
+					pScaledPens->m_pSegm->SetWidth(Min(MAXPENWIDTH, static_cast<int>(ScaleFactor*m_Pens[i]->m_pSegm->GetWidth())));
 			}
 		} else {
 			// do not scale. take default widths

@@ -382,8 +382,9 @@ void CXMapPainter2D::DrawOneways(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eW
 					// skip if too close
 					/// \todo why NodeCount - 1 ?
 					/// \todo 900 configurable
-					if(	((((x-prev_x)*(x-prev_x) + (y-prev_y)*(y-prev_y)) > 900) && ((j < NodeCount - 1))) ||
-						(((x-x1)*(x-x1) + (y-y1)*(y-y1)) > 900))
+					
+					if(	(((x-prev_x)*(x-prev_x) + (y-prev_y)*(y-prev_y)) > 30*30) &&
+						((j < NodeCount - 1) || (((x-x1)*(x-x1) + (y-y1)*(y-y1)) > 30*30)))
 					{
 						// compute arrow position
 						CXTransformationMatrix2D TMOneway;
