@@ -141,10 +141,6 @@ void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<
 			// normate to m/s
 			dUTCSpeed = dUnnormedSpeed/dUTCt;
 		}
-		// compute direction
-		// 0 is east, so use dx and dy
-		double dCos = dx / dUnnormedSpeed;
-		double dSin = dy / dUnnormedSpeed;
 		m_Speed.SetSpeed(dUTCSpeed);
 		// now check if we have a standstill. Take rmc speed into account
 		switch(m_eSpeedSource) {
@@ -155,8 +151,9 @@ void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<
 			// standstill. Do not touch direction to avoid turning map around
 		} else {
 			// moving. Set direction.
-			m_Speed.SetCos(dCos);
-			m_Speed.SetSin(dSin);
+			// compute direction
+			// 0 is east, so use dx and dy
+			m_Speed.SetDirection(CXDirection(dx / dUnnormedSpeed, dy / dUnnormedSpeed));
 		}
 
 		m_LastValidSpeed = m_Speed;

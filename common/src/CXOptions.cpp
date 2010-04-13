@@ -91,7 +91,8 @@ CXOptions::CXOptions() :
 	m_CityLargeFontSize(20),
 	m_POIDisplaySize(20),
 	m_ePOIBGType(e_BG_AREA),
-	m_eCityBGType(e_BG_AREA)
+	m_eCityBGType(e_BG_AREA),
+	m_oTargetSet(false)
 {
 }
 
@@ -312,13 +313,15 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	m_POIVisibilityDescriptor.SetShowOther(F.Get("POIShowOther", "off").ToUpper() == "ON");
 	// Routing
 	CXStringASCII TargetStr = F.Get("Target", "none").ToUpper();
+	SetTarget(false);
 	if(TargetStr == "NONE") {
 		// no target
 	} else {
 		// extract target coordinates
 		CXCoor Coor;
 		if(InterpretCoordinates(TargetStr, Coor)){
-			SetStartPosition(Coor);
+			SetTarget(true);
+			SetTargetCoor(Coor);
 		}
 	}
 	return true;
@@ -1201,4 +1204,28 @@ void CXOptions::SetCityBGType(E_BACKGROUND_TYPE NewValue) {
 CXPOIVisibilityDescriptor & CXOptions::GetPOIVisibilityDescriptorByRef() {
 	CXWriteLocker WL(&m_RWLock);
 	return m_POIVisibilityDescriptor;
+}
+
+//-------------------------------------
+bool CXOptions::IsTargetSet() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oTargetSet;
+}
+
+//-------------------------------------
+void CXOptions::SetTarget(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oTargetSet = NewValue;
+}
+
+//-------------------------------------
+CXCoor CXOptions::GetTargetCoor() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_TargetCoor;
+}
+
+//-------------------------------------
+void CXOptions::SetTargetCoor(const CXCoor &NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_TargetCoor = NewValue;
 }

@@ -23,6 +23,8 @@
 #ifndef __CXUTMSPEED_HPP__
 #define __CXUTMSPEED_HPP__
 
+#include "CXDirection.hpp"
+
 //---------------------------------------------------------------------
 /**
  * \brief oiu
@@ -30,9 +32,8 @@
  */
 class CXUTMSpeed {
 private:
-	double	m_dSpeed;		///< oiu
-	double	m_dCos;			///< oiu
-	double	m_dSin;			///< oiu
+	double			m_dSpeed;		///< oiu
+	CXDirection		m_Direction;	///< oiu
 	//-------------------------------------
 	/**
 	 * \brief Copy from other instance to self.
@@ -114,25 +115,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	double GetCos() const;
+	CXDirection GetDirection() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetCos(double dCos);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetSin() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetSin(double dSin);
+	void SetDirection(const CXDirection &Direction);
 };
 
 #endif // __CXUTMSPEED_HPP__

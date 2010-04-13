@@ -153,6 +153,8 @@ common/src/CXCoor.cpp -text
 common/src/CXCoor.hpp -text
 common/src/CXDebugInfo.cpp -text
 common/src/CXDebugInfo.hpp -text
+common/src/CXDirection.cpp -text
+common/src/CXDirection.hpp -text
 common/src/CXFile.cpp -text
 common/src/CXFile.hpp -text
 common/src/CXFileIni.cpp -text

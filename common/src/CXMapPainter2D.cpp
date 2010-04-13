@@ -819,9 +819,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
 	// calc deviation for geographic north.
 	CXCoor TmpCoor(dLonImageCenter + 0.001, dLatImageCenter);
-	double dCos = 0;
-	double dSin = 0;
-	ComputeRelativeUTMAngle(ImageCenter, TmpCoor, dCos, dSin);
+	CXDirection Dir;
+	ComputeRelativeUTMAngle(ImageCenter, TmpCoor, Dir);
 
 	// compute UTM coordinates of image center
 	char UTMLetterCurrent = 0;
@@ -850,21 +849,21 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 	if(pOpt->IsNorthing() || pOpt->IsMapMovingManually()) {
 		xc = Width/2;
 		yc = Height/2;
-		TMCurrentPos.Rotate(UTMSpeed.GetCos(), UTMSpeed.GetSin());
+		TMCurrentPos.Rotate(UTMSpeed.GetDirection());
 		TMCurrentPos.Rotate(-UTMPI/2);
 		// correct for geographic north
-		TMMap.Rotate(dCos, -dSin);
-		TMCurrentPos.Rotate(dCos, -dSin);
+		TMMap.Rotate(-Dir);
+		TMCurrentPos.Rotate(-Dir);
 	} else {
 		xc = Width/2;
 		yc = 3*Height/4;
-		TMMap.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
-		TMCompass.Rotate(UTMSpeed.GetCos(), -UTMSpeed.GetSin());
+		TMMap.Rotate(-UTMSpeed.GetDirection());
+		TMCompass.Rotate(-UTMSpeed.GetDirection());
 		// rotate 90 to left, since 0 is east and we want it point to north
 		TMMap.Rotate(UTMPI/2);
 		TMCompass.Rotate(UTMPI/2);
 		// correct for geographic north
-		TMCompass.Rotate(dCos, -dSin);
+		TMCompass.Rotate(-Dir);
 	}
 
 	TMMap.Scale(1.0/m_MeterPerPixel, -1.0/m_MeterPerPixel);		// do scaling (negative for y!)

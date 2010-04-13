@@ -27,6 +27,7 @@
 #include "CXStringUTF8.hpp"
 #include "CXFile.hpp"
 #include "CXRGB.hpp"
+#include "CXDirection.hpp"
 
 
 class CXCoor;
@@ -429,7 +430,7 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
  *
  * oiu.
  */
-void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, double & rdCos, double &rdSin);
+void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, CXDirection & rDir);
 
 //-------------------------------------
 /**

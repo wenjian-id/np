@@ -23,6 +23,8 @@
 #ifndef __CXTRANSFORMATIONMATRIX_HPP__
 #define __CXTRANSFORMATIONMATRIX_HPP__
 
+#include "CXDirection.hpp"
+
 //---------------------------------------------------------------------
 /**
  * \brief oiu
@@ -194,6 +196,12 @@ public:
 	 *
 	 */
 	void Rotate(double dRad);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void Rotate(const CXDirection &Direction);
 	//-------------------------------------
 	/**
 	 * \brief oiu

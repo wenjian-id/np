@@ -314,8 +314,8 @@ void CXLocatorThread::OnThreadLoop() {
 		int GPSReceiverLag = CXOptions::Instance()->GetGPSReceiverLag();
 		// add last draw time.
 		int Lag = GPSReceiverLag + CXDebugInfo::Instance()->GetDrawTime();
-		double dE = 1.0*Lag/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetCos();
-		double dN = 1.0*Lag/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetSin();
+		double dE = 1.0*Lag/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetDirection().GetCos();
+		double dN = 1.0*Lag/1000.0*UTMSpeed.GetSpeed()*UTMSpeed.GetDirection().GetSin();
 		CorrectedGPSCoor.OffsetCoor(dE, dN);
 		m_NaviData.SetCorrectedGPSCoor(CorrectedGPSCoor);
 	} else {
@@ -628,8 +628,8 @@ void CXLocatorThread::Locate() {
 										if(dSquareDist <= MAXDIST*MAXDIST) {
 											double dDist = sqrt(dSquareDist);
 											// compute cos of angle between move vector and segment
-											double dUTMX = UTMSpeed.GetCos();
-											double dUTMY = UTMSpeed.GetSin();
+											double dUTMX = UTMSpeed.GetDirection().GetCos();
+											double dUTMY = UTMSpeed.GetDirection().GetSin();
 											// compute cosinus of angle between vector Node1->P and Node1->Node2
 											double dCos = 0;
 											dCos = ((Node2x-Node1x)*dUTMX + (Node2y-Node1y)*dUTMY)/sqrt(SqSegLen);

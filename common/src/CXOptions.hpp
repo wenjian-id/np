@@ -156,6 +156,8 @@ private:
 	E_BACKGROUND_TYPE			m_ePOIBGType;					///< oiu
 	E_BACKGROUND_TYPE			m_eCityBGType;					///< oiu
 	CXPOIVisibilityDescriptor	m_POIVisibilityDescriptor;		///< oiu
+	bool						m_oTargetSet;					///< oiu
+	CXCoor						m_TargetCoor;					///< oiu
 	mutable CXRWLock			m_RWLock;						///< Synchronization object.
 	//-------------------------------------
 	CXOptions(const CXOptions &);						///< Not used.
@@ -1065,6 +1067,30 @@ public:
 	 *
 	 */
 	CXPOIVisibilityDescriptor & GetPOIVisibilityDescriptorByRef(); 
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool IsTargetSet() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetTarget(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXCoor GetTargetCoor() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetTargetCoor(const CXCoor &NewValue);
 };
 
 #endif // __CXOPTIONS_HPP__

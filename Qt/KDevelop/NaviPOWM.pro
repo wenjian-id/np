@@ -66,6 +66,7 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXMapMovingDetails.cpp \
 ../../common/src/CXUTCTime.cpp \
 ../../common/src/CXPOIVisibilityDescriptor.cpp \
+../../common/src/CXDirection.cpp \
 ../../Qt/src/CXMutex.cpp \
 ../../Qt/src/TargetIncludes.cpp \
 ../../Qt/src/CXDeviceContext.cpp \
@@ -153,6 +154,7 @@ HEADERS += ../../common/src/CoordConstants.h \
 ../../common/src/CXMapMovingDetails.hpp \
 ../../common/src/CXUTCTime.hpp \
 ../../common/src/CXPOIVisibilityDescriptor.hpp \
+../../common/src/CXDirection.hpp \
 ../../Qt/src/CXRWLock.hpp \
 ../../Qt/src/CXMainWindow.hpp \
 ../../Qt/src/TargetIncludes.hpp \

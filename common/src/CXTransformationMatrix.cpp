@@ -173,6 +173,10 @@ void CXTransformationMatrix2D::Rotate(double dRad) {
 	*this = RM;
 }
 
+void CXTransformationMatrix2D::Rotate(const CXDirection &Direction) {
+	Rotate(Direction.GetCos(), Direction.GetSin());
+}
+
 //-------------------------------------
 void CXTransformationMatrix2D::Rotate(double dCos, double dSin) {
 	CXTransformationMatrix2D RM(dCos, -dSin, 0, dSin, dCos, 0, 0, 0, 1);

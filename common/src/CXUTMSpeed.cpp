@@ -46,16 +46,12 @@ const CXUTMSpeed & CXUTMSpeed::operator = (const CXUTMSpeed &rOther) {
 //-------------------------------------
 void CXUTMSpeed::CopyFrom(const CXUTMSpeed &rOther) {
 	m_dSpeed = rOther.m_dSpeed;
-	m_dCos = rOther.m_dCos;
-	m_dSin = rOther.m_dSin;
+	m_Direction = rOther.m_Direction;
 }
 
 //-------------------------------------
 bool CXUTMSpeed::operator == (const CXUTMSpeed &rOther) {
-	return	(m_dSpeed == rOther.m_dSpeed) && 
-			(m_dCos == rOther.m_dCos) &&
-			(m_dSin == rOther.m_dSin);
-
+	return	(m_dSpeed == rOther.m_dSpeed) && (m_Direction == rOther.m_Direction);
 }
 
 //-------------------------------------
@@ -66,8 +62,7 @@ bool CXUTMSpeed::operator != (const CXUTMSpeed &rOther) {
 //-------------------------------------
 void CXUTMSpeed::Reset() {
 	m_dSpeed = 0;
-	m_dCos = 0;
-	m_dSin = 1;
+	m_Direction.Reset();
 }
 
 //-------------------------------------
@@ -81,21 +76,11 @@ void CXUTMSpeed::SetSpeed(double dSpeed) {
 }
 
 //-------------------------------------
-double CXUTMSpeed::GetCos() const {
-	return m_dCos;
+CXDirection CXUTMSpeed::GetDirection() const {
+	return m_Direction;
 }
 
 //-------------------------------------
-void CXUTMSpeed::SetCos(double dCos) {
-	m_dCos = dCos;
-}
-
-//-------------------------------------
-double CXUTMSpeed::GetSin() const {
-	return m_dSin;
-}
-
-//-------------------------------------
-void CXUTMSpeed::SetSin(double dSin) {
-	m_dSin = dSin;
+void CXUTMSpeed::SetDirection(const CXDirection &Direction) {
+	m_Direction = Direction;
 }
