@@ -149,6 +149,7 @@ extraResourceOptions=
 67=..\..\common\src\CXPOIVisibilityDescriptor.cpp
 68=..\..\common\src\CXArea.cpp
 69=..\..\common\src\CXAreaColorHolder.cpp
+70=..\..\common\src\CXDirection.cpp
 [Header]
 1=..\src\CXMutex.hpp
 2=..\src\CXRWLock.hpp
@@ -235,6 +236,7 @@ extraResourceOptions=
 83=..\..\common\src\CXPOIVisibilityDescriptor.hpp
 84=..\..\common\src\CXArea.hpp
 85=..\..\common\src\CXAreaColorHolder.hpp
+86=..\..\common\src\CXDirection.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

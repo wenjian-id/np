@@ -149,6 +149,7 @@ extraResourceOptions=
 67=..\..\common\src\CXPOIVisibilityDescriptor.cpp
 68=..\..\common\src\CXArea.cpp
 69=..\..\common\src\CXAreaColorHolder.cpp
+70=..\..\common\src\CXDirection.cpp
 [Header]
 1=..\..\common\src\CXBuffer.hpp
 2=..\..\common\src\CXFile.hpp
@@ -236,6 +237,7 @@ extraResourceOptions=
 84=..\..\common\src\CXPOIVisibilityDescriptor.hpp
 85=..\..\common\src\CXArea.hpp
 86=..\..\common\src\CXAreaColorHolder.hpp
+87=..\..\common\src\CXDirection.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

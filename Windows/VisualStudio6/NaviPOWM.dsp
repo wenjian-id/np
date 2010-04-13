@@ -246,6 +246,10 @@ SOURCE=..\..\common\src\CXDebugInfo.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXDirection.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXFile.hpp
 # End Source File
 # Begin Source File
@@ -519,6 +523,10 @@ SOURCE=..\..\common\src\CXCoor.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXDebugInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXDirection.cpp
 # End Source File
 # Begin Source File
 
