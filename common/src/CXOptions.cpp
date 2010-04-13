@@ -66,6 +66,7 @@ CXOptions::CXOptions() :
 	m_DebugInfo(0),
 	m_InfoBarBottomHeight(20),
 	m_InfoBarTopHeight(20),
+	m_oShowInfoBarCommon(true),
 	m_InfoBarCommonWidth(65),
 	m_InfoBarCommonHeight(60),
 	m_MaxSpeedSize(61),
@@ -148,6 +149,8 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
 	// InfoBar Top Height
 	SetInfoBarTopHeight(atoi(F.Get("InfoBarTopHeight", "20").c_str()));
+	// Info bar visibility
+	SetShowInfoBarCommonFlag(F.Get("ShowInfoBarCommon", "on").ToUpper() == "ON");
 	// InfoBar Common Width
 	SetInfoBarCommonWidth(atoi(F.Get("InfoBarCommonWidth", "65").c_str()));
 	// InfoBar Common Height
@@ -412,6 +415,18 @@ void CXOptions::SetInfoBarBottomHeight(int Value) {
 void CXOptions::SetInfoBarTopHeight(int Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_InfoBarTopHeight = Value;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowInfoBarCommon() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowInfoBarCommon;
+}
+
+//-------------------------------------
+void CXOptions::SetShowInfoBarCommonFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowInfoBarCommon = NewValue;
 }
 
 //-------------------------------------

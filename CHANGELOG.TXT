@@ -3,6 +3,7 @@ Version 0.2.5:
    - 2973833: TrackLog must show real GPSCoor
  - implemented feature requests:
    - 2980508: Show oneway arrow on streets
+   - 2979185: Visibility of speed-pos box adjustable
  - other:
    - area display (sea) speedup
 

@@ -293,7 +293,10 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		if(CXOptions::Instance()->MustShowMaxSpeed()) {
 			m_pInfoBarSpeed->Paint(pDC, m_InfoBarSpeedPos.GetLeft(), m_InfoBarSpeedPos.GetTop());
 		}
-		m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
+		if(CXOptions::Instance()->MustShowInfoBarCommon()) {
+			// must show InfoBarCommon
+			m_pInfoBarCommon->Paint(pDC, m_InfoBarCommonPos.GetLeft(), m_InfoBarCommonPos.GetTop());
+		}
 		// paint zoom buttons
 		if(CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom())
 		{
@@ -376,8 +379,13 @@ void CXNaviPOWM::Resize(int Width, int Height) {
 	m_ZoomInBtn.Resize(ZoomSize, ZoomSize);
 	m_ZoomOutBtn.Resize(ZoomSize, ZoomSize);
 
-	int InfoBarCommonWidth = CXOptions::Instance()->GetInfoBarCommonWidth();
-	int InfoBarCommonHeight = CXOptions::Instance()->GetInfoBarCommonHeight();
+	int InfoBarCommonWidth = 0;
+	int InfoBarCommonHeight = 0;
+	// check if InfoBarCommon has to be shown to adjust maxspeed position
+	if(CXOptions::Instance()->MustShowInfoBarCommon()) {
+		InfoBarCommonWidth = CXOptions::Instance()->GetInfoBarCommonWidth();
+		InfoBarCommonHeight = CXOptions::Instance()->GetInfoBarCommonHeight();
+	}
 	int MaxSpeedSize = CXOptions::Instance()->GetMaxSpeedSize();
 	m_InfoBarSpeedPos.SetTop(IBTH);
 	m_InfoBarSpeedPos.SetLeft(Width-InfoBarCommonWidth-MaxSpeedSize);

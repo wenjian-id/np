@@ -116,6 +116,7 @@ private:
 	t_uint64					m_DebugInfo;					///< Holder for debug info flags.
 	int							m_InfoBarBottomHeight;			///< oiu
 	int							m_InfoBarTopHeight;				///< oiu
+	bool						m_oShowInfoBarCommon;			///< oiu
 	int							m_InfoBarCommonWidth;			///< oiu
 	int							m_InfoBarCommonHeight;			///< oiu
 	int							m_MaxSpeedSize;					///< oiu
@@ -268,6 +269,18 @@ public:
 	 *
 	 */
 	void SetInfoBarTopHeight(int Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowInfoBarCommon() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetShowInfoBarCommonFlag(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
