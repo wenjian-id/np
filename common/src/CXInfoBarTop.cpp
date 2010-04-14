@@ -185,12 +185,15 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		}
 
 		CXStringASCII StrTime;
+		CXRGB ClockColor(0xff, 0xff, 0x00);
 		if(CXOptions::Instance()->MustShowCurrentTime()) {
 			// get current time
 			CXExactTime Now;
 			snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
 			StrTime = buf;
 		} else {
+			// set other color
+			ClockColor = CXRGB(0xff, 0xff, 0xff);
 			CXStringASCII Tmp = m_NaviData.GetUTC();
 			if(Tmp.IsEmpty()) {
 				StrTime = "--:--";
@@ -209,7 +212,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		}
 
 		// draw time
-		Bmp.DrawTextASCII(StrTime, m_TimeRect, CXRGB(0xff, 0xff, 0x00), BgColor);
+		Bmp.DrawTextASCII(StrTime, m_TimeRect, ClockColor, BgColor);
 	}
 
 	// draw
