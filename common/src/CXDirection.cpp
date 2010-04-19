@@ -27,7 +27,6 @@ CXDirection::CXDirection():
 	m_dCos(1),
 	m_dSin(0)
 {
-	Reset();
 }
 
 //-------------------------------------
@@ -77,10 +76,4 @@ double CXDirection::GetCos() const {
 //-------------------------------------
 double CXDirection::GetSin() const {
 	return m_dSin;
-}
-
-//-------------------------------------
-void CXDirection::Reset() {
-	m_dCos = 1;
-	m_dSin = 0;
 }

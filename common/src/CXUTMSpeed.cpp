@@ -62,7 +62,8 @@ bool CXUTMSpeed::operator != (const CXUTMSpeed &rOther) {
 //-------------------------------------
 void CXUTMSpeed::Reset() {
 	m_dSpeed = 0;
-	m_Direction.Reset();
+	// set directon to north
+	m_Direction = CXDirection(0, 1);
 }
 
 //-------------------------------------

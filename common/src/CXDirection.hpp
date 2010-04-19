@@ -107,12 +107,6 @@ public:
 	 *
 	 */
 	double GetSin() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Reset();
 };
 
 #endif // __CXDIRECTION_HPP__
