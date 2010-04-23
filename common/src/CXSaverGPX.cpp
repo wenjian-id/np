@@ -28,7 +28,7 @@ CXSaverGPX::CXSaverGPX():
 	CXSaver("gpx")
 {
 	m_GPXHeader += "<?xml version=\"1.0\" standalone=\"yes\"?>\r\n";
-	m_GPXHeader += "<gpx version=\"1.1\" creator=\"NaviPOWM - http://sourceforge.net/apps/mediawiki/navipowm\"\r\n";
+	m_GPXHeader += "<gpx version=\"1.1\" creator=\"NaviPOWM - http://sourceforge.net/projects/navipowm\"\r\n";
 	m_GPXHeader += "   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n";
 	m_GPXHeader += "   xmlns=\"http://www.topografix.com/GPX/1/1\"\r\n";
 	m_GPXHeader += "   xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">\r\n";

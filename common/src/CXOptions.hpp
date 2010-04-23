@@ -185,6 +185,8 @@ private:
 	bool						m_oFullScreen;					///< oiu
 	bool						m_oShowLogo;					///< Show logo.
 	bool						m_oSaving;						///< oiu
+	bool						m_oSaveRaw;						///< oiu
+	bool						m_oSaveGPX;						///< oiu
 	bool						m_oShowZoomButtons;				///< oiu
 	int							m_ZoomButtonSize;				///< oiu
 	bool						m_oAutomaticZoom;				///< oiu
@@ -687,6 +689,30 @@ public:
 	 *
 	 */
 	void ToggleSaving();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustSaveRaw() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetSaveRaw(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustSaveGPX() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetSaveGPX(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

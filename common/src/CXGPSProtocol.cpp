@@ -246,14 +246,16 @@ void CXGPSProtocol::SaveRawData(unsigned char *pbBuffer, size_t DataLength) {
 		return;
 	if(DataLength == 0)
 		return;
-	/// \todo check if save of raw data allowed
-	// save buffer
-	m_SaverRaw.Write(pbBuffer, DataLength);
+	if(CXOptions::Instance()->MustSaveRaw()) {
+		// save buffer
+		m_SaverRaw.Write(pbBuffer, DataLength);
+	}
 }
 
 //-------------------------------------
 void CXGPSProtocol::SaveGPXData(double dLon, double dLat, double dHeight) {
-	/// \todo check if save of GPX data allowed
-	// save buffer
-	m_SaverGPX.Write(dLon, dLat, dHeight);
+	if(CXOptions::Instance()->MustSaveGPX()) {
+		// save buffer
+		m_SaverGPX.Write(dLon, dLat, dHeight);
+	}
 }

@@ -95,6 +95,8 @@ CXOptions::CXOptions() :
 	m_oFullScreen(false),
 	m_oShowLogo(true),
 	m_oSaving(false),
+	m_oSaveRaw(false),
+	m_oSaveGPX(false),
 	m_oShowZoomButtons(false),
 	m_ZoomButtonSize(40),
 	m_oAutomaticZoom(false),
@@ -378,6 +380,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 			SetStartPosition(Coor);
 		}
 	}
+	// Saving
+	SetSaveRaw(F.Get("SaveRaw", "off").ToUpper() == "ON");
+	SetSaveGPX(F.Get("SaveGPX", "off").ToUpper() == "ON");
 	// Speed thresholds
 	SetSpeedThresholdCar(atof(F.Get("SpeedThresholdCar", "2").c_str()));
 	SetSpeedThresholdBike(atof(F.Get("SpeedThresholdBike", "1.5").c_str()));
@@ -958,6 +963,30 @@ bool CXOptions::IsSaving() const {
 void CXOptions::ToggleSaving() {
 	CXWriteLocker WL(&m_RWLock);
 	m_oSaving = ! m_oSaving;
+}
+
+//-------------------------------------
+bool CXOptions::MustSaveRaw() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oSaveRaw;
+}
+
+//-------------------------------------
+void CXOptions::SetSaveRaw(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oSaveRaw = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustSaveGPX() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oSaveGPX;
+}
+
+//-------------------------------------
+void CXOptions::SetSaveGPX(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oSaveGPX = NewValue;
 }
 
 //-------------------------------------

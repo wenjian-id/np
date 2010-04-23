@@ -4,6 +4,7 @@ Version 0.2.5:
  - implemented feature requests:
    - 2980508: Show oneway arrow on streets
    - 2979185: Visibility of speed-pos box adjustable
+   - 2991340: Save received data also as GPX file
  - other:
    - area display (sea) speedup
 
