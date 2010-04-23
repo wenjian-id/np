@@ -258,6 +258,46 @@ SOURCE=..\..\common\src\CXFileIni.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXGPSCourseInfo.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannel.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannelFile.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannelGPSD.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannelSerial.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSPosInfo.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSProtocol.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSProtocolGPSD.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSProtocolNMEA.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSQualityInfo.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXGPSRecvThread.hpp
 # End Source File
 # Begin Source File
@@ -402,6 +442,18 @@ SOURCE=..\..\common\src\CXSatelliteData.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXSaver.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSaverGPX.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSaverRaw.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXSmartPtr.hpp
 # End Source File
 # Begin Source File
@@ -538,6 +590,46 @@ SOURCE=..\..\common\src\CXFileIni.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXGPSCourseInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannel.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannelFile.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannelGPSD.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSInputChannelSerial.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSPosInfo.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSProtocol.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSProtocolGPSD.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSProtocolNMEA.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXGPSQualityInfo.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXGPSRecvThread.cpp
 # End Source File
 # Begin Source File
@@ -655,6 +747,18 @@ SOURCE=..\..\common\src\CXRGB.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXSatelliteData.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSaver.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSaverGPX.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXSaverRaw.cpp
 # End Source File
 # Begin Source File
 
