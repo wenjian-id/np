@@ -133,7 +133,7 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		char buf[10];
 		if(m_NaviData.IsConnected()) {
 			// draw satellite count
-			int NSat = CXSatelliteData::Instance()->GetNrSat();
+			int NSat = CXSatellites::Instance()->GetNrSat();
 			snprintf(buf, 10, "%d", NSat);
 			CXStringASCII StrNSat(buf);
 			// compute color

@@ -25,6 +25,8 @@
 static const size_t MaxBufferSize = 100000;
 static const size_t MinBufferSize = 10;
 
+
+//----------------------------------------------------------------------------
 //-------------------------------------
 CXFile::CXFile() :
 	m_File(NULL),

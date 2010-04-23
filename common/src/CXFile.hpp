@@ -24,6 +24,7 @@
 #define __CXFILE_HPP__
 
 #include <TargetIncludes.hpp>
+#include <CXStringASCII.hpp>
 #include <stdio.h>
 
 //----------------------------------------------------------------------------

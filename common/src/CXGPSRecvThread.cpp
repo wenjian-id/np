@@ -26,21 +26,20 @@
 #include "CXLocatorThread.hpp"
 #include "CXOptions.hpp"
 #include "CXNMEA.hpp"
+#include "CXGPSProtocolNMEA.hpp"
+#include "CXGPSProtocolGPSD.hpp"
+#include "CXGPSInputChannelFile.hpp"
+#include "CXGPSInputChannelSerial.hpp"
+#include "CXGPSInputChannelGPSD.hpp"
 
 #include <stdlib.h>
 
-static const unsigned char GGABEGIN[6]	= {'$', 'G', 'P', 'G', 'G', 'A'};
-static const unsigned char RMCBEGIN[6]	= {'$', 'G', 'P', 'R', 'M', 'C'};
-static const unsigned char GSABEGIN[6]	= {'$', 'G', 'P', 'G', 'S', 'A'};
-static const unsigned char GSVBEGIN[6]	= {'$', 'G', 'P', 'G', 'S', 'V'};
-
 //-------------------------------------
 CXGPSRecvThread::CXGPSRecvThread() :
-	m_oDemoMode(false),
-	m_DemoTimeout(1000),
+	m_pGPSProtocol(NULL),
+	m_pGPSInputChannel(NULL),
 	m_LastGPSConnectTimeout(1000),
-	m_pLocator(NULL),
-	m_oSaving(false)
+	m_pLocator(NULL)
 {
 	SetSleepTime(100);	// 100ms
 }
@@ -48,255 +47,118 @@ CXGPSRecvThread::CXGPSRecvThread() :
 
 //-------------------------------------
 CXGPSRecvThread::~CXGPSRecvThread() {
+	delete m_pGPSProtocol;
+	delete m_pGPSInputChannel;
 }
 
-
 //-------------------------------------
-void CXGPSRecvThread::OpenSerial() {
+void CXGPSRecvThread::CreateGPSProtocol() {
 	CXMutexLocker L(&m_Mutex);
-	m_LastGPSConnectTimeout = CXOptions::Instance()->GetGPSReconnectTimeout();
-	CXSerialPortConfig Cfg = CXOptions::Instance()->GetSerialPortConfig();
-	CXStringASCII Port = Cfg.GetPort();
-	// look for "DEMO:"
-	m_oDemoMode = Port.Find("DEMO;") == 0;
-	if(m_oDemoMode) {
-		ExtractFirstToken(Port, ';');
-		// extract file name
-		CXStringASCII FileName = CreateAbsoluteFileName(CXOptions::Instance()->GetStartPath(), ExtractFirstToken(Port, ';'));
-		// extract timeout
-		// check if "ms" is found.
-		size_t PosMS = Port.Find("ms");
-		if(PosMS == CXStringASCII::NPOS) {
-			// timeout is given in seconds
-			m_DemoTimeout = 1000*atoi(Port.c_str());
-		} else {
-			// timeout is given in milliseconds
-			Port = Port.Left(PosMS);
-			m_DemoTimeout = atoi(Port.c_str());
+	delete m_pGPSProtocol;
+	m_pGPSProtocol = NULL;
+	delete m_pGPSInputChannel;
+	m_pGPSInputChannel = NULL;
+	// check which kind of protocol to use
+	switch(CXOptions::Instance()->GetGPSProtocolType()) {
+		case CXOptions::e_GPSProto_None:	m_pGPSProtocol = NULL; break;
+		case CXOptions::e_GPSProto_NMEA:	m_pGPSProtocol = new CXGPSProtocolNMEA(); break;
+		case CXOptions::e_GPSProto_GPSD:	m_pGPSProtocol = new CXGPSProtocolGPSD(); break;
+	}
+	// now set InputChannel
+	switch(CXOptions::Instance()->GetGPSInputChannelType()) {
+		case CXOptions::e_InputChannel_None:	m_pGPSInputChannel = NULL; break;
+		case CXOptions::e_InputChannel_Serial:	m_pGPSInputChannel = new CXGPSInputChannelSerial(); break;
+		case CXOptions::e_InputChannel_File:	m_pGPSInputChannel = new CXGPSInputChannelFile(); break;
+		case CXOptions::e_InputChannel_GPSD:	m_pGPSInputChannel = new CXGPSInputChannelGPSD(); break;
+	}
+	if(m_pGPSInputChannel != NULL) {
+		// read configuration of input channel
+		m_pGPSInputChannel->ReadConfiguration();
+		if(m_pGPSProtocol != NULL) {
+			// set input channel in protocol
+			m_pGPSProtocol->SetInputChannel(m_pGPSInputChannel);
 		}
-		if(m_DemoTimeout == 0)
-			m_DemoTimeout = 1000;
-		if(m_DemoTimeout > 10000)
-			m_DemoTimeout = 10000;
-		// open file
-		m_DemoFile.Open(FileName.c_str(), CXFile::E_READ);
-	} else {
-		// open serial port
-		m_Serial.Open(Cfg);
 	}
 }
 
-
 //-------------------------------------
-void CXGPSRecvThread::ReopenSerial() {
-	CloseSerial();
-	OpenSerial();
-}
-
-
-//-------------------------------------
-void CXGPSRecvThread::CloseSerial() {
+void CXGPSRecvThread::OpenGPSProtocol() {
 	CXMutexLocker L(&m_Mutex);
-	if(m_oDemoMode) {
-		m_DemoFile.Close();
-	} else {
-		m_Serial.Close();
-	}
+	if(m_pGPSProtocol != NULL)
+		m_pGPSProtocol->Open();
 }
 
+//-------------------------------------
+void CXGPSRecvThread::ReopenGPSProtocol() {
+	CloseGPSProtocol();
+	OpenGPSProtocol();
+}
+
+//-------------------------------------
+void CXGPSRecvThread::CloseGPSProtocol() {
+	CXMutexLocker L(&m_Mutex);
+	if(m_pGPSProtocol != NULL)
+		m_pGPSProtocol->Close();
+}
 
 //-------------------------------------
 void CXGPSRecvThread::OnThreadStarted() {
 	CXMutexLocker L(&m_Mutex);
-	OpenSerial();
+	m_LastGPSConnectTimeout = CXOptions::Instance()->GetGPSReconnectTimeout();
+	// create gps Protocol
+	CreateGPSProtocol();
+	// open gps Protocol
+	OpenGPSProtocol();
 	// set connection status to locator thread
-	m_pLocator->SetConnected(IsOpen());
-}
-
-
-//-------------------------------------
-bool CXGPSRecvThread::CheckGGA() {
-    // length must be at least 11 : $ G P G G A * x x CR LF
-    if(m_LastPacket.GetSize() < 11)
-    	return false;
-    
-    // must start with "$GPGGA"
-    if(!m_LastPacket.CompareBegin(GGABEGIN, sizeof(GGABEGIN))) {
-    	return false;
-    }
-
-	// OK, it is a GGA packet
-	return true;
-}
-
-//-------------------------------------
-bool CXGPSRecvThread::CheckRMC() {
-    // length must be at least 11 : $ G P R M C * x x CR LF
-    if(m_LastPacket.GetSize() < 11)
-    	return false;
-    
-    // must start with "$GPRMC"
-    if(!m_LastPacket.CompareBegin(RMCBEGIN, sizeof(RMCBEGIN))) {
-    	return false;
-    }
-
-	// OK, it is a RMC packet
-	return true;
-}
-
-//-------------------------------------
-bool CXGPSRecvThread::CheckGSA() {
-    // length must be at least 11 : $ G P G S A * x x CR LF
-    if(m_LastPacket.GetSize() < 11)
-    	return false;
-    
-    // must start with "$GPGSA"
-    if(!m_LastPacket.CompareBegin(GSABEGIN, sizeof(GSABEGIN))) {
-    	return false;
-    }
-
-	// OK, it is a GSA packet
-	return true;
-}
-
-//-------------------------------------
-bool CXGPSRecvThread::CheckGSV() {
-    // length must be at least 11 : $ G P G S V * x x CR LF
-    if(m_LastPacket.GetSize() < 11)
-    	return false;
-    
-    // must start with "$GPGSV"
-    if(!m_LastPacket.CompareBegin(GSVBEGIN, sizeof(GSVBEGIN))) {
-    	return false;
-    }
-
-	// OK, it is a GSV packet
-	return true;
+	if(m_pGPSProtocol != NULL)
+		m_pLocator->SetGPSConnected(m_pGPSProtocol->IsOpen());
+	else
+		m_pLocator->SetGPSConnected(false);
 }
 
 //-------------------------------------
 void CXGPSRecvThread::OnThreadLoop() {
 	CXMutexLocker L(&m_Mutex);
-	// poll data on serial port
-	if(ReceiveData()) {
-		// process data
-		while(ProcessData()) {
-			// save data if necessary
-			Save(m_LastPacket);
-			// check GGA packet
-			if(CheckRMC()) {
-				// tell the locator that data is ready
-				if(m_pLocator != NULL)
-					m_pLocator->SetGPSDataRMC(m_LastPacket);
-			}
-			if(CheckGGA()) {
-				// check if demo mode
-				if(m_oDemoMode) {
-					CXExactTime Now;
-					size_t TO = Now - m_LastDemoGGA;
-					// check if sleep necessary
-					if(TO < m_DemoTimeout) {
-						// yes, sleep some time
-						DoSleep(m_DemoTimeout - TO);
-					}
-					// now set last received time
-					m_LastDemoGGA.SetNow();
-				}
-				// tell the locator that data is ready
-				if(m_pLocator != NULL)
-					m_pLocator->SetGPSDataGGA(m_LastPacket);
-			}
-			if(CheckGSA()) {
-				// tell the locator that data is ready
-				if(m_pLocator != NULL)
-					m_pLocator->SetGPSDataGSA(m_LastPacket);
-			}
-			if(CheckGSV()) {
-				// tell the locator that data is ready
-				if(m_pLocator != NULL)
-					m_pLocator->SetGPSDataGSV(m_LastPacket);
-			}
+	if(m_pGPSProtocol == NULL)
+		return;
+	if(!m_pGPSProtocol->IsOpen()) {
+		// channel not open
+		CXExactTime Now;
+		size_t TO = Now - m_LastGPSConnect;
+		if(TO > m_LastGPSConnectTimeout) {
+			// try to reopen Protocol
+			ReopenGPSProtocol();
+			m_LastGPSConnect.SetNow();
+			// set connection status to locator thread
+			m_pLocator->SetGPSConnected(m_pGPSProtocol->IsOpen());
 		}
-	} else {
-		if(!IsOpen()) {
-			// channel not open
-			CXExactTime Now;
-			size_t TO = Now - m_LastGPSConnect;
-			if(TO > m_LastGPSConnectTimeout) {
-				// try to reopen channel
-				ReopenSerial();
-				m_LastGPSConnect.SetNow();
-				// set connection status to locator thread
-				m_pLocator->SetConnected(IsOpen());
-			}
+	}
+	if(!m_pGPSProtocol->IsOpen())
+		return;
+	// connected
+	// read data
+	if(m_pGPSProtocol->ReadAndProcessData()) {
+		// send data to locator thread
+		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvPosInfo) != 0) {
+			m_pLocator->SetGPSPosInfo(m_pGPSProtocol->GetGPSPosInfo());
 		}
+		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvCourseInfo) != 0) {
+			m_pLocator->SetGPSCourseInfo(m_pGPSProtocol->GetGPSCourseInfo());
+		}
+		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvQualityInfo) != 0) {
+			m_pLocator->SetGPSQualityInfo(m_pGPSProtocol->GetGPSQualityInfo());
+		}
+		// reset receive flags
+		m_pGPSProtocol->ClearReceivedDataTypes();
+		// save
+		/// \todo implement
 	}
 }
 
 //-------------------------------------
 void CXGPSRecvThread::OnThreadStopped() {
 	CXMutexLocker L(&m_Mutex);
-	CloseSerial();
-}
-
-//-------------------------------------
-bool CXGPSRecvThread::ReceiveData() {
-	bool Result = false;
-	unsigned char buf[500];
-	if(m_oDemoMode) {
-		size_t ReadSize = 0;
-		if((m_DemoFile.Read(buf, 500, ReadSize) == CXFile::E_OK) && (ReadSize != 0)) {
-			// append data to m_Buffer
-			m_Buffer.Append(buf, ReadSize);
-			Result = true;
-		} else {
-			// restart demo
-			ReopenSerial();
-		}
-	} else {
-		// synchronisation has to be done in calling function
-		unsigned long ulReceived = 0;
-		m_Serial.Receive(500, buf, ulReceived);
-		if(ulReceived > 0) {
-			m_Buffer.Append(buf, ulReceived);
-		}
-		Result = ulReceived != 0;
-	}
-	return Result;
-}
-
-//-------------------------------------
-bool CXGPSRecvThread::ProcessData() {
-	// synchronisation has to be done in calling function
-
-	// check if complete Packet arrived
-	while(!m_Buffer.IsEmpty() && (m_Buffer[0] != '$')) {
-		m_Buffer.DeleteFirst(1);
-	}
-	// check if empty
-	if(m_Buffer.IsEmpty())
-		return false;
-	// OK, starts with $
-	// check, if 0x0a inside
-	unsigned long pos = m_Buffer.Find(0x0a);
-	if(pos == tUCBuffer::NPOS)
-		return false;
-	// extract payload
-	m_LastPacket = m_Buffer.Left(pos-1);
-	// delete from input buffer
-	m_Buffer.DeleteFirst(pos+1);
-	return true;
-}
-
-//-------------------------------------
-bool CXGPSRecvThread::IsOpen() const {
-	CXMutexLocker L(&m_Mutex);
-	bool Result = false;
-	if(m_oDemoMode)
-		Result = m_DemoFile.IsOpen();
-	else
-		Result = m_Serial.IsOpen();
-	return Result;
+	CloseGPSProtocol();
 }
 
 //-------------------------------------
@@ -308,56 +170,6 @@ void CXGPSRecvThread::SetLocator(CXLocatorThread *pLocator) {
 //-------------------------------------
 void CXGPSRecvThread::FlushInput() {
 	CXMutexLocker L(&m_Mutex);
-	while(ReceiveData())
-		;
-}
-
-//-------------------------------------
-void CXGPSRecvThread::Save(const tUCBuffer & Buffer) {
-	// check to see if state changed
-	if(m_oSaving != CXOptions::Instance()->IsSaving()) {
-		// yes
-		m_oSaving = CXOptions::Instance()->IsSaving();
-		if(!m_oSaving) {
-			// saving just turned off
-			m_SaveFile.Close();
-		} else {
-			// saving just turned on
-			// reset flag in case of error
-			m_oSaving = false;
-
-			// get current time
-			CXExactTime Now;
-			char buf[100];
-			for(int i=0; i<100; i++) {
-				snprintf(buf, 100, "%04d%02d%02d%02d.txt", Now.GetYear(), Now.GetMonth(), Now.GetDay(), i);
-				CXStringASCII FileName(CXOptions::Instance()->GetDirectorySave());
-				FileName+=buf;
-
-				// check if file already exists
-				if(m_SaveFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
-					// yes. close it again.
-					m_SaveFile.Close();
-				} else {
-					// no. open for writing
-					m_SaveFile.Close();
-					m_oSaving = m_SaveFile.Open(FileName.c_str(), CXFile::E_WRITE) == CXFile::E_OK;
-					if(m_oSaving)
-						break;
-				}
-			}
-
-		}
-	}
-	if(m_oSaving != CXOptions::Instance()->IsSaving()) {
-		// some error occured
-		CXOptions::Instance()->ToggleSaving();
-	}
-	if(m_oSaving) {
-		// save buffer
-		size_t WriteSize = 0;
-		m_SaveFile.Write(Buffer.GetBuffer(), Buffer.GetSize(), WriteSize);
-		unsigned char DA[2] = {0x0d, 0x0a};
-		m_SaveFile.Write(DA, 2, WriteSize);
-	}
+	if(m_pGPSProtocol != NULL)
+		m_pGPSProtocol->FlushInput();
 }

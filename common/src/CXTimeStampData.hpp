@@ -60,6 +60,13 @@ public:
 	 *
 	 * oiu
 	 */
+	CXTimeStampData(const tData & Data);
+	//-------------------------------------
+	/**
+	 * \brief	oiu
+	 *
+	 * oiu
+	 */
 	CXTimeStampData(const tData & Data, const CXExactTime &TimeStamp);
 	//-------------------------------------
 	/**
@@ -147,6 +154,13 @@ template<class tData> CXTimeStampData<tData>::CXTimeStampData(const tData & Data
 	m_Data(Data),
 	m_TimeStamp(TimeStamp)
 {
+}
+
+//-------------------------------------
+template<class tData> CXTimeStampData<tData>::CXTimeStampData(const tData & Data) :
+	m_Data(Data)
+{
+	m_TimeStamp.SetNow();
 }
 
 //-------------------------------------

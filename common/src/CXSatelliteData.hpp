@@ -29,20 +29,121 @@
 
 class CXDeviceContext;
 
+//---------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+class CXSatelliteInfo {
+private:
+private:
+	int		m_PRN;			///< oiu
+	int		m_Elevation;	///< oiu
+	int		m_Azimuth;		///< oiu
+	int		m_SNR;			///< oiu
+	//-------------------------------------
+	/**
+	 * \brief Copy from other instance to self.
+	 *
+	 * Copy from other instance to self.
+	 * \param	rOther	Instance to copy from.
+	 */
+	void CopyFrom(const CXSatelliteInfo &rOther);
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
+	CXSatelliteInfo();
+	//-------------------------------------
+	/**
+	 * \brief Copy constructor.
+	 *
+	 * Copy constructor.
+	 * \param	rOther	Instance to copy from.
+	 */
+	CXSatelliteInfo(const CXSatelliteInfo &rOther);
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXSatelliteInfo();
+	//-------------------------------------
+	/**
+	 * \brief Assignment operator.
+	 *
+	 * Assignment operator.
+	 * \param	rOther	Instance to copy from.
+	 * \return			Const reference to self.
+	 */
+	const CXSatelliteInfo & operator = (const CXSatelliteInfo &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetPRN() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetPRN(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetElevation() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetElevation(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetAzimuth() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetAzimuth(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetSNR() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetSNR(int NewValue);
+};
+
+
+
 //----------------------------------------------------------------------------
 /**
  * \brief oiu
  *
  */
-class CXSatelliteData {
+class CXSatellitesData {
 private:
-	static CXSatelliteData			*m_pInstance;			///< oiu
 	int								m_NrSat;				///< oiu
 	CXBuffer<int>					m_ActiveSatellites;		///< oiu
-	CXBuffer<CXGSVSatelliteInfo *>	m_SatInfo;				///< oiu
-	CXBuffer<CXGSVSatelliteInfo *>	m_TmpSatInfo;			///< oiu
-	int								m_LastReceivedGSVTel;	///< oiu
-	int								m_TmpNrSat;				///< oiu
+	CXBuffer<CXSatelliteInfo *>		m_SatInfo;				///< oiu
 	double							m_HDOP;					///< oiu
 	double							m_VDOP;					///< oiu
 	bool							m_oRMCDataReceived;		///< oiu
@@ -53,14 +154,17 @@ private:
 	bool							m_oVDOPReceived;		///< oiu
 	mutable CXRWLock				m_RWLock;				///< Synchronization object.
 	//-------------------------------------
-	CXSatelliteData(const CXSatelliteData &);						///< Not used.
-	const CXSatelliteData & operator = (const CXSatelliteData &);	///< Not used.
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void CopyFrom(const CXSatellitesData &rOther);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void ClearBuffer(CXBuffer<CXGSVSatelliteInfo *> & rBuffer);
+	void ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer);
 protected:
 public:
 	//-------------------------------------
@@ -69,20 +173,26 @@ public:
 	 *
 	 * Default constructor.
 	 */
-	CXSatelliteData();
+	CXSatellitesData();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXSatellitesData(const CXSatellitesData &rOther);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
 	 * Destructor.
 	 */
-	virtual ~CXSatelliteData();
+	virtual ~CXSatellitesData();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	static CXSatelliteData *Instance();
+	const CXSatellitesData & operator = (const CXSatellitesData &rOther);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -112,9 +222,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetGSVData(int NTelegrams, int NCurrentTelegram, int NSat, int NInfos, 
-					const CXGSVSatelliteInfo &Info1, const CXGSVSatelliteInfo &Info2,
-					const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4);
+	void SetGSVData(const CXBuffer<CXSatelliteInfo *>SatInfos);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	double GetHDOP() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -126,13 +240,99 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	double GetVDOP() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	void SetVDOP(double NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height);
+	const CXBuffer<int> &ActiveSatellites() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	const CXBuffer<CXSatelliteInfo *> &SatInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasRMCDataReceived() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasGGADataReceived() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasGSADataReceived() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasGSVDataReceived() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasHDOPReceived() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasVDOPReceived() const;
+};
+
+//----------------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+class CXSatellites {
+private:
+	static CXSatellitesData		*m_pInstance;		///< oiu
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief Default constructor.
+	 *
+	 * Default constructor.
+	 */
+	CXSatellites();
+	//-------------------------------------
+	/**
+	 * \brief Destructor.
+	 *
+	 * Destructor.
+	 */
+	virtual ~CXSatellites();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	static CXSatellitesData *Instance();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	static void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height);
 };
 
 #endif // __CXSATELLITEDATA_HPP__

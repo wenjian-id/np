@@ -39,7 +39,7 @@
 #include "CXPOWMMap.hpp"
 #include "CXMapMovingDetails.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.2.5-dev2";
+const char * VERSIONSTRING ="NaviPOWM 0.2.5-dev3";
 const char * INFOSTRING1 ="(C) Doru Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 
@@ -284,8 +284,8 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
 		}
 		m_pMapPainterThread->Paint(pDC, OffsetX, OffsetY);
 	} else if (eDisplayMode == e_ModeSatInfo) {
-		CXSatelliteData::Instance()->Paint(	pDC, 0, m_InfoBarTopPos.GetBottom(),
-											GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
+		CXSatellites::Paint(	pDC, 0, m_InfoBarTopPos.GetBottom(),
+								GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
 	}
 	m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
 	m_pInfoBarTop->Paint(pDC, m_InfoBarTopPos.GetLeft(), m_InfoBarTopPos.GetTop());

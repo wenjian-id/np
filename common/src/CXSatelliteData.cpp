@@ -31,15 +31,87 @@
 #include "math.h"
 
 
-CXSatelliteData * CXSatelliteData::m_pInstance = NULL;
+CXSatellitesData * CXSatellites::m_pInstance = NULL;
 
 
 //----------------------------------------------------------------------------
 //-------------------------------------
-CXSatelliteData::CXSatelliteData() :
+CXSatelliteInfo::CXSatelliteInfo() :
+	m_PRN(0),
+	m_Elevation(0),
+	m_Azimuth(0),
+	m_SNR(0)
+{
+}
+
+//-------------------------------------
+CXSatelliteInfo::CXSatelliteInfo(const CXSatelliteInfo &rOther) {
+	CopyFrom(rOther);
+}
+
+//-------------------------------------
+CXSatelliteInfo::~CXSatelliteInfo() {
+}
+
+//-------------------------------------
+const CXSatelliteInfo & CXSatelliteInfo::operator = (const CXSatelliteInfo &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
+}
+
+//-------------------------------------
+void CXSatelliteInfo::CopyFrom(const CXSatelliteInfo &rOther) {
+	m_PRN		= rOther.m_PRN;
+	m_Elevation	= rOther.m_Elevation;
+	m_Azimuth	= rOther.m_Azimuth;
+	m_SNR		= rOther.m_SNR;
+}
+
+//-------------------------------------
+int CXSatelliteInfo::GetPRN() const {
+	return m_PRN;
+}
+
+//-------------------------------------
+void CXSatelliteInfo::SetPRN(int NewValue) {
+	m_PRN = NewValue;
+}
+
+//-------------------------------------
+int CXSatelliteInfo::GetElevation() const {
+	return m_Elevation;
+}
+
+//-------------------------------------
+void CXSatelliteInfo::SetElevation(int NewValue) {
+	m_Elevation = NewValue;
+}
+
+//-------------------------------------
+int CXSatelliteInfo::GetAzimuth() const {
+	return m_Azimuth;
+}
+
+//-------------------------------------
+void CXSatelliteInfo::SetAzimuth(int NewValue) {
+	m_Azimuth = NewValue;
+}
+
+//-------------------------------------
+int CXSatelliteInfo::GetSNR() const {
+	return m_SNR;
+}
+
+//-------------------------------------
+void CXSatelliteInfo::SetSNR(int NewValue) {
+	m_SNR = NewValue;
+}
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXSatellitesData::CXSatellitesData() :
 	m_NrSat(0),
-	m_LastReceivedGSVTel(0),
-	m_TmpNrSat(0),
 	m_HDOP(0),
 	m_VDOP(0),
 	m_oRMCDataReceived(false),
@@ -52,47 +124,83 @@ CXSatelliteData::CXSatelliteData() :
 }
 
 //-------------------------------------
-CXSatelliteData::~CXSatelliteData() {
+CXSatellitesData::CXSatellitesData(const CXSatellitesData &rOther) :
+	m_NrSat(0),
+	m_HDOP(0),
+	m_VDOP(0),
+	m_oRMCDataReceived(false),
+	m_oGGADataReceived(false),
+	m_oGSADataReceived(false),
+	m_oGSVDataReceived(false),
+	m_oHDOPReceived(false),
+	m_oVDOPReceived(false)
+{
+	CopyFrom(rOther);
+}
+
+//-------------------------------------
+CXSatellitesData::~CXSatellitesData() {
 	CXWriteLocker WL(&m_RWLock);
 	ClearBuffer(m_SatInfo);
-	ClearBuffer(m_TmpSatInfo);
 }
 
 //-------------------------------------
-CXSatelliteData *CXSatelliteData::Instance() {
-	if(m_pInstance == NULL)
-		m_pInstance = new CXSatelliteData();
-	return m_pInstance;
+const CXSatellitesData & CXSatellitesData::operator = (const CXSatellitesData &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
 }
 
 //-------------------------------------
-void CXSatelliteData::ClearBuffer(CXBuffer<CXGSVSatelliteInfo *> & rBuffer) {
+void CXSatellitesData::CopyFrom(const CXSatellitesData &rOther) {
+	CXWriteLocker WL(&m_RWLock);
+	CXReadLocker RL(&(rOther.m_RWLock));
+	// clear data
+	ClearBuffer(m_SatInfo);
+	// copy data
+	m_NrSat = rOther.m_NrSat;
+	m_HDOP = rOther.m_HDOP;
+	m_VDOP = rOther.m_VDOP;
+	m_oRMCDataReceived = rOther.m_oRMCDataReceived;
+	m_oGGADataReceived = rOther.m_oGGADataReceived;
+	m_oGSADataReceived = rOther.m_oGSADataReceived;
+	m_oGSVDataReceived = rOther.m_oGSVDataReceived;
+	m_oHDOPReceived = rOther.m_oHDOPReceived;
+	m_oVDOPReceived = rOther.m_oVDOPReceived;
+	// copy buffers
+	m_ActiveSatellites = rOther.m_ActiveSatellites;
+	for(size_t i=0; i<rOther.m_SatInfo.GetSize(); i++)
+		m_SatInfo.Append(new CXSatelliteInfo(*rOther.m_SatInfo[i]));
+}
+
+//-------------------------------------
+void CXSatellitesData::ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer) {
 	for(size_t i=0; i<rBuffer.GetSize(); i++)
 		delete rBuffer[i];
 	rBuffer.Clear();
 }
 
 //-------------------------------------
-void CXSatelliteData::SetRMCReceived() {
+void CXSatellitesData::SetRMCReceived() {
 	CXWriteLocker WL(&m_RWLock);
 	m_oRMCDataReceived = true;
 }
 
 //-------------------------------------
-void CXSatelliteData::SetNrSatGGA(int NrSatGGA) {
+void CXSatellitesData::SetNrSatGGA(int NrSatGGA) {
 	CXWriteLocker WL(&m_RWLock);
 	m_NrSat = NrSatGGA;
 	m_oGGADataReceived = true;
 }
 
 //-------------------------------------
-int CXSatelliteData::GetNrSat() const {
+int CXSatellitesData::GetNrSat() const {
 	CXReadLocker RL(&m_RWLock);
 	return m_NrSat;
 }
 
 //-------------------------------------
-void CXSatelliteData::SetActiveSatellites(const CXBuffer<int> &ActiveSatellites) {
+void CXSatellitesData::SetActiveSatellites(const CXBuffer<int> &ActiveSatellites) {
 	CXWriteLocker WL(&m_RWLock);
 	m_ActiveSatellites = ActiveSatellites;
 	// set nr satellites
@@ -101,70 +209,106 @@ void CXSatelliteData::SetActiveSatellites(const CXBuffer<int> &ActiveSatellites)
 }
 
 //-------------------------------------
-void CXSatelliteData::SetGSVData(	int NTelegrams, int NCurrentTelegram, int NSat, int NInfos, 
-									const CXGSVSatelliteInfo &Info1, const CXGSVSatelliteInfo &Info2,
-									const CXGSVSatelliteInfo &Info3, const CXGSVSatelliteInfo &Info4)
-{
+void CXSatellitesData::SetGSVData(const CXBuffer<CXSatelliteInfo *>SatInfos) {
 	CXWriteLocker WL(&m_RWLock);
 	m_oGSVDataReceived = true;
-	// check if we are in sync
-	if(NCurrentTelegram != m_LastReceivedGSVTel+1) {
-		// not in sync. reset and discard
-		ClearBuffer(m_TmpSatInfo);
-		m_LastReceivedGSVTel = 0;
-		return;
-	}
-	if((m_TmpNrSat != 0) && (m_TmpNrSat != NSat)) {
-		// not in sync? reset and discard
-		ClearBuffer(m_TmpSatInfo);
-		m_LastReceivedGSVTel = 0;
-		return;
-	}
-
-	// OK. Probably in sync
-	m_TmpNrSat = NSat;
-	// append received data
-	if(NInfos >= 1)
-		m_TmpSatInfo.Append(new CXGSVSatelliteInfo(Info1));
-	if(NInfos >= 2)
-		m_TmpSatInfo.Append(new CXGSVSatelliteInfo(Info2));
-	if(NInfos >= 3)
-		m_TmpSatInfo.Append(new CXGSVSatelliteInfo(Info3));
-	if(NInfos >= 4)
-		m_TmpSatInfo.Append(new CXGSVSatelliteInfo(Info4));
-	if(NTelegrams == NCurrentTelegram) {
-		// this was the last telegram
-		// transfer data from m_TmpSatInfo to m_SatInfo
-		ClearBuffer(m_SatInfo);
-		for(size_t i=0; i<m_TmpSatInfo.GetSize(); i++)
-			m_SatInfo.Append(m_TmpSatInfo[i]);
-		m_TmpSatInfo.Clear();
-		// reset m_LastReceivedGSVTel and m_TmpNrSat
-		m_LastReceivedGSVTel = 0;
-		m_TmpNrSat = 0;
-	} else {
-		// other telegrams to follow
-		m_LastReceivedGSVTel = NCurrentTelegram;
-	}
+	ClearBuffer(m_SatInfo);
+	for(size_t i=0; i<SatInfos.GetSize(); i++)
+		m_SatInfo.Append(new CXSatelliteInfo(*SatInfos[i]));
 }
 
 //-------------------------------------
-void CXSatelliteData::SetHDOP(double NewValue) {
+double CXSatellitesData::GetHDOP() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_HDOP;
+}
+
+//-------------------------------------
+void CXSatellitesData::SetHDOP(double NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_HDOP = NewValue;
 	m_oHDOPReceived = true;
 }
 
 //-------------------------------------
-void CXSatelliteData::SetVDOP(double NewValue) {
+double CXSatellitesData::GetVDOP() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_VDOP;
+}
+
+//-------------------------------------
+void CXSatellitesData::SetVDOP(double NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_VDOP = NewValue;
 	m_oVDOPReceived = true;
 }
 
 //-------------------------------------
-void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height) {
-	CXReadLocker RL(&m_RWLock);
+const CXBuffer<int> &CXSatellitesData::ActiveSatellites() const {
+	return m_ActiveSatellites;
+}
+
+//-------------------------------------
+const CXBuffer<CXSatelliteInfo *> &CXSatellitesData::SatInfo() const {
+	return m_SatInfo;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasRMCDataReceived() const {
+	CXWriteLocker WL(&m_RWLock);
+	return m_oRMCDataReceived;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasGGADataReceived() const {
+	CXWriteLocker WL(&m_RWLock);
+	return m_oGGADataReceived;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasGSADataReceived() const {
+	CXWriteLocker WL(&m_RWLock);
+	return m_oGSADataReceived;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasGSVDataReceived() const {
+	CXWriteLocker WL(&m_RWLock);
+	return m_oGSVDataReceived;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasHDOPReceived() const {
+	CXWriteLocker WL(&m_RWLock);
+	return m_oHDOPReceived;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasVDOPReceived() const {
+	return m_oVDOPReceived;
+}
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXSatellites::CXSatellites() {
+}
+
+//-------------------------------------
+CXSatellites::~CXSatellites() {
+}
+
+//-------------------------------------
+CXSatellitesData *CXSatellites::Instance() {
+	if(m_pInstance == NULL)
+		m_pInstance = new CXSatellitesData();
+	return m_pInstance;
+}
+
+//-------------------------------------
+void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height) {
+	// make a copy of sat data
+	CXSatellitesData SatData = *m_pInstance;
 
 	CXRGB LineColor(0xFF, 0xFF, 0xFF);
 	CXRGB BgColor(0x00,0x00,0x00);
@@ -236,7 +380,9 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	Bmp.DrawTextUTF8(Str, StrRect, OrientationColor, BgColor);
 
 	// now draw satellites
-	size_t SatCount = m_SatInfo.GetSize();
+	const CXBuffer<CXSatelliteInfo *> &SatInfo = SatData.SatInfo();
+	const CXBuffer<int> &ActiveSatellites = SatData.ActiveSatellites();
+	size_t SatCount = SatInfo.GetSize();
 	if(SatCount != 0) {
 		// compute width for one satellite
 		int SatWidth = (Width - 2*Margin - (SatCount - 1)*dx) / SatCount;
@@ -249,14 +395,14 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 			// draw background
 			Bmp.DrawRect(SatBgRect, SatBgColor, SatBgColor);
 			// get satellite name
-			CXGSVSatelliteInfo *pSatInfo = m_SatInfo[i];
+			CXSatelliteInfo *pSatInfo = SatInfo[i];
 			int PRN = pSatInfo->GetPRN();
 			char buf[10];
 			snprintf(buf, sizeof(buf), "%d", PRN);
 			// check if satellite is active
 			bool Active = false;
-			for(size_t j=0; j<m_ActiveSatellites.GetSize(); j++) {
-				if(PRN == m_ActiveSatellites[j]) {
+			for(size_t j=0; j<ActiveSatellites.GetSize(); j++) {
+				if(PRN == ActiveSatellites[j]) {
 					Active = true;
 					break;
 				}
@@ -297,10 +443,10 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	tIRect GSARect = Bmp.CalcTextRectUTF8("GPGSA", 2, 2);
 	tIRect GSVRect = Bmp.CalcTextRectUTF8("GPGSV", 2, 2);
 	char HDOPbuf[25];
-	snprintf(HDOPbuf, sizeof(HDOPbuf), "HDOP: %0.2f", m_HDOP);
+	snprintf(HDOPbuf, sizeof(HDOPbuf), "HDOP: %0.2f", SatData.GetHDOP());
 	tIRect HDOPRect = Bmp.CalcTextRectASCII(HDOPbuf, 2, 2);
 	char VDOPbuf[25];
-	snprintf(VDOPbuf, sizeof(VDOPbuf), "VDOP: %0.2f", m_VDOP);
+	snprintf(VDOPbuf, sizeof(VDOPbuf), "VDOP: %0.2f", SatData.GetVDOP());
 	tIRect VDOPRect = Bmp.CalcTextRectASCII(VDOPbuf, 2, 2);
 	int DOPWidth = Max(HDOPRect.GetWidth(), VDOPRect.GetWidth());
 	// move rectangles
@@ -311,14 +457,14 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	VDOPRect.OffsetRect(Width - DOPWidth, HDOPRect.GetHeight());
 	CXRGB TextColor = TelegramNotReceivedColor;
 
-	if(m_oRMCDataReceived) {
+	if(SatData.WasRMCDataReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
 	}
 	// draw
 	Bmp.DrawTextUTF8("GPRMC", RMCRect, TextColor, BgColor);
-	if(m_oGGADataReceived) {
+	if(SatData.WasGGADataReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
@@ -326,7 +472,7 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	// draw
 	Bmp.DrawTextUTF8("GPGGA", GGARect, TextColor, BgColor);
 
-	if(m_oGSADataReceived) {
+	if(SatData.WasGSADataReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
@@ -334,29 +480,27 @@ void CXSatelliteData::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int 
 	// draw
 	Bmp.DrawTextUTF8("GPGSA", GSARect, TextColor, BgColor);
 
-	if(m_oGSVDataReceived) {
+	if(SatData.WasGSVDataReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
 	}
 	// draw
 	Bmp.DrawTextUTF8("GPGSV", GSVRect, TextColor, BgColor);
-	if(m_oHDOPReceived) {
+	if(SatData.WasHDOPReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
 	}
 	// draw
 	Bmp.DrawTextUTF8(HDOPbuf, HDOPRect, TextColor, BgColor);
-	if(m_oVDOPReceived) {
+	if(SatData.WasVDOPReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {
 		TextColor = TelegramNotReceivedColor;
 	}
 	// draw
 	Bmp.DrawTextUTF8(VDOPbuf, VDOPRect, TextColor, BgColor);
-
 	pDC->Draw(&Bmp, OffsetX, OffsetY);
-
 }
 

@@ -24,9 +24,9 @@
 #define __CXGPSRECVTHREAD_HPP__
 
 #include "CXLoopThread.hpp"
-#include "CXBuffer.hpp"
-#include "CXFile.hpp"
 #include "CXExactTime.hpp"
+#include "CXGPSProtocol.hpp"
+#include "CXGPSInputChannel.hpp"
 #include <CXMutex.hpp>
 #include <CXSerial.hpp>
 
@@ -39,18 +39,11 @@ class CXLocatorThread;
  */
 class CXGPSRecvThread : public CXLoopThread {
 private:
-	CXSerial			m_Serial;					///< oiu
-	bool				m_oDemoMode;				///< oiu
-	CXFile				m_DemoFile;					///< oiu
-	size_t				m_DemoTimeout;				///< oiu
+	CXGPSProtocol		*m_pGPSProtocol;			///< oiu
+	CXGPSInputChannel	*m_pGPSInputChannel;		///< oiu
 	size_t				m_LastGPSConnectTimeout;	///< oiu
-	CXExactTime			m_LastDemoGGA;				///< oiu
 	CXExactTime			m_LastGPSConnect;			///< oiu
-	tUCBuffer			m_Buffer;					///< oiu
-	tUCBuffer			m_LastPacket;				///< oiu
 	CXLocatorThread		*m_pLocator;				///< oiu
-	bool				m_oSaving;					///< oiu
-	CXFile				m_SaveFile;					///< oiu
 	mutable CXMutex		m_Mutex;					///< Synchronization object.
 	//-------------------------------------
 	CXGPSRecvThread(const CXGPSRecvThread &);						///< Not used.
@@ -60,55 +53,25 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	void OpenSerial();
+	void CreateGPSProtocol();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void ReopenSerial();
+	void OpenGPSProtocol();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void CloseSerial();
+	void ReopenGPSProtocol();
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	bool ReceiveData();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool ProcessData();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGGA();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool CheckRMC();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGSA();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool CheckGSV();
+	void CloseGPSProtocol();
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -148,12 +111,6 @@ public:
 	 * Destructor.
 	 */
 	virtual ~CXGPSRecvThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool IsOpen() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

@@ -22,7 +22,7 @@
 
 #include "Utils.hpp"
 #include "CXCoor.hpp"
-#include "CXNMEA.hpp"
+#include "CXSatelliteData.hpp"
 #include "OSSpecific.hpp"
 
 #include  <stdlib.h>
@@ -513,8 +513,8 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket) {
 
 //-------------------------------------
 bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram, 
-					int &rNSat, int &rNInfos, CXGSVSatelliteInfo &rInfo1, CXGSVSatelliteInfo &rInfo2,
-					CXGSVSatelliteInfo &rInfo3, CXGSVSatelliteInfo &rInfo4)
+					int &rNSat, int &rNInfos, CXSatelliteInfo &rInfo1, CXSatelliteInfo &rInfo2,
+					CXSatelliteInfo &rInfo3, CXSatelliteInfo &rInfo4)
 {
 	// check if this NMEAPacket contains a GSV packet
 
@@ -551,7 +551,7 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
 	// now extract satellite infos
 	while(!s.IsEmpty()) {
 		rNInfos++;
-		CXGSVSatelliteInfo *pInfo = &rInfo1;
+		CXSatelliteInfo *pInfo = &rInfo1;
 		switch(rNInfos) {
 			case 1 : pInfo = &rInfo1; break;
 			case 2 : pInfo = &rInfo2; break;

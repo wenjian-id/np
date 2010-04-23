@@ -35,6 +35,74 @@
  * \brief oiu
  *
  */
+class CXFileConfig {
+private:
+	CXStringASCII	m_FileName;		///< oiu;
+	int				m_iTimeout;		///< oiu
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void CopyFrom(const CXFileConfig & rOther);
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXFileConfig();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXFileConfig(const CXFileConfig &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXFileConfig();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	const CXFileConfig & operator = (const CXFileConfig &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetFileName(const CXStringASCII & FileName);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetFileName() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetTimeout(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetTimeout() const;
+};
+
+
+//---------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
 class CXOptions {
 public:
 	//-------------------------------------
@@ -83,10 +151,36 @@ public:
 		e_SWLP_LastPos,		///< oiu
 		e_SWLP_Custom,		///< oiu
 	};
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_GPS_PROTOCOL_TYPE {
+		e_GPSProto_None,		///< oiu
+		e_GPSProto_NMEA,		///< oiu
+		e_GPSProto_GPSD,		///< oiu
+	};
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 * oiu
+	 */
+	enum E_INPUT_CHANNEL_TYPE {
+		e_InputChannel_None,		///< oiu
+		e_InputChannel_Serial,		///< oiu
+		e_InputChannel_File,		///< oiu
+		e_InputChannel_GPSD,		///< oiu
+	};
 private:
 	static CXOptions			*m_pInstance;					///< oiu
 	CXStringASCII				m_StartPath;					///< oiu
+	E_GPS_PROTOCOL_TYPE			m_eGPSProtocolType;				///< oiu
+	E_INPUT_CHANNEL_TYPE		m_eGPSInputChannelType;			///< oiu
 	CXSerialPortConfig			m_SerialPortConfig;				///< oiu
+	CXFileConfig				m_FileConfig;					///< oiu
 	bool						m_oNorthing;					///< oiu
 	bool						m_oFullScreen;					///< oiu
 	bool						m_oShowLogo;					///< Show logo.
@@ -214,6 +308,30 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	void SetGPSProtocolType(E_GPS_PROTOCOL_TYPE NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_GPS_PROTOCOL_TYPE GetGPSProtocolType() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSInputChannelType(E_INPUT_CHANNEL_TYPE NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	E_INPUT_CHANNEL_TYPE GetGPSInputChannelType() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	CXSerialPortConfig GetSerialPortConfig() const;
 	//-------------------------------------
 	/**
@@ -221,6 +339,18 @@ public:
 	 *
 	 */
 	void SetSerialPortConfig(const CXSerialPortConfig & Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXFileConfig GetFileConfig() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetFileConfig(const CXFileConfig &Value);
 	//-------------------------------------
 	/**
 	 * \brief oiu

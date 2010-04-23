@@ -27,9 +27,11 @@
 #include "CXTimeStampData.hpp"
 #include "CXBuffer.hpp"
 #include "CXNaviData.hpp"
-#include "CXExactTime.hpp"
 #include "CXStringASCII.hpp"
 #include "CXSpeedCalculator.hpp"
+#include "CXGPSPosInfo.hpp"
+#include "CXGPSCourseInfo.hpp"
+#include "CXGPSQualityInfo.hpp"
 #include "CXMutex.hpp"
 
 class CXNaviPOWM;
@@ -41,12 +43,14 @@ class CXNaviPOWM;
  */
 class CXLocatorThread : public CXLoopThread {
 private:
-	CXTimeStampData<tUCBuffer>		m_InputBufferGPSGGA;		///< oiu
-	CXTimeStampData<tUCBuffer>		m_InputBufferGPSRMC;		///< oiu
-	bool							m_oConnected;				///< oiu
-	bool							m_oNewDataConnection;		///< oiu
-	bool							m_oNewDataGPSGGA;			///< oiu
-	bool							m_oNewDataGPSRMC;			///< oiu
+	tTimeStampedGPSPosInfo			m_GPSPosInfo;				///< oiu
+	tTimeStampedGPSCourseInfo		m_GPSCourseInfo;			///< oiu
+	tTimeStampedGPSQualityInfo		m_GPSQualityInfo;			///< oiu
+	bool							m_oGPSConnected;			///< oiu
+	bool							m_oNewGPSConnection;		///< oiu
+	bool							m_oNewGPSPosInfo;			///< oiu
+	bool							m_oNewGPSCourseInfo;		///< oiu
+	bool							m_oNewGPSQualityInfo;		///< oiu
 	CXSpeedCalculator				m_SpeedCalculator;			///< oiu
 	CXExactTime						m_LastReceivedPosition;		///< oiu
 	CXNaviData						m_NaviData;					///< oiu
@@ -66,49 +70,67 @@ private:
 	 * \brief oiu
 	 *
 	 */
-	void SetFlag_NewDataConnection(bool NewValue);
+	void SetFlag_NewGPSConnection(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetFlag_NewDataGPSGGA(bool NewValue);
+	void SetFlag_NewGPSPosInfo(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetFlag_NewDataGPSRMC(bool NewValue);
+	void SetFlag_NewGPSCourseInfo(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	bool GetFlag_NewDataConnection() const;
+	void SetFlag_NewGPSQualityInfo(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	bool GetFlag_NewDataGPSGGA() const;
+	bool GetFlag_NewGPSConnection() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	bool GetFlag_NewDataGPSRMC() const;
+	bool GetFlag_NewGPSPosInfo() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	CXTimeStampData<tUCBuffer> GetGPSDataGGA() const;
+	bool GetFlag_NewGPSCourseInfo() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	CXTimeStampData<tUCBuffer> GetGPSDataRMC() const;
+	bool GetFlag_NewGPSQualityInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	tTimeStampedGPSPosInfo GetGPSPosInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	tTimeStampedGPSCourseInfo GetGPSCourseInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	tTimeStampedGPSQualityInfo GetGPSQualityInfo() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -160,37 +182,31 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool IsConnected() const;
+	bool IsGPSConnected() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetConnected(bool NewValue);
+	void SetGPSConnected(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetGPSDataGGA(const tUCBuffer & Buffer);
+	void SetGPSPosInfo(const tTimeStampedGPSPosInfo &PosInfo);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetGPSDataRMC(const tUCBuffer & Buffer);
+	void SetGPSCourseInfo(const tTimeStampedGPSCourseInfo &CourseInfo);
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	void SetGPSDataGSA(const tUCBuffer & Buffer);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetGPSDataGSV(const tUCBuffer & Buffer);
+	void SetGPSQualityInfo(const tTimeStampedGPSQualityInfo &QualityInfo);
 	//-------------------------------------
 	/**
 	 * \brief oiu

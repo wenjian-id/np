@@ -34,7 +34,7 @@ class CXCoor;
 class CXGGAPacket;
 class CXRMCPacket;
 class CXGSAPacket;
-class CXGSVSatelliteInfo;
+class CXSatelliteInfo;
 
 
 
@@ -384,8 +384,8 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket);
  */
 bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram, 
 					int &rNSat, int &rNInfos, 
-					CXGSVSatelliteInfo &rInfo1, CXGSVSatelliteInfo &rInfo2,
-					CXGSVSatelliteInfo &rInfo3, CXGSVSatelliteInfo &rInfo4);
+					CXSatelliteInfo &rInfo1, CXSatelliteInfo &rInfo2,
+					CXSatelliteInfo &rInfo3, CXSatelliteInfo &rInfo4);
 
 //-------------------------------------
 /**

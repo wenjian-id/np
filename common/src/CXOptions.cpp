@@ -36,9 +36,61 @@ CXOptions * CXOptions::m_pInstance = NULL;
 
 static const int TO = 2000;
 
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXFileConfig::CXFileConfig() :
+	m_iTimeout(0)
+{
+}
+
+//-------------------------------------
+CXFileConfig::CXFileConfig(const CXFileConfig &rOther) {
+	CopyFrom(rOther);
+}
+
+//-------------------------------------
+CXFileConfig::~CXFileConfig() {
+}
+
+//-------------------------------------
+const CXFileConfig & CXFileConfig::operator = (const CXFileConfig &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
+}
+
+//-------------------------------------
+void CXFileConfig::CopyFrom(const CXFileConfig & rOther) {
+	m_FileName = rOther.m_FileName;
+	m_iTimeout = rOther.m_iTimeout;
+}
+
+//-------------------------------------
+void CXFileConfig::SetFileName(const CXStringASCII & FileName) {
+	m_FileName = FileName;
+}
+
+//-------------------------------------
+CXStringASCII CXFileConfig::GetFileName() const {
+	return m_FileName;
+}
+
+//-------------------------------------
+void CXFileConfig::SetTimeout(int NewValue) {
+	m_iTimeout = NewValue;
+}
+
+//-------------------------------------
+int CXFileConfig::GetTimeout() const {
+	return m_iTimeout;
+}
+
+
 //---------------------------------------------------------------------
 //-------------------------------------
 CXOptions::CXOptions() :
+	m_eGPSProtocolType(e_GPSProto_None),
+	m_eGPSInputChannelType(e_InputChannel_None),
 	m_oNorthing(false),
 	m_oFullScreen(false),
 	m_oShowLogo(true),
@@ -115,26 +167,73 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	if(!F.Read(pcFileName))
 		return false;
 	// now extract options
-	// serial port
-	CXSerialPortConfig SPC;
-	CXStringASCII SPCStr = F.Get("SerialPort", "COM5:;8;N;1");
-	// check if DEMO
-	if(SPCStr.Find("DEMO") == 0) {
-		// DEMO, don't change anything
-		SPC.SetPort(SPCStr);
-	} else {
-		// Port
-		SPC.SetPort(ExtractFirstToken(SPCStr, ';'));
-		// Baudrate
-		SPC.SetBaudrate(atoi(ExtractFirstToken(SPCStr, ';').c_str()));
-		// data bits
-		SPC.SetDataBits(atoi(ExtractFirstToken(SPCStr, ';').c_str()));
-		// parity
-		SPC.SetParity(ExtractFirstToken(SPCStr, ';'));
-		// stop bits
-		SPC.SetStopBits(SPCStr);
+	// GPS port configuration
+	CXStringASCII PCStr = F.Get("GPSPort", "NMEA;serial;COM5:;8;N;1");
+	// extract protocol type
+	CXStringASCII ProtocolTypeStr = ExtractFirstToken(PCStr, ';').ToUpper();
+	if(ProtocolTypeStr == "NMEA") {
+		SetGPSProtocolType(e_GPSProto_NMEA);
+	} else if (ProtocolTypeStr == "GPSD") {
+		SetGPSProtocolType(e_GPSProto_GPSD);
 	}
-	SetSerialPortConfig(SPC);
+	// extract input channel type
+	CXStringASCII InputChannelTypeStr = ExtractFirstToken(PCStr, ';').ToUpper();
+	if(InputChannelTypeStr == "SERIAL") {
+		SetGPSInputChannelType(e_InputChannel_Serial);
+		CXSerialPortConfig SPC;
+		// Port
+		SPC.SetPort(ExtractFirstToken(PCStr, ';'));
+		// Baudrate
+		SPC.SetBaudrate(atoi(ExtractFirstToken(PCStr, ';').c_str()));
+		// data bits
+		SPC.SetDataBits(atoi(ExtractFirstToken(PCStr, ';').c_str()));
+		// parity
+		SPC.SetParity(ExtractFirstToken(PCStr, ';'));
+		// stop bits
+		SPC.SetStopBits(PCStr);
+		SetSerialPortConfig(SPC);
+	} else if (InputChannelTypeStr == "FILE") {
+		SetGPSInputChannelType(e_InputChannel_File);
+		CXFileConfig FC;
+		// file name as absolute file name
+		FC.SetFileName(CreateAbsoluteFileName(m_StartPath, ExtractFirstToken(PCStr, ';')));
+		// timeout
+		int Timeout = 0;
+		CXStringASCII TimeoutStr=ExtractFirstToken(PCStr, ';');
+		size_t PosMS = TimeoutStr.Find("ms");
+		if(PosMS == CXStringASCII::NPOS) {
+			// timeout is given in seconds
+			Timeout = 1000*atoi(TimeoutStr.c_str());
+		} else {
+			// timeout is given in milliseconds
+			TimeoutStr = TimeoutStr.Left(PosMS);
+			Timeout = atoi(TimeoutStr.c_str());
+		}
+		FC.SetTimeout(Timeout);
+		SetFileConfig(FC);
+	} else if (InputChannelTypeStr == "GPSD") {
+		SetGPSInputChannelType(e_InputChannel_GPSD);
+		/// \todo implement
+/*
+		CXFileConfig FC;
+		// file name as absolute file name
+		FC.SetFileName(CreateAbsoluteFileName(m_StartPath, ExtractFirstToken(PCStr, ';')));
+		// timeout
+		int Timeout = 0;
+		CXStringASCII TimeoutStr=ExtractFirstToken(PCStr, ';');
+		size_t PosMS = TimeoutStr.Find("ms");
+		if(PosMS == CXStringASCII::NPOS) {
+			// timeout is given in seconds
+			Timeout = 1000*atoi(TimeoutStr.c_str());
+		} else {
+			// timeout is given in milliseconds
+			TimeoutStr = TimeoutStr.Left(PosMS);
+			Timeout = atoi(TimeoutStr.c_str());
+		}
+		FC.SetTimeout(Timeout);
+		SetFileConfig(FC);
+*/
+	}
 	// northing
 	SetNorthing(F.Get("Northing", "off").ToUpper() == "ON");
 	// fullscreen
@@ -358,6 +457,30 @@ void CXOptions::SetStartPath(const CXStringASCII & Value) {
 }
 
 //-------------------------------------
+void CXOptions::SetGPSProtocolType(E_GPS_PROTOCOL_TYPE NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_eGPSProtocolType = NewValue;
+}
+
+//-------------------------------------
+CXOptions::E_GPS_PROTOCOL_TYPE CXOptions::GetGPSProtocolType() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_eGPSProtocolType;
+}
+
+//-------------------------------------
+void CXOptions::SetGPSInputChannelType(E_INPUT_CHANNEL_TYPE NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_eGPSInputChannelType = NewValue;
+}
+
+//-------------------------------------
+CXOptions::E_INPUT_CHANNEL_TYPE CXOptions::GetGPSInputChannelType() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_eGPSInputChannelType;
+}
+
+//-------------------------------------
 CXSerialPortConfig CXOptions::GetSerialPortConfig() const {
 	CXReadLocker RL(&m_RWLock);
 	return m_SerialPortConfig;
@@ -367,6 +490,18 @@ CXSerialPortConfig CXOptions::GetSerialPortConfig() const {
 void CXOptions::SetSerialPortConfig(const CXSerialPortConfig & Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_SerialPortConfig = Value;
+}
+
+//-------------------------------------
+CXFileConfig CXOptions::GetFileConfig() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_FileConfig;
+}
+
+//-------------------------------------
+void CXOptions::SetFileConfig(const CXFileConfig &Value) {
+	CXWriteLocker WL(&m_RWLock);
+	m_FileConfig = Value;
 }
 
 //-------------------------------------

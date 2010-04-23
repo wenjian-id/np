@@ -46,10 +46,11 @@ static const char * pcLastCoorFileName = "last.gps";
 //---------------------------------------------------------------------
 //-------------------------------------
 CXLocatorThread::CXLocatorThread() :
-	m_oConnected(false),
-	m_oNewDataConnection(false),
-	m_oNewDataGPSGGA(false),
-	m_oNewDataGPSRMC(false),
+	m_oGPSConnected(false),
+	m_oNewGPSConnection(false),
+	m_oNewGPSPosInfo(false),
+	m_oNewGPSCourseInfo(false),
+	m_oNewGPSQualityInfo(false),
 	m_SpeedCalculator(4),
 	m_oGPSFixAtLeastOnce(false),
 	m_oStartCoordinatesValid(false),
@@ -64,114 +65,103 @@ CXLocatorThread::~CXLocatorThread() {
 }
 
 //-------------------------------------
-bool CXLocatorThread::IsConnected() const {
+bool CXLocatorThread::IsGPSConnected() const {
 	CXMutexLocker L(&m_MutexInputData);
-	return m_oConnected;
+	return m_oGPSConnected;
 }
 
 //-------------------------------------
-void CXLocatorThread::SetConnected(bool NewValue) {
+void CXLocatorThread::SetGPSConnected(bool NewValue) {
 	CXMutexLocker L(&m_MutexInputData);
-	m_oConnected = NewValue;
-	SetFlag_NewDataConnection(true);
+	m_oGPSConnected = NewValue;
+	SetFlag_NewGPSConnection(true);
 }
 
 //-------------------------------------
-void CXLocatorThread::SetFlag_NewDataConnection(bool NewValue) {
+void CXLocatorThread::SetFlag_NewGPSConnection(bool NewValue) {
 	CXMutexLocker L(&m_MutexInputData);
-	m_oNewDataConnection = NewValue;
+	m_oNewGPSConnection = NewValue;
 }
 
 //-------------------------------------
-void CXLocatorThread::SetFlag_NewDataGPSGGA(bool NewValue) {
-	CXMutexLocker L(&m_MutexInputData);
-	m_oNewDataGPSGGA = NewValue;
+void CXLocatorThread::SetFlag_NewGPSPosInfo(bool NewValue) {
+	// synchronisation must be done in caling method
+	m_oNewGPSPosInfo = NewValue;
 }
 
 //-------------------------------------
-void CXLocatorThread::SetFlag_NewDataGPSRMC(bool NewValue) {
-	CXMutexLocker L(&m_MutexInputData);
-	m_oNewDataGPSRMC = NewValue;
+void CXLocatorThread::SetFlag_NewGPSCourseInfo(bool NewValue) {
+	// synchronisation must be done in caling method
+	m_oNewGPSCourseInfo = NewValue;
 }
 
 //-------------------------------------
-bool CXLocatorThread::GetFlag_NewDataConnection() const {
-	CXMutexLocker L(&m_MutexInputData);
-	return m_oNewDataConnection;
+void CXLocatorThread::SetFlag_NewGPSQualityInfo(bool NewValue) {
+	// synchronisation must be done in caling method
+	m_oNewGPSQualityInfo = NewValue;
 }
 
 //-------------------------------------
-bool CXLocatorThread::GetFlag_NewDataGPSGGA() const {
-	CXMutexLocker L(&m_MutexInputData);
-	return m_oNewDataGPSGGA;
+bool CXLocatorThread::GetFlag_NewGPSConnection() const {
+	// synchronisation must be done in caling method
+	return m_oNewGPSConnection;
 }
 
 //-------------------------------------
-bool CXLocatorThread::GetFlag_NewDataGPSRMC() const {
+bool CXLocatorThread::GetFlag_NewGPSPosInfo() const {
 	CXMutexLocker L(&m_MutexInputData);
-	return m_oNewDataGPSRMC;
+	return m_oNewGPSPosInfo;
 }
 
 //-------------------------------------
-void CXLocatorThread::SetGPSDataGGA(const tUCBuffer & Buffer) {
+bool CXLocatorThread::GetFlag_NewGPSCourseInfo() const {
 	CXMutexLocker L(&m_MutexInputData);
-	// overwrite existing data
-	m_InputBufferGPSGGA.SetData(Buffer);
-	m_InputBufferGPSGGA.SetNow();
-	SetFlag_NewDataGPSGGA(true);
+	return m_oNewGPSCourseInfo;
 }
 
 //-------------------------------------
-void CXLocatorThread::SetGPSDataRMC(const tUCBuffer & Buffer) {
+bool CXLocatorThread::GetFlag_NewGPSQualityInfo() const {
 	CXMutexLocker L(&m_MutexInputData);
-	// overwrite existing data
-	m_InputBufferGPSRMC.SetData(Buffer);
-	m_InputBufferGPSRMC.SetNow();
-	SetFlag_NewDataGPSRMC(true);
-	// oiu put somewhere else
-	CXSatelliteData::Instance()->SetRMCReceived();
+	return m_oNewGPSQualityInfo;
 }
 
 //-------------------------------------
-void CXLocatorThread::SetGPSDataGSA(const tUCBuffer & Buffer) {
+void CXLocatorThread::SetGPSPosInfo(const tTimeStampedGPSPosInfo &PosInfo) {
 	CXMutexLocker L(&m_MutexInputData);
-	// process GSA packet
-	CXGSAPacket GSAPacket;
-	CXStringASCII Line(reinterpret_cast<const char *>(Buffer.GetBuffer()), Buffer.GetSize());
-	if(ExtractGSAData(Line, GSAPacket)) {
-		// data extracted and OK
-		// now set it
-		CXSatelliteData::Instance()->SetActiveSatellites(GSAPacket.GetSatellites());
-		// set HDOP and VDOP
-		CXSatelliteData::Instance()->SetHDOP(GSAPacket.GetHDOP());
-		CXSatelliteData::Instance()->SetVDOP(GSAPacket.GetVDOP());
-		// request repaint
-		if(m_pNaviPOWM != NULL)
-			m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
-	}
+	m_GPSPosInfo = PosInfo;
+	SetFlag_NewGPSPosInfo(true);
 }
 
 //-------------------------------------
-void CXLocatorThread::SetGPSDataGSV(const tUCBuffer & Buffer) {
+void CXLocatorThread::SetGPSCourseInfo(const tTimeStampedGPSCourseInfo &CourseInfo) {
 	CXMutexLocker L(&m_MutexInputData);
-	// process GSV packet
-	CXStringASCII Line(reinterpret_cast<const char *>(Buffer.GetBuffer()), Buffer.GetSize());
-	int NTelegrams = 0;
-	int NCurrentTelegram = 0;
-	int NSat = 0;
-	int NInfos = 0;
-	CXGSVSatelliteInfo Info1;
-	CXGSVSatelliteInfo Info2;
-	CXGSVSatelliteInfo Info3;
-	CXGSVSatelliteInfo Info4;
-	if(ExtractGSVData(Line, NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4)) {
-		// data extracted and OK
-		// now set it
-		CXSatelliteData::Instance()->SetGSVData(NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4);
-		// request repaint
-		if(m_pNaviPOWM != NULL)
-			m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
-	}
+	m_GPSCourseInfo = CourseInfo;
+	SetFlag_NewGPSCourseInfo(true);
+}
+
+//-------------------------------------
+void CXLocatorThread::SetGPSQualityInfo(const tTimeStampedGPSQualityInfo &QualityInfo) {
+	CXMutexLocker L(&m_MutexInputData);
+	m_GPSQualityInfo = QualityInfo;
+	SetFlag_NewGPSQualityInfo(true);
+}
+
+//-------------------------------------
+tTimeStampedGPSPosInfo CXLocatorThread::GetGPSPosInfo() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_GPSPosInfo;
+}
+
+//-------------------------------------
+tTimeStampedGPSCourseInfo CXLocatorThread::GetGPSCourseInfo() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_GPSCourseInfo;
+}
+
+//-------------------------------------
+tTimeStampedGPSQualityInfo CXLocatorThread::GetGPSQualityInfo() const {
+	CXMutexLocker L(&m_MutexInputData);
+	return m_GPSQualityInfo;
 }
 
 //-------------------------------------
@@ -181,104 +171,64 @@ void CXLocatorThread::SetNaviPOWM(CXNaviPOWM *pNaviPOWM) {
 }
 
 //-------------------------------------
-CXTimeStampData<tUCBuffer> CXLocatorThread::GetGPSDataGGA() const {
-	CXMutexLocker L(&m_MutexInputData);
-	return m_InputBufferGPSGGA ;
-}
-
-//-------------------------------------
-CXTimeStampData<tUCBuffer> CXLocatorThread::GetGPSDataRMC() const {
-	CXMutexLocker L(&m_MutexInputData);
-	return m_InputBufferGPSRMC;
-}
-
-//-------------------------------------
 void CXLocatorThread::OnThreadStarted() {
 	// nothing to do
 }
 
 //-------------------------------------
 void CXLocatorThread::OnThreadLoop() {
-
 	// check if new data arriwed
 	CXExactTime Now;
-	bool NewDataRMC = GetFlag_NewDataGPSRMC();
-	bool NewDataGGA = GetFlag_NewDataGPSGGA();
+	bool NewGPSConnection = GetFlag_NewGPSConnection();
+	bool NewGPSPosInfo = GetFlag_NewGPSPosInfo();
+	bool NewGPSCourseInfo = GetFlag_NewGPSCourseInfo();
+	bool NewGPSQualityInfo = GetFlag_NewGPSQualityInfo();
 	bool oHasFix = false;
 	bool oNewDataNoFix = false;
-	bool oNewDataConnection = GetFlag_NewDataConnection();
-	SetFlag_NewDataConnection(false);
+	SetFlag_NewGPSConnection(false);
 	// set connection status in m_NaviData
-	m_NaviData.SetConnected(IsConnected());
+	m_NaviData.SetConnected(IsGPSConnected());
+
+	if(NewGPSPosInfo) {
+		// process it
+		// reset flag
+		SetFlag_NewGPSPosInfo(false);
+		tTimeStampedGPSPosInfo PosInfo = GetGPSPosInfo();
+		// OK, valid GGA data arrived
+		// set UTC
+		m_NaviData.SetUTC(PosInfo.Data().GetUTC());
+		oHasFix = PosInfo.Data().GetFix();
+		m_LastReceivedPosition.SetNow();
+		// set number of satellites
+		CXSatellites::Instance()->SetNrSatGGA(PosInfo.Data().GetNSat());
+		// check fix
+		if(oHasFix) {
+			m_oGPSFixAtLeastOnce = true;
+			// extract data
+			double dLon = PosInfo.Data().GetLon();
+			double dLat = PosInfo.Data().GetLat();
+			// remember coordinates
+			m_LastReceivedCoor = CXCoor(dLon, dLat);
+			// set height
+			m_NaviData.SetHeight(PosInfo.Data().GetHeight());
+			// set data in speed calculator
+			m_SpeedCalculator.SetGGAData(PosInfo.Data().GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, PosInfo.TimeStamp()));
+		} else {
+			oNewDataNoFix = true;
+		}
+	}
 	// process new data
-	if(NewDataRMC) {
-		// process it
+	if(NewGPSCourseInfo) {
+		// process new course info
 		// reset flag
-		SetFlag_NewDataGPSRMC(false);
-		CXTimeStampData<tUCBuffer> Buffer = GetGPSDataRMC();
-		// extract RMC packet if possible
-		unsigned long Size = Buffer.Data().GetSize();
-		const char *pBuffer = reinterpret_cast<const char *>(Buffer.Data().GetBuffer());
-		CXStringASCII Line(pBuffer, Size);
-		CXRMCPacket RMCData;
-		if(ExtractRMCData(Line, RMCData)) {
-			// OK, valid data arrived
-			// set UTC
-			m_NaviData.SetUTC(RMCData.GetUTC());
-			oHasFix = RMCData.HasFix();
-			m_LastReceivedPosition.SetNow();
-			// check fix
-			if(oHasFix) {
-				m_oGPSFixAtLeastOnce = true;
-				double dLon = RMCData.GetLon();
-				double dLat = RMCData.GetLat();
-				// remember coordinates
-				m_LastReceivedCoor = CXCoor(dLon, dLat);
-				// set data in speed calculator
-				m_SpeedCalculator.SetRMCData(RMCData.GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()), RMCData.GetSpeed());
-			} else {
-				oNewDataNoFix = true;
-			}
-		}
+		SetFlag_NewGPSCourseInfo(false);
+		tTimeStampedGPSCourseInfo GPSCourseInfo = GetGPSCourseInfo();
+		// set UTC
+		m_LastReceivedPosition.SetNow();
+		// set data in speed calculator
+		m_SpeedCalculator.SetRMCData(GPSCourseInfo.Data().GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, GPSCourseInfo.TimeStamp()), GPSCourseInfo.Data().GetSpeed());
 	}
-	if(NewDataGGA) {
-		// process it
-		// reset flag
-		SetFlag_NewDataGPSGGA(false);
-		// extract GGA packet if possible
-		CXTimeStampData<tUCBuffer> Buffer = GetGPSDataGGA();
-		unsigned long Size = Buffer.Data().GetSize();
-		const char *pBuffer = reinterpret_cast<const char *>(Buffer.Data().GetBuffer());
-		CXStringASCII Line(pBuffer, Size);
-		CXGGAPacket GGAData;
-		if(ExtractGGAData(Line, GGAData)) {
-			// OK, valid GGA data arrived
-			// set UTC
-			m_NaviData.SetUTC(GGAData.GetUTC());
-			oHasFix = GGAData.HasFix();
-			m_LastReceivedPosition.SetNow();
-			// set number of satellites
-			CXSatelliteData::Instance()->SetNrSatGGA(GGAData.GetNSat());
-			// set HDOP
-			CXSatelliteData::Instance()->SetHDOP(GGAData.GetHDOP());
-			// check fix
-			if(oHasFix) {
-				m_oGPSFixAtLeastOnce = true;
-				// extract data
-				double dLon = GGAData.GetLon();
-				double dLat = GGAData.GetLat();
-				// remember coordinates
-				m_LastReceivedCoor = CXCoor(dLon, dLat);
-				// set height
-				m_NaviData.SetHeight(GGAData.GetHeight());
-				// set data in speed calculator
-				m_SpeedCalculator.SetGGAData(GGAData.GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, Buffer.TimeStamp()));
-			} else {
-				oNewDataNoFix = true;
-			}
-		}
-	}
-	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix || oNewDataConnection;
+	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix || NewGPSConnection;
 
 	if(oNewDataArrived) {
 		// set speed thresholds for speed calculator
@@ -324,12 +274,26 @@ void CXLocatorThread::OnThreadLoop() {
 		if(Delta > 1000*TIMEOUT_RECEIVE) {
 			// if still connected reset number of satellites to zero. maybe we are in a tunnel or so.
 			// if not connected, do not reset number of satellites
-			if(IsConnected()) {
-				CXSatelliteData::Instance()->SetNrSatGGA(0);
+			if(IsGPSConnected()) {
+				CXSatellites::Instance()->SetNrSatGGA(0);
 			}
 			if(m_pNaviPOWM != NULL)
 				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
 		}
+	}
+	bool oUpdateSatInfo = false;
+	if(NewGPSQualityInfo) {
+		oUpdateSatInfo = true;
+		// reset flag
+		SetFlag_NewGPSQualityInfo(false);
+		// new satellite info received
+		tTimeStampedGPSQualityInfo QualityInfo = GetGPSQualityInfo();
+		CXSatellites::Instance()->SetHDOP(QualityInfo.Data().GetHDOP());
+		CXSatellites::Instance()->SetVDOP(QualityInfo.Data().GetVDOP());
+	}
+	if(oUpdateSatInfo) {
+		if(m_pNaviPOWM != NULL)
+			m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeSatInfo);
 	}
 	// check if we must hide logo
 	bool LogoHidden = false;
@@ -442,25 +406,25 @@ void CXLocatorThread::Locate() {
 	if(CXPOWMMap::Instance() == NULL)
 		return;
 
-    // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
-    // The received coordinate is defined by P(x0, y0).
-    // The nearest point to P(x0,y0) lying on the segment PS(PSx, PSy)
-  
-    double PSx = 0;
-    double PSy = 0;
-    double PSProxx = 0;
-    double PSProxy = 0;
-    double dMaxFitness = -1;
+	// A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
+	// The received coordinate is defined by P(x0, y0).
+	// The nearest point to P(x0,y0) lying on the segment PS(PSx, PSy)
+
+	double PSx = 0;
+	double PSy = 0;
+	double PSProxx = 0;
+	double PSProxy = 0;
+	double dMaxFitness = -1;
 	bool first = true;
-    
+
 	CXNode *pNode1 = NULL;
 	CXNode *pNode2 = NULL;
-    double Node1x = 0;
-    double Node1y = 0;
-    double Node2x = 0;
-    double Node2y = 0;
-    double SqSegLen = 0;		// square length of segment
-    double dSquareDist = 0;		// distance from x0,y0 to segment
+	double Node1x = 0;
+	double Node1y = 0;
+	double Node2x = 0;
+	double Node2y = 0;
+	double SqSegLen = 0;		// square length of segment
+	double dSquareDist = 0;		// distance from x0,y0 to segment
 
 	double dLon = m_NaviData.GetCorrectedGPSCoor().GetLon();
 	double dLat = m_NaviData.GetCorrectedGPSCoor().GetLat();
@@ -517,7 +481,6 @@ void CXLocatorThread::Locate() {
 						size_t ws = pWayBuffer->GetSize();
 						for(size_t w=0; w<ws; w++) {
 							pWay = (*pWayBuffer)[w];
-
 							E_WAY_TYPE Type = pWay->GetWayType();
 							E_ONEWAY_TYPE eOneway = pWay->GetOneway();
 							bool oUseWay = false;
@@ -558,7 +521,6 @@ void CXLocatorThread::Locate() {
 												(Type == e_Way_Pedestrian) ||
 												(Type == e_Way_Steps) ||
 												(Type == e_Way_LivingStreet);
-
 									break;
 								}
 								case CXOptions::e_ModePedestrian:
@@ -588,11 +550,11 @@ void CXLocatorThread::Locate() {
 									pNode1 = pWay->GetNodeList()->GetNode(i-1);
 									// get second node
 									pNode2 = pWay->GetNodeList()->GetNode(i);
-    								// get coordinates
-    								Node1x = pNode1->GetUTME();
-    								Node1y = pNode1->GetUTMN();
-    								Node2x = pNode2->GetUTME();
-    								Node2y = pNode2->GetUTMN();
+									// get coordinates
+									Node1x = pNode1->GetUTME();
+									Node1y = pNode1->GetUTMN();
+									Node2x = pNode2->GetUTME();
+									Node2y = pNode2->GetUTMN();
 
 									// max distance from endpoints to current position is 1000 m
 									double dMax = 1000;
@@ -644,12 +606,12 @@ void CXLocatorThread::Locate() {
 												case e_Oneway_Inverse:	dCos = -dCos; break;		// invert since oneway is in the other direction
 											}
 											double dFitness = dFactor*dCos + (1-dFactor)*dFactor;
-    										// check if new best fit
-    										if(first || (dFitness > dMaxFitness)) {
+											// check if new best fit
+											if(first || (dFitness > dMaxFitness)) {
 												first = false;
-    											// yes
-    											dMaxFitness = dFitness;
-    											pProxWay = pWay;
+												// yes
+												dMaxFitness = dFitness;
+												pProxWay = pWay;
 												PSProxx = PSx;
 												PSProxy = PSy;
 												oForward = oFwdNMove;
@@ -670,15 +632,15 @@ void CXLocatorThread::Locate() {
 	CXDebugInfo::Instance()->SetLocatorTime(StopTime-StartTime);
 
 	bool Located = false;
-    if(first || (dMaxFitness <= 0)) {
-    	// nothing found or too far from a way.
-    	Located = false;
-    } else {
+	if(first || (dMaxFitness <= 0)) {
+		// nothing found or too far from a way.
+		Located = false;
+	} else {
 		Located = true;
 	}
 
 	if(Located && (pProxWay != NULL)) {
-  		m_NaviData.SetLocated(true);
+		m_NaviData.SetLocated(true);
 		UTMtoLL(WGS84, PSProxx, PSProxy, UTMZoneCurrent, UTMLetterCurrent, dLon, dLat);
 		m_NaviData.SetLocatedCoor(CXCoor(dLon, dLat));
 		/// \todo implement
