@@ -67,7 +67,7 @@ bool CXSaverGPX::Write(double dLon, double dLat, double dHeight) {
 	// save trkpt
 	CXExactTime Now;
 	char buf[256];
-	int len = snprintf(buf, sizeof(buf), "<trkpt lon=\"%0.6f\" lat=\"%0.6f\"> <ele>%0.2f</ele> <time>20%02d-%02d-%02dT%02d:%02d:%02dZ</time></trkpt>\r\n",
+	int len = snprintf(buf, sizeof(buf), "<trkpt lon=\"%0.6f\" lat=\"%0.6f\"> <ele>%0.2f</ele> <time>%04d-%02d-%02dT%02d:%02d:%02dZ</time></trkpt>\r\n",
 					   dLon, dLat, dHeight, Now.GetYear(), Now.GetMonth(), Now.GetDay(), Now.GetHour(), Now.GetMinute(), Now.GetSecond());
 	if(m_File.Write((const unsigned char *)buf, len, Written) != CXFile::E_OK)
 		return false;

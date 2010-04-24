@@ -308,7 +308,7 @@ CXSatellitesData *CXSatellites::Instance() {
 //-------------------------------------
 void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Width, int Height) {
 	// make a copy of sat data
-	CXSatellitesData SatData = *m_pInstance;
+	CXSatellitesData SatData = *Instance();
 
 	CXRGB LineColor(0xFF, 0xFF, 0xFF);
 	CXRGB BgColor(0x00,0x00,0x00);
