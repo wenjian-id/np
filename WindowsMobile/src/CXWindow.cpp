@@ -22,7 +22,15 @@
 
 #include "CXWindow.hpp"
 
-#include <aygshell.h>
+//#include <aygshell.h>
+typedef BOOL (__stdcall *SHFullScreenProc)(HWND, DWORD);
+#define SHFS_SHOWTASKBAR            0x0001
+#define SHFS_HIDETASKBAR            0x0002
+#define SHFS_SHOWSIPBUTTON          0x0004
+#define SHFS_HIDESIPBUTTON          0x0008
+#define SHFS_SHOWSTARTICON          0x0010
+#define SHFS_HIDESTARTICON          0x0020
+
 
 //-------------------------------------
 CXWindow::CXWindow() :
@@ -73,10 +81,25 @@ void CXWindow::ShowNormal() {
 void CXWindow::ShowFullScreen() {
 	if(m_hWnd != NULL) {
 		// hide windows stuff
-		SHFullScreen(m_hWnd, SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
 		int width = GetDeviceCaps(NULL, HORZRES);
 		int height = GetDeviceCaps(NULL, VERTRES);
-		MoveWindow(m_hWnd, 0, 0, width, height, TRUE);
+
+		bool DllFound = false;
+		// try to load aygshell.dll
+		HINSTANCE hAygDll = LoadLibrary(L"aygshell.dll");
+		if (hAygDll) {
+			// try to get procedure SHFullScreen
+			SHFullScreenProc procSHFullScreen = (SHFullScreenProc)GetProcAddress(hAygDll, L"SHFullScreen");
+			if (procSHFullScreen) {
+				// use procedure SHFullScreen
+				procSHFullScreen(m_hWnd, SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
+				MoveWindow(m_hWnd, 0, 0, width, height, TRUE);
+				DllFound = true;
+			}
+			FreeLibrary(hAygDll);
+		}
+		// don't use aygshell.dll and SHFullScreen
+		if (!DllFound) SetWindowPos(m_hWnd, HWND_TOPMOST, 0, 0, width, height, SWP_SHOWWINDOW);
 	}
 }
 
