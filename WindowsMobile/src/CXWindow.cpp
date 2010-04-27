@@ -22,7 +22,7 @@
 
 #include "CXWindow.hpp"
 
-//#include <aygshell.h>
+// from aygshell.h
 typedef BOOL (__stdcall *SHFullScreenProc)(HWND, DWORD);
 #define SHFS_SHOWTASKBAR            0x0001
 #define SHFS_HIDETASKBAR            0x0002
@@ -99,7 +99,8 @@ void CXWindow::ShowFullScreen() {
 			FreeLibrary(hAygDll);
 		}
 		// don't use aygshell.dll and SHFullScreen
-		if (!DllFound) SetWindowPos(m_hWnd, HWND_TOPMOST, 0, 0, width, height, SWP_SHOWWINDOW);
+		if (!DllFound)
+			SetWindowPos(m_hWnd, HWND_TOPMOST, 0, 0, width, height, SWP_SHOWWINDOW);
 	}
 }
 

@@ -92,7 +92,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII_FP) Debug"
 
@@ -126,7 +126,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Release"
 
@@ -160,7 +160,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSII) Debug"
 
@@ -194,7 +194,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Release"
 
@@ -228,7 +228,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH4) Debug"
 
@@ -262,7 +262,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH4
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
 
@@ -296,7 +296,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3 /align:4096
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3 /align:4096
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3 /align:4096
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
 
@@ -330,7 +330,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3 /align:4096
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3 /align:4096
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:SH3 /align:4096
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Release"
 
@@ -364,7 +364,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV) Debug"
 
@@ -398,7 +398,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
 
@@ -432,7 +432,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
-# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
+# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
 
@@ -466,7 +466,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
-# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
+# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
 
@@ -500,7 +500,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
 
@@ -534,7 +534,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Release"
 
@@ -568,7 +568,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPSIV_FP) Debug"
 
@@ -602,7 +602,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPSFPU
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
 
@@ -636,7 +636,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
 
@@ -670,7 +670,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /align:"4096" /MACHINE:ARM
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
 
@@ -704,7 +704,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS16 /ALIGN:4096
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS16 /ALIGN:4096
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS16 /ALIGN:4096
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
 
@@ -738,7 +738,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS16 /ALIGN:4096
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS16 /ALIGN:4096
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:MIPS16 /ALIGN:4096
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
 
@@ -772,7 +772,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
 
@@ -806,7 +806,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
-# ADD LINK32 commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
+# ADD LINK32 commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"$(CENoDefaultLib)" /subsystem:$(CESubsystem) /MACHINE:THUMB
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Release"
 
@@ -840,7 +840,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
-# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
+# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
@@ -874,7 +874,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 commctrl.lib coredll.lib $(CEx86Corelibc) /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
-# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib aygshell.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
+# ADD LINK32 $(CEx86Corelibc) commctrl.lib coredll.lib /nologo /base:"0x00010000" /stack:0x10000,0x1000 /entry:"WinMainCRTStartup" /debug /nodefaultlib:"OLDNAMES.lib" /nodefaultlib:$(CENoDefaultLib) /subsystem:$(CESubsystem) /MACHINE:IX86
 
 !ENDIF 
 
@@ -1298,6 +1298,7 @@ DEP_CPP_CXBIT=\
 
 DEP_CPP_CXBIT=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
 	"..\..\..\common\src\CXRect.hpp"\
@@ -2683,7 +2684,11 @@ DEP_CPP_CXMAI=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_CXMAI=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -2693,6 +2698,7 @@ DEP_CPP_CXMAI=\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IDeviceContext.hpp"\
 	"..\..\..\common\src\IMainWindow.hpp"\
@@ -4080,12 +4086,6 @@ DEP_CPP_CXWIN=\
 	"..\..\src\CXWindow.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
-NODEP_CPP_CXWIN=\
-	".\hellsdk.h"\
-	".\hsdkstc.h"\
-	".\ipapi.h"\
-	".\ygshell.h"\
-	
 
 !ENDIF 
 
@@ -4677,13 +4677,18 @@ DEP_CPP_MAIN_=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_MAIN_=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\IMainWindow.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
@@ -5042,6 +5047,7 @@ DEP_CPP_TARGE=\
 
 DEP_CPP_TARGE=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -6094,6 +6100,7 @@ DEP_CPP_CXARE=\
 	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
@@ -6419,6 +6426,7 @@ DEP_CPP_CXAREA=\
 DEP_CPP_CXAREA=\
 	"..\..\..\common\src\CXAreaColorHolder.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -6963,7 +6971,9 @@ DEP_CPP_CXFIL=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_CXFIL=\
+	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -7292,6 +7302,7 @@ DEP_CPP_CXFILE=\
 
 DEP_CPP_CXFILE=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXFileIni.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -13456,7 +13467,18 @@ DEP_CPP_CXGPSR=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXGPSCourseInfo.hpp"\
+	"..\..\..\common\src\CXGPSInputChannel.hpp"\
+	"..\..\..\common\src\CXGPSInputChannelFile.hpp"\
+	"..\..\..\common\src\CXGPSInputChannelGPSD.hpp"\
+	"..\..\..\common\src\CXGPSInputChannelSerial.hpp"\
+	"..\..\..\common\src\CXGPSPosInfo.hpp"\
+	"..\..\..\common\src\CXGPSProtocol.hpp"\
+	"..\..\..\common\src\CXGPSProtocolGPSD.hpp"\
+	"..\..\..\common\src\CXGPSProtocolNMEA.hpp"\
+	"..\..\..\common\src\CXGPSQualityInfo.hpp"\
 	"..\..\..\common\src\CXGPSRecvThread.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
@@ -13466,6 +13488,9 @@ DEP_CPP_CXGPSR=\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSaver.hpp"\
+	"..\..\..\common\src\CXSaverGPX.hpp"\
+	"..\..\..\common\src\CXSaverRaw.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
@@ -13846,6 +13871,7 @@ DEP_CPP_CXINF=\
 
 DEP_CPP_CXINF=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
@@ -14474,6 +14500,7 @@ DEP_CPP_CXINFO=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarBottom.hpp"\
@@ -15161,6 +15188,7 @@ DEP_CPP_CXINFOB=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarCommon.hpp"\
@@ -15850,6 +15878,7 @@ DEP_CPP_CXINFOBA=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarSpeed.hpp"\
@@ -16536,6 +16565,7 @@ DEP_CPP_CXINFOBAR=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarTop.hpp"\
@@ -17405,12 +17435,17 @@ DEP_CPP_CXLOC=\
 DEP_CPP_CXLOC=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXGPSCourseInfo.hpp"\
+	"..\..\..\common\src\CXGPSPosInfo.hpp"\
+	"..\..\..\common\src\CXGPSQualityInfo.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXLocatorThread.hpp"\
@@ -18630,9 +18665,11 @@ DEP_CPP_CXMAP=\
 DEP_CPP_CXMAP=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapContainer.hpp"\
@@ -19572,10 +19609,12 @@ DEP_CPP_CXMAPL=\
 DEP_CPP_CXMAPL=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapContainer.hpp"\
@@ -20084,6 +20123,7 @@ DEP_CPP_CXMAPM=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXMapMovingDetails.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
@@ -20531,10 +20571,12 @@ DEP_CPP_CXMAPP=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -21328,11 +21370,14 @@ DEP_CPP_CXMAPPA=\
 DEP_CPP_CXMAPPA=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
+	"..\..\..\common\src\CXAreaColorHolder.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXHysterezis.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -21367,6 +21412,7 @@ DEP_CPP_CXMAPPA=\
 	"..\..\..\common\src\CXWay.hpp"\
 	"..\..\..\common\src\CXWriteLocker.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
+	"..\..\..\common\src\IDeviceContext.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
 	"..\..\..\common\src\IRWLock.hpp"\
@@ -21376,6 +21422,7 @@ DEP_CPP_CXMAPPA=\
 	"..\..\..\common\src\IWorkRequestThread.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
 	"..\..\src\CXBitmap.hpp"\
+	"..\..\src\CXDeviceContext.hpp"\
 	"..\..\src\CXExactTime.hpp"\
 	"..\..\src\CXMutex.hpp"\
 	"..\..\src\CXRWLock.hpp"\
@@ -22021,6 +22068,7 @@ DEP_CPP_CXMAPPAI=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
@@ -22575,6 +22623,7 @@ DEP_CPP_CXMAPPAIN=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXMapPainter.hpp"\
 	"..\..\..\common\src\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\..\common\src\CXMapPainterTest.hpp"\
@@ -23580,10 +23629,13 @@ DEP_CPP_CXMAPPAINT=\
 DEP_CPP_CXMAPPAINT=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
+	"..\..\..\common\src\CXAreaColorHolder.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXHysterezis.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
@@ -24588,10 +24640,12 @@ DEP_CPP_CXMAPS=\
 DEP_CPP_CXMAPS=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
@@ -25236,8 +25290,10 @@ DEP_CPP_CXNAV=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXNaviData.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
+	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
@@ -26262,11 +26318,18 @@ NODEP_CPP_CXNAVI=\
 DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
+	"..\..\..\common\src\CXGPSCourseInfo.hpp"\
+	"..\..\..\common\src\CXGPSInputChannel.hpp"\
+	"..\..\..\common\src\CXGPSPosInfo.hpp"\
+	"..\..\..\common\src\CXGPSProtocol.hpp"\
+	"..\..\..\common\src\CXGPSQualityInfo.hpp"\
 	"..\..\..\common\src\CXGPSRecvThread.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXInfoBarBottom.hpp"\
@@ -26295,6 +26358,9 @@ DEP_CPP_CXNAVI=\
 	"..\..\..\common\src\CXRect.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXSatelliteData.hpp"\
+	"..\..\..\common\src\CXSaver.hpp"\
+	"..\..\..\common\src\CXSaverGPX.hpp"\
+	"..\..\..\common\src\CXSaverRaw.hpp"\
 	"..\..\..\common\src\CXSmartPtr.hpp"\
 	"..\..\..\common\src\CXSpeedCalculator.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
@@ -27051,6 +27117,7 @@ DEP_CPP_CXNOD=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
@@ -27526,10 +27593,12 @@ DEP_CPP_CXOPT=\
 DEP_CPP_CXOPT=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXFileIni.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
@@ -28311,10 +28380,12 @@ DEP_CPP_CXPENH=\
 DEP_CPP_CXPENH=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapContainer.hpp"\
@@ -28660,6 +28731,7 @@ DEP_CPP_CXPOI=\
 
 DEP_CPP_CXPOI=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
@@ -29236,11 +29308,13 @@ DEP_CPP_CXPOW=\
 DEP_CPP_CXPOW=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
+	"..\..\..\common\src\CXArea.hpp"\
 	"..\..\..\common\src\CXArray.hpp"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCache.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
 	"..\..\..\common\src\CXDebugInfo.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapContainer.hpp"\
@@ -30328,6 +30402,7 @@ DEP_CPP_CXSAT=\
 	"..\..\..\common\src\CoordConstants.h"\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXNMEA.hpp"\
 	"..\..\..\common\src\CXPen.hpp"\
@@ -32036,6 +32111,7 @@ DEP_CPP_CXSPE=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXReadLocker.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
@@ -32734,6 +32810,7 @@ DEP_CPP_CXTRA=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
 	"..\..\..\common\src\CXPOIVisibilityDescriptor.hpp"\
@@ -32903,6 +32980,7 @@ DEP_CPP_CXTRAN=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_CXTRAN=\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXTransformationMatrix.hpp"\
 	
 
@@ -33476,6 +33554,7 @@ DEP_CPP_CXUTMS=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_CXUTMS=\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXUTMSpeed.hpp"\
 	
 
@@ -34064,7 +34143,11 @@ DEP_CPP_CXWAT=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE x86) Debug"
 
 DEP_CPP_CXWAT=\
+	"..\..\..\common\src\CoordConstants.h"\
+	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXLoopThread.hpp"\
 	"..\..\..\common\src\CXOptions.hpp"\
@@ -34072,6 +34155,7 @@ DEP_CPP_CXWAT=\
 	"..\..\..\common\src\CXRGB.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
+	"..\..\..\common\src\CXUTMCoor.hpp"\
 	"..\..\..\common\src\CXWatchdogThread.hpp"\
 	"..\..\..\common\src\IExactTime.hpp"\
 	"..\..\..\common\src\IMutex.hpp"\
@@ -34655,6 +34739,7 @@ DEP_CPP_CXWAY=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXKeyVal.hpp"\
 	"..\..\..\common\src\CXMapHashSimple.hpp"\
@@ -35292,7 +35377,6 @@ DEP_CPP_IBITM=\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\IBitmap.hpp"\
 	"..\..\..\common\src\IDeviceContext.hpp"\
-	"..\..\src\CXDeviceContext.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
 
@@ -35669,6 +35753,7 @@ DEP_CPP_IMAIN=\
 
 DEP_CPP_IMAIN=\
 	"..\..\..\common\src\CXBuffer.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXInfoBar.hpp"\
 	"..\..\..\common\src\CXNaviPOWM.hpp"\
@@ -36828,13 +36913,21 @@ DEP_CPP_UTILS=\
 	"..\..\..\common\src\CoordConversion.h"\
 	"..\..\..\common\src\CXBuffer.hpp"\
 	"..\..\..\common\src\CXCoor.hpp"\
+	"..\..\..\common\src\CXDirection.hpp"\
 	"..\..\..\common\src\CXFile.hpp"\
 	"..\..\..\common\src\CXNMEA.hpp"\
 	"..\..\..\common\src\CXRGB.hpp"\
+	"..\..\..\common\src\CXSatelliteData.hpp"\
 	"..\..\..\common\src\CXStringASCII.hpp"\
 	"..\..\..\common\src\CXStringUTF8.hpp"\
 	"..\..\..\common\src\CXUTMCoor.hpp"\
+	"..\..\..\common\src\IMutex.hpp"\
+	"..\..\..\common\src\IRWLock.hpp"\
+	"..\..\..\common\src\ISemaphore.hpp"\
 	"..\..\..\common\src\Utils.hpp"\
+	"..\..\src\CXMutex.hpp"\
+	"..\..\src\CXRWLock.hpp"\
+	"..\..\src\CXSemaphore.hpp"\
 	"..\..\src\OSSpecific.hpp"\
 	"..\..\src\TargetIncludes.hpp"\
 	
