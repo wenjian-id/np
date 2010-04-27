@@ -170,7 +170,7 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 		return false;
 	// now extract options
 	// GPS port configuration
-	CXStringASCII PCStr = F.Get("GPSPort", "NMEA;serial;COM5:;8;N;1");
+	CXStringASCII PCStr = F.Get("GPSPort", "NMEA;serial;COM5:4800;8;N;1");
 	// extract protocol type
 	CXStringASCII ProtocolTypeStr = ExtractFirstToken(PCStr, ';').ToUpper();
 	if(ProtocolTypeStr == "NMEA") {
