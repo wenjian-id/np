@@ -50,9 +50,9 @@ unsigned char CXGPSProtocol::GetReceivedDataTypes() const {
 }
 
 //-------------------------------------
-void CXGPSProtocol::ClearReceivedDataTypes() {
+void CXGPSProtocol::ClearReceivedDataType(E_RECEIVED_DATA_TYPE eDataType) {
 	CXMutexLocker ML(&m_Mutex);
-	m_ReceivedDataTypes = 0;
+	m_ReceivedDataTypes &= ~eDataType;
 }
 
 //-------------------------------------

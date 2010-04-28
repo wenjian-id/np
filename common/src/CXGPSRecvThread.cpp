@@ -135,23 +135,27 @@ void CXGPSRecvThread::OnThreadLoop() {
 	}
 	if(!m_pGPSProtocol->IsOpen())
 		return;
-	// connected
-	// read data
+	// connected. now read data
 	if(m_pGPSProtocol->ReadAndProcessData()) {
 		// send data to locator thread
 		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvPosInfo) != 0) {
+			// reset receive flag
+			m_pGPSProtocol->ClearReceivedDataType(CXGPSProtocol::e_RcvPosInfo);
+			// get data
 			m_pLocator->SetGPSPosInfo(m_pGPSProtocol->GetGPSPosInfo());
 		}
 		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvCourseInfo) != 0) {
+			// reset receive flag
+			m_pGPSProtocol->ClearReceivedDataType(CXGPSProtocol::e_RcvCourseInfo);
+			// get data
 			m_pLocator->SetGPSCourseInfo(m_pGPSProtocol->GetGPSCourseInfo());
 		}
 		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvQualityInfo) != 0) {
+			// reset receive flag
+			m_pGPSProtocol->ClearReceivedDataType(CXGPSProtocol::e_RcvQualityInfo);
+			// get data
 			m_pLocator->SetGPSQualityInfo(m_pGPSProtocol->GetGPSQualityInfo());
 		}
-		// reset receive flags
-		m_pGPSProtocol->ClearReceivedDataTypes();
-		// save
-		/// \todo implement
 	}
 }
 

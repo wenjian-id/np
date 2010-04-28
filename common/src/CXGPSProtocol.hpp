@@ -200,7 +200,7 @@ public:
 	 *
 	 * oiu
 	 */
-	void ClearReceivedDataTypes();
+	void ClearReceivedDataType(E_RECEIVED_DATA_TYPE eDataType);
 	//-------------------------------------
 	/**
 	 * \brief oiu
