@@ -111,7 +111,7 @@ bool CXGPSProtocolNMEA::OnReadAndProcessData() {
 			SaveGPXData(GGAPacket.GetLon(), GGAPacket.GetLat(), GGAPacket.GetHeight());
 		}
 	} else if(ExtractRMCData(NMEAPacket, RMCPacket)) {
-		SetGPSCourseInfo(CXGPSCourseInfo(RMCPacket.GetUTC(), RMCPacket.GetSpeed(), RMCPacket.GetCourse()));
+		SetGPSCourseInfo(CXGPSCourseInfo(RMCPacket.GetUTC(), RMCPacket.HasFix(), RMCPacket.GetSpeed(), RMCPacket.GetCourse()));
 		CXSatellites::Instance()->SetRMCReceived();
 	} else if(ExtractGSAData(NMEAPacket, GSAPacket)) {
 		SetGPSQualityInfo(CXGPSQualityInfo(GSAPacket.GetHDOP(), GSAPacket.GetVDOP()));

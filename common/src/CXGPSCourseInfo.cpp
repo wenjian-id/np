@@ -24,14 +24,16 @@
 
 //-------------------------------------
 CXGPSCourseInfo::CXGPSCourseInfo() :
+	m_oFix(false),
 	m_dSpeed(0.0),
 	m_dCourse(0.0)
 {
 }
 
 //-------------------------------------
-CXGPSCourseInfo::CXGPSCourseInfo(const CXStringASCII &UTC, double dSpeed, double dCourse) :
+CXGPSCourseInfo::CXGPSCourseInfo(const CXStringASCII &UTC, bool oFix, double dSpeed, double dCourse) :
 	m_UTC(UTC),
+	m_oFix(oFix),
 	m_dSpeed(dSpeed),
 	m_dCourse(dCourse)
 {
@@ -56,6 +58,7 @@ const CXGPSCourseInfo & CXGPSCourseInfo::operator = (const CXGPSCourseInfo & rOt
 //-------------------------------------
 void CXGPSCourseInfo::CopyFrom(const CXGPSCourseInfo &rOther) {
 	m_UTC = rOther.m_UTC;
+	m_oFix = rOther.m_oFix;
 	m_dSpeed = rOther.m_dSpeed;
 	m_dCourse = rOther.m_dCourse;
 }
@@ -63,6 +66,11 @@ void CXGPSCourseInfo::CopyFrom(const CXGPSCourseInfo &rOther) {
 //-------------------------------------
 CXStringASCII CXGPSCourseInfo::GetUTC() const {
 	return m_UTC;
+}
+
+//-------------------------------------
+bool CXGPSCourseInfo::GetFix() const {
+	return m_oFix;
 }
 
 //-------------------------------------

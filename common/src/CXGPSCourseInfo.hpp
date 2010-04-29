@@ -34,8 +34,9 @@
 class CXGPSCourseInfo {
 private:
 	CXStringASCII	m_UTC;		///< oiu
+	bool			m_oFix;		///< oiu
 	double			m_dSpeed;	///< oiu
-	double			m_dCourse;		///< oiu
+	double			m_dCourse;	///< oiu
 	//-------------------------------------
 	/**
 	 * \brief oiu.
@@ -58,7 +59,7 @@ public:
 	 *
 	 * oiu.
 	 */
-	CXGPSCourseInfo(const CXStringASCII &UTC, double dSpeed, double dcourse);
+	CXGPSCourseInfo(const CXStringASCII &UTC, bool oFix, double dSpeed, double dcourse);
 	//-------------------------------------
 	/**
 	 * \brief oiu.
@@ -87,6 +88,13 @@ public:
 	 * oiu.
 	 */
 	CXStringASCII GetUTC() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GetFix() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu.

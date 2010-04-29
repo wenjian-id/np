@@ -128,6 +128,7 @@ bool CXLocatorThread::GetFlag_NewGPSQualityInfo() const {
 //-------------------------------------
 void CXLocatorThread::SetGPSPosInfo(const tTimeStampedGPSPosInfo &PosInfo) {
 	CXMutexLocker L(&m_MutexInputData);
+	// take data
 	m_GPSPosInfo = PosInfo;
 	SetFlag_NewGPSPosInfo(true);
 }
@@ -135,6 +136,7 @@ void CXLocatorThread::SetGPSPosInfo(const tTimeStampedGPSPosInfo &PosInfo) {
 //-------------------------------------
 void CXLocatorThread::SetGPSCourseInfo(const tTimeStampedGPSCourseInfo &CourseInfo) {
 	CXMutexLocker L(&m_MutexInputData);
+	// take data
 	m_GPSCourseInfo = CourseInfo;
 	SetFlag_NewGPSCourseInfo(true);
 }
@@ -194,7 +196,6 @@ void CXLocatorThread::OnThreadLoop() {
 		// reset flag
 		SetFlag_NewGPSPosInfo(false);
 		tTimeStampedGPSPosInfo PosInfo = GetGPSPosInfo();
-		// OK, valid GGA data arrived
 		// set UTC
 		m_NaviData.SetUTC(PosInfo.Data().GetUTC());
 		oHasFix = PosInfo.Data().GetFix();
@@ -223,10 +224,10 @@ void CXLocatorThread::OnThreadLoop() {
 		// reset flag
 		SetFlag_NewGPSCourseInfo(false);
 		tTimeStampedGPSCourseInfo GPSCourseInfo = GetGPSCourseInfo();
-		// set UTC
-		m_LastReceivedPosition.SetNow();
-		// set data in speed calculator
-		m_SpeedCalculator.SetRMCData(GPSCourseInfo.Data().GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, GPSCourseInfo.TimeStamp()), GPSCourseInfo.Data().GetSpeed());
+		if(GPSCourseInfo.Data().GetFix()) {
+			// set data in speed calculator
+			m_SpeedCalculator.SetRMCData(GPSCourseInfo.Data().GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, GPSCourseInfo.TimeStamp()), GPSCourseInfo.Data().GetSpeed());
+		}
 	}
 	bool oNewDataArrived = m_SpeedCalculator.NewDataArrived() || oNewDataNoFix || NewGPSConnection;
 
