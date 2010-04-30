@@ -163,6 +163,7 @@ extraResourceOptions=
 81=..\..\common\src\CXSaver.cpp
 82=..\..\common\src\CXSaverGPX.cpp
 83=..\..\common\src\CXSaverRaw.cpp
+84=..\..\common\src\CXInfoBarRouting.cpp
 [Header]
 1=..\src\CXMutex.hpp
 2=..\src\CXRWLock.hpp
@@ -263,6 +264,7 @@ extraResourceOptions=
 97=..\..\common\src\CXSaver.hpp
 98=..\..\common\src\CXSaverGPX.hpp
 99=..\..\common\src\CXSaverRaw.hpp
+100=..\..\common\src\CXInfoBarRouting.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

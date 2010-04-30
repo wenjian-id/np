@@ -318,6 +318,10 @@ SOURCE=..\..\common\src\CXInfoBarCommon.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\src\CXInfoBarRouting.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\src\CXInfoBarSpeed.hpp
 # End Source File
 # Begin Source File
@@ -643,6 +647,10 @@ SOURCE=..\..\common\src\CXInfoBarBottom.cpp
 # Begin Source File
 
 SOURCE=..\..\common\src\CXInfoBarCommon.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\src\CXInfoBarRouting.cpp
 # End Source File
 # Begin Source File
 
