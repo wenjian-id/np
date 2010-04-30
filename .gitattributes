@@ -188,6 +188,8 @@ common/src/CXInfoBarBottom.cpp -text
 common/src/CXInfoBarBottom.hpp -text
 common/src/CXInfoBarCommon.cpp -text
 common/src/CXInfoBarCommon.hpp -text
+common/src/CXInfoBarRouting.cpp -text
+common/src/CXInfoBarRouting.hpp -text
 common/src/CXInfoBarSpeed.cpp -text
 common/src/CXInfoBarSpeed.hpp -text
 common/src/CXInfoBarTop.cpp -text

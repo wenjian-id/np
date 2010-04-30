@@ -57,18 +57,6 @@ private:
 	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 	//-------------------------------------
 	/**
-	 * \brief Calculate optimal font height for a rect.
-	 *
-	 * Calculate optimal font height so that a text fits into a rectangle.
-	 * Font height is adjusted when coputing!
-	 * \param	Bmp		Bitmap.
-	 * \param	Str		String.
-	 * \param	rRect	The rectangle.
-	 * \return			Font height.
-	 */
-	int CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
-	//-------------------------------------
-	/**
 	 * \brief oiu
 	 *
 	 * oiu
@@ -80,21 +68,21 @@ public:
 	/**
 	 * \brief Default constructor.
 	 *
-	 * Default constructor.
+	 * The default constructor.
 	 */
 	CXInfoBarCommon();
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
-	 * Destructor.
+	 * The destructor.
 	 */
 	virtual ~CXInfoBarCommon();
 	//-------------------------------------
 	/**
 	 * \brief Position has changed.
 	 *
-	 * Position has changed.
+	 * The position has changed.
 	 * \param	Newdata		New position.
 	 */
 	void PositionChanged(const CXNaviData & NewData);

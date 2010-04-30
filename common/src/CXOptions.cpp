@@ -123,6 +123,9 @@ CXOptions::CXOptions() :
 	m_oShowInfoBarCommon(true),
 	m_InfoBarCommonWidth(65),
 	m_InfoBarCommonHeight(60),
+	m_oShowInfoBarRouting(true),
+	m_InfoBarRoutingWidth(65),
+	m_InfoBarRoutingHeight(60),
 	m_MaxSpeedSize(61),
 	m_CompassSize(50),
 	m_TrackLogSize(0),
@@ -256,6 +259,12 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 	SetInfoBarCommonWidth(atoi(F.Get("InfoBarCommonWidth", "65").c_str()));
 	// InfoBar Common Height
 	SetInfoBarCommonHeight(atoi(F.Get("InfoBarCommonHeight", "60").c_str()));
+	// Routing bar visibility
+	SetShowInfoBarRoutingFlag(F.Get("ShowInfoBarRouting", "on").ToUpper() == "ON");
+	// InfoBar Routing Width
+	SetInfoBarRoutingWidth(atoi(F.Get("InfoBarRoutingWidth", "65").c_str()));
+	// InfoBar Routing Height
+	SetInfoBarRoutingHeight(atoi(F.Get("InfoBarRoutingHeight", "60").c_str()));
 	// MaxSpeed
 	SetShowMaxSpeedFlag(F.Get("ShowMaxSpeed", "on").ToUpper() == "ON");
 	// MaxSpeed size
@@ -591,6 +600,42 @@ int CXOptions::GetInfoBarCommonHeight() const {
 void CXOptions::SetInfoBarCommonHeight(int NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_InfoBarCommonHeight = NewValue;
+}
+
+//-------------------------------------
+bool CXOptions::MustShowInfoBarRouting() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_oShowInfoBarRouting;
+}
+
+//-------------------------------------
+void CXOptions::SetShowInfoBarRoutingFlag(bool NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_oShowInfoBarRouting = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetInfoBarRoutingWidth() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_InfoBarRoutingWidth;
+}
+
+//-------------------------------------
+void CXOptions::SetInfoBarRoutingWidth(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_InfoBarRoutingWidth = NewValue;
+}
+
+//-------------------------------------
+int CXOptions::GetInfoBarRoutingHeight() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_InfoBarRoutingHeight;
+}
+
+//-------------------------------------
+void CXOptions::SetInfoBarRoutingHeight(int NewValue) {
+	CXWriteLocker WL(&m_RWLock);
+	m_InfoBarRoutingHeight = NewValue;
 }
 
 //-------------------------------------

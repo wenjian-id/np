@@ -50,23 +50,6 @@ void CXInfoBarCommon::PositionChanged(const CXNaviData & NewData) {
 }
 
 //-------------------------------------
-int CXInfoBarCommon::CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect) {
-	int Height = rRect.GetHeight();
-	int Width = rRect.GetWidth();
-	int FontHeight = Height;
-	Bmp.SetFont(FontHeight, false);
-	// calculate font height, so text fits into rect
-	do {
-		rRect = Bmp.CalcTextRectUTF8(Str, 2, 2);
-		if(rRect.GetWidth() >= Width) {
-			FontHeight--;
-			Bmp.SetFont(FontHeight, false);
-		}
-	} while((rRect.GetWidth() >= Width) && (FontHeight > 2));
-	return FontHeight;
-}
-
-//-------------------------------------
 void CXInfoBarCommon::CalcFontHeights(CXDeviceContext *pDC) {
 	int Width = GetWidth();
 	int Height = GetHeight();

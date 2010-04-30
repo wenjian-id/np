@@ -41,6 +41,7 @@ class CXInfoBarBottom;
 class CXInfoBarTop;
 class CXInfoBarSpeed;
 class CXInfoBarCommon;
+class CXInfoBarRouting;
 
 
 //----------------------------------------------------------------------------
@@ -117,12 +118,14 @@ private:
 	CXInfoBarTop		*m_pInfoBarTop;				///< oiu
 	CXInfoBarSpeed		*m_pInfoBarSpeed;			///< oiu
 	CXInfoBarCommon		*m_pInfoBarCommon;			///< oiu
+	CXInfoBarRouting	*m_pInfoBarRouting;			///< oiu
 	int					m_iWidth;					///< oiu
 	int					m_iHeight;					///< oiu
 	tIRect				m_InfoBarTopPos;			///< oiu
 	tIRect				m_InfoBarBottomPos;			///< oiu
 	tIRect				m_InfoBarSpeedPos;			///< oiu
 	tIRect				m_InfoBarCommonPos;			///< oiu
+	tIRect				m_InfoBarRoutingPos;		///< oiu
 	tIRect				m_ZoomInPos;				///< oiu
 	tIRect				m_ZoomOutPos;				///< oiu
 	tIRect				m_MapPos;					///< oiu

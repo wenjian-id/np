@@ -80,6 +80,7 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../common/src/CXSaver.cpp \
 ../../common/src/CXSaverRaw.cpp \
 ../../common/src/CXSaverGPX.cpp \
+../../common/src/CXInfoBarRouting.cpp \
 ../../Qt/src/CXMutex.cpp \
 ../../Qt/src/TargetIncludes.cpp \
 ../../Qt/src/CXDeviceContext.cpp \
@@ -181,6 +182,7 @@ HEADERS += ../../common/src/CoordConstants.h \
 ../../common/src/CXSaver.hpp \
 ../../common/src/CXSaverRaw.hpp \
 ../../common/src/CXSaverGPX.hpp \
+../../common/src/CXInfoBarRouting.hpp \
 ../../Qt/src/CXRWLock.hpp \
 ../../Qt/src/CXMainWindow.hpp \
 ../../Qt/src/TargetIncludes.hpp \

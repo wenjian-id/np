@@ -23,6 +23,7 @@
 #include "Utils.hpp"
 #include "CXCoor.hpp"
 #include "CXSatelliteData.hpp"
+#include "CXBitmap.hpp"
 #include "OSSpecific.hpp"
 
 #include  <stdlib.h>
@@ -636,6 +637,23 @@ void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, C
 		double dy = TargetCoor.GetUTMNorthing() - BaseCoor.GetUTMNorthing();
 		rDir = CXDirection(dx/d, dy/d);
 	}
+}
+
+//-------------------------------------
+int CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect) {
+	int Height = rRect.GetHeight();
+	int Width = rRect.GetWidth();
+	int FontHeight = Height;
+	Bmp.SetFont(FontHeight, false);
+	// calculate font height, so text fits into rect
+	do {
+		rRect = Bmp.CalcTextRectUTF8(Str, 2, 2);
+		if(rRect.GetWidth() >= Width) {
+			FontHeight--;
+			Bmp.SetFont(FontHeight, false);
+		}
+	} while((rRect.GetWidth() >= Width) && (FontHeight > 2));
+	return FontHeight;
 }
 
 //-------------------------------------

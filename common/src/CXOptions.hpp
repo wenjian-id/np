@@ -215,6 +215,9 @@ private:
 	bool						m_oShowInfoBarCommon;			///< oiu
 	int							m_InfoBarCommonWidth;			///< oiu
 	int							m_InfoBarCommonHeight;			///< oiu
+	bool						m_oShowInfoBarRouting;			///< oiu
+	int							m_InfoBarRoutingWidth;			///< oiu
+	int							m_InfoBarRoutingHeight;			///< oiu
 	int							m_MaxSpeedSize;					///< oiu
 	int							m_CompassSize;					///< oiu
 	size_t						m_TrackLogSize;					///< oiu
@@ -437,6 +440,42 @@ public:
 	 *
 	 */
 	void SetInfoBarCommonHeight(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool MustShowInfoBarRouting() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetShowInfoBarRoutingFlag(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetInfoBarRoutingWidth() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetInfoBarRoutingWidth(int NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	int GetInfoBarRoutingHeight() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetInfoBarRoutingHeight(int NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu

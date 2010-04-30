@@ -26,6 +26,7 @@
 #include "CXStringASCII.hpp"
 #include "CXStringUTF8.hpp"
 #include "CXFile.hpp"
+#include "CXRect.hpp"
 #include "CXRGB.hpp"
 #include "CXDirection.hpp"
 
@@ -35,6 +36,7 @@ class CXGGAPacket;
 class CXRMCPacket;
 class CXGSAPacket;
 class CXSatelliteInfo;
+class CXBitmap;
 
 
 
@@ -431,6 +433,19 @@ double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
  * oiu.
  */
 void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, CXDirection & rDir);
+
+//-------------------------------------
+/**
+ * \brief Calculate optimal font height for a rect.
+ *
+ * Calculate optimal font height so that a text fits into a rectangle.
+ * Font height is adjusted when coputing!
+ * \param	Bmp		Bitmap.
+ * \param	Str		String.
+ * \param	rRect	The rectangle.
+ * \return			Font height.
+ */
+int CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
 
 //-------------------------------------
 /**
