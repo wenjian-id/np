@@ -7,7 +7,6 @@ Linux/src/CXSerial.hpp -text
 Linux/src/OSSpecific.cpp -text
 Linux/src/OSSpecific.hpp -text
 Qt/KDevelop/NaviPOWM.pro -text
-Qt/KDevelop/doxygen/NaviPOWM.dox -text
 Qt/MinGW/NaviPOWM.mdsp -text
 Qt/MinGW/NaviPOWM.rc -text
 Qt/MinGW/doxygen/NaviPOWM.dox -text
