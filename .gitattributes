@@ -1,12 +1,13 @@
 * text=auto !eol
 /CHANGELOG.TXT -text
 /LICENSE.TXT -text
+Linux/doxygen/NaviPOWM.dox -text
+Linux/src/CXSerial.cpp -text
+Linux/src/CXSerial.hpp -text
+Linux/src/OSSpecific.cpp -text
+Linux/src/OSSpecific.hpp -text
 Qt/KDevelop/NaviPOWM.pro -text
 Qt/KDevelop/doxygen/NaviPOWM.dox -text
-Qt/KDevelop/src/CXSerial.cpp -text
-Qt/KDevelop/src/CXSerial.hpp -text
-Qt/KDevelop/src/OSSpecific.cpp -text
-Qt/KDevelop/src/OSSpecific.hpp -text
 Qt/MinGW/NaviPOWM.mdsp -text
 Qt/MinGW/NaviPOWM.rc -text
 Qt/MinGW/doxygen/NaviPOWM.dox -text
