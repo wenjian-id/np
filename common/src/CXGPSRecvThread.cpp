@@ -136,7 +136,7 @@ void CXGPSRecvThread::OnThreadLoop() {
 	if(!m_pGPSProtocol->IsOpen())
 		return;
 	// connected. now read data
-	if(m_pGPSProtocol->ReadAndProcessData()) {
+	while(m_pGPSProtocol->ReadAndProcessData()) {
 		// send data to locator thread
 		if((m_pGPSProtocol->GetReceivedDataTypes() & CXGPSProtocol::e_RcvPosInfo) != 0) {
 			// reset receive flag

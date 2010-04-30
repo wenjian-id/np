@@ -28,18 +28,20 @@
 
 //----------------------------------------------------------------------------
 /**
- * \brief oiu
+ * \brief Class containing GPS quality information.
  *
+ * Class containing GPS qualityn information: HDOP VDOP.
  */
 class CXGPSQualityInfo {
 private:
-	double			m_dHDOP;	///< oiu
-	double			m_dVDOP;		///< oiu
+	double		m_dHDOP;	///< HDOP.
+	double		m_dVDOP;	///< VDOP.
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Copy from other instance.
 	 *
-	 * oiu.
+	 * Copy data from other instance.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXGPSQualityInfo &rOther);
 protected:
@@ -48,49 +50,56 @@ public:
 	/**
 	 * \brief Default constructor.
 	 *
-	 * Default constructor.
+	 * The default constructor.
 	 */
 	CXGPSQualityInfo();
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Constructor.
 	 *
-	 * oiu.
+	 * A Constructor.
+	 * \param	dHDOP		HDOP.
+	 * \param	dVDOP		VDOP.
 	 */
 	CXGPSQualityInfo(double dHDOP, double dVDOP);
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Copy constructor.
 	 *
-	 * oiu.
+	 * The copy constructor.
+	 * \param	rOther		Instance to copy from.
 	 */
 	CXGPSQualityInfo(const CXGPSQualityInfo & rOther);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
-	 * Destructor.
+	 * The destructor.
 	 */
 	virtual ~CXGPSQualityInfo();
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Assignment operator.
 	 *
-	 * oiu.
+	 * The assignment operator.
+	 * \param	rOther		Instance to copy from..
+	 * \return				Const pointer to self.
 	 */
 	const CXGPSQualityInfo & operator = (const CXGPSQualityInfo & rOther);
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get HDOP.
 	 *
-	 * oiu.
+	 * Get HDOP value.
+	 * \return	HDOP.
 	 */
 	double GetHDOP() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get VDOP.
 	 *
-	 * oiu.
+	 * Get VDOP value.
+	 * \return	HDOP.
 	 */
 	double GetVDOP() const;
 };

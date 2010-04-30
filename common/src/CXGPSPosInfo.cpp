@@ -75,7 +75,7 @@ CXStringASCII CXGPSPosInfo::GetUTC() const {
 }
 
 //-------------------------------------
-bool CXGPSPosInfo::GetFix() const {
+bool CXGPSPosInfo::HasFix() const {
 	return m_oFix;
 }
 

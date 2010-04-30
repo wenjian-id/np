@@ -27,21 +27,24 @@
 
 //----------------------------------------------------------------------------
 /**
- * \brief oiu
+ * \brief Base class for a GPS input channel.
  *
+ * This class is the base class for a GPS input channel. It has methods to open,
+ * close and read data.
  */
 class CXGPSInputChannel {
 private:
-	size_t		m_ForcedTimeout;		///< oiu
+	size_t		m_ForcedTimeout;		///< Forced timout. Used to stop processing data if new UTC read.
 	//-------------------------------------
 	CXGPSInputChannel(const CXGPSInputChannel &);						///< Not used.
 	const CXGPSInputChannel & operator = (const CXGPSInputChannel &);	///< Not used.
 protected:
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Set forced timeout.
 	 *
-	 * oiu
+	 * Set forced timeout in ms.
+	 * \param	NewValue	New timeout [ms].
 	 */
 	void SetForcedTimeout(int NewValue);
 public:
@@ -49,63 +52,73 @@ public:
 	/**
 	 * \brief Default constructor.
 	 *
-	 * Default constructor.
+	 * The default constructor.
 	 */
 	CXGPSInputChannel();
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
-	 * Destructor.
+	 * The destructor.
 	 */
 	virtual ~CXGPSInputChannel();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Open channel.
 	 *
-	 * oiu
+	 * Open the GPS input channel. Has to be implemented in derived classes.
+	 * \return		true on success.
 	 */
 	virtual bool Open()=0;
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Close channel.
 	 *
-	 * oiu
+	 * Close the GPS input channel. Has to be implemented in derived classes.
+	 * \return		true on success.
 	 */
 	virtual bool Close()=0;
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Check if channel is open.
 	 *
-	 * oiu
+	 * Check if input channel is open. Has to be implemented in derived classes.
+	 * \return		true if open.
 	 */
 	virtual bool IsOpen()=0;
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Read configuration.
 	 *
-	 * oiu
+	 * Read configuration. Has to be implemented in derived classes.
+	 * \return		true on success.
 	 */
 	virtual bool ReadConfiguration() = 0;
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Check if flush allowed.
 	 *
-	 * oiu
+	 * Check if flush allowed. Has to be implemented in derived classes.
+	 * \return		true if allowed.
 	 */
 	virtual bool CanFlush()=0;
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Read data.
 	 *
-	 * oiu
+	 * Read some data. Has to be implemented in derived classes.
+	 * \param		pbBuffer	Buffer for data.
+	 * \param		Size		Size of buffer.
+	 * \param		ReadSize	Size of actually read data.
+	 * \return		true on success. 0 bytes read is also OK.
 	 */
 	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) = 0;
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Get forced timeout.
 	 *
-	 * oiu
+	 * get forced timeout in ms.
+	 * \return		Timeout [ms].
 	 */
 	size_t GetForcedTimeout() const;
 };

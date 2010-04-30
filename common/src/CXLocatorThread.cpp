@@ -198,7 +198,7 @@ void CXLocatorThread::OnThreadLoop() {
 		tTimeStampedGPSPosInfo PosInfo = GetGPSPosInfo();
 		// set UTC
 		m_NaviData.SetUTC(PosInfo.Data().GetUTC());
-		oHasFix = PosInfo.Data().GetFix();
+		oHasFix = PosInfo.Data().HasFix();
 		m_LastReceivedPosition.SetNow();
 		// set number of satellites
 		CXSatellites::Instance()->SetNrSatGGA(PosInfo.Data().GetNSat());
@@ -224,7 +224,7 @@ void CXLocatorThread::OnThreadLoop() {
 		// reset flag
 		SetFlag_NewGPSCourseInfo(false);
 		tTimeStampedGPSCourseInfo GPSCourseInfo = GetGPSCourseInfo();
-		if(GPSCourseInfo.Data().GetFix()) {
+		if(GPSCourseInfo.Data().HasFix()) {
 			// set data in speed calculator
 			m_SpeedCalculator.SetRMCData(GPSCourseInfo.Data().GetUTC(), CXTimeStampData<CXCoor>(m_LastReceivedCoor, GPSCourseInfo.TimeStamp()), GPSCourseInfo.Data().GetSpeed());
 		}

@@ -153,6 +153,9 @@ bool CXGPSProtocolNMEA::OnReadAndProcessData() {
 			// other telegrams to follow
 			m_LastReceivedGSVTel = NCurrentTelegram;
 		}
+	} else {
+		// no correct packet received
+		return false;
 	}
 	return true;
 }

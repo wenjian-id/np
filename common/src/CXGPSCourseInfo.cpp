@@ -69,7 +69,7 @@ CXStringASCII CXGPSCourseInfo::GetUTC() const {
 }
 
 //-------------------------------------
-bool CXGPSCourseInfo::GetFix() const {
+bool CXGPSCourseInfo::HasFix() const {
 	return m_oFix;
 }
 

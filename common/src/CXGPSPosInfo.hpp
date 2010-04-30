@@ -28,22 +28,24 @@
 
 //----------------------------------------------------------------------------
 /**
- * \brief oiu
+ * \brief Class containing GPS position information.
  *
+ * Class containing GPS position information: UTC, position number of satellites.
  */
 class CXGPSPosInfo {
 private:
-	CXStringASCII	m_UTC;		///< oiu
-	bool			m_oFix;		///< oiu
-	double			m_dLon;		///< oiu
-	double			m_dLat;		///< oiu
-	double			m_dHeight;	///< oiu
-	int				m_NSat;		///< oiu
+	CXStringASCII	m_UTC;		///< UTC.
+	bool			m_oFix;		///< Fix.
+	double			m_dLon;		///< Longitude [deg].
+	double			m_dLat;		///< Latitude [deg].
+	double			m_dHeight;	///< Height [m].
+	int				m_NSat;		///< Number of satellites
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Copy from other instance.
 	 *
-	 * oiu.
+	 * Copy data from other instance.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXGPSPosInfo &rOther);
 protected:
@@ -52,77 +54,92 @@ public:
 	/**
 	 * \brief Default constructor.
 	 *
-	 * Default constructor.
+	 * The default constructor.
 	 */
 	CXGPSPosInfo();
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Constructor.
 	 *
-	 * oiu.
+	 * A Constructor.
+	 * \param	UTC			UTC time.
+	 * \param	oFix		Fix.
+	 * \param	dLon		Longitude [deg].
+	 * \param	dLat		Latitude [deg].
+	 * \param	dHeight		Height [m].
+	 * \param	NSat		Number of satellites.
 	 */
 	CXGPSPosInfo(const CXStringASCII &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat);
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Copy constructor.
 	 *
-	 * oiu.
+	 * The copy constructor.
+	 * \param	rOther		Instance to copy from.
 	 */
 	CXGPSPosInfo(const CXGPSPosInfo & rOther);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
-	 * Destructor.
+	 * The destructor.
 	 */
 	virtual ~CXGPSPosInfo();
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Assignment operator.
 	 *
-	 * oiu.
+	 * The assignment operator.
+	 * \param	rOther		Instance to copy from..
+	 * \return				Const pointer to self.
 	 */
 	const CXGPSPosInfo & operator = (const CXGPSPosInfo & rOther);
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get UTC.
 	 *
-	 * oiu.
+	 * Get UTC time.
+	 * \return	UTC time as string.
 	 */
 	CXStringASCII GetUTC() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Check if GPS fix.
 	 *
-	 * oiu.
+	 * Check if GPS fix or not.
+	 * \return	true if fix.
 	 */
-	bool GetFix() const;
+	bool HasFix() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get longitude.
 	 *
-	 * oiu.
+	 * Get the longitude.
+	 * \return	Longitude [deg].
 	 */
 	double GetLon() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get latitude.
 	 *
-	 * oiu.
+	 * Get the latitude.
+	 * \return	Latitude [deg].
 	 */
 	double GetLat() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get height.
 	 *
-	 * oiu.
+	 * Get the height.
+	 * \return	Height [m].
 	 */
 	double GetHeight() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get number of satellites.
 	 *
-	 * oiu.
+	 * Get the number of satellites.
+	 * \return	Number of satellites.
 	 */
 	int GetNSat() const;
 };

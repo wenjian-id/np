@@ -28,20 +28,22 @@
 
 //----------------------------------------------------------------------------
 /**
- * \brief oiu
+ * \brief Class containing GPS course information.
  *
+ * Class containing GPS course information: UTC, speed and course.
  */
 class CXGPSCourseInfo {
 private:
-	CXStringASCII	m_UTC;		///< oiu
-	bool			m_oFix;		///< oiu
-	double			m_dSpeed;	///< oiu
-	double			m_dCourse;	///< oiu
+	CXStringASCII	m_UTC;		///< UTC.
+	bool			m_oFix;		///< Fix.
+	double			m_dSpeed;	///< Speed [m/s].
+	double			m_dCourse;	///< Course [deg].
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Copy from other instance.
 	 *
-	 * oiu.
+	 * Copy data from other instance.
+	 * \param	rOther	Instance to copy from.
 	 */
 	void CopyFrom(const CXGPSCourseInfo &rOther);
 protected:
@@ -50,63 +52,74 @@ public:
 	/**
 	 * \brief Default constructor.
 	 *
-	 * Default constructor.
+	 * The default constructor.
 	 */
 	CXGPSCourseInfo();
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Constructor.
 	 *
-	 * oiu.
+	 * A Constructor.
+	 * \param	UTC			UTC time.
+	 * \param	oFix		Fix.
+	 * \param	dSpeed		Speed [m/s].
+	 * \param	dCourse		Course [deg].
 	 */
 	CXGPSCourseInfo(const CXStringASCII &UTC, bool oFix, double dSpeed, double dcourse);
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Copy constructor.
 	 *
-	 * oiu.
+	 * The copy constructor.
+	 * \param	rOther		Instance to copy from.
 	 */
 	CXGPSCourseInfo(const CXGPSCourseInfo & rOther);
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
-	 * Destructor.
+	 * The destructor.
 	 */
 	virtual ~CXGPSCourseInfo();
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Assignment operator.
 	 *
-	 * oiu.
+	 * The assignment operator.
+	 * \param	rOther		Instance to copy from..
+	 * \return				Const pointer to self.
 	 */
 	const CXGPSCourseInfo & operator = (const CXGPSCourseInfo & rOther);
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get UTC.
 	 *
-	 * oiu.
+	 * Get UTC time.
+	 * \return	UTC time as string.
 	 */
 	CXStringASCII GetUTC() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Check if GPS fix.
 	 *
-	 * oiu.
+	 * Check if GPS fix or not.
+	 * \return	true if fix.
 	 */
-	bool GetFix() const;
+	bool HasFix() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get speed.
 	 *
-	 * oiu.
+	 * Get the speed.
+	 * \return	Speed [m/s].
 	 */
 	double GetSpeed() const;
 	//-------------------------------------
 	/**
-	 * \brief oiu.
+	 * \brief Get course.
 	 *
-	 * oiu.
+	 * Get course.
+	 * \return	Course [deg].
 	 */
 	double GetCourse() const;
 };

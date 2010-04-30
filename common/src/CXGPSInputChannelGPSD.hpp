@@ -27,8 +27,9 @@
 
 //----------------------------------------------------------------------------
 /**
- * \brief oiu
+ * \brief Class for reading data from GPSD.
  *
+ * This class is used for reading data from GPSD.
  */
 class CXGPSInputChannelGPSD : public CXGPSInputChannel {
 private:
@@ -41,56 +42,65 @@ public:
 	/**
 	 * \brief Default constructor.
 	 *
-	 * Default constructor.
+	 * The default constructor.
 	 */
 	CXGPSInputChannelGPSD();
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
-	 * Destructor.
+	 * The destructor.
 	 */
 	virtual ~CXGPSInputChannelGPSD();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Open channel.
 	 *
-	 * oiu
+	 * Open the GPS input channel.
+	 * \return		true on success.
 	 */
 	virtual bool Open();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Close channel.
 	 *
-	 * oiu
+	 * Close the GPS input channel.
+	 * \return		true on success.
 	 */
 	virtual bool Close();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Check if channel is open.
 	 *
-	 * oiu
+	 * Check if input channel is open.
+	 * \return		true if open.
 	 */
 	virtual bool IsOpen();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Read configuration.
 	 *
-	 * oiu
+	 * Read the configuration.
+	 * \return		true on success.
 	 */
 	virtual bool ReadConfiguration();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Check if flush allowed.
 	 *
-	 * oiu
+	 * Check if flush allowed. It is.
+	 * \return		Always true.
 	 */
 	virtual bool CanFlush();
 	//-------------------------------------
 	/**
-	 * \brief oiu
+	 * \brief Read data.
 	 *
-	 * oiu
+	 * Read some data.
+	 * \param		pbBuffer	Buffer for data.
+	 * \param		Size		Size of buffer.
+	 * \param		ReadSize	Size of actually read data.
+	 * \return		true on success. 0 bytes read is also OK.
 	 */
 	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
 };
