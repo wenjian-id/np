@@ -20,71 +20,29 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXSERIAL_HPP__
-#define __CXSERIAL_HPP__
+#ifndef __OSSPECIFIC_HPP__
+#define __OSSPECIFIC_HPP__
 
-#include <ISerial.hpp>
-#include "CXStringASCII.hpp"
-#include <TargetIncludes.hpp>
+#include "TargetIncludes.hpp"
 
-//---------------------------------------------------------------------
+#include <windows.h>
+
+#ifndef PATHDELIMITER
+#define PATHDELIMITER '\\'
+#endif
+
+//-------------------------------------
 /**
  * \brief oiu
  *
  */
-class CXSerial : public ISerial {
-private:
-    HANDLE	m_hComm;	///< oiu
-	//-------------------------------------
-	CXSerial(const CXSerial&);						///< Not used.
-	const CXSerial & operator = (const CXSerial&);	///< Not used.
-protected:
-public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXSerial();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXSerial();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-    E_RESULTCODE Open(const CXSerialPortConfig & Config);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-    virtual E_RESULTCODE Close();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-    virtual E_RESULTCODE Receive(unsigned long  ulDataSize, unsigned char *  pbData, unsigned long &  ulReceived);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-    virtual E_RESULTCODE Transmit(unsigned long  ulDataSize, const unsigned char *  pbData, unsigned long &  ulTransmitted);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool IsOpen() const;
-};
+void TriggerWatchdog();
 
+//-------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+size_t GetFreeMem();
 
-#endif // __CXSERIAL_HPP__
+#endif // __OSSPECIFIC_HPP__

@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../common/src" /I "../src" /I "./" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../common/src" /I "./" /I "../common/src" /I "../native/src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../../common/src" /I "../src" /I "./" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../../common/src" /I "./" /I "../common/src" /I "../native/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
@@ -94,55 +94,55 @@ LINK32=link.exe
 # PROP Default_Filter "HPP"
 # Begin Source File
 
-SOURCE=..\src\CXBitmap.hpp
+SOURCE=..\native\src\CXBitmap.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXDeviceContext.hpp
+SOURCE=..\native\src\CXDeviceContext.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXExactTime.hpp
+SOURCE=..\native\src\CXExactTime.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXMainWindow.hpp
+SOURCE=..\native\src\CXMainWindow.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXMutex.hpp
+SOURCE=..\native\src\CXMutex.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXRWLock.hpp
+SOURCE=..\native\src\CXRWLock.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXSemaphore.hpp
+SOURCE=..\native\src\CXSemaphore.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXSerial.hpp
+SOURCE=..\common\src\CXSerial.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXThread.hpp
+SOURCE=..\native\src\CXThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXWindow.hpp
+SOURCE=..\native\src\CXWindow.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXWorkRequestThread.hpp
+SOURCE=..\native\src\CXWorkRequestThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\OSSpecific.hpp
+SOURCE=..\common\src\OSSpecific.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\TargetIncludes.hpp
+SOURCE=..\native\src\TargetIncludes.hpp
 # End Source File
 # End Group
 # Begin Group "Windows specific CPP"
@@ -150,59 +150,73 @@ SOURCE=..\src\TargetIncludes.hpp
 # PROP Default_Filter "CPP"
 # Begin Source File
 
-SOURCE=..\src\CXBitmap.cpp
+SOURCE=..\native\src\CXBitmap.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXDeviceContext.cpp
+SOURCE=..\native\src\CXDeviceContext.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXExactTime.cpp
+SOURCE=..\native\src\CXExactTime.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXMainWindow.cpp
+SOURCE=..\native\src\CXMainWindow.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXMutex.cpp
+SOURCE=..\native\src\CXMutex.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXRWLock.cpp
+SOURCE=..\native\src\CXRWLock.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXSemaphore.cpp
+SOURCE=..\native\src\CXSemaphore.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXSerial.cpp
+SOURCE=..\common\src\CXSerial.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXThread.cpp
+SOURCE=..\native\src\CXThread.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXWindow.cpp
+SOURCE=..\native\src\CXWindow.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\CXWorkRequestThread.cpp
+SOURCE=..\native\src\CXWorkRequestThread.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\Main.cpp
+SOURCE=..\native\src\Main.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\OSSpecific.cpp
+SOURCE=..\common\src\OSSpecific.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # Begin Source File
 
-SOURCE=..\src\TargetIncludes.cpp
+SOURCE=..\native\src\TargetIncludes.cpp
+# ADD CPP /I "../common/src" /I "../native/src"
 # End Source File
 # End Group
 # Begin Group "Common HPP"
