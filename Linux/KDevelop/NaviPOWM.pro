@@ -5,9 +5,9 @@ CONFIG += warn_on \
           thread \
           rtti \
 QMAKE_CXXFLAGS += -Wall
-INCLUDEPATH += ../../common/src/ \
-               ../../Linux/src \
-               ../src/
+INCLUDEPATH += ../common/src/ \
+               ../../Qt/src \
+               ../../common/src
 
 OBJECTS_DIR = obj
 CONFIG += release
@@ -95,8 +95,8 @@ SOURCES += ../../common/src/IBitmap.cpp \
 ../../Qt/src/CXThread.cpp \
 ../../Qt/src/CXExactTime.cpp \
 ../../Qt/src/CXMainWindow.cpp \
-../../Linux/src/CXSerial.cpp \
-../../Linux/src/OSSpecific.cpp
+../common/src/CXSerial.cpp \
+../common/src/OSSpecific.cpp
 
 HEADERS += ../../common/src/CoordConstants.h \
 ../../common/src/CoordConversion.h \
@@ -196,5 +196,5 @@ HEADERS += ../../common/src/CoordConstants.h \
 ../../Qt/src/CXWindow.hpp \
 ../../Qt/src/CXWorkRequestThread.hpp \
 ../../Qt/src/CXDeviceContext.hpp \
-../../Linux/src/OSSpecific.hpp \
-../../Linux/src/CXSerial.hpp
+../common/src/OSSpecific.hpp \
+../common/src/CXSerial.hpp
