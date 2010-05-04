@@ -24,6 +24,7 @@ WindowsMobile/WM5/eVC4/NaviPOWM.vcp -text
 WindowsMobile/WM5/eVC4/NaviPOWM.vcw -text
 WindowsMobile/WM5/eVC4/resource.h -text
 WindowsMobile/doxygen/NaviPOWM.dox -text
+build/cmake/CMakeLists.txt -text
 build/mingw-qt/NaviPOWM.mdsp -text
 build/mingw-qt/NaviPOWM.rc -text
 build/mingw-qt/doxygen/NaviPOWM.dox -text
@@ -215,6 +216,11 @@ src/common/IWorkRequestThread.cpp -text
 src/common/IWorkRequestThread.hpp -text
 src/common/Utils.cpp -text
 src/common/Utils.hpp -text
+src/linux/CXGPSDClient.hpp -text
+src/linux/CXGPSDClient3.cpp -text
+src/linux/CXGPSDClient3.hpp -text
+src/linux/CXGPSDClient4.cpp -text
+src/linux/CXGPSDClient4.hpp -text
 src/linux/CXSerial.cpp -text
 src/linux/CXSerial.hpp -text
 src/linux/OSSpecific.cpp -text

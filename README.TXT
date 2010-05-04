@@ -15,21 +15,21 @@ NaviPOWM can be compiled under Windows (with or without Qt) and Linux (with Qt)
 Compiling under Windows using Visual Studio 6:
 ----------------------------------------------
 1. A workspace and project file can be found in directory 
-   NaviPOWM\Windows\VisualStudio6
+   build\windows\visualstudio6
 2. Open workspace and compile. Qt is not needed.
 
 -------------------------------------------
 Compiling under Windows using MinGW Studio:
 -------------------------------------------
 1. A workspace and project file can be found in directory 
-   NaviPOWM\Windows\MinGW
+   build\mingw
 2. Open workspace and compile. Qt is not needed.
 
 ---------------------------------------------------
 Compiling under Windows using MinGW Studio with Qt:
 ---------------------------------------------------
 1. A workspace and project file can be found in directory 
-   NaviPOWM\Windows\MinGW-Qt
+   build\mingw-qt
 2. Make sure includes and libraries are accesible from MinGWStudio
 3. Open workspace and compile. Qt (at least 4.3.2) is needed.
 
@@ -41,10 +41,18 @@ Compiling for Windows Mobile using embedded Visual Studio 4:
 2. Open workspace and compile. Qt is not needed.
 
 ------------------------------
-Compiling under Linux with Qt:
+Compiling under Linux with Qt and qmake:
 ------------------------------
-1. Go to directory NaviPOWM/Linux/KDevelop
+1. Go to directory build/qmake
 2. run qmake
+3. run make clean
+4. run make 
+
+------------------------------
+Compiling under Linux with Qt and CMake:
+------------------------------
+1. Go to directory build/cmake
+2. run cmake .
 3. run make clean
 4. run make 
 
