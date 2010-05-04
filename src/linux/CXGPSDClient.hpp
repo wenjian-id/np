@@ -31,7 +31,7 @@
 #elif (GPSD_API_MAJOR_VERSION == 3)
 	#include "CXGPSDClient3.hpp"
 #elif (GPSD_API_MAJOR_VERSION == 4)
-	#error Version 4.x
+	#include "CXGPSDClient4.hpp"
 #else
 	#error Version > 4.x
 #endif
