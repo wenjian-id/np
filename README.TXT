@@ -29,7 +29,7 @@ Compiling under Windows using MinGW Studio:
 Compiling under Windows using MinGW Studio with Qt:
 ---------------------------------------------------
 1. A workspace and project file can be found in directory 
-   NaviPOWM\Qt\MinGW
+   NaviPOWM\Windows\MinGW-Qt
 2. Make sure includes and libraries are accesible from MinGWStudio
 3. Open workspace and compile. Qt (at least 4.3.2) is needed.
 
@@ -43,7 +43,7 @@ Compiling for Windows Mobile using embedded Visual Studio 4:
 ------------------------------
 Compiling under Linux with Qt:
 ------------------------------
-1. Go to directory Qt\KDevelop
+1. Go to directory NaviPOWM/Linux/KDevelop
 2. run qmake
 3. run make clean
 4. run make 

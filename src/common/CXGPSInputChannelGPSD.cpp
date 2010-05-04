@@ -32,20 +32,17 @@ CXGPSInputChannelGPSD::~CXGPSInputChannelGPSD() {
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::Open() {
-	/// \todo implement
-	return true;
+	return m_GPSDClient.Open();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::Close() {
-	/// \todo implement
-	return true;
+	return m_GPSDClient.Close();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::IsOpen() {
-	/// \todo implement
-	return true;
+	return m_GPSDClient.IsOpen();
 }
 
 //-------------------------------------
@@ -56,7 +53,6 @@ bool CXGPSInputChannelGPSD::ReadConfiguration() {
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::CanFlush() {
-	/// \todo implement
 	return false;
 }
 

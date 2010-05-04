@@ -20,22 +20,21 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXGPSINPUTCHANNELGPSD_HPP__
-#define __CXGPSINPUTCHANNELGPSD_HPP__
 
-#include "CXGPSInputChannel.hpp"
+#ifndef __IGPSDCLIENT_HPP__
+#define __IGPSDCLIENT_HPP__
 
 //----------------------------------------------------------------------------
 /**
- * \brief Class for reading data from GPSD.
+ * \brief oiu.
  *
- * This class is used for reading data from GPSD.
+ * oiu.
  */
-class CXGPSInputChannelGPSD : public CXGPSInputChannel {
+class IGPSDClient {
 private:
 	//-------------------------------------
-	CXGPSInputChannelGPSD(const CXGPSInputChannelGPSD &);						///< Not used.
-	const CXGPSInputChannelGPSD & operator = (const CXGPSInputChannelGPSD &);	///< Not used.
+	IGPSDClient(const IGPSDClient &);						///< Not used.
+	const IGPSDClient & operator = (const IGPSDClient &);	///< Not used.
 protected:
 public:
 	//-------------------------------------
@@ -44,65 +43,40 @@ public:
 	 *
 	 * The default constructor.
 	 */
-	CXGPSInputChannelGPSD();
+	IGPSDClient() {
+	}
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
 	 * The destructor.
 	 */
-	virtual ~CXGPSInputChannelGPSD();
+	virtual ~IGPSDClient() {
+	}
 	//-------------------------------------
 	/**
-	 * \brief Open channel.
+	 * \brief Open connection to gpsd.
 	 *
-	 * Open the GPS input channel.
+	 * Open the connection to gpsd. Has to be implemented in derived classes.
 	 * \return		true on success.
 	 */
-	virtual bool Open();
+	virtual bool Open() = 0;
 	//-------------------------------------
 	/**
-	 * \brief Close channel.
+	 * \brief Close connection to gpsd.
 	 *
-	 * Close the GPS input channel.
+	 * Close the connection to gpsd. Has to be implemented in derived classes.
 	 * \return		true on success.
 	 */
-	virtual bool Close();
+	virtual bool Close() = 0;
 	//-------------------------------------
 	/**
-	 * \brief Check if channel is open.
+	 * \brief Check if connection is open.
 	 *
-	 * Check if input channel is open.
+	 * Check if the connection is open. Has to be implemented in derived classes.
 	 * \return		true if open.
 	 */
-	virtual bool IsOpen();
-	//-------------------------------------
-	/**
-	 * \brief Read configuration.
-	 *
-	 * Read the configuration.
-	 * \return		true on success.
-	 */
-	virtual bool ReadConfiguration();
-	//-------------------------------------
-	/**
-	 * \brief Check if flush allowed.
-	 *
-	 * Check if flush allowed. It is.
-	 * \return		Always true.
-	 */
-	virtual bool CanFlush();
-	//-------------------------------------
-	/**
-	 * \brief Read data.
-	 *
-	 * Read some data.
-	 * \param		pbBuffer	Buffer for data.
-	 * \param		Size		Size of buffer.
-	 * \param		ReadSize	Size of actually read data.
-	 * \return		true on success. 0 bytes read is also OK.
-	 */
-	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
+	virtual bool IsOpen() = 0;
 };
 
-#endif // __CXGPSINPUTCHANNELGPSD_HPP__
+#endif // __IGPSDCLIENT_HPP__
