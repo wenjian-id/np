@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "../../common/src" /I "./" /I "../common/src" /I "../native/src" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FD /c
+# ADD CPP /nologo /MD /W3 /GR /GX /O2 /I "./" /I "../../src/common" /I "../../src/windows/common" /I "../../src/windows/native" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "../../common/src" /I "./" /I "../common/src" /I "../native/src" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR /YX /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GR /GX /ZI /Od /I "./" /I "../../src/common" /I "../../src/windows/common" /I "../../src/windows/native" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR /YX /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
@@ -94,55 +94,59 @@ LINK32=link.exe
 # PROP Default_Filter "HPP"
 # Begin Source File
 
-SOURCE=..\native\src\CXBitmap.hpp
+SOURCE=..\..\src\windows\native\CXBitmap.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXDeviceContext.hpp
+SOURCE=..\..\src\windows\native\CXDeviceContext.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXExactTime.hpp
+SOURCE=..\..\src\windows\native\CXExactTime.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXMainWindow.hpp
+SOURCE=..\..\src\windows\common\CXGPSDClient.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXMutex.hpp
+SOURCE=..\..\src\windows\native\CXMainWindow.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXRWLock.hpp
+SOURCE=..\..\src\windows\native\CXMutex.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXSemaphore.hpp
+SOURCE=..\..\src\windows\native\CXRWLock.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\src\CXSerial.hpp
+SOURCE=..\..\src\windows\native\CXSemaphore.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXThread.hpp
+SOURCE=..\..\src\windows\common\CXSerial.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXWindow.hpp
+SOURCE=..\..\src\windows\native\CXThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXWorkRequestThread.hpp
+SOURCE=..\..\src\windows\native\CXWindow.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\src\OSSpecific.hpp
+SOURCE=..\..\src\windows\native\CXWorkRequestThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\TargetIncludes.hpp
+SOURCE=..\..\src\windows\common\OSSpecific.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\windows\native\TargetIncludes.hpp
 # End Source File
 # End Group
 # Begin Group "Windows specific CPP"
@@ -150,73 +154,63 @@ SOURCE=..\native\src\TargetIncludes.hpp
 # PROP Default_Filter "CPP"
 # Begin Source File
 
-SOURCE=..\native\src\CXBitmap.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXBitmap.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXDeviceContext.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXDeviceContext.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXExactTime.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXExactTime.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXMainWindow.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\common\CXGPSDClient.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXMutex.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXMainWindow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXRWLock.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXMutex.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXSemaphore.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXRWLock.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\src\CXSerial.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXSemaphore.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXThread.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\common\CXSerial.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXWindow.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\CXWorkRequestThread.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXWindow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\Main.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\CXWorkRequestThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\common\src\OSSpecific.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\native\Main.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\native\src\TargetIncludes.cpp
-# ADD CPP /I "../common/src" /I "../native/src"
+SOURCE=..\..\src\windows\common\OSSpecific.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\windows\native\TargetIncludes.cpp
 # End Source File
 # End Group
 # Begin Group "Common HPP"
@@ -224,351 +218,355 @@ SOURCE=..\native\src\TargetIncludes.cpp
 # PROP Default_Filter "HPP"
 # Begin Source File
 
-SOURCE=..\..\common\src\CoordConstants.h
+SOURCE=..\..\src\common\CoordConstants.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CoordConversion.h
+SOURCE=..\..\src\common\CoordConversion.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXArea.hpp
+SOURCE=..\..\src\common\CXArea.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXAreaColorHolder.hpp
+SOURCE=..\..\src\common\CXAreaColorHolder.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXArray.hpp
+SOURCE=..\..\src\common\CXArray.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXBuffer.hpp
+SOURCE=..\..\src\common\CXBuffer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXCache.hpp
+SOURCE=..\..\src\common\CXCache.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXCoor.hpp
+SOURCE=..\..\src\common\CXCoor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXDebugInfo.hpp
+SOURCE=..\..\src\common\CXDebugInfo.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXDirection.hpp
+SOURCE=..\..\src\common\CXDirection.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXFile.hpp
+SOURCE=..\..\src\common\CXFile.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXFileIni.hpp
+SOURCE=..\..\src\common\CXFileIni.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSCourseInfo.hpp
+SOURCE=..\..\src\common\CXGPSCourseInfo.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannel.hpp
+SOURCE=..\..\src\common\CXGPSInputChannel.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannelFile.hpp
+SOURCE=..\..\src\common\CXGPSInputChannelFile.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannelGPSD.hpp
+SOURCE=..\..\src\common\CXGPSInputChannelGPSD.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannelSerial.hpp
+SOURCE=..\..\src\common\CXGPSInputChannelSerial.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSPosInfo.hpp
+SOURCE=..\..\src\common\CXGPSPosInfo.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSProtocol.hpp
+SOURCE=..\..\src\common\CXGPSProtocol.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSProtocolGPSD.hpp
+SOURCE=..\..\src\common\CXGPSProtocolGPSD.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSProtocolNMEA.hpp
+SOURCE=..\..\src\common\CXGPSProtocolNMEA.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSQualityInfo.hpp
+SOURCE=..\..\src\common\CXGPSQualityInfo.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSRecvThread.hpp
+SOURCE=..\..\src\common\CXGPSRecvThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXHysterezis.hpp
+SOURCE=..\..\src\common\CXHysterezis.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBar.hpp
+SOURCE=..\..\src\common\CXInfoBar.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarBottom.hpp
+SOURCE=..\..\src\common\CXInfoBarBottom.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarCommon.hpp
+SOURCE=..\..\src\common\CXInfoBarCommon.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarRouting.hpp
+SOURCE=..\..\src\common\CXInfoBarRouting.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarSpeed.hpp
+SOURCE=..\..\src\common\CXInfoBarSpeed.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarTop.hpp
+SOURCE=..\..\src\common\CXInfoBarTop.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXKeyVal.hpp
+SOURCE=..\..\src\common\CXKeyVal.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXLocatorThread.hpp
+SOURCE=..\..\src\common\CXLocatorThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXLoopThread.hpp
+SOURCE=..\..\src\common\CXLoopThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapContainer.hpp
+SOURCE=..\..\src\common\CXMapContainer.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapHashSimple.hpp
+SOURCE=..\..\src\common\CXMapHashSimple.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapLoaderThread.hpp
+SOURCE=..\..\src\common\CXMapLoaderThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapMovingDetails.hpp
+SOURCE=..\..\src\common\CXMapMovingDetails.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainter.hpp
+SOURCE=..\..\src\common\CXMapPainter.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainter2D.hpp
+SOURCE=..\..\src\common\CXMapPainter2D.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainterDoubleBuffered.hpp
+SOURCE=..\..\src\common\CXMapPainterDoubleBuffered.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainterTest.hpp
+SOURCE=..\..\src\common\CXMapPainterTest.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainterThread.hpp
+SOURCE=..\..\src\common\CXMapPainterThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapSection.hpp
+SOURCE=..\..\src\common\CXMapSection.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapSimple.hpp
+SOURCE=..\..\src\common\CXMapSimple.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapSort.hpp
+SOURCE=..\..\src\common\CXMapSort.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMutexLocker.hpp
+SOURCE=..\..\src\common\CXMutexLocker.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNaviData.hpp
+SOURCE=..\..\src\common\CXNaviData.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNaviPOWM.hpp
+SOURCE=..\..\src\common\CXNaviPOWM.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNMEA.hpp
+SOURCE=..\..\src\common\CXNMEA.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNode.hpp
+SOURCE=..\..\src\common\CXNode.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXOptions.hpp
+SOURCE=..\..\src\common\CXOptions.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPen.hpp
+SOURCE=..\..\src\common\CXPen.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPenHolder.hpp
+SOURCE=..\..\src\common\CXPenHolder.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPOIVisibilityDescriptor.hpp
+SOURCE=..\..\src\common\CXPOIVisibilityDescriptor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPOWMMap.hpp
+SOURCE=..\..\src\common\CXPOWMMap.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXReadLocker.hpp
+SOURCE=..\..\src\common\CXReadLocker.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXRect.hpp
+SOURCE=..\..\src\common\CXRect.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXRGB.hpp
+SOURCE=..\..\src\common\CXRGB.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSatelliteData.hpp
+SOURCE=..\..\src\common\CXSatelliteData.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSaver.hpp
+SOURCE=..\..\src\common\CXSaver.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSaverGPX.hpp
+SOURCE=..\..\src\common\CXSaverGPX.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSaverRaw.hpp
+SOURCE=..\..\src\common\CXSaverRaw.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSmartPtr.hpp
+SOURCE=..\..\src\common\CXSmartPtr.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSpeedCalculator.hpp
+SOURCE=..\..\src\common\CXSpeedCalculator.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXStringASCII.hpp
+SOURCE=..\..\src\common\CXStringASCII.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXStringUTF8.hpp
+SOURCE=..\..\src\common\CXStringUTF8.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXTimeStampData.hpp
+SOURCE=..\..\src\common\CXTimeStampData.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXTrackLog.hpp
+SOURCE=..\..\src\common\CXTrackLog.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXTransformationMatrix.hpp
+SOURCE=..\..\src\common\CXTransformationMatrix.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXUTCTime.hpp
+SOURCE=..\..\src\common\CXUTCTime.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXUTMCoor.hpp
+SOURCE=..\..\src\common\CXUTMCoor.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXUTMSpeed.hpp
+SOURCE=..\..\src\common\CXUTMSpeed.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXWatchdogThread.hpp
+SOURCE=..\..\src\common\CXWatchdogThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXWay.hpp
+SOURCE=..\..\src\common\CXWay.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXWriteLocker.hpp
+SOURCE=..\..\src\common\CXWriteLocker.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IBitmap.hpp
+SOURCE=..\..\src\common\IBitmap.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IDeviceContext.hpp
+SOURCE=..\..\src\common\IDeviceContext.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IExactTime.hpp
+SOURCE=..\..\src\common\IExactTime.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IMainWindow.hpp
+SOURCE=..\..\src\common\IGPSDClient.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IMutex.hpp
+SOURCE=..\..\src\common\IMainWindow.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IRWLock.hpp
+SOURCE=..\..\src\common\IMutex.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\ISemaphore.hpp
+SOURCE=..\..\src\common\IRWLock.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\ISerial.hpp
+SOURCE=..\..\src\common\ISemaphore.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IThread.hpp
+SOURCE=..\..\src\common\ISerial.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IWindow.hpp
+SOURCE=..\..\src\common\IThread.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IWorkRequestThread.hpp
+SOURCE=..\..\src\common\IWindow.hpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\Utils.hpp
+SOURCE=..\..\src\common\IWorkRequestThread.hpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\common\Utils.hpp
 # End Source File
 # End Group
 # Begin Group "Common CPP"
@@ -576,285 +574,289 @@ SOURCE=..\..\common\src\Utils.hpp
 # PROP Default_Filter "CPP"
 # Begin Source File
 
-SOURCE=..\..\common\src\CoordConversion.cpp
+SOURCE=..\..\src\common\CoordConversion.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXArea.cpp
+SOURCE=..\..\src\common\CXArea.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXAreaColorHolder.cpp
+SOURCE=..\..\src\common\CXAreaColorHolder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXCoor.cpp
+SOURCE=..\..\src\common\CXCoor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXDebugInfo.cpp
+SOURCE=..\..\src\common\CXDebugInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXDirection.cpp
+SOURCE=..\..\src\common\CXDirection.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXFile.cpp
+SOURCE=..\..\src\common\CXFile.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXFileIni.cpp
+SOURCE=..\..\src\common\CXFileIni.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSCourseInfo.cpp
+SOURCE=..\..\src\common\CXGPSCourseInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannel.cpp
+SOURCE=..\..\src\common\CXGPSInputChannel.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannelFile.cpp
+SOURCE=..\..\src\common\CXGPSInputChannelFile.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannelGPSD.cpp
+SOURCE=..\..\src\common\CXGPSInputChannelGPSD.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSInputChannelSerial.cpp
+SOURCE=..\..\src\common\CXGPSInputChannelSerial.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSPosInfo.cpp
+SOURCE=..\..\src\common\CXGPSPosInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSProtocol.cpp
+SOURCE=..\..\src\common\CXGPSProtocol.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSProtocolGPSD.cpp
+SOURCE=..\..\src\common\CXGPSProtocolGPSD.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSProtocolNMEA.cpp
+SOURCE=..\..\src\common\CXGPSProtocolNMEA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSQualityInfo.cpp
+SOURCE=..\..\src\common\CXGPSQualityInfo.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXGPSRecvThread.cpp
+SOURCE=..\..\src\common\CXGPSRecvThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBar.cpp
+SOURCE=..\..\src\common\CXInfoBar.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarBottom.cpp
+SOURCE=..\..\src\common\CXInfoBarBottom.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarCommon.cpp
+SOURCE=..\..\src\common\CXInfoBarCommon.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarRouting.cpp
+SOURCE=..\..\src\common\CXInfoBarRouting.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarSpeed.cpp
+SOURCE=..\..\src\common\CXInfoBarSpeed.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXInfoBarTop.cpp
+SOURCE=..\..\src\common\CXInfoBarTop.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXLocatorThread.cpp
+SOURCE=..\..\src\common\CXLocatorThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXLoopThread.cpp
+SOURCE=..\..\src\common\CXLoopThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapContainer.cpp
+SOURCE=..\..\src\common\CXMapContainer.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapLoaderThread.cpp
+SOURCE=..\..\src\common\CXMapLoaderThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapMovingDetails.cpp
+SOURCE=..\..\src\common\CXMapMovingDetails.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainter.cpp
+SOURCE=..\..\src\common\CXMapPainter.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainter2D.cpp
+SOURCE=..\..\src\common\CXMapPainter2D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainterDoubleBuffered.cpp
+SOURCE=..\..\src\common\CXMapPainterDoubleBuffered.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainterTest.cpp
+SOURCE=..\..\src\common\CXMapPainterTest.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapPainterThread.cpp
+SOURCE=..\..\src\common\CXMapPainterThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMapSection.cpp
+SOURCE=..\..\src\common\CXMapSection.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXMutexLocker.cpp
+SOURCE=..\..\src\common\CXMutexLocker.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNaviData.cpp
+SOURCE=..\..\src\common\CXNaviData.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNaviPOWM.cpp
+SOURCE=..\..\src\common\CXNaviPOWM.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNMEA.cpp
+SOURCE=..\..\src\common\CXNMEA.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXNode.cpp
+SOURCE=..\..\src\common\CXNode.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXOptions.cpp
+SOURCE=..\..\src\common\CXOptions.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPen.cpp
+SOURCE=..\..\src\common\CXPen.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPenHolder.cpp
+SOURCE=..\..\src\common\CXPenHolder.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPOIVisibilityDescriptor.cpp
+SOURCE=..\..\src\common\CXPOIVisibilityDescriptor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXPOWMMap.cpp
+SOURCE=..\..\src\common\CXPOWMMap.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXReadLocker.cpp
+SOURCE=..\..\src\common\CXReadLocker.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXRGB.cpp
+SOURCE=..\..\src\common\CXRGB.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSatelliteData.cpp
+SOURCE=..\..\src\common\CXSatelliteData.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSaver.cpp
+SOURCE=..\..\src\common\CXSaver.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSaverGPX.cpp
+SOURCE=..\..\src\common\CXSaverGPX.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSaverRaw.cpp
+SOURCE=..\..\src\common\CXSaverRaw.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXSpeedCalculator.cpp
+SOURCE=..\..\src\common\CXSpeedCalculator.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXStringASCII.cpp
+SOURCE=..\..\src\common\CXStringASCII.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXStringUTF8.cpp
+SOURCE=..\..\src\common\CXStringUTF8.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXTrackLog.cpp
+SOURCE=..\..\src\common\CXTrackLog.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXTransformationMatrix.cpp
+SOURCE=..\..\src\common\CXTransformationMatrix.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXUTCTime.cpp
+SOURCE=..\..\src\common\CXUTCTime.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXUTMCoor.cpp
+SOURCE=..\..\src\common\CXUTMCoor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXUTMSpeed.cpp
+SOURCE=..\..\src\common\CXUTMSpeed.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXWatchdogThread.cpp
+SOURCE=..\..\src\common\CXWatchdogThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXWay.cpp
+SOURCE=..\..\src\common\CXWay.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\CXWriteLocker.cpp
+SOURCE=..\..\src\common\CXWriteLocker.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IBitmap.cpp
+SOURCE=..\..\src\common\IBitmap.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IMainWindow.cpp
+SOURCE=..\..\src\common\IMainWindow.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\ISemaphore.cpp
+SOURCE=..\..\src\common\ISemaphore.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\ISerial.cpp
+SOURCE=..\..\src\common\ISerial.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IThread.cpp
+SOURCE=..\..\src\common\IThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\IWorkRequestThread.cpp
+SOURCE=..\..\src\common\IWorkRequestThread.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\src\Utils.cpp
+SOURCE=..\..\src\common\Utils.cpp
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=..\..\common\Images\MainIcon.ico
+# End Source File
 # Begin Source File
 
 SOURCE=.\NaviPOWM.rc

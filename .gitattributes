@@ -15,14 +15,6 @@ WindowsMobile/Install/makeWM2003SE.bat -text
 WindowsMobile/Install/makeWM5.bat -text
 WindowsMobile/Install/updateWM2003SE.bat -text
 WindowsMobile/Install/updateWM5.bat -text
-WindowsMobile/WM2003SE/eVC4/NaviPOWM.rc -text
-WindowsMobile/WM2003SE/eVC4/NaviPOWM.vcp -text
-WindowsMobile/WM2003SE/eVC4/NaviPOWM.vcw -text
-WindowsMobile/WM2003SE/eVC4/resource.h -text
-WindowsMobile/WM5/eVC4/NaviPOWM.rc -text
-WindowsMobile/WM5/eVC4/NaviPOWM.vcp -text
-WindowsMobile/WM5/eVC4/NaviPOWM.vcw -text
-WindowsMobile/WM5/eVC4/resource.h -text
 WindowsMobile/doxygen/NaviPOWM.dox -text
 build/cmake/CMakeLists.txt -text
 build/mingw-qt/NaviPOWM.mdsp -text
@@ -36,6 +28,14 @@ build/visualstudio6/NaviPOWM.dsp -text
 build/visualstudio6/NaviPOWM.dsw -text
 build/visualstudio6/NaviPOWM.rc -text
 build/visualstudio6/resource.h -text
+build/wm2003se/NaviPOWM.rc -text
+build/wm2003se/NaviPOWM.vcp -text
+build/wm2003se/NaviPOWM.vcw -text
+build/wm2003se/resource.h -text
+build/wm5/NaviPOWM.rc -text
+build/wm5/NaviPOWM.vcp -text
+build/wm5/NaviPOWM.vcw -text
+build/wm5/resource.h -text
 common/Config/navipowm.ini -text
 common/Demo/E007N50.map -text
 common/Demo/demo01.txt -text
@@ -248,6 +248,8 @@ src/qt/CXWorkRequestThread.hpp -text
 src/qt/Main.cpp -text
 src/qt/TargetIncludes.cpp -text
 src/qt/TargetIncludes.hpp -text
+src/windows/common/CXGPSDClient.cpp -text
+src/windows/common/CXGPSDClient.hpp -text
 src/windows/common/CXSerial.cpp -text
 src/windows/common/CXSerial.hpp -text
 src/windows/common/OSSpecific.cpp -text
@@ -281,6 +283,8 @@ src/windowsmobile/common/CXDeviceContext.cpp -text
 src/windowsmobile/common/CXDeviceContext.hpp -text
 src/windowsmobile/common/CXExactTime.cpp -text
 src/windowsmobile/common/CXExactTime.hpp -text
+src/windowsmobile/common/CXGPSDClient.cpp -text
+src/windowsmobile/common/CXGPSDClient.hpp -text
 src/windowsmobile/common/CXMainWindow.cpp -text
 src/windowsmobile/common/CXMainWindow.hpp -text
 src/windowsmobile/common/CXMutex.cpp -text
