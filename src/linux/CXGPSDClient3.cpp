@@ -130,4 +130,10 @@ void CXGPSDClient::Read() {
 	// do nothing
 }
 
+//-------------------------------------
+void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
+	rHDOP = pGPSData->hdop;
+	rVDOP = pGPSData->vdop;
+}
+
 #endif // (GPSD_API_MAJOR_VERSION == 3)

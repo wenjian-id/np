@@ -132,12 +132,12 @@ void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 		std::cout << "u" << std::flush;
 		std::cout << " " << pGPSData->status << " " << std::flush;
 	}
-	if(pGPSData->set & HDOP_SET) {
-		m_GPSQualityInfo.SetHDOP(pGPSData->hdop);
-		m_oGPSQualityInfoChanged = true;
-	}
-	if(pGPSData->set & VDOP_SET) {
-		m_GPSQualityInfo.SetVDOP(pGPSData->vdop);
+	if(pGPSData->set & DOP_SET) {
+		double HDOP = 0;
+		double VDOP = 0;
+		ReadDOP(pGPSData, HDOP, VDOP);
+		m_GPSQualityInfo.SetHDOP(HDOP);
+		m_GPSQualityInfo.SetVDOP(VDOP);
 		m_oGPSQualityInfoChanged = true;
 	}
 	if(pGPSData->set & SATELLITE_SET) {

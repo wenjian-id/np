@@ -58,6 +58,13 @@ protected:
 	 * oiu.
 	 */
 	void DoProcessData(gps_data_t *pGPSData);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) = 0;
 public:
 	//-------------------------------------
 	/**

@@ -111,6 +111,13 @@ private:
 	 */
 	void SetTerminating();
 protected:
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP);
 public:
 	//-------------------------------------
 	/**

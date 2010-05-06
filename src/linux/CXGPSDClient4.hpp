@@ -43,6 +43,13 @@ private:
 	CXGPSDClient(const CXGPSDClient &);						///< Not used.
 	const CXGPSDClient & operator = (const CXGPSDClient &);	///< Not used.
 protected:
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP);
 public:
 	//-------------------------------------
 	/**
