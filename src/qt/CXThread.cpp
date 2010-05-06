@@ -62,6 +62,12 @@ bool CXThread::CreateThread() {
 }
 
 //-------------------------------------
+void CXThread::KillThread() {
+	// kill it
+	m_ThreadHelper.terminate();
+}
+
+//-------------------------------------
 bool CXThread::WaitForThreadExit(size_t dwMilliSeconds) {
 	return m_ThreadHelper.wait(dwMilliSeconds);
 }

@@ -110,6 +110,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void KillThread() = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	virtual bool IsRunning() const;
 	//-------------------------------------
 	/**

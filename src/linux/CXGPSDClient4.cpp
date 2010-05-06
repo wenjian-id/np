@@ -26,7 +26,9 @@
 #if (GPSD_API_MAJOR_VERSION == 4)
 
 //-------------------------------------
-CXGPSDClient::CXGPSDClient() {
+CXGPSDClient::CXGPSDClient() :
+	m_pGPSData(NULL)
+{
 }
 
 //-------------------------------------
@@ -35,20 +37,29 @@ CXGPSDClient::~CXGPSDClient() {
 
 //-------------------------------------
 bool CXGPSDClient::Open() {
+	m_pGPSData = gps_open("127.0.0.1", "2947");
+	if(m_pGPSData != NULL)
+		return false;
 	/// \todo implement
-	return false;
+	return true;
 }
 
 //-------------------------------------
 bool CXGPSDClient::Close() {
-	/// \todo implement
-	return false;
+	if(m_pGPSData != NULL)
+		gps_close(m_pGPSData);
+	m_pGPSData = NULL;
+	return true;
 }
 
 //-------------------------------------
 bool CXGPSDClient::IsOpen() {
-	/// \todo implement
-	return false;
+	return m_pGPSData != NULL;
+}
+
+//-------------------------------------
+void CXGPSDClient::Read(gps_data_t *pGPSData) {
+	/// todo \imlpement
 }
 
 #endif // (GPSD_API_MAJOR_VERSION == 4)

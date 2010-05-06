@@ -110,11 +110,13 @@ bool CXGPSProtocolNMEA::OnReadAndProcessData() {
 		if(GGAPacket.HasFix()) {
 			SaveGPXData(GGAPacket.GetLon(), GGAPacket.GetLat(), GGAPacket.GetHeight());
 		}
+		CXSatellites::Instance()->SetGGADataReceived();
 	} else if(ExtractRMCData(NMEAPacket, RMCPacket)) {
 		SetGPSCourseInfo(CXGPSCourseInfo(RMCPacket.GetUTC(), RMCPacket.HasFix(), RMCPacket.GetSpeed(), RMCPacket.GetCourse()));
-		CXSatellites::Instance()->SetRMCReceived();
+		CXSatellites::Instance()->SetRMCDataReceived();
 	} else if(ExtractGSAData(NMEAPacket, GSAPacket)) {
 		SetGPSQualityInfo(CXGPSQualityInfo(GSAPacket.GetHDOP(), GSAPacket.GetVDOP()));
+		CXSatellites::Instance()->SetGSADataReceived();
 		CXSatellites::Instance()->SetActiveSatellites(GSAPacket.GetSatellites());
 	} else if(ExtractGSVData(NMEAPacket, NTelegrams, NCurrentTelegram, NSat, NInfos, Info1, Info2, Info3, Info4)) {
 		// check if we are in sync
@@ -144,7 +146,8 @@ bool CXGPSProtocolNMEA::OnReadAndProcessData() {
 		if(NTelegrams == NCurrentTelegram) {
 			// this was the last telegram
 			// transfer data from m_TmpGSVSatInfo to m_SatInfo
-			CXSatellites::Instance()->SetGSVData(m_TmpGSVSatInfo);
+			CXSatellites::Instance()->SetSatelliteInfos(m_TmpGSVSatInfo);
+			CXSatellites::Instance()->SetGSVDataReceived();
 			ClearBuffer(m_TmpGSVSatInfo);
 			// reset m_LastReceivedGSVTel and m_TmpNrSat
 			m_LastReceivedGSVTel = 0;

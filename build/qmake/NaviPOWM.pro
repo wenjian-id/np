@@ -5,6 +5,7 @@ CONFIG += warn_on \
           thread \
           rtti \
 QMAKE_CXXFLAGS += -Wall
+QMAKE_LFLAGS += -lgps
 INCLUDEPATH += ../../src/common \
                ../../src/qt \
                ../../src/linux
@@ -97,6 +98,7 @@ SOURCES += ../../src/common/IBitmap.cpp \
 ../../src/qt/CXMainWindow.cpp \
 ../../src/linux/CXSerial.cpp \
 ../../src/linux/OSSpecific.cpp \
+../../src/linux/CXGPSDClientBase.cpp \
 ../../src/linux/CXGPSDClient3.cpp \
 ../../src/linux/CXGPSDClient4.cpp
 
@@ -202,5 +204,6 @@ HEADERS += ../../src/common/CoordConstants.h \
 ../../src/linux/OSSpecific.hpp \
 ../../src/linux/CXSerial.hpp \
 ../../src/linux/CXGPSDClient.hpp \
+../../src/linux/CXGPSDClientBase.hpp \
 ../../src/linux/CXGPSDClient3.hpp \
 ../../src/linux/CXGPSDClient4.hpp

@@ -73,3 +73,8 @@ bool CXGPSInputChannelSerial::Read(unsigned char *pbBuffer, size_t Size, size_t 
 	ReadSize = ulReadSize;
 	return oResult;
 }
+
+//-------------------------------------
+bool CXGPSInputChannelSerial::Read(CXGPSPosInfo &/*rGPSPosInfo*/, bool &/*roGPSPosInfoChanged*/, CXGPSCourseInfo &/*rGPSCourseInfo*/, bool &/*roGPSCourseInfoChanged*/, CXGPSQualityInfo &/*rGPSQualityInfo*/, bool &/*roGPSQualityInfoChanged*/) {
+	return false;
+}

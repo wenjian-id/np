@@ -113,6 +113,12 @@ public:
 	 * \brief oiu
 	 *
 	 */
+	virtual void KillThread();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
 	bool WaitForThreadExit(size_t dwMilliSeconds);
 };
 

@@ -38,6 +38,7 @@
  */
 class CXGPSDClient : public IGPSDClient {
 private:
+	gps_data_t		*m_pGPSData;	///< oiu
 	//-------------------------------------
 	CXGPSDClient(const CXGPSDClient &);						///< Not used.
 	const CXGPSDClient & operator = (const CXGPSDClient &);	///< Not used.
@@ -81,6 +82,13 @@ public:
 	 * \return		true if open.
 	 */
 	virtual bool IsOpen();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void Read();
 };
 
 

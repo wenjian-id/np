@@ -118,6 +118,7 @@ CXSatellitesData::CXSatellitesData() :
 	m_oGGADataReceived(false),
 	m_oGSADataReceived(false),
 	m_oGSVDataReceived(false),
+	m_oGPSDDataReceived(false),
 	m_oHDOPReceived(false),
 	m_oVDOPReceived(false)
 {
@@ -132,6 +133,7 @@ CXSatellitesData::CXSatellitesData(const CXSatellitesData &rOther) :
 	m_oGGADataReceived(false),
 	m_oGSADataReceived(false),
 	m_oGSVDataReceived(false),
+	m_oGPSDDataReceived(false),
 	m_oHDOPReceived(false),
 	m_oVDOPReceived(false)
 {
@@ -165,6 +167,7 @@ void CXSatellitesData::CopyFrom(const CXSatellitesData &rOther) {
 	m_oGGADataReceived = rOther.m_oGGADataReceived;
 	m_oGSADataReceived = rOther.m_oGSADataReceived;
 	m_oGSVDataReceived = rOther.m_oGSVDataReceived;
+	m_oGPSDDataReceived = rOther.m_oGPSDDataReceived;
 	m_oHDOPReceived = rOther.m_oHDOPReceived;
 	m_oVDOPReceived = rOther.m_oVDOPReceived;
 	// copy buffers
@@ -181,16 +184,39 @@ void CXSatellitesData::ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer) {
 }
 
 //-------------------------------------
-void CXSatellitesData::SetRMCReceived() {
+void CXSatellitesData::SetGGADataReceived() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oGGADataReceived = true;
+}
+
+//-------------------------------------
+void CXSatellitesData::SetRMCDataReceived() {
 	CXWriteLocker WL(&m_RWLock);
 	m_oRMCDataReceived = true;
+}
+
+//-------------------------------------
+void CXSatellitesData::SetGSADataReceived() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oGSADataReceived = true;
+}
+
+//-------------------------------------
+void CXSatellitesData::SetGSVDataReceived() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oGSVDataReceived = true;
+}
+
+//-------------------------------------
+void CXSatellitesData::SetGPSDDataReceived() {
+	CXWriteLocker WL(&m_RWLock);
+	m_oGPSDDataReceived = true;
 }
 
 //-------------------------------------
 void CXSatellitesData::SetNrSatGGA(int NrSatGGA) {
 	CXWriteLocker WL(&m_RWLock);
 	m_NrSat = NrSatGGA;
-	m_oGGADataReceived = true;
 }
 
 //-------------------------------------
@@ -205,13 +231,11 @@ void CXSatellitesData::SetActiveSatellites(const CXBuffer<int> &ActiveSatellites
 	m_ActiveSatellites = ActiveSatellites;
 	// set nr satellites
 	m_NrSat = m_ActiveSatellites.GetSize();
-	m_oGSADataReceived = true;
 }
 
 //-------------------------------------
-void CXSatellitesData::SetGSVData(const CXBuffer<CXSatelliteInfo *>SatInfos) {
+void CXSatellitesData::SetSatelliteInfos(const CXBuffer<CXSatelliteInfo *>SatInfos) {
 	CXWriteLocker WL(&m_RWLock);
-	m_oGSVDataReceived = true;
 	ClearBuffer(m_SatInfo);
 	for(size_t i=0; i<SatInfos.GetSize(); i++)
 		m_SatInfo.Append(new CXSatelliteInfo(*SatInfos[i]));
@@ -275,6 +299,12 @@ bool CXSatellitesData::WasGSADataReceived() const {
 bool CXSatellitesData::WasGSVDataReceived() const {
 	CXWriteLocker WL(&m_RWLock);
 	return m_oGSVDataReceived;
+}
+
+//-------------------------------------
+bool CXSatellitesData::WasGPSDDataReceived() const {
+	CXWriteLocker WL(&m_RWLock);
+	return m_oGPSDDataReceived;
 }
 
 //-------------------------------------
@@ -442,6 +472,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
 	tIRect GGARect = Bmp.CalcTextRectUTF8("GPGGA", 2, 2);
 	tIRect GSARect = Bmp.CalcTextRectUTF8("GPGSA", 2, 2);
 	tIRect GSVRect = Bmp.CalcTextRectUTF8("GPGSV", 2, 2);
+	tIRect GPSDRect = Bmp.CalcTextRectUTF8("GPSD", 2, 2);
 	char HDOPbuf[25];
 	snprintf(HDOPbuf, sizeof(HDOPbuf), "HDOP: %0.2f", SatData.GetHDOP());
 	tIRect HDOPRect = Bmp.CalcTextRectASCII(HDOPbuf, 2, 2);
@@ -453,6 +484,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
 	GGARect.OffsetRect(0, RMCRect.GetHeight());
 	GSARect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight());
 	GSVRect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight() + GSARect.GetHeight());
+	GPSDRect.OffsetRect(0, RMCRect.GetHeight() + GGARect.GetHeight() + GSARect.GetHeight() + GSVRect.GetHeight());
 	HDOPRect.OffsetRect(Width - DOPWidth, 0);
 	VDOPRect.OffsetRect(Width - DOPWidth, HDOPRect.GetHeight());
 	CXRGB TextColor = TelegramNotReceivedColor;
@@ -487,6 +519,15 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
 	}
 	// draw
 	Bmp.DrawTextUTF8("GPGSV", GSVRect, TextColor, BgColor);
+
+	if(SatData.WasGPSDDataReceived()) {
+		TextColor = TelegramReceivedColor;
+	} else {
+		TextColor = TelegramNotReceivedColor;
+	}
+	// draw
+	Bmp.DrawTextUTF8("GPSD", GPSDRect, TextColor, BgColor);
+
 	if(SatData.WasHDOPReceived()) {
 		TextColor = TelegramReceivedColor;
 	} else {

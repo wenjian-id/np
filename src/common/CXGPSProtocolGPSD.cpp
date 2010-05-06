@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXGPSProtocolGPSD.hpp"
+#include "CXSatelliteData.hpp"
 
 //-------------------------------------
 CXGPSProtocolGPSD::CXGPSProtocolGPSD():
@@ -34,18 +35,36 @@ CXGPSProtocolGPSD::~CXGPSProtocolGPSD() {
 
 //-------------------------------------
 bool CXGPSProtocolGPSD::AfterOpen() {
-	/// \todo implement
+	// nothing to do
 	return true;
 }
 
 //-------------------------------------
 bool CXGPSProtocolGPSD::BeforeClose() {
-	/// \todo implement
+	// nothing to do
 	return true;
 }
 
 //-------------------------------------
 bool CXGPSProtocolGPSD::OnReadAndProcessData() {
-	/// \todo implement
-	return true;
+	CXGPSPosInfo GPSPosInfo;
+	bool oGPSPosInfoChanged = false;
+	CXGPSCourseInfo GPSCourseInfo;
+	bool oGPSCourseInfoChanged = false;
+	CXGPSQualityInfo GPSQualityInfo;
+	bool oGPSQualityInfoChanged = false;
+	// check if new data received
+	if(m_pInputChannel->Read(GPSPosInfo, oGPSPosInfoChanged, GPSCourseInfo, oGPSCourseInfoChanged, GPSQualityInfo, oGPSQualityInfoChanged)) {
+		CXSatellites::Instance()->SetGPSDDataReceived();
+		if(oGPSPosInfoChanged) {
+			SetGPSPosInfo(GPSPosInfo);
+			// save gpx data
+			if(GPSPosInfo.HasFix()) {
+				SaveGPXData(GPSPosInfo.GetLon(), GPSPosInfo.GetLat(), GPSPosInfo.GetHeight());
+			}
+		}
+		/// \todo implement
+		return true;
+	}
+	return false;
 }

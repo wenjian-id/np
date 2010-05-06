@@ -80,8 +80,18 @@ bool CXGPSPosInfo::HasFix() const {
 }
 
 //-------------------------------------
+void CXGPSPosInfo::SetFix(bool NewValue) {
+	m_oFix = NewValue;
+}
+
+//-------------------------------------
 double CXGPSPosInfo::GetLon() const {
 	return m_dLon;
+}
+
+//-------------------------------------
+void CXGPSPosInfo::SetLon(double NewValue) {
+	m_dLon = NewValue;
 }
 
 //-------------------------------------
@@ -90,8 +100,18 @@ double CXGPSPosInfo::GetLat() const {
 }
 
 //-------------------------------------
+void CXGPSPosInfo::SetLat(double NewValue) {
+	m_dLat = NewValue;
+}
+
+//-------------------------------------
 double CXGPSPosInfo::GetHeight() const {
 	return m_dHeight;
+}
+
+//-------------------------------------
+void CXGPSPosInfo::SetHeight(double NewValue) {
+	m_dHeight = NewValue;
 }
 
 //-------------------------------------

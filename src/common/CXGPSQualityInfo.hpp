@@ -96,12 +96,28 @@ public:
 	double GetHDOP() const;
 	//-------------------------------------
 	/**
+	 * \brief Set HDOP.
+	 *
+	 * Set HDOP value.
+	 * \param	Newvalue	HDOP.
+	 */
+	void SetHDOP(double NewValue);
+	//-------------------------------------
+	/**
 	 * \brief Get VDOP.
 	 *
 	 * Get VDOP value.
 	 * \return	HDOP.
 	 */
 	double GetVDOP() const;
+	//-------------------------------------
+	/**
+	 * \brief Set VDOP.
+	 *
+	 * Set VDOP value.
+	 * \param	Newvalue	VDOP.
+	 */
+	void SetVDOP(double NewValue);
 };
 
 typedef CXTimeStampData<CXGPSQualityInfo> tTimeStampedGPSQualityInfo;

@@ -22,11 +22,57 @@
 
 
 #include "CXGPSDClient3.hpp"
+#include "CXMutexLocker.hpp"
 
 #if (GPSD_API_MAJOR_VERSION == 3)
 
 //-------------------------------------
-CXGPSDClient::CXGPSDClient() {
+CXGPSDThread::CXGPSDThread(CXGPSDClient *pClient):
+	m_pClient(pClient),
+	m_pGPSData(NULL)
+{
+	m_pGPSData = gps_open("127.0.0.1", "2947");
+	if(m_pGPSData != NULL)
+		gps_query(m_pGPSData, "w+x\n");
+}
+
+//-------------------------------------
+CXGPSDThread::~CXGPSDThread() {
+	if(m_pGPSData != NULL)
+		gps_close(m_pGPSData);
+	m_pClient = NULL;
+	m_pGPSData = NULL;
+}
+
+//-------------------------------------
+bool CXGPSDThread::IsOpen() {
+	return m_pGPSData != NULL;
+}
+
+//-------------------------------------
+void CXGPSDThread::OnThreadStarted() {
+}
+
+//-------------------------------------
+void CXGPSDThread::OnThreadLoop() {
+	gps_poll(m_pGPSData);
+	if(m_pClient != NULL) {
+		if(!MustStopThread()) {
+			m_pClient->ProcessData(m_pGPSData);
+		}
+	}
+}
+
+//-------------------------------------
+void CXGPSDThread::OnThreadStopped() {
+}
+
+
+//-------------------------------------
+CXGPSDClient::CXGPSDClient() :
+	m_pThread(NULL),
+	m_oTerminating(false)
+{
 }
 
 //-------------------------------------
@@ -35,20 +81,53 @@ CXGPSDClient::~CXGPSDClient() {
 
 //-------------------------------------
 bool CXGPSDClient::Open() {
-	/// \todo implement
-	return false;
+	CXMutexLocker ML(&m_Mutex);
+	m_pThread = new CXGPSDThread(this);
+	m_pThread->CreateThread();
+	return true;
 }
 
 //-------------------------------------
 bool CXGPSDClient::Close() {
-	/// \todo implement
-	return false;
+	SetTerminating();
+	CXMutexLocker ML(&m_Mutex);
+	m_pThread->StopThread();
+	if(!m_pThread->WaitForThreadExit(1500)) {
+		m_pThread->KillThread();
+	}
+	delete m_pThread;
+	m_pThread = NULL;
+	return true;
 }
 
 //-------------------------------------
 bool CXGPSDClient::IsOpen() {
-	/// \todo implement
-	return false;
+	CXMutexLocker ML(&m_Mutex);
+	return m_pThread->IsOpen();
+}
+
+//-------------------------------------
+bool CXGPSDClient::IsTerminating() const {
+	CXMutexLocker ML(&m_Mutex);
+	return m_oTerminating;
+}
+
+//-------------------------------------
+void CXGPSDClient::SetTerminating() {
+	CXMutexLocker ML(&m_Mutex);
+	m_oTerminating = true;
+}
+
+//-------------------------------------
+void CXGPSDClient::ProcessData(gps_data_t *pGPSData) {
+	if(IsTerminating())
+		return;
+	DoProcessData(pGPSData);
+}
+
+//-------------------------------------
+void CXGPSDClient::Read() {
+	// do nothing
 }
 
 #endif // (GPSD_API_MAJOR_VERSION == 3)

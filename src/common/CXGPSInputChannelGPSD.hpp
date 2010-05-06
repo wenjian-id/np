@@ -98,13 +98,20 @@ public:
 	/**
 	 * \brief Read data.
 	 *
-	 * Read some data.
+	 * Read some data. Always return false
 	 * \param		pbBuffer	Buffer for data.
 	 * \param		Size		Size of buffer.
 	 * \param		ReadSize	Size of actually read data.
 	 * \return		true on success. 0 bytes read is also OK.
 	 */
 	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual bool Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged);
 };
 
 #endif // __CXGPSINPUTCHANNELGPSD_HPP__

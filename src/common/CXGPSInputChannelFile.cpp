@@ -80,3 +80,8 @@ bool CXGPSInputChannelFile::Read(unsigned char *pbBuffer, size_t Size, size_t &R
 	// read again
 	return m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK;
 }
+
+//-------------------------------------
+bool CXGPSInputChannelFile::Read(CXGPSPosInfo &/*rGPSPosInfo*/, bool &/*roGPSPosInfoChanged*/, CXGPSCourseInfo &/*rGPSCourseInfo*/, bool &/*roGPSCourseInfoChanged*/, CXGPSQualityInfo &/*rGPSQualityInfo*/, bool &/*roGPSQualityInfoChanged*/) {
+	return false;
+}

@@ -28,7 +28,59 @@
 
 #if (GPSD_API_MAJOR_VERSION == 3)
 
-#include "IGPSDClient.hpp"
+#include "CXGPSDClientBase.hpp"
+#include "CXLoopThread.hpp"
+#include "CXMutex.hpp"
+
+class CXGPSDClient;
+
+class CXGPSDThread : public CXLoopThread {
+private:
+	CXGPSDClient	*m_pClient;		///< oiu
+	gps_data_t		*m_pGPSData;	///< oiu
+	CXMutex			m_Mutex;		///< Synchronisation object
+	CXGPSDThread();
+	CXGPSDThread(const CXGPSDThread &);
+	const CXGPSDThread & operator = (const CXGPSDThread&);
+protected:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnThreadStarted();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnThreadLoop();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual void OnThreadStopped();
+public:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXGPSDThread(CXGPSDClient *pClient);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXGPSDThread();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool IsOpen();
+};
 
 //----------------------------------------------------------------------------
 /**
@@ -36,11 +88,28 @@
  *
  * oiu.
  */
-class CXGPSDClient : public IGPSDClient {
+class CXGPSDClient : public CXGPSDClientBase {
 private:
+	CXGPSDThread		*m_pThread;					///< oiu
+	bool				m_oTerminating;				///< oiu
+	mutable CXMutex		m_Mutex;					///< Synchronisation object
 	//-------------------------------------
 	CXGPSDClient(const CXGPSDClient &);						///< Not used.
 	const CXGPSDClient & operator = (const CXGPSDClient &);	///< Not used.
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool IsTerminating() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void SetTerminating();
 protected:
 public:
 	//-------------------------------------
@@ -81,6 +150,20 @@ public:
 	 * \return		true if open.
 	 */
 	virtual bool IsOpen();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ProcessData(gps_data_t *pGPSData);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void Read();
 };
 
 

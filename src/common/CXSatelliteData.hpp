@@ -150,6 +150,7 @@ private:
 	bool							m_oGGADataReceived;		///< oiu
 	bool							m_oGSADataReceived;		///< oiu
 	bool							m_oGSVDataReceived;		///< oiu
+	bool							m_oGPSDDataReceived;	///< oiu
 	bool							m_oHDOPReceived;		///< oiu
 	bool							m_oVDOPReceived;		///< oiu
 	mutable CXRWLock				m_RWLock;				///< Synchronization object.
@@ -198,7 +199,31 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetRMCReceived();
+	void SetGGADataReceived();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetRMCDataReceived();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGSADataReceived();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGSVDataReceived();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSDDataReceived();
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -222,7 +247,7 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	void SetGSVData(const CXBuffer<CXSatelliteInfo *>SatInfos);
+	void SetSatelliteInfos(const CXBuffer<CXSatelliteInfo *>SatInfos);
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -264,13 +289,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	bool WasRMCDataReceived() const;
+	bool WasGGADataReceived() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
 	 *
 	 */
-	bool WasGGADataReceived() const;
+	bool WasRMCDataReceived() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -283,6 +308,12 @@ public:
 	 *
 	 */
 	bool WasGSVDataReceived() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool WasGPSDDataReceived() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu

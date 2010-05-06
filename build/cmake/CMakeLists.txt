@@ -123,6 +123,7 @@ set (HDR_FILES
   ../../src/linux/OSSpecific.hpp
   ../../src/linux/CXSerial.hpp
   ../../src/linux/CXGPSDClient.hpp
+  ../../src/linux/CXGPSDClientBase.hpp
   ../../src/linux/CXGPSDClient3.hpp
   ../../src/linux/CXGPSDClient4.hpp
 )
@@ -213,6 +214,7 @@ set(SRC_FILES
   ../../src/qt/CXMainWindow.cpp
   ../../src/linux/CXSerial.cpp
   ../../src/linux/OSSpecific.cpp
+  ../../src/linux/CXGPSDClientBase.cpp
   ../../src/linux/CXGPSDClient3.cpp
   ../../src/linux/CXGPSDClient4.cpp
 )
@@ -223,4 +225,4 @@ include( ${QT_USE_FILE} )
 add_executable( NaviPOWM ${SRC_FILES} ${HDR_FILES})
 
 # Link Qt to the executable
-target_link_libraries( NaviPOWM ${QT_LIBRARIES} ) 
+target_link_libraries( NaviPOWM ${QT_LIBRARIES} gps) 

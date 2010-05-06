@@ -112,12 +112,28 @@ public:
 	bool HasFix() const;
 	//-------------------------------------
 	/**
+	 * \brief Set if GPS fix.
+	 *
+	 * Set if GPS fix or not.
+	 * \param	NewValue	true if fix.
+	 */
+	void SetFix(bool NewValue);
+	//-------------------------------------
+	/**
 	 * \brief Get longitude.
 	 *
 	 * Get the longitude.
 	 * \return	Longitude [deg].
 	 */
 	double GetLon() const;
+	//-------------------------------------
+	/**
+	 * \brief Set longitude.
+	 *
+	 * Set the longitude.
+	 * \param	NewValue	Longitude [deg].
+	 */
+	void SetLon(double NewValue);
 	//-------------------------------------
 	/**
 	 * \brief Get latitude.
@@ -128,12 +144,28 @@ public:
 	double GetLat() const;
 	//-------------------------------------
 	/**
+	 * \brief Set latitude.
+	 *
+	 * Set the latitude.
+	 * \param	NewValue	Latitude [deg].
+	 */
+	void SetLat(double NewValue);
+	//-------------------------------------
+	/**
 	 * \brief Get height.
 	 *
 	 * Get the height.
 	 * \return	Height [m].
 	 */
 	double GetHeight() const;
+	//-------------------------------------
+	/**
+	 * \brief Set height.
+	 *
+	 * Set the height.
+	 * \param	NewValue Height [m].
+	 */
+	void SetHeight(double NewValue);
 	//-------------------------------------
 	/**
 	 * \brief Get number of satellites.

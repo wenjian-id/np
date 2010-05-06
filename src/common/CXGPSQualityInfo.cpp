@@ -64,6 +64,15 @@ double CXGPSQualityInfo::GetHDOP() const {
 }
 
 //-------------------------------------
+void CXGPSQualityInfo::SetHDOP(double NewValue) {
+	m_dHDOP = NewValue;
+}
+//-------------------------------------
 double CXGPSQualityInfo::GetVDOP() const {
 	return m_dVDOP;
+}
+
+//-------------------------------------
+void CXGPSQualityInfo::SetVDOP(double NewValue) {
+	m_dVDOP = NewValue;
 }

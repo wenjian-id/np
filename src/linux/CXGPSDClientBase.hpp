@@ -20,37 +20,44 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXGPSINPUTCHANNEL_HPP__
-#define __CXGPSINPUTCHANNEL_HPP__
 
+#ifndef __CXGPSDCLIENTBASE_HPP__
+#define __CXGPSDCLIENTBASE_HPP__
+
+#include <gps.h>
+
+#include "IGPSDClient.hpp"
 #include "CXGPSPosInfo.hpp"
 #include "CXGPSCourseInfo.hpp"
 #include "CXGPSQualityInfo.hpp"
-#include "Utils.hpp"
-
+#include "CXMutex.hpp"
 
 //----------------------------------------------------------------------------
 /**
- * \brief Base class for a GPS input channel.
+ * \brief oiu.
  *
- * This class is the base class for a GPS input channel. It has methods to open,
- * close and read data.
+ * oiu.
  */
-class CXGPSInputChannel {
+class CXGPSDClientBase : public IGPSDClient {
 private:
-	size_t		m_ForcedTimeout;		///< Forced timout. Used to stop processing data if new UTC read.
+	CXGPSPosInfo		m_GPSPosInfo;				///< oiu
+	CXGPSCourseInfo		m_GPSCourseInfo;			///< oiu
+	CXGPSQualityInfo	m_GPSQualityInfo;			///< oiu
+	bool				m_oGPSPosInfoChanged;		///< oiu
+	bool				m_oGPSCourseInfoChanged;	///< oiu
+	bool				m_oGPSQualityInfoChanged;	///< oiu
+	mutable CXMutex		m_Mutex;					///< Synchronisation object
 	//-------------------------------------
-	CXGPSInputChannel(const CXGPSInputChannel &);						///< Not used.
-	const CXGPSInputChannel & operator = (const CXGPSInputChannel &);	///< Not used.
+	CXGPSDClientBase(const CXGPSDClientBase &);						///< Not used.
+	const CXGPSDClientBase & operator = (const CXGPSDClientBase &);	///< Not used.
 protected:
 	//-------------------------------------
 	/**
-	 * \brief Set forced timeout.
+	 * \brief oiu.
 	 *
-	 * Set forced timeout in ms.
-	 * \param	NewValue	New timeout [ms].
+	 * oiu.
 	 */
-	void SetForcedTimeout(int NewValue);
+	void DoProcessData(gps_data_t *pGPSData);
 public:
 	//-------------------------------------
 	/**
@@ -58,80 +65,85 @@ public:
 	 *
 	 * The default constructor.
 	 */
-	CXGPSInputChannel();
+	CXGPSDClientBase();
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
 	 * The destructor.
 	 */
-	virtual ~CXGPSInputChannel();
-	//-------------------------------------
-	/**
-	 * \brief Open channel.
-	 *
-	 * Open the GPS input channel. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool Open()=0;
-	//-------------------------------------
-	/**
-	 * \brief Close channel.
-	 *
-	 * Close the GPS input channel. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool Close()=0;
-	//-------------------------------------
-	/**
-	 * \brief Check if channel is open.
-	 *
-	 * Check if input channel is open. Has to be implemented in derived classes.
-	 * \return		true if open.
-	 */
-	virtual bool IsOpen()=0;
-	//-------------------------------------
-	/**
-	 * \brief Read configuration.
-	 *
-	 * Read configuration. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool ReadConfiguration() = 0;
-	//-------------------------------------
-	/**
-	 * \brief Check if flush allowed.
-	 *
-	 * Check if flush allowed. Has to be implemented in derived classes.
-	 * \return		true if allowed.
-	 */
-	virtual bool CanFlush()=0;
-	//-------------------------------------
-	/**
-	 * \brief Read data into a buffer.
-	 *
-	 * Read some data into a buffer. Has to be implemented in derived classes.
-	 * \param		pbBuffer	Buffer for data.
-	 * \param		Size		Size of buffer.
-	 * \param		ReadSize	Size of actually read data.
-	 * \return		true on success. 0 bytes read is also OK.
-	 */
-	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) = 0;
+	virtual ~CXGPSDClientBase();
 	//-------------------------------------
 	/**
 	 * \brief oiu.
 	 *
 	 * oiu.
 	 */
-	virtual bool Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged) = 0;
+	bool GPSPosInfoChanged() const;
 	//-------------------------------------
 	/**
-	 * \brief Get forced timeout.
+	 * \brief oiu.
 	 *
-	 * get forced timeout in ms.
-	 * \return		Timeout [ms].
+	 * oiu.
 	 */
-	size_t GetForcedTimeout() const;
+	CXGPSPosInfo GetGPSPosInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetGPSPosInfoChanged();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GPSCourseInfoChanged() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	CXGPSCourseInfo GetGPSCourseInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetGPSCourseInfoChanged();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GPSQualityInfoChanged() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	CXGPSQualityInfo GetGPSQualityInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetGPSQualityInfoChanged();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void Read() = 0;
 };
 
-#endif // __CXGPSINPUTCHANNEL_HPP__
+
+#endif // __CXGPSDCLIENTBASE_HPP__

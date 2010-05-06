@@ -57,12 +57,29 @@ bool CXGPSInputChannelGPSD::CanFlush() {
 }
 
 //-------------------------------------
-bool CXGPSInputChannelGPSD::Read(unsigned char *pbBuffer, size_t /*Size*/, size_t &ReadSize) {
+bool CXGPSInputChannelGPSD::Read(unsigned char */*pbBuffer*/, size_t /*Size*/, size_t &ReadSize) {
 	ReadSize = 0;
-	if(pbBuffer == 0)
-		return false;
-	if(!IsOpen())
-		return false;
-	/// \todo implement
 	return false;
+}
+
+//-------------------------------------
+bool CXGPSInputChannelGPSD::Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged) {
+	m_GPSDClient.Read();
+	bool oResult = false;
+	roGPSPosInfoChanged = false;
+	roGPSCourseInfoChanged = false;
+	roGPSQualityInfoChanged = false;
+	if(m_GPSDClient.GPSPosInfoChanged()) {
+		rGPSPosInfo = m_GPSDClient.GetGPSPosInfo();
+		m_GPSDClient.ResetGPSPosInfoChanged();
+		roGPSPosInfoChanged = true;
+		oResult = true;
+	}
+	if(m_GPSDClient.GPSQualityInfoChanged()) {
+		rGPSQualityInfo = m_GPSDClient.GetGPSQualityInfo();
+		m_GPSDClient.ResetGPSQualityInfoChanged();
+		roGPSQualityInfoChanged = true;
+		oResult = true;
+	}
+	return oResult;
 }
