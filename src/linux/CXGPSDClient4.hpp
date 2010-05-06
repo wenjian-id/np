@@ -28,7 +28,7 @@
 
 #if (GPSD_API_MAJOR_VERSION == 4)
 
-#include "IGPSDClient.hpp"
+#include "CXGPSDClientBase.hpp"
 
 //----------------------------------------------------------------------------
 /**
@@ -36,7 +36,7 @@
  *
  * oiu.
  */
-class CXGPSDClient : public IGPSDClient {
+class CXGPSDClient : public CXGPSDClientBase {
 private:
 	gps_data_t		*m_pGPSData;	///< oiu
 	//-------------------------------------
@@ -50,6 +50,13 @@ protected:
 	 * oiu.
 	 */
 	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat);
 public:
 	//-------------------------------------
 	/**

@@ -118,6 +118,13 @@ protected:
 	 * oiu.
 	 */
 	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat);
 public:
 	//-------------------------------------
 	/**

@@ -100,7 +100,7 @@ void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 
 	if(pGPSData == NULL)
 		return;
-	if(pGPSData->set & FIX_SET) {
+	if(pGPSData->set & MODE_SET) {
 		bool oFix = (pGPSData->fix.mode >= MODE_2D);
 		m_GPSPosInfo.SetFix(oFix);
 		m_oGPSPosInfoChanged = true;
@@ -142,7 +142,9 @@ void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 	}
 	if(pGPSData->set & SATELLITE_SET) {
 		std::cout << "sat in view" << std::flush;
-		std::cout << " " << pGPSData->satellites << " " << std::flush;
+		int NrSatVisible = 0;
+		ReadNumberOfVisibleSatellites(pGPSData, NrSatVisible);
+		std::cout << " " << NrSatVisible << " " << std::flush;
 	}
 	if(pGPSData->set & USED_SET) {
 		std::cout << "sat used" << std::flush;

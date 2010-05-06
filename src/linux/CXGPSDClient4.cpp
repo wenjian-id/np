@@ -58,14 +58,19 @@ bool CXGPSDClient::IsOpen() {
 }
 
 //-------------------------------------
-void CXGPSDClient::Read(gps_data_t *pGPSData) {
+void CXGPSDClient::Read() {
 	/// todo \imlpement
 }
 
 //-------------------------------------
 void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
-	HDOP = pGPSData->hdop;
-	VDOP = pGPSData->vdop;
+	rHDOP = pGPSData->dop.hdop;
+	rVDOP = pGPSData->dop.vdop;
+}
+
+//-------------------------------------
+void CXGPSDClient::ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat) {
+	rNVisibleSat = pGPSData->satellites_visible;
 }
 
 #endif // (GPSD_API_MAJOR_VERSION == 4)

@@ -136,4 +136,9 @@ void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
 	rVDOP = pGPSData->vdop;
 }
 
+//-------------------------------------
+void CXGPSDClient::ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat) {
+	rNVisibleSat = pGPSData->satellites;
+}
+
 #endif // (GPSD_API_MAJOR_VERSION == 3)
