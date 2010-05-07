@@ -393,7 +393,8 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
 	for(size_t i=0; i<NMEAPacket.GetSize(); i++)
 		if(NMEAPacket[i] == ',')
 			iCount++;
-	if(iCount != 12)
+	// in NMEA 2.3 there is an additional field
+	if((iCount != 11) && (iCount != 12))
 		return false;
 
 	if(!CheckNMEACRC(NMEAPacket))
