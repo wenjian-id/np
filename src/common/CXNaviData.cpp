@@ -143,13 +143,13 @@ void CXNaviData::SetLocatedCoor(const CXCoor &Coor) {
 }
 
 //-------------------------------------
-CXStringASCII CXNaviData::GetUTC() const {
+CXUTCTime CXNaviData::GetUTC() const {
 	CXReadLocker RL(&m_RWLock);
 	return m_UTC;
 }
 
 //-------------------------------------
-void CXNaviData::SetUTC(const CXStringASCII &NewValue) {
+void CXNaviData::SetUTC(const CXUTCTime &NewValue) {
 	CXWriteLocker WL(&m_RWLock);
 	m_UTC = NewValue;
 }

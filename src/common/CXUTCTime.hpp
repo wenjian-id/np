@@ -33,7 +33,8 @@
  */
 class CXUTCTime {
 private:
-	double 		m_UTCTime;	///<oiu
+	double 			m_UTCTimeDouble;	///<oiu
+	CXStringASCII 	m_UTCTimeString;	///<oiu
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -46,6 +47,12 @@ private:
 	 *
 	 */
 	void FromString(const CXStringASCII &Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void FromDouble(double Value);
 protected:
 public:
 	//-------------------------------------
@@ -89,7 +96,13 @@ public:
 	 * \brief oiu
 	 *
 	 */
-	double GetUTCTime() const;
+	double GetUTCTimeAsDouble() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetUTCTimeAsString() const;
 	//-------------------------------------
 	/**
 	 * \brief oiu
@@ -108,6 +121,18 @@ public:
 	 *
 	 */
 	CXUTCTime operator - (const CXUTCTime & rOther) const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool operator == (const CXUTCTime & rOther) const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	bool operator != (const CXUTCTime & rOther) const;
 };
 
 #endif // __CXUTCTIME_HPP__

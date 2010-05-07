@@ -75,6 +75,12 @@ bool CXGPSInputChannelGPSD::Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoC
 		roGPSPosInfoChanged = true;
 		oResult = true;
 	}
+	if(m_GPSDClient.GPSCourseInfoChanged()) {
+		rGPSCourseInfo = m_GPSDClient.GetGPSCourseInfo();
+		m_GPSDClient.ResetGPSCourseInfoChanged();
+		roGPSCourseInfoChanged = true;
+		oResult = true;
+	}
 	if(m_GPSDClient.GPSQualityInfoChanged()) {
 		rGPSQualityInfo = m_GPSDClient.GetGPSQualityInfo();
 		m_GPSDClient.ResetGPSQualityInfoChanged();

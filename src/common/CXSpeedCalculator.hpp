@@ -85,7 +85,7 @@ private:
 	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor);
+	void SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCoor> &Coor);
 protected:
 public:
 	//-------------------------------------
@@ -111,7 +111,7 @@ public:
 	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor);
+	void SetGGAData(const CXUTCTime &UTC, const CXTimeStampData<CXCoor> &Coor);
 	//-------------------------------------
 	/**
 	 * \brief Set new RMC data.
@@ -120,7 +120,7 @@ public:
 	 * \param	Coor		New coordinate.
 	 * \param	TimeStamp	TiemStamp for the coordinate.
 	 */
-	void SetRMCData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed);
+	void SetRMCData(const CXUTCTime &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed);
 	//-------------------------------------
 	/**
 	 * \brief Reset data.

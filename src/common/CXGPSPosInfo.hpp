@@ -23,7 +23,7 @@
 #ifndef __CXGPSPOSINFO_HPP__
 #define __CXGPSPOSINFO_HPP__
 
-#include "CXStringASCII.hpp"
+#include "CXUTCTime.hpp"
 #include "CXTimeStampData.hpp"
 
 //----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
  */
 class CXGPSPosInfo {
 private:
-	CXStringASCII	m_UTC;		///< UTC.
+	CXUTCTime		m_UTC;		///< UTC.
 	bool			m_oFix;		///< Fix.
 	double			m_dLon;		///< Longitude [deg].
 	double			m_dLat;		///< Latitude [deg].
@@ -69,7 +69,7 @@ public:
 	 * \param	dHeight		Height [m].
 	 * \param	NSat		Number of satellites.
 	 */
-	CXGPSPosInfo(const CXStringASCII &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat);
+	CXGPSPosInfo(const CXUTCTime &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat);
 	//-------------------------------------
 	/**
 	 * \brief Copy constructor.
@@ -99,9 +99,17 @@ public:
 	 * \brief Get UTC.
 	 *
 	 * Get UTC time.
-	 * \return	UTC time as string.
+	 * \return	UTC time as CXUTCTime.
 	 */
-	CXStringASCII GetUTC() const;
+	CXUTCTime GetUTC() const;
+	//-------------------------------------
+	/**
+	 * \brief Set UTC.
+	 *
+	 * Set UTC time.
+	 * \param	NewValue	UTC time as CXUTCTime.
+	 */
+	void SetUTC(const CXUTCTime &NewValue);
 	//-------------------------------------
 	/**
 	 * \brief Check if GPS fix.
@@ -174,6 +182,14 @@ public:
 	 * \return	Number of satellites.
 	 */
 	int GetNSat() const;
+	//-------------------------------------
+	/**
+	 * \brief Set number of satellites.
+	 *
+	 * Set the number of satellites.
+	 * \param	NewValue	Number of satellites.
+	 */
+	void SetNSat(int NewValue);
 };
 
 typedef CXTimeStampData<CXGPSPosInfo> tTimeStampedGPSPosInfo;

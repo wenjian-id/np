@@ -26,14 +26,13 @@
 
 //-------------------------------------
 CXUTCTime::CXUTCTime():
-	m_UTCTime(0)
+	m_UTCTimeDouble(0)
 {
 }
 
 //-------------------------------------
-CXUTCTime::CXUTCTime(double UTCTime) :
-	m_UTCTime(UTCTime)
-{
+CXUTCTime::CXUTCTime(double UTCTime) {
+	FromDouble(UTCTime);
 }
 
 //-------------------------------------
@@ -59,13 +58,15 @@ const CXUTCTime & CXUTCTime::operator = (const CXUTCTime &rOther) {
 
 //-------------------------------------
 void CXUTCTime::CopyFrom(const CXUTCTime &rOther) {
-	m_UTCTime = rOther.m_UTCTime;
+	m_UTCTimeDouble = rOther.m_UTCTimeDouble;
+	m_UTCTimeString = rOther.m_UTCTimeString;
 }
 
 //-------------------------------------
 void CXUTCTime::FromString(const CXStringASCII &Value) {
 	if(Value.GetSize() < 6) {
-		m_UTCTime = 0;
+		m_UTCTimeDouble = 0;
+		m_UTCTimeString.Clear();
 		return;
 	}
 	CXStringASCII Tmp = Value;
@@ -93,17 +94,31 @@ void CXUTCTime::FromString(const CXStringASCII &Value) {
 			dFractions = dFractions/10;
 	}
 	// now compute value
-	m_UTCTime = (dHours + (dMinutes + (dSeconds+dFractions)/60)/60)/24;
+	m_UTCTimeDouble = (dHours + (dMinutes + (dSeconds+dFractions)/60)/60)/24;
+	m_UTCTimeString = Value;
 }
 
 //-------------------------------------
-double CXUTCTime::GetUTCTime() const {
-	return m_UTCTime;
+void CXUTCTime::FromDouble(double Value) {
+	m_UTCTimeDouble = Value;
+	char buf[100];
+	snprintf(buf, sizeof(buf), "%010.3f", Value);
+	m_UTCTimeString = buf;
+}
+
+//-------------------------------------
+double CXUTCTime::GetUTCTimeAsDouble() const {
+	return m_UTCTimeDouble;
+}
+
+//-------------------------------------
+CXStringASCII CXUTCTime::GetUTCTimeAsString() const {
+	return m_UTCTimeString;
 }
 
 //-------------------------------------
 void CXUTCTime::SetUTCTime(double NewValue) {
-	m_UTCTime = NewValue;
+	FromDouble(NewValue);
 }
 
 //-------------------------------------
@@ -113,8 +128,18 @@ void CXUTCTime::SetUTCTime(const CXStringASCII & NewValue) {
 
 //-------------------------------------
 CXUTCTime CXUTCTime::operator - (const CXUTCTime & rOther) const {
-	if(m_UTCTime < rOther.m_UTCTime)
-		return 1 + m_UTCTime - rOther.m_UTCTime;
+	if(m_UTCTimeDouble < rOther.m_UTCTimeDouble)
+		return 1 + m_UTCTimeDouble - rOther.m_UTCTimeDouble;
 	// compute difference in seconds
-	return m_UTCTime - rOther.m_UTCTime;
+	return m_UTCTimeDouble - rOther.m_UTCTimeDouble;
+}
+
+//-------------------------------------
+bool CXUTCTime::operator == (const CXUTCTime & rOther) const {
+	return m_UTCTimeString == rOther.m_UTCTimeString;
+}
+
+//-------------------------------------
+bool CXUTCTime::operator != (const CXUTCTime & rOther) const {
+	return !(*this == rOther);
 }

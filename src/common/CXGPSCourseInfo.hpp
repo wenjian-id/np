@@ -23,7 +23,7 @@
 #ifndef __CXGPSCOURSEINFO_HPP__
 #define __CXGPSCOURSEINFO_HPP__
 
-#include "CXStringASCII.hpp"
+#include "CXUTCTime.hpp"
 #include "CXTimeStampData.hpp"
 
 //----------------------------------------------------------------------------
@@ -34,7 +34,7 @@
  */
 class CXGPSCourseInfo {
 private:
-	CXStringASCII	m_UTC;		///< UTC.
+	CXUTCTime		m_UTC;		///< UTC.
 	bool			m_oFix;		///< Fix.
 	double			m_dSpeed;	///< Speed [m/s].
 	double			m_dCourse;	///< Course [deg].
@@ -97,7 +97,15 @@ public:
 	 * Get UTC time.
 	 * \return	UTC time as string.
 	 */
-	CXStringASCII GetUTC() const;
+	CXUTCTime GetUTC() const;
+	//-------------------------------------
+	/**
+	 * \brief Set UTC.
+	 *
+	 * Set UTC time.
+	 * \param	NewValue	UTC time as string.
+	 */
+	void SetUTC(const CXUTCTime &NewValue);
 	//-------------------------------------
 	/**
 	 * \brief Check if GPS fix.
@@ -108,6 +116,14 @@ public:
 	bool HasFix() const;
 	//-------------------------------------
 	/**
+	 * \brief Set GPS fix.
+	 *
+	 * Set GPS fix or not.
+	 * \param	NewValue	true if fix.
+	 */
+	void SetFix(bool NewValue);
+	//-------------------------------------
+	/**
 	 * \brief Get speed.
 	 *
 	 * Get the speed.
@@ -116,12 +132,28 @@ public:
 	double GetSpeed() const;
 	//-------------------------------------
 	/**
+	 * \brief Set speed.
+	 *
+	 * Set the speed.
+	 * \param	NewValue	Speed [m/s].
+	 */
+	void SetSpeed(double NewValue);
+	//-------------------------------------
+	/**
 	 * \brief Get course.
 	 *
 	 * Get course.
 	 * \return	Course [deg].
 	 */
 	double GetCourse() const;
+	//-------------------------------------
+	/**
+	 * \brief Set course.
+	 *
+	 * Set the course.
+	 * \param	NewValue	Course [deg].
+	 */
+	void SetCourse(double NewValue);
 };
 
 typedef CXTimeStampData<CXGPSCourseInfo> tTimeStampedGPSCourseInfo;

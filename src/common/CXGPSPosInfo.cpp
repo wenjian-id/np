@@ -33,7 +33,7 @@ CXGPSPosInfo::CXGPSPosInfo() :
 }
 
 //-------------------------------------
-CXGPSPosInfo::CXGPSPosInfo(const CXStringASCII &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat) :
+CXGPSPosInfo::CXGPSPosInfo(const CXUTCTime &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat) :
 	m_UTC(UTC),
 	m_oFix(oFix),
 	m_dLon(dLon),
@@ -70,8 +70,13 @@ void CXGPSPosInfo::CopyFrom(const CXGPSPosInfo &rOther) {
 }
 
 //-------------------------------------
-CXStringASCII CXGPSPosInfo::GetUTC() const {
+CXUTCTime CXGPSPosInfo::GetUTC() const {
 	return m_UTC;
+}
+
+//-------------------------------------
+void CXGPSPosInfo::SetUTC(const CXUTCTime &NewValue) {
+	m_UTC = NewValue;
 }
 
 //-------------------------------------
@@ -117,4 +122,9 @@ void CXGPSPosInfo::SetHeight(double NewValue) {
 //-------------------------------------
 int CXGPSPosInfo::GetNSat() const {
 	return m_NSat;
+}
+
+//-------------------------------------
+void CXGPSPosInfo::SetNSat(int NewValue) {
+	m_NSat = NewValue;
 }

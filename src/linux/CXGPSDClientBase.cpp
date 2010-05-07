@@ -23,6 +23,7 @@
 #include "CXGPSDClientBase.hpp"
 #include "CXMutexLocker.hpp"
 
+#include <math.h>
 #include <iostream>
 
 //-------------------------------------
@@ -96,20 +97,31 @@ void CXGPSDClientBase::ResetGPSQualityInfoChanged() {
 void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 	CXMutexLocker ML(&m_Mutex);
 	std::cout << "x" << std::flush;
-//	SetGPSCourseInfo(CXGPSCourseInfo(RMCPacket.GetUTC(), RMCPacket.HasFix(), RMCPacket.GetSpeed(), RMCPacket.GetCourse()));
-
 	if(pGPSData == NULL)
 		return;
 	if(pGPSData->set & MODE_SET) {
 		bool oFix = (pGPSData->fix.mode >= MODE_2D);
 		m_GPSPosInfo.SetFix(oFix);
+		m_GPSCourseInfo.SetFix(oFix);
 		m_oGPSPosInfoChanged = true;
+		m_oGPSCourseInfoChanged = true;
 	}
 	if(pGPSData->set & ONLINE_SET) {
 		std::cout << "o" << std::flush;
 	}
 	if(pGPSData->set & TIME_SET) {
 		std::cout << "t" << std::flush;
+		time_t t = pGPSData->fix.time;
+		double dFract = pGPSData->fix.time - floor(pGPSData->fix.time);
+		struct tm * ptm = gmtime(&t);
+		double dUTC = ptm->tm_hour*10000 + ptm->tm_min*100 + ptm->tm_sec + dFract;
+		std::cout << dUTC << " " << std::flush;
+		CXUTCTime UTC(dUTC);
+		std::cout << UTC.GetUTCTimeAsString().c_str() << " " << std::flush;
+		m_GPSPosInfo.SetUTC(UTC);
+		m_GPSCourseInfo.SetUTC(UTC);
+		m_oGPSPosInfoChanged = true;
+		m_oGPSCourseInfoChanged = true;
 	}
 	if(pGPSData->set & LATLON_SET) {
 		if(pGPSData->fix.mode >= MODE_2D) {
@@ -127,6 +139,13 @@ void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 	}
 	if(pGPSData->set & SPEED_SET) {
 		std::cout << "s" << std::flush;
+		m_GPSCourseInfo.SetSpeed(pGPSData->fix.speed);
+		m_oGPSCourseInfoChanged = true;
+	}
+	if(pGPSData->set & TRACK_SET) {
+		std::cout << "c" << std::flush;
+		m_GPSCourseInfo.SetCourse(pGPSData->fix.track);
+		m_oGPSCourseInfoChanged = true;
 	}
 	if(pGPSData->set & STATUS_SET) {
 		std::cout << "u" << std::flush;
@@ -149,7 +168,9 @@ void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 	if(pGPSData->set & USED_SET) {
 		std::cout << "sat used" << std::flush;
 		std::cout << " " << pGPSData->satellites_used << " " << std::flush;
+		m_GPSPosInfo.SetNSat(pGPSData->satellites_used);
+		m_oGPSPosInfoChanged = true;
 	}
-	std::cout << "t6" << std::endl;
+	std::cout << std::endl;
 }
 

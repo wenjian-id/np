@@ -25,8 +25,6 @@
 
 #if (GPSD_API_MAJOR_VERSION == 4)
 
-#include <iostream>
-
 //-------------------------------------
 CXGPSDClient::CXGPSDClient() :
 	m_pGPSData(NULL)
@@ -39,14 +37,10 @@ CXGPSDClient::~CXGPSDClient() {
 
 //-------------------------------------
 bool CXGPSDClient::Open() {
-std::cout << "400" << std::endl;
 	m_pGPSData = gps_open("127.0.0.1", "2947");
-std::cout << "401" << std::endl;
 	if(m_pGPSData == NULL)
 		return false;
-std::cout << "402" << std::endl;
 	gps_stream(m_pGPSData, WATCH_ENABLE, NULL);
-std::cout << "403" << std::endl;
 	return true;
 }
 
@@ -55,7 +49,6 @@ bool CXGPSDClient::Close() {
 	if(m_pGPSData != NULL)
 		gps_close(m_pGPSData);
 	m_pGPSData = NULL;
-std::cout << "4x" << std::endl;
 	return true;
 }
 
@@ -68,12 +61,9 @@ bool CXGPSDClient::IsOpen() {
 void CXGPSDClient::Read() {
 	if(m_pGPSData == NULL)
 		return;
-	if(gps_waiting(m_pGPSData)) {
-std::cout << "41" << std::endl;
+	while(gps_waiting(m_pGPSData)) {
 		gps_poll(m_pGPSData);
-std::cout << "42" << std::endl;
 		DoProcessData(m_pGPSData);
-std::cout << "43" << std::endl;
 	}
 }
 

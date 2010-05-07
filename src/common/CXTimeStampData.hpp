@@ -140,7 +140,7 @@ public:
 	 *
 	 * oiu
 	 */
-	void SetUTCTime(const CXStringASCII &UTCTime);
+	void SetUTCTime(const CXUTCTime &UTCTime);
 };
 
 
@@ -217,8 +217,8 @@ template<class tData> void CXTimeStampData<tData>::SetNow() {
 }
 
 //-------------------------------------
-template<class tData> void CXTimeStampData<tData>::SetUTCTime(const CXStringASCII &UTCTime) {
-	m_UTCTime.SetUTCTime(UTCTime);
+template<class tData> void CXTimeStampData<tData>::SetUTCTime(const CXUTCTime &UTCTime) {
+	m_UTCTime = UTCTime;
 }
 
 #endif // __CXTIMESTAMPDATA_HPP__

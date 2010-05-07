@@ -66,7 +66,7 @@ private:
 	bool						m_oInTimeout;					///< oiu
 	unsigned char				m_ReceivedDataTypes;			///< oiu
 	E_BUFFERED_DATA_TYPE		m_eBufferedDataType;			///< oiu
-	CXStringASCII				m_LastReceivedUTC;				///< oiu
+	CXUTCTime					m_LastReceivedUTC;				///< oiu
 	CXExactTime					m_LastReceivedDataTimeStamp;	///< oiu
 	tTimeStampedGPSPosInfo		m_GPSPosInfo;					///< oiu
 	CXGPSPosInfo				m_BufferedGPSPosInfo;			///< oiu

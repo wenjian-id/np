@@ -68,7 +68,7 @@ void CXSpeedCalculator::ClearBuffer() {
 }
 
 //-------------------------------------
-void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor) {
+void CXSpeedCalculator::SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCoor> &Coor) {
 	CXWriteLocker WL(&m_RWLock);
 	// check if m_iCurrentUTMZone changes
 	if(m_iCurrentUTMZone != Coor.Data().GetUTMZone()) {
@@ -110,13 +110,13 @@ void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<
 				x1 = x1 + m_pBuffer[i]->Data().GetUTMEasting();
 				y1 = y1 + m_pBuffer[i]->Data().GetUTMNorthing();
 				dt1 = dt1 + (m_pBuffer[i]->TimeStamp()-StartTime);
-				dUTCt1 = dUTCt1 + (m_pBuffer[i]->UTCTime()-UTCStartTime).GetUTCTime();
+				dUTCt1 = dUTCt1 + (m_pBuffer[i]->UTCTime()-UTCStartTime).GetUTCTimeAsDouble();
 			}
 			if(i != 0) {
 				x2 = x2 + m_pBuffer[i]->Data().GetUTMEasting();
 				y2 = y2 + m_pBuffer[i]->Data().GetUTMNorthing();
 				dt2 = dt2 + (m_pBuffer[i]->TimeStamp()-StartTime);
-				dUTCt2 = dUTCt2 + (m_pBuffer[i]->UTCTime()-UTCStartTime).GetUTCTime();
+				dUTCt2 = dUTCt2 + (m_pBuffer[i]->UTCTime()-UTCStartTime).GetUTCTimeAsDouble();
 			}
 		}
 		x1 = x1/(count-1);
@@ -164,8 +164,8 @@ void CXSpeedCalculator::SetData(const CXStringASCII &UTC, const CXTimeStampData<
 }
 
 //-------------------------------------
-void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor) {
-	double dUTC = atof(UTC.c_str());
+void CXSpeedCalculator::SetGGAData(const CXUTCTime &UTC, const CXTimeStampData<CXCoor> &Coor) {
+	double dUTC = UTC.GetUTCTimeAsDouble();
 	bool oNew = true;
 	for(size_t i=0; i< m_LastUTCs.GetSize(); i++) {
 		if(fabs(m_LastUTCs[i] - dUTC) <= EPSILON) {
@@ -185,12 +185,12 @@ void CXSpeedCalculator::SetGGAData(const CXStringASCII &UTC, const CXTimeStampDa
 }
 
 //-------------------------------------
-void CXSpeedCalculator::SetRMCData(const CXStringASCII &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed) {
+void CXSpeedCalculator::SetRMCData(const CXUTCTime &UTC, const CXTimeStampData<CXCoor> &Coor, double dRMCSpeed) {
 	// set speed source
 	m_eSpeedSource = e_RMC_Packet;
 	// and RMC speed
 	m_dRMCSpeed = dRMCSpeed;
-	double dUTC = atof(UTC.c_str());
+	double dUTC = UTC.GetUTCTimeAsDouble();
 	bool oNew = true;
 	for(size_t i=0; i< m_LastUTCs.GetSize(); i++) {
 		if(fabs(m_LastUTCs[i] - dUTC) <= EPSILON) {

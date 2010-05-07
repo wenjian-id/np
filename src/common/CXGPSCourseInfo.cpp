@@ -64,8 +64,13 @@ void CXGPSCourseInfo::CopyFrom(const CXGPSCourseInfo &rOther) {
 }
 
 //-------------------------------------
-CXStringASCII CXGPSCourseInfo::GetUTC() const {
+CXUTCTime CXGPSCourseInfo::GetUTC() const {
 	return m_UTC;
+}
+
+//-------------------------------------
+void CXGPSCourseInfo::SetUTC(const CXUTCTime &NewValue) {
+	m_UTC = NewValue;
 }
 
 //-------------------------------------
@@ -74,11 +79,26 @@ bool CXGPSCourseInfo::HasFix() const {
 }
 
 //-------------------------------------
+void CXGPSCourseInfo::SetFix(bool NewValue) {
+	m_oFix = NewValue;
+}
+
+//-------------------------------------
 double CXGPSCourseInfo::GetSpeed() const {
 	return m_dSpeed;
 }
 
 //-------------------------------------
+void CXGPSCourseInfo::SetSpeed(double NewValue) {
+	m_dSpeed = NewValue;
+}
+
+//-------------------------------------
 double CXGPSCourseInfo::GetCourse() const {
 	return m_dCourse;
+}
+
+//-------------------------------------
+void CXGPSCourseInfo::SetCourse(double NewValue) {
+	m_dCourse = NewValue;
 }

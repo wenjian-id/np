@@ -194,10 +194,11 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		} else {
 			// set other color
 			ClockColor = CXRGB(0xff, 0xff, 0xff);
-			CXStringASCII Tmp = m_NaviData.GetUTC();
+			CXStringASCII Tmp = m_NaviData.GetUTC().GetUTCTimeAsString();
 			if(Tmp.IsEmpty()) {
 				StrTime = "--:--";
 			} else {
+				/// \todo enhance CXUTCTime
 				CXStringASCII Chunk = Tmp.Left(2);
 				int Hour = 0;
 				sscanf(Chunk.c_str(), "%d", &Hour);
