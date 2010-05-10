@@ -218,26 +218,11 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
 		SetFileConfig(FC);
 	} else if (InputChannelTypeStr == "GPSD") {
 		SetGPSInputChannelType(e_InputChannel_GPSD);
-		/// \todo implement
-/*
-		CXFileConfig FC;
-		// file name as absolute file name
-		FC.SetFileName(CreateAbsoluteFileName(m_StartPath, ExtractFirstToken(PCStr, ';')));
-		// timeout
-		int Timeout = 0;
-		CXStringASCII TimeoutStr=ExtractFirstToken(PCStr, ';');
-		size_t PosMS = TimeoutStr.Find("ms");
-		if(PosMS == CXStringASCII::NPOS) {
-			// timeout is given in seconds
-			Timeout = 1000*atoi(TimeoutStr.c_str());
-		} else {
-			// timeout is given in milliseconds
-			TimeoutStr = TimeoutStr.Left(PosMS);
-			Timeout = atoi(TimeoutStr.c_str());
-		}
-		FC.SetTimeout(Timeout);
-		SetFileConfig(FC);
-*/
+		CXGPSDConfig GPSDC;
+		// Address and port
+		GPSDC.SetAddress(ExtractFirstToken(PCStr, ';'));
+		GPSDC.SetPort(ExtractFirstToken(PCStr, ';'));
+		SetGPSDConfig(GPSDC);
 	}
 	// northing
 	SetNorthing(F.Get("Northing", "off").ToUpper() == "ON");
@@ -516,6 +501,18 @@ CXFileConfig CXOptions::GetFileConfig() const {
 void CXOptions::SetFileConfig(const CXFileConfig &Value) {
 	CXWriteLocker WL(&m_RWLock);
 	m_FileConfig = Value;
+}
+
+//-------------------------------------
+CXGPSDConfig CXOptions::GetGPSDConfig() const {
+	CXReadLocker RL(&m_RWLock);
+	return m_GPSDConfig;
+}
+
+//-------------------------------------
+void CXOptions::SetGPSDConfig(const CXGPSDConfig &Value) {
+	CXWriteLocker WL(&m_RWLock);
+	m_GPSDConfig = Value;
 }
 
 //-------------------------------------

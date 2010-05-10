@@ -84,6 +84,7 @@ SOURCES += ../../src/common/IBitmap.cpp \
 ../../src/common/CXSaverRaw.cpp \
 ../../src/common/CXSaverGPX.cpp \
 ../../src/common/CXInfoBarRouting.cpp \
+../../src/common/IGPSDClient.cpp \
 ../../src/qt/CXMutex.cpp \
 ../../src/qt/TargetIncludes.cpp \
 ../../src/qt/CXDeviceContext.cpp \

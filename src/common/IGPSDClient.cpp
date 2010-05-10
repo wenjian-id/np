@@ -21,125 +21,128 @@
  ***************************************************************************/
 
 
-#include "CXGPSDClient3.hpp"
+#include "IGPSDClient.hpp"
 #include "CXMutexLocker.hpp"
 
-#if (GPSD_API_MAJOR_VERSION == 3)
+//----------------------------------------------------------------------------
+//-------------------------------------
+CXGPSDConfig::CXGPSDConfig() {
+}
 
 //-------------------------------------
-CXGPSDThread::CXGPSDThread(CXGPSDClient *pClient):
-	m_pClient(pClient),
-	m_pGPSData(NULL)
+CXGPSDConfig::CXGPSDConfig(const CXGPSDConfig &rOther) {
+	CopyFrom(rOther);
+}
+
+//-------------------------------------
+CXGPSDConfig::~CXGPSDConfig() {
+}
+
+//-------------------------------------
+const CXGPSDConfig & CXGPSDConfig::operator = (const CXGPSDConfig &rOther) {
+	if(this != &rOther)
+		CopyFrom(rOther);
+	return *this;
+}
+
+//-------------------------------------
+void CXGPSDConfig::CopyFrom(const CXGPSDConfig & rOther) {
+	m_Address = rOther.m_Address;
+	m_Port = rOther.m_Port;
+}
+
+//-------------------------------------
+void CXGPSDConfig::SetAddress(const CXStringASCII & Address) {
+	m_Address = Address;
+}
+
+//-------------------------------------
+CXStringASCII CXGPSDConfig::GetAddress() const {
+	return m_Address;
+}
+
+//-------------------------------------
+void CXGPSDConfig::SetPort(const CXStringASCII & Port) {
+	m_Port = Port;
+}
+
+//-------------------------------------
+CXStringASCII CXGPSDConfig::GetPort() const {
+	return m_Port;
+}
+
+
+//----------------------------------------------------------------------------
+//-------------------------------------
+IGPSDClient::IGPSDClient() :
+	m_oGPSPosInfoChanged(false),
+	m_oGPSCourseInfoChanged(false),
+	m_oGPSQualityInfoChanged(false)
 {
-	CXGPSDConfig Cfg = pClient->GetConfig();
-	m_pGPSData = gps_open(Cfg.GetAddress().c_str(), Cfg.GetPort().c_str());
-	if(m_pGPSData != NULL)
-		gps_query(m_pGPSData, "w+x\n");
+}
+//-------------------------------------
+IGPSDClient::~IGPSDClient() {
+}
+//-------------------------------------
+void IGPSDClient::SetConfig(const CXGPSDConfig &Config) {
+	m_Config = Config;
+}
+//-------------------------------------
+CXGPSDConfig IGPSDClient::GetConfig() const {
+	return m_Config;
 }
 
 //-------------------------------------
-CXGPSDThread::~CXGPSDThread() {
-	if(m_pGPSData != NULL)
-		gps_close(m_pGPSData);
-	m_pClient = NULL;
-	m_pGPSData = NULL;
-}
-
-//-------------------------------------
-bool CXGPSDThread::IsOpen() {
-	return m_pGPSData != NULL;
-}
-
-//-------------------------------------
-void CXGPSDThread::OnThreadStarted() {
-}
-
-//-------------------------------------
-void CXGPSDThread::OnThreadLoop() {
-	gps_poll(m_pGPSData);
-	if(m_pClient != NULL) {
-		if(!MustStopThread()) {
-			m_pClient->ProcessData(m_pGPSData);
-		}
-	}
-}
-
-//-------------------------------------
-void CXGPSDThread::OnThreadStopped() {
-}
-
-
-//-------------------------------------
-CXGPSDClient::CXGPSDClient() :
-	m_pThread(NULL),
-	m_oTerminating(false)
-{
-}
-
-//-------------------------------------
-CXGPSDClient::~CXGPSDClient() {
-}
-
-//-------------------------------------
-bool CXGPSDClient::Open() {
+bool IGPSDClient::GPSPosInfoChanged() const {
 	CXMutexLocker ML(&m_Mutex);
-	m_pThread = new CXGPSDThread(this);
-	m_pThread->CreateThread();
-	return true;
+	return m_oGPSPosInfoChanged;
 }
 
 //-------------------------------------
-bool CXGPSDClient::Close() {
-	SetTerminating();
+CXGPSPosInfo IGPSDClient::GetGPSPosInfo() const {
 	CXMutexLocker ML(&m_Mutex);
-	m_pThread->StopThread();
-	if(!m_pThread->WaitForThreadExit(1500)) {
-		m_pThread->KillThread();
-	}
-	delete m_pThread;
-	m_pThread = NULL;
-	return true;
+	return m_GPSPosInfo;
 }
 
 //-------------------------------------
-bool CXGPSDClient::IsOpen() {
+void IGPSDClient::ResetGPSPosInfoChanged() {
 	CXMutexLocker ML(&m_Mutex);
-	return m_pThread->IsOpen();
+	m_oGPSPosInfoChanged = false;
 }
 
 //-------------------------------------
-bool CXGPSDClient::IsTerminating() const {
+bool IGPSDClient::GPSCourseInfoChanged() const {
 	CXMutexLocker ML(&m_Mutex);
-	return m_oTerminating;
+	return m_oGPSCourseInfoChanged;
 }
 
 //-------------------------------------
-void CXGPSDClient::SetTerminating() {
+CXGPSCourseInfo IGPSDClient::GetGPSCourseInfo() const {
 	CXMutexLocker ML(&m_Mutex);
-	m_oTerminating = true;
+	return m_GPSCourseInfo;
 }
 
 //-------------------------------------
-void CXGPSDClient::ProcessData(gps_data_t *pGPSData) {
-	if(IsTerminating())
-		return;
-	DoProcessData(pGPSData);
+void IGPSDClient::ResetGPSCourseInfoChanged() {
+	CXMutexLocker ML(&m_Mutex);
+	m_oGPSCourseInfoChanged = false;
 }
 
 //-------------------------------------
-void CXGPSDClient::Read() {
-	// do nothing
+bool IGPSDClient::GPSQualityInfoChanged() const {
+	CXMutexLocker ML(&m_Mutex);
+	return m_oGPSQualityInfoChanged;
 }
 
 //-------------------------------------
-void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
-	rHDOP = pGPSData->hdop;
-	rVDOP = pGPSData->vdop;
+CXGPSQualityInfo IGPSDClient::GetGPSQualityInfo() const {
+	CXMutexLocker ML(&m_Mutex);
+	return m_GPSQualityInfo;
 }
 
 //-------------------------------------
-void CXGPSDClient::ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat) {
-	rNVisibleSat = pGPSData->satellites;
+void IGPSDClient::ResetGPSQualityInfoChanged() {
+	CXMutexLocker ML(&m_Mutex);
+	m_oGPSQualityInfoChanged = false;
 }
 
-#endif // (GPSD_API_MAJOR_VERSION == 3)

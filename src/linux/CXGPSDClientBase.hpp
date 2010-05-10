@@ -27,10 +27,6 @@
 #include <gps.h>
 
 #include "IGPSDClient.hpp"
-#include "CXGPSPosInfo.hpp"
-#include "CXGPSCourseInfo.hpp"
-#include "CXGPSQualityInfo.hpp"
-#include "CXMutex.hpp"
 
 //----------------------------------------------------------------------------
 /**
@@ -40,13 +36,6 @@
  */
 class CXGPSDClientBase : public IGPSDClient {
 private:
-	CXGPSPosInfo		m_GPSPosInfo;				///< oiu
-	CXGPSCourseInfo		m_GPSCourseInfo;			///< oiu
-	CXGPSQualityInfo	m_GPSQualityInfo;			///< oiu
-	bool				m_oGPSPosInfoChanged;		///< oiu
-	bool				m_oGPSCourseInfoChanged;	///< oiu
-	bool				m_oGPSQualityInfoChanged;	///< oiu
-	mutable CXMutex		m_Mutex;					///< Synchronisation object
 	//-------------------------------------
 	CXGPSDClientBase(const CXGPSDClientBase &);						///< Not used.
 	const CXGPSDClientBase & operator = (const CXGPSDClientBase &);	///< Not used.
@@ -87,69 +76,6 @@ public:
 	 * The destructor.
 	 */
 	virtual ~CXGPSDClientBase();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool GPSPosInfoChanged() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	CXGPSPosInfo GetGPSPosInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void ResetGPSPosInfoChanged();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool GPSCourseInfoChanged() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	CXGPSCourseInfo GetGPSCourseInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void ResetGPSCourseInfoChanged();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool GPSQualityInfoChanged() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	CXGPSQualityInfo GetGPSQualityInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void ResetGPSQualityInfoChanged();
 	//-------------------------------------
 	/**
 	 * \brief oiu.

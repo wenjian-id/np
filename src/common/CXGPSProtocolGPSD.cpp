@@ -63,7 +63,12 @@ bool CXGPSProtocolGPSD::OnReadAndProcessData() {
 				SaveGPXData(GPSPosInfo.GetLon(), GPSPosInfo.GetLat(), GPSPosInfo.GetHeight());
 			}
 		}
-		/// \todo implement
+		if(oGPSCourseInfoChanged) {
+			SetGPSCourseInfo(GPSCourseInfo);
+		}
+		if(oGPSQualityInfoChanged) {
+			SetGPSQualityInfo(GPSQualityInfo);
+		}
 		return true;
 	}
 	return false;

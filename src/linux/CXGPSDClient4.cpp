@@ -37,7 +37,8 @@ CXGPSDClient::~CXGPSDClient() {
 
 //-------------------------------------
 bool CXGPSDClient::Open() {
-	m_pGPSData = gps_open("127.0.0.1", "2947");
+	CXGPSDConfig Cfg = GetConfig();
+	m_pGPSData = gps_open(Cfg.GetAddress().c_str(), Cfg.GetPort().c_str());
 	if(m_pGPSData == NULL)
 		return false;
 	gps_stream(m_pGPSData, WATCH_ENABLE, NULL);

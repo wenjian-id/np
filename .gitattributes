@@ -200,6 +200,7 @@ src/common/IBitmap.cpp -text
 src/common/IBitmap.hpp -text
 src/common/IDeviceContext.hpp -text
 src/common/IExactTime.hpp -text
+src/common/IGPSDClient.cpp -text
 src/common/IGPSDClient.hpp -text
 src/common/IMainWindow.cpp -text
 src/common/IMainWindow.hpp -text

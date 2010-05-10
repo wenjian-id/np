@@ -28,6 +28,7 @@
 #include "CXCoor.hpp"
 #include "CXRWLock.hpp"
 #include "ISerial.hpp"
+#include "IGPSDClient.hpp"
 #include "Utils.hpp"
 
 //---------------------------------------------------------------------
@@ -181,6 +182,7 @@ private:
 	E_INPUT_CHANNEL_TYPE		m_eGPSInputChannelType;			///< oiu
 	CXSerialPortConfig			m_SerialPortConfig;				///< oiu
 	CXFileConfig				m_FileConfig;					///< oiu
+	CXGPSDConfig				m_GPSDConfig;					///< oiu
 	bool						m_oNorthing;					///< oiu
 	bool						m_oFullScreen;					///< oiu
 	bool						m_oShowLogo;					///< Show logo.
@@ -356,6 +358,18 @@ public:
 	 *
 	 */
 	void SetFileConfig(const CXFileConfig &Value);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXGPSDConfig GetGPSDConfig() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetGPSDConfig(const CXGPSDConfig &Value);
 	//-------------------------------------
 	/**
 	 * \brief oiu

@@ -27,76 +27,17 @@
 #include <iostream>
 
 //-------------------------------------
-CXGPSDClientBase::CXGPSDClientBase() :
-	m_oGPSPosInfoChanged(false),
-	m_oGPSCourseInfoChanged(false),
-	m_oGPSQualityInfoChanged(false)
-{
+CXGPSDClientBase::CXGPSDClientBase() {
 }
 
 //-------------------------------------
 CXGPSDClientBase::~CXGPSDClientBase() {
 }
 
-
-//-------------------------------------
-bool CXGPSDClientBase::GPSPosInfoChanged() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_oGPSPosInfoChanged;
-}
-
-//-------------------------------------
-CXGPSPosInfo CXGPSDClientBase::GetGPSPosInfo() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_GPSPosInfo;
-}
-
-//-------------------------------------
-void CXGPSDClientBase::ResetGPSPosInfoChanged() {
-	CXMutexLocker ML(&m_Mutex);
-	m_oGPSPosInfoChanged = false;
-}
-
-//-------------------------------------
-bool CXGPSDClientBase::GPSCourseInfoChanged() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_oGPSCourseInfoChanged;
-}
-
-//-------------------------------------
-CXGPSCourseInfo CXGPSDClientBase::GetGPSCourseInfo() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_GPSCourseInfo;
-}
-
-//-------------------------------------
-void CXGPSDClientBase::ResetGPSCourseInfoChanged() {
-	CXMutexLocker ML(&m_Mutex);
-	m_oGPSCourseInfoChanged = false;
-}
-
-//-------------------------------------
-bool CXGPSDClientBase::GPSQualityInfoChanged() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_oGPSQualityInfoChanged;
-}
-
-//-------------------------------------
-CXGPSQualityInfo CXGPSDClientBase::GetGPSQualityInfo() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_GPSQualityInfo;
-}
-
-//-------------------------------------
-void CXGPSDClientBase::ResetGPSQualityInfoChanged() {
-	CXMutexLocker ML(&m_Mutex);
-	m_oGPSQualityInfoChanged = false;
-}
-
 //-------------------------------------
 void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 	CXMutexLocker ML(&m_Mutex);
-	std::cout << "x" << std::flush;
+	std::cout << "x " << pGPSData->set << std::flush;
 	if(pGPSData == NULL)
 		return;
 	if(pGPSData->set & MODE_SET) {

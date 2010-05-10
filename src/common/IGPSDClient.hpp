@@ -24,6 +24,81 @@
 #ifndef __IGPSDCLIENT_HPP__
 #define __IGPSDCLIENT_HPP__
 
+#include "CXStringASCII.hpp"
+#include "CXGPSPosInfo.hpp"
+#include "CXGPSCourseInfo.hpp"
+#include "CXGPSQualityInfo.hpp"
+#include "CXMutex.hpp"
+
+//---------------------------------------------------------------------
+/**
+ * \brief oiu
+ *
+ */
+class CXGPSDConfig {
+private:
+	CXStringASCII	m_Address;		///< oiu;
+	CXStringASCII	m_Port;			///< oiu;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void CopyFrom(const CXGPSDConfig & rOther);
+protected:
+public:
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXGPSDConfig();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXGPSDConfig(const CXGPSDConfig &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	virtual ~CXGPSDConfig();
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	const CXGPSDConfig & operator = (const CXGPSDConfig &rOther);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetAddress(const CXStringASCII & Address);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetAddress() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetPort(const CXStringASCII & Port);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	CXStringASCII GetPort() const;
+};
+
+
+
 //----------------------------------------------------------------------------
 /**
  * \brief oiu.
@@ -32,10 +107,18 @@
  */
 class IGPSDClient {
 private:
+	CXGPSDConfig		m_Config;			///< oiu
 	//-------------------------------------
 	IGPSDClient(const IGPSDClient &);						///< Not used.
 	const IGPSDClient & operator = (const IGPSDClient &);	///< Not used.
 protected:
+	CXGPSPosInfo		m_GPSPosInfo;				///< oiu
+	CXGPSCourseInfo		m_GPSCourseInfo;			///< oiu
+	CXGPSQualityInfo	m_GPSQualityInfo;			///< oiu
+	bool				m_oGPSPosInfoChanged;		///< oiu
+	bool				m_oGPSCourseInfoChanged;	///< oiu
+	bool				m_oGPSQualityInfoChanged;	///< oiu
+	mutable CXMutex		m_Mutex;					///< Synchronisation object
 public:
 	//-------------------------------------
 	/**
@@ -43,16 +126,14 @@ public:
 	 *
 	 * The default constructor.
 	 */
-	IGPSDClient() {
-	}
+	IGPSDClient();
 	//-------------------------------------
 	/**
 	 * \brief Destructor.
 	 *
 	 * The destructor.
 	 */
-	virtual ~IGPSDClient() {
-	}
+	virtual ~IGPSDClient();
 	//-------------------------------------
 	/**
 	 * \brief Open connection to gpsd.
@@ -77,6 +158,83 @@ public:
 	 * \return		true if open.
 	 */
 	virtual bool IsOpen() = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void SetConfig(const CXGPSDConfig &Config);
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	CXGPSDConfig GetConfig() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GPSPosInfoChanged() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	CXGPSPosInfo GetGPSPosInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetGPSPosInfoChanged();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GPSCourseInfoChanged() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	CXGPSCourseInfo GetGPSCourseInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetGPSCourseInfoChanged();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	bool GPSQualityInfoChanged() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	CXGPSQualityInfo GetGPSQualityInfo() const;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ResetGPSQualityInfoChanged();
 };
 
 #endif // __IGPSDCLIENT_HPP__

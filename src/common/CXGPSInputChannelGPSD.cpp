@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXGPSInputChannelGPSD.hpp"
+#include "CXOptions.hpp"
 
 //-------------------------------------
 CXGPSInputChannelGPSD::CXGPSInputChannelGPSD() {
@@ -47,7 +48,7 @@ bool CXGPSInputChannelGPSD::IsOpen() {
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::ReadConfiguration() {
-	/// \todo implement
+	m_GPSDClient.SetConfig(CXOptions::Instance()->GetGPSDConfig());
 	return true;
 }
 
