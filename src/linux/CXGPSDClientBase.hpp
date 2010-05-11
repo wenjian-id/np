@@ -76,13 +76,6 @@ public:
 	 * The destructor.
 	 */
 	virtual ~CXGPSDClientBase();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual void Read() = 0;
 };
 
 

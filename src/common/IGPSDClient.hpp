@@ -164,6 +164,13 @@ public:
 	 *
 	 * oiu.
 	 */
+	virtual void Read() = 0;
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
 	void SetConfig(const CXGPSDConfig &Config);
 	//-------------------------------------
 	/**
