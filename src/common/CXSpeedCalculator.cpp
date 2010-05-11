@@ -32,6 +32,7 @@
 #include <math.h>
 
 const size_t LASTUTCBUFFERSIZE = 3;
+const double MINUTCDIFF = 0.1/60/60/24; ///< 0.1 seconds [days]
 
 //-------------------------------------
 CXSpeedCalculator::CXSpeedCalculator(size_t BufferSize) :
@@ -136,17 +137,18 @@ void CXSpeedCalculator::SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCo
 		// compute speed
 		double dUTCSpeed = 0;
 		double dUnnormedSpeed = 0;
-		if(fabs(dUTCt) >= EPSILON) {
+		if(fabs(dUTCt) >= MINUTCDIFF) {
 			dUnnormedSpeed = sqrt(dx*dx+dy*dy);
 			// normate to m/s
 			dUTCSpeed = dUnnormedSpeed/dUTCt;
 		}
-		m_Speed.SetSpeed(dUTCSpeed);
-		// now check if we have a standstill. Take rmc speed into account
 		switch(m_eSpeedSource) {
 			case e_GGA_Packet:	break;
 			case e_RMC_Packet:	dUTCSpeed = m_dRMCSpeed; break;
 		}
+		// now set speed
+		m_Speed.SetSpeed(dUTCSpeed);
+		// now check if we have a standstill. Take rmc speed into account
 		if(dUTCSpeed < m_SpeedThreshold) {
 			// standstill. Do not touch direction to avoid turning map around
 		} else {
@@ -168,7 +170,7 @@ void CXSpeedCalculator::SetGGAData(const CXUTCTime &UTC, const CXTimeStampData<C
 	double dUTC = UTC.GetUTCTimeAsDouble();
 	bool oNew = true;
 	for(size_t i=0; i< m_LastUTCs.GetSize(); i++) {
-		if(fabs(m_LastUTCs[i] - dUTC) <= EPSILON) {
+		if(fabs(m_LastUTCs[i] - dUTC) <= MINUTCDIFF) {
 			oNew = false;
 			break;
 		}
@@ -193,7 +195,7 @@ void CXSpeedCalculator::SetRMCData(const CXUTCTime &UTC, const CXTimeStampData<C
 	double dUTC = UTC.GetUTCTimeAsDouble();
 	bool oNew = true;
 	for(size_t i=0; i< m_LastUTCs.GetSize(); i++) {
-		if(fabs(m_LastUTCs[i] - dUTC) <= EPSILON) {
+		if(fabs(m_LastUTCs[i] - dUTC) <= MINUTCDIFF) {
 			oNew = false;
 			break;
 		}
@@ -237,11 +239,6 @@ CXUTMSpeed CXSpeedCalculator::GetSpeed() const {
 	} else {
 		// no valid current speed. try last valid speed
 		Result = m_LastValidSpeed;
-	}
-	// set speed depending on m_eSpeedSource
-	switch(m_eSpeedSource) {
-		case e_GGA_Packet:	break;									// do not alter speed
-		case e_RMC_Packet:	Result.SetSpeed(m_dRMCSpeed); break;	// set RMC speed
 	}
 	return Result;
 }

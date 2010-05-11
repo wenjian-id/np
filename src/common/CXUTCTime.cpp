@@ -28,6 +28,7 @@
 CXUTCTime::CXUTCTime():
 	m_UTCTimeDouble(0)
 {
+	FromDouble(m_UTCTimeDouble);
 }
 
 //-------------------------------------

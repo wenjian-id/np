@@ -91,16 +91,18 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 		if(pOpt->IsTargetSet()) {
 			// draw distance
 			char buf[100];
-			if(dDist < 100) {
-				snprintf(buf, sizeof(buf), "%0.2f m", dDist);
+			if(dDist < 10) {
+				snprintf(buf, sizeof(buf), "%0.2f m", dDist); // resolution 1cm
+			} else if (dDist < 100) {
+				snprintf(buf, sizeof(buf), "%0.1f m", dDist); // resolution 10cm
 			} else if (dDist < 1000) {
-				snprintf(buf, sizeof(buf), "%0.1f m", dDist);
+				snprintf(buf, sizeof(buf), "%0.0f m", dDist); // resolution 1m
 			} else if (dDist < 10000) {
-				snprintf(buf, sizeof(buf), "%0.2f km", dDist/1000);
+				snprintf(buf, sizeof(buf), "%0.2f km", dDist/1000); // resolution 10m
 			} else if (dDist < 100000) {
-				snprintf(buf, sizeof(buf), "%0.1f km", dDist/1000);
+				snprintf(buf, sizeof(buf), "%0.1f km", dDist/1000); // resolution 100m
 			} else {
-				snprintf(buf, sizeof(buf), "%0.0f km", dDist/1000);
+				snprintf(buf, sizeof(buf), "%0.0f km", dDist/1000); // resolution 1km
 			}
 			Bmp.SetFont(m_TextHeightDist, false);
 			CXStringUTF8 DistStr(buf);
