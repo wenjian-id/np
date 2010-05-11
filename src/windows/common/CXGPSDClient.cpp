@@ -49,3 +49,7 @@ bool CXGPSDClient::IsOpen() {
 	return false;
 }
 
+//-------------------------------------
+void CXGPSDClient::Read() {
+	/// \todo implement
+}

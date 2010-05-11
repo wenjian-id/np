@@ -40,7 +40,7 @@
 #include "CXPOWMMap.hpp"
 #include "CXMapMovingDetails.hpp"
 
-const char * VERSIONSTRING ="NaviPOWM 0.2.5-RC1";
+const char * VERSIONSTRING ="NaviPOWM 0.2.5-RC2";
 const char * INFOSTRING1 ="(C) Doru Julian Bugariu";
 const char * INFOSTRING2 ="http://sourceforge.net/projects/navipowm";
 

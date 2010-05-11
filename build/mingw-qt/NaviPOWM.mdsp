@@ -165,6 +165,7 @@ extraResourceOptions=
 83=..\..\src\qt\CXWorkRequestThread.cpp
 84=..\..\src\qt\Main.cpp
 85=..\..\src\qt\TargetIncludes.cpp
+86=..\..\src\common\IGPSDClient.cpp
 [Header]
 1=..\..\src\common\CXArea.hpp
 2=..\..\src\common\CXAreaColorHolder.hpp

@@ -830,6 +830,10 @@ SOURCE=..\..\src\common\IBitmap.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\common\IGPSDClient.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\common\IMainWindow.cpp
 # End Source File
 # Begin Source File

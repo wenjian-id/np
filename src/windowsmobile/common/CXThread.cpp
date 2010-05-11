@@ -62,6 +62,13 @@ bool CXThread::CreateThread() {
 }
 
 //-------------------------------------
+void CXThread::KillThread() {
+	::TerminateThread(GetHandle(), 0);
+	::CloseHandle(GetHandle());
+	SetHandle(NULL);
+}
+
+//-------------------------------------
 void CXThread::SetHandle(HANDLE NewHandle) {
 	CXMutexLocker L(&m_Mutex);
 	m_Handle = NewHandle;
@@ -82,6 +89,7 @@ bool CXThread::WaitForThreadExit(size_t dwMilliSeconds) {
 		// wait for thread termination
 		WaitForSingleObject(ThreadHandle, dwMilliSeconds);
 	}
+	::CloseHandle(ThreadHandle);
 	SetHandle(NULL);
 	return true;
 }

@@ -77,6 +77,13 @@ public:
 	 * \return		true if open.
 	 */
 	virtual bool IsOpen();
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	virtual void Read();
 };
 
 

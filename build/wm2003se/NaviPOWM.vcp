@@ -761,8 +761,20 @@ DEP_CPP_CXGPS=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
 
 DEP_CPP_CXGPS=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
 	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXGPSDClient.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
@@ -890,6 +902,9 @@ DEP_CPP_CXMAI=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXInfoBar.hpp"\
 	"..\..\src\common\CXNaviPOWM.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
@@ -898,9 +913,13 @@ DEP_CPP_CXMAI=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMainWindow.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
@@ -910,6 +929,7 @@ DEP_CPP_CXMAI=\
 	"..\..\src\common\Utils.hpp"\
 	"..\..\src\windowsmobile\common\CXBitmap.hpp"\
 	"..\..\src\windowsmobile\common\CXDeviceContext.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMainWindow.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
@@ -1848,13 +1868,20 @@ DEP_CPP_MAIN_=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
 	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\src\common\CXRect.hpp"\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMainWindow.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
@@ -1862,6 +1889,7 @@ DEP_CPP_MAIN_=\
 	"..\..\src\common\ISerial.hpp"\
 	"..\..\src\common\IWindow.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMainWindow.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
@@ -1869,9 +1897,6 @@ DEP_CPP_MAIN_=\
 	"..\..\src\windowsmobile\common\CXWindow.hpp"\
 	"..\..\src\windowsmobile\common\OSSpecific.hpp"\
 	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
-	
-NODEP_CPP_MAIN_=\
-	"..\..\src\windowsmobile\common\resource.h"\
 	
 
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
@@ -3602,12 +3627,19 @@ DEP_CPP_CXGPSI=\
 	"..\..\src\common\CXBuffer.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
 	"..\..\src\common\CXGPSInputChannel.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXRect.hpp"\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
 	
 
@@ -3760,20 +3792,28 @@ DEP_CPP_CXGPSIN=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
 	"..\..\src\common\CXGPSInputChannel.hpp"\
 	"..\..\src\common\CXGPSInputChannelFile.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
 	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\src\common\CXRect.hpp"\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
 	"..\..\src\common\ISerial.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -3971,18 +4011,38 @@ DEP_CPP_CXGPSINP=\
 !ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
 
 DEP_CPP_CXGPSINP=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
 	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
 	"..\..\src\common\CXGPSInputChannel.hpp"\
 	"..\..\src\common\CXGPSInputChannelGPSD.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXOptions.hpp"\
+	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\src\common\CXRect.hpp"\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
 	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\common\IRWLock.hpp"\
+	"..\..\src\common\ISemaphore.hpp"\
+	"..\..\src\common\ISerial.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXGPSDClient.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
+	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
 	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
 	
 
@@ -4152,20 +4212,28 @@ DEP_CPP_CXGPSINPU=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
 	"..\..\src\common\CXGPSInputChannel.hpp"\
 	"..\..\src\common\CXGPSInputChannelSerial.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
 	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\src\common\CXRect.hpp"\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
 	"..\..\src\common\ISerial.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -4549,6 +4617,7 @@ DEP_CPP_CXGPSPR=\
 	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -4838,8 +4907,10 @@ DEP_CPP_CXGPSPRO=\
 	"..\..\src\common\CXGPSProtocol.hpp"\
 	"..\..\src\common\CXGPSProtocolGPSD.hpp"\
 	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXNMEA.hpp"\
 	"..\..\src\common\CXRect.hpp"\
 	"..\..\src\common\CXRGB.hpp"\
+	"..\..\src\common\CXSatelliteData.hpp"\
 	"..\..\src\common\CXSaver.hpp"\
 	"..\..\src\common\CXSaverGPX.hpp"\
 	"..\..\src\common\CXSaverRaw.hpp"\
@@ -4849,9 +4920,13 @@ DEP_CPP_CXGPSPRO=\
 	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
 	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\common\IRWLock.hpp"\
+	"..\..\src\common\ISemaphore.hpp"\
 	"..\..\src\common\Utils.hpp"\
 	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
+	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
 	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
 	
 
@@ -6138,6 +6213,9 @@ DEP_CPP_CXINFO=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXInfoBar.hpp"\
 	"..\..\src\common\CXInfoBarBottom.hpp"\
 	"..\..\src\common\CXNaviData.hpp"\
@@ -6147,10 +6225,14 @@ DEP_CPP_CXINFO=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -6158,6 +6240,7 @@ DEP_CPP_CXINFO=\
 	"..\..\src\common\Utils.hpp"\
 	"..\..\src\windowsmobile\common\CXBitmap.hpp"\
 	"..\..\src\windowsmobile\common\CXDeviceContext.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -6425,6 +6508,9 @@ DEP_CPP_CXINFOB=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXInfoBar.hpp"\
 	"..\..\src\common\CXInfoBarCommon.hpp"\
 	"..\..\src\common\CXNaviData.hpp"\
@@ -6434,10 +6520,14 @@ DEP_CPP_CXINFOB=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -6445,6 +6535,7 @@ DEP_CPP_CXINFOB=\
 	"..\..\src\common\Utils.hpp"\
 	"..\..\src\windowsmobile\common\CXBitmap.hpp"\
 	"..\..\src\windowsmobile\common\CXDeviceContext.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -6714,6 +6805,9 @@ DEP_CPP_CXINFOBA=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXInfoBar.hpp"\
 	"..\..\src\common\CXInfoBarRouting.hpp"\
 	"..\..\src\common\CXNaviData.hpp"\
@@ -6723,11 +6817,15 @@ DEP_CPP_CXINFOBA=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
 	"..\..\src\common\CXTransformationMatrix.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -6735,6 +6833,7 @@ DEP_CPP_CXINFOBA=\
 	"..\..\src\common\Utils.hpp"\
 	"..\..\src\windowsmobile\common\CXBitmap.hpp"\
 	"..\..\src\windowsmobile\common\CXDeviceContext.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -7009,6 +7108,9 @@ DEP_CPP_CXINFOBAR=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXInfoBar.hpp"\
 	"..\..\src\common\CXInfoBarSpeed.hpp"\
 	"..\..\src\common\CXNaviData.hpp"\
@@ -7019,10 +7121,14 @@ DEP_CPP_CXINFOBAR=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -7030,6 +7136,7 @@ DEP_CPP_CXINFOBAR=\
 	"..\..\src\common\Utils.hpp"\
 	"..\..\src\windowsmobile\common\CXBitmap.hpp"\
 	"..\..\src\windowsmobile\common\CXDeviceContext.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -7312,6 +7419,9 @@ DEP_CPP_CXINFOBART=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXInfoBar.hpp"\
 	"..\..\src\common\CXInfoBarTop.hpp"\
 	"..\..\src\common\CXNaviData.hpp"\
@@ -7324,11 +7434,14 @@ DEP_CPP_CXINFOBART=\
 	"..\..\src\common\CXSatelliteData.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -7734,6 +7847,7 @@ DEP_CPP_CXLOC=\
 	"..\..\src\common\CXWay.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -8667,6 +8781,9 @@ DEP_CPP_CXMAPL=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXKeyVal.hpp"\
 	"..\..\src\common\CXMapContainer.hpp"\
 	"..\..\src\common\CXMapHashSimple.hpp"\
@@ -8683,8 +8800,12 @@ DEP_CPP_CXMAPL=\
 	"..\..\src\common\CXSmartPtr.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXWay.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -8692,6 +8813,7 @@ DEP_CPP_CXMAPL=\
 	"..\..\src\common\IThread.hpp"\
 	"..\..\src\common\IWorkRequestThread.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -9179,6 +9301,7 @@ DEP_CPP_CXMAPP=\
 	"..\..\src\common\CXReadLocker.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\CXWriteLocker.hpp"\
@@ -9478,6 +9601,9 @@ DEP_CPP_CXMAPPA=\
 	"..\..\src\common\CXDebugInfo.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXHysterezis.hpp"\
 	"..\..\src\common\CXKeyVal.hpp"\
 	"..\..\src\common\CXMapContainer.hpp"\
@@ -9504,8 +9630,10 @@ DEP_CPP_CXMAPPA=\
 	"..\..\src\common\CXSmartPtr.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
 	"..\..\src\common\CXTrackLog.hpp"\
 	"..\..\src\common\CXTransformationMatrix.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\CXWay.hpp"\
@@ -9513,6 +9641,7 @@ DEP_CPP_CXMAPPA=\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -9966,6 +10095,9 @@ DEP_CPP_CXMAPPAI=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXMapPainter.hpp"\
 	"..\..\src\common\CXMapPainterDoubleBuffered.hpp"\
 	"..\..\src\common\CXNaviData.hpp"\
@@ -9976,12 +10108,15 @@ DEP_CPP_CXMAPPAI=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\CXWriteLocker.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -10278,6 +10413,7 @@ DEP_CPP_CXMAPPAIN=\
 	"..\..\src\common\CXSatelliteData.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
@@ -10616,6 +10752,7 @@ DEP_CPP_CXMAPPAINT=\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
 	"..\..\src\common\CXTransformationMatrix.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\CXWay.hpp"\
@@ -11048,6 +11185,9 @@ DEP_CPP_CXMAPS=\
 	"..\..\src\common\CXDebugInfo.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXKeyVal.hpp"\
 	"..\..\src\common\CXMapHashSimple.hpp"\
 	"..\..\src\common\CXMapSection.hpp"\
@@ -11063,11 +11203,14 @@ DEP_CPP_CXMAPS=\
 	"..\..\src\common\CXSmartPtr.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
 	"..\..\src\common\CXTransformationMatrix.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXWay.hpp"\
 	"..\..\src\common\CXWriteLocker.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -11446,6 +11589,7 @@ DEP_CPP_CXNAV=\
 	"..\..\src\common\CXReadLocker.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXUTMSpeed.hpp"\
 	"..\..\src\common\CXWriteLocker.hpp"\
@@ -11818,6 +11962,7 @@ DEP_CPP_CXNAVI=\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMainWindow.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
@@ -12657,6 +12802,9 @@ DEP_CPP_CXOPT=\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
 	"..\..\src\common\CXFileIni.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXKeyVal.hpp"\
 	"..\..\src\common\CXMapContainer.hpp"\
 	"..\..\src\common\CXMapHashSimple.hpp"\
@@ -12675,10 +12823,14 @@ DEP_CPP_CXOPT=\
 	"..\..\src\common\CXSmartPtr.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
 	"..\..\src\common\CXTransformationMatrix.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXWay.hpp"\
 	"..\..\src\common\CXWriteLocker.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -12686,6 +12838,7 @@ DEP_CPP_CXOPT=\
 	"..\..\src\common\IThread.hpp"\
 	"..\..\src\common\IWorkRequestThread.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -13635,6 +13788,9 @@ DEP_CPP_CXPOW=\
 	"..\..\src\common\CXDebugInfo.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXKeyVal.hpp"\
 	"..\..\src\common\CXMapContainer.hpp"\
 	"..\..\src\common\CXMapHashSimple.hpp"\
@@ -13652,10 +13808,13 @@ DEP_CPP_CXPOW=\
 	"..\..\src\common\CXSmartPtr.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
 	"..\..\src\common\CXTransformationMatrix.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXWay.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -14419,6 +14578,9 @@ DEP_CPP_CXSAV=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
 	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\src\common\CXRect.hpp"\
@@ -14426,8 +14588,11 @@ DEP_CPP_CXSAV=\
 	"..\..\src\common\CXSaver.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -15277,6 +15442,9 @@ DEP_CPP_CXTRA=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
 	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
 	"..\..\src\common\CXReadLocker.hpp"\
@@ -15284,14 +15452,19 @@ DEP_CPP_CXTRA=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
 	"..\..\src\common\CXTrackLog.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXWriteLocker.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
 	"..\..\src\common\ISerial.hpp"\
 	"..\..\src\common\Utils.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
 	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\CXRWLock.hpp"\
 	"..\..\src\windowsmobile\common\CXSemaphore.hpp"\
@@ -15808,6 +15981,9 @@ DEP_CPP_CXWAT=\
 	"..\..\src\common\CXCoor.hpp"\
 	"..\..\src\common\CXDirection.hpp"\
 	"..\..\src\common\CXFile.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
 	"..\..\src\common\CXLoopThread.hpp"\
 	"..\..\src\common\CXOptions.hpp"\
 	"..\..\src\common\CXPOIVisibilityDescriptor.hpp"\
@@ -15815,9 +15991,12 @@ DEP_CPP_CXWAT=\
 	"..\..\src\common\CXRGB.hpp"\
 	"..\..\src\common\CXStringASCII.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
 	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\common\CXWatchdogThread.hpp"\
 	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
 	"..\..\src\common\IMutex.hpp"\
 	"..\..\src\common\IRWLock.hpp"\
 	"..\..\src\common\ISemaphore.hpp"\
@@ -16421,6 +16600,165 @@ DEP_CPP_IBITM=\
 	"..\..\src\common\CXStringUTF8.hpp"\
 	"..\..\src\common\IBitmap.hpp"\
 	"..\..\src\common\IDeviceContext.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\common\IGPSDClient.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
 	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
 	
 

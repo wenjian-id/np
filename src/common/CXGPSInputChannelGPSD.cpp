@@ -58,7 +58,7 @@ bool CXGPSInputChannelGPSD::CanFlush() {
 }
 
 //-------------------------------------
-bool CXGPSInputChannelGPSD::Read(unsigned char */*pbBuffer*/, size_t /*Size*/, size_t &ReadSize) {
+bool CXGPSInputChannelGPSD::Read(unsigned char * /*pbBuffer*/, size_t /*Size*/, size_t &ReadSize) {
 	ReadSize = 0;
 	return false;
 }

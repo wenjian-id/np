@@ -24136,6 +24136,241 @@ DEP_CPP_IBITM=\
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\common\IGPSDClient.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4I) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_IGPSD=\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXGPSCourseInfo.hpp"\
+	"..\..\src\common\CXGPSPosInfo.hpp"\
+	"..\..\src\common\CXGPSQualityInfo.hpp"\
+	"..\..\src\common\CXMutexLocker.hpp"\
+	"..\..\src\common\CXStringASCII.hpp"\
+	"..\..\src\common\CXTimeStampData.hpp"\
+	"..\..\src\common\CXUTCTime.hpp"\
+	"..\..\src\common\IExactTime.hpp"\
+	"..\..\src\common\IGPSDClient.hpp"\
+	"..\..\src\common\IMutex.hpp"\
+	"..\..\src\windowsmobile\common\CXExactTime.hpp"\
+	"..\..\src\windowsmobile\common\CXMutex.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\common\IMainWindow.cpp
 
 !IF  "$(CFG)" == "NaviPOWM - Win32 (WCE SH3) Release"
