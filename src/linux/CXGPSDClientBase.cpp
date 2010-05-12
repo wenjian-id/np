@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXGPSDClientBase.hpp"
+#include "CXSatelliteData.hpp"
 #include "CXMutexLocker.hpp"
 
 #include <math.h>
@@ -32,6 +33,13 @@ CXGPSDClientBase::CXGPSDClientBase() {
 
 //-------------------------------------
 CXGPSDClientBase::~CXGPSDClientBase() {
+}
+
+//-------------------------------------
+void CXGPSDClientBase::ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer) {
+	for(size_t i=0; i<rBuffer.GetSize(); i++)
+		delete rBuffer[i];
+	rBuffer.Clear();
 }
 
 //-------------------------------------
@@ -105,12 +113,31 @@ void CXGPSDClientBase::DoProcessData(gps_data_t *pGPSData) {
 		int NrSatVisible = 0;
 		ReadNumberOfVisibleSatellites(pGPSData, NrSatVisible);
 		std::cout << " " << NrSatVisible << " " << std::flush;
+		CXBuffer<CXSatelliteInfo *> SatInfoBuffer;
+		if(NrSatVisible > 0) {
+			for(int i=0; i<NrSatVisible; i++) {
+				CXSatelliteInfo *pInfo = new CXSatelliteInfo();
+				pInfo->SetPRN(pGPSData->PRN[i]);
+    			pInfo->SetElevation(pGPSData->elevation[i]);
+    			pInfo->SetAzimuth(pGPSData->azimuth[i]);
+    			pInfo->SetSNR(pGPSData->ss[i]);
+				SatInfoBuffer.Append(pInfo);
+			}
+		}
+		CXSatellites::Instance()->SetSatelliteInfos(SatInfoBuffer);
+   		ClearBuffer(SatInfoBuffer);
 	}
 	if(pGPSData->set & USED_SET) {
 		std::cout << "sat used" << std::flush;
 		std::cout << " " << pGPSData->satellites_used << " " << std::flush;
 		m_GPSPosInfo.SetNSat(pGPSData->satellites_used);
 		m_oGPSPosInfoChanged = true;
+		CXBuffer<int> ActiveSatBuffer;
+		if(pGPSData->satellites_used > 0)
+		for(int i=0; i<pGPSData->satellites_used; i++) {
+			ActiveSatBuffer.Append(pGPSData->used[i]);
+		}
+		CXSatellites::Instance()->SetActiveSatellites(ActiveSatBuffer);
 	}
 	std::cout << std::endl;
 }

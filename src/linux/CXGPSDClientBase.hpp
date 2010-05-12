@@ -27,6 +27,7 @@
 #include <gps.h>
 
 #include "IGPSDClient.hpp"
+class CXSatelliteInfo;
 
 //----------------------------------------------------------------------------
 /**
@@ -39,6 +40,13 @@ private:
 	//-------------------------------------
 	CXGPSDClientBase(const CXGPSDClientBase &);						///< Not used.
 	const CXGPSDClientBase & operator = (const CXGPSDClientBase &);	///< Not used.
+	//-------------------------------------
+	/**
+	 * \brief oiu.
+	 *
+	 * oiu.
+	 */
+	void ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer);
 protected:
 	//-------------------------------------
 	/**
