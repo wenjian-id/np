@@ -56,10 +56,12 @@ void CXGPSDThread::OnThreadStarted() {
 
 //-------------------------------------
 void CXGPSDThread::OnThreadLoop() {
-	gps_poll(m_pGPSData);
-	if(m_pClient != NULL) {
-		if(!MustStopThread()) {
-			m_pClient->ProcessData(m_pGPSData);
+	if(m_pGPSData != NULL) {
+		gps_poll(m_pGPSData);
+		if(m_pClient != NULL) {
+			if(!MustStopThread()) {
+				m_pClient->ProcessData(m_pGPSData);
+			}
 		}
 	}
 }
