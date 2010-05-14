@@ -25,8 +25,6 @@
 
 #include "CXMapSort.hpp"
 
-static const int MIN_AGE_PURGE = 5;		///< Min age of elemnts that can be purged.
-
 //---------------------------------------------------------------------
 /**
  * \brief oiu
@@ -132,13 +130,13 @@ private:
 		};
 	};
 private:
-	size_t								m_NominalCacheSize;		///< oiu
-	CXMapSort<tKey, CXCacheHelper *>	m_Values;				///< oiu
-	static const tKey					NPOS;					///< oiu
+	int									m_PurgeAge;		///< Min age of elemnts that can be purged.
+	CXMapSort<tKey, CXCacheHelper *>	m_Values;		///< oiu
+	static const tKey					NPOS;			///< oiu
 	//-------------------------------------
-	CXCache();										///< Not used.
-	CXCache(const CXCache &);						///< Not used.
-	const CXCache & operator = (const CXCache &);	///< Not used.
+	CXCache();											///< Not used.
+	CXCache(const CXCache &);							///< Not used.
+	const CXCache & operator = (const CXCache &);		///< Not used.
 protected:
 public:
 	//-------------------------------------
@@ -147,8 +145,8 @@ public:
 	 *
 	 * Default constructor.
 	 */
-	CXCache(size_t NominalCacheSize) :
-		m_NominalCacheSize(NominalCacheSize)
+	CXCache(int PurgeAge) :
+		m_PurgeAge(PurgeAge)
 	{
 	}
 	//-------------------------------------
@@ -172,26 +170,15 @@ public:
 	 */
 	void Purge() {
 		CXCacheHelper *pTmp = NULL;
-		CXCacheHelper *pDel = NULL;
 		CXPOSMapSort<tKey> Pos = m_Values.GetStart();
-		int MaxCount = -1;
-		tKey DelKey = NPOS;
 		while(m_Values.GetNext(Pos, pTmp) != m_Values.NPOS) {
-			if(pTmp->GetCounter() > MaxCount) {
+			if(pTmp->GetCounter() >= m_PurgeAge) {
 				// found new maximum
-				DelKey = Pos.m_key;
-				MaxCount = pTmp->GetCounter();
-				pDel = pTmp;
+				m_Values.RemoveAt(Pos.m_key);
+				// and delete element
+				delete pTmp;
 			}
 		}
-		// check if we can remove maximum
-		if(MaxCount > MIN_AGE_PURGE) {
-			// now remove maximum
-			m_Values.RemoveAt(DelKey);
-			// and delete element
-			delete pDel;
-		}
-
 	}
 	//-------------------------------------
 	/**
@@ -200,11 +187,8 @@ public:
 	 */
 	CXSmartPtr<tValue> GetAt(const tKey & Key) {
 		CXCacheHelper *pResult = NULL;
-		// check if we have to remove a Element
-		if(m_Values.GetSize() >= m_NominalCacheSize) {
-			// remove rarely used elements
-			Purge();
-		}
+		// remove rarely used elements
+		Purge();
 		// check if value exists
 		if(!m_Values.Lookup(Key, pResult)) {
 			// value does not exist
@@ -213,11 +197,6 @@ public:
 			// save in map
 			pResult = new CXCacheHelper(pNewValue);
 			m_Values.SetAt(Key, pResult);
-			if(m_Values.GetSize() > m_NominalCacheSize) {
-				char buf[100];
-				snprintf(buf, sizeof(buf), "cache size = %d nominal size = %d\n", m_Values.GetSize(), m_NominalCacheSize);
-				DoOutputDebugString(buf);
-			}
 		}
 		// reset counter
 		pResult->ResetCounter();

@@ -28,9 +28,9 @@
 #include <math.h>
 
 
-static const size_t TOCCACHESIZE		= 20;		///< oiu
-static const size_t MSDISPLAYCACHESIZE	= 50;		///< oiu
-static const size_t MSLOCATORCACHESIZE	= 16;		///< oiu
+static const size_t TOCCACHEPURGEAGE		= 20;		///< oiu
+static const size_t MSDISPLAYCACHEPURGEAGE	= 50;		///< oiu
+static const size_t MSLOCATORCACHEPURGEAGE	= 16;		///< oiu
 
 
 //----------------------------------------------------------------------------
@@ -79,9 +79,9 @@ E_ZOOM_LEVEL CXVisibleMapSectionDescr::GetZoomLevel() const {
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXMapLoaderThread::CXMapLoaderThread() :
-	m_TOCCache(TOCCACHESIZE),
-	m_MapSectionDisplayCache(MSDISPLAYCACHESIZE),
-	m_MapSectionLocatorCache(MSLOCATORCACHESIZE)
+	m_TOCCache(TOCCACHEPURGEAGE),
+	m_MapSectionDisplayCache(MSDISPLAYCACHEPURGEAGE),
+	m_MapSectionLocatorCache(MSLOCATORCACHEPURGEAGE)
 {
 }
 
