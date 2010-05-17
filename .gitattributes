@@ -224,6 +224,8 @@ src/linux/CXGPSDClient4.cpp -text
 src/linux/CXGPSDClient4.hpp -text
 src/linux/CXGPSDClientBase.cpp -text
 src/linux/CXGPSDClientBase.hpp -text
+src/linux/CXGPSDClientNoVersion.cpp -text
+src/linux/CXGPSDClientNoVersion.hpp -text
 src/linux/CXSerial.cpp -text
 src/linux/CXSerial.hpp -text
 src/linux/OSSpecific.cpp -text
