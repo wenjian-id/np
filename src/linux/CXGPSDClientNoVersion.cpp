@@ -24,7 +24,7 @@
 #include "CXGPSDClientNoVersion.hpp"
 #include "CXMutexLocker.hpp"
 
-#if (GPSD_API_MAJOR_VERSION < 3)
+#ifndef GPSD_API_MAJOR_VERSION
 
 //-------------------------------------
 CXGPSDThread::CXGPSDThread(CXGPSDClient *pClient):
@@ -144,4 +144,4 @@ void CXGPSDClient::ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVi
 	rNVisibleSat = pGPSData->satellites;
 }
 
-#endif // (GPSD_API_MAJOR_VERSION < 3)
+#endif // GPSD_API_MAJOR_VERSION

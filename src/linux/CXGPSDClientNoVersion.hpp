@@ -26,7 +26,7 @@
 
 #include <gps.h>
 
-#if (GPSD_API_MAJOR_VERSION < 3)
+#ifndef GPSD_API_MAJOR_VERSION
 
 #include "CXGPSDClientBase.hpp"
 #include "CXLoopThread.hpp"
@@ -181,6 +181,6 @@ public:
 };
 
 
-#endif // (GPSD_API_MAJOR_VERSION < 3)
+#endif // GPSD_API_MAJOR_VERSION
 
 #endif // __CXGPSDCLIENTNOVERSION_HPP__

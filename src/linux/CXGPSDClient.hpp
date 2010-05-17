@@ -27,7 +27,7 @@
 #include <gps.h>
 
 #ifndef GPSD_API_MAJOR_VERSION
-	#define GPSD_API_MAJOR_VERSION 0
+	#include "CXGPSDClientNoVersion.hpp"
 #elif (GPSD_API_MAJOR_VERSION < 3)
 	#error Version 2.x or 1.x
 #elif (GPSD_API_MAJOR_VERSION == 3)
