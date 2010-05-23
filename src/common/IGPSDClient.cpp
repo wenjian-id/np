@@ -145,4 +145,3 @@ void IGPSDClient::ResetGPSQualityInfoChanged() {
 	CXMutexLocker ML(&m_Mutex);
 	m_oGPSQualityInfoChanged = false;
 }
-

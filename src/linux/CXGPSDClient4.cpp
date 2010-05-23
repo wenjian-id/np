@@ -75,8 +75,22 @@ void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
 }
 
 //-------------------------------------
-void CXGPSDClient::ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat) {
-	rNVisibleSat = pGPSData->satellites_visible;
+void CXGPSDClient::ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats) {
+	if(pGPSData->satellites > 0) {
+		for(int i=0; i<pGPSData->satellites; i++) {
+			CXSatelliteInfo *pInfo = new CXSatelliteInfo();
+			pInfo->SetPRN(pGPSData->PRN[i]);
+			pInfo->SetElevation(pGPSData->elevation[i]);
+			pInfo->SetAzimuth(pGPSData->azimuth[i]);
+			pInfo->SetSNR(pGPSData->ss[i]);
+			rSatInfos.Append(pInfo);
+		}
+	}
+	if(pGPSData->satellites_used > 0) {
+		for(int i=0; i<pGPSData->satellites_used; i++) {
+			rActiveSats.Append(pGPSData->used[i]);
+		}
+	}
 }
 
 #endif // (GPSD_API_MAJOR_VERSION == 4)

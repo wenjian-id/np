@@ -29,6 +29,7 @@ CXPOIVisibilityDescriptor::CXPOIVisibilityDescriptor() :
 	m_oShowFuel(false),
 	m_oShowTrafficSignals(false),
 	m_oShowAmenities(false),
+	m_oShowSchools(false),
 	m_oShowPublicTransport(false),
 	m_oShowFoodDrink(false),
 	m_oShowAccomodation(false),
@@ -60,6 +61,7 @@ void CXPOIVisibilityDescriptor::CopyFrom(const CXPOIVisibilityDescriptor &rOther
 	m_oShowFuel = rOther.m_oShowFuel;
 	m_oShowTrafficSignals = rOther.m_oShowTrafficSignals;
 	m_oShowAmenities = rOther.m_oShowAmenities;
+	m_oShowSchools = rOther.m_oShowSchools;
 	m_oShowPublicTransport = rOther.m_oShowPublicTransport;
 	m_oShowFoodDrink = rOther.m_oShowFoodDrink;
 	m_oShowAccomodation = rOther.m_oShowAccomodation;
@@ -88,22 +90,21 @@ bool CXPOIVisibilityDescriptor::MustShowPOIType(E_POI_TYPE ePOIType) const {
 		case e_POI_Stop:
 		case e_POI_Crossing:
 		case e_POI_LevelCrossing:			oVisible = m_oShowTrafficSignals; break;
-
 		// amenities
 		case e_POI_Pharmacy:
 		case e_POI_Hospital:
 		case e_POI_Supermarket:
 		case e_POI_FireStation:
 		case e_POI_Police:
-		case e_POI_School:
 		case e_POI_PostOffice:
 		case e_POI_Telephone:
 		case e_POI_PostBox:
 		case e_POI_Toilets:
-		case e_POI_Shelter:
+		case e_POI_Shelter:					oVisible = m_oShowAmenities; break;
+		// schools
+		case e_POI_School:
 		case e_POI_College:
-		case e_POI_University:				oVisible = m_oShowAmenities; break;
-
+		case e_POI_University:				oVisible = m_oShowSchools; break;
 		// public transport
 		case e_POI_BusStop:
 		case e_POI_BusStation:
@@ -114,17 +115,14 @@ bool CXPOIVisibilityDescriptor::MustShowPOIType(E_POI_TYPE ePOIType) const {
 		case e_POI_Taxi:
 		case e_POI_Aerodrome:
 		case e_POI_Helipad:					oVisible = m_oShowPublicTransport; break;
-
 		// food / drink
 		case e_POI_Restaurant:
 		case e_POI_Pub:						oVisible = m_oShowFoodDrink; break;
-
 		// accomodation
 		case e_POI_Hotel:
 		case e_POI_Hostel:
 		case e_POI_CampSite:				oVisible = m_oShowAccomodation; break;
-
-		// church
+		// churches
 		case e_POI_PlcOfWrshp_Christian:
 		case e_POI_PlcOfWrshp_Jewish:
 		case e_POI_PlcOfWrshp_Muslim:
@@ -133,11 +131,9 @@ bool CXPOIVisibilityDescriptor::MustShowPOIType(E_POI_TYPE ePOIType) const {
 		case e_POI_PlcOfWrshp_Shinto:
 		case e_POI_PlcOfWrshp_Taoist:
 		case e_POI_PlcOfWrshp_Unknown:		oVisible = m_oShowChurches; break;
-
 		// other
 		case e_POI_PowerTower:
 		case e_POI_PowerSubStation:			oVisible = m_oShowOther; break;
-
 		case e_POI_None:
 		case e_POI_All:						break;
 	}
@@ -167,6 +163,11 @@ void CXPOIVisibilityDescriptor::SetShowTrafficSignals(bool NewValue) {
 //-------------------------------------
 void CXPOIVisibilityDescriptor::SetShowAmenities(bool NewValue) {
 	m_oShowAmenities = NewValue;
+}
+
+//-------------------------------------
+void CXPOIVisibilityDescriptor::SetShowSchools(bool NewValue) {
+	m_oShowSchools = NewValue;
 }
 
 //-------------------------------------

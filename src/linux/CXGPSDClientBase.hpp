@@ -27,7 +27,7 @@
 #include <gps.h>
 
 #include "IGPSDClient.hpp"
-class CXSatelliteInfo;
+#include "CXSatelliteData.hpp"
 
 //----------------------------------------------------------------------------
 /**
@@ -68,7 +68,7 @@ protected:
 	 *
 	 * oiu.
 	 */
-	virtual void ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat) = 0;
+	virtual void ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats) = 0;
 public:
 	//-------------------------------------
 	/**

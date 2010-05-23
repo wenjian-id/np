@@ -505,7 +505,6 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
 	e_POI_None					= 0x0000,	///< Nothing.
 	e_POI_All					= 0xFFFF,	///< All.
 
-	// amenities 0x00****
 	e_POI_Parking				= 0x0001,	///< Car park.
 	e_POI_Fuel					= 0x0002,	///< Fuel.
 	e_POI_PlcOfWrshp_Christian	= 0x0003,	///< Christian church, temple, etc.

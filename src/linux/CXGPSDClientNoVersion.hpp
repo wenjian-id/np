@@ -124,7 +124,7 @@ protected:
 	 *
 	 * oiu.
 	 */
-	virtual void ReadNumberOfVisibleSatellites(gps_data_t *pGPSData, int &rNVisibleSat);
+	virtual void ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats);
 public:
 	//-------------------------------------
 	/**

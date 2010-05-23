@@ -37,6 +37,7 @@ private:
 	bool	m_oShowFuel;			///< oiu
 	bool	m_oShowTrafficSignals;	///< oiu
 	bool	m_oShowAmenities;		///< oiu
+	bool	m_oShowSchools;			///< oiu
 	bool	m_oShowPublicTransport;	///< oiu
 	bool	m_oShowFoodDrink;		///< oiu
 	bool	m_oShowAccomodation;	///< oiu
@@ -116,6 +117,12 @@ public:
 	 *
 	 */
 	void SetShowAmenities(bool NewValue);
+	//-------------------------------------
+	/**
+	 * \brief oiu
+	 *
+	 */
+	void SetShowSchools(bool NewValue);
 	//-------------------------------------
 	/**
 	 * \brief oiu
