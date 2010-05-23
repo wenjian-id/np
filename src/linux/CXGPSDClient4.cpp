@@ -76,8 +76,8 @@ void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
 
 //-------------------------------------
 void CXGPSDClient::ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats) {
-	if(pGPSData->satellites > 0) {
-		for(int i=0; i<pGPSData->satellites; i++) {
+	if(pGPSData->satellites_visible > 0) {
+		for(int i=0; i<pGPSData->satellites_visible; i++) {
 			CXSatelliteInfo *pInfo = new CXSatelliteInfo();
 			pInfo->SetPRN(pGPSData->PRN[i]);
 			pInfo->SetElevation(pGPSData->elevation[i]);
