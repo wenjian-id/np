@@ -1,6 +1,6 @@
 del /q Common\*.*
 del /q Icons\*.*
-copy ..\WM5\eVC4\ARMV4IRel\NaviPOWM.exe Common
+copy ..\..\build\WM5\ARMV4IRel\NaviPOWM.exe Common
 copy ..\..\LICENSE.TXT Common
 copy ..\..\README.TXT Common
 copy ..\..\CHANGELOG.TXT Common

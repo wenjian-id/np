@@ -17,9 +17,9 @@ Name "NaviPOWM"
 
 !define MainPath "..\..\"                                           ; main path 
 !ifdef USE_QT
-    !define ExePath "${MainPath}\Qt\MinGW\Release\"                 ; path where the executable lies
+    !define ExePath "${MainPath}\build\mingw\Release\"                 ; path where the executable lies
 !else
-    !define ExePath "${MainPath}\Windows\MinGW\Release\"            ; path where the executable lies
+    !define ExePath "${MainPath}\build\mingw-qt\Release\"            ; path where the executable lies
 !endif
 !define ImagePath "${MainPath}\common\Images\"                      ; path with images
 !define ConfigPath "${MainPath}\common\Config\"                     ; path with config files
