@@ -108,6 +108,7 @@ Section "NaviPOWM (required)" SECT_NaviPOWM     ;
     File "${ImagePath}\zoomin.bmp"
     File "${ImagePath}\zoomout.bmp"
     File "${ImagePath}\places.bmp"
+    File "${ImagePath}\target.bmp"
 
 
     ; Maps
@@ -183,6 +184,7 @@ Section "Uninstall"
     Delete "$INSTDIR\Icons\zoomin.bmp"
     Delete "$INSTDIR\Icons\zoomout.bmp"
     Delete "$INSTDIR\Icons\places.bmp"
+    Delete "$INSTDIR\Icons\target.bmp"
     RmDir $INSTDIR\Icons ; will be deleted only if empty
 
     !ifdef USE_QT

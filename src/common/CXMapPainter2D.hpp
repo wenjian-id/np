@@ -48,6 +48,7 @@ private:
 	CXBuffer<TAreaBuffer *>			m_DrawAreas;				///< oiu
 	CXBuffer<CXBitmap *>			m_POIBMPs;					///< oiu
 	CXBitmap 						*m_pPlaceBMP;				///< oiu
+	CXBitmap						*m_pTargetBMP;				///< oiu
 	double							m_LastSpeed;				///< oiu
 	CXHysterezis<double, double>	m_AutoZoomLevels;			///< oiu
 	mutable CXRWLock				m_RWLock;					///< Synchronization object.

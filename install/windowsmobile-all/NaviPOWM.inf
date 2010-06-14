@@ -50,6 +50,7 @@ saveon.bmp = 3
 zoomin.bmp = 3
 zoomout.bmp = 3
 places.bmp = 3
+target.bmp = 3
 
 
 ;==================================================
@@ -84,6 +85,7 @@ saveon.bmp
 zoomin.bmp
 zoomout.bmp
 places.bmp
+target.bmp
 
 
 [Save]

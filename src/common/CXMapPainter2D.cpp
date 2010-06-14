@@ -88,7 +88,8 @@ E_AREA_TYPE AreaOrder[e_Area_EnumCount] = {
 CXMapPainter2D::CXMapPainter2D() :
 	m_MeterPerPixel(3),
 	m_RequestedMeterPerPixel(m_MeterPerPixel),
-	m_pPlaceBMP(NULL)
+	m_pPlaceBMP(NULL),
+	m_pTargetBMP(NULL)
 {
 	size_t i=0;
 	for(i=0; i<e_Way_EnumCount; i++) {
@@ -134,6 +135,8 @@ CXMapPainter2D::~CXMapPainter2D() {
 	}
 	delete m_pPlaceBMP;
 	m_pPlaceBMP = NULL;
+	delete m_pTargetBMP;
+	m_pTargetBMP = NULL;
 }
 
 //-------------------------------------
@@ -174,6 +177,19 @@ void CXMapPainter2D::OnBuffersCreated(CXDeviceContext *pDC, int /*Width*/, int /
 		CXStringASCII FileName = m_pPlaceBMP->GetFileName();
 		m_pPlaceBMP->Create(pDC, POIDisplaySize*PLACECOUNTHORZ, POIDisplaySize*PLACECOUNTVERT);
 		m_pPlaceBMP->LoadFromFile(FileName);
+	}
+	if(m_pTargetBMP == NULL) {
+		// create bitmap
+		m_pTargetBMP = new CXBitmap();
+		m_pTargetBMP->Create(pDC, POIDisplaySize, POIDisplaySize*2);
+		CXStringASCII FileName = CXOptions::Instance()->GetDirectoryIcons();
+		FileName += "target.bmp";
+		m_pTargetBMP->LoadFromFile(FileName);
+	} else {
+		// bitmaps already created. reload
+		CXStringASCII FileName = m_pTargetBMP->GetFileName();
+		m_pTargetBMP->Create(pDC, POIDisplaySize, POIDisplaySize*2);
+		m_pTargetBMP->LoadFromFile(FileName);
 	}
 }
 
@@ -1100,6 +1116,18 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 		DrawScale(pBMP, Width, Height);
 	}
 	StopScale.SetNow();
+
+	if(pOpt->IsTargetSet()){
+		CXCoor TargetCoor = pOpt->GetTargetCoor();
+		TargetCoor.RelocateUTM(UTMZoneCurrent);
+		CXCoorVector v = TMMap*CXCoorVector(TargetCoor.GetUTMEasting(), TargetCoor.GetUTMNorthing());
+		// draw target if neccessary
+		int POIDisplaySize = CXOptions::Instance()->GetPOIDisplaySize();
+		pBMP->DrawTransparent(	m_pTargetBMP,
+								v.GetIntX()-POIDisplaySize/2, v.GetIntY()-3*POIDisplaySize/2,
+								0, 0, POIDisplaySize, 2*POIDisplaySize,
+								COLOR_TRANSPARENT);
+	}
 
 	// draw current position
 	DrawCurrentPosition(pBMP, NaviData, TMCurrentPos);

@@ -48,6 +48,8 @@ common/Images/poi00.bmp -text
 common/Images/quit.bmp -text
 common/Images/saveoff.bmp -text
 common/Images/saveon.bmp -text
+common/Images/target.bmp -text
+common/Images/target.xcf -text
 common/Images/zoomin.bmp -text
 common/Images/zoomout.bmp -text
 install/mingw-all/NaviPOWM.nsi -text

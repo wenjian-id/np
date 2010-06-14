@@ -19,3 +19,5 @@ copy ..\..\common\Images\saveon.bmp Icons
 copy ..\..\common\Images\zoomin.bmp Icons
 copy ..\..\common\Images\zoomout.bmp Icons
 copy ..\..\common\Images\places.bmp Icons
+copy ..\..\common\Images\target.bmp Icons
+
