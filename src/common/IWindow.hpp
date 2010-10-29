@@ -30,105 +30,105 @@
  */
 class IWindow {
 private:
-	//-------------------------------------
-	IWindow(const IWindow &);							///< Not used.
-	const IWindow & operator = (const IWindow &);		///< Not used.
+    //-------------------------------------
+    IWindow(const IWindow &);                           ///< Not used.
+    const IWindow & operator = (const IWindow &);       ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnPaint() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnResize(int Width, int Height) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnChar(int TheChar) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnKeyDown(int TheChar) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnKeyUp(int TheChar) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseDown(int X, int Y) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseUp(int X, int Y) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseMove(int X, int Y) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnPaint() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnResize(int Width, int Height) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnChar(int TheChar) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnKeyDown(int TheChar) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnKeyUp(int TheChar) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseDown(int X, int Y) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseUp(int X, int Y) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseMove(int X, int Y) = 0;
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IWindow() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IWindow() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowMaximized() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowNormal() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowFullScreen() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowMinimized() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void RequestRepaint() = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IWindow() {
+    }
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IWindow() {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowMaximized() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowNormal() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowFullScreen() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowMinimized() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void RequestRepaint() = 0;
 };
 
 

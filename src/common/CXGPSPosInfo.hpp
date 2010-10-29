@@ -34,162 +34,162 @@
  */
 class CXGPSPosInfo {
 private:
-	CXUTCTime		m_UTC;		///< UTC.
-	bool			m_oFix;		///< Fix.
-	double			m_dLon;		///< Longitude [deg].
-	double			m_dLat;		///< Latitude [deg].
-	double			m_dHeight;	///< Height [m].
-	int				m_NSat;		///< Number of satellites
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance.
-	 *
-	 * Copy data from other instance.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXGPSPosInfo &rOther);
+    CXUTCTime       m_UTC;      ///< UTC.
+    bool            m_oFix;     ///< Fix.
+    double          m_dLon;     ///< Longitude [deg].
+    double          m_dLat;     ///< Latitude [deg].
+    double          m_dHeight;  ///< Height [m].
+    int             m_NSat;     ///< Number of satellites
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance.
+     *
+     * Copy data from other instance.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXGPSPosInfo &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXGPSPosInfo();
-	//-------------------------------------
-	/**
-	 * \brief Constructor.
-	 *
-	 * A Constructor.
-	 * \param	UTC			UTC time.
-	 * \param	oFix		Fix.
-	 * \param	dLon		Longitude [deg].
-	 * \param	dLat		Latitude [deg].
-	 * \param	dHeight		Height [m].
-	 * \param	NSat		Number of satellites.
-	 */
-	CXGPSPosInfo(const CXUTCTime &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * The copy constructor.
-	 * \param	rOther		Instance to copy from.
-	 */
-	CXGPSPosInfo(const CXGPSPosInfo & rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXGPSPosInfo();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * The assignment operator.
-	 * \param	rOther		Instance to copy from..
-	 * \return				Const pointer to self.
-	 */
-	const CXGPSPosInfo & operator = (const CXGPSPosInfo & rOther);
-	//-------------------------------------
-	/**
-	 * \brief Get UTC.
-	 *
-	 * Get UTC time.
-	 * \return	UTC time as CXUTCTime.
-	 */
-	CXUTCTime GetUTC() const;
-	//-------------------------------------
-	/**
-	 * \brief Set UTC.
-	 *
-	 * Set UTC time.
-	 * \param	NewValue	UTC time as CXUTCTime.
-	 */
-	void SetUTC(const CXUTCTime &NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Check if GPS fix.
-	 *
-	 * Check if GPS fix or not.
-	 * \return	true if fix.
-	 */
-	bool HasFix() const;
-	//-------------------------------------
-	/**
-	 * \brief Set if GPS fix.
-	 *
-	 * Set if GPS fix or not.
-	 * \param	NewValue	true if fix.
-	 */
-	void SetFix(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Get longitude.
-	 *
-	 * Get the longitude.
-	 * \return	Longitude [deg].
-	 */
-	double GetLon() const;
-	//-------------------------------------
-	/**
-	 * \brief Set longitude.
-	 *
-	 * Set the longitude.
-	 * \param	NewValue	Longitude [deg].
-	 */
-	void SetLon(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Get latitude.
-	 *
-	 * Get the latitude.
-	 * \return	Latitude [deg].
-	 */
-	double GetLat() const;
-	//-------------------------------------
-	/**
-	 * \brief Set latitude.
-	 *
-	 * Set the latitude.
-	 * \param	NewValue	Latitude [deg].
-	 */
-	void SetLat(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Get height.
-	 *
-	 * Get the height.
-	 * \return	Height [m].
-	 */
-	double GetHeight() const;
-	//-------------------------------------
-	/**
-	 * \brief Set height.
-	 *
-	 * Set the height.
-	 * \param	NewValue Height [m].
-	 */
-	void SetHeight(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Get number of satellites.
-	 *
-	 * Get the number of satellites.
-	 * \return	Number of satellites.
-	 */
-	int GetNSat() const;
-	//-------------------------------------
-	/**
-	 * \brief Set number of satellites.
-	 *
-	 * Set the number of satellites.
-	 * \param	NewValue	Number of satellites.
-	 */
-	void SetNSat(int NewValue);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXGPSPosInfo();
+    //-------------------------------------
+    /**
+     * \brief Constructor.
+     *
+     * A Constructor.
+     * \param   UTC         UTC time.
+     * \param   oFix        Fix.
+     * \param   dLon        Longitude [deg].
+     * \param   dLat        Latitude [deg].
+     * \param   dHeight     Height [m].
+     * \param   NSat        Number of satellites.
+     */
+    CXGPSPosInfo(const CXUTCTime &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * The copy constructor.
+     * \param   rOther      Instance to copy from.
+     */
+    CXGPSPosInfo(const CXGPSPosInfo & rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXGPSPosInfo();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * The assignment operator.
+     * \param   rOther      Instance to copy from..
+     * \return              Const pointer to self.
+     */
+    const CXGPSPosInfo & operator = (const CXGPSPosInfo & rOther);
+    //-------------------------------------
+    /**
+     * \brief Get UTC.
+     *
+     * Get UTC time.
+     * \return  UTC time as CXUTCTime.
+     */
+    CXUTCTime GetUTC() const;
+    //-------------------------------------
+    /**
+     * \brief Set UTC.
+     *
+     * Set UTC time.
+     * \param   NewValue    UTC time as CXUTCTime.
+     */
+    void SetUTC(const CXUTCTime &NewValue);
+    //-------------------------------------
+    /**
+     * \brief Check if GPS fix.
+     *
+     * Check if GPS fix or not.
+     * \return  true if fix.
+     */
+    bool HasFix() const;
+    //-------------------------------------
+    /**
+     * \brief Set if GPS fix.
+     *
+     * Set if GPS fix or not.
+     * \param   NewValue    true if fix.
+     */
+    void SetFix(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief Get longitude.
+     *
+     * Get the longitude.
+     * \return  Longitude [deg].
+     */
+    double GetLon() const;
+    //-------------------------------------
+    /**
+     * \brief Set longitude.
+     *
+     * Set the longitude.
+     * \param   NewValue    Longitude [deg].
+     */
+    void SetLon(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief Get latitude.
+     *
+     * Get the latitude.
+     * \return  Latitude [deg].
+     */
+    double GetLat() const;
+    //-------------------------------------
+    /**
+     * \brief Set latitude.
+     *
+     * Set the latitude.
+     * \param   NewValue    Latitude [deg].
+     */
+    void SetLat(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief Get height.
+     *
+     * Get the height.
+     * \return  Height [m].
+     */
+    double GetHeight() const;
+    //-------------------------------------
+    /**
+     * \brief Set height.
+     *
+     * Set the height.
+     * \param   NewValue Height [m].
+     */
+    void SetHeight(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief Get number of satellites.
+     *
+     * Get the number of satellites.
+     * \return  Number of satellites.
+     */
+    int GetNSat() const;
+    //-------------------------------------
+    /**
+     * \brief Set number of satellites.
+     *
+     * Set the number of satellites.
+     * \param   NewValue    Number of satellites.
+     */
+    void SetNSat(int NewValue);
 };
 
 typedef CXTimeStampData<CXGPSPosInfo> tTimeStampedGPSPosInfo;

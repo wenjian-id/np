@@ -53,39 +53,39 @@ class CXInfoBarRouting;
  */
 class CXZoomBtn  : public CXInfoBar {
 private:
-	CXBitmap		m_Bmp;		///< oiu
-	E_COMMAND		m_eCommand;	///< oiu
-	//-------------------------------------
-	CXZoomBtn();										///< Not used.
-	CXZoomBtn(const CXZoomBtn &);						///< Not used.
-	const CXZoomBtn & operator = (const CXZoomBtn &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+    CXBitmap        m_Bmp;      ///< oiu
+    E_COMMAND       m_eCommand; ///< oiu
+    //-------------------------------------
+    CXZoomBtn();                                        ///< Not used.
+    CXZoomBtn(const CXZoomBtn &);                       ///< Not used.
+    const CXZoomBtn & operator = (const CXZoomBtn &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual E_COMMAND OnInternalMouseDown(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual E_COMMAND OnInternalMouseDown(int X, int Y);
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXZoomBtn(E_COMMAND eCommand);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXZoomBtn();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXZoomBtn(E_COMMAND eCommand);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXZoomBtn();
 };
 
 
@@ -96,192 +96,192 @@ public:
  */
 class CXNaviPOWM {
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	enum E_DISPLAY_MODE {
-		e_ModeMap,			///< oiu
-		e_ModeInfo,			///< oiu
-		e_ModeSatInfo,		///< oiu
-	};
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    enum E_DISPLAY_MODE {
+        e_ModeMap,          ///< oiu
+        e_ModeInfo,         ///< oiu
+        e_ModeSatInfo,      ///< oiu
+    };
 private:
-	E_DISPLAY_MODE		m_eDisplayMode;				///< oiu
-	IMainWindow			*m_pMainWindow;				///< oiu
-	CXGPSRecvThread		*m_pGPSRecvThread;			///< oiu
-	CXLocatorThread		*m_pLocatorThread;			///< oiu
-	CXMapPainterThread	*m_pMapPainterThread;		///< oiu
-	CXMapLoaderThread	*m_pMapLoaderThread;		///< oiu
-	CXWatchdogThread	*m_pWatchdogThread;			///< oiu
-	CXInfoBarBottom		*m_pInfoBarBottom;			///< oiu
-	CXInfoBarTop		*m_pInfoBarTop;				///< oiu
-	CXInfoBarSpeed		*m_pInfoBarSpeed;			///< oiu
-	CXInfoBarCommon		*m_pInfoBarCommon;			///< oiu
-	CXInfoBarRouting	*m_pInfoBarRouting;			///< oiu
-	int					m_iWidth;					///< oiu
-	int					m_iHeight;					///< oiu
-	tIRect				m_InfoBarTopPos;			///< oiu
-	tIRect				m_InfoBarBottomPos;			///< oiu
-	tIRect				m_InfoBarSpeedPos;			///< oiu
-	tIRect				m_InfoBarCommonPos;			///< oiu
-	tIRect				m_InfoBarRoutingPos;		///< oiu
-	tIRect				m_ZoomInPos;				///< oiu
-	tIRect				m_ZoomOutPos;				///< oiu
-	tIRect				m_MapPos;					///< oiu
-	CXZoomBtn			m_ZoomInBtn;				///< oiu
-	CXZoomBtn			m_ZoomOutBtn;				///< oiu
-	bool				m_oMouseDown;				///< oiu
-	int					m_StartMoveX;				///< oiu
-	int					m_StartMoveY;				///< oiu
-	int					m_CurrentPosMoveX;			///< oiu
-	int					m_CurrentPosMoveY;			///< oiu
-	mutable CXMutex		m_Mutex;					///< Synchronization object.
-	//-------------------------------------
-	CXNaviPOWM(const CXNaviPOWM &);						///< Not used.
-	const CXNaviPOWM & operator = (const CXNaviPOWM &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetWidth() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetWidth(int Width);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetHeight() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetHeight(int Height);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetDisplayMode(E_DISPLAY_MODE eDisplayMode);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_DISPLAY_MODE GetDisplayMode() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void DoRequestRepaint();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void StopMapMove();
+    E_DISPLAY_MODE      m_eDisplayMode;             ///< oiu
+    IMainWindow         *m_pMainWindow;             ///< oiu
+    CXGPSRecvThread     *m_pGPSRecvThread;          ///< oiu
+    CXLocatorThread     *m_pLocatorThread;          ///< oiu
+    CXMapPainterThread  *m_pMapPainterThread;       ///< oiu
+    CXMapLoaderThread   *m_pMapLoaderThread;        ///< oiu
+    CXWatchdogThread    *m_pWatchdogThread;         ///< oiu
+    CXInfoBarBottom     *m_pInfoBarBottom;          ///< oiu
+    CXInfoBarTop        *m_pInfoBarTop;             ///< oiu
+    CXInfoBarSpeed      *m_pInfoBarSpeed;           ///< oiu
+    CXInfoBarCommon     *m_pInfoBarCommon;          ///< oiu
+    CXInfoBarRouting    *m_pInfoBarRouting;         ///< oiu
+    int                 m_iWidth;                   ///< oiu
+    int                 m_iHeight;                  ///< oiu
+    tIRect              m_InfoBarTopPos;            ///< oiu
+    tIRect              m_InfoBarBottomPos;         ///< oiu
+    tIRect              m_InfoBarSpeedPos;          ///< oiu
+    tIRect              m_InfoBarCommonPos;         ///< oiu
+    tIRect              m_InfoBarRoutingPos;        ///< oiu
+    tIRect              m_ZoomInPos;                ///< oiu
+    tIRect              m_ZoomOutPos;               ///< oiu
+    tIRect              m_MapPos;                   ///< oiu
+    CXZoomBtn           m_ZoomInBtn;                ///< oiu
+    CXZoomBtn           m_ZoomOutBtn;               ///< oiu
+    bool                m_oMouseDown;               ///< oiu
+    int                 m_StartMoveX;               ///< oiu
+    int                 m_StartMoveY;               ///< oiu
+    int                 m_CurrentPosMoveX;          ///< oiu
+    int                 m_CurrentPosMoveY;          ///< oiu
+    mutable CXMutex     m_Mutex;                    ///< Synchronization object.
+    //-------------------------------------
+    CXNaviPOWM(const CXNaviPOWM &);                     ///< Not used.
+    const CXNaviPOWM & operator = (const CXNaviPOWM &); ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetWidth() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetWidth(int Width);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetHeight() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetHeight(int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetDisplayMode(E_DISPLAY_MODE eDisplayMode);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_DISPLAY_MODE GetDisplayMode() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void DoRequestRepaint();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void StopMapMove();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXNaviPOWM();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXNaviPOWM();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool Init(IMainWindow *pMainWindow);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool StartThreads();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void StopThreads();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void RequestRepaint(E_DISPLAY_MODE eDisplayMode);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Paint(CXDeviceContext *pDC);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Resize(int Width, int Height);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnChar(int TheChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnKeyDown(int TheChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnKeyUp(int TheChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseDown(int X, int Y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseUp(int X, int Y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseMove(int X, int Y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void PositionChanged(const CXNaviData & NewData);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXNaviPOWM();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXNaviPOWM();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool Init(IMainWindow *pMainWindow);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool StartThreads();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void StopThreads();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void RequestRepaint(E_DISPLAY_MODE eDisplayMode);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Paint(CXDeviceContext *pDC);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Resize(int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnChar(int TheChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnKeyDown(int TheChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnKeyUp(int TheChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseDown(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseUp(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseMove(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void PositionChanged(const CXNaviData & NewData);
 };
 
 #endif // __CXNAVIPOWM_HPP__

@@ -34,51 +34,51 @@
  */
 class CXRWLock : public IRWLock {
 private:
-	QReadWriteLock	m_RWLock;	///< Synchronization object.
-	//-------------------------------------
-	CXRWLock(const CXRWLock &);							///< Not used.
-	//-------------------------------------
-	const CXRWLock & operator = (const CXRWLock &);		///< Not used.
+    QReadWriteLock  m_RWLock;   ///< Synchronization object.
+    //-------------------------------------
+    CXRWLock(const CXRWLock &);                         ///< Not used.
+    //-------------------------------------
+    const CXRWLock & operator = (const CXRWLock &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXRWLock();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXRWLock();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LockRead();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LockWrite();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void UnlockRead();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void UnlockWrite();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXRWLock();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXRWLock();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void LockRead();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void LockWrite();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void UnlockRead();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void UnlockWrite();
 };
 
 #endif // __CXRWLOCK_HPP__

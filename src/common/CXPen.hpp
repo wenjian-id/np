@@ -32,96 +32,96 @@
  */
 class CXPen {
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	enum E_STYLE {
-		e_Solid,		///< oiu
-	};
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    enum E_STYLE {
+        e_Solid,        ///< oiu
+    };
 private:
-	E_STYLE		m_eStyle;	///< oiu
-	int			m_iWidth;	///< oiu
-	CXRGB		m_Color;	///< oiu
-	//-------------------------------------
-	CXPen();											///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXPen &rOther);
+    E_STYLE     m_eStyle;   ///< oiu
+    int         m_iWidth;   ///< oiu
+    CXRGB       m_Color;    ///< oiu
+    //-------------------------------------
+    CXPen();                                            ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXPen &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXPen(E_STYLE eStyle, int Width, const CXRGB & Color);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXPen(const CXPen &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXPen & operator = (const CXPen & rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXPen();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_STYLE GetStyle() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetStyle(E_STYLE NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetWidth() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetWidth(int NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXRGB GetColor() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetColor(const CXRGB & NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXPen(E_STYLE eStyle, int Width, const CXRGB & Color);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXPen(const CXPen &rOther);
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXPen & operator = (const CXPen & rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXPen();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_STYLE GetStyle() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetStyle(E_STYLE NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetWidth() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetWidth(int NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXRGB GetColor() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetColor(const CXRGB & NewValue);
 };
 
 #endif //__CXPEN_H__

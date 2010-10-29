@@ -34,108 +34,108 @@
  */
 class CXFile {
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	enum E_RESULTCODE {
-		E_OK,						///< oiu
-		E_INVALID_ARG,				///< oiu
-		E_UNSUPPORTED_OPENMODE,		///< oiu
-		E_OPEN_ERROR,				///< oiu
-		E_FILE_NOT_OPEN,			///< oiu
-		E_FILE_OPEN,				///< oiu
-		E_SEEK_ERROR,				///< oiu
-	};
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	enum E_OPENMODE {
-		E_READ,			///< oiu
-		E_WRITE,		///< oiu
-	};
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    enum E_RESULTCODE {
+        E_OK,                       ///< oiu
+        E_INVALID_ARG,              ///< oiu
+        E_UNSUPPORTED_OPENMODE,     ///< oiu
+        E_OPEN_ERROR,               ///< oiu
+        E_FILE_NOT_OPEN,            ///< oiu
+        E_FILE_OPEN,                ///< oiu
+        E_SEEK_ERROR,               ///< oiu
+    };
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    enum E_OPENMODE {
+        E_READ,         ///< oiu
+        E_WRITE,        ///< oiu
+    };
 private:
-	FILE			*m_File;			///< oiu
-	unsigned char	*m_pBuffer;			///< oiu
-	size_t			m_ReadAheadSize;	///< oiu
-	size_t			m_BufferedSize;		///< oiu
-	size_t			m_BufferOffset;		///< oiu
-	//-------------------------------------
-	CXFile(const CXFile &);							///< Not used.
-	const CXFile & operator = (const CXFile &);		///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Clear();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ReallocateReadAheadBuffer();
+    FILE            *m_File;            ///< oiu
+    unsigned char   *m_pBuffer;         ///< oiu
+    size_t          m_ReadAheadSize;    ///< oiu
+    size_t          m_BufferedSize;     ///< oiu
+    size_t          m_BufferOffset;     ///< oiu
+    //-------------------------------------
+    CXFile(const CXFile &);                         ///< Not used.
+    const CXFile & operator = (const CXFile &);     ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Clear();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void ReallocateReadAheadBuffer();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXFile();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXFile();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_RESULTCODE SetReadAheadSize(size_t ReadAheadSize);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_RESULTCODE Open(const char *pcFileName, E_OPENMODE eMode);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Close();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool IsOpen() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_RESULTCODE Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_RESULTCODE Write(const unsigned char *pbBuffer, size_t Size, size_t &WriteSize);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_RESULTCODE Seek(size_t Offset);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXFile();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXFile();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_RESULTCODE SetReadAheadSize(size_t ReadAheadSize);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_RESULTCODE Open(const char *pcFileName, E_OPENMODE eMode);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Close();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool IsOpen() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_RESULTCODE Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_RESULTCODE Write(const unsigned char *pbBuffer, size_t Size, size_t &WriteSize);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_RESULTCODE Seek(size_t Offset);
 };
 
 #endif // __CXFILE_HPP__

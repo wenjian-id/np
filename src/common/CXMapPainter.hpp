@@ -35,90 +35,90 @@ class CXDeviceContext;
  */
 class CXMapPainter {
 private:
-	CXNaviData			m_NaviData;			///< oiu
-	bool				m_oMustRepaint;		///< oiu
-	mutable CXRWLock	m_RWLock;			///< Synchronization object.
-	//-------------------------------------
-	CXMapPainter(const CXMapPainter &);						///< Not used.
-	const CXMapPainter & operator = (const CXMapPainter &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnDoWork() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ComputeZoomBySpeed(double dSpeed) = 0;
+    CXNaviData          m_NaviData;         ///< oiu
+    bool                m_oMustRepaint;     ///< oiu
+    mutable CXRWLock    m_RWLock;           ///< Synchronization object.
+    //-------------------------------------
+    CXMapPainter(const CXMapPainter &);                     ///< Not used.
+    const CXMapPainter & operator = (const CXMapPainter &); ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnDoWork() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ComputeZoomBySpeed(double dSpeed) = 0;
 protected:
-	//-------------------------------------
-	CXNaviData GetPosition() const;
+    //-------------------------------------
+    CXNaviData GetPosition() const;
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMapPainter();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMapPainter();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool MustRepaint() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetMustRepaint(bool Value);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void PositionChanged(const CXNaviData &NewNaviData);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool ZoomIn() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool ZoomOut() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Resize(int Width, int Height) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DoWork();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMapPainter();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMapPainter();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool MustRepaint() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetMustRepaint(bool Value);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void PositionChanged(const CXNaviData &NewNaviData);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool ZoomIn() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool ZoomOut() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Resize(int Width, int Height) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DoWork();
 };
 
 #endif // __CXMAPPAINTER_HPP__

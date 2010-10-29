@@ -32,79 +32,79 @@
  */
 class CXArea {
 private:
-	E_AREA_TYPE			m_eAreaType;		///< oiu
-	unsigned char		m_Layer;			///< oiu
-	CXOrderedNodeList	*m_pOuterNodeList;	///< oiu
-	TNodeListBuffer		m_Holes;			///< oiu
-	//-------------------------------------
-	CXArea();									///< Not used.
-	CXArea(const CXArea &);						///< Not used.
-	const CXArea & operator = (const CXArea &);	///< Not used.
+    E_AREA_TYPE         m_eAreaType;        ///< oiu
+    unsigned char       m_Layer;            ///< oiu
+    CXOrderedNodeList   *m_pOuterNodeList;  ///< oiu
+    TNodeListBuffer     m_Holes;            ///< oiu
+    //-------------------------------------
+    CXArea();                                   ///< Not used.
+    CXArea(const CXArea &);                     ///< Not used.
+    const CXArea & operator = (const CXArea &); ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXArea(E_AREA_TYPE eAreaType);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXArea();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_AREA_TYPE GetAreaType() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	unsigned char GetLayer() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLayer(unsigned char Layer);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetOuterNodeList(CXOrderedNodeList *pNodeList);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXOrderedNodeList *GetOuterNodeList() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void AddHole(CXOrderedNodeList *pNodeList);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	size_t GetHoleCount();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXOrderedNodeList *GetHole(size_t Index);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXArea(E_AREA_TYPE eAreaType);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXArea();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_AREA_TYPE GetAreaType() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    unsigned char GetLayer() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetLayer(unsigned char Layer);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetOuterNodeList(CXOrderedNodeList *pNodeList);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXOrderedNodeList *GetOuterNodeList() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void AddHole(CXOrderedNodeList *pNodeList);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    size_t GetHoleCount();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXOrderedNodeList *GetHole(size_t Index);
 };
 
-typedef CXBuffer<CXArea *>		TAreaBuffer;		///< oiu
+typedef CXBuffer<CXArea *>      TAreaBuffer;        ///< oiu
 
 #endif // __CXAREA_HPP__

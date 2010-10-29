@@ -24,7 +24,7 @@
 
 //-------------------------------------
 CXGPSInputChannel::CXGPSInputChannel() :
-	m_ForcedTimeout(0)
+    m_ForcedTimeout(0)
 {
 }
 
@@ -34,10 +34,10 @@ CXGPSInputChannel::~CXGPSInputChannel() {
 
 //-------------------------------------
 void CXGPSInputChannel::SetForcedTimeout(int NewValue) {
-	m_ForcedTimeout = NewValue;
+    m_ForcedTimeout = NewValue;
 }
 
 //-------------------------------------
 size_t CXGPSInputChannel::GetForcedTimeout() const {
-	return m_ForcedTimeout;
+    return m_ForcedTimeout;
 }

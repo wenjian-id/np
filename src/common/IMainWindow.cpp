@@ -25,81 +25,81 @@
 
 //-------------------------------------
 IMainWindow::IMainWindow() :
-	m_pNaviPOWM(NULL)
+    m_pNaviPOWM(NULL)
 {
-	m_pNaviPOWM = new CXNaviPOWM();
+    m_pNaviPOWM = new CXNaviPOWM();
 }
 
 //-------------------------------------
 IMainWindow::~IMainWindow() {
-	delete m_pNaviPOWM;
-	m_pNaviPOWM = NULL;
+    delete m_pNaviPOWM;
+    m_pNaviPOWM = NULL;
 }
 
 //-------------------------------------
 CXNaviPOWM *IMainWindow::GetNaviPOWM() const {
-	return m_pNaviPOWM;
+    return m_pNaviPOWM;
 }
 
 //-------------------------------------
 bool IMainWindow::Init() {
-	if(m_pNaviPOWM == NULL)
-		return false;
-	return m_pNaviPOWM->Init(this);
+    if(m_pNaviPOWM == NULL)
+        return false;
+    return m_pNaviPOWM->Init(this);
 }
 
 //-------------------------------------
 bool IMainWindow::StartThreads() {
-	if(m_pNaviPOWM == NULL)
-		return false;
-	return m_pNaviPOWM->StartThreads();
+    if(m_pNaviPOWM == NULL)
+        return false;
+    return m_pNaviPOWM->StartThreads();
 }
 
 //-------------------------------------
 void IMainWindow::StopThreads() {
-	if(m_pNaviPOWM == NULL)
-		return;
-	m_pNaviPOWM->StopThreads();
+    if(m_pNaviPOWM == NULL)
+        return;
+    m_pNaviPOWM->StopThreads();
 }
 
 //-------------------------------------
 void IMainWindow::OnResize(int Width, int Height) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->Resize(Width, Height);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->Resize(Width, Height);
 }
 
 //-------------------------------------
 void IMainWindow::OnChar(int TheChar) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->OnChar(TheChar);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->OnChar(TheChar);
 }
 
 //-------------------------------------
 void IMainWindow::OnKeyDown(int TheChar) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->OnKeyDown(TheChar);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->OnKeyDown(TheChar);
 }
 
 //-------------------------------------
 void IMainWindow::OnKeyUp(int TheChar) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->OnKeyUp(TheChar);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->OnKeyUp(TheChar);
 }
 
 //-------------------------------------
 void IMainWindow::OnMouseDown(int X, int Y) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->OnMouseDown(X, Y);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->OnMouseDown(X, Y);
 }
 
 //-------------------------------------
 void IMainWindow::OnMouseUp(int X, int Y) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->OnMouseUp(X, Y);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->OnMouseUp(X, Y);
 }
 
 //-------------------------------------
 void IMainWindow::OnMouseMove(int X, int Y) {
-	if(m_pNaviPOWM != NULL)
-		m_pNaviPOWM->OnMouseMove(X, Y);
+    if(m_pNaviPOWM != NULL)
+        m_pNaviPOWM->OnMouseMove(X, Y);
 }

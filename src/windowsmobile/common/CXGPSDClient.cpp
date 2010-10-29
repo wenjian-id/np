@@ -33,23 +33,23 @@ CXGPSDClient::~CXGPSDClient() {
 
 //-------------------------------------
 bool CXGPSDClient::Open() {
-	/// \todo implement
-	return false;
+    /// \todo implement
+    return false;
 }
 
 //-------------------------------------
 bool CXGPSDClient::Close() {
-	/// \todo implement
-	return false;
+    /// \todo implement
+    return false;
 }
 
 //-------------------------------------
 bool CXGPSDClient::IsOpen() {
-	/// \todo implement
-	return false;
+    /// \todo implement
+    return false;
 }
 
 //-------------------------------------
 void CXGPSDClient::Read() {
-	/// \todo implement
+    /// \todo implement
 }

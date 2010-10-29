@@ -36,90 +36,90 @@
 class CXThread : public IThread {
 friend class CXThreadHelper;
 private:
-	//---------------------------------------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	class CXThreadHelper : public QThread {
-	private:
-		CXThread		*m_pThread;		///< oiu
-		//-------------------------------------
-		CXThreadHelper(const CXThreadHelper &);							///< Not used.
-		const CXThreadHelper & operator = (const CXThreadHelper &);		///< Not used.
-	protected:
-	public:
-		//-------------------------------------
-		/**
-		 * \brief oiu
-		 *
-		 */
-		CXThreadHelper(CXThread *pThread);
-		//-------------------------------------
-		/**
-		 * \brief Destructor.
-		 *
-		 * Destructor.
-		 */
-		virtual ~CXThreadHelper();
-		//-------------------------------------
-		/**
-		 * \brief oiu
-		 *
-		 */
-		void run();
-		//-------------------------------------
-		/**
-		 * \brief oiu
-		 *
-		 */
-		void DoSleep(size_t dwMilliSeconds);
-	};
+    //---------------------------------------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    class CXThreadHelper : public QThread {
+    private:
+        CXThread        *m_pThread;     ///< oiu
+        //-------------------------------------
+        CXThreadHelper(const CXThreadHelper &);                         ///< Not used.
+        const CXThreadHelper & operator = (const CXThreadHelper &);     ///< Not used.
+    protected:
+    public:
+        //-------------------------------------
+        /**
+         * \brief oiu
+         *
+         */
+        CXThreadHelper(CXThread *pThread);
+        //-------------------------------------
+        /**
+         * \brief Destructor.
+         *
+         * Destructor.
+         */
+        virtual ~CXThreadHelper();
+        //-------------------------------------
+        /**
+         * \brief oiu
+         *
+         */
+        void run();
+        //-------------------------------------
+        /**
+         * \brief oiu
+         *
+         */
+        void DoSleep(size_t dwMilliSeconds);
+    };
 private:
-	CXThreadHelper		m_ThreadHelper;		///< oiu
-	//-------------------------------------
-	CXThread(const CXThread &);							///< Not used.
-	const CXThread & operator = (const CXThread &);		///< Not used.
+    CXThreadHelper      m_ThreadHelper;     ///< oiu
+    //-------------------------------------
+    CXThread(const CXThread &);                         ///< Not used.
+    const CXThread & operator = (const CXThread &);     ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DoSleep(size_t dwMilliSeconds);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DoSleep(size_t dwMilliSeconds);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool CreateThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void KillThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool WaitForThreadExit(size_t dwMilliSeconds);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool CreateThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void KillThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool WaitForThreadExit(size_t dwMilliSeconds);
 };
 
 

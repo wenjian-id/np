@@ -41,41 +41,41 @@ class CXBitmap;
 
 
 // Versions
-const unsigned int MAPVERSION	= 0x00020000; // 0.2.0
-const unsigned int ZOOMVERSION	= 0x00010000; // 0.1.0
-const unsigned int SECTVERSION	= 0x00010300; // 0.1.3
+const unsigned int MAPVERSION   = 0x00020000; // 0.2.0
+const unsigned int ZOOMVERSION  = 0x00010000; // 0.1.0
+const unsigned int SECTVERSION  = 0x00010300; // 0.1.3
 
-const unsigned int SCALE_FACTOR_UI32 = 1000000;		///< oiu
-const char MINLAYER = -10;							///< Minimum value or layer.
-const char MAXLAYER = 10;							///< Maximum value for layer.
+const unsigned int SCALE_FACTOR_UI32 = 1000000;     ///< oiu
+const char MINLAYER = -10;                          ///< Minimum value or layer.
+const char MAXLAYER = 10;                           ///< Maximum value for layer.
 
-const double EPSILON = 0.01;						///< oiu
-const unsigned char DegUTF8[2] = {0xC2, 0xB0};		///< UTF8 characters for degree sign.
+const double EPSILON = 0.01;                        ///< oiu
+const unsigned char DegUTF8[2] = {0xC2, 0xB0};      ///< UTF8 characters for degree sign.
 
 
 // Mapnik colors
-const CXRGB MAPBGCOLOR(0xE2, 0xDE, 0xD8);			///< oiu
-const CXRGB MAPFGCOLOR(0x00, 0x00, 0x00);			///< oiu
-const CXRGB MAPPOITEXTCOLOR(0x00, 0x00, 0xA0);		///< oiu
-const CXRGB MAPPOIBGCOLOR(0xE2, 0xDE, 0xD8);		///< oiu
-const CXRGB MAPCITYTEXTCOLOR(0x00, 0x00, 0x00);		///< oiu
-const CXRGB MAPCITYBGCOLOR(0xff, 0xff, 0x00);		///< oiu
+const CXRGB MAPBGCOLOR(0xE2, 0xDE, 0xD8);           ///< oiu
+const CXRGB MAPFGCOLOR(0x00, 0x00, 0x00);           ///< oiu
+const CXRGB MAPPOITEXTCOLOR(0x00, 0x00, 0xA0);      ///< oiu
+const CXRGB MAPPOIBGCOLOR(0xE2, 0xDE, 0xD8);        ///< oiu
+const CXRGB MAPCITYTEXTCOLOR(0x00, 0x00, 0x00);     ///< oiu
+const CXRGB MAPCITYBGCOLOR(0xff, 0xff, 0x00);       ///< oiu
 
-const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);	///< oiu
+const CXRGB COLOR_TRANSPARENT(0xFF, 0x22, 0xEE);    ///< oiu
 
 //-------------------------------------
 /**
  * \brief Compute maximum of two values.
  *
  * Compute maximum of two values.
- * \param	a	First value.
- * \param	b	Second value.
- * \return		Maximum.
+ * \param   a   First value.
+ * \param   b   Second value.
+ * \return      Maximum.
  */
 template <class t> t Max(const t &a, const t&b) {
-	if(a < b)
-		return b;
-	return a;
+    if(a < b)
+        return b;
+    return a;
 }
 
 //-------------------------------------
@@ -83,14 +83,14 @@ template <class t> t Max(const t &a, const t&b) {
  * \brief Compute minimum of two values.
  *
  * Compute minimum of two values.
- * \param	a	First value.
- * \param	b	Second value.
- * \return		Minimum.
+ * \param   a   First value.
+ * \param   b   Second value.
+ * \return      Minimum.
  */
 template <class t> t Min(const t &a, const t&b) {
-	if(a < b)
-		return a;
-	return b;
+    if(a < b)
+        return a;
+    return b;
 }
 
 //-------------------------------------
@@ -100,17 +100,17 @@ template <class t> t Min(const t &a, const t&b) {
  * Possible command.
  */
 enum E_COMMAND {
-	e_CmdNone,				///< No command.
-	e_CmdQuit,				///< Quit.
-	e_CmdInfo,				///< Info.
-	e_CmdSave,				///< Toggle save.
-	e_CmdZoomIn,			///< Zoom in
-	e_CmdZoomOut,			///< Zoom out
-	e_CmdSat,				///< Sat info.
-	e_CmdMinimize,			///< Minimize.
-	e_CmdAutoZoom,			///< Auto zoom.
-	e_CmdMapMoveManually,	///< Move map around.
-	e_CmdClock,				///< Switch clock display.
+    e_CmdNone,              ///< No command.
+    e_CmdQuit,              ///< Quit.
+    e_CmdInfo,              ///< Info.
+    e_CmdSave,              ///< Toggle save.
+    e_CmdZoomIn,            ///< Zoom in
+    e_CmdZoomOut,           ///< Zoom out
+    e_CmdSat,               ///< Sat info.
+    e_CmdMinimize,          ///< Minimize.
+    e_CmdAutoZoom,          ///< Auto zoom.
+    e_CmdMapMoveManually,   ///< Move map around.
+    e_CmdClock,             ///< Switch clock display.
 };
 
 
@@ -121,11 +121,11 @@ enum E_COMMAND {
  * Loading status for map container and map section.
  */
 enum E_LOADING_STATUS {
-	e_LSNotLoaded,	///< Not loaded yet.
-	e_LSInList,		///< In list for loading.
-	e_LSLoading,	///< Still loading.
-	e_LSLoadError,	///< Load error.
-	e_LSLoaded,		///< Alerady loaded.
+    e_LSNotLoaded,  ///< Not loaded yet.
+    e_LSInList,     ///< In list for loading.
+    e_LSLoading,    ///< Still loading.
+    e_LSLoadError,  ///< Load error.
+    e_LSLoaded,     ///< Alerady loaded.
 };
 
 //-------------------------------------
@@ -134,8 +134,8 @@ enum E_LOADING_STATUS {
  *
  */
 enum E_BACKGROUND_TYPE {
-	e_BG_AREA,		///< oiu
-	e_BG_GLOW,		///< oiu
+    e_BG_AREA,      ///< oiu
+    e_BG_GLOW,      ///< oiu
 };
 
 
@@ -145,10 +145,10 @@ enum E_BACKGROUND_TYPE {
  *
  */
 enum E_BIT_COUNT {
-	e_BC_8,		///< oiu
-	e_BC_16,	///< oiu
-	e_BC_24,	///< oiu
-	e_BC_32,	///< oiu
+    e_BC_8,     ///< oiu
+    e_BC_16,    ///< oiu
+    e_BC_24,    ///< oiu
+    e_BC_32,    ///< oiu
 };
 
 //-------------------------------------
@@ -157,12 +157,12 @@ enum E_BIT_COUNT {
  *
  */
 enum E_TAG_TYPE_0_1_2 {
-	e_Tag_Name_0_1_2		= 0x0001,	///< oiu
-	e_Tag_Ref_0_1_2			= 0x0002,	///< oiu
-	e_Tag_IntRef_0_1_2		= 0x0004,	///< oiu
-	e_Tag_Layer_0_1_2		= 0x0008,	///< oiu
-	e_Tag_MaxSpeed_0_1_2	= 0x0010,	///< oiu
-	e_Tag_Oneway_0_1_2		= 0x0020,	///< oiu
+    e_Tag_Name_0_1_2        = 0x0001,   ///< oiu
+    e_Tag_Ref_0_1_2         = 0x0002,   ///< oiu
+    e_Tag_IntRef_0_1_2      = 0x0004,   ///< oiu
+    e_Tag_Layer_0_1_2       = 0x0008,   ///< oiu
+    e_Tag_MaxSpeed_0_1_2    = 0x0010,   ///< oiu
+    e_Tag_Oneway_0_1_2      = 0x0020,   ///< oiu
 };
 
 //-------------------------------------
@@ -171,13 +171,13 @@ enum E_TAG_TYPE_0_1_2 {
  *
  */
 enum E_TAG_TYPE {
-	e_Tag_Name				= 0x0001,	///< oiu
-	e_Tag_Ref				= 0x0002,	///< oiu
-	e_Tag_IntRef			= 0x0004,	///< oiu
-	e_Tag_Layer				= 0x0008,	///< oiu
-	e_Tag_MaxSpeedForward	= 0x0010,	///< oiu
-	e_Tag_MaxSpeedBackward	= 0x0020,	///< oiu
-	e_Tag_Oneway			= 0x0040,	///< oiu
+    e_Tag_Name              = 0x0001,   ///< oiu
+    e_Tag_Ref               = 0x0002,   ///< oiu
+    e_Tag_IntRef            = 0x0004,   ///< oiu
+    e_Tag_Layer             = 0x0008,   ///< oiu
+    e_Tag_MaxSpeedForward   = 0x0010,   ///< oiu
+    e_Tag_MaxSpeedBackward  = 0x0020,   ///< oiu
+    e_Tag_Oneway            = 0x0040,   ///< oiu
 };
 
 //-------------------------------------
@@ -186,9 +186,9 @@ enum E_TAG_TYPE {
  *
  */
 enum E_ONEWAY_TYPE {
-	e_Oneway_None		= 0x00,	///< oiu
-	e_Oneway_Normal		= 0x01,	///< oiu
-	e_Oneway_Inverse	= 0x02,	///< oiu
+    e_Oneway_None       = 0x00, ///< oiu
+    e_Oneway_Normal     = 0x01, ///< oiu
+    e_Oneway_Inverse    = 0x02, ///< oiu
 };
 
 //-------------------------------------
@@ -199,9 +199,9 @@ enum E_ONEWAY_TYPE {
  * If Path is an absolute path (well, a path starting with PATHDELIMITER)
  * already it will be used as result, else the result will be StartPath + Path.
  * If necessary, a PATHDELIMITER will be appended.
- * \param	StartPath	Start path
- * \param	Path		Path to be processed.
- * \return				New absolute path.
+ * \param   StartPath   Start path
+ * \param   Path        Path to be processed.
+ * \return              New absolute path.
  */
 CXStringASCII CreateAbsolutePath(const CXStringASCII &StartPath, const CXStringASCII &Path);
 
@@ -212,9 +212,9 @@ CXStringASCII CreateAbsolutePath(const CXStringASCII &StartPath, const CXStringA
  * Create an absolute filename.
  * If FileName is an absolute file name (well, a file name starting with PATHDELIMITER)
  * already it will be used as result, else the result will be StartPath + FileName.
- * \param	StartPath	Start path
- * \param	FileName	File name to be processed.
- * \return				New absolute path.
+ * \param   StartPath   Start path
+ * \param   FileName    File name to be processed.
+ * \return              New absolute path.
  */
 CXStringASCII CreateAbsoluteFileName(const CXStringASCII &StartPath, const CXStringASCII &FileName);
 
@@ -226,9 +226,9 @@ CXStringASCII CreateAbsoluteFileName(const CXStringASCII &StartPath, const CXStr
  * Both Unix and Windows line end styles should be recognised and 
  * hadled properly. The end line character(s) are not part of the
  * result.
- * \param	rInFile     The file to read from.
- * \param	rNewLine	String to read into.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rNewLine    String to read into.
+ * \return              true if successfull.
  */
 bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine);
 
@@ -237,9 +237,9 @@ bool ReadLineASCII(CXFile & rInFile, CXStringASCII & rNewLine);
  * \brief Read one byte from a file.
  *
  * Read a byte (unsigned char) from a file.
- * \param	rInFile     The file to read from.
- * \param	rValue		Byte to read into.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      Byte to read into.
+ * \return              true if successfull.
  */
 bool ReadUI(CXFile & rInFile, E_BIT_COUNT eBitCount, t_uint32 & rValue);
 
@@ -248,9 +248,9 @@ bool ReadUI(CXFile & rInFile, E_BIT_COUNT eBitCount, t_uint32 & rValue);
  * \brief Read one byte from a file.
  *
  * Read a byte (unsigned char) from a file.
- * \param	rInFile     The file to read from.
- * \param	rValue		Byte to read into.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      Byte to read into.
+ * \return              true if successfull.
  */
 bool ReadUI8(CXFile & rInFile, unsigned char & rValue);
 
@@ -259,9 +259,9 @@ bool ReadUI8(CXFile & rInFile, unsigned char & rValue);
  * \brief Read a 16 bit unsigned integer from a file.
  *
  * Read a 16 bit unsigned integer from a file.
- * \param	rInFile     The file to read from.
- * \param	rValue		Value to fill with data.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      Value to fill with data.
+ * \return              true if successfull.
  */
 bool ReadUI16(CXFile & rInFile, t_uint16 & rValue);
 
@@ -270,9 +270,9 @@ bool ReadUI16(CXFile & rInFile, t_uint16 & rValue);
  * \brief Read a 24 bit unsigned integer from a file.
  *
  * Read a 24 bit unsigned integer from a file.
- * \param	rInFile     The file to read from.
- * \param	rValue		Value to fill with data.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      Value to fill with data.
+ * \return              true if successfull.
  */
 bool ReadUI24(CXFile & rInFile, t_uint32 & rValue);
 
@@ -281,9 +281,9 @@ bool ReadUI24(CXFile & rInFile, t_uint32 & rValue);
  * \brief Read a 32 bit unsigned integer from a file.
  *
  * Read a 32 bit unsigned integer from a file.
- * \param	rInFile     The file to read from.
- * \param	rValue		Value to fill with data.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      Value to fill with data.
+ * \return              true if successfull.
  */
 bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
 
@@ -292,9 +292,9 @@ bool ReadUI32(CXFile & rInFile, t_uint32 & rValue);
  * \brief Write a 32 bit unsigned integer to a file.
  *
  * Write a 32 bit unsigned integer to a file.
- * \param	rOutFile	The file to write to .
- * \param	Value		Value to write.
- * \return				true if successfull.
+ * \param   rOutFile    The file to write to .
+ * \param   Value       Value to write.
+ * \return              true if successfull.
  */
 bool WriteUI32(CXFile & rOutFile, t_uint32 Value);
 
@@ -303,9 +303,9 @@ bool WriteUI32(CXFile & rOutFile, t_uint32 Value);
  * \brief Read a 64 bit unsigned integer from a file.
  *
  * Read a 64 bit unsigned integer from a file.
- * \param	rInFile     The file to read from.
- * \param	rValue		Value to fill with data.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      Value to fill with data.
+ * \return              true if successfull.
  */
 bool ReadUI64(CXFile & rInFile, t_uint64 & rValue);
 
@@ -315,9 +315,9 @@ bool ReadUI64(CXFile & rInFile, t_uint64 & rValue);
  *
  * Read one UTF8 encoded string from a file. Strings have to 
  * terminated with a 0 character.
- * \param	rInFile     The file to read from.
- * \param	rValue		UTF8 String to read into.
- * \return				true if successfull.
+ * \param   rInFile     The file to read from.
+ * \param   rValue      UTF8 String to read into.
+ * \return              true if successfull.
  */
 bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
 
@@ -326,8 +326,8 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
  * \brief Check if CRC of NMEA packet is correct.
  *
  * Check if CRC of NMEA packet is correct.
- * \param	NMEAPacket		String containing the NMEA packet including CR LF 
- * \return					true if CRC s OK.
+ * \param   NMEAPacket      String containing the NMEA packet including CR LF 
+ * \return                  true if CRC s OK.
  */
 bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
 
@@ -337,9 +337,9 @@ bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
  *
  * Extract information from a GGA packet. The information extracted
  * consists of longitude, latitude and number of satellites.
- * \param	NMEAPacket	String containing the NMEA packet including CR LF 
- * \param	rGGAPacket	Extracted data.
- * \return				true if successfull.
+ * \param   NMEAPacket  String containing the NMEA packet including CR LF 
+ * \param   rGGAPacket  Extracted data.
+ * \return              true if successfull.
  */
 bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket);
 
@@ -349,9 +349,9 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket);
  *
  * Extract information from a RMC packet. The information extracted
  * consists of longitude, latitude and speed and course.
- * \param	NMEAPacket	String containing the NMEA packet including CR LF 
- * \param	rRMCPacket	Extracted data.
- * \return				true if successfull.
+ * \param   NMEAPacket  String containing the NMEA packet including CR LF 
+ * \param   rRMCPacket  Extracted data.
+ * \return              true if successfull.
  */
 bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
 
@@ -361,9 +361,9 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
  *
  * Extract information from a GSA packet. The information extracted
  * consists of an array of the PRN of active satellites.
- * \param	NMEAPacket		String containing the NMEA packet including CR LF 
- * \param	rGSAPacket		Extracted data.
- * \return					true if successfull.
+ * \param   NMEAPacket      String containing the NMEA packet including CR LF 
+ * \param   rGSAPacket      Extracted data.
+ * \return                  true if successfull.
  */
 bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket);
 
@@ -373,21 +373,21 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket);
  *
  * Extract information from a GSV packet. The information extracted
  * consists of 
- * \param	NMEAPacket			String containing the NMEA packet including CR LF 
- * \param	rNTelegrams			Number of GSV telegrams
- * \param	rNCurrentTelegram	Number of current telegram
- * \param	rNSat				Number of visible staellites
- * \param	rNInfos				Number of staellite infos received
- * \param	rInfo1				Satellite info 1
- * \param	rInfo2				Satellite info 2
- * \param	rInfo3				Satellite info 3
- * \param	rInfo4				Satellite info 4
- * \return						true if successfull.
+ * \param   NMEAPacket          String containing the NMEA packet including CR LF 
+ * \param   rNTelegrams         Number of GSV telegrams
+ * \param   rNCurrentTelegram   Number of current telegram
+ * \param   rNSat               Number of visible staellites
+ * \param   rNInfos             Number of staellite infos received
+ * \param   rInfo1              Satellite info 1
+ * \param   rInfo2              Satellite info 2
+ * \param   rInfo3              Satellite info 3
+ * \param   rInfo4              Satellite info 4
+ * \return                      true if successfull.
  */
 bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram, 
-					int &rNSat, int &rNInfos, 
-					CXSatelliteInfo &rInfo1, CXSatelliteInfo &rInfo2,
-					CXSatelliteInfo &rInfo3, CXSatelliteInfo &rInfo4);
+                    int &rNSat, int &rNInfos, 
+                    CXSatelliteInfo &rInfo1, CXSatelliteInfo &rInfo2,
+                    CXSatelliteInfo &rInfo3, CXSatelliteInfo &rInfo4);
 
 //-------------------------------------
 /**
@@ -397,9 +397,9 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
  * between the first character (including it) and the first occurence of the
  * token delimiter (not including it). If the token delimiter is not found, the whole string
  * is returned. The returned string (plus token delimiter) is deleted from the string.
- * \param	rString		The string to 
- * \param	cTokenChar	Token delimiter.
- * \return				The first extracted token.
+ * \param   rString     The string to 
+ * \param   cTokenChar  Token delimiter.
+ * \return              The first extracted token.
  */
 CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar);
 
@@ -408,10 +408,10 @@ CXStringASCII ExtractFirstToken(CXStringASCII &rString, const char cTokenChar);
  * \brief Convert lon / lat from deGreesMinute.Decimal to decimal deGrees.
  *
  * Convert lon / lat from deGreesMinute.Decimal to decimal deGrees.
- * \param	dLon	Longitude to convert [GM.D]
- * \param	dLat	Latitude to convert [GM.D]
- * \param	rLon	Converted longitude [decimal degrees]
- * \param	rLat	Converted latitude [decimal degrees]
+ * \param   dLon    Longitude to convert [GM.D]
+ * \param   dLat    Latitude to convert [GM.D]
+ * \param   rLon    Converted longitude [decimal degrees]
+ * \param   rLat    Converted latitude [decimal degrees]
  */
 void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdLat);
 
@@ -420,9 +420,9 @@ void LLGMDToG(const double dLon, const double dLat, double & rdLon, double & rdL
  * \brief Compute distance between two coordinates.
  *
  * Compute distance between two coordinates.
- * \param	Coor1	First coordinate.
- * \param	Coor2	Second coordinate.
- * \return	Distance between coordinates
+ * \param   Coor1   First coordinate.
+ * \param   Coor2   Second coordinate.
+ * \return  Distance between coordinates
  */
 double CalcDistance(const CXCoor &Coor1, const CXCoor &Coor2);
 
@@ -440,10 +440,10 @@ void ComputeRelativeUTMAngle(const CXCoor &BaseCoor, const CXCoor &TargetCoor, C
  *
  * Calculate optimal font height so that a text fits into a rectangle.
  * Font height is adjusted when coputing!
- * \param	Bmp		Bitmap.
- * \param	Str		String.
- * \param	rRect	The rectangle.
- * \return			Font height.
+ * \param   Bmp     Bitmap.
+ * \param   Str     String.
+ * \param   rRect   The rectangle.
+ * \return          Font height.
  */
 int CalcFontHeight(CXBitmap &Bmp, const CXStringUTF8 &Str, tIRect &rRect);
 
@@ -459,7 +459,7 @@ double ConvertSavedUI32(t_uint32 Value);
 /**
  * \brief oiu
  *
- *	oiu
+ *  oiu
  */
 E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value);
 
@@ -469,10 +469,10 @@ E_BACKGROUND_TYPE Str2BGType(const CXStringASCII & Value);
  *
  */
 enum E_MAP_PLACE_TYPE {
-	e_MapPlace_None				= 0x00,		///< No place.
-	e_MapPlace_Small			= 0x01,		///< Place small.
-	e_MapPlace_Medium			= 0x02,		///< Place medium.
-	e_MapPlace_Large			= 0x03,		///< Place large.
+    e_MapPlace_None             = 0x00,     ///< No place.
+    e_MapPlace_Small            = 0x01,     ///< Place small.
+    e_MapPlace_Medium           = 0x02,     ///< Place medium.
+    e_MapPlace_Large            = 0x03,     ///< Place large.
 };
 
 //-------------------------------------
@@ -481,15 +481,15 @@ enum E_MAP_PLACE_TYPE {
  *
  */
 enum E_ZOOM_LEVEL {
-	e_ZoomLevel_0		= 0,	///< oiu
-	e_ZoomLevel_1		= 1,	///< oiu
-	e_ZoomLevel_2		= 2,	///< oiu
-	e_ZoomLevel_3		= 3,	///< oiu
-	e_ZoomLevel_4		= 4,	///< oiu
-	e_ZoomLevel_5		= 5,	///< oiu
-	e_ZoomLevel_6		= 6,	///< oiu
-	e_ZoomLevel_7		= 7,	///< oiu
-	e_ZoomLevel_Count	= 8,	///< oiu
+    e_ZoomLevel_0       = 0,    ///< oiu
+    e_ZoomLevel_1       = 1,    ///< oiu
+    e_ZoomLevel_2       = 2,    ///< oiu
+    e_ZoomLevel_3       = 3,    ///< oiu
+    e_ZoomLevel_4       = 4,    ///< oiu
+    e_ZoomLevel_5       = 5,    ///< oiu
+    e_ZoomLevel_6       = 6,    ///< oiu
+    e_ZoomLevel_7       = 7,    ///< oiu
+    e_ZoomLevel_Count   = 8,    ///< oiu
 };
 
 // Order taken from http://etricceline.de/osm/germany/en_stats_amenity.htm
@@ -498,92 +498,92 @@ enum E_ZOOM_LEVEL {
 /**
  * \brief oiu
  *
- *	oiu
+ *  oiu
  */
-enum E_POI_TYPE {		// must fit the values in the map file!!!
-	// special values
-	e_POI_None					= 0x0000,	///< Nothing.
-	e_POI_All					= 0xFFFF,	///< All.
+enum E_POI_TYPE {       // must fit the values in the map file!!!
+    // special values
+    e_POI_None                  = 0x0000,   ///< Nothing.
+    e_POI_All                   = 0xFFFF,   ///< All.
 
-	e_POI_Parking				= 0x0001,	///< Car park.
-	e_POI_Fuel					= 0x0002,	///< Fuel.
-	e_POI_PlcOfWrshp_Christian	= 0x0003,	///< Christian church, temple, etc.
-	e_POI_Restaurant			= 0x0004,	///< Restaurant.
-	e_POI_School				= 0x0005,	///< School.
-	e_POI_Telephone				= 0x0006,	///< Public telephone
-	e_POI_PostBox				= 0x0007,	///< Post box.
-	e_POI_Pharmacy				= 0x0008,	///< Pharmacy.
-	e_POI_Pub					= 0x0009,	///< Pub.
-	e_POI_Hospital				= 0x000A,	///< Hospital.
-	e_POI_PostOffice			= 0x000B,	///< Post office.
-	e_POI_FireStation			= 0x000C,	///< Fire station.
-	e_POI_Police				= 0x000D,	///< Police station.
-	e_POI_BusStation			= 0x000E,	///< Bus station.
-	e_POI_Toilets				= 0x000F,	///< Public toilets.
-	e_POI_Taxi					= 0x0010,	///< Taxi.
-	e_POI_Stop					= 0x0011,	///< Stop sign
-	e_POI_TrafficSignals		= 0x0012,	///< Traffic signals
-	e_POI_MotorwayJunction		= 0x0013,	///< Motorway junction
-	e_POI_BusStop				= 0x0014,	///< Bus stop.
-	e_POI_RailwayStation		= 0x0015,	///< Railway station.
-	e_POI_RailwayHalt			= 0x0016,	///< Railway halt.
-	e_POI_TramStop				= 0x0017,	///< Tram stop.
-	e_POI_SubwayEntrance		= 0x0018,	///< Subway entrance
-	e_POI_Crossing				= 0x0019,	///< Crossing
-	e_POI_LevelCrossing			= 0x001A,	///< Level crossing
-	e_POI_Aerodrome				= 0x001B,	///< Aerodrome
-	e_POI_Helipad				= 0x001C,	///< Helipad
-	e_POI_PowerTower			= 0x001D,	///< Power tower.
-	e_POI_PowerSubStation		= 0x001E,	///< Power sub station.
-	e_POI_Hotel					= 0x001F,	///< Hotel.
-	e_POI_Hostel				= 0x0020,	///< Hostel.
-	e_POI_CampSite				= 0x0021,	///< Camp site.
-	e_POI_Supermarket			= 0x0022,	///< Supermarket.
-	e_POI_PlcOfWrshp_Jewish		= 0x0023,	///< Jewish church, temple, etc.
-	e_POI_PlcOfWrshp_Muslim		= 0x0024,	///< Muslim church, temple, etc.
-	e_POI_PlcOfWrshp_Hindu		= 0x0025,	///< Hindu church, temple, etc.
-	e_POI_PlcOfWrshp_Buddhist	= 0x0026,	///< Buddhist church, temple, etc.
-	e_POI_PlcOfWrshp_Shinto		= 0x0027,	///< Shinto church, temple, etc.
-	e_POI_PlcOfWrshp_Taoist		= 0x0028,	///< Taoist church, temple, etc.
-	e_POI_PlcOfWrshp_Unknown	= 0x0029,	///< Unknown church, temple, etc.
-	e_POI_Shelter				= 0x002A,	///< Shelter.
-	e_POI_College				= 0x002B,	///< College.
-	e_POI_University			= 0x002C,	///< University.
+    e_POI_Parking               = 0x0001,   ///< Car park.
+    e_POI_Fuel                  = 0x0002,   ///< Fuel.
+    e_POI_PlcOfWrshp_Christian  = 0x0003,   ///< Christian church, temple, etc.
+    e_POI_Restaurant            = 0x0004,   ///< Restaurant.
+    e_POI_School                = 0x0005,   ///< School.
+    e_POI_Telephone             = 0x0006,   ///< Public telephone
+    e_POI_PostBox               = 0x0007,   ///< Post box.
+    e_POI_Pharmacy              = 0x0008,   ///< Pharmacy.
+    e_POI_Pub                   = 0x0009,   ///< Pub.
+    e_POI_Hospital              = 0x000A,   ///< Hospital.
+    e_POI_PostOffice            = 0x000B,   ///< Post office.
+    e_POI_FireStation           = 0x000C,   ///< Fire station.
+    e_POI_Police                = 0x000D,   ///< Police station.
+    e_POI_BusStation            = 0x000E,   ///< Bus station.
+    e_POI_Toilets               = 0x000F,   ///< Public toilets.
+    e_POI_Taxi                  = 0x0010,   ///< Taxi.
+    e_POI_Stop                  = 0x0011,   ///< Stop sign
+    e_POI_TrafficSignals        = 0x0012,   ///< Traffic signals
+    e_POI_MotorwayJunction      = 0x0013,   ///< Motorway junction
+    e_POI_BusStop               = 0x0014,   ///< Bus stop.
+    e_POI_RailwayStation        = 0x0015,   ///< Railway station.
+    e_POI_RailwayHalt           = 0x0016,   ///< Railway halt.
+    e_POI_TramStop              = 0x0017,   ///< Tram stop.
+    e_POI_SubwayEntrance        = 0x0018,   ///< Subway entrance
+    e_POI_Crossing              = 0x0019,   ///< Crossing
+    e_POI_LevelCrossing         = 0x001A,   ///< Level crossing
+    e_POI_Aerodrome             = 0x001B,   ///< Aerodrome
+    e_POI_Helipad               = 0x001C,   ///< Helipad
+    e_POI_PowerTower            = 0x001D,   ///< Power tower.
+    e_POI_PowerSubStation       = 0x001E,   ///< Power sub station.
+    e_POI_Hotel                 = 0x001F,   ///< Hotel.
+    e_POI_Hostel                = 0x0020,   ///< Hostel.
+    e_POI_CampSite              = 0x0021,   ///< Camp site.
+    e_POI_Supermarket           = 0x0022,   ///< Supermarket.
+    e_POI_PlcOfWrshp_Jewish     = 0x0023,   ///< Jewish church, temple, etc.
+    e_POI_PlcOfWrshp_Muslim     = 0x0024,   ///< Muslim church, temple, etc.
+    e_POI_PlcOfWrshp_Hindu      = 0x0025,   ///< Hindu church, temple, etc.
+    e_POI_PlcOfWrshp_Buddhist   = 0x0026,   ///< Buddhist church, temple, etc.
+    e_POI_PlcOfWrshp_Shinto     = 0x0027,   ///< Shinto church, temple, etc.
+    e_POI_PlcOfWrshp_Taoist     = 0x0028,   ///< Taoist church, temple, etc.
+    e_POI_PlcOfWrshp_Unknown    = 0x0029,   ///< Unknown church, temple, etc.
+    e_POI_Shelter               = 0x002A,   ///< Shelter.
+    e_POI_College               = 0x002B,   ///< College.
+    e_POI_University            = 0x002C,   ///< University.
 
 /*
-	e_POI_Recycling				= 0x0006,	///< Recycling facilities.
-	e_POI_Bank					= 0x000A,	///< Bank.
-	e_POI_FastFood				= 0x000B,	///< Fast food.
-	e_POI_PublicBuilding		= 0x000C,	///< Public building.
-	e_POI_TownHall				= 0x0013,	///< Town hall.
-	e_POI_GraveYard				= 0x0014,	///< Grave yard.
-	e_POI_Cafe					= 0x0017,	///< Cafe.
-	e_POI_Library				= 0x0018,	///< Library.
-	e_POI_Cinema				= 0x0019,	///< Cinema.
-	e_POI_ATM					= 0x001A,	///< ATM, cash point.
-	e_POI_Theatre				= 0x001B,	///< Theatre or opera.
-	e_POI_Biergarten			= 0x001C,	///< Biergarten.
-	e_POI_BicycleParking		= 0x001D,	///< Parking for bicycles.
-	e_POI_Courthouse			= 0x001E,	///< Courthouse.
-	e_POI_Prison				= 0x001F,	///< Prison.
-	e_POI_Attraction			= 0x0202,	///< Attraction.
-	e_POI_ViewPoint				= 0x0205,	///< Viewpoint.
-	e_POI_Information			= 0x0206,	///< Information.
-	e_POI_Zoo					= 0x0207,	///< Zoo.
-	e_POI_GuestHouse			= 0x0208,	///< Guest house
-	e_POI_PicnicSite			= 0x0209,	///< Picninc site.
-	e_POI_ThemePark				= 0x020A,	///< Theme park.
-	e_POI_CaravanSite			= 0x020B,	///< Caravan site.
-	e_POI_Motel					= 0x020C,	///< Motel.
-	e_POI_Museum				= 0x020D,	///< Museum.
-	e_POI_Artwork				= 0x020E,	///< Artwork.
-	e_POI_ShopBakery			= 0x0202,	///< Bakery
-	e_POI_ShopButcher			= 0x0203,	///< Butcher.
-	e_POI_Kiosk					= 0x0204,	///< Kiosk.
-	e_POI_ShopConvenience		= 0x0205,	///< Shop convenience
-	e_POI_ShopDoItYourself		= 0x0206,	///< Shop "do it yourself"
-	e_POI_ShopBicycle			= 0x0207,	///< Shop bicycle.
-	e_POI_ShopOutdoor			= 0x0208,	///< Shop Outdoor.
+    e_POI_Recycling             = 0x0006,   ///< Recycling facilities.
+    e_POI_Bank                  = 0x000A,   ///< Bank.
+    e_POI_FastFood              = 0x000B,   ///< Fast food.
+    e_POI_PublicBuilding        = 0x000C,   ///< Public building.
+    e_POI_TownHall              = 0x0013,   ///< Town hall.
+    e_POI_GraveYard             = 0x0014,   ///< Grave yard.
+    e_POI_Cafe                  = 0x0017,   ///< Cafe.
+    e_POI_Library               = 0x0018,   ///< Library.
+    e_POI_Cinema                = 0x0019,   ///< Cinema.
+    e_POI_ATM                   = 0x001A,   ///< ATM, cash point.
+    e_POI_Theatre               = 0x001B,   ///< Theatre or opera.
+    e_POI_Biergarten            = 0x001C,   ///< Biergarten.
+    e_POI_BicycleParking        = 0x001D,   ///< Parking for bicycles.
+    e_POI_Courthouse            = 0x001E,   ///< Courthouse.
+    e_POI_Prison                = 0x001F,   ///< Prison.
+    e_POI_Attraction            = 0x0202,   ///< Attraction.
+    e_POI_ViewPoint             = 0x0205,   ///< Viewpoint.
+    e_POI_Information           = 0x0206,   ///< Information.
+    e_POI_Zoo                   = 0x0207,   ///< Zoo.
+    e_POI_GuestHouse            = 0x0208,   ///< Guest house
+    e_POI_PicnicSite            = 0x0209,   ///< Picninc site.
+    e_POI_ThemePark             = 0x020A,   ///< Theme park.
+    e_POI_CaravanSite           = 0x020B,   ///< Caravan site.
+    e_POI_Motel                 = 0x020C,   ///< Motel.
+    e_POI_Museum                = 0x020D,   ///< Museum.
+    e_POI_Artwork               = 0x020E,   ///< Artwork.
+    e_POI_ShopBakery            = 0x0202,   ///< Bakery
+    e_POI_ShopButcher           = 0x0203,   ///< Butcher.
+    e_POI_Kiosk                 = 0x0204,   ///< Kiosk.
+    e_POI_ShopConvenience       = 0x0205,   ///< Shop convenience
+    e_POI_ShopDoItYourself      = 0x0206,   ///< Shop "do it yourself"
+    e_POI_ShopBicycle           = 0x0207,   ///< Shop bicycle.
+    e_POI_ShopOutdoor           = 0x0208,   ///< Shop Outdoor.
 */
 };
 
@@ -592,32 +592,32 @@ enum E_POI_TYPE {		// must fit the values in the map file!!!
  * \brief oiu
  *
  */
-enum E_WAY_TYPE_0_1_2 {	// must fit the values in the map file!!!
-	e_Way_Fading_0_1_2			= 0x00,		///< oiu
-	e_Way_Unknown_0_1_2			= 0x01,		///< oiu
-	e_Way_Motorway_0_1_2		= 0x02,		///< oiu
-	e_Way_MotorwayLink_0_1_2	= 0x03,		///< oiu
-	e_Way_Trunk_0_1_2			= 0x04,		///< oiu
-	e_Way_TrunkLink_0_1_2		= 0x05,		///< oiu
-	e_Way_Primary_0_1_2			= 0x06,		///< oiu
-	e_Way_PrimaryLink_0_1_2		= 0x07,		///< oiu
-	e_Way_Secondary_0_1_2		= 0x08,		///< oiu
-	e_Way_Tertiary_0_1_2		= 0x09,		///< oiu
-	e_Way_Unclassified_0_1_2	= 0x0A,		///< oiu
-	e_Way_Track_0_1_2			= 0x0B,		///< oiu
-	e_Way_Residential_0_1_2		= 0x0C,		///< oiu
-	e_Way_Service_0_1_2			= 0x0D,		///< oiu
-	e_Way_Bridleway_0_1_2		= 0x0E,		///< oiu
-	e_Way_Cycleway_0_1_2		= 0x0F,		///< oiu
-	e_Way_Footway_0_1_2			= 0x10,		///< oiu
-	e_Way_Pedestrian_0_1_2		= 0x11,		///< oiu
-	e_Way_Steps_0_1_2			= 0x12,		///< oiu
-	e_Way_LivingStreet_0_1_2	= 0x13,		///< oiu
-	e_Way_NationalBorder_0_1_2	= 0x14,		///< oiu
-	e_Way_Railway_Thick_0_1_2	= 0x15,		///< oiu
-	e_Way_Railway_Thin_0_1_2	= 0x16,		///< oiu
-	e_Way_Water_Thick_0_1_2		= 0x17,		///< oiu
-	e_Way_Water_Thin_0_1_2		= 0x18,		///< oiu
+enum E_WAY_TYPE_0_1_2 { // must fit the values in the map file!!!
+    e_Way_Fading_0_1_2          = 0x00,     ///< oiu
+    e_Way_Unknown_0_1_2         = 0x01,     ///< oiu
+    e_Way_Motorway_0_1_2        = 0x02,     ///< oiu
+    e_Way_MotorwayLink_0_1_2    = 0x03,     ///< oiu
+    e_Way_Trunk_0_1_2           = 0x04,     ///< oiu
+    e_Way_TrunkLink_0_1_2       = 0x05,     ///< oiu
+    e_Way_Primary_0_1_2         = 0x06,     ///< oiu
+    e_Way_PrimaryLink_0_1_2     = 0x07,     ///< oiu
+    e_Way_Secondary_0_1_2       = 0x08,     ///< oiu
+    e_Way_Tertiary_0_1_2        = 0x09,     ///< oiu
+    e_Way_Unclassified_0_1_2    = 0x0A,     ///< oiu
+    e_Way_Track_0_1_2           = 0x0B,     ///< oiu
+    e_Way_Residential_0_1_2     = 0x0C,     ///< oiu
+    e_Way_Service_0_1_2         = 0x0D,     ///< oiu
+    e_Way_Bridleway_0_1_2       = 0x0E,     ///< oiu
+    e_Way_Cycleway_0_1_2        = 0x0F,     ///< oiu
+    e_Way_Footway_0_1_2         = 0x10,     ///< oiu
+    e_Way_Pedestrian_0_1_2      = 0x11,     ///< oiu
+    e_Way_Steps_0_1_2           = 0x12,     ///< oiu
+    e_Way_LivingStreet_0_1_2    = 0x13,     ///< oiu
+    e_Way_NationalBorder_0_1_2  = 0x14,     ///< oiu
+    e_Way_Railway_Thick_0_1_2   = 0x15,     ///< oiu
+    e_Way_Railway_Thin_0_1_2    = 0x16,     ///< oiu
+    e_Way_Water_Thick_0_1_2     = 0x17,     ///< oiu
+    e_Way_Water_Thin_0_1_2      = 0x18,     ///< oiu
 };
 
 //-------------------------------------
@@ -625,35 +625,35 @@ enum E_WAY_TYPE_0_1_2 {	// must fit the values in the map file!!!
  * \brief oiu
  *
  */
-enum E_WAY_TYPE {	// must fit the values in the map file!!!
-	e_Way_Fading			= 0x00,		///< oiu
-	e_Way_Unknown			= 0x01,		///< oiu
-	e_Way_Motorway			= 0x02,		///< oiu
-	e_Way_MotorwayLink		= 0x03,		///< oiu
-	e_Way_Trunk				= 0x04,		///< oiu
-	e_Way_TrunkLink			= 0x05,		///< oiu
-	e_Way_Primary			= 0x06,		///< oiu
-	e_Way_PrimaryLink		= 0x07,		///< oiu
-	e_Way_Secondary			= 0x08,		///< oiu
-	e_Way_Tertiary			= 0x09,		///< oiu
-	e_Way_Unclassified		= 0x0A,		///< oiu
-	e_Way_Track				= 0x0B,		///< oiu
-	e_Way_Residential		= 0x0C,		///< oiu
-	e_Way_Service			= 0x0D,		///< oiu
-	e_Way_Bridleway			= 0x0E,		///< oiu
-	e_Way_Cycleway			= 0x0F,		///< oiu
-	e_Way_Footway			= 0x10,		///< oiu
-	e_Way_Pedestrian		= 0x11,		///< oiu
-	e_Way_Steps				= 0x12,		///< oiu
-	e_Way_LivingStreet		= 0x13,		///< oiu
-	e_Way_Railway_Thick		= 0x14,		///< oiu
-	e_Way_Railway_Thin		= 0x15,		///< oiu
-	e_Way_Water_Thick		= 0x16,		///< oiu
-	e_Way_Water_Thin		= 0x17,		///< oiu
-	e_Way_BorderThick		= 0x18,		///< oiu
-	e_Way_BorderMedium		= 0x19,		///< oiu
-	e_Way_BorderThin		= 0x1A,		///< oiu
-	e_Way_EnumCount			= 0x1B,		///< oiu
+enum E_WAY_TYPE {   // must fit the values in the map file!!!
+    e_Way_Fading            = 0x00,     ///< oiu
+    e_Way_Unknown           = 0x01,     ///< oiu
+    e_Way_Motorway          = 0x02,     ///< oiu
+    e_Way_MotorwayLink      = 0x03,     ///< oiu
+    e_Way_Trunk             = 0x04,     ///< oiu
+    e_Way_TrunkLink         = 0x05,     ///< oiu
+    e_Way_Primary           = 0x06,     ///< oiu
+    e_Way_PrimaryLink       = 0x07,     ///< oiu
+    e_Way_Secondary         = 0x08,     ///< oiu
+    e_Way_Tertiary          = 0x09,     ///< oiu
+    e_Way_Unclassified      = 0x0A,     ///< oiu
+    e_Way_Track             = 0x0B,     ///< oiu
+    e_Way_Residential       = 0x0C,     ///< oiu
+    e_Way_Service           = 0x0D,     ///< oiu
+    e_Way_Bridleway         = 0x0E,     ///< oiu
+    e_Way_Cycleway          = 0x0F,     ///< oiu
+    e_Way_Footway           = 0x10,     ///< oiu
+    e_Way_Pedestrian        = 0x11,     ///< oiu
+    e_Way_Steps             = 0x12,     ///< oiu
+    e_Way_LivingStreet      = 0x13,     ///< oiu
+    e_Way_Railway_Thick     = 0x14,     ///< oiu
+    e_Way_Railway_Thin      = 0x15,     ///< oiu
+    e_Way_Water_Thick       = 0x16,     ///< oiu
+    e_Way_Water_Thin        = 0x17,     ///< oiu
+    e_Way_BorderThick       = 0x18,     ///< oiu
+    e_Way_BorderMedium      = 0x19,     ///< oiu
+    e_Way_BorderThin        = 0x1A,     ///< oiu
+    e_Way_EnumCount         = 0x1B,     ///< oiu
 };
 
 //-------------------------------------
@@ -669,21 +669,21 @@ E_WAY_TYPE WayType012ToCurrentWayType(E_WAY_TYPE_0_1_2 Value);
  * \brief oiu
  *
  */
-enum E_AREA_TYPE {	// must fit the values in NaviPOWM!!!
-	e_Area_None			= 0x0000,		///< oiu
-	e_Area_Water		= 0x0001,		///< oiu
-	e_Area_Wood			= 0x0002,		///< oiu
-	e_Area_EnumCount	= 0x0003,		///< oiu
+enum E_AREA_TYPE {  // must fit the values in NaviPOWM!!!
+    e_Area_None         = 0x0000,       ///< oiu
+    e_Area_Water        = 0x0001,       ///< oiu
+    e_Area_Wood         = 0x0002,       ///< oiu
+    e_Area_EnumCount    = 0x0003,       ///< oiu
 };
 
 //-------------------------------------
 /**
  * \brief Compute position in bitmap (row, column) of the most important POI only.
  *
- *	Compute position in bitmap (row, column) of the most important POI only.
- *	\param	ePOIType	POI type
- *	\param	rRow		Computed row.
- *	\param	rCol		Computed column.
+ *  Compute position in bitmap (row, column) of the most important POI only.
+ *  \param  ePOIType    POI type
+ *  \param  rRow        Computed row.
+ *  \param  rCol        Computed column.
  */
 void ComputePOIBMP(E_POI_TYPE ePOIType, size_t & BMPIdx, size_t & rRow, size_t & rCol);
 

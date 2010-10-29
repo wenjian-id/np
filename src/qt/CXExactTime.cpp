@@ -25,14 +25,14 @@
 
 //-------------------------------------
 CXExactTime::CXExactTime() {
-	SetNow();
+    SetNow();
 }
 
 //-------------------------------------
 CXExactTime::CXExactTime(const CXExactTime &rOther) :
-	IExactTime()
+    IExactTime()
 {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -41,55 +41,55 @@ CXExactTime::~CXExactTime() {
 
 //-------------------------------------
 const CXExactTime & CXExactTime::operator = (const CXExactTime & rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXExactTime::CopyFrom(const CXExactTime & rOther) {
-	m_Time = rOther.m_Time;
+    m_Time = rOther.m_Time;
 }
 
 //-------------------------------------
 void CXExactTime::SetNow() {
-	m_Time = QDateTime::currentDateTime();
+    m_Time = QDateTime::currentDateTime();
 }
 
 //-------------------------------------
 unsigned long CXExactTime::operator - (const CXExactTime & rOther) const {
-	if(m_Time < rOther.m_Time)
-		return 0;
-	// compute difference in seconds
-	return rOther.m_Time.time().msecsTo(m_Time.time());
+    if(m_Time < rOther.m_Time)
+        return 0;
+    // compute difference in seconds
+    return rOther.m_Time.time().msecsTo(m_Time.time());
 }
 
 //-------------------------------------
 int CXExactTime::GetYear() const {
-	return m_Time.date().year();
+    return m_Time.date().year();
 }
 
 //-------------------------------------
 int CXExactTime::GetMonth() const {
-	return m_Time.date().month();
+    return m_Time.date().month();
 }
 
 //-------------------------------------
 int CXExactTime::GetDay() const {
-	return m_Time.date().day();
+    return m_Time.date().day();
 }
 
 //-------------------------------------
 int CXExactTime::GetHour() const {
-	return m_Time.time().hour();
+    return m_Time.time().hour();
 }
 
 //-------------------------------------
 int CXExactTime::GetMinute() const {
-	return m_Time.time().minute();
+    return m_Time.time().minute();
 }
 
 //-------------------------------------
 int CXExactTime::GetSecond() const {
-	return m_Time.time().second();
+    return m_Time.time().second();
 }

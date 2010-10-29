@@ -24,17 +24,17 @@
 
 //-------------------------------------
 CXWriteLocker::CXWriteLocker(CXRWLock *pRWLock) :
-	m_pRWLock(pRWLock)
+    m_pRWLock(pRWLock)
 {
-	// lock
-	if(m_pRWLock != NULL)
-		m_pRWLock->LockWrite();
+    // lock
+    if(m_pRWLock != NULL)
+        m_pRWLock->LockWrite();
 }
 
 //-------------------------------------
 CXWriteLocker::~CXWriteLocker() {
-	// unlock
-	if(m_pRWLock != NULL)
-		m_pRWLock->UnlockWrite();
-	m_pRWLock = NULL;
+    // unlock
+    if(m_pRWLock != NULL)
+        m_pRWLock->UnlockWrite();
+    m_pRWLock = NULL;
 }

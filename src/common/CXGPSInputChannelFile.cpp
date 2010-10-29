@@ -33,55 +33,55 @@ CXGPSInputChannelFile::~CXGPSInputChannelFile() {
 
 //-------------------------------------
 bool CXGPSInputChannelFile::Open() {
-	return m_File.Open(m_FileName.c_str(), CXFile::E_READ) == CXFile::E_OK;
+    return m_File.Open(m_FileName.c_str(), CXFile::E_READ) == CXFile::E_OK;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelFile::Close() {
-	m_File.Close();
-	return true;
+    m_File.Close();
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelFile::IsOpen() {
-	return m_File.IsOpen();
+    return m_File.IsOpen();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelFile::ReadConfiguration() {
-	// get file name
-	m_FileName = CXOptions::Instance()->GetFileConfig().GetFileName();
-	SetForcedTimeout(CXOptions::Instance()->GetFileConfig().GetTimeout());
-	return true;
+    // get file name
+    m_FileName = CXOptions::Instance()->GetFileConfig().GetFileName();
+    SetForcedTimeout(CXOptions::Instance()->GetFileConfig().GetTimeout());
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelFile::CanFlush() {
-	return false;
+    return false;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelFile::Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) {
-	ReadSize = 0;
-	if(pbBuffer == 0)
-		return false;
-	if(!IsOpen())
-		return false;
-	// read data
-	if(!m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK)
-		// read succeeded
-		return false;
-	if(ReadSize != 0) {
-		return true;
-	}
-	// read failure. reopen file
-	Close();
-	Open();
-	// read again
-	return m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK;
+    ReadSize = 0;
+    if(pbBuffer == 0)
+        return false;
+    if(!IsOpen())
+        return false;
+    // read data
+    if(!m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK)
+        // read succeeded
+        return false;
+    if(ReadSize != 0) {
+        return true;
+    }
+    // read failure. reopen file
+    Close();
+    Open();
+    // read again
+    return m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelFile::Read(CXGPSPosInfo &/*rGPSPosInfo*/, bool &/*roGPSPosInfoChanged*/, CXGPSCourseInfo &/*rGPSCourseInfo*/, bool &/*roGPSCourseInfoChanged*/, CXGPSQualityInfo &/*rGPSQualityInfo*/, bool &/*roGPSQualityInfoChanged*/) {
-	return false;
+    return false;
 }

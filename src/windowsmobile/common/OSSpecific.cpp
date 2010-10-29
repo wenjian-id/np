@@ -26,12 +26,12 @@
 
 //-------------------------------------
 void TriggerWatchdog() {
-	SystemIdleTimerReset();
+    SystemIdleTimerReset();
 }
 
 //-------------------------------------
 size_t GetFreeMem() {
-	MEMORYSTATUS MS;
-	GlobalMemoryStatus(&MS);
-	return MS.dwAvailPhys;
+    MEMORYSTATUS MS;
+    GlobalMemoryStatus(&MS);
+    return MS.dwAvailPhys;
 }

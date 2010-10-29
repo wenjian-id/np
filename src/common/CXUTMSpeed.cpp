@@ -24,12 +24,12 @@
 
 //-------------------------------------
 CXUTMSpeed::CXUTMSpeed() {
-	Reset();
+    Reset();
 }
 
 //-------------------------------------
 CXUTMSpeed::CXUTMSpeed(const CXUTMSpeed &rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -38,50 +38,50 @@ CXUTMSpeed::~CXUTMSpeed() {
 
 //-------------------------------------
 const CXUTMSpeed & CXUTMSpeed::operator = (const CXUTMSpeed &rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXUTMSpeed::CopyFrom(const CXUTMSpeed &rOther) {
-	m_dSpeed = rOther.m_dSpeed;
-	m_Direction = rOther.m_Direction;
+    m_dSpeed = rOther.m_dSpeed;
+    m_Direction = rOther.m_Direction;
 }
 
 //-------------------------------------
 bool CXUTMSpeed::operator == (const CXUTMSpeed &rOther) {
-	return	(m_dSpeed == rOther.m_dSpeed) && (m_Direction == rOther.m_Direction);
+    return  (m_dSpeed == rOther.m_dSpeed) && (m_Direction == rOther.m_Direction);
 }
 
 //-------------------------------------
 bool CXUTMSpeed::operator != (const CXUTMSpeed &rOther) {
-	return ! operator == (rOther);
+    return ! operator == (rOther);
 }
 
 //-------------------------------------
 void CXUTMSpeed::Reset() {
-	m_dSpeed = 0;
-	// set directon to north
-	m_Direction = CXDirection(0, 1);
+    m_dSpeed = 0;
+    // set directon to north
+    m_Direction = CXDirection(0, 1);
 }
 
 //-------------------------------------
 double CXUTMSpeed::GetSpeed() const {
-	return m_dSpeed;
+    return m_dSpeed;
 }
 
 //-------------------------------------
 void CXUTMSpeed::SetSpeed(double dSpeed) {
-	m_dSpeed = dSpeed;
+    m_dSpeed = dSpeed;
 }
 
 //-------------------------------------
 CXDirection CXUTMSpeed::GetDirection() const {
-	return m_Direction;
+    return m_Direction;
 }
 
 //-------------------------------------
 void CXUTMSpeed::SetDirection(const CXDirection &Direction) {
-	m_Direction = Direction;
+    m_Direction = Direction;
 }

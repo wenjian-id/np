@@ -27,7 +27,7 @@
 #include "CXCoor.hpp"
 #include "CXRWLock.hpp"
 
-typedef CXBuffer<CXCoor *>	TCoorBuffer;
+typedef CXBuffer<CXCoor *>  TCoorBuffer;
 
 
 //---------------------------------------------------------------------
@@ -38,92 +38,92 @@ typedef CXBuffer<CXCoor *>	TCoorBuffer;
  */
 class CXTrackLog {
 private:
-	size_t				m_MaxSize;		///< Max size of coordinates.
-	unsigned int		m_MinDistance;	///< Min distance between last and new coordinate.
-	TCoorBuffer			m_Coordinates;	///< The coordinates.
-	static CXTrackLog	*m_pInstance;	///< oiu
-	int					m_iCurrentZone;	///< oiu
-	mutable CXRWLock	m_RWLock;		///< Synchronization object.
-	//-------------------------------------
-	CXTrackLog(const CXTrackLog &);							///< Not used.
-	const CXTrackLog & operator = (const CXTrackLog &);		///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief Delete superfluous elements.
-	 *
-	 * Delete superfluous elements, so that only m_MaxSize elements remain in list.
-	 */
-	void DeleteSuperfluous();
+    size_t              m_MaxSize;      ///< Max size of coordinates.
+    unsigned int        m_MinDistance;  ///< Min distance between last and new coordinate.
+    TCoorBuffer         m_Coordinates;  ///< The coordinates.
+    static CXTrackLog   *m_pInstance;   ///< oiu
+    int                 m_iCurrentZone; ///< oiu
+    mutable CXRWLock    m_RWLock;       ///< Synchronization object.
+    //-------------------------------------
+    CXTrackLog(const CXTrackLog &);                         ///< Not used.
+    const CXTrackLog & operator = (const CXTrackLog &);     ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief Delete superfluous elements.
+     *
+     * Delete superfluous elements, so that only m_MaxSize elements remain in list.
+     */
+    void DeleteSuperfluous();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 * 
-	 * Default constructor.
-	 */
-	CXTrackLog();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXTrackLog();
-	//-------------------------------------
-	/**
-	 * \brief Set max size of coordinates.
-	 * 
-	 * Set max size of coordinates.
-	 * \param	MaxSize		Max size of coordinates.
-	 */
-	void SetMaxSize(size_t MaxSize);
-	//-------------------------------------
-	/**
-	 * \brief Set MinDistance.
-	 * 
-	 * Set MinDistance. A new coordinate must be at least MinDistance away
-	 * from last coordinate to be added.
-	 * \param	MaxSize		Max size of coordinates.
-	 */
-	void SetMinDistance(unsigned int MinDistance);
-	//-------------------------------------
-	/**
-	 * \brief Relocate coordinates to new UTM zone.
-	 * 
-	 * Relocate coordinates to new UTM zone.
-	 * \param	NewUTMZone	New UTM Zone.
-	 */
-	void RelocateUTM(int NewUTMZone);
-	//-------------------------------------
-	/**
-	 * \brief Get coordinates.
-	 *
-	 * Get coordinates.
-	 * \return	coordinates.
-	 */
-	const TCoorBuffer & GetCoordinates() const;
-	//-------------------------------------
-	/**
-	 * \brief Add coordinate.
-	 *
-	 * Add coordinate. If necessary remove older ones.
-	 * \param	dLon	Longitude of new coordinate.
-	 * \param	dLat	Latitude of new coordinate.
-	 */
-	void AddCoordinate(double dLon, double dLat);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	static CXTrackLog *Instance();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 */
-	CXRWLock & GetRWLock();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     * 
+     * Default constructor.
+     */
+    CXTrackLog();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXTrackLog();
+    //-------------------------------------
+    /**
+     * \brief Set max size of coordinates.
+     * 
+     * Set max size of coordinates.
+     * \param   MaxSize     Max size of coordinates.
+     */
+    void SetMaxSize(size_t MaxSize);
+    //-------------------------------------
+    /**
+     * \brief Set MinDistance.
+     * 
+     * Set MinDistance. A new coordinate must be at least MinDistance away
+     * from last coordinate to be added.
+     * \param   MaxSize     Max size of coordinates.
+     */
+    void SetMinDistance(unsigned int MinDistance);
+    //-------------------------------------
+    /**
+     * \brief Relocate coordinates to new UTM zone.
+     * 
+     * Relocate coordinates to new UTM zone.
+     * \param   NewUTMZone  New UTM Zone.
+     */
+    void RelocateUTM(int NewUTMZone);
+    //-------------------------------------
+    /**
+     * \brief Get coordinates.
+     *
+     * Get coordinates.
+     * \return  coordinates.
+     */
+    const TCoorBuffer & GetCoordinates() const;
+    //-------------------------------------
+    /**
+     * \brief Add coordinate.
+     *
+     * Add coordinate. If necessary remove older ones.
+     * \param   dLon    Longitude of new coordinate.
+     * \param   dLat    Latitude of new coordinate.
+     */
+    void AddCoordinate(double dLon, double dLat);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    static CXTrackLog *Instance();
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     */
+    CXRWLock & GetRWLock();
 };
 
 #endif // __CXTRACKLOG_HPP__

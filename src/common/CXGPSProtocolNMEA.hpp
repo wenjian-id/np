@@ -33,56 +33,56 @@
  */
 class CXGPSProtocolNMEA : public CXGPSProtocol {
 private:
-	tUCBuffer						m_Buffer;			///< oiu
-	CXBuffer<CXSatelliteInfo *>		m_TmpGSVSatInfo;	///< oiu
-	int								m_LastReceivedGSVTel;	///< oiu
-	int								m_TmpNrSat;				///< oiu
-	//-------------------------------------
-	CXGPSProtocolNMEA(const CXGPSProtocolNMEA &);						///< Not used.
-	const CXGPSProtocolNMEA & operator = (const CXGPSProtocolNMEA &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer);
+    tUCBuffer                       m_Buffer;           ///< oiu
+    CXBuffer<CXSatelliteInfo *>     m_TmpGSVSatInfo;    ///< oiu
+    int                             m_LastReceivedGSVTel;   ///< oiu
+    int                             m_TmpNrSat;             ///< oiu
+    //-------------------------------------
+    CXGPSProtocolNMEA(const CXGPSProtocolNMEA &);                       ///< Not used.
+    const CXGPSProtocolNMEA & operator = (const CXGPSProtocolNMEA &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer);
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual bool AfterOpen();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual bool BeforeClose();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual bool OnReadAndProcessData();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual bool AfterOpen();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual bool BeforeClose();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual bool OnReadAndProcessData();
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXGPSProtocolNMEA();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXGPSProtocolNMEA();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXGPSProtocolNMEA();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXGPSProtocolNMEA();
 };
 
 #endif // __CXGPSPROTOCOLNMEA_HPP__

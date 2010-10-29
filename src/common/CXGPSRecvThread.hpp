@@ -39,90 +39,90 @@ class CXLocatorThread;
  */
 class CXGPSRecvThread : public CXLoopThread {
 private:
-	CXGPSProtocol		*m_pGPSProtocol;			///< oiu
-	CXGPSInputChannel	*m_pGPSInputChannel;		///< oiu
-	size_t				m_LastGPSConnectTimeout;	///< oiu
-	CXExactTime			m_LastGPSConnect;			///< oiu
-	CXLocatorThread		*m_pLocator;				///< oiu
-	mutable CXMutex		m_Mutex;					///< Synchronization object.
-	//-------------------------------------
-	CXGPSRecvThread(const CXGPSRecvThread &);						///< Not used.
-	const CXGPSRecvThread & operator = (const CXGPSRecvThread &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void CreateGPSProtocol();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void OpenGPSProtocol();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ReopenGPSProtocol();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void CloseGPSProtocol();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadLoop();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Save(const tUCBuffer & Buffer);
+    CXGPSProtocol       *m_pGPSProtocol;            ///< oiu
+    CXGPSInputChannel   *m_pGPSInputChannel;        ///< oiu
+    size_t              m_LastGPSConnectTimeout;    ///< oiu
+    CXExactTime         m_LastGPSConnect;           ///< oiu
+    CXLocatorThread     *m_pLocator;                ///< oiu
+    mutable CXMutex     m_Mutex;                    ///< Synchronization object.
+    //-------------------------------------
+    CXGPSRecvThread(const CXGPSRecvThread &);                       ///< Not used.
+    const CXGPSRecvThread & operator = (const CXGPSRecvThread &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void CreateGPSProtocol();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void OpenGPSProtocol();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void ReopenGPSProtocol();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void CloseGPSProtocol();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStarted();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadLoop();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStopped();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Save(const tUCBuffer & Buffer);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXGPSRecvThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXGPSRecvThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLocator(CXLocatorThread *pLocator);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void FlushInput();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXGPSRecvThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXGPSRecvThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetLocator(CXLocatorThread *pLocator);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void FlushInput();
 };
 
 

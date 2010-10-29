@@ -24,9 +24,9 @@
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXArea::CXArea(E_AREA_TYPE eAreaType):
-	m_eAreaType(eAreaType),
-	m_Layer(0),
-	m_pOuterNodeList(NULL)
+    m_eAreaType(eAreaType),
+    m_Layer(0),
+    m_pOuterNodeList(NULL)
 {
 }
 
@@ -36,40 +36,40 @@ CXArea::~CXArea() {
 
 //-------------------------------------
 E_AREA_TYPE CXArea::GetAreaType() const {
-	return m_eAreaType;
+    return m_eAreaType;
 }
 
 //-------------------------------------
 unsigned char CXArea::GetLayer() const {
-	return m_Layer;
+    return m_Layer;
 }
 
 //-------------------------------------
 void CXArea::SetLayer(unsigned char Layer) {
-	m_Layer = Layer;
+    m_Layer = Layer;
 }
 
 //-------------------------------------
 void CXArea::SetOuterNodeList(CXOrderedNodeList *pNodeList) {
-	m_pOuterNodeList = pNodeList;
+    m_pOuterNodeList = pNodeList;
 }
 
 //-------------------------------------
 CXOrderedNodeList *CXArea::GetOuterNodeList() const {
-	return m_pOuterNodeList;
+    return m_pOuterNodeList;
 }
 
 //-------------------------------------
 void CXArea::AddHole(CXOrderedNodeList *pNodeList) {
-	m_Holes.Append(pNodeList);
+    m_Holes.Append(pNodeList);
 }
 
 //-------------------------------------
 size_t CXArea::GetHoleCount() {
-	return m_Holes.GetSize();
+    return m_Holes.GetSize();
 }
 
 //-------------------------------------
 CXOrderedNodeList *CXArea::GetHole(size_t Index) {
-	return m_Holes[Index];
+    return m_Holes[Index];
 }

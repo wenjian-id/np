@@ -33,98 +33,98 @@
  */
 class CXExactTime : public IExactTime {
 private:
-	//-------------------------------------
-	SYSTEMTIME	mSystemTime;			///< oiu
-	DWORD		mdwMilliSeconds;		///< oiu
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXExactTime &rOther);
+    //-------------------------------------
+    SYSTEMTIME  mSystemTime;            ///< oiu
+    DWORD       mdwMilliSeconds;        ///< oiu
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXExactTime &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXExactTime();
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXExactTime(const CXExactTime &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	~CXExactTime();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXExactTime & operator = (const CXExactTime & rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void SetNow();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual unsigned long operator - (const CXExactTime & rOther) const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetYear() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetMonth() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetDay() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetHour() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetMinute() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetSecond() const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXExactTime();
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXExactTime(const CXExactTime &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    ~CXExactTime();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXExactTime & operator = (const CXExactTime & rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void SetNow();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual unsigned long operator - (const CXExactTime & rOther) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetYear() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetMonth() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetDay() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetHour() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetMinute() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetSecond() const;
 };
 
 #endif //__CXEXACTTIME_HPP__

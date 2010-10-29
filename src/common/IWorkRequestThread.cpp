@@ -26,62 +26,62 @@
 
 //-------------------------------------
 IWorkRequestThread::IWorkRequestThread() :
-	m_oWorkRequestFlag(false)
+    m_oWorkRequestFlag(false)
 {
 }
 
 
 //-------------------------------------
 IWorkRequestThread::~IWorkRequestThread() {
-	// check if it is running
-	if(IsRunning()) {
-		StopThread();
-		// wait for thread exit
-		WaitForThreadExit(WAIT_INFINITE);
-	}
+    // check if it is running
+    if(IsRunning()) {
+        StopThread();
+        // wait for thread exit
+        WaitForThreadExit(WAIT_INFINITE);
+    }
 }
 
 //-------------------------------------
 void IWorkRequestThread::SetWorkRequestFlag(bool NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_oWorkRequestFlag = NewValue;
+    CXWriteLocker WL(&m_RWLock);
+    m_oWorkRequestFlag = NewValue;
 }
 
 //-------------------------------------
 bool IWorkRequestThread::GetWorkRequestFlag() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oWorkRequestFlag;
+    CXReadLocker RL(&m_RWLock);
+    return m_oWorkRequestFlag;
 }
 
 //-------------------------------------
 void IWorkRequestThread::StopThread() {
-	CXThread::StopThread();
-	Wakeup();
+    CXThread::StopThread();
+    Wakeup();
 }
 
 //-------------------------------------
 void IWorkRequestThread::RequestWork() {
-	SetWorkRequestFlag(true);
-	Wakeup();
+    SetWorkRequestFlag(true);
+    Wakeup();
 }
 
 //-------------------------------------
 int IWorkRequestThread::OnThreadFunc() {
-	// main loop
-	do {
-		if(!GetWorkRequestFlag()) {
-			// wait for a wakeup call
-			DoWait();
-		}
-		if(!MustStopThread()) {
-			if(GetWorkRequestFlag()) {
-				// do work
-				SetWorkRequestFlag(false);
-				OnWorkFunc();
-			}
-		}
-	} while(!MustStopThread());
+    // main loop
+    do {
+        if(!GetWorkRequestFlag()) {
+            // wait for a wakeup call
+            DoWait();
+        }
+        if(!MustStopThread()) {
+            if(GetWorkRequestFlag()) {
+                // do work
+                SetWorkRequestFlag(false);
+                OnWorkFunc();
+            }
+        }
+    } while(!MustStopThread());
 
-	return 0;
+    return 0;
 }
 

@@ -26,16 +26,16 @@
 
 //-------------------------------------
 void TriggerWatchdog() {
-	/// \todo implement
+    /// \todo implement
 }
 
 //-------------------------------------
 size_t GetFreeMem() {
-	struct sysinfo SINFO;
-	memset(&SINFO, 0, sizeof(SINFO));
-	int res = sysinfo(&SINFO); 
-	if(res < 0)
-		return 0;
-	int FreeMem = SINFO.freeram + SINFO.sharedram + SINFO.bufferram;
-	return FreeMem;
+    struct sysinfo SINFO;
+    memset(&SINFO, 0, sizeof(SINFO));
+    int res = sysinfo(&SINFO); 
+    if(res < 0)
+        return 0;
+    int FreeMem = SINFO.freeram + SINFO.sharedram + SINFO.bufferram;
+    return FreeMem;
 }

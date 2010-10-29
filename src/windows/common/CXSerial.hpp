@@ -34,56 +34,56 @@
  */
 class CXSerial : public ISerial {
 private:
-    HANDLE	m_hComm;	///< oiu
-	//-------------------------------------
-	CXSerial(const CXSerial&);						///< Not used.
-	const CXSerial & operator = (const CXSerial&);	///< Not used.
+    HANDLE  m_hComm;    ///< oiu
+    //-------------------------------------
+    CXSerial(const CXSerial&);                      ///< Not used.
+    const CXSerial & operator = (const CXSerial&);  ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXSerial();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXSerial();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXSerial();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXSerial();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     E_RESULTCODE Open(const CXSerialPortConfig & Config);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     virtual E_RESULTCODE Close();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     virtual E_RESULTCODE Receive(unsigned long  ulDataSize, unsigned char *  pbData, unsigned long &  ulReceived);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     virtual E_RESULTCODE Transmit(unsigned long  ulDataSize, const unsigned char *  pbData, unsigned long &  ulTransmitted);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool IsOpen() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool IsOpen() const;
 };
 
 

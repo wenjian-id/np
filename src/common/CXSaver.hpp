@@ -32,57 +32,57 @@
  */
 class CXSaver {
 private:
-	bool			m_oSaving;	///< oiu
-	CXStringASCII	m_Suffix;	///< oiu
-	//-------------------------------------
-	CXSaver();										///< Not used.
-	CXSaver(const CXSaver &);						///< Not used.
-	const CXSaver & operator = (const CXSaver &);	///< Not used.
+    bool            m_oSaving;  ///< oiu
+    CXStringASCII   m_Suffix;   ///< oiu
+    //-------------------------------------
+    CXSaver();                                      ///< Not used.
+    CXSaver(const CXSaver &);                       ///< Not used.
+    const CXSaver & operator = (const CXSaver &);   ///< Not used.
 protected:
-	CXFile			m_File;		///< oiu
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	bool PrepareSaving();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual void AfterOpen() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual void BeforeClose() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	bool Close();
+    CXFile          m_File;     ///< oiu
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    bool PrepareSaving();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual void AfterOpen() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual void BeforeClose() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    bool Close();
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	CXSaver(const char *pcSuffix);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual ~CXSaver();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    CXSaver(const char *pcSuffix);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual ~CXSaver();
 };
 
 #endif //__CXSAVER_HPP__

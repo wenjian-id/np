@@ -24,16 +24,16 @@
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXWay::CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef):
-	m_eWayType(eWayType),
-	m_Name(Name),
-	m_Ref(Ref),
-	m_IntRef(IntRef),
-	m_MaxSpeedForward(0),
-	m_MaxSpeedBackward(0),
-	m_Layer(0),
-	m_eOneway(e_Oneway_None),
-	m_oOSMValiOK(true),
-	m_pNodeList(NULL)
+    m_eWayType(eWayType),
+    m_Name(Name),
+    m_Ref(Ref),
+    m_IntRef(IntRef),
+    m_MaxSpeedForward(0),
+    m_MaxSpeedBackward(0),
+    m_Layer(0),
+    m_eOneway(e_Oneway_None),
+    m_oOSMValiOK(true),
+    m_pNodeList(NULL)
 {
 }
 
@@ -43,80 +43,80 @@ CXWay::~CXWay() {
 
 //-------------------------------------
 CXOrderedNodeList *CXWay::GetNodeList() const {
-	return m_pNodeList;
+    return m_pNodeList;
 }
 
 //-------------------------------------
 void CXWay::SetNodeList(CXOrderedNodeList *pNodeList) {
-	m_pNodeList = pNodeList;
+    m_pNodeList = pNodeList;
 }
 
 //-------------------------------------
 E_WAY_TYPE CXWay::GetWayType() const {
-	return m_eWayType;
+    return m_eWayType;
 }
 
 //-------------------------------------
 CXStringUTF8 CXWay::GetName() const {
-	return m_Name;
+    return m_Name;
 }
 
 //-------------------------------------
 CXStringUTF8 CXWay::GetRef() const {
-	return m_Ref;
+    return m_Ref;
 }
 
 //-------------------------------------
 CXStringUTF8 CXWay::GetIntRef() const {
-	return m_IntRef;
+    return m_IntRef;
 }
 
 //-------------------------------------
 void CXWay::SetMaxSpeedForward(unsigned char NewValue) {
-	m_MaxSpeedForward = NewValue;
+    m_MaxSpeedForward = NewValue;
 }
 
 //-------------------------------------
 unsigned char CXWay::GetMaxSpeedForward() const {
-	return m_MaxSpeedForward;
+    return m_MaxSpeedForward;
 }
 
 //-------------------------------------
 void CXWay::SetMaxSpeedBackward(unsigned char NewValue) {
-	m_MaxSpeedBackward = NewValue;
+    m_MaxSpeedBackward = NewValue;
 }
 
 //-------------------------------------
 unsigned char CXWay::GetMaxSpeedBackward() const {
-	return m_MaxSpeedBackward;
+    return m_MaxSpeedBackward;
 }
 
 //-------------------------------------
 void CXWay::SetLayer(char NewValue) {
-	m_Layer = NewValue;
+    m_Layer = NewValue;
 }
 
 //-------------------------------------
 unsigned char CXWay::GetLayer() const {
-	return m_Layer;
+    return m_Layer;
 }
 
 //-------------------------------------
 void CXWay::SetOneway(E_ONEWAY_TYPE NewValue) {
-	m_eOneway = NewValue;
+    m_eOneway = NewValue;
 }
 
 //-------------------------------------
 E_ONEWAY_TYPE CXWay::GetOneway() const {
-	return m_eOneway;
+    return m_eOneway;
 }
 
 //-------------------------------------
 bool CXWay::IsOSMValiOK() const {
-	return m_oOSMValiOK;
+    return m_oOSMValiOK;
 }
 
 //-------------------------------------
 void CXWay::SetOSMValiOK(bool NewValue) {
-	m_oOSMValiOK = NewValue;
+    m_oOSMValiOK = NewValue;
 }

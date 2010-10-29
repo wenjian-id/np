@@ -26,8 +26,8 @@
 
 //-------------------------------------
 CXSaver::CXSaver(const char *pcSuffix):
-	m_oSaving(false),
-	m_Suffix(pcSuffix)
+    m_oSaving(false),
+    m_Suffix(pcSuffix)
 {
 }
 
@@ -37,55 +37,55 @@ CXSaver::~CXSaver() {
 
 //-------------------------------------
 bool CXSaver::PrepareSaving() {
-	// check to see if state changed
-	if(m_oSaving != CXOptions::Instance()->IsSaving()) {
-		// yes
-		m_oSaving = CXOptions::Instance()->IsSaving();
-		if(!m_oSaving) {
-			// saving just turned off
-			Close();
-		} else {
-			// saving just turned on
-			// reset flag in case of error
-			m_oSaving = false;
+    // check to see if state changed
+    if(m_oSaving != CXOptions::Instance()->IsSaving()) {
+        // yes
+        m_oSaving = CXOptions::Instance()->IsSaving();
+        if(!m_oSaving) {
+            // saving just turned off
+            Close();
+        } else {
+            // saving just turned on
+            // reset flag in case of error
+            m_oSaving = false;
 
-			// get current time
-			CXExactTime Now;
-			char buf[100];
-			for(int i=0; i<100; i++) {
-				snprintf(buf, 100, "%04d%02d%02d%02d.%s", Now.GetYear(), Now.GetMonth(), Now.GetDay(), i, m_Suffix.c_str());
-				CXStringASCII FileName(CXOptions::Instance()->GetDirectorySave());
-				FileName+=buf;
+            // get current time
+            CXExactTime Now;
+            char buf[100];
+            for(int i=0; i<100; i++) {
+                snprintf(buf, 100, "%04d%02d%02d%02d.%s", Now.GetYear(), Now.GetMonth(), Now.GetDay(), i, m_Suffix.c_str());
+                CXStringASCII FileName(CXOptions::Instance()->GetDirectorySave());
+                FileName+=buf;
 
-				// check if file already exists
-				if(m_File.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
-					// yes. close it again.
-					m_File.Close();
-				} else {
-					// no. open for writing
-					m_File.Close();
-					m_oSaving = m_File.Open(FileName.c_str(), CXFile::E_WRITE) == CXFile::E_OK;
-					if(m_oSaving) {
-						AfterOpen();
-						break;
-					}
-				}
-			}
+                // check if file already exists
+                if(m_File.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
+                    // yes. close it again.
+                    m_File.Close();
+                } else {
+                    // no. open for writing
+                    m_File.Close();
+                    m_oSaving = m_File.Open(FileName.c_str(), CXFile::E_WRITE) == CXFile::E_OK;
+                    if(m_oSaving) {
+                        AfterOpen();
+                        break;
+                    }
+                }
+            }
 
-		}
-	}
-	if(m_oSaving != CXOptions::Instance()->IsSaving()) {
-		// some error occured
-		CXOptions::Instance()->ToggleSaving();
-	}
-	return m_oSaving;
+        }
+    }
+    if(m_oSaving != CXOptions::Instance()->IsSaving()) {
+        // some error occured
+        CXOptions::Instance()->ToggleSaving();
+    }
+    return m_oSaving;
 }
 
 //-------------------------------------
 bool CXSaver::Close() {
-	if(m_File.IsOpen()) {
-		BeforeClose();
-		m_File.Close();
-	}	
-	return true;
+    if(m_File.IsOpen()) {
+        BeforeClose();
+        m_File.Close();
+    }   
+    return true;
 }

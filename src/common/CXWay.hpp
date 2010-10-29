@@ -35,133 +35,133 @@ class CXWay;
  */
 class CXWay {
 private:
-	E_WAY_TYPE			m_eWayType;			///< oiu
-	CXStringUTF8		m_Name;				///< oiu
-	CXStringUTF8		m_Ref;				///< oiu
-	CXStringUTF8		m_IntRef;			///< oiu
-	unsigned char		m_MaxSpeedForward;	///< oiu 0 means no max speed
-	unsigned char		m_MaxSpeedBackward;	///< oiu 0 means no max speed
-	char				m_Layer;			///< oiu
-	E_ONEWAY_TYPE		m_eOneway;			///< oiu
-	bool				m_oOSMValiOK;		///< oiu
-	CXOrderedNodeList	*m_pNodeList;			///< oiu
-	//-------------------------------------
-	CXWay();									///< Not used.
-	CXWay(const CXWay &);						///< Not used.
-	const CXWay & operator = (const CXWay &);	///< Not used.
+    E_WAY_TYPE          m_eWayType;         ///< oiu
+    CXStringUTF8        m_Name;             ///< oiu
+    CXStringUTF8        m_Ref;              ///< oiu
+    CXStringUTF8        m_IntRef;           ///< oiu
+    unsigned char       m_MaxSpeedForward;  ///< oiu 0 means no max speed
+    unsigned char       m_MaxSpeedBackward; ///< oiu 0 means no max speed
+    char                m_Layer;            ///< oiu
+    E_ONEWAY_TYPE       m_eOneway;          ///< oiu
+    bool                m_oOSMValiOK;       ///< oiu
+    CXOrderedNodeList   *m_pNodeList;           ///< oiu
+    //-------------------------------------
+    CXWay();                                    ///< Not used.
+    CXWay(const CXWay &);                       ///< Not used.
+    const CXWay & operator = (const CXWay &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXWay();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXOrderedNodeList *GetNodeList() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetNodeList(CXOrderedNodeList *pNodeList);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_WAY_TYPE GetWayType() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetName() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetRef() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetIntRef() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetMaxSpeedForward(unsigned char NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	unsigned char GetMaxSpeedForward() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetMaxSpeedBackward(unsigned char NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	unsigned char GetMaxSpeedBackward() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLayer(char NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	unsigned char GetLayer() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetOneway(E_ONEWAY_TYPE NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	E_ONEWAY_TYPE GetOneway() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool IsOSMValiOK() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetOSMValiOK(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 & Ref, const CXStringUTF8 & IntRef);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXWay();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXOrderedNodeList *GetNodeList() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetNodeList(CXOrderedNodeList *pNodeList);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_WAY_TYPE GetWayType() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 GetName() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 GetRef() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 GetIntRef() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetMaxSpeedForward(unsigned char NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    unsigned char GetMaxSpeedForward() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetMaxSpeedBackward(unsigned char NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    unsigned char GetMaxSpeedBackward() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetLayer(char NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    unsigned char GetLayer() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetOneway(E_ONEWAY_TYPE NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    E_ONEWAY_TYPE GetOneway() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool IsOSMValiOK() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetOSMValiOK(bool NewValue);
 };
 
-typedef CXBuffer<CXWay *>						TWayBuffer;		///< oiu
+typedef CXBuffer<CXWay *>                       TWayBuffer;     ///< oiu
 
 #endif // __CXWAY_HPP__

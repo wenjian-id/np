@@ -32,13 +32,13 @@ CXWorkRequestThread::~CXWorkRequestThread() {
 
 //-------------------------------------
 void CXWorkRequestThread::Wakeup() {
-	m_WaitCondition.wakeAll();
+    m_WaitCondition.wakeAll();
 } 
 
 //-------------------------------------
 void CXWorkRequestThread::DoWait() {
-	// How to wait on own thread?
-	m_Mutex.lock();
-	m_WaitCondition.wait(&m_Mutex);
-	m_Mutex.unlock();
+    // How to wait on own thread?
+    m_Mutex.lock();
+    m_WaitCondition.wait(&m_Mutex);
+    m_Mutex.unlock();
 }

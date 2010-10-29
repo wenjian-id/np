@@ -25,26 +25,26 @@
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
-	// do some tests
-	if(pcBuf== NULL)
-		return;
-	OutputDebugString(pcBuf);
+    // do some tests
+    if(pcBuf== NULL)
+        return;
+    OutputDebugString(pcBuf);
 }
 
 //-------------------------------------
 void DoOutputErrorMessage(const char *pcBuf) {
-	// do some tests
-	if(pcBuf== NULL)
-		return;
-	::MessageBox(NULL, pcBuf, "NaviPOWM error", MB_OK | MB_ICONERROR);
+    // do some tests
+    if(pcBuf== NULL)
+        return;
+    ::MessageBox(NULL, pcBuf, "NaviPOWM error", MB_OK | MB_ICONERROR);
 }
 
 //-------------------------------------
 CXRGB COLORREF2CXRGB(const COLORREF & Color) {
-	return CXRGB(GetRValue(Color), GetGValue(Color), GetBValue(Color));
+    return CXRGB(GetRValue(Color), GetGValue(Color), GetBValue(Color));
 }
 
 //-------------------------------------
 COLORREF CXRGB2COLORREF(const CXRGB & Color) {
-	return RGB(Color.GetR(), Color.GetG(), Color.GetB());
+    return RGB(Color.GetR(), Color.GetG(), Color.GetB());
 }

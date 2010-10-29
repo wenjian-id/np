@@ -35,64 +35,64 @@
  */
 class CXMapMovingDetails {
 private:
-	CXCoor							m_Position;			///< oiu
-	CXTransformationMatrix2D		m_Matrix;			///< oiu
-	static CXMapMovingDetails		*m_pInstance;		///< oiu
-	mutable CXRWLock				m_RWLock;			///< Synchronization object.
-	//-------------------------------------
-	CXMapMovingDetails(const CXMapMovingDetails &);							///< Not used.
-	const CXMapMovingDetails & operator = (const CXMapMovingDetails &);		///< Not used.
+    CXCoor                          m_Position;         ///< oiu
+    CXTransformationMatrix2D        m_Matrix;           ///< oiu
+    static CXMapMovingDetails       *m_pInstance;       ///< oiu
+    mutable CXRWLock                m_RWLock;           ///< Synchronization object.
+    //-------------------------------------
+    CXMapMovingDetails(const CXMapMovingDetails &);                         ///< Not used.
+    const CXMapMovingDetails & operator = (const CXMapMovingDetails &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Only allowed constructor.
-	 *
-	 * Only allowed constructor.
-	 */
-	CXMapMovingDetails();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMapMovingDetails();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	static CXMapMovingDetails * Instance();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	CXCoor GetPosition() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void SetPosition(const CXCoor &NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void SetMatrix(const CXTransformationMatrix2D &Matrix);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void OffsetPosition(int OffsetPixelX, int OffsetPixelY);
+    //-------------------------------------
+    /**
+     * \brief Only allowed constructor.
+     *
+     * Only allowed constructor.
+     */
+    CXMapMovingDetails();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMapMovingDetails();
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    static CXMapMovingDetails * Instance();
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    CXCoor GetPosition() const;
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void SetPosition(const CXCoor &NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void SetMatrix(const CXTransformationMatrix2D &Matrix);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void OffsetPosition(int OffsetPixelX, int OffsetPixelY);
 };
 
 #endif // __CXMAPMOVINGDETAILS_HPP__

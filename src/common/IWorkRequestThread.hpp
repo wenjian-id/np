@@ -33,77 +33,77 @@
  */
 class IWorkRequestThread : public CXThread {
 private:
-	bool				m_oWorkRequestFlag;	///< oiu
-	mutable CXRWLock	m_RWLock;			///< Synchronization object.
-	//-------------------------------------
-	IWorkRequestThread(const IWorkRequestThread &);							///< Not used.
-	const IWorkRequestThread & operator = (const IWorkRequestThread &);		///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int OnThreadFunc();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnWorkFunc() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DoWait() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Wakeup() = 0;
+    bool                m_oWorkRequestFlag; ///< oiu
+    mutable CXRWLock    m_RWLock;           ///< Synchronization object.
+    //-------------------------------------
+    IWorkRequestThread(const IWorkRequestThread &);                         ///< Not used.
+    const IWorkRequestThread & operator = (const IWorkRequestThread &);     ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int OnThreadFunc();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnWorkFunc() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DoWait() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Wakeup() = 0;
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void SetWorkRequestFlag(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool GetWorkRequestFlag() const;
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void SetWorkRequestFlag(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    bool GetWorkRequestFlag() const;
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IWorkRequestThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IWorkRequestThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 * we must overload it to exit waiting
-	 */
-	virtual void StopThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void RequestWork();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IWorkRequestThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IWorkRequestThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     * we must overload it to exit waiting
+     */
+    virtual void StopThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void RequestWork();
 };
 
 

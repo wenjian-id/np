@@ -29,8 +29,8 @@ CXDebugInfo * CXDebugInfo::m_pInstance = NULL;
 
 //-------------------------------------
 CXDebugInfo::CXDebugInfo() :
-	m_DrawTime(0),
-	m_LocatorTime(0)
+    m_DrawTime(0),
+    m_LocatorTime(0)
 {
 }
 
@@ -40,31 +40,31 @@ CXDebugInfo::~CXDebugInfo() {
 
 //-------------------------------------
 CXDebugInfo *CXDebugInfo::Instance() {
-	if(m_pInstance == NULL)
-		m_pInstance = new CXDebugInfo();
-	return m_pInstance;
+    if(m_pInstance == NULL)
+        m_pInstance = new CXDebugInfo();
+    return m_pInstance;
 }
 
 //-------------------------------------
 int CXDebugInfo::GetDrawTime() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_DrawTime;
+    CXReadLocker RL(&m_RWLock);
+    return m_DrawTime;
 }
 
 //-------------------------------------
 void CXDebugInfo::SetDrawTime(int NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_DrawTime = NewValue;
+    CXWriteLocker WL(&m_RWLock);
+    m_DrawTime = NewValue;
 }
 
 //-------------------------------------
 int CXDebugInfo::GetLocatorTime() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_LocatorTime;
+    CXReadLocker RL(&m_RWLock);
+    return m_LocatorTime;
 }
 
 //-------------------------------------
 void CXDebugInfo::SetLocatorTime(int NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_LocatorTime = NewValue;
+    CXWriteLocker WL(&m_RWLock);
+    m_LocatorTime = NewValue;
 }

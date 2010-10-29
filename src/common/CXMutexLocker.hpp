@@ -32,27 +32,27 @@
  */
 class CXMutexLocker {
 private:
-	CXMutex	*m_pMutex;		///< oiu
-	//-------------------------------------
-	CXMutexLocker();											///< Not used.
-	CXMutexLocker(const CXMutexLocker &);						///< Not used.
-	const CXMutexLocker & operator = (const CXMutexLocker &);	///< Not used.
+    CXMutex *m_pMutex;      ///< oiu
+    //-------------------------------------
+    CXMutexLocker();                                            ///< Not used.
+    CXMutexLocker(const CXMutexLocker &);                       ///< Not used.
+    const CXMutexLocker & operator = (const CXMutexLocker &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMutexLocker(CXMutex *pMutex);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMutexLocker();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMutexLocker(CXMutex *pMutex);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMutexLocker();
 };
 
 #endif // __CXMUTEXLOCKER_HPP__

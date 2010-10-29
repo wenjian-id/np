@@ -32,27 +32,27 @@
  */
 class CXWriteLocker {
 private:
-	CXRWLock	*m_pRWLock;		///< oiu
-	//-------------------------------------
-	CXWriteLocker();											///< Not used.
-	CXWriteLocker(const CXWriteLocker &);						///< Not used.
-	const CXWriteLocker & operator = (const CXWriteLocker &);	///< Not used.
+    CXRWLock    *m_pRWLock;     ///< oiu
+    //-------------------------------------
+    CXWriteLocker();                                            ///< Not used.
+    CXWriteLocker(const CXWriteLocker &);                       ///< Not used.
+    const CXWriteLocker & operator = (const CXWriteLocker &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXWriteLocker(CXRWLock *pRWLock);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXWriteLocker();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXWriteLocker(CXRWLock *pRWLock);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXWriteLocker();
 };
 
 #endif // __CXWRITELOCKER_HPP__

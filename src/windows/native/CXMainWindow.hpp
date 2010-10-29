@@ -32,51 +32,51 @@
  */
 class CXMainWindow : public IMainWindow {
 private:
-	static CXMainWindow		*m_pInstance;		/// oiu multiple instances
-	//-------------------------------------
-	CXMainWindow(const CXMainWindow &);							///< Not used.
-	//-------------------------------------
-	const CXMainWindow & operator = (const CXMainWindow &);		///< Not used.
+    static CXMainWindow     *m_pInstance;       /// oiu multiple instances
+    //-------------------------------------
+    CXMainWindow(const CXMainWindow &);                         ///< Not used.
+    //-------------------------------------
+    const CXMainWindow & operator = (const CXMainWindow &);     ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnPaint();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnPaint();
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMainWindow();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMainWindow();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void RequestTermination();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	LRESULT CALLBACK TheWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMainWindow();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMainWindow();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void RequestTermination();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    LRESULT CALLBACK TheWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 };
 
 

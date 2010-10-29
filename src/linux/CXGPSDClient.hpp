@@ -27,15 +27,15 @@
 #include <gps.h>
 
 #ifndef GPSD_API_MAJOR_VERSION
-	#include "CXGPSDClientNoVersion.hpp"
+    #include "CXGPSDClientNoVersion.hpp"
 #elif (GPSD_API_MAJOR_VERSION < 3)
-	#error Version 2.x or 1.x
+    #error Version 2.x or 1.x
 #elif (GPSD_API_MAJOR_VERSION == 3)
-	#include "CXGPSDClient3.hpp"
+    #include "CXGPSDClient3.hpp"
 #elif (GPSD_API_MAJOR_VERSION == 4)
-	#include "CXGPSDClient4.hpp"
+    #include "CXGPSDClient4.hpp"
 #else
-	#error Version > 4.x
+    #error Version > 4.x
 #endif
 
 

@@ -32,46 +32,46 @@
  */
 class CXGPSProtocolGPSD : public CXGPSProtocol {
 private:
-	//-------------------------------------
-	CXGPSProtocolGPSD(const CXGPSProtocolGPSD &);						///< Not used.
-	const CXGPSProtocolGPSD & operator = (const CXGPSProtocolGPSD &);	///< Not used.
+    //-------------------------------------
+    CXGPSProtocolGPSD(const CXGPSProtocolGPSD &);                       ///< Not used.
+    const CXGPSProtocolGPSD & operator = (const CXGPSProtocolGPSD &);   ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual bool AfterOpen();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual bool BeforeClose();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual bool OnReadAndProcessData();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual bool AfterOpen();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual bool BeforeClose();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual bool OnReadAndProcessData();
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXGPSProtocolGPSD();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXGPSProtocolGPSD();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXGPSProtocolGPSD();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXGPSProtocolGPSD();
 };
 
 #endif // __CXGPSPROTOCOLGPSD_HPP__

@@ -34,7 +34,7 @@ typedef BOOL (__stdcall *SHFullScreenProc)(HWND, DWORD);
 
 //-------------------------------------
 CXWindow::CXWindow() :
-	m_hWnd(NULL)
+    m_hWnd(NULL)
 {
 }
 
@@ -44,69 +44,69 @@ CXWindow::~CXWindow() {
 
 //-------------------------------------
 void CXWindow::SetHWND(HWND hWnd) {
-	m_hWnd = hWnd;
+    m_hWnd = hWnd;
 }
 
 //-------------------------------------
 HWND CXWindow::GetHWND() const {
-	return m_hWnd;
+    return m_hWnd;
 }
 
 //-------------------------------------
 void CXWindow::RequestRepaint() {
-	if(m_hWnd == NULL)
-		return;
-	InvalidateRect(m_hWnd, NULL, TRUE);
-	UpdateWindow(m_hWnd);
+    if(m_hWnd == NULL)
+        return;
+    InvalidateRect(m_hWnd, NULL, TRUE);
+    UpdateWindow(m_hWnd);
 }
 
 //-------------------------------------
 void CXWindow::ShowMaximized() {
-	if(m_hWnd != NULL) {
-		ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
-		InvalidateRect(m_hWnd, NULL, true);
-	}
+    if(m_hWnd != NULL) {
+        ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
+        InvalidateRect(m_hWnd, NULL, true);
+    }
 }
 
 //-------------------------------------
 void CXWindow::ShowNormal() {
-	if(m_hWnd != NULL) {
-		ShowWindow(m_hWnd, SW_SHOWNORMAL);
-		InvalidateRect(m_hWnd, NULL, true);
-	}
+    if(m_hWnd != NULL) {
+        ShowWindow(m_hWnd, SW_SHOWNORMAL);
+        InvalidateRect(m_hWnd, NULL, true);
+    }
 }
 
 
 //-------------------------------------
 void CXWindow::ShowFullScreen() {
-	if(m_hWnd != NULL) {
-		// hide windows stuff
-		int width = GetDeviceCaps(NULL, HORZRES);
-		int height = GetDeviceCaps(NULL, VERTRES);
+    if(m_hWnd != NULL) {
+        // hide windows stuff
+        int width = GetDeviceCaps(NULL, HORZRES);
+        int height = GetDeviceCaps(NULL, VERTRES);
 
-		bool DllFound = false;
-		// try to load aygshell.dll
-		HINSTANCE hAygDll = LoadLibrary(L"aygshell.dll");
-		if (hAygDll) {
-			// try to get procedure SHFullScreen
-			SHFullScreenProc procSHFullScreen = (SHFullScreenProc)GetProcAddress(hAygDll, L"SHFullScreen");
-			if (procSHFullScreen) {
-				// use procedure SHFullScreen
-				procSHFullScreen(m_hWnd, SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
-				MoveWindow(m_hWnd, 0, 0, width, height, TRUE);
-				DllFound = true;
-			}
-			FreeLibrary(hAygDll);
-		}
-		// don't use aygshell.dll and SHFullScreen
-		if (!DllFound)
-			SetWindowPos(m_hWnd, HWND_TOPMOST, 0, 0, width, height, SWP_SHOWWINDOW);
-	}
+        bool DllFound = false;
+        // try to load aygshell.dll
+        HINSTANCE hAygDll = LoadLibrary(L"aygshell.dll");
+        if (hAygDll) {
+            // try to get procedure SHFullScreen
+            SHFullScreenProc procSHFullScreen = (SHFullScreenProc)GetProcAddress(hAygDll, L"SHFullScreen");
+            if (procSHFullScreen) {
+                // use procedure SHFullScreen
+                procSHFullScreen(m_hWnd, SHFS_HIDETASKBAR | SHFS_HIDESIPBUTTON | SHFS_HIDESTARTICON);
+                MoveWindow(m_hWnd, 0, 0, width, height, TRUE);
+                DllFound = true;
+            }
+            FreeLibrary(hAygDll);
+        }
+        // don't use aygshell.dll and SHFullScreen
+        if (!DllFound)
+            SetWindowPos(m_hWnd, HWND_TOPMOST, 0, 0, width, height, SWP_SHOWWINDOW);
+    }
 }
 
 //-------------------------------------
 void CXWindow::ShowMinimized() {
-	if(m_hWnd != NULL) {
-		ShowWindow(m_hWnd, SW_MINIMIZE);
-	}
+    if(m_hWnd != NULL) {
+        ShowWindow(m_hWnd, SW_MINIMIZE);
+    }
 }

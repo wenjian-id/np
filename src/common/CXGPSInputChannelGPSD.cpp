@@ -33,60 +33,60 @@ CXGPSInputChannelGPSD::~CXGPSInputChannelGPSD() {
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::Open() {
-	return m_GPSDClient.Open();
+    return m_GPSDClient.Open();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::Close() {
-	return m_GPSDClient.Close();
+    return m_GPSDClient.Close();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::IsOpen() {
-	return m_GPSDClient.IsOpen();
+    return m_GPSDClient.IsOpen();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::ReadConfiguration() {
-	m_GPSDClient.SetConfig(CXOptions::Instance()->GetGPSDConfig());
-	return true;
+    m_GPSDClient.SetConfig(CXOptions::Instance()->GetGPSDConfig());
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::CanFlush() {
-	return false;
+    return false;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::Read(unsigned char * /*pbBuffer*/, size_t /*Size*/, size_t &ReadSize) {
-	ReadSize = 0;
-	return false;
+    ReadSize = 0;
+    return false;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelGPSD::Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged) {
-	m_GPSDClient.Read();
-	bool oResult = false;
-	roGPSPosInfoChanged = false;
-	roGPSCourseInfoChanged = false;
-	roGPSQualityInfoChanged = false;
-	if(m_GPSDClient.GPSPosInfoChanged()) {
-		rGPSPosInfo = m_GPSDClient.GetGPSPosInfo();
-		m_GPSDClient.ResetGPSPosInfoChanged();
-		roGPSPosInfoChanged = true;
-		oResult = true;
-	}
-	if(m_GPSDClient.GPSCourseInfoChanged()) {
-		rGPSCourseInfo = m_GPSDClient.GetGPSCourseInfo();
-		m_GPSDClient.ResetGPSCourseInfoChanged();
-		roGPSCourseInfoChanged = true;
-		oResult = true;
-	}
-	if(m_GPSDClient.GPSQualityInfoChanged()) {
-		rGPSQualityInfo = m_GPSDClient.GetGPSQualityInfo();
-		m_GPSDClient.ResetGPSQualityInfoChanged();
-		roGPSQualityInfoChanged = true;
-		oResult = true;
-	}
-	return oResult;
+    m_GPSDClient.Read();
+    bool oResult = false;
+    roGPSPosInfoChanged = false;
+    roGPSCourseInfoChanged = false;
+    roGPSQualityInfoChanged = false;
+    if(m_GPSDClient.GPSPosInfoChanged()) {
+        rGPSPosInfo = m_GPSDClient.GetGPSPosInfo();
+        m_GPSDClient.ResetGPSPosInfoChanged();
+        roGPSPosInfoChanged = true;
+        oResult = true;
+    }
+    if(m_GPSDClient.GPSCourseInfoChanged()) {
+        rGPSCourseInfo = m_GPSDClient.GetGPSCourseInfo();
+        m_GPSDClient.ResetGPSCourseInfoChanged();
+        roGPSCourseInfoChanged = true;
+        oResult = true;
+    }
+    if(m_GPSDClient.GPSQualityInfoChanged()) {
+        rGPSQualityInfo = m_GPSDClient.GetGPSQualityInfo();
+        m_GPSDClient.ResetGPSQualityInfoChanged();
+        roGPSQualityInfoChanged = true;
+        oResult = true;
+    }
+    return oResult;
 }

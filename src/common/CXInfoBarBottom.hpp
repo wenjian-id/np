@@ -33,38 +33,38 @@
  */
 class CXInfoBarBottom : public CXInfoBar {
 private:
-	CXNaviData			m_NaviData;	///< oiu
-	//-------------------------------------
-	CXInfoBarBottom(const CXInfoBarBottom &);						///< Not used.
-	const CXInfoBarBottom & operator = (const CXInfoBarBottom &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+    CXNaviData          m_NaviData; ///< oiu
+    //-------------------------------------
+    CXInfoBarBottom(const CXInfoBarBottom &);                       ///< Not used.
+    const CXInfoBarBottom & operator = (const CXInfoBarBottom &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXInfoBarBottom();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXInfoBarBottom();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void PositionChanged(const CXNaviData & NewData);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXInfoBarBottom();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXInfoBarBottom();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void PositionChanged(const CXNaviData & NewData);
 };
 
 #endif // __CXINFOBARBOTTOM_HPP__

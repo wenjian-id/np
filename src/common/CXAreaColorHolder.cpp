@@ -24,39 +24,39 @@
 
 //-------------------------------------
 CXAreaColorHolder::CXAreaColorHolder() {
-	CreateColors();
+    CreateColors();
 }
 
 //-------------------------------------
 CXAreaColorHolder::~CXAreaColorHolder() {
-	DestroyColors();
+    DestroyColors();
 }
 
 //-------------------------------------
 void CXAreaColorHolder::CreateColors() {
 
-	for(size_t i=0; i<e_Way_EnumCount; i++) {
-		m_Colors.Append(new CXRGB());
-	}
+    for(size_t i=0; i<e_Way_EnumCount; i++) {
+        m_Colors.Append(new CXRGB());
+    }
 
-	// now create colors
-	// area none
-	*m_Colors[e_Area_None]		= CXRGB(0x00, 0x00, 0x00);
-	// water
-	*m_Colors[e_Area_Water]		= CXRGB(0x00, 0x00, 0xD0);
-	// wood
-	*m_Colors[e_Area_Wood]		= CXRGB(0x00, 0xFF, 0x00);
+    // now create colors
+    // area none
+    *m_Colors[e_Area_None]      = CXRGB(0x00, 0x00, 0x00);
+    // water
+    *m_Colors[e_Area_Water]     = CXRGB(0x00, 0x00, 0xD0);
+    // wood
+    *m_Colors[e_Area_Wood]      = CXRGB(0x00, 0xFF, 0x00);
 }
 
 //-------------------------------------
 void CXAreaColorHolder::DestroyColors() {
-	for(size_t i=0; i<e_Way_EnumCount; i++) {
-		delete m_Colors[i];
-	}
-	m_Colors.Clear();
+    for(size_t i=0; i<e_Way_EnumCount; i++) {
+        delete m_Colors[i];
+    }
+    m_Colors.Clear();
 }
 
 //-------------------------------------
 CXRGB CXAreaColorHolder::GetColor(E_AREA_TYPE eAreaType) const {
-	return *m_Colors[eAreaType];
+    return *m_Colors[eAreaType];
 }

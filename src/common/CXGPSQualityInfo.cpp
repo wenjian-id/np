@@ -24,21 +24,21 @@
 
 //-------------------------------------
 CXGPSQualityInfo::CXGPSQualityInfo() :
-	m_dHDOP(0.0),
-	m_dVDOP(0.0)
+    m_dHDOP(0.0),
+    m_dVDOP(0.0)
 {
 }
 
 //-------------------------------------
 CXGPSQualityInfo::CXGPSQualityInfo(double dHDOP, double dVDOP) :
-	m_dHDOP(dHDOP),
-	m_dVDOP(dVDOP)
+    m_dHDOP(dHDOP),
+    m_dVDOP(dVDOP)
 {
 }
 
 //-------------------------------------
 CXGPSQualityInfo::CXGPSQualityInfo(const CXGPSQualityInfo & rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -47,32 +47,32 @@ CXGPSQualityInfo::~CXGPSQualityInfo() {
 
 //-------------------------------------
 const CXGPSQualityInfo & CXGPSQualityInfo::operator = (const CXGPSQualityInfo & rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXGPSQualityInfo::CopyFrom(const CXGPSQualityInfo &rOther) {
-	m_dHDOP = rOther.m_dHDOP;
-	m_dVDOP = rOther.m_dVDOP;
+    m_dHDOP = rOther.m_dHDOP;
+    m_dVDOP = rOther.m_dVDOP;
 }
 
 //-------------------------------------
 double CXGPSQualityInfo::GetHDOP() const {
-	return m_dHDOP;
+    return m_dHDOP;
 }
 
 //-------------------------------------
 void CXGPSQualityInfo::SetHDOP(double NewValue) {
-	m_dHDOP = NewValue;
+    m_dHDOP = NewValue;
 }
 //-------------------------------------
 double CXGPSQualityInfo::GetVDOP() const {
-	return m_dVDOP;
+    return m_dVDOP;
 }
 
 //-------------------------------------
 void CXGPSQualityInfo::SetVDOP(double NewValue) {
-	m_dVDOP = NewValue;
+    m_dVDOP = NewValue;
 }

@@ -24,21 +24,21 @@
 
 //-------------------------------------
 CXDirection::CXDirection(): 
-	m_dCos(1),
-	m_dSin(0)
+    m_dCos(1),
+    m_dSin(0)
 {
 }
 
 //-------------------------------------
 CXDirection::CXDirection(double dCos, double dSin):
-	m_dCos(dCos),
-	m_dSin(dSin)
+    m_dCos(dCos),
+    m_dSin(dSin)
 {
 }
 
 //-------------------------------------
 CXDirection::CXDirection(const CXDirection &rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -47,33 +47,33 @@ CXDirection::~CXDirection() {
 
 //-------------------------------------
 void CXDirection::CopyFrom(const CXDirection &rOther) {
-	m_dCos = rOther.m_dCos;
-	m_dSin = rOther.m_dSin;
+    m_dCos = rOther.m_dCos;
+    m_dSin = rOther.m_dSin;
 }
 
 //-------------------------------------
 const CXDirection & CXDirection::operator = (const CXDirection &rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 bool CXDirection::operator == (const CXDirection & rOther) {
-	return (m_dCos == rOther.m_dCos) && (m_dSin == rOther.m_dSin);
+    return (m_dCos == rOther.m_dCos) && (m_dSin == rOther.m_dSin);
 }
 
 //-------------------------------------
 CXDirection CXDirection::operator - () const {
-	return CXDirection(m_dCos, -m_dSin);
+    return CXDirection(m_dCos, -m_dSin);
 }
 
 //-------------------------------------
 double CXDirection::GetCos() const {
-	return m_dCos;
+    return m_dCos;
 }
 
 //-------------------------------------
 double CXDirection::GetSin() const {
-	return m_dSin;
+    return m_dSin;
 }

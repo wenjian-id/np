@@ -32,96 +32,96 @@
  */
 class CXUTMSpeed {
 private:
-	double			m_dSpeed;		///< oiu
-	CXDirection		m_Direction;	///< oiu
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXUTMSpeed &rOther);
+    double          m_dSpeed;       ///< oiu
+    CXDirection     m_Direction;    ///< oiu
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXUTMSpeed &rOther);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXUTMSpeed();
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXUTMSpeed(const CXUTMSpeed &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXUTMSpeed();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXUTMSpeed & operator = (const CXUTMSpeed &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if equal.
-	 */
-	bool operator == (const CXUTMSpeed &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if not equal.
-	 */
-	bool operator != (const CXUTMSpeed &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Reset();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetSpeed() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetSpeed(double dSpeed);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXDirection GetDirection() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetDirection(const CXDirection &Direction);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXUTMSpeed();
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXUTMSpeed(const CXUTMSpeed &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXUTMSpeed();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXUTMSpeed & operator = (const CXUTMSpeed &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if equal.
+     */
+    bool operator == (const CXUTMSpeed &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if not equal.
+     */
+    bool operator != (const CXUTMSpeed &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Reset();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetSpeed() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetSpeed(double dSpeed);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXDirection GetDirection() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetDirection(const CXDirection &Direction);
 };
 
 #endif // __CXUTMSPEED_HPP__

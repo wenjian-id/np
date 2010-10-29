@@ -24,13 +24,13 @@
 
 //-------------------------------------
 CXWorkRequestThread::CXWorkRequestThread() :
-	m_hEvent(NULL)
+    m_hEvent(NULL)
 {
-	m_hEvent = CreateEvent(	NULL,	// pointer to security attributes
-							false,  // flag for manual-reset event
-							false,	// flag for initial state
-							NULL	// pointer to event-object name
-				);
+    m_hEvent = CreateEvent( NULL,   // pointer to security attributes
+                            false,  // flag for manual-reset event
+                            false,  // flag for initial state
+                            NULL    // pointer to event-object name
+                );
  
 }
 
@@ -40,17 +40,17 @@ CXWorkRequestThread::~CXWorkRequestThread() {
 
 //-------------------------------------
 void CXWorkRequestThread::Wakeup() {
-	SetEvent(m_hEvent);
+    SetEvent(m_hEvent);
 } 
 
 //-------------------------------------
 void CXWorkRequestThread::DoWait() {
-	HANDLE handles[2];
-	handles[0] = GetHandle(); // own handle
-	handles[1] = m_hEvent;
-	if(handles[0] != NULL) {
-		// wait
-		DWORD res = WaitForMultipleObjects(2, handles, FALSE, INFINITE);
-		DWORD res1 = res;
-	}
+    HANDLE handles[2];
+    handles[0] = GetHandle(); // own handle
+    handles[1] = m_hEvent;
+    if(handles[0] != NULL) {
+        // wait
+        DWORD res = WaitForMultipleObjects(2, handles, FALSE, INFINITE);
+        DWORD res1 = res;
+    }
 }

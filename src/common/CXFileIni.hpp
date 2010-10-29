@@ -34,44 +34,44 @@
  */
 class CXFileIni {
 private:
-	CXMapSimple<CXStringASCII, CXStringASCII>	m_Content;		///< oiu
-	//-------------------------------------
-	CXFileIni(const CXFileIni &);						///< Not used.
-	const CXFileIni & operator = (const CXFileIni &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Clear();
+    CXMapSimple<CXStringASCII, CXStringASCII>   m_Content;      ///< oiu
+    //-------------------------------------
+    CXFileIni(const CXFileIni &);                       ///< Not used.
+    const CXFileIni & operator = (const CXFileIni &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Clear();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXFileIni();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXFileIni();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool Read(const CXStringASCII & FileName);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringASCII Get(const CXStringASCII & Key, const CXStringASCII & Default);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXFileIni();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXFileIni();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool Read(const CXStringASCII & FileName);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringASCII Get(const CXStringASCII & Key, const CXStringASCII & Default);
 };
 
 #endif // __CXFILEINI_HPP__

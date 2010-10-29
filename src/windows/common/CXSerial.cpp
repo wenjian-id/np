@@ -25,7 +25,7 @@
 
 //-------------------------------------
 CXSerial::CXSerial() :
-	m_hComm(INVALID_HANDLE_VALUE)
+    m_hComm(INVALID_HANDLE_VALUE)
 {
 }
 
@@ -37,16 +37,16 @@ CXSerial::~CXSerial() {
 //-------------------------------------
 CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     if(m_hComm != INVALID_HANDLE_VALUE)
-    	return RC_CHANNEL_ALREADY_OPEN;
+        return RC_CHANNEL_ALREADY_OPEN;
 
     m_hComm = CreateFile(Config.GetPort().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, 0);
     if(m_hComm == INVALID_HANDLE_VALUE)
-    	return RC_CHANNEL_OPEN_ERROR;
+        return RC_CHANNEL_OPEN_ERROR;
     
     // configure
     DCB dcb;
     if(!GetCommState(m_hComm, &dcb))
-    	return RC_CHANNEL_OPEN_ERROR;
+        return RC_CHANNEL_OPEN_ERROR;
     dcb.fBinary = TRUE;
     dcb.fParity = TRUE;
     
@@ -57,20 +57,20 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     // parity
     unsigned char ucParity = 0;
     switch(Config.GetParity()) {
-		case CXSerialPortConfig::SCP_NONE:	ucParity = NOPARITY; break;
-    	case CXSerialPortConfig::SCP_EVEN:	ucParity = EVENPARITY; break;
-    	case CXSerialPortConfig::SCP_ODD:	ucParity = ODDPARITY; break;
-    	case CXSerialPortConfig::SCP_MARK:	ucParity = MARKPARITY; break;
-		default :							Close(); return RC_WRONG_ARGUMENT;
+        case CXSerialPortConfig::SCP_NONE:  ucParity = NOPARITY; break;
+        case CXSerialPortConfig::SCP_EVEN:  ucParity = EVENPARITY; break;
+        case CXSerialPortConfig::SCP_ODD:   ucParity = ODDPARITY; break;
+        case CXSerialPortConfig::SCP_MARK:  ucParity = MARKPARITY; break;
+        default :                           Close(); return RC_WRONG_ARGUMENT;
     }
     dcb.Parity = ucParity;
     // stop bits
     unsigned char ucStopBits = 0;
-    	switch(Config.GetStopBits()) {
-    	case CXSerialPortConfig::SCS_ONE:		ucStopBits = ONESTOPBIT; break;
-    	case CXSerialPortConfig::SCS_ONEFIVE:	ucStopBits = ONE5STOPBITS; break;
-    	case CXSerialPortConfig::SCS_TWO:		ucStopBits = TWOSTOPBITS; break;
-		default :								Close(); return RC_WRONG_ARGUMENT;
+        switch(Config.GetStopBits()) {
+        case CXSerialPortConfig::SCS_ONE:       ucStopBits = ONESTOPBIT; break;
+        case CXSerialPortConfig::SCS_ONEFIVE:   ucStopBits = ONE5STOPBITS; break;
+        case CXSerialPortConfig::SCS_TWO:       ucStopBits = TWOSTOPBITS; break;
+        default :                               Close(); return RC_WRONG_ARGUMENT;
     }
     dcb.StopBits = ucStopBits;
     
@@ -86,9 +86,9 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     dcb.fAbortOnError = FALSE;
     
     if(!SetCommState(m_hComm, &dcb)) {
-		Close();
-    	return RC_CHANNEL_OPEN_ERROR;
-	}
+        Close();
+        return RC_CHANNEL_OPEN_ERROR;
+    }
     
     // disable timeouts
     COMMTIMEOUTS ct;
@@ -99,9 +99,9 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     ct.WriteTotalTimeoutConstant = 0;
     ct.WriteTotalTimeoutMultiplier = 0;
     if(!SetCommTimeouts(m_hComm, &ct)) {
-		Close();
-    	return RC_CHANNEL_OPEN_ERROR;
-	}
+        Close();
+        return RC_CHANNEL_OPEN_ERROR;
+    }
     
     return RC_OK;
 }
@@ -109,12 +109,12 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
 //-------------------------------------
 CXSerial::E_RESULTCODE CXSerial::Close() {
     if(m_hComm == INVALID_HANDLE_VALUE)
-    	return RC_NO_CHANNEL_OPEN;
+        return RC_NO_CHANNEL_OPEN;
     E_RESULTCODE eResult = RC_OK;
-   	// close
-   	if(!CloseHandle(m_hComm))
-   		eResult = RC_CHANNEL_CLOSE_ERROR;
-   	m_hComm = INVALID_HANDLE_VALUE;
+    // close
+    if(!CloseHandle(m_hComm))
+        eResult = RC_CHANNEL_CLOSE_ERROR;
+    m_hComm = INVALID_HANDLE_VALUE;
     return eResult;
 }
 
@@ -123,15 +123,15 @@ CXSerial::E_RESULTCODE CXSerial::Receive(unsigned long  ulDataSize, unsigned cha
     ulReceived = 0;
     
     if(m_hComm == INVALID_HANDLE_VALUE)
-    	return RC_NO_CHANNEL_OPEN;
+        return RC_NO_CHANNEL_OPEN;
     
     E_RESULTCODE eResult = RC_OK;
     
     DWORD dwReceived = 0;
     if(!ReadFile(m_hComm, pbData, ulDataSize, &dwReceived, NULL))
-    	eResult = RC_RECEIVE_ERROR;
+        eResult = RC_RECEIVE_ERROR;
     else if(dwReceived == 0)
-    	eResult = RC_RCV_NO_DATA;
+        eResult = RC_RCV_NO_DATA;
     ulReceived = dwReceived;
     
     return eResult;
@@ -143,18 +143,18 @@ CXSerial::E_RESULTCODE CXSerial::Transmit(unsigned long  ulDataSize, const unsig
     
     // if no data to send return RC_OK
     if(ulDataSize == 0)
-    	return RC_OK;
+        return RC_OK;
     
     if(m_hComm == INVALID_HANDLE_VALUE)
-    	return RC_NO_CHANNEL_OPEN;
+        return RC_NO_CHANNEL_OPEN;
     
     E_RESULTCODE eResult = RC_OK;
     
     DWORD dwWritten = 0;
     if(!WriteFile(m_hComm, pbData, ulDataSize, &dwWritten, NULL))
-    	eResult = RC_TRANSMIT_ERROR;
+        eResult = RC_TRANSMIT_ERROR;
     if(dwWritten != ulDataSize)
-    	eResult = RC_TRANSMIT_ERROR;
+        eResult = RC_TRANSMIT_ERROR;
     ulTransmitted = dwWritten;
     
     return eResult;

@@ -24,7 +24,7 @@
 
 //-------------------------------------
 CXWindow::CXWindow() :
-	m_hWnd(NULL)
+    m_hWnd(NULL)
 {
 }
 
@@ -34,49 +34,49 @@ CXWindow::~CXWindow() {
 
 //-------------------------------------
 void CXWindow::SetHWND(HWND hWnd) {
-	m_hWnd = hWnd;
+    m_hWnd = hWnd;
 }
 
 //-------------------------------------
 HWND CXWindow::GetHWND() const {
-	return m_hWnd;
+    return m_hWnd;
 }
 
 //-------------------------------------
 void CXWindow::RequestRepaint() {
-	if(m_hWnd == NULL)
-		return;
-	InvalidateRect(m_hWnd, NULL, TRUE);
-	UpdateWindow(m_hWnd);
+    if(m_hWnd == NULL)
+        return;
+    InvalidateRect(m_hWnd, NULL, TRUE);
+    UpdateWindow(m_hWnd);
 }
 
 //-------------------------------------
 void CXWindow::ShowMaximized() {
-	if(m_hWnd != NULL) {
-		ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
-		InvalidateRect(m_hWnd, NULL, true);
-	}
+    if(m_hWnd != NULL) {
+        ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
+        InvalidateRect(m_hWnd, NULL, true);
+    }
 }
 
 //-------------------------------------
 void CXWindow::ShowNormal() {
-	if(m_hWnd != NULL) {
-		ShowWindow(m_hWnd, SW_SHOWNORMAL);
-		InvalidateRect(m_hWnd, NULL, true);
-	}
+    if(m_hWnd != NULL) {
+        ShowWindow(m_hWnd, SW_SHOWNORMAL);
+        InvalidateRect(m_hWnd, NULL, true);
+    }
 }
 
 //-------------------------------------
 void CXWindow::ShowFullScreen() {
-	if(m_hWnd != NULL) {
-		SetWindowLong(m_hWnd, GWL_STYLE, WS_VISIBLE | WS_BORDER | WS_CLIPCHILDREN);
-		ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
-	}
+    if(m_hWnd != NULL) {
+        SetWindowLong(m_hWnd, GWL_STYLE, WS_VISIBLE | WS_BORDER | WS_CLIPCHILDREN);
+        ShowWindow(m_hWnd, SW_SHOWMAXIMIZED);
+    }
 }
 
 //-------------------------------------
 void CXWindow::ShowMinimized() {
-	if(m_hWnd != NULL) {
-		ShowWindow(m_hWnd, SW_MINIMIZE);
-	}
+    if(m_hWnd != NULL) {
+        ShowWindow(m_hWnd, SW_MINIMIZE);
+    }
 }

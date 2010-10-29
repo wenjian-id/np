@@ -32,79 +32,79 @@
  */
 class CXCoorVector {
 private:
-	double m_x;		///< oiu
-	double m_y;		///< oiu
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXCoorVector &rOther);
+    double m_x;     ///< oiu
+    double m_y;     ///< oiu
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXCoorVector &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXCoorVector();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXCoorVector(double x, double y);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXCoorVector(const CXCoorVector &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXCoorVector();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXCoorVector & operator = (const CXCoorVector &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetX() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetY() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetIntX() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetIntY() const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXCoorVector();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXCoorVector(double x, double y);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXCoorVector(const CXCoorVector &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXCoorVector();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXCoorVector & operator = (const CXCoorVector &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetX() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetY() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetIntX() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetIntY() const;
 };
 
 //---------------------------------------------------------------------
@@ -114,119 +114,119 @@ public:
  */
 class CXTransformationMatrix2D {
 private:
-	double	m_a11;	///< oiu
-	double	m_a12;	///< oiu
-	double	m_a13;	///< oiu
-	double	m_a21;	///< oiu
-	double	m_a22;	///< oiu
-	double	m_a23;	///< oiu
-	double	m_a31;	///< oiu
-	double	m_a32;	///< oiu
-	double	m_a33;	///< oiu
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXTransformationMatrix2D(	double a11, double a12, double a13, 
-								double a21, double a22, double a23, 
-								double a31, double a32, double a33);
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXTransformationMatrix2D &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Multiply(const CXTransformationMatrix2D &rOther);
+    double  m_a11;  ///< oiu
+    double  m_a12;  ///< oiu
+    double  m_a13;  ///< oiu
+    double  m_a21;  ///< oiu
+    double  m_a22;  ///< oiu
+    double  m_a23;  ///< oiu
+    double  m_a31;  ///< oiu
+    double  m_a32;  ///< oiu
+    double  m_a33;  ///< oiu
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXTransformationMatrix2D(   double a11, double a12, double a13, 
+                                double a21, double a22, double a23, 
+                                double a31, double a32, double a33);
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXTransformationMatrix2D &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Multiply(const CXTransformationMatrix2D &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXTransformationMatrix2D();
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXTransformationMatrix2D(const CXTransformationMatrix2D &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXTransformationMatrix2D();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXTransformationMatrix2D & operator = (const CXTransformationMatrix2D &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXCoorVector operator * (const CXCoorVector &Value) const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXTransformationMatrix2D operator * (const CXTransformationMatrix2D &Value) const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Rotate(double dRad);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Rotate(const CXDirection &Direction);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Rotate(double dCos, double dSin);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Translate(double dX, double dY);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Scale(double dX, double dY);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu
-	 */
-	CXTransformationMatrix2D Inverse() const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXTransformationMatrix2D();
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXTransformationMatrix2D(const CXTransformationMatrix2D &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXTransformationMatrix2D();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXTransformationMatrix2D & operator = (const CXTransformationMatrix2D &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXCoorVector operator * (const CXCoorVector &Value) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXTransformationMatrix2D operator * (const CXTransformationMatrix2D &Value) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Rotate(double dRad);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Rotate(const CXDirection &Direction);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Rotate(double dCos, double dSin);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Translate(double dX, double dY);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Scale(double dX, double dY);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu
+     */
+    CXTransformationMatrix2D Inverse() const;
 };
 
 #endif // __CXTRANSFORMATIONMATRIX_HPP__

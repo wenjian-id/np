@@ -31,7 +31,7 @@ CXGPSDConfig::CXGPSDConfig() {
 
 //-------------------------------------
 CXGPSDConfig::CXGPSDConfig(const CXGPSDConfig &rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -40,44 +40,44 @@ CXGPSDConfig::~CXGPSDConfig() {
 
 //-------------------------------------
 const CXGPSDConfig & CXGPSDConfig::operator = (const CXGPSDConfig &rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXGPSDConfig::CopyFrom(const CXGPSDConfig & rOther) {
-	m_Address = rOther.m_Address;
-	m_Port = rOther.m_Port;
+    m_Address = rOther.m_Address;
+    m_Port = rOther.m_Port;
 }
 
 //-------------------------------------
 void CXGPSDConfig::SetAddress(const CXStringASCII & Address) {
-	m_Address = Address;
+    m_Address = Address;
 }
 
 //-------------------------------------
 CXStringASCII CXGPSDConfig::GetAddress() const {
-	return m_Address;
+    return m_Address;
 }
 
 //-------------------------------------
 void CXGPSDConfig::SetPort(const CXStringASCII & Port) {
-	m_Port = Port;
+    m_Port = Port;
 }
 
 //-------------------------------------
 CXStringASCII CXGPSDConfig::GetPort() const {
-	return m_Port;
+    return m_Port;
 }
 
 
 //----------------------------------------------------------------------------
 //-------------------------------------
 IGPSDClient::IGPSDClient() :
-	m_oGPSPosInfoChanged(false),
-	m_oGPSCourseInfoChanged(false),
-	m_oGPSQualityInfoChanged(false)
+    m_oGPSPosInfoChanged(false),
+    m_oGPSCourseInfoChanged(false),
+    m_oGPSQualityInfoChanged(false)
 {
 }
 //-------------------------------------
@@ -85,63 +85,63 @@ IGPSDClient::~IGPSDClient() {
 }
 //-------------------------------------
 void IGPSDClient::SetConfig(const CXGPSDConfig &Config) {
-	m_Config = Config;
+    m_Config = Config;
 }
 //-------------------------------------
 CXGPSDConfig IGPSDClient::GetConfig() const {
-	return m_Config;
+    return m_Config;
 }
 
 //-------------------------------------
 bool IGPSDClient::GPSPosInfoChanged() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_oGPSPosInfoChanged;
+    CXMutexLocker ML(&m_Mutex);
+    return m_oGPSPosInfoChanged;
 }
 
 //-------------------------------------
 CXGPSPosInfo IGPSDClient::GetGPSPosInfo() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_GPSPosInfo;
+    CXMutexLocker ML(&m_Mutex);
+    return m_GPSPosInfo;
 }
 
 //-------------------------------------
 void IGPSDClient::ResetGPSPosInfoChanged() {
-	CXMutexLocker ML(&m_Mutex);
-	m_oGPSPosInfoChanged = false;
+    CXMutexLocker ML(&m_Mutex);
+    m_oGPSPosInfoChanged = false;
 }
 
 //-------------------------------------
 bool IGPSDClient::GPSCourseInfoChanged() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_oGPSCourseInfoChanged;
+    CXMutexLocker ML(&m_Mutex);
+    return m_oGPSCourseInfoChanged;
 }
 
 //-------------------------------------
 CXGPSCourseInfo IGPSDClient::GetGPSCourseInfo() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_GPSCourseInfo;
+    CXMutexLocker ML(&m_Mutex);
+    return m_GPSCourseInfo;
 }
 
 //-------------------------------------
 void IGPSDClient::ResetGPSCourseInfoChanged() {
-	CXMutexLocker ML(&m_Mutex);
-	m_oGPSCourseInfoChanged = false;
+    CXMutexLocker ML(&m_Mutex);
+    m_oGPSCourseInfoChanged = false;
 }
 
 //-------------------------------------
 bool IGPSDClient::GPSQualityInfoChanged() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_oGPSQualityInfoChanged;
+    CXMutexLocker ML(&m_Mutex);
+    return m_oGPSQualityInfoChanged;
 }
 
 //-------------------------------------
 CXGPSQualityInfo IGPSDClient::GetGPSQualityInfo() const {
-	CXMutexLocker ML(&m_Mutex);
-	return m_GPSQualityInfo;
+    CXMutexLocker ML(&m_Mutex);
+    return m_GPSQualityInfo;
 }
 
 //-------------------------------------
 void IGPSDClient::ResetGPSQualityInfoChanged() {
-	CXMutexLocker ML(&m_Mutex);
-	m_oGPSQualityInfoChanged = false;
+    CXMutexLocker ML(&m_Mutex);
+    m_oGPSQualityInfoChanged = false;
 }

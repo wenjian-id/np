@@ -33,48 +33,48 @@ CXGPSInputChannelSerial::~CXGPSInputChannelSerial() {
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::Open() {
-	// open channel
-	return m_Serial.Open(m_PortConfig) == CXSerial::RC_OK;
+    // open channel
+    return m_Serial.Open(m_PortConfig) == CXSerial::RC_OK;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::Close() {
-	// close
-	return m_Serial.Close() == CXSerial::RC_OK;
+    // close
+    return m_Serial.Close() == CXSerial::RC_OK;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::IsOpen() {
-	return m_Serial.IsOpen();
+    return m_Serial.IsOpen();
 }
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::ReadConfiguration() {
-	// get configuration
-	m_PortConfig = CXOptions::Instance()->GetSerialPortConfig();
-	return true;
+    // get configuration
+    m_PortConfig = CXOptions::Instance()->GetSerialPortConfig();
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::CanFlush() {
-	return true;
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) {
-	ReadSize = 0;
-	if(pbBuffer == 0)
-		return false;
-	if(!IsOpen())
-		return false;
-	// read data
-	unsigned long ulReadSize = 0;
-	bool oResult = m_Serial.Receive(Size, pbBuffer, ulReadSize) == CXSerial::RC_OK;
-	ReadSize = ulReadSize;
-	return oResult;
+    ReadSize = 0;
+    if(pbBuffer == 0)
+        return false;
+    if(!IsOpen())
+        return false;
+    // read data
+    unsigned long ulReadSize = 0;
+    bool oResult = m_Serial.Receive(Size, pbBuffer, ulReadSize) == CXSerial::RC_OK;
+    ReadSize = ulReadSize;
+    return oResult;
 }
 
 //-------------------------------------
 bool CXGPSInputChannelSerial::Read(CXGPSPosInfo &/*rGPSPosInfo*/, bool &/*roGPSPosInfoChanged*/, CXGPSCourseInfo &/*rGPSCourseInfo*/, bool &/*roGPSCourseInfoChanged*/, CXGPSQualityInfo &/*rGPSQualityInfo*/, bool &/*roGPSQualityInfoChanged*/) {
-	return false;
+    return false;
 }

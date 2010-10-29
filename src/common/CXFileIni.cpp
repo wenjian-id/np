@@ -29,60 +29,60 @@ CXFileIni::CXFileIni() {
 
 //-------------------------------------
 CXFileIni::~CXFileIni() {
-	Clear();
+    Clear();
 }
 
 //-------------------------------------
 void CXFileIni::Clear() {
-	// cleanup
-	m_Content.RemoveAll();
+    // cleanup
+    m_Content.RemoveAll();
 }
 
 //-------------------------------------
 bool CXFileIni::Read(const CXStringASCII & FileName) {
-	// first of all clear content
-	Clear();
-	// open file
-	CXFile  TheFile;
-	if(TheFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
-		return false;
-	}
-	CXStringASCII NewLine;
-	CXStringASCII Key;
-	CXStringASCII Value;
-	while(ReadLineASCII(TheFile, NewLine)) {
-		// extract comments
-		size_t pos = NewLine.Find("//");
-		if(pos != CXStringASCII::NPOS) {
-			// throw away comment
-			NewLine = NewLine.Left(pos);
-		}
-		// ok, now check for "="
-		pos = NewLine.Find('=');
-		if(pos != CXStringASCII::NPOS) {
-			// extract key
-			Key = NewLine.Left(pos);
-			Key.TrimLeft();
-			Key.TrimRight();
-			// extract value
-			Value = NewLine;
-			Value.DeleteFirst(pos+1);
-			Value.TrimLeft();
-			Value.TrimRight();
-			// add to m_Content;
-			m_Content.SetAt(Key.ToUpper(), Value);
-		}
-	}
-	return true;
+    // first of all clear content
+    Clear();
+    // open file
+    CXFile  TheFile;
+    if(TheFile.Open(FileName.c_str(), CXFile::E_READ) != CXFile::E_OK) {
+        return false;
+    }
+    CXStringASCII NewLine;
+    CXStringASCII Key;
+    CXStringASCII Value;
+    while(ReadLineASCII(TheFile, NewLine)) {
+        // extract comments
+        size_t pos = NewLine.Find("//");
+        if(pos != CXStringASCII::NPOS) {
+            // throw away comment
+            NewLine = NewLine.Left(pos);
+        }
+        // ok, now check for "="
+        pos = NewLine.Find('=');
+        if(pos != CXStringASCII::NPOS) {
+            // extract key
+            Key = NewLine.Left(pos);
+            Key.TrimLeft();
+            Key.TrimRight();
+            // extract value
+            Value = NewLine;
+            Value.DeleteFirst(pos+1);
+            Value.TrimLeft();
+            Value.TrimRight();
+            // add to m_Content;
+            m_Content.SetAt(Key.ToUpper(), Value);
+        }
+    }
+    return true;
 }
 
 
 //-------------------------------------
 CXStringASCII CXFileIni::Get(const CXStringASCII & Key, const CXStringASCII & Default) {
-	// search for key and value
-	CXStringASCII Result;
-	if(m_Content.Lookup(Key.ToUpper(), Result))
-		// found something
-		return Result;
-	return Default;
+    // search for key and value
+    CXStringASCII Result;
+    if(m_Content.Lookup(Key.ToUpper(), Result))
+        // found something
+        return Result;
+    return Default;
 }

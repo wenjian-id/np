@@ -39,53 +39,53 @@ class CXStringUTF8;
  */
 class CXInfoBarCommon : public CXInfoBar {
 private:
-	CXNaviData			m_NaviData;			///< Navigation data.
-	int					m_TextHeightCoor;	///< oiu
-	int					m_TextHeightSpeed;	///< oiu
-	//-------------------------------------
-	CXInfoBarCommon(const CXInfoBarCommon &);						///< Not used.
-	const CXInfoBarCommon & operator = (const CXInfoBarCommon &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief Paint.
-	 *
-	 * Paint position and speed data to a bitmap.
-	 * \param	pDC			Pointer to a device context.
-	 * \param	OffsetX		Offset for painting (X).
-	 * \param	OffsetY		Offset for painting (Y).
-	 */
-	virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	void CalcFontHeights(CXDeviceContext *pDC);
+    CXNaviData          m_NaviData;         ///< Navigation data.
+    int                 m_TextHeightCoor;   ///< oiu
+    int                 m_TextHeightSpeed;  ///< oiu
+    //-------------------------------------
+    CXInfoBarCommon(const CXInfoBarCommon &);                       ///< Not used.
+    const CXInfoBarCommon & operator = (const CXInfoBarCommon &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief Paint.
+     *
+     * Paint position and speed data to a bitmap.
+     * \param   pDC         Pointer to a device context.
+     * \param   OffsetX     Offset for painting (X).
+     * \param   OffsetY     Offset for painting (Y).
+     */
+    virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    void CalcFontHeights(CXDeviceContext *pDC);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXInfoBarCommon();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXInfoBarCommon();
-	//-------------------------------------
-	/**
-	 * \brief Position has changed.
-	 *
-	 * The position has changed.
-	 * \param	Newdata		New position.
-	 */
-	void PositionChanged(const CXNaviData & NewData);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXInfoBarCommon();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXInfoBarCommon();
+    //-------------------------------------
+    /**
+     * \brief Position has changed.
+     *
+     * The position has changed.
+     * \param   Newdata     New position.
+     */
+    void PositionChanged(const CXNaviData & NewData);
 };
 
 #endif // __CXINFOBARCOMMON_HPP__

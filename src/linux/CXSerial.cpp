@@ -28,7 +28,7 @@
 
 //-------------------------------------
 CXSerial::CXSerial() :
-	m_iComm(-1)
+    m_iComm(-1)
 {
 }
 
@@ -39,18 +39,18 @@ CXSerial::~CXSerial() {
 
 //-------------------------------------
 CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
-	// check if channel already open
-	if(m_iComm != -1)
-		return RC_CHANNEL_ALREADY_OPEN;
+    // check if channel already open
+    if(m_iComm != -1)
+        return RC_CHANNEL_ALREADY_OPEN;
 
-	// try to open
+    // try to open
     m_iComm = open(Config.GetPort().c_str(), O_RDWR | O_NOCTTY | O_NDELAY | O_NONBLOCK);
     if(m_iComm < 0) {
-    	return RC_CHANNEL_OPEN_ERROR;
+        return RC_CHANNEL_OPEN_ERROR;
     }
     
     struct termios t;
-	// return immediately even if no char reveived
+    // return immediately even if no char reveived
     t.c_cc[VMIN]  = 0;
     t.c_cc[VTIME] = 0;
     t.c_iflag = IGNBRK | IGNPAR;
@@ -61,89 +61,89 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     // set data bits
     unsigned char ucDataBits = Config.GetDataBits();
     if(ucDataBits == 7) {
-    	t.c_cflag |= CS7;
+        t.c_cflag |= CS7;
     } else if(ucDataBits == 8) {
-    	t.c_cflag |= CS8;
+        t.c_cflag |= CS8;
     } else {
-    	Close();
-		return RC_WRONG_ARGUMENT;
+        Close();
+        return RC_WRONG_ARGUMENT;
     }
 
-	// set baud rate
-	speed_t SerSpeed = B0;
-	unsigned long ulBaudrate = Config.GetBaudrate();
-	switch(ulBaudrate) {
-		case 2400:		SerSpeed = B2400; break;
-		case 4800:		SerSpeed = B4800; break;
-		case 9600:		SerSpeed = B9600; break;
-		case 19200:		SerSpeed = B19200; break;
-		case 38400:		SerSpeed = B38400; break;
-		case 57600:		SerSpeed = B57600; break;
-		case 115200:	SerSpeed = B115200; break;
-		default:		{
-    						Close();
-							return RC_WRONG_ARGUMENT;
-						}
-	}
+    // set baud rate
+    speed_t SerSpeed = B0;
+    unsigned long ulBaudrate = Config.GetBaudrate();
+    switch(ulBaudrate) {
+        case 2400:      SerSpeed = B2400; break;
+        case 4800:      SerSpeed = B4800; break;
+        case 9600:      SerSpeed = B9600; break;
+        case 19200:     SerSpeed = B19200; break;
+        case 38400:     SerSpeed = B38400; break;
+        case 57600:     SerSpeed = B57600; break;
+        case 115200:    SerSpeed = B115200; break;
+        default:        {
+                            Close();
+                            return RC_WRONG_ARGUMENT;
+                        }
+    }
 
     // parity
-	switch(Config.GetParity()) {
-		case CXSerialPortConfig::SCP_NONE:	{
-												t.c_cflag &= ~PARENB;
-												break;
-											}
-		case CXSerialPortConfig::SCP_EVEN:	{
-												t.c_cflag |= PARENB;
-												t.c_cflag &= ~PARODD;
-												break;
-											}
-		case CXSerialPortConfig::SCP_ODD:	{
-												t.c_cflag |= PARENB;
-												t.c_cflag |= PARODD;
-												break;
-											}
-		default:							{
-												Close();
-												return RC_WRONG_ARGUMENT;
-											}
-	}
+    switch(Config.GetParity()) {
+        case CXSerialPortConfig::SCP_NONE:  {
+                                                t.c_cflag &= ~PARENB;
+                                                break;
+                                            }
+        case CXSerialPortConfig::SCP_EVEN:  {
+                                                t.c_cflag |= PARENB;
+                                                t.c_cflag &= ~PARODD;
+                                                break;
+                                            }
+        case CXSerialPortConfig::SCP_ODD:   {
+                                                t.c_cflag |= PARENB;
+                                                t.c_cflag |= PARODD;
+                                                break;
+                                            }
+        default:                            {
+                                                Close();
+                                                return RC_WRONG_ARGUMENT;
+                                            }
+    }
     // stop bits
-	switch(Config.GetStopBits()) {
-    	case CXSerialPortConfig::SCS_ONE:		t.c_cflag &= ~CSTOPB; break;
-    	case CXSerialPortConfig::SCS_TWO:		t.c_cflag |= CSTOPB; break;
-		default:								Close(); return RC_WRONG_ARGUMENT;
-	}
+    switch(Config.GetStopBits()) {
+        case CXSerialPortConfig::SCS_ONE:       t.c_cflag &= ~CSTOPB; break;
+        case CXSerialPortConfig::SCS_TWO:       t.c_cflag |= CSTOPB; break;
+        default:                                Close(); return RC_WRONG_ARGUMENT;
+    }
         
     if(cfsetispeed(&t, SerSpeed) == -1) {
-    	Close();
-    	return RC_CHANNEL_OPEN_ERROR;
+        Close();
+        return RC_CHANNEL_OPEN_ERROR;
     }
     if(cfsetospeed(&t, SerSpeed) == -1) {
-    	Close();
-    	return RC_CHANNEL_OPEN_ERROR;
+        Close();
+        return RC_CHANNEL_OPEN_ERROR;
     }
     
     // flush
     if(tcflush(m_iComm, TCIFLUSH) == -1 ) {
-    	Close();
-    	return RC_CHANNEL_OPEN_ERROR;
+        Close();
+        return RC_CHANNEL_OPEN_ERROR;
     }
     
     // Now set the terminal port attributes
     if(tcsetattr(m_iComm, TCSANOW, &t) == -1) {
-    	Close();
-    	return RC_CHANNEL_OPEN_ERROR;
+        Close();
+        return RC_CHANNEL_OPEN_ERROR;
     }
-	// everyhing OK
+    // everyhing OK
     return RC_OK;
 }
 
 //-------------------------------------
 CXSerial::E_RESULTCODE CXSerial::Close() {
     if(m_iComm != -1) {
-		// close
-    	close(m_iComm);
-    	m_iComm = -1;
+        // close
+        close(m_iComm);
+        m_iComm = -1;
     }
     return RC_OK;
 }
@@ -153,17 +153,17 @@ CXSerial::E_RESULTCODE CXSerial::Receive(unsigned long  ulDataSize, unsigned cha
     ulReceived = 0;
     
     if(m_iComm == -1)
-    	return RC_NO_CHANNEL_OPEN;
+        return RC_NO_CHANNEL_OPEN;
     
     E_RESULTCODE eResult = RC_OK;
     
     int iReceived = read(m_iComm, pbData, ulDataSize);
     if(iReceived < 0)
-    	eResult = RC_RECEIVE_ERROR;
+        eResult = RC_RECEIVE_ERROR;
     else if(iReceived == 0)
-    	eResult = RC_RCV_NO_DATA;
-	else
-		ulReceived = iReceived;
+        eResult = RC_RCV_NO_DATA;
+    else
+        ulReceived = iReceived;
 
     return eResult;
 }
@@ -174,22 +174,22 @@ CXSerial::E_RESULTCODE CXSerial::Transmit(unsigned long  ulDataSize, const unsig
     
     // if no data to send return RC_OK
     if(ulDataSize == 0)
-    	return RC_OK;
+        return RC_OK;
     
     if(m_iComm == -1)
-    	return RC_NO_CHANNEL_OPEN;
+        return RC_NO_CHANNEL_OPEN;
     
     E_RESULTCODE eResult = RC_OK;
     
     int iWritten = write(m_iComm, pbData, ulDataSize);
     if(iWritten < 0 ) {
-    	eResult = RC_TRANSMIT_ERROR;
+        eResult = RC_TRANSMIT_ERROR;
     } else if(iWritten != static_cast<int>(ulDataSize)) {
-	    ulTransmitted = iWritten;
-    	eResult = RC_TRANSMIT_ERROR;
-	} else {
-	    ulTransmitted = iWritten;
-	}
+        ulTransmitted = iWritten;
+        eResult = RC_TRANSMIT_ERROR;
+    } else {
+        ulTransmitted = iWritten;
+    }
     
     return eResult;
 }

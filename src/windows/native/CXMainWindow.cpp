@@ -28,114 +28,114 @@ CXMainWindow *CXMainWindow::m_pInstance = NULL;
 
 //-------------------------------------
 CXMainWindow::CXMainWindow() {
-	m_pInstance = this;
+    m_pInstance = this;
 }
 
 //-------------------------------------
 CXMainWindow::~CXMainWindow() {
-	m_pInstance = NULL;
+    m_pInstance = NULL;
 }
 
 //-------------------------------------
 void CXMainWindow::OnPaint() {
-	HWND hWnd = GetHWND();
-	if(hWnd == NULL)
-		return;
+    HWND hWnd = GetHWND();
+    if(hWnd == NULL)
+        return;
 
-	// init painting
-	RECT rt;
-	PAINTSTRUCT ps;
-	HDC hdc = BeginPaint(hWnd, &ps);
-	GetClientRect(hWnd, &rt);
-	int Width=rt.right + 1 - rt.left;
-	int Height=rt.bottom + 1 - rt.top;
+    // init painting
+    RECT rt;
+    PAINTSTRUCT ps;
+    HDC hdc = BeginPaint(hWnd, &ps);
+    GetClientRect(hWnd, &rt);
+    int Width=rt.right + 1 - rt.left;
+    int Height=rt.bottom + 1 - rt.top;
 
-	// create MemDC
-	HDC hMemDC = CreateCompatibleDC(hdc);
-	HBITMAP bmp = CreateCompatibleBitmap(hdc, Width, Height);
-	HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemDC, bmp);
+    // create MemDC
+    HDC hMemDC = CreateCompatibleDC(hdc);
+    HBITMAP bmp = CreateCompatibleBitmap(hdc, Width, Height);
+    HBITMAP hOldBitmap = (HBITMAP)SelectObject(hMemDC, bmp);
 
-	// do painting
-	CXDeviceContext DC(hMemDC);
+    // do painting
+    CXDeviceContext DC(hMemDC);
 
-	if(GetNaviPOWM() != NULL)
-		GetNaviPOWM()->Paint(&DC);
+    if(GetNaviPOWM() != NULL)
+        GetNaviPOWM()->Paint(&DC);
 
-	// copy painted data to dc
-	BitBlt(hdc, 0, 0, Width, Height, hMemDC, 0, 0, SRCCOPY);
+    // copy painted data to dc
+    BitBlt(hdc, 0, 0, Width, Height, hMemDC, 0, 0, SRCCOPY);
 
-	// cleanup
-	SelectObject(hMemDC, hOldBitmap);
-	DeleteObject(bmp);
-	DeleteDC(hMemDC);
+    // cleanup
+    SelectObject(hMemDC, hOldBitmap);
+    DeleteObject(bmp);
+    DeleteDC(hMemDC);
 
-	EndPaint(hWnd, &ps);
+    EndPaint(hWnd, &ps);
 }
 
 //-------------------------------------
 void CXMainWindow::RequestTermination() {
-	PostQuitMessage(0);
+    PostQuitMessage(0);
 }
 
 //-------------------------------------
 LRESULT CALLBACK CXMainWindow::WndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-	return m_pInstance->TheWndProc(hWnd, message, wParam, lParam);
+    return m_pInstance->TheWndProc(hWnd, message, wParam, lParam);
 }
 
 //-------------------------------------
 LRESULT CALLBACK CXMainWindow::TheWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
-	switch (message) 
-	{
-		case WM_PAINT:
-			{
-				// now do paint
-				if(m_pInstance != NULL)
-					m_pInstance->OnPaint();
-				break;
-			}
-		case WM_ERASEBKGND:		return 1;
-		case WM_SIZE:
-			{
-				int Width = LOWORD(lParam);
-				int Height = HIWORD(lParam);
-				if(m_pInstance != NULL)
-					m_pInstance->OnResize(Width, Height);
-				break;
-			}
-		case WM_CHAR:			m_pInstance->OnChar(wParam); break;
-		case WM_KEYDOWN:		m_pInstance->OnKeyDown(wParam); break;
-		case WM_KEYUP:			m_pInstance->OnKeyUp(wParam); break;
-		case WM_DESTROY:
-			{
-				PostQuitMessage(0);
-				break;
-			}
-		case WM_LBUTTONDOWN:
-			{
-				int X = LOWORD(lParam);
-				int Y = HIWORD(lParam);
-				if(m_pInstance != NULL)
-					m_pInstance->OnMouseDown(X, Y);
-				break;
-			}
-		case WM_LBUTTONUP:
-			{
-				int X = LOWORD(lParam);
-				int Y = HIWORD(lParam);
-				if(m_pInstance != NULL)
-					m_pInstance->OnMouseUp(X, Y);
-				break;
-			}
-		case WM_MOUSEMOVE:
-			{
-				int X = LOWORD(lParam);
-				int Y = HIWORD(lParam);
-				if(m_pInstance != NULL)
-					m_pInstance->OnMouseMove(X, Y);
-				break;
-			}
-		default:			return DefWindowProc(hWnd, message, wParam, lParam);
+    switch (message) 
+    {
+        case WM_PAINT:
+            {
+                // now do paint
+                if(m_pInstance != NULL)
+                    m_pInstance->OnPaint();
+                break;
+            }
+        case WM_ERASEBKGND:     return 1;
+        case WM_SIZE:
+            {
+                int Width = LOWORD(lParam);
+                int Height = HIWORD(lParam);
+                if(m_pInstance != NULL)
+                    m_pInstance->OnResize(Width, Height);
+                break;
+            }
+        case WM_CHAR:           m_pInstance->OnChar(wParam); break;
+        case WM_KEYDOWN:        m_pInstance->OnKeyDown(wParam); break;
+        case WM_KEYUP:          m_pInstance->OnKeyUp(wParam); break;
+        case WM_DESTROY:
+            {
+                PostQuitMessage(0);
+                break;
+            }
+        case WM_LBUTTONDOWN:
+            {
+                int X = LOWORD(lParam);
+                int Y = HIWORD(lParam);
+                if(m_pInstance != NULL)
+                    m_pInstance->OnMouseDown(X, Y);
+                break;
+            }
+        case WM_LBUTTONUP:
+            {
+                int X = LOWORD(lParam);
+                int Y = HIWORD(lParam);
+                if(m_pInstance != NULL)
+                    m_pInstance->OnMouseUp(X, Y);
+                break;
+            }
+        case WM_MOUSEMOVE:
+            {
+                int X = LOWORD(lParam);
+                int Y = HIWORD(lParam);
+                if(m_pInstance != NULL)
+                    m_pInstance->OnMouseMove(X, Y);
+                break;
+            }
+        default:            return DefWindowProc(hWnd, message, wParam, lParam);
    }
    return 0;
 }

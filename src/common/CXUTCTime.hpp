@@ -33,106 +33,106 @@
  */
 class CXUTCTime {
 private:
-	double 			m_UTCTimeDouble;	///<oiu
-	CXStringASCII 	m_UTCTimeString;	///<oiu
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void CopyFrom(const CXUTCTime &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void FromString(const CXStringASCII &Value);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void FromDouble(double Value);
+    double          m_UTCTimeDouble;    ///<oiu
+    CXStringASCII   m_UTCTimeString;    ///<oiu
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void CopyFrom(const CXUTCTime &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void FromString(const CXStringASCII &Value);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void FromDouble(double Value);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTCTime();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTCTime(double UTCTime);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTCTime(const CXStringASCII & UTCTime);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTCTime(const CXUTCTime &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual ~CXUTCTime();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	const CXUTCTime & operator = (const CXUTCTime &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetUTCTimeAsDouble() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringASCII GetUTCTimeAsString() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTCTime(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTCTime(const CXStringASCII & NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTCTime operator - (const CXUTCTime & rOther) const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool operator == (const CXUTCTime & rOther) const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool operator != (const CXUTCTime & rOther) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTCTime();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTCTime(double UTCTime);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTCTime(const CXStringASCII & UTCTime);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTCTime(const CXUTCTime &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual ~CXUTCTime();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    const CXUTCTime & operator = (const CXUTCTime &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetUTCTimeAsDouble() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringASCII GetUTCTimeAsString() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTCTime(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTCTime(const CXStringASCII & NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTCTime operator - (const CXUTCTime & rOther) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool operator == (const CXUTCTime & rOther) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool operator != (const CXUTCTime & rOther) const;
 };
 
 #endif // __CXUTCTIME_HPP__

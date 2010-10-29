@@ -35,39 +35,39 @@
  */
 class CXWorkRequestThread : public IWorkRequestThread {
 private:
-	QWaitCondition	m_WaitCondition;	///< oiu
-	QMutex			m_Mutex;			///< Synchronization object.
-	//-------------------------------------
-	CXWorkRequestThread(const CXWorkRequestThread &);							///< Not used.
-	const CXWorkRequestThread & operator = (const CXWorkRequestThread &);		///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DoWait();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Wakeup();
+    QWaitCondition  m_WaitCondition;    ///< oiu
+    QMutex          m_Mutex;            ///< Synchronization object.
+    //-------------------------------------
+    CXWorkRequestThread(const CXWorkRequestThread &);                           ///< Not used.
+    const CXWorkRequestThread & operator = (const CXWorkRequestThread &);       ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DoWait();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Wakeup();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXWorkRequestThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXWorkRequestThread();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXWorkRequestThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXWorkRequestThread();
 };
 
 

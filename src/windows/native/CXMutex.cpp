@@ -24,28 +24,28 @@
 
 //-------------------------------------
 CXMutex::CXMutex() :
-	m_hMutex(NULL)
+    m_hMutex(NULL)
 {
-	/// \todo error checking
-	m_hMutex = CreateMutex(NULL, FALSE, NULL);
+    /// \todo error checking
+    m_hMutex = CreateMutex(NULL, FALSE, NULL);
 }
 
 //-------------------------------------
 CXMutex::~CXMutex() {
-	/// \todo error checking
-	::CloseHandle(m_hMutex);
+    /// \todo error checking
+    ::CloseHandle(m_hMutex);
     m_hMutex = NULL;
 }
 
 //-------------------------------------
 void CXMutex::Lock() {
-	/// \todo error checking
-	::WaitForSingleObject(m_hMutex, INFINITE);
+    /// \todo error checking
+    ::WaitForSingleObject(m_hMutex, INFINITE);
 }
 
 //-------------------------------------
 void CXMutex::Unlock() {
-	/// \todo error checking
-	ReleaseMutex(m_hMutex);
+    /// \todo error checking
+    ReleaseMutex(m_hMutex);
 }
 

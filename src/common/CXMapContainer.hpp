@@ -39,97 +39,97 @@
  */
 class CXTOCMapContainer {
 private:
-	E_LOADING_STATUS			m_eLoadStatus;		///< oiu
-	CXStringASCII				m_FileName;			///< oiu
-	CXTOCMapSection				***m_pTOCSections;	///< oiu
-	double						m_dBaseLon;			///< oiu
-	double						m_dBaseLat;			///< oiu
-	size_t						m_Width;			///< oiu
-	size_t						m_Height;			///< oiu
-	mutable CXRWLock			m_RWLock;			///< Synchronization object.
-	mutable CXRWLock			m_StatusRWLock;		///< Synchronization object for m_eLoadStatus.
-	//-------------------------------------
-	CXTOCMapContainer(const CXTOCMapContainer &);							///< Not used.
-	const CXTOCMapContainer & operator = (const CXTOCMapContainer &);		///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void Clear();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void Resize(size_t Width, size_t Height);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool LoadTOCZoom(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel);
+    E_LOADING_STATUS            m_eLoadStatus;      ///< oiu
+    CXStringASCII               m_FileName;         ///< oiu
+    CXTOCMapSection             ***m_pTOCSections;  ///< oiu
+    double                      m_dBaseLon;         ///< oiu
+    double                      m_dBaseLat;         ///< oiu
+    size_t                      m_Width;            ///< oiu
+    size_t                      m_Height;           ///< oiu
+    mutable CXRWLock            m_RWLock;           ///< Synchronization object.
+    mutable CXRWLock            m_StatusRWLock;     ///< Synchronization object for m_eLoadStatus.
+    //-------------------------------------
+    CXTOCMapContainer(const CXTOCMapContainer &);                           ///< Not used.
+    const CXTOCMapContainer & operator = (const CXTOCMapContainer &);       ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void Clear();
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void Resize(size_t Width, size_t Height);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    bool LoadTOCMapContainer_CurrentVersion(CXFile & rFile, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    bool LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    bool LoadTOCZoom(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL ZoomLevel);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXTOCMapContainer();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXTOCMapContainer();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	E_LOADING_STATUS GetLoadStatus() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void SetLoadStatus(E_LOADING_STATUS eStatus);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	bool Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSection*> & rResult);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXTOCMapContainer();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXTOCMapContainer();
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    E_LOADING_STATUS GetLoadStatus() const;
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void SetLoadStatus(E_LOADING_STATUS eStatus);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    bool Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLevel, t_uint32 Key);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSection*> & rResult);
 };
 
 typedef CXSmartPtr<CXTOCMapContainer> TTOCMapContainerPtr;

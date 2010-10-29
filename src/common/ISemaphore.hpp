@@ -32,45 +32,45 @@
  */
 class ISemaphore {
 private:
-	size_t		m_MaxCount;	///< oiu
-	//-------------------------------------
-	ISemaphore();											///< Not used.
-	ISemaphore(const ISemaphore &);							///< Not used.
-	const ISemaphore & operator = (const ISemaphore &);		///< Not used.
+    size_t      m_MaxCount; ///< oiu
+    //-------------------------------------
+    ISemaphore();                                           ///< Not used.
+    ISemaphore(const ISemaphore &);                         ///< Not used.
+    const ISemaphore & operator = (const ISemaphore &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	ISemaphore(size_t MaxCount);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~ISemaphore();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	size_t GetMaxCount() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Lock() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Unlock() = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    ISemaphore(size_t MaxCount);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~ISemaphore();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    size_t GetMaxCount() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Lock() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Unlock() = 0;
 };
 
 #endif // __ISEMAPHORE_HPP__

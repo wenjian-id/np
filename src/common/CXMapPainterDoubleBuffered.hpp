@@ -35,82 +35,82 @@ class CXDeviceContext;
  */
 class CXMapPainterDoubleBuffered : public CXMapPainter {
 private:
-	// internal painting stuff
-	int					m_Width;				///< oiu
-	int					m_Height;				///< oiu
-	CXBitmap			m_Bitmap1;				///< oiu
-	CXBitmap			m_Bitmap2;				///< oiu
-	CXBitmap			*m_pDrawBitmap;			///< oiu
-	CXBitmap			*m_pFinishedBitmap;		///< oiu
-	int					m_iSwitchFlag;			///< oiu
-	mutable CXRWLock	m_RWLock;				///< Synchronization object.
-	//-------------------------------------
-	CXMapPainterDoubleBuffered(const CXMapPainterDoubleBuffered &);						///< Not used.
-	const CXMapPainterDoubleBuffered & operator = (const CXMapPainterDoubleBuffered &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SwitchBuffers();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void CreateBuffers(CXDeviceContext *pDC, int Width, int Height);
+    // internal painting stuff
+    int                 m_Width;                ///< oiu
+    int                 m_Height;               ///< oiu
+    CXBitmap            m_Bitmap1;              ///< oiu
+    CXBitmap            m_Bitmap2;              ///< oiu
+    CXBitmap            *m_pDrawBitmap;         ///< oiu
+    CXBitmap            *m_pFinishedBitmap;     ///< oiu
+    int                 m_iSwitchFlag;          ///< oiu
+    mutable CXRWLock    m_RWLock;               ///< Synchronization object.
+    //-------------------------------------
+    CXMapPainterDoubleBuffered(const CXMapPainterDoubleBuffered &);                     ///< Not used.
+    const CXMapPainterDoubleBuffered & operator = (const CXMapPainterDoubleBuffered &); ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SwitchBuffers();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void CreateBuffers(CXDeviceContext *pDC, int Width, int Height);
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void PaintPackground(IBitmap *pBMP, int Width, int Height) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnDoWork();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void PaintPackground(IBitmap *pBMP, int Width, int Height) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnDoWork();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnBuffersCreated(CXDeviceContext *pDC, int Width, int Height);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMapPainterDoubleBuffered();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMapPainterDoubleBuffered();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Resize(int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMapPainterDoubleBuffered();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMapPainterDoubleBuffered();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Resize(int Width, int Height);
 };
 
 #endif // __CXMAPPAINTERDOUBLEBUFFERED_HPP__

@@ -32,49 +32,49 @@
  */
 class CXMapPainterTest : public CXMapPainterDoubleBuffered {
 private:
-	//-------------------------------------
-	CXMapPainterTest(const CXMapPainterTest&);						///< Not used.
-	const CXMapPainterTest & operator = (const CXMapPainterTest &);	///< Not used.
+    //-------------------------------------
+    CXMapPainterTest(const CXMapPainterTest&);                      ///< Not used.
+    const CXMapPainterTest & operator = (const CXMapPainterTest &); ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void PaintPackground(IBitmap *pBMP, int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void PaintPackground(IBitmap *pBMP, int Width, int Height);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMapPainterTest();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMapPainterTest();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool ZoomIn();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool ZoomOut();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMapPainterTest();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMapPainterTest();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool ZoomIn();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool ZoomOut();
 };
 
 #endif // __CXMAPPAINTERTEST_HPP__

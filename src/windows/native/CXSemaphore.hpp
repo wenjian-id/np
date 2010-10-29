@@ -33,38 +33,38 @@
  */
 class CXSemaphore : public ISemaphore {
 private:
-	HANDLE	m_hSemaphore;	///< oiu
-	//-------------------------------------
-	CXSemaphore();												///< Not used.
-	CXSemaphore(const CXSemaphore &);							///< Not used.
-	const CXSemaphore & operator = (const CXSemaphore &);		///< Not used.
+    HANDLE  m_hSemaphore;   ///< oiu
+    //-------------------------------------
+    CXSemaphore();                                              ///< Not used.
+    CXSemaphore(const CXSemaphore &);                           ///< Not used.
+    const CXSemaphore & operator = (const CXSemaphore &);       ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXSemaphore(size_t MaxCount);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXSemaphore();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Lock();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Unlock();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXSemaphore(size_t MaxCount);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXSemaphore();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Lock();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Unlock();
 };
 
 #endif // __CXSEMAPHORE_HPP__

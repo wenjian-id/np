@@ -37,53 +37,53 @@
  */
 class CXGPSDClientBase : public IGPSDClient {
 private:
-	//-------------------------------------
-	CXGPSDClientBase(const CXGPSDClientBase &);						///< Not used.
-	const CXGPSDClientBase & operator = (const CXGPSDClientBase &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer);
+    //-------------------------------------
+    CXGPSDClientBase(const CXGPSDClientBase &);                     ///< Not used.
+    const CXGPSDClientBase & operator = (const CXGPSDClientBase &); ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void ClearBuffer(CXBuffer<CXSatelliteInfo *> & rBuffer);
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void DoProcessData(gps_data_t *pGPSData);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual void ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void DoProcessData(gps_data_t *pGPSData);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual void ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats) = 0;
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXGPSDClientBase();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXGPSDClientBase();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXGPSDClientBase();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXGPSDClientBase();
 };
 
 

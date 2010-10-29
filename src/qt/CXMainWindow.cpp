@@ -35,15 +35,15 @@ CXMainWindow::~CXMainWindow() {
 
 //-------------------------------------
 void CXMainWindow::OnPaint() {
-	// init painting
-	QPainter p(this);
-	// do painting
-	CXDeviceContext DC(&p);
-	if(GetNaviPOWM() != NULL)
-		GetNaviPOWM()->Paint(&DC);
+    // init painting
+    QPainter p(this);
+    // do painting
+    CXDeviceContext DC(&p);
+    if(GetNaviPOWM() != NULL)
+        GetNaviPOWM()->Paint(&DC);
 }
 
 //-------------------------------------
 void CXMainWindow::RequestTermination() {
-	close();
+    close();
 }

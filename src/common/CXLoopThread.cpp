@@ -26,44 +26,44 @@
 
 //-------------------------------------
 CXLoopThread::CXLoopThread() :
-	m_SleepTime(10)
+    m_SleepTime(10)
 {
 }
 
 
 //-------------------------------------
 CXLoopThread::~CXLoopThread() {
-	// check if it is runnning
-	if(IsRunning()) {
-		StopThread();
-		// wait for thread exit
-		WaitForThreadExit(WAIT_INFINITE);
-	}
+    // check if it is runnning
+    if(IsRunning()) {
+        StopThread();
+        // wait for thread exit
+        WaitForThreadExit(WAIT_INFINITE);
+    }
 }
 
 //-------------------------------------
 void CXLoopThread::SetSleepTime(size_t SleepTime) {
-	CXWriteLocker WL(&m_RWLock);
-	m_SleepTime = SleepTime;
+    CXWriteLocker WL(&m_RWLock);
+    m_SleepTime = SleepTime;
 }
 
 //-------------------------------------
 size_t CXLoopThread::GetSleepTime() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_SleepTime;
+    CXReadLocker RL(&m_RWLock);
+    return m_SleepTime;
 }
 
 //-------------------------------------
 int CXLoopThread::OnThreadFunc() {
-	// main loop
-	do {
-		// do work
-		OnThreadLoop();
-		// sleep
-		DoSleep(GetSleepTime());
-	} while(!MustStopThread());
+    // main loop
+    do {
+        // do work
+        OnThreadLoop();
+        // sleep
+        DoSleep(GetSleepTime());
+    } while(!MustStopThread());
 
-	return 0;
+    return 0;
 }
 
 

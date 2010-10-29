@@ -31,11 +31,11 @@
 
 //-------------------------------------
 CXMapPainterDoubleBuffered::CXMapPainterDoubleBuffered() :
-	m_Width(1),
-	m_Height(1),
-	m_pDrawBitmap(&m_Bitmap1),
-	m_pFinishedBitmap(&m_Bitmap2),
-	m_iSwitchFlag(1)
+    m_Width(1),
+    m_Height(1),
+    m_pDrawBitmap(&m_Bitmap1),
+    m_pFinishedBitmap(&m_Bitmap2),
+    m_iSwitchFlag(1)
 {
 }
 
@@ -45,86 +45,86 @@ CXMapPainterDoubleBuffered::~CXMapPainterDoubleBuffered() {
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::Resize(int Width, int Height) {
-	CXWriteLocker WL(&m_RWLock);
-	m_Width = Width;
-	m_Height = Height;
-	m_Bitmap1.Destroy();
-	m_Bitmap2.Destroy();
+    CXWriteLocker WL(&m_RWLock);
+    m_Width = Width;
+    m_Height = Height;
+    m_Bitmap1.Destroy();
+    m_Bitmap2.Destroy();
 }
 
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::OnDoWork() {
-	{
-		// start read locker
-		CXReadLocker RL(&m_RWLock);
-		// check if we can paint
-		if(m_pDrawBitmap == NULL)
-			return;
-		if(m_Bitmap1.IsNull())
-			return;
-		CXNaviData Data = GetPosition();
-		if(!CXOptions::Instance()->MustShowLogo()) {
-			// call internal painting routine, since we must not display logo
-			OnInternalPaint(m_pDrawBitmap, m_Width, m_Height);
-		}
-		// end read locker
-	}
-	// now switch buffers
-	SwitchBuffers();
-	// set flag
-	SetMustRepaint(true);
+    {
+        // start read locker
+        CXReadLocker RL(&m_RWLock);
+        // check if we can paint
+        if(m_pDrawBitmap == NULL)
+            return;
+        if(m_Bitmap1.IsNull())
+            return;
+        CXNaviData Data = GetPosition();
+        if(!CXOptions::Instance()->MustShowLogo()) {
+            // call internal painting routine, since we must not display logo
+            OnInternalPaint(m_pDrawBitmap, m_Width, m_Height);
+        }
+        // end read locker
+    }
+    // now switch buffers
+    SwitchBuffers();
+    // set flag
+    SetMustRepaint(true);
 }
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::SwitchBuffers() {
-	CXWriteLocker WL(&m_RWLock);
-	if(m_iSwitchFlag == 1) {
-		m_pDrawBitmap = &m_Bitmap2;
-		m_pFinishedBitmap = &m_Bitmap1;
-		m_iSwitchFlag = 2;
-	} else {
-		m_pDrawBitmap = &m_Bitmap1;
-		m_pFinishedBitmap = &m_Bitmap2;
-		m_iSwitchFlag = 1;
-	}
+    CXWriteLocker WL(&m_RWLock);
+    if(m_iSwitchFlag == 1) {
+        m_pDrawBitmap = &m_Bitmap2;
+        m_pFinishedBitmap = &m_Bitmap1;
+        m_iSwitchFlag = 2;
+    } else {
+        m_pDrawBitmap = &m_Bitmap1;
+        m_pFinishedBitmap = &m_Bitmap2;
+        m_iSwitchFlag = 1;
+    }
 }
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::OnBuffersCreated(CXDeviceContext * /*pDC*/, int /*Width*/, int /*Height*/) {
-	// do nothing
+    // do nothing
 }
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::CreateBuffers(CXDeviceContext *pDC, int Width, int Height) {
-	m_Bitmap1.Destroy();
-	m_Bitmap2.Destroy();
-	m_Bitmap1.Create(pDC, Width, Height);
-	m_Bitmap2.Create(pDC, Width, Height);
-	OnBuffersCreated(pDC, Width, Height);
+    m_Bitmap1.Destroy();
+    m_Bitmap2.Destroy();
+    m_Bitmap1.Create(pDC, Width, Height);
+    m_Bitmap2.Create(pDC, Width, Height);
+    OnBuffersCreated(pDC, Width, Height);
 }
 
 //-------------------------------------
 void CXMapPainterDoubleBuffered::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
-	// protect from switching buffers
-	CXReadLocker RL(&m_RWLock);
-	if(pDC == NULL)
-		return;
-	if(m_Bitmap1.IsNull()) {
-		// no internal buffers. create them
-		CreateBuffers(pDC, m_Width, m_Height);
-		CXNaviData Data = GetPosition();
-		if(CXOptions::Instance()->MustShowLogo()) {
-			// load logo
-			m_pFinishedBitmap->LoadFromFile(CXOptions::Instance()->GetLogoFileName());
-			m_pDrawBitmap->LoadFromFile(CXOptions::Instance()->GetLogoFileName());
-		} else {
-			PaintPackground(m_pFinishedBitmap, m_Width, m_Height);
-		}
-	}
-	// bitblt internal paint buffer
-	if(!m_pFinishedBitmap->IsNull())
-		pDC->Draw(m_pFinishedBitmap, OffsetX, OffsetY);
-	// reset flag
-	SetMustRepaint(false);
+    // protect from switching buffers
+    CXReadLocker RL(&m_RWLock);
+    if(pDC == NULL)
+        return;
+    if(m_Bitmap1.IsNull()) {
+        // no internal buffers. create them
+        CreateBuffers(pDC, m_Width, m_Height);
+        CXNaviData Data = GetPosition();
+        if(CXOptions::Instance()->MustShowLogo()) {
+            // load logo
+            m_pFinishedBitmap->LoadFromFile(CXOptions::Instance()->GetLogoFileName());
+            m_pDrawBitmap->LoadFromFile(CXOptions::Instance()->GetLogoFileName());
+        } else {
+            PaintPackground(m_pFinishedBitmap, m_Width, m_Height);
+        }
+    }
+    // bitblt internal paint buffer
+    if(!m_pFinishedBitmap->IsNull())
+        pDC->Draw(m_pFinishedBitmap, OffsetX, OffsetY);
+    // reset flag
+    SetMustRepaint(false);
 }

@@ -24,7 +24,7 @@
 
 //-------------------------------------
 ISemaphore::ISemaphore(size_t MaxCount) :
-	m_MaxCount(MaxCount)
+    m_MaxCount(MaxCount)
 {
 }
 
@@ -34,5 +34,5 @@ ISemaphore::~ISemaphore() {
 
 //-------------------------------------
 size_t ISemaphore::GetMaxCount() const {
-	return m_MaxCount;
+    return m_MaxCount;
 }

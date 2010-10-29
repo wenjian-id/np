@@ -28,7 +28,7 @@
 
 //-------------------------------------
 CXWindow::CXWindow() {
-	setAutoFillBackground(false);
+    setAutoFillBackground(false);
 }
 
 //-------------------------------------
@@ -37,71 +37,71 @@ CXWindow::~CXWindow() {
 
 //-------------------------------------
 void CXWindow::RequestRepaint() {
-	update();
-	/// \todo Check why a second update is needed to fix bug #1826737
-	update();
+    update();
+    /// \todo Check why a second update is needed to fix bug #1826737
+    update();
 }
 
 //-------------------------------------
 void CXWindow::paintEvent(QPaintEvent * /*event*/) {
-	OnPaint();
+    OnPaint();
 }
 
 //-------------------------------------
 void CXWindow::resizeEvent(QResizeEvent *event) {
-	QWidget::resizeEvent(event);
-	OnResize(event->size().width(), event->size().height());
+    QWidget::resizeEvent(event);
+    OnResize(event->size().width(), event->size().height());
 }
 
 //-------------------------------------
 void CXWindow::keyPressEvent(QKeyEvent * event) {
-	QWidget::keyPressEvent(event);
-	OnKeyDown(event->key());
+    QWidget::keyPressEvent(event);
+    OnKeyDown(event->key());
 }
 
 //-------------------------------------
 void CXWindow::keyReleaseEvent(QKeyEvent * event) {
-	QWidget::keyReleaseEvent(event);
-	OnKeyUp(event->key());
+    QWidget::keyReleaseEvent(event);
+    OnKeyUp(event->key());
 }
 
 //-------------------------------------
 void CXWindow::mousePressEvent(QMouseEvent * event) {
-	QWidget::mousePressEvent(event);
-	OnMouseDown(event->x(), event->y());
+    QWidget::mousePressEvent(event);
+    OnMouseDown(event->x(), event->y());
 }
 
 //-------------------------------------
 void CXWindow::mouseReleaseEvent(QMouseEvent * event) {
-	QWidget::mouseReleaseEvent(event);
-	OnMouseUp(event->x(), event->y());
+    QWidget::mouseReleaseEvent(event);
+    OnMouseUp(event->x(), event->y());
 }
 
 //-------------------------------------
 void CXWindow::mouseMoveEvent(QMouseEvent * event) {
-	QWidget::mouseMoveEvent(event);
-	OnMouseMove(event->x(), event->y());
+    QWidget::mouseMoveEvent(event);
+    OnMouseMove(event->x(), event->y());
 }
 
 //-------------------------------------
 void CXWindow::ShowMaximized() {
-	showMaximized();
-	update();
+    showMaximized();
+    update();
 }
 
 //-------------------------------------
 void CXWindow::ShowNormal() {
-	showNormal();
-	update();
+    showNormal();
+    update();
 }
 
 //-------------------------------------
 void CXWindow::ShowFullScreen() {
-	showFullScreen();
+    showFullScreen();
 }
 
 //-------------------------------------
 void CXWindow::ShowMinimized() {
-	showMinimized();
+    showMinimized();
 }
 

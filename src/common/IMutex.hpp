@@ -30,39 +30,39 @@
  */
 class IMutex {
 private:
-	//-------------------------------------
-	IMutex(const IMutex &);							///< Not used.
-	const IMutex & operator = (const IMutex &);		///< Not used.
+    //-------------------------------------
+    IMutex(const IMutex &);                         ///< Not used.
+    const IMutex & operator = (const IMutex &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IMutex() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IMutex() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Lock() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Unlock() = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IMutex() {
+    }
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IMutex() {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Lock() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Unlock() = 0;
 };
 
 #endif // __IMUTEX_HPP__

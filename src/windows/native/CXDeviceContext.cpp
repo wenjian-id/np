@@ -25,8 +25,8 @@
 
 //-------------------------------------
 CXDeviceContext::CXDeviceContext(HDC hDC) :
-	IDeviceContext(),
-	m_hDC(hDC)
+    IDeviceContext(),
+    m_hDC(hDC)
 {
 }
 
@@ -36,71 +36,71 @@ CXDeviceContext::~CXDeviceContext() {
 
 //-------------------------------------
 HDC CXDeviceContext::GetDC() const {
-	return m_hDC;
+    return m_hDC;
 }
 
 //-------------------------------------
 void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
-	if(m_hDC == NULL)
-		return;
-	if(pBmp == NULL)
-		return;
-	if(pBmp->GetDC() == NULL)
-		return;
-	::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
+    if(m_hDC == NULL)
+        return;
+    if(pBmp == NULL)
+        return;
+    if(pBmp->GetDC() == NULL)
+        return;
+    ::BitBlt(m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), pBmp->GetDC(), 0, 0, SRCCOPY);
 }
 
 //-------------------------------------
 void CXDeviceContext::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor) {
-	if(m_hDC == NULL)
-		return;
+    if(m_hDC == NULL)
+        return;
 
-	// create new pen and brush
-	HPEN NewPen = ::CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
-	HBRUSH NewBrush = ::CreateSolidBrush(CXRGB2COLORREF(BrushColor));
+    // create new pen and brush
+    HPEN NewPen = ::CreatePen(PS_SOLID, 1, CXRGB2COLORREF(PenColor));
+    HBRUSH NewBrush = ::CreateSolidBrush(CXRGB2COLORREF(BrushColor));
 
-	// get old pen and brush
-	HPEN OldPen = (HPEN)::SelectObject(m_hDC, NewPen); 
-	HBRUSH OldBrush = (HBRUSH)::SelectObject(m_hDC, NewBrush);
-	// draw rectangle
-	::Rectangle(m_hDC, TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight(), TheRect.GetBottom());
+    // get old pen and brush
+    HPEN OldPen = (HPEN)::SelectObject(m_hDC, NewPen); 
+    HBRUSH OldBrush = (HBRUSH)::SelectObject(m_hDC, NewBrush);
+    // draw rectangle
+    ::Rectangle(m_hDC, TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetRight(), TheRect.GetBottom());
 
-	// restore old pen and brush
-	::SelectObject(m_hDC, OldBrush);
-	::SelectObject(m_hDC, OldPen);
-	::DeleteObject(NewPen);
-	::DeleteObject(NewBrush);
+    // restore old pen and brush
+    ::SelectObject(m_hDC, OldBrush);
+    ::SelectObject(m_hDC, OldPen);
+    ::DeleteObject(NewPen);
+    ::DeleteObject(NewBrush);
 }
 
 //-------------------------------------
 void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
-	if(m_hDC == NULL)
-		return;
-	if(pBmp == NULL)
-		return;
-	if(pBmp->GetDC() == NULL)
-		return;
-	BLENDFUNCTION bf;
-	bf.BlendOp = AC_SRC_OVER;
-	bf.BlendFlags = 0;
-	bf.SourceConstantAlpha = static_cast<unsigned char>(256.0*Alpha/100);
-	bf.AlphaFormat = 0;
-	::AlphaBlend(	m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), 
-					pBmp->GetDC(), 0, 0, pBmp->GetWidth(), pBmp->GetHeight(), 
-					bf);
+    if(m_hDC == NULL)
+        return;
+    if(pBmp == NULL)
+        return;
+    if(pBmp->GetDC() == NULL)
+        return;
+    BLENDFUNCTION bf;
+    bf.BlendOp = AC_SRC_OVER;
+    bf.BlendFlags = 0;
+    bf.SourceConstantAlpha = static_cast<unsigned char>(256.0*Alpha/100);
+    bf.AlphaFormat = 0;
+    ::AlphaBlend(   m_hDC, OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight(), 
+                    pBmp->GetDC(), 0, 0, pBmp->GetWidth(), pBmp->GetHeight(), 
+                    bf);
 }
 
 //-------------------------------------
 void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB &TrColor) {
-	if(m_hDC == NULL)
-		return;
-	if(pBmp == NULL)
-		return;
-	if(pBmp->GetDC() == NULL)
-		return;
-	::TransparentBlt(	m_hDC, OffsetX, OffsetY, 
-						pBmp->GetWidth(), pBmp->GetHeight(), 
-						pBmp->GetDC(), 0, 0, 
-						pBmp->GetWidth(), pBmp->GetHeight(), 
-						CXRGB2COLORREF(TrColor));
+    if(m_hDC == NULL)
+        return;
+    if(pBmp == NULL)
+        return;
+    if(pBmp->GetDC() == NULL)
+        return;
+    ::TransparentBlt(   m_hDC, OffsetX, OffsetY, 
+                        pBmp->GetWidth(), pBmp->GetHeight(), 
+                        pBmp->GetDC(), 0, 0, 
+                        pBmp->GetWidth(), pBmp->GetHeight(), 
+                        CXRGB2COLORREF(TrColor));
 }

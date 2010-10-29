@@ -30,57 +30,57 @@
  */
 template<class tX, class tY> class CXHystInterval {
 private:
-	tX		m_XDown;
-	tX		m_XUp;
-	tY		m_Y;
-	//-------------------------------------
-	CXHystInterval();												///< Not used.
-	CXHystInterval(const CXHystInterval &);							///< Not used.
-	const CXHystInterval & operator = (const CXHystInterval &);		///< Not used.
+    tX      m_XDown;
+    tX      m_XUp;
+    tY      m_Y;
+    //-------------------------------------
+    CXHystInterval();                                               ///< Not used.
+    CXHystInterval(const CXHystInterval &);                         ///< Not used.
+    const CXHystInterval & operator = (const CXHystInterval &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXHystInterval(const tX & XDown, const tX & XUp, const tY & Y):
-		m_XDown(XDown),
-		m_XUp(XUp),
-		m_Y(Y)
-	{
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual ~CXHystInterval() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tX GetXDown() const {
-		return m_XDown;
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tX GetXUp() const {
-		return m_XUp;
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tY GetY() const {
-		return m_Y;
-	}
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXHystInterval(const tX & XDown, const tX & XUp, const tY & Y):
+        m_XDown(XDown),
+        m_XUp(XUp),
+        m_Y(Y)
+    {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual ~CXHystInterval() {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tX GetXDown() const {
+        return m_XDown;
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tX GetXUp() const {
+        return m_XUp;
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tY GetY() const {
+        return m_Y;
+    }
 };
 
 //---------------------------------------------------------------------
@@ -90,57 +90,57 @@ public:
  */
 template<class tX, class tY> class CXHysterezis {
 private:
-	tX										m_LastX;		///< oiu
-	tY										m_LastY;		///< oiu
-	int										m_LastInterval;	///< oiu
-	bool									m_oFirstRun;	///< oiu
-	CXBuffer< CXHystInterval<tX, tY> *>		m_Values;		///< oiu
-	//-------------------------------------
-	CXHysterezis(const CXHysterezis &);							///< Not used.
-	const CXHysterezis & operator = (const CXHysterezis &);		///< Not used.
+    tX                                      m_LastX;        ///< oiu
+    tY                                      m_LastY;        ///< oiu
+    int                                     m_LastInterval; ///< oiu
+    bool                                    m_oFirstRun;    ///< oiu
+    CXBuffer< CXHystInterval<tX, tY> *>     m_Values;       ///< oiu
+    //-------------------------------------
+    CXHysterezis(const CXHysterezis &);                         ///< Not used.
+    const CXHysterezis & operator = (const CXHysterezis &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXHysterezis() :
-		m_LastX(0),
-		m_LastY(0),
-		m_LastInterval(0),
-		m_oFirstRun(true)
-	{
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual ~CXHysterezis() {
-		for(size_t i=0; i<m_Values.GetSize(); i++) {
-			delete m_Values[i];
-		}
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void AddInterval(const tX & XDown, const tX & XUp, const tY & Y) {
-		/// \todo insert sorted!!!
-		m_Values.Append(new CXHystInterval<tX, tY>(XDown, XUp, Y));
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tY GetHysterezisValue(const tX & X) {
-		tY Result = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXHysterezis() :
+        m_LastX(0),
+        m_LastY(0),
+        m_LastInterval(0),
+        m_oFirstRun(true)
+    {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual ~CXHysterezis() {
+        for(size_t i=0; i<m_Values.GetSize(); i++) {
+            delete m_Values[i];
+        }
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void AddInterval(const tX & XDown, const tX & XUp, const tY & Y) {
+        /// \todo insert sorted!!!
+        m_Values.Append(new CXHystInterval<tX, tY>(XDown, XUp, Y));
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tY GetHysterezisValue(const tX & X) {
+        tY Result = 0;
         int NewIntervalIndex = -1; 
-		if(m_Values.GetSize() == 0)
-			return Result;
+        if(m_Values.GetSize() == 0)
+            return Result;
         // check if X increased or decreased
         if(m_oFirstRun || (X > m_LastX)) {
             // X increased or first run
@@ -158,9 +158,9 @@ public:
                 // is in last interval.
                 NewIntervalIndex = (int)(m_Values.GetSize())-1;
             }
-			int IntervalIndex = Max(m_LastInterval, NewIntervalIndex);
-			Result = m_Values[IntervalIndex]->GetY();
-			NewIntervalIndex = IntervalIndex;
+            int IntervalIndex = Max(m_LastInterval, NewIntervalIndex);
+            Result = m_Values[IntervalIndex]->GetY();
+            NewIntervalIndex = IntervalIndex;
         } else if (X < m_LastX) {
             // X decreased
             // check in which interval we are
@@ -177,22 +177,22 @@ public:
                 // is in last interval.
                 NewIntervalIndex = (int)(m_Values.GetSize())-1;
             }
-			int IntervalIndex = Min(m_LastInterval, NewIntervalIndex);
-			Result = m_Values[IntervalIndex]->GetY();
-			NewIntervalIndex = IntervalIndex;
+            int IntervalIndex = Min(m_LastInterval, NewIntervalIndex);
+            Result = m_Values[IntervalIndex]->GetY();
+            NewIntervalIndex = IntervalIndex;
         } else {
             // X constant
             // do nothing
-			Result = m_LastY;
-			NewIntervalIndex = m_LastInterval;
+            Result = m_LastY;
+            NewIntervalIndex = m_LastInterval;
         }
         // now remember new values
         m_LastX = X;
-		m_LastY = Result;
-		m_LastInterval = NewIntervalIndex;
-		m_oFirstRun = false;
-		return Result;
-	}
+        m_LastY = Result;
+        m_LastInterval = NewIntervalIndex;
+        m_oFirstRun = false;
+        return Result;
+    }
 };
 
 #endif // __CXHYSTEREZIS_HPP__

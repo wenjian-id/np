@@ -37,217 +37,217 @@
  */
 class CXNaviData {
 private:
-	bool				m_oConnected;		///< oiu
-	bool				m_oFix;				///< oiu
-	double				m_dHeight;			///< Height [m].
-	CXCoor				m_GPSCoor;			///< Received GPS coordinate.
-	CXCoor				m_CorrectedGPSCoor;	///< Corrected GPS coordinate.
-	CXCoor				m_LocatedCoor;		///< Located coordinate.
-	CXUTMSpeed			m_UTMSpeed;			///< UTM speed.
-	CXStringUTF8		m_StreetName;		///< Name of street.
-	CXStringUTF8		m_Ref;				///< Ref of street.
-	CXStringUTF8		m_IntRef;			///< Int Ref of street.
-	unsigned char		m_MaxSpeed;			///< Max. allowed speed.
-	bool				m_oLocated;			///< Is located on a way or not.
-	CXUTCTime			m_UTC;				///< UTC
-	mutable CXRWLock	m_RWLock;			///< Synchronization object.
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXNaviData &rOther);
+    bool                m_oConnected;       ///< oiu
+    bool                m_oFix;             ///< oiu
+    double              m_dHeight;          ///< Height [m].
+    CXCoor              m_GPSCoor;          ///< Received GPS coordinate.
+    CXCoor              m_CorrectedGPSCoor; ///< Corrected GPS coordinate.
+    CXCoor              m_LocatedCoor;      ///< Located coordinate.
+    CXUTMSpeed          m_UTMSpeed;         ///< UTM speed.
+    CXStringUTF8        m_StreetName;       ///< Name of street.
+    CXStringUTF8        m_Ref;              ///< Ref of street.
+    CXStringUTF8        m_IntRef;           ///< Int Ref of street.
+    unsigned char       m_MaxSpeed;         ///< Max. allowed speed.
+    bool                m_oLocated;         ///< Is located on a way or not.
+    CXUTCTime           m_UTC;              ///< UTC
+    mutable CXRWLock    m_RWLock;           ///< Synchronization object.
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXNaviData &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXNaviData();
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXNaviData(const CXNaviData &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	~CXNaviData();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXNaviData & operator = (const CXNaviData &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool IsConnected() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetConnected(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool HasFix() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetFix(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetHeight() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetHeight(double dHeight);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXCoor GetGPSCoor() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetGPSCoor(const CXCoor &Coor);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXCoor GetCorrectedGPSCoor() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetCorrectedGPSCoor(const CXCoor &Coor);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXCoor GetLocatedCoor() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLocatedCoor(const CXCoor &Coor);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTCTime GetUTC() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTC(const CXUTCTime &NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTMSpeed GetUTMSpeed() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTMSpeed(const CXUTMSpeed & UTMSpeed);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetStreetName() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetStreetName(const CXStringUTF8 & StreetName);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetRef() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetRef(const CXStringUTF8 & Ref);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8 GetIntRef() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetIntRef(const CXStringUTF8 & IntRef);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	unsigned char GetMaxSpeed() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetMaxSpeed(unsigned char MaxSpeed);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool GetLocated() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLocated(bool Value);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXNaviData();
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXNaviData(const CXNaviData &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    ~CXNaviData();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXNaviData & operator = (const CXNaviData &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool IsConnected() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetConnected(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool HasFix() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetFix(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetHeight() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetHeight(double dHeight);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXCoor GetGPSCoor() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetGPSCoor(const CXCoor &Coor);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXCoor GetCorrectedGPSCoor() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetCorrectedGPSCoor(const CXCoor &Coor);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXCoor GetLocatedCoor() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetLocatedCoor(const CXCoor &Coor);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTCTime GetUTC() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTC(const CXUTCTime &NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTMSpeed GetUTMSpeed() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTMSpeed(const CXUTMSpeed & UTMSpeed);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 GetStreetName() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetStreetName(const CXStringUTF8 & StreetName);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 GetRef() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetRef(const CXStringUTF8 & Ref);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 GetIntRef() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetIntRef(const CXStringUTF8 & IntRef);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    unsigned char GetMaxSpeed() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetMaxSpeed(unsigned char MaxSpeed);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool GetLocated() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetLocated(bool Value);
 };
 
 #endif // __CXNAVIDATA_HPP__

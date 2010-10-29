@@ -34,85 +34,85 @@
  */
 class CXGPSInputChannelSerial : public CXGPSInputChannel {
 private:
-	CXSerial				m_Serial;		///< Serial device.
-	CXSerialPortConfig		m_PortConfig;	///< Serial device configuration.
-	//-------------------------------------
-	CXGPSInputChannelSerial(const CXGPSInputChannelSerial &);						///< Not used.
-	const CXGPSInputChannelSerial & operator = (const CXGPSInputChannelSerial &);	///< Not used.
+    CXSerial                m_Serial;       ///< Serial device.
+    CXSerialPortConfig      m_PortConfig;   ///< Serial device configuration.
+    //-------------------------------------
+    CXGPSInputChannelSerial(const CXGPSInputChannelSerial &);                       ///< Not used.
+    const CXGPSInputChannelSerial & operator = (const CXGPSInputChannelSerial &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXGPSInputChannelSerial();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXGPSInputChannelSerial();
-	//-------------------------------------
-	/**
-	 * \brief Open channel.
-	 *
-	 * Open the GPS input channel.
-	 * \return		true on success.
-	 */
-	virtual bool Open();
-	//-------------------------------------
-	/**
-	 * \brief Close channel.
-	 *
-	 * Close the GPS input channel.
-	 * \return		true on success.
-	 */
-	virtual bool Close();
-	//-------------------------------------
-	/**
-	 * \brief Check if channel is open.
-	 *
-	 * Check if input channel is open.
-	 * \return		true if open.
-	 */
-	virtual bool IsOpen();
-	//-------------------------------------
-	/**
-	 * \brief Read configuration.
-	 *
-	 * Read the configuration.
-	 * \return		true on success.
-	 */
-	virtual bool ReadConfiguration();
-	//-------------------------------------
-	/**
-	 * \brief Check if flush allowed.
-	 *
-	 * Check if flush allowed. It is.
-	 * \return		Always true.
-	 */
-	virtual bool CanFlush();
-	//-------------------------------------
-	/**
-	 * \brief Read data.
-	 *
-	 * Read some data.
-	 * \param		pbBuffer	Buffer for data.
-	 * \param		Size		Size of buffer.
-	 * \param		ReadSize	Size of actually read data.
-	 * \return		true on success. 0 bytes read is also OK.
-	 */
-	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual bool Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXGPSInputChannelSerial();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXGPSInputChannelSerial();
+    //-------------------------------------
+    /**
+     * \brief Open channel.
+     *
+     * Open the GPS input channel.
+     * \return      true on success.
+     */
+    virtual bool Open();
+    //-------------------------------------
+    /**
+     * \brief Close channel.
+     *
+     * Close the GPS input channel.
+     * \return      true on success.
+     */
+    virtual bool Close();
+    //-------------------------------------
+    /**
+     * \brief Check if channel is open.
+     *
+     * Check if input channel is open.
+     * \return      true if open.
+     */
+    virtual bool IsOpen();
+    //-------------------------------------
+    /**
+     * \brief Read configuration.
+     *
+     * Read the configuration.
+     * \return      true on success.
+     */
+    virtual bool ReadConfiguration();
+    //-------------------------------------
+    /**
+     * \brief Check if flush allowed.
+     *
+     * Check if flush allowed. It is.
+     * \return      Always true.
+     */
+    virtual bool CanFlush();
+    //-------------------------------------
+    /**
+     * \brief Read data.
+     *
+     * Read some data.
+     * \param       pbBuffer    Buffer for data.
+     * \param       Size        Size of buffer.
+     * \param       ReadSize    Size of actually read data.
+     * \return      true on success. 0 bytes read is also OK.
+     */
+    virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual bool Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged);
 };
 
 #endif // __CXGPSINPUTCHANNELSERIAL_HPP__

@@ -30,69 +30,69 @@
  */
 class IExactTime {
 private:
-	//-------------------------------------
-	IExactTime(const IExactTime &);						///< Not used.
-	const IExactTime & operator = (const IExactTime &);	///< Not used.
+    //-------------------------------------
+    IExactTime(const IExactTime &);                     ///< Not used.
+    const IExactTime & operator = (const IExactTime &); ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IExactTime() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IExactTime() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void SetNow() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetYear() const = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetMonth() const = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetDay() const = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetHour() const = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetMinute() const = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int GetSecond() const = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IExactTime() {
+    }
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IExactTime() {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void SetNow() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetYear() const = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetMonth() const = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetDay() const = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetHour() const = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetMinute() const = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int GetSecond() const = 0;
 };
 
 #endif //__IEXACTTIME_H__

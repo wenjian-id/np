@@ -26,9 +26,9 @@
 
 //-------------------------------------
 CXInfoBar::CXInfoBar() :
-	m_Width(0),
-	m_Height(0),
-	m_oSizeChanged(false)
+    m_Width(0),
+    m_Height(0),
+    m_oSizeChanged(false)
 {
 }
 
@@ -38,49 +38,49 @@ CXInfoBar::~CXInfoBar() {
 
 //-------------------------------------
 int CXInfoBar::GetWidth() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_Width;
+    CXReadLocker RL(&m_RWLock);
+    return m_Width;
 }
 
 //-------------------------------------
 int CXInfoBar::GetHeight() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_Height;
+    CXReadLocker RL(&m_RWLock);
+    return m_Height;
 }
 
 //-------------------------------------
 void CXInfoBar::Resize(int Width, int Height) {
-	CXWriteLocker WL(&m_RWLock);
-	m_Width = Width;
-	m_Height = Height;
-	m_oSizeChanged = true;
+    CXWriteLocker WL(&m_RWLock);
+    m_Width = Width;
+    m_Height = Height;
+    m_oSizeChanged = true;
 }
 
 //-------------------------------------
 bool CXInfoBar::SizeChanged() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oSizeChanged;
+    CXReadLocker RL(&m_RWLock);
+    return m_oSizeChanged;
 }
 
 //-------------------------------------
 void CXInfoBar::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
-	if(pDC == NULL)
-		return;
-	OnPaint(pDC, OffsetX, OffsetY);
-	{
-		// reset size changed flag
-		CXWriteLocker WL(&m_RWLock);
-		m_oSizeChanged = false;
-	}
+    if(pDC == NULL)
+        return;
+    OnPaint(pDC, OffsetX, OffsetY);
+    {
+        // reset size changed flag
+        CXWriteLocker WL(&m_RWLock);
+        m_oSizeChanged = false;
+    }
 }
 
 //-------------------------------------
 E_COMMAND CXInfoBar::OnInternalMouseDown(int /*X*/, int /*Y*/) {
-	return e_CmdNone;
+    return e_CmdNone;
 }
 
 //-------------------------------------
 E_COMMAND CXInfoBar::OnMouseDown(int X, int Y) {
-	CXReadLocker RL(&m_RWLock);
-	return OnInternalMouseDown(X, Y);
+    CXReadLocker RL(&m_RWLock);
+    return OnInternalMouseDown(X, Y);
 }

@@ -32,48 +32,48 @@
  */
 class CXSaverGPX : public CXSaver {
 private:
-	CXStringASCII		m_GPXHeader;			///< oiu
-	CXStringASCII		m_GPXFooter;			///< oiu
-	//-------------------------------------
-	CXSaverGPX(const CXSaverGPX &);						///< Not used.
-	const CXSaverGPX & operator = (const CXSaverGPX &);	///< Not used.
+    CXStringASCII       m_GPXHeader;            ///< oiu
+    CXStringASCII       m_GPXFooter;            ///< oiu
+    //-------------------------------------
+    CXSaverGPX(const CXSaverGPX &);                     ///< Not used.
+    const CXSaverGPX & operator = (const CXSaverGPX &); ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual void AfterOpen();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual void BeforeClose();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual void AfterOpen();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual void BeforeClose();
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	CXSaverGPX();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual ~CXSaverGPX();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	bool Write(double dLon, double dLat, double dHeight);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    CXSaverGPX();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual ~CXSaverGPX();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    bool Write(double dLon, double dLat, double dHeight);
 };
 
 #endif //__CXSAVERGPX_HPP__

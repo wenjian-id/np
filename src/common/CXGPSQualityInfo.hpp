@@ -34,90 +34,90 @@
  */
 class CXGPSQualityInfo {
 private:
-	double		m_dHDOP;	///< HDOP.
-	double		m_dVDOP;	///< VDOP.
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance.
-	 *
-	 * Copy data from other instance.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXGPSQualityInfo &rOther);
+    double      m_dHDOP;    ///< HDOP.
+    double      m_dVDOP;    ///< VDOP.
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance.
+     *
+     * Copy data from other instance.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXGPSQualityInfo &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXGPSQualityInfo();
-	//-------------------------------------
-	/**
-	 * \brief Constructor.
-	 *
-	 * A Constructor.
-	 * \param	dHDOP		HDOP.
-	 * \param	dVDOP		VDOP.
-	 */
-	CXGPSQualityInfo(double dHDOP, double dVDOP);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * The copy constructor.
-	 * \param	rOther		Instance to copy from.
-	 */
-	CXGPSQualityInfo(const CXGPSQualityInfo & rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXGPSQualityInfo();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * The assignment operator.
-	 * \param	rOther		Instance to copy from..
-	 * \return				Const pointer to self.
-	 */
-	const CXGPSQualityInfo & operator = (const CXGPSQualityInfo & rOther);
-	//-------------------------------------
-	/**
-	 * \brief Get HDOP.
-	 *
-	 * Get HDOP value.
-	 * \return	HDOP.
-	 */
-	double GetHDOP() const;
-	//-------------------------------------
-	/**
-	 * \brief Set HDOP.
-	 *
-	 * Set HDOP value.
-	 * \param	Newvalue	HDOP.
-	 */
-	void SetHDOP(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Get VDOP.
-	 *
-	 * Get VDOP value.
-	 * \return	HDOP.
-	 */
-	double GetVDOP() const;
-	//-------------------------------------
-	/**
-	 * \brief Set VDOP.
-	 *
-	 * Set VDOP value.
-	 * \param	Newvalue	VDOP.
-	 */
-	void SetVDOP(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXGPSQualityInfo();
+    //-------------------------------------
+    /**
+     * \brief Constructor.
+     *
+     * A Constructor.
+     * \param   dHDOP       HDOP.
+     * \param   dVDOP       VDOP.
+     */
+    CXGPSQualityInfo(double dHDOP, double dVDOP);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * The copy constructor.
+     * \param   rOther      Instance to copy from.
+     */
+    CXGPSQualityInfo(const CXGPSQualityInfo & rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXGPSQualityInfo();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * The assignment operator.
+     * \param   rOther      Instance to copy from..
+     * \return              Const pointer to self.
+     */
+    const CXGPSQualityInfo & operator = (const CXGPSQualityInfo & rOther);
+    //-------------------------------------
+    /**
+     * \brief Get HDOP.
+     *
+     * Get HDOP value.
+     * \return  HDOP.
+     */
+    double GetHDOP() const;
+    //-------------------------------------
+    /**
+     * \brief Set HDOP.
+     *
+     * Set HDOP value.
+     * \param   Newvalue    HDOP.
+     */
+    void SetHDOP(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief Get VDOP.
+     *
+     * Get VDOP value.
+     * \return  HDOP.
+     */
+    double GetVDOP() const;
+    //-------------------------------------
+    /**
+     * \brief Set VDOP.
+     *
+     * Set VDOP value.
+     * \param   Newvalue    VDOP.
+     */
+    void SetVDOP(double NewValue);
 };
 
 typedef CXTimeStampData<CXGPSQualityInfo> tTimeStampedGPSQualityInfo;

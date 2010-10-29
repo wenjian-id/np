@@ -34,44 +34,44 @@
  */
 class CXAreaColorHolder {
 private:
-	CXBuffer<CXRGB *>	m_Colors;			///< oiu
-	//-------------------------------------
-	CXAreaColorHolder(const CXAreaColorHolder &);						///< Not used.
-	const CXAreaColorHolder & operator = (const CXAreaColorHolder &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void CreateColors();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void DestroyColors();
+    CXBuffer<CXRGB *>   m_Colors;           ///< oiu
+    //-------------------------------------
+    CXAreaColorHolder(const CXAreaColorHolder &);                       ///< Not used.
+    const CXAreaColorHolder & operator = (const CXAreaColorHolder &);   ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void CreateColors();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void DestroyColors();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXAreaColorHolder();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXAreaColorHolder();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXRGB GetColor(E_AREA_TYPE AreaType) const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXAreaColorHolder();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXAreaColorHolder();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXRGB GetColor(E_AREA_TYPE AreaType) const;
 };
 
 #endif // __CXAREACOLORHOLDER_HPP__

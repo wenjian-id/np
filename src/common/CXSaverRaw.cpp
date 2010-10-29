@@ -24,39 +24,39 @@
 
 //-------------------------------------
 CXSaverRaw::CXSaverRaw():
-	CXSaver("txt")
+    CXSaver("txt")
 {
 }
 
 //-------------------------------------
 CXSaverRaw::~CXSaverRaw() {
-	// close
-	Close();
+    // close
+    Close();
 }
 
 //-------------------------------------
 void CXSaverRaw::AfterOpen() {
-	// nothing to do
+    // nothing to do
 }
 
 //-------------------------------------
 void CXSaverRaw::BeforeClose() {
-	// nothing to do
+    // nothing to do
 }
 
 //-------------------------------------
 bool CXSaverRaw::Write(const unsigned char *pbBuffer, size_t DataLength) {
-	if(pbBuffer == NULL)
-		return false;
-	if(DataLength == 0)
-		return false;
-	size_t Written = 0;
-	// do save some preparations
-	if(!PrepareSaving())
-		return false;
-	if(m_File.Write(pbBuffer, DataLength, Written) != CXFile::E_OK)
-		return false;
-	if(DataLength != Written)
-		return false;
-	return true;
+    if(pbBuffer == NULL)
+        return false;
+    if(DataLength == 0)
+        return false;
+    size_t Written = 0;
+    // do save some preparations
+    if(!PrepareSaving())
+        return false;
+    if(m_File.Write(pbBuffer, DataLength, Written) != CXFile::E_OK)
+        return false;
+    if(DataLength != Written)
+        return false;
+    return true;
 }

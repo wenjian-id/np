@@ -24,17 +24,17 @@
 
 //-------------------------------------
 CXReadLocker::CXReadLocker(CXRWLock *pRWLock) :
-	m_pRWLock(pRWLock)
+    m_pRWLock(pRWLock)
 {
-	// lock
-	if(m_pRWLock != NULL)
-		m_pRWLock->LockRead();
+    // lock
+    if(m_pRWLock != NULL)
+        m_pRWLock->LockRead();
 }
 
 //-------------------------------------
 CXReadLocker::~CXReadLocker() {
-	// unlock
-	if(m_pRWLock != NULL)
-		m_pRWLock->UnlockRead();
-	m_pRWLock = NULL;
+    // unlock
+    if(m_pRWLock != NULL)
+        m_pRWLock->UnlockRead();
+    m_pRWLock = NULL;
 }

@@ -33,43 +33,43 @@
  */
 class CXWatchdogThread : public CXLoopThread {
 private:
-	CXExactTime		m_TriggerTime;	///< oiu
-	//-------------------------------------
-	CXWatchdogThread(const CXWatchdogThread &);						///< Not used.
-	const CXWatchdogThread & operator = (const CXWatchdogThread &);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadLoop();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped();
+    CXExactTime     m_TriggerTime;  ///< oiu
+    //-------------------------------------
+    CXWatchdogThread(const CXWatchdogThread &);                     ///< Not used.
+    const CXWatchdogThread & operator = (const CXWatchdogThread &); ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStarted();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadLoop();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStopped();
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXWatchdogThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXWatchdogThread();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXWatchdogThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXWatchdogThread();
 };
 
 

@@ -35,98 +35,98 @@ class CXDeviceContext;
  */
 class IMainWindow : public CXWindow {
 private:
-	CXNaviPOWM			*m_pNaviPOWM;		///< oiu
-	//-------------------------------------
-	IMainWindow(const IMainWindow &);							///< Not used.
-	const IMainWindow & operator = (const IMainWindow &);		///< Not used.
+    CXNaviPOWM          *m_pNaviPOWM;       ///< oiu
+    //-------------------------------------
+    IMainWindow(const IMainWindow &);                           ///< Not used.
+    const IMainWindow & operator = (const IMainWindow &);       ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnResize(int Width, int Height);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnChar(int TheChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnKeyDown(int TheChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnKeyUp(int TheChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseDown(int X, int Y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseUp(int X, int Y);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnMouseMove(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnResize(int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnChar(int TheChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnKeyDown(int TheChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnKeyUp(int TheChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseDown(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseUp(int X, int Y);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnMouseMove(int X, int Y);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IMainWindow();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IMainWindow();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXNaviPOWM *GetNaviPOWM() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool Init();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool StartThreads();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void StopThreads();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void RequestTermination() = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IMainWindow();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IMainWindow();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXNaviPOWM *GetNaviPOWM() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool Init();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool StartThreads();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void StopThreads();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void RequestTermination() = 0;
 };
 
 

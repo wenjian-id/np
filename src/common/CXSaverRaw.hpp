@@ -32,46 +32,46 @@
  */
 class CXSaverRaw : public CXSaver {
 private:
-	//-------------------------------------
-	CXSaverRaw(const CXSaverRaw &);						///< Not used.
-	const CXSaverRaw & operator = (const CXSaverRaw &);	///< Not used.
+    //-------------------------------------
+    CXSaverRaw(const CXSaverRaw &);                     ///< Not used.
+    const CXSaverRaw & operator = (const CXSaverRaw &); ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual void AfterOpen();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual void BeforeClose();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual void AfterOpen();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual void BeforeClose();
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	CXSaverRaw();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	virtual ~CXSaverRaw();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 * oiu
-	 */
-	bool Write(const unsigned char *pbBuffer, size_t DataLength);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    CXSaverRaw();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    virtual ~CXSaverRaw();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     * oiu
+     */
+    bool Write(const unsigned char *pbBuffer, size_t DataLength);
 };
 
 #endif //__CXSAVERRAW_HPP__

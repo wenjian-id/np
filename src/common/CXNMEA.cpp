@@ -26,12 +26,12 @@
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXGGAPacket::CXGGAPacket() :
-	m_oFix(false),
-	m_NSat(0),
-	m_dLon(0),
-	m_dLat(0),
-	m_dHeight(0),
-	m_dHDOP(0)
+    m_oFix(false),
+    m_NSat(0),
+    m_dLon(0),
+    m_dLat(0),
+    m_dHeight(0),
+    m_dHDOP(0)
 {
 }
 
@@ -41,83 +41,83 @@ CXGGAPacket::~CXGGAPacket() {
 
 //-------------------------------------
 CXStringASCII CXGGAPacket::GetUTC() const {
-	return m_UTC;
+    return m_UTC;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetUTC(const CXStringASCII &NewValue) {
-	m_UTC = NewValue;
+    m_UTC = NewValue;
 }
 
 //-------------------------------------
 bool CXGGAPacket::HasFix() const {
-	return m_oFix;
+    return m_oFix;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetFix(bool NewValue) {
-	m_oFix = NewValue;
+    m_oFix = NewValue;
 }
 
 //-------------------------------------
-int	CXGGAPacket::GetNSat() const {
-	return m_NSat;
+int CXGGAPacket::GetNSat() const {
+    return m_NSat;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetNSat(int NewValue) {
-	m_NSat = NewValue;
+    m_NSat = NewValue;
 }
 
 //-------------------------------------
 double CXGGAPacket::GetHeight() const {
-	return m_dHeight;
+    return m_dHeight;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetHeight(double NewValue) {
-	m_dHeight = NewValue;
+    m_dHeight = NewValue;
 }
 
 //-------------------------------------
 double CXGGAPacket::GetHDOP() const {
-	return m_dHDOP;
+    return m_dHDOP;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetHDOP(double NewValue) {
-	m_dHDOP = NewValue;
+    m_dHDOP = NewValue;
 }
 
 //-------------------------------------
 double CXGGAPacket::GetLon() const {
-	return m_dLon;
+    return m_dLon;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetLon(double NewValue) {
-	m_dLon = NewValue;
+    m_dLon = NewValue;
 }
 
 //-------------------------------------
 double CXGGAPacket::GetLat() const {
-	return m_dLat;
+    return m_dLat;
 }
 
 //-------------------------------------
 void CXGGAPacket::SetLat(double NewValue) {
-	m_dLat = NewValue;
+    m_dLat = NewValue;
 }
 
 
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXRMCPacket::CXRMCPacket() :
-	m_oFix(false),
-	m_dLon(0),
-	m_dLat(0),
-	m_dSpeed(0),
-	m_dCourse(0)
+    m_oFix(false),
+    m_dLon(0),
+    m_dLat(0),
+    m_dSpeed(0),
+    m_dCourse(0)
 {
 }
 
@@ -127,70 +127,70 @@ CXRMCPacket::~CXRMCPacket() {
 
 //-------------------------------------
 CXStringASCII CXRMCPacket::GetUTC() const {
-	return m_UTC;
+    return m_UTC;
 }
 
 //-------------------------------------
 void CXRMCPacket::SetUTC(const CXStringASCII &NewValue) {
-	m_UTC = NewValue;
+    m_UTC = NewValue;
 }
 
 //-------------------------------------
 bool CXRMCPacket::HasFix() const {
-	return m_oFix;
+    return m_oFix;
 }
 
 //-------------------------------------
 void CXRMCPacket::SetFix(bool NewValue) {
-	m_oFix = NewValue;
+    m_oFix = NewValue;
 }
 
 //-------------------------------------
 double CXRMCPacket::GetLon() const {
-	return m_dLon;
+    return m_dLon;
 }
 
 //-------------------------------------
 void CXRMCPacket::SetLon(double NewValue) {
-	m_dLon = NewValue;
+    m_dLon = NewValue;
 }
 
 //-------------------------------------
 double CXRMCPacket::GetLat() const {
-	return m_dLat;
+    return m_dLat;
 }
 
 //-------------------------------------
 void CXRMCPacket::SetLat(double NewValue) {
-	m_dLat = NewValue;
+    m_dLat = NewValue;
 }
 
 //-------------------------------------
 double CXRMCPacket::GetSpeed() const {
-	return m_dSpeed;
+    return m_dSpeed;
 }
 
 //-------------------------------------
 void CXRMCPacket::SetSpeed(double NewValue) {
-	m_dSpeed = NewValue;
+    m_dSpeed = NewValue;
 }
 
 //-------------------------------------
 double CXRMCPacket::GetCourse() const {
-	return m_dCourse;
+    return m_dCourse;
 }
 
 //-------------------------------------
 void CXRMCPacket::SetCourse(double NewValue) {
-	m_dCourse = NewValue;
+    m_dCourse = NewValue;
 }
 
 
 //----------------------------------------------------------------------------
 //-------------------------------------
 CXGSAPacket::CXGSAPacket() :
-	m_HDOP(0),
-	m_VDOP(0)
+    m_HDOP(0),
+    m_VDOP(0)
 {
 }
 
@@ -200,36 +200,36 @@ CXGSAPacket::~CXGSAPacket() {
 
 //-------------------------------------
 void CXGSAPacket::ClearSatellites() {
-	m_Satellites.Clear();
+    m_Satellites.Clear();
 }
 
 //-------------------------------------
 void CXGSAPacket::AddSatellite(int SatNr) {
-	m_Satellites.Append(SatNr);
+    m_Satellites.Append(SatNr);
 }
 
 //-------------------------------------
 const CXBuffer<int> & CXGSAPacket::GetSatellites() const {
-	return m_Satellites;
+    return m_Satellites;
 }
 
 //-------------------------------------
 double CXGSAPacket::GetHDOP() const {
-	return m_HDOP;
+    return m_HDOP;
 }
 
 //-------------------------------------
 void CXGSAPacket::SetHDOP(double NewValue) {
-	m_HDOP = NewValue;
+    m_HDOP = NewValue;
 }
 
 //-------------------------------------
 double CXGSAPacket::GetVDOP() const {
-	return m_VDOP;
+    return m_VDOP;
 }
 
 //-------------------------------------
 void CXGSAPacket::SetVDOP(double NewValue) {
-	m_VDOP = NewValue;
+    m_VDOP = NewValue;
 }
 

@@ -24,7 +24,7 @@
 
 //-------------------------------------
 CXMutex::CXMutex() :
-	m_Mutex(QMutex::Recursive)
+    m_Mutex(QMutex::Recursive)
 {
 }
 
@@ -34,13 +34,13 @@ CXMutex::~CXMutex() {
 
 //-------------------------------------
 void CXMutex::Lock() {
-	// lock mutex
-	m_Mutex.lock();
+    // lock mutex
+    m_Mutex.lock();
 }
 
 //-------------------------------------
 void CXMutex::Unlock() {
-	// unlock mutex
-	m_Mutex.unlock();
+    // unlock mutex
+    m_Mutex.unlock();
 }
 

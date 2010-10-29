@@ -27,7 +27,7 @@
 
 //-------------------------------------
 CXMapPainter::CXMapPainter() :
-	m_oMustRepaint(true)
+    m_oMustRepaint(true)
 {
 }
 
@@ -37,30 +37,30 @@ CXMapPainter::~CXMapPainter() {
 
 //-------------------------------------
 bool CXMapPainter::MustRepaint() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oMustRepaint;
+    CXReadLocker RL(&m_RWLock);
+    return m_oMustRepaint;
 }
 
 //-------------------------------------
 void CXMapPainter::SetMustRepaint(bool Value) {
-	CXWriteLocker WL(&m_RWLock);
-	m_oMustRepaint = Value;
+    CXWriteLocker WL(&m_RWLock);
+    m_oMustRepaint = Value;
 }
 
 //-------------------------------------
 void CXMapPainter::PositionChanged(const CXNaviData &NewNaviData) {
-	CXWriteLocker WL(&m_RWLock);
-	m_NaviData = NewNaviData;
+    CXWriteLocker WL(&m_RWLock);
+    m_NaviData = NewNaviData;
 }
 
 //-------------------------------------
 CXNaviData CXMapPainter::GetPosition() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_NaviData;
+    CXReadLocker RL(&m_RWLock);
+    return m_NaviData;
 }
 
 //-------------------------------------
 void CXMapPainter::DoWork() {
-	OnDoWork();
+    OnDoWork();
 }
 

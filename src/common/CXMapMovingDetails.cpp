@@ -24,7 +24,7 @@
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 
-CXMapMovingDetails *CXMapMovingDetails::m_pInstance = NULL;		///< oiu
+CXMapMovingDetails *CXMapMovingDetails::m_pInstance = NULL;     ///< oiu
 
 //-------------------------------------
 CXMapMovingDetails::CXMapMovingDetails() {
@@ -36,37 +36,37 @@ CXMapMovingDetails::~CXMapMovingDetails() {
 
 //-------------------------------------
 CXMapMovingDetails *CXMapMovingDetails::Instance() {
-	if(m_pInstance == NULL)
-		m_pInstance = new CXMapMovingDetails();
-	return m_pInstance;
+    if(m_pInstance == NULL)
+        m_pInstance = new CXMapMovingDetails();
+    return m_pInstance;
 }
 
 //-------------------------------------
 CXCoor CXMapMovingDetails::GetPosition() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_Position;
+    CXReadLocker RL(&m_RWLock);
+    return m_Position;
 }
 
 //-------------------------------------
 void CXMapMovingDetails::SetPosition(const CXCoor &NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_Position = NewValue;
+    CXWriteLocker WL(&m_RWLock);
+    m_Position = NewValue;
 }
 
 //-------------------------------------
 void CXMapMovingDetails::SetMatrix(const CXTransformationMatrix2D &Matrix) {
-	CXWriteLocker WL(&m_RWLock);
-	m_Matrix = Matrix;
+    CXWriteLocker WL(&m_RWLock);
+    m_Matrix = Matrix;
 }
 
 //-------------------------------------
 void CXMapMovingDetails::OffsetPosition(int OffsetPixelX, int OffsetPixelY) {
-	CXWriteLocker WL(&m_RWLock);
-	// compute inverse to TMMap
-	CXTransformationMatrix2D Inv = m_Matrix.Inverse();
+    CXWriteLocker WL(&m_RWLock);
+    // compute inverse to TMMap
+    CXTransformationMatrix2D Inv = m_Matrix.Inverse();
 
-	CXCoorVector CurPos = m_Matrix*CXCoorVector(m_Position.GetUTMEasting(), m_Position.GetUTMNorthing());
-	CXCoorVector NewPos(CurPos.GetX() + OffsetPixelX, CurPos.GetY() + OffsetPixelY);
-	CXCoorVector NewCoor = Inv*NewPos;
-	m_Position.OffsetCoor(NewCoor.GetX()-m_Position.GetUTMEasting(), NewCoor.GetY()-m_Position.GetUTMNorthing());
+    CXCoorVector CurPos = m_Matrix*CXCoorVector(m_Position.GetUTMEasting(), m_Position.GetUTMNorthing());
+    CXCoorVector NewPos(CurPos.GetX() + OffsetPixelX, CurPos.GetY() + OffsetPixelY);
+    CXCoorVector NewCoor = Inv*NewPos;
+    m_Position.OffsetCoor(NewCoor.GetX()-m_Position.GetUTMEasting(), NewCoor.GetY()-m_Position.GetUTMNorthing());
 }

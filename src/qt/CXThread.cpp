@@ -24,7 +24,7 @@
 
 //-------------------------------------
 CXThread::CXThreadHelper::CXThreadHelper(CXThread *pThread) :
-	m_pThread(pThread)
+    m_pThread(pThread)
 {
 }
 
@@ -34,46 +34,46 @@ CXThread::CXThreadHelper::~CXThreadHelper() {
 
 //-------------------------------------
 void CXThread::CXThreadHelper::run() {
-	if(m_pThread != NULL)
-		m_pThread->ThreadFunc();
+    if(m_pThread != NULL)
+        m_pThread->ThreadFunc();
 }
 
 //-------------------------------------
 void CXThread::CXThreadHelper::DoSleep(size_t dwMilliSeconds) {
-	msleep(dwMilliSeconds);
+    msleep(dwMilliSeconds);
 }
 
 //-------------------------------------
 CXThread::CXThread() :
-	m_ThreadHelper(this)
+    m_ThreadHelper(this)
 {
 }
 
 //-------------------------------------
 CXThread::~CXThread() {
-	/// \todo check !IsRunning()
+    /// \todo check !IsRunning()
 }
 
 //-------------------------------------
 bool CXThread::CreateThread() {
-	/// \todo check !IsRunning()
-	m_ThreadHelper.start();
-	return true;
+    /// \todo check !IsRunning()
+    m_ThreadHelper.start();
+    return true;
 }
 
 //-------------------------------------
 void CXThread::KillThread() {
-	// kill it
-	m_ThreadHelper.terminate();
+    // kill it
+    m_ThreadHelper.terminate();
 }
 
 //-------------------------------------
 bool CXThread::WaitForThreadExit(size_t dwMilliSeconds) {
-	return m_ThreadHelper.wait(dwMilliSeconds);
+    return m_ThreadHelper.wait(dwMilliSeconds);
 }
 
 //-------------------------------------
 void CXThread::DoSleep(size_t dwMilliSeconds) {
-	m_ThreadHelper.DoSleep(dwMilliSeconds);
+    m_ThreadHelper.DoSleep(dwMilliSeconds);
 }
 

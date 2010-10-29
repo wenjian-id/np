@@ -32,7 +32,7 @@ CXPOWMMap *CXPOWMMap::m_pInstance = NULL;
 
 //-------------------------------------
 CXPOWMMap::CXPOWMMap() :
-	m_pMapLoaderThread(NULL)
+    m_pMapLoaderThread(NULL)
 {
 }
 
@@ -42,22 +42,22 @@ CXPOWMMap::~CXPOWMMap() {
 
 //-------------------------------------
 CXPOWMMap *CXPOWMMap::Instance() {
-	if(m_pInstance == NULL)
-		m_pInstance = new CXPOWMMap();
-	return m_pInstance;
+    if(m_pInstance == NULL)
+        m_pInstance = new CXPOWMMap();
+    return m_pInstance;
 }
 
 //-------------------------------------
 void CXPOWMMap::SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread) {
-	m_pMapLoaderThread = pMapLoaderThread;
+    m_pMapLoaderThread = pMapLoaderThread;
 }
 
 //-------------------------------------
 TMapSectionPtrArray CXPOWMMap::GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr) {
-	return m_pMapLoaderThread->GetMapSectionsDisplay(Descr);
+    return m_pMapLoaderThread->GetMapSectionsDisplay(Descr);
 }
 
 //-------------------------------------
 TMapSectionPtrArray CXPOWMMap::GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr) {
-	return m_pMapLoaderThread->GetMapSectionsLocator(Descr);
+    return m_pMapLoaderThread->GetMapSectionsLocator(Descr);
 }

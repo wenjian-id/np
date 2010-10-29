@@ -32,24 +32,24 @@ CXRWLock::~CXRWLock() {
 
 //-------------------------------------
 void CXRWLock::LockRead() {
-	// lock for read
-	m_RWLock.lockForRead();
+    // lock for read
+    m_RWLock.lockForRead();
 }
 
 //-------------------------------------
 void CXRWLock::LockWrite() {
-	// lock for write
-	m_RWLock.lockForWrite();
+    // lock for write
+    m_RWLock.lockForWrite();
 }
 
 //-------------------------------------
 void CXRWLock::UnlockRead() {
-	// unlock
-	m_RWLock.unlock();
+    // unlock
+    m_RWLock.unlock();
 }
 
 //-------------------------------------
 void CXRWLock::UnlockWrite() {
-	// unlock
-	m_RWLock.unlock();
+    // unlock
+    m_RWLock.unlock();
 }

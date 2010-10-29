@@ -32,59 +32,59 @@
  */
 class CXDebugInfo {
 private:
-	static CXDebugInfo	*m_pInstance;					///< oiu
-	int					m_DrawTime;						///< oiu
-	int					m_LocatorTime;					///< oiu
-	mutable CXRWLock	m_RWLock;						///< Synchronization object.
-	//-------------------------------------
-	CXDebugInfo(const CXDebugInfo &);						///< Not used.
-	const CXDebugInfo & operator = (const CXDebugInfo &);	///< Not used.
+    static CXDebugInfo  *m_pInstance;                   ///< oiu
+    int                 m_DrawTime;                     ///< oiu
+    int                 m_LocatorTime;                  ///< oiu
+    mutable CXRWLock    m_RWLock;                       ///< Synchronization object.
+    //-------------------------------------
+    CXDebugInfo(const CXDebugInfo &);                       ///< Not used.
+    const CXDebugInfo & operator = (const CXDebugInfo &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXDebugInfo();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXDebugInfo();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	static CXDebugInfo *Instance();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetDrawTime() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetDrawTime(int NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetLocatorTime() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetLocatorTime(int NewValue);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXDebugInfo();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXDebugInfo();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    static CXDebugInfo *Instance();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetDrawTime() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetDrawTime(int NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetLocatorTime() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetLocatorTime(int NewValue);
 };
 
 #endif // __CXDEBUGINFO_HPP__

@@ -25,12 +25,12 @@
 
 //-------------------------------------
 CXExactTime::CXExactTime() {
-	SetNow();
+    SetNow();
 }
 
 //-------------------------------------
 CXExactTime::CXExactTime(const CXExactTime &rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -39,56 +39,56 @@ CXExactTime::~CXExactTime() {
 
 //-------------------------------------
 const CXExactTime & CXExactTime::operator = (const CXExactTime & rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXExactTime::CopyFrom(const CXExactTime & rOther) {
-	mSystemTime = rOther.mSystemTime;
-	mdwMilliSeconds = rOther.mdwMilliSeconds;
+    mSystemTime = rOther.mSystemTime;
+    mdwMilliSeconds = rOther.mdwMilliSeconds;
 }
 
 //-------------------------------------
 void CXExactTime::SetNow() {
-	GetLocalTime(&mSystemTime); 
-	mdwMilliSeconds = GetTickCount();
+    GetLocalTime(&mSystemTime); 
+    mdwMilliSeconds = GetTickCount();
 }
 
 //-------------------------------------
 unsigned long CXExactTime::operator - (const CXExactTime & rOther) const {
-	if(mdwMilliSeconds < rOther.mdwMilliSeconds)
-		return 0;
-	return mdwMilliSeconds - rOther.mdwMilliSeconds;
+    if(mdwMilliSeconds < rOther.mdwMilliSeconds)
+        return 0;
+    return mdwMilliSeconds - rOther.mdwMilliSeconds;
 }
 
 //-------------------------------------
 int CXExactTime::GetYear() const {
-	return mSystemTime.wYear;
+    return mSystemTime.wYear;
 }
 
 //-------------------------------------
 int CXExactTime::GetMonth() const {
-	return mSystemTime.wMonth;
+    return mSystemTime.wMonth;
 }
 
 //-------------------------------------
 int CXExactTime::GetDay() const {
-	return mSystemTime.wDay;
+    return mSystemTime.wDay;
 }
 
 //-------------------------------------
 int CXExactTime::GetHour() const {
-	return mSystemTime.wHour;
+    return mSystemTime.wHour;
 }
 
 //-------------------------------------
 int CXExactTime::GetMinute() const {
-	return mSystemTime.wMinute;
+    return mSystemTime.wMinute;
 }
 
 //-------------------------------------
 int CXExactTime::GetSecond() const {
-	return mSystemTime.wSecond;
+    return mSystemTime.wSecond;
 }

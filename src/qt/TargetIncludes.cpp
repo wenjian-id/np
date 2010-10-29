@@ -29,26 +29,26 @@
 
 //-------------------------------------
 void DoOutputDebugString(const char *pcBuf) {
-	// do some tests
-	if(pcBuf == NULL)
-		return;
-	printf("%s", pcBuf);
+    // do some tests
+    if(pcBuf == NULL)
+        return;
+    printf("%s", pcBuf);
 }
 
 //-------------------------------------
 void DoOutputErrorMessage(const char *pcBuf) {
-	// do some tests
-	if(pcBuf == NULL)
-		return;
-	QMessageBox::critical(NULL, "NaviPOWM error", pcBuf);
+    // do some tests
+    if(pcBuf == NULL)
+        return;
+    QMessageBox::critical(NULL, "NaviPOWM error", pcBuf);
 }
 
 //-------------------------------------
 QColor CXRGB2QColor(const CXRGB & Color){
-	return QColor(Color.GetR(), Color.GetG(), Color.GetB());
+    return QColor(Color.GetR(), Color.GetG(), Color.GetB());
 }
 
 //-------------------------------------
 CXRGB QColor2CXRGB(const QColor & Color) {
-	return CXRGB(Color.red(), Color.green(), Color.blue());
+    return CXRGB(Color.red(), Color.green(), Color.blue());
 }

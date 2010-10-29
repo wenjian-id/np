@@ -27,7 +27,7 @@
 
 //-------------------------------------
 CXGPSDClient::CXGPSDClient() :
-	m_pGPSData(NULL)
+    m_pGPSData(NULL)
 {
 }
 
@@ -37,60 +37,60 @@ CXGPSDClient::~CXGPSDClient() {
 
 //-------------------------------------
 bool CXGPSDClient::Open() {
-	CXGPSDConfig Cfg = GetConfig();
-	m_pGPSData = gps_open(Cfg.GetAddress().c_str(), Cfg.GetPort().c_str());
-	if(m_pGPSData == NULL)
-		return false;
-	gps_stream(m_pGPSData, WATCH_ENABLE, NULL);
-	return true;
+    CXGPSDConfig Cfg = GetConfig();
+    m_pGPSData = gps_open(Cfg.GetAddress().c_str(), Cfg.GetPort().c_str());
+    if(m_pGPSData == NULL)
+        return false;
+    gps_stream(m_pGPSData, WATCH_ENABLE, NULL);
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSDClient::Close() {
-	if(m_pGPSData != NULL)
-		gps_close(m_pGPSData);
-	m_pGPSData = NULL;
-	return true;
+    if(m_pGPSData != NULL)
+        gps_close(m_pGPSData);
+    m_pGPSData = NULL;
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSDClient::IsOpen() {
-	return m_pGPSData != NULL;
+    return m_pGPSData != NULL;
 }
 
 //-------------------------------------
 void CXGPSDClient::Read() {
-	if(m_pGPSData == NULL)
-		return;
-	while(gps_waiting(m_pGPSData)) {
-		gps_poll(m_pGPSData);
-		DoProcessData(m_pGPSData);
-	}
+    if(m_pGPSData == NULL)
+        return;
+    while(gps_waiting(m_pGPSData)) {
+        gps_poll(m_pGPSData);
+        DoProcessData(m_pGPSData);
+    }
 }
 
 //-------------------------------------
 void CXGPSDClient::ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP) {
-	rHDOP = pGPSData->dop.hdop;
-	rVDOP = pGPSData->dop.vdop;
+    rHDOP = pGPSData->dop.hdop;
+    rVDOP = pGPSData->dop.vdop;
 }
 
 //-------------------------------------
 void CXGPSDClient::ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats) {
-	if(pGPSData->satellites_visible > 0) {
-		for(int i=0; i<pGPSData->satellites_visible; i++) {
-			CXSatelliteInfo *pInfo = new CXSatelliteInfo();
-			pInfo->SetPRN(pGPSData->PRN[i]);
-			pInfo->SetElevation(pGPSData->elevation[i]);
-			pInfo->SetAzimuth(pGPSData->azimuth[i]);
-			pInfo->SetSNR(pGPSData->ss[i]);
-			rSatInfos.Append(pInfo);
-		}
-	}
-	if(pGPSData->satellites_used > 0) {
-		for(int i=0; i<pGPSData->satellites_used; i++) {
-			rActiveSats.Append(pGPSData->used[i]);
-		}
-	}
+    if(pGPSData->satellites_visible > 0) {
+        for(int i=0; i<pGPSData->satellites_visible; i++) {
+            CXSatelliteInfo *pInfo = new CXSatelliteInfo();
+            pInfo->SetPRN(pGPSData->PRN[i]);
+            pInfo->SetElevation(pGPSData->elevation[i]);
+            pInfo->SetAzimuth(pGPSData->azimuth[i]);
+            pInfo->SetSNR(pGPSData->ss[i]);
+            rSatInfos.Append(pInfo);
+        }
+    }
+    if(pGPSData->satellites_used > 0) {
+        for(int i=0; i<pGPSData->satellites_used; i++) {
+            rActiveSats.Append(pGPSData->used[i]);
+        }
+    }
 }
 
 #endif // (GPSD_API_MAJOR_VERSION == 4)

@@ -28,7 +28,7 @@
 
 //-------------------------------------
 CXDeviceContext::CXDeviceContext(QPainter *pPainter) :
-	m_pPainter(pPainter)
+    m_pPainter(pPainter)
 {
 }
 
@@ -38,68 +38,68 @@ CXDeviceContext::~CXDeviceContext() {
 
 //-------------------------------------
 void CXDeviceContext::Draw(CXBitmap *pBmp, int OffsetX, int OffsetY) {
-	if(m_pPainter == NULL)
-		return;
-	if(pBmp == NULL)
-		return;
-	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
-	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
-	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+    if(m_pPainter == NULL)
+        return;
+    if(pBmp == NULL)
+        return;
+    QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+    QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+    m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
 }
 
 //-------------------------------------
 void CXDeviceContext::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor) {
-	if(m_pPainter == NULL)
-		return;
+    if(m_pPainter == NULL)
+        return;
 
-	// get old pen and brush
-	QPen OldPen = m_pPainter->pen();
-	QBrush OldBrush = m_pPainter->brush();
-	
-	// create new pen
-	QPen NewPen(Qt::SolidLine);
-	NewPen.setWidth(1);
-	NewPen.setColor(CXRGB2QColor(PenColor));
+    // get old pen and brush
+    QPen OldPen = m_pPainter->pen();
+    QBrush OldBrush = m_pPainter->brush();
+    
+    // create new pen
+    QPen NewPen(Qt::SolidLine);
+    NewPen.setWidth(1);
+    NewPen.setColor(CXRGB2QColor(PenColor));
 
-	// create new brush
-	QBrush NewBrush(CXRGB2QColor(BrushColor), Qt::SolidPattern);
-	
-	// select new pen and brush
-	m_pPainter->setBrush(NewBrush);
-	m_pPainter->setPen(NewPen);
+    // create new brush
+    QBrush NewBrush(CXRGB2QColor(BrushColor), Qt::SolidPattern);
+    
+    // select new pen and brush
+    m_pPainter->setBrush(NewBrush);
+    m_pPainter->setPen(NewPen);
 
-	// draw rectangle
-	m_pPainter->drawRect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth() - 1, TheRect.GetHeight() - 1);
+    // draw rectangle
+    m_pPainter->drawRect(TheRect.GetLeft(), TheRect.GetTop(), TheRect.GetWidth() - 1, TheRect.GetHeight() - 1);
 
-	// restore old pen and brush
-	m_pPainter->setPen(OldPen);
-	m_pPainter->setBrush(OldBrush);
+    // restore old pen and brush
+    m_pPainter->setPen(OldPen);
+    m_pPainter->setBrush(OldBrush);
 }
 
 //-------------------------------------
 void CXDeviceContext::Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha) {
-	if(m_pPainter == NULL)
-		return;
-	if(pBmp == NULL)
-		return;
-	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
-	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
-	qreal Opacity = m_pPainter->opacity();
-	m_pPainter->setOpacity(Alpha/100.0);
-	m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
-	m_pPainter->setOpacity(Opacity);
+    if(m_pPainter == NULL)
+        return;
+    if(pBmp == NULL)
+        return;
+    QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+    QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+    qreal Opacity = m_pPainter->opacity();
+    m_pPainter->setOpacity(Alpha/100.0);
+    m_pPainter->drawImage(tgt, *pBmp->GetImage(), src);
+    m_pPainter->setOpacity(Opacity);
 }
 
 //-------------------------------------
 void CXDeviceContext::DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB & TrColor) {
-	if(m_pPainter == NULL)
-		return;
-	if(pBmp == NULL)
-		return;
-	QImage cpy = pBmp->GetImage()->copy();
-	QImage mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskOutColor);
-	cpy.setAlphaChannel(mask);
-	QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
-	QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
-	m_pPainter->drawImage(tgt, cpy, src);
+    if(m_pPainter == NULL)
+        return;
+    if(pBmp == NULL)
+        return;
+    QImage cpy = pBmp->GetImage()->copy();
+    QImage mask = cpy.createMaskFromColor(qRgb(TrColor.GetR(), TrColor.GetG(), TrColor.GetB()), Qt::MaskOutColor);
+    cpy.setAlphaChannel(mask);
+    QRect src(0, 0, pBmp->GetWidth(), pBmp->GetHeight());
+    QRect tgt(OffsetX, OffsetY, pBmp->GetWidth(), pBmp->GetHeight());
+    m_pPainter->drawImage(tgt, cpy, src);
 }

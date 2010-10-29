@@ -38,129 +38,129 @@ class CXTransformationMatrix2D;
  */
 class CXNode {
 private:
-	CXCoor		m_Coor;			///< Coordinate of node
-	int			m_DisplayX;		///< X coordinate on display [pixel];
-	int			m_DisplayY;		///< Y coordinate on display [pixel];
-	bool		m_oTerminator;	///< oiu
-	//-------------------------------------
-	CXNode();										///< Not used.
-	const CXNode & operator = (const CXNode &);		///< Not used.
+    CXCoor      m_Coor;         ///< Coordinate of node
+    int         m_DisplayX;     ///< X coordinate on display [pixel];
+    int         m_DisplayY;     ///< Y coordinate on display [pixel];
+    bool        m_oTerminator;  ///< oiu
+    //-------------------------------------
+    CXNode();                                       ///< Not used.
+    const CXNode & operator = (const CXNode &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Constructor.
-	 *
-	 *	Constructor.
-	 *	\param	Lon				Longitude of node [deg].
-	 *	\param	Lat				Latitude of node [deg].
-	 */
-	CXNode(double Lon, double Lat);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 *	Copy constructor.
-	 *	\param	rOther	Node to copy.
-	 */
-	CXNode(const CXNode &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXNode();
-	//-------------------------------------
-	/**
-	 * \brief Get longitude.
-	 *
-	 *	Get longitude.
-	 *	\return		Longitude [deg]
-	 */
-	double GetLon() const;
-	//-------------------------------------
-	/**
-	 * \brief Get latitude.
-	 *
-	 *	Get latitude.
-	 *	\return		Latitude [deg]
-	 */
-	double GetLat() const;
-	//-------------------------------------
-	/**
-	 * \brief Get UTM easting.
-	 *
-	 *	Get UTM easting.
-	 *	\return		UTM easting.
-	 */
-	double GetUTME() const;
-	//-------------------------------------
-	/**
-	 * \brief Get UTM northing.
-	 *
-	 *	Get UTM northing.
-	 *	\return		UTM northing.
-	 */
-	double GetUTMN() const;
-	//-------------------------------------
-	/**
-	 * \brief Relocate UTM coordinates to new UTM zone.
-	 * 
-	 * Relocate UTM coordinates to new UTM zone.
-	 * \param	NewUTMZone	New UTM Zone.
-	 */
-	void RelocateUTM(int NewUTMZone);
-	//-------------------------------------
-	/**
-	 * \brief Get X coordinate on display.
-	 *
-	 *	Get X coordinate on display.
-	 *	\return		X coordinate on display [pixel].
-	 */
-	int GetDisplayX() const;
-	//-------------------------------------
-	/**
-	 * \brief Set X coordinate on display.
-	 *
-	 *	Set X coordinate on display.
-	 *	\param	X	X coordinate on display [pixel].
-	 */
-	void SetDisplayX(int X);
-	//-------------------------------------
-	/**
-	 * \brief Get Y coordinate on display.
-	 *
-	 *	Get Y coordinate on display.
-	 *	\return		Y coordinate on display [pixel].
-	 */
-	int GetDisplayY() const;
-	//-------------------------------------
-	/**
-	 * \brief Set Y coordinate on display.
-	 *
-	 *	Set Y coordinate on display.
-	 *	\param	Y	Y coordinate on display [pixel].
-	 */
-	void SetDisplayY(int Y);
-	//-------------------------------------
-	/**
-	 * \brief Check if node is terminator node.
-	 *
-	 *	Check if node is terminator node.
-	 *	\return		true if terminator node
-	 */
-	bool IsTerminator() const;
-	//-------------------------------------
-	/**
-	 * \brief Set terminator flag.
-	 *
-	 *	Set terminator flag.
-	 */
-	void SetTerminator();
+    //-------------------------------------
+    /**
+     * \brief Constructor.
+     *
+     *  Constructor.
+     *  \param  Lon             Longitude of node [deg].
+     *  \param  Lat             Latitude of node [deg].
+     */
+    CXNode(double Lon, double Lat);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     *  Copy constructor.
+     *  \param  rOther  Node to copy.
+     */
+    CXNode(const CXNode &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXNode();
+    //-------------------------------------
+    /**
+     * \brief Get longitude.
+     *
+     *  Get longitude.
+     *  \return     Longitude [deg]
+     */
+    double GetLon() const;
+    //-------------------------------------
+    /**
+     * \brief Get latitude.
+     *
+     *  Get latitude.
+     *  \return     Latitude [deg]
+     */
+    double GetLat() const;
+    //-------------------------------------
+    /**
+     * \brief Get UTM easting.
+     *
+     *  Get UTM easting.
+     *  \return     UTM easting.
+     */
+    double GetUTME() const;
+    //-------------------------------------
+    /**
+     * \brief Get UTM northing.
+     *
+     *  Get UTM northing.
+     *  \return     UTM northing.
+     */
+    double GetUTMN() const;
+    //-------------------------------------
+    /**
+     * \brief Relocate UTM coordinates to new UTM zone.
+     * 
+     * Relocate UTM coordinates to new UTM zone.
+     * \param   NewUTMZone  New UTM Zone.
+     */
+    void RelocateUTM(int NewUTMZone);
+    //-------------------------------------
+    /**
+     * \brief Get X coordinate on display.
+     *
+     *  Get X coordinate on display.
+     *  \return     X coordinate on display [pixel].
+     */
+    int GetDisplayX() const;
+    //-------------------------------------
+    /**
+     * \brief Set X coordinate on display.
+     *
+     *  Set X coordinate on display.
+     *  \param  X   X coordinate on display [pixel].
+     */
+    void SetDisplayX(int X);
+    //-------------------------------------
+    /**
+     * \brief Get Y coordinate on display.
+     *
+     *  Get Y coordinate on display.
+     *  \return     Y coordinate on display [pixel].
+     */
+    int GetDisplayY() const;
+    //-------------------------------------
+    /**
+     * \brief Set Y coordinate on display.
+     *
+     *  Set Y coordinate on display.
+     *  \param  Y   Y coordinate on display [pixel].
+     */
+    void SetDisplayY(int Y);
+    //-------------------------------------
+    /**
+     * \brief Check if node is terminator node.
+     *
+     *  Check if node is terminator node.
+     *  \return     true if terminator node
+     */
+    bool IsTerminator() const;
+    //-------------------------------------
+    /**
+     * \brief Set terminator flag.
+     *
+     *  Set terminator flag.
+     */
+    void SetTerminator();
 };
 
-typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
+typedef CXBuffer<CXNode *>                      TNodeBuffer;    ///< oiu
 
 
 //---------------------------------------------------------------------
@@ -171,141 +171,141 @@ typedef CXBuffer<CXNode *>						TNodeBuffer;	///< oiu
  */
 class CXPOINode : public CXNode {
 private:
-	CXStringUTF8			m_Name;			///< oiu
-	CXBuffer<E_POI_TYPE>	m_POITypes;		///< POI flags.
-	E_MAP_PLACE_TYPE		m_ePlaceType;	///< oiu
-	//-------------------------------------
-	CXPOINode();										///< Not used.
-	CXPOINode(const CXPOINode &);						///< Not used.
-	const CXPOINode & operator = (const CXPOINode &);	///< Not used.
+    CXStringUTF8            m_Name;         ///< oiu
+    CXBuffer<E_POI_TYPE>    m_POITypes;     ///< POI flags.
+    E_MAP_PLACE_TYPE        m_ePlaceType;   ///< oiu
+    //-------------------------------------
+    CXPOINode();                                        ///< Not used.
+    CXPOINode(const CXPOINode &);                       ///< Not used.
+    const CXPOINode & operator = (const CXPOINode &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Constructor.
-	 *
-	 *	Constructor.
-	 *	\param	Lon		Longitude of node [deg].
-	 *	\param	Lat		Latitude of node [deg].
-	 */
-	CXPOINode(double Lon, double Lat);
-	//-------------------------------------
-	/**
-	 * \brief Constructor.
-	 *
-	 *	Constructor.
-	 *	\param	rNode	Node to copy from.
-	 */
-	CXPOINode(const CXNode &rNode);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXPOINode();
-	//-------------------------------------
-	/**
-	 * \brief Get POI type count.
-	 *
-	 *	Get POI type count.
-	 *	\return				POI flag.
-	 */
-	size_t GetPOITypeCount() const;
-	//-------------------------------------
-	/**
-	 * \brief Get POI type at specific index.
-	 *
-	 *	Get POI type at specific index.
-	 *	\param		Index	Index of POI type.
-	 *	\return				POI type.
-	 */
-	E_POI_TYPE GetPOIType(size_t Index) const;
-	//-------------------------------------
-	/**
-	 * \brief Set POI flag.
-	 *
-	 *	Set POI flag.
-	 *	\param		NewValue	New POI type.
-	 */
-	void SetPOIType(E_POI_TYPE NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Set name.
-	 *
-	 *	Set name.
-	 *	\param	NewValue	New value.
-	 */
-	void SetName(const CXStringUTF8 &NewValue);
-	//-------------------------------------
-	/**
-	 * \brief Get name.
-	 *
-	 *	Get name.
-	 *	\return	Name.
-	 */
-	CXStringUTF8 GetName() const;
-	//-------------------------------------
-	/**
-	 * \brief Get place type.
-	 *
-	 *	Get place type.
-	 *	\return	place type.
-	 */
-	E_MAP_PLACE_TYPE GetPlaceType() const;
-	//-------------------------------------
-	/**
-	 * \brief Set place type.
-	 *
-	 *	Set place type.
-	 *	\param	NewValue	Place type.
-	 */
-	void SetPlaceType(E_MAP_PLACE_TYPE ePlaceType);
+    //-------------------------------------
+    /**
+     * \brief Constructor.
+     *
+     *  Constructor.
+     *  \param  Lon     Longitude of node [deg].
+     *  \param  Lat     Latitude of node [deg].
+     */
+    CXPOINode(double Lon, double Lat);
+    //-------------------------------------
+    /**
+     * \brief Constructor.
+     *
+     *  Constructor.
+     *  \param  rNode   Node to copy from.
+     */
+    CXPOINode(const CXNode &rNode);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXPOINode();
+    //-------------------------------------
+    /**
+     * \brief Get POI type count.
+     *
+     *  Get POI type count.
+     *  \return             POI flag.
+     */
+    size_t GetPOITypeCount() const;
+    //-------------------------------------
+    /**
+     * \brief Get POI type at specific index.
+     *
+     *  Get POI type at specific index.
+     *  \param      Index   Index of POI type.
+     *  \return             POI type.
+     */
+    E_POI_TYPE GetPOIType(size_t Index) const;
+    //-------------------------------------
+    /**
+     * \brief Set POI flag.
+     *
+     *  Set POI flag.
+     *  \param      NewValue    New POI type.
+     */
+    void SetPOIType(E_POI_TYPE NewValue);
+    //-------------------------------------
+    /**
+     * \brief Set name.
+     *
+     *  Set name.
+     *  \param  NewValue    New value.
+     */
+    void SetName(const CXStringUTF8 &NewValue);
+    //-------------------------------------
+    /**
+     * \brief Get name.
+     *
+     *  Get name.
+     *  \return Name.
+     */
+    CXStringUTF8 GetName() const;
+    //-------------------------------------
+    /**
+     * \brief Get place type.
+     *
+     *  Get place type.
+     *  \return place type.
+     */
+    E_MAP_PLACE_TYPE GetPlaceType() const;
+    //-------------------------------------
+    /**
+     * \brief Set place type.
+     *
+     *  Set place type.
+     *  \param  NewValue    Place type.
+     */
+    void SetPlaceType(E_MAP_PLACE_TYPE ePlaceType);
 };
 
-typedef CXBuffer<CXPOINode *>	TPOINodeBuffer;		///< oiu
+typedef CXBuffer<CXPOINode *>   TPOINodeBuffer;     ///< oiu
 
 //---------------------------------------------------------------------
 class CXOrderedNodeList {
 private:
-	TNodeBuffer		m_Nodes;	///< oiu
-	//-------------------------------------
-	CXOrderedNodeList(const CXOrderedNodeList &); 						///< Not used.
-	const CXOrderedNodeList & operator = (const CXOrderedNodeList &);	///< Not used.
+    TNodeBuffer     m_Nodes;    ///< oiu
+    //-------------------------------------
+    CXOrderedNodeList(const CXOrderedNodeList &);                       ///< Not used.
+    const CXOrderedNodeList & operator = (const CXOrderedNodeList &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXOrderedNodeList();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual ~CXOrderedNodeList();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void AddNode(CXNode *pNode);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	size_t GetNodeCount() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXNode *GetNode(size_t Index) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXOrderedNodeList();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual ~CXOrderedNodeList();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void AddNode(CXNode *pNode);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    size_t GetNodeCount() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXNode *GetNode(size_t Index) const;
 };
 
-typedef CXBuffer<CXOrderedNodeList *>	TNodeListBuffer;		///< oiu
+typedef CXBuffer<CXOrderedNodeList *>   TNodeListBuffer;        ///< oiu
 
 #endif // __CXNODE_HPP__

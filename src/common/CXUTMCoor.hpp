@@ -32,135 +32,135 @@
  */
 class CXUTMCoor {
 private:
-	int			m_UTMZone;			///< UTM zone
-	char		m_UTMLetter;		///< UTM Letter
-	double		m_UTMEasting;		///< UTM Easting
-	double		m_UTMNorthing;		///< UTM Northing
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXUTMCoor &rOther);
+    int         m_UTMZone;          ///< UTM zone
+    char        m_UTMLetter;        ///< UTM Letter
+    double      m_UTMEasting;       ///< UTM Easting
+    double      m_UTMNorthing;      ///< UTM Northing
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXUTMCoor &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXUTMCoor();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTMCoor(int UTMZone, char UTMLetter, double UTMEasting, double UTMNorthing);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXUTMCoor(double dLon, double dLat);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXUTMCoor(const CXUTMCoor &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXUTMCoor();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXUTMCoor & operator = (const CXUTMCoor &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if equal.
-	 */
-	bool operator == (const CXUTMCoor &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if not equal.
-	 */
-	bool operator != (const CXUTMCoor &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int GetUTMZone() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTMZone(int NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	char GetUTMLetter() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTMLetter(char NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetUTMEasting() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTMEasting(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetUTMNorthing() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetUTMNorthing(double NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void OffsetCoor(double dUTME, double dUTMN);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXUTMCoor();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTMCoor(int UTMZone, char UTMLetter, double UTMEasting, double UTMNorthing);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXUTMCoor(double dLon, double dLat);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXUTMCoor(const CXUTMCoor &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXUTMCoor();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXUTMCoor & operator = (const CXUTMCoor &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if equal.
+     */
+    bool operator == (const CXUTMCoor &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if not equal.
+     */
+    bool operator != (const CXUTMCoor &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int GetUTMZone() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTMZone(int NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    char GetUTMLetter() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTMLetter(char NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetUTMEasting() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTMEasting(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetUTMNorthing() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetUTMNorthing(double NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void OffsetCoor(double dUTME, double dUTMN);
 };
 
 #endif // __CXUTMCOOR_HPP__

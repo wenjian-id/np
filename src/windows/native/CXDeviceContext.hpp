@@ -34,56 +34,56 @@ class CXBitMap;
  */
 class CXDeviceContext : public IDeviceContext {
 private:
-	HDC		m_hDC;		///< oiu
-	//-------------------------------------
-	CXDeviceContext(const CXDeviceContext &);							///< Not used.
-	const CXDeviceContext & operator = (const CXDeviceContext &);		///< Not used.
+    HDC     m_hDC;      ///< oiu
+    //-------------------------------------
+    CXDeviceContext(const CXDeviceContext &);                           ///< Not used.
+    const CXDeviceContext & operator = (const CXDeviceContext &);       ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXDeviceContext(HDC hDC);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXDeviceContext();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	HDC GetDC() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB &TrColor);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXDeviceContext(HDC hDC);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXDeviceContext();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    HDC GetDC() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Draw(CXBitmap *pBmp, int OffsetX, int OffsetY);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Blend(CXBitmap *pBmp, int OffsetX, int OffsetY, unsigned char Alpha);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DrawTransparent(CXBitmap *pBmp, int OffsetX, int OffsetY, const CXRGB &TrColor);
 };
 
 #endif // __IDEVICECONTEXT_HPP__

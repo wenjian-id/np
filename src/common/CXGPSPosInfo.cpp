@@ -24,28 +24,28 @@
 
 //-------------------------------------
 CXGPSPosInfo::CXGPSPosInfo() :
-	m_oFix(false),
-	m_dLon(0.0),
-	m_dLat(0.0),
-	m_dHeight(0.0),
-	m_NSat(0)
+    m_oFix(false),
+    m_dLon(0.0),
+    m_dLat(0.0),
+    m_dHeight(0.0),
+    m_NSat(0)
 {
 }
 
 //-------------------------------------
 CXGPSPosInfo::CXGPSPosInfo(const CXUTCTime &UTC, bool oFix, double dLon, double dLat, double dHeight, int NSat) :
-	m_UTC(UTC),
-	m_oFix(oFix),
-	m_dLon(dLon),
-	m_dLat(dLat),
-	m_dHeight(dHeight),
-	m_NSat(NSat)
+    m_UTC(UTC),
+    m_oFix(oFix),
+    m_dLon(dLon),
+    m_dLat(dLat),
+    m_dHeight(dHeight),
+    m_NSat(NSat)
 {
 }
 
 //-------------------------------------
 CXGPSPosInfo::CXGPSPosInfo(const CXGPSPosInfo & rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -54,77 +54,77 @@ CXGPSPosInfo::~CXGPSPosInfo() {
 
 //-------------------------------------
 const CXGPSPosInfo & CXGPSPosInfo::operator = (const CXGPSPosInfo & rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::CopyFrom(const CXGPSPosInfo &rOther) {
-	m_UTC = rOther.m_UTC;
-	m_oFix = rOther.m_oFix;
-	m_dLon = rOther.m_dLon;
-	m_dLat = rOther.m_dLat;
-	m_dHeight = rOther.m_dHeight;
-	m_NSat = rOther.m_NSat;
+    m_UTC = rOther.m_UTC;
+    m_oFix = rOther.m_oFix;
+    m_dLon = rOther.m_dLon;
+    m_dLat = rOther.m_dLat;
+    m_dHeight = rOther.m_dHeight;
+    m_NSat = rOther.m_NSat;
 }
 
 //-------------------------------------
 CXUTCTime CXGPSPosInfo::GetUTC() const {
-	return m_UTC;
+    return m_UTC;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::SetUTC(const CXUTCTime &NewValue) {
-	m_UTC = NewValue;
+    m_UTC = NewValue;
 }
 
 //-------------------------------------
 bool CXGPSPosInfo::HasFix() const {
-	return m_oFix;
+    return m_oFix;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::SetFix(bool NewValue) {
-	m_oFix = NewValue;
+    m_oFix = NewValue;
 }
 
 //-------------------------------------
 double CXGPSPosInfo::GetLon() const {
-	return m_dLon;
+    return m_dLon;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::SetLon(double NewValue) {
-	m_dLon = NewValue;
+    m_dLon = NewValue;
 }
 
 //-------------------------------------
 double CXGPSPosInfo::GetLat() const {
-	return m_dLat;
+    return m_dLat;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::SetLat(double NewValue) {
-	m_dLat = NewValue;
+    m_dLat = NewValue;
 }
 
 //-------------------------------------
 double CXGPSPosInfo::GetHeight() const {
-	return m_dHeight;
+    return m_dHeight;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::SetHeight(double NewValue) {
-	m_dHeight = NewValue;
+    m_dHeight = NewValue;
 }
 
 //-------------------------------------
 int CXGPSPosInfo::GetNSat() const {
-	return m_NSat;
+    return m_NSat;
 }
 
 //-------------------------------------
 void CXGPSPosInfo::SetNSat(int NewValue) {
-	m_NSat = NewValue;
+    m_NSat = NewValue;
 }

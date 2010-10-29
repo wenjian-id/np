@@ -25,9 +25,9 @@
 
 //-------------------------------------
 IBitmap::IBitmap() :
-	m_pDeviceContext(NULL),
-	m_Width(0),
-	m_Height(0)
+    m_pDeviceContext(NULL),
+    m_Width(0),
+    m_Height(0)
 {
 }
 
@@ -37,52 +37,52 @@ IBitmap::~IBitmap() {
 
 //-------------------------------------
 void IBitmap::SetDeviceContext(IDeviceContext *NewValue) {
-	m_pDeviceContext = NewValue;
+    m_pDeviceContext = NewValue;
 }
 
 //-------------------------------------
 void IBitmap::SetWidth(int NewValue) {
-	m_Width = NewValue;
+    m_Width = NewValue;
 }
 
 //-------------------------------------
 void IBitmap::SetHeight(int NewValue) {
-	m_Height = NewValue;
+    m_Height = NewValue;
 }
 
 //-------------------------------------
 void IBitmap::SetFileName(const CXStringASCII & FileName) {
-	m_FileName = FileName;
+    m_FileName = FileName;
 }
 
 //-------------------------------------
 IDeviceContext *IBitmap::GetDeviceContext() const {
-	return m_pDeviceContext;
+    return m_pDeviceContext;
 }
 
 //-------------------------------------
 int IBitmap::GetWidth() const {
-	return m_Width;
+    return m_Width;
 }
 
 //-------------------------------------
 int IBitmap::GetHeight() const {
-	return m_Height;
+    return m_Height;
 }
 
 //-------------------------------------
 CXStringASCII IBitmap::GetFileName() const {
-	return m_FileName;
+    return m_FileName;
 }
 
 //-------------------------------------
 void IBitmap::Resize(IDeviceContext *pDC, int Width, int Height) {
-	// destroy old bitmap
-	Destroy();
-	if(pDC == NULL)
-		return;
-	m_Width = Width;
-	m_Height = Height;
-	// create new bitmap
-	Create(pDC, Width, Height);
+    // destroy old bitmap
+    Destroy();
+    if(pDC == NULL)
+        return;
+    m_Width = Width;
+    m_Height = Height;
+    // create new bitmap
+    Create(pDC, Width, Height);
 }

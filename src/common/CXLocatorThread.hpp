@@ -43,182 +43,182 @@ class CXNaviPOWM;
  */
 class CXLocatorThread : public CXLoopThread {
 private:
-	tTimeStampedGPSPosInfo			m_GPSPosInfo;				///< oiu
-	tTimeStampedGPSCourseInfo		m_GPSCourseInfo;			///< oiu
-	tTimeStampedGPSQualityInfo		m_GPSQualityInfo;			///< oiu
-	bool							m_oGPSConnected;			///< oiu
-	bool							m_oNewGPSConnection;		///< oiu
-	bool							m_oNewGPSPosInfo;			///< oiu
-	bool							m_oNewGPSCourseInfo;		///< oiu
-	bool							m_oNewGPSQualityInfo;		///< oiu
-	CXSpeedCalculator				m_SpeedCalculator;			///< oiu
-	CXExactTime						m_LastReceivedPosition;		///< oiu
-	CXNaviData						m_NaviData;					///< oiu
-	CXCoor							m_LastReceivedCoor;			///< oiu
-	CXCoor							m_StartCoordinates;			///< oiu
-	bool							m_oGPSFixAtLeastOnce;		///< oiu
-	bool							m_oStartCoordinatesValid;	///< oiu
-	CXNaviPOWM						*m_pNaviPOWM;				///< oiu
-	CXExactTime						m_StartTime;				///< starting time
-	mutable CXMutex					m_MutexInputData;			///< Synchronization object for input data.
-	mutable CXMutex					m_Mutex;					///< Synchronization object.
-	//-------------------------------------
-	CXLocatorThread(const CXLocatorThread&);						///< Not used.
-	const CXLocatorThread & operator = (const CXLocatorThread&);	///< Not used.
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetFlag_NewGPSConnection(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetFlag_NewGPSPosInfo(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetFlag_NewGPSCourseInfo(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetFlag_NewGPSQualityInfo(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool GetFlag_NewGPSConnection() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool GetFlag_NewGPSPosInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool GetFlag_NewGPSCourseInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool GetFlag_NewGPSQualityInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tTimeStampedGPSPosInfo GetGPSPosInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tTimeStampedGPSCourseInfo GetGPSCourseInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	tTimeStampedGPSQualityInfo GetGPSQualityInfo() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Locate();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool LoadStartGPSCoordinates();
+    tTimeStampedGPSPosInfo          m_GPSPosInfo;               ///< oiu
+    tTimeStampedGPSCourseInfo       m_GPSCourseInfo;            ///< oiu
+    tTimeStampedGPSQualityInfo      m_GPSQualityInfo;           ///< oiu
+    bool                            m_oGPSConnected;            ///< oiu
+    bool                            m_oNewGPSConnection;        ///< oiu
+    bool                            m_oNewGPSPosInfo;           ///< oiu
+    bool                            m_oNewGPSCourseInfo;        ///< oiu
+    bool                            m_oNewGPSQualityInfo;       ///< oiu
+    CXSpeedCalculator               m_SpeedCalculator;          ///< oiu
+    CXExactTime                     m_LastReceivedPosition;     ///< oiu
+    CXNaviData                      m_NaviData;                 ///< oiu
+    CXCoor                          m_LastReceivedCoor;         ///< oiu
+    CXCoor                          m_StartCoordinates;         ///< oiu
+    bool                            m_oGPSFixAtLeastOnce;       ///< oiu
+    bool                            m_oStartCoordinatesValid;   ///< oiu
+    CXNaviPOWM                      *m_pNaviPOWM;               ///< oiu
+    CXExactTime                     m_StartTime;                ///< starting time
+    mutable CXMutex                 m_MutexInputData;           ///< Synchronization object for input data.
+    mutable CXMutex                 m_Mutex;                    ///< Synchronization object.
+    //-------------------------------------
+    CXLocatorThread(const CXLocatorThread&);                        ///< Not used.
+    const CXLocatorThread & operator = (const CXLocatorThread&);    ///< Not used.
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetFlag_NewGPSConnection(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetFlag_NewGPSPosInfo(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetFlag_NewGPSCourseInfo(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetFlag_NewGPSQualityInfo(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool GetFlag_NewGPSConnection() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool GetFlag_NewGPSPosInfo() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool GetFlag_NewGPSCourseInfo() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool GetFlag_NewGPSQualityInfo() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tTimeStampedGPSPosInfo GetGPSPosInfo() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tTimeStampedGPSCourseInfo GetGPSCourseInfo() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tTimeStampedGPSQualityInfo GetGPSQualityInfo() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Locate();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool LoadStartGPSCoordinates();
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadLoop();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStarted();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadLoop();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStopped();
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXLocatorThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXLocatorThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool IsGPSConnected() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetGPSConnected(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetGPSPosInfo(const tTimeStampedGPSPosInfo &PosInfo);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetGPSCourseInfo(const tTimeStampedGPSCourseInfo &CourseInfo);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetGPSQualityInfo(const tTimeStampedGPSQualityInfo &QualityInfo);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SaveLastReceivedGPSCoordinate();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXLocatorThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXLocatorThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool IsGPSConnected() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetGPSConnected(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetGPSPosInfo(const tTimeStampedGPSPosInfo &PosInfo);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetGPSCourseInfo(const tTimeStampedGPSCourseInfo &CourseInfo);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetGPSQualityInfo(const tTimeStampedGPSQualityInfo &QualityInfo);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SaveLastReceivedGPSCoordinate();
 };
 
 

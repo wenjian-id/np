@@ -33,111 +33,111 @@
  */
 class  CXStringUTF8 : public tUCBuffer {
 private:
-	mutable wchar_t			*m_wbuf;	///< oiu
-	mutable unsigned char	*m_ucbuf;	///< oiu
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	void ClearSTRBuffers();
+    mutable wchar_t         *m_wbuf;    ///< oiu
+    mutable unsigned char   *m_ucbuf;   ///< oiu
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    void ClearSTRBuffers();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXStringUTF8();
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXStringUTF8(const CXStringUTF8 &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8(const char *pcChar);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXStringUTF8(const char *pcChar, size_t Len);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXStringUTF8();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXStringUTF8 & operator = (const CXStringUTF8 &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXStringUTF8 & operator = (const tUCBuffer &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if equal.
-	 */
-	bool operator == (const CXStringUTF8 &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if not equal.
-	 */
-	bool operator != (const CXStringUTF8 &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void operator += (const CXStringUTF8 &rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void Empty();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	wchar_t *w_str() const ;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	unsigned char *uc_str() const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXStringUTF8();
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXStringUTF8(const CXStringUTF8 &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8(const char *pcChar);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8(const char *pcChar, size_t Len);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXStringUTF8();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXStringUTF8 & operator = (const CXStringUTF8 &rOther);
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXStringUTF8 & operator = (const tUCBuffer &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if equal.
+     */
+    bool operator == (const CXStringUTF8 &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if not equal.
+     */
+    bool operator != (const CXStringUTF8 &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void operator += (const CXStringUTF8 &rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void Empty();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    wchar_t *w_str() const ;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    unsigned char *uc_str() const;
 };
 
 #endif // __CXSTRINGUTF8_HPP__

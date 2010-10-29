@@ -38,100 +38,100 @@
  */
 class CXGPSInputChannel {
 private:
-	size_t		m_ForcedTimeout;		///< Forced timout. Used to stop processing data if new UTC read.
-	//-------------------------------------
-	CXGPSInputChannel(const CXGPSInputChannel &);						///< Not used.
-	const CXGPSInputChannel & operator = (const CXGPSInputChannel &);	///< Not used.
+    size_t      m_ForcedTimeout;        ///< Forced timout. Used to stop processing data if new UTC read.
+    //-------------------------------------
+    CXGPSInputChannel(const CXGPSInputChannel &);                       ///< Not used.
+    const CXGPSInputChannel & operator = (const CXGPSInputChannel &);   ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief Set forced timeout.
-	 *
-	 * Set forced timeout in ms.
-	 * \param	NewValue	New timeout [ms].
-	 */
-	void SetForcedTimeout(int NewValue);
+    //-------------------------------------
+    /**
+     * \brief Set forced timeout.
+     *
+     * Set forced timeout in ms.
+     * \param   NewValue    New timeout [ms].
+     */
+    void SetForcedTimeout(int NewValue);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXGPSInputChannel();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXGPSInputChannel();
-	//-------------------------------------
-	/**
-	 * \brief Open channel.
-	 *
-	 * Open the GPS input channel. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool Open()=0;
-	//-------------------------------------
-	/**
-	 * \brief Close channel.
-	 *
-	 * Close the GPS input channel. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool Close()=0;
-	//-------------------------------------
-	/**
-	 * \brief Check if channel is open.
-	 *
-	 * Check if input channel is open. Has to be implemented in derived classes.
-	 * \return		true if open.
-	 */
-	virtual bool IsOpen()=0;
-	//-------------------------------------
-	/**
-	 * \brief Read configuration.
-	 *
-	 * Read configuration. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool ReadConfiguration() = 0;
-	//-------------------------------------
-	/**
-	 * \brief Check if flush allowed.
-	 *
-	 * Check if flush allowed. Has to be implemented in derived classes.
-	 * \return		true if allowed.
-	 */
-	virtual bool CanFlush()=0;
-	//-------------------------------------
-	/**
-	 * \brief Read data into a buffer.
-	 *
-	 * Read some data into a buffer. Has to be implemented in derived classes.
-	 * \param		pbBuffer	Buffer for data.
-	 * \param		Size		Size of buffer.
-	 * \param		ReadSize	Size of actually read data.
-	 * \return		true on success. 0 bytes read is also OK.
-	 */
-	virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual bool Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged) = 0;
-	//-------------------------------------
-	/**
-	 * \brief Get forced timeout.
-	 *
-	 * get forced timeout in ms.
-	 * \return		Timeout [ms].
-	 */
-	size_t GetForcedTimeout() const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXGPSInputChannel();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXGPSInputChannel();
+    //-------------------------------------
+    /**
+     * \brief Open channel.
+     *
+     * Open the GPS input channel. Has to be implemented in derived classes.
+     * \return      true on success.
+     */
+    virtual bool Open()=0;
+    //-------------------------------------
+    /**
+     * \brief Close channel.
+     *
+     * Close the GPS input channel. Has to be implemented in derived classes.
+     * \return      true on success.
+     */
+    virtual bool Close()=0;
+    //-------------------------------------
+    /**
+     * \brief Check if channel is open.
+     *
+     * Check if input channel is open. Has to be implemented in derived classes.
+     * \return      true if open.
+     */
+    virtual bool IsOpen()=0;
+    //-------------------------------------
+    /**
+     * \brief Read configuration.
+     *
+     * Read configuration. Has to be implemented in derived classes.
+     * \return      true on success.
+     */
+    virtual bool ReadConfiguration() = 0;
+    //-------------------------------------
+    /**
+     * \brief Check if flush allowed.
+     *
+     * Check if flush allowed. Has to be implemented in derived classes.
+     * \return      true if allowed.
+     */
+    virtual bool CanFlush()=0;
+    //-------------------------------------
+    /**
+     * \brief Read data into a buffer.
+     *
+     * Read some data into a buffer. Has to be implemented in derived classes.
+     * \param       pbBuffer    Buffer for data.
+     * \param       Size        Size of buffer.
+     * \param       ReadSize    Size of actually read data.
+     * \return      true on success. 0 bytes read is also OK.
+     */
+    virtual bool Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual bool Read(CXGPSPosInfo &rGPSPosInfo, bool & roGPSPosInfoChanged, CXGPSCourseInfo &rGPSCourseInfo, bool & roGPSCourseInfoChanged, CXGPSQualityInfo &rGPSQualityInfo, bool & roGPSQualityInfoChanged) = 0;
+    //-------------------------------------
+    /**
+     * \brief Get forced timeout.
+     *
+     * get forced timeout in ms.
+     * \return      Timeout [ms].
+     */
+    size_t GetForcedTimeout() const;
 };
 
 #endif // __CXGPSINPUTCHANNEL_HPP__

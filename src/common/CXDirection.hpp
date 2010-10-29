@@ -31,82 +31,82 @@
  */
 class CXDirection {
 private:
-	double	m_dCos;		///< oiu
-	double	m_dSin;		///< oiu
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXDirection &rOther);
+    double  m_dCos;     ///< oiu
+    double  m_dSin;     ///< oiu
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXDirection &rOther);
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXDirection();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXDirection(double dCos, double dSin);
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXDirection(const CXDirection &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXDirection();
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXDirection & operator = (const CXDirection &rOther);
-	//-------------------------------------
-	/**
-	 * \brief Comparison operator.
-	 *
-	 * Compares this instance with other instance.
-	 * \param	rOther	Instance to compare with.
-	 * \return			True if equal.
-	 */
-	bool operator == (const CXDirection & rOther);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXDirection operator - () const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetCos() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	double GetSin() const;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXDirection();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXDirection(double dCos, double dSin);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXDirection(const CXDirection &rOther);
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXDirection();
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXDirection & operator = (const CXDirection &rOther);
+    //-------------------------------------
+    /**
+     * \brief Comparison operator.
+     *
+     * Compares this instance with other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if equal.
+     */
+    bool operator == (const CXDirection & rOther);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXDirection operator - () const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetCos() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    double GetSin() const;
 };
 
 #endif // __CXDIRECTION_HPP__

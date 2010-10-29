@@ -30,51 +30,51 @@
  */
 class IRWLock {
 private:
-	//-------------------------------------
-	IRWLock(const IRWLock &);							///< Not used.
-	const IRWLock & operator = (const IRWLock &);		///< Not used.
+    //-------------------------------------
+    IRWLock(const IRWLock &);                           ///< Not used.
+    const IRWLock & operator = (const IRWLock &);       ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IRWLock() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IRWLock() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LockRead() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void LockWrite() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void UnlockRead() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void UnlockWrite() = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IRWLock() {
+    }
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IRWLock() {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void LockRead() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void LockWrite() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void UnlockRead() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void UnlockWrite() = 0;
 };
 
 #endif // __IRWLOCK_HPP__

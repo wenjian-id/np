@@ -26,8 +26,8 @@
 
 //-------------------------------------
 IThread::IThread() :
-	m_oRunning(false),
-	m_oStopThread(false)
+    m_oRunning(false),
+    m_oStopThread(false)
 {
 }
 
@@ -37,43 +37,43 @@ IThread::~IThread() {
 
 //-------------------------------------
 bool IThread::MustStopThread() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oStopThread;
+    CXReadLocker RL(&m_RWLock);
+    return m_oStopThread;
 }
 
 //-------------------------------------
 void IThread::StopThread() {
-	CXWriteLocker WL(&m_RWLock);
-	m_oStopThread = true;
+    CXWriteLocker WL(&m_RWLock);
+    m_oStopThread = true;
 }
 
 //-------------------------------------
 bool IThread::IsRunning() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oRunning;
+    CXReadLocker RL(&m_RWLock);
+    return m_oRunning;
 }
 
 //-------------------------------------
 void IThread::SetRunning(bool NewValue) {
-	CXWriteLocker WL(&m_RWLock);
-	m_oRunning = NewValue;
+    CXWriteLocker WL(&m_RWLock);
+    m_oRunning = NewValue;
 }
 
 //-------------------------------------
 int IThread::ThreadFunc() {
-	/// \todo check !IsRunning()
-	SetRunning(true);
-	// tell thread was started
-	OnThreadStarted();
-	// run specific thread function
-	int Result = OnThreadFunc();
+    /// \todo check !IsRunning()
+    SetRunning(true);
+    // tell thread was started
+    OnThreadStarted();
+    // run specific thread function
+    int Result = OnThreadFunc();
 
-	// tell thread was stopped
-	OnThreadStopped();
+    // tell thread was stopped
+    OnThreadStopped();
 
-	SetRunning(false);
+    SetRunning(false);
 
-	return Result;
+    return Result;
 }
 
 

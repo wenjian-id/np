@@ -30,70 +30,70 @@
  */
 template<class tKey, class tValue> class CXKeyVal {
 private:
-	//-------------------------------------
-	/**
-	 * \brief Copy from other instance to self.
-	 *
-	 * Copy from other instance to self.
-	 * \param	rOther	Instance to copy from.
-	 */
-	void CopyFrom(const CXKeyVal &rOther) {
-		m_Key = rOther.m_Key;
-		m_Value = rOther.m_Value;
-	}
+    //-------------------------------------
+    /**
+     * \brief Copy from other instance to self.
+     *
+     * Copy from other instance to self.
+     * \param   rOther  Instance to copy from.
+     */
+    void CopyFrom(const CXKeyVal &rOther) {
+        m_Key = rOther.m_Key;
+        m_Value = rOther.m_Value;
+    }
 protected:
 public:
-	tKey	m_Key;		///< oiu
-	tValue	m_Value;	///< oiu
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXKeyVal() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	CXKeyVal(const tKey & Key, const tValue & Value) :
-		m_Key(Key),
-		m_Value(Value)
-	{
-	}
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXKeyVal() {
-	}
-	//-------------------------------------
-	/**
-	 * \brief Copy constructor.
-	 *
-	 * Copy constructor.
-	 * \param	rOther	Instance to copy from.
-	 */
-	CXKeyVal(const CXKeyVal &rOther) {
-		CopyFrom(rOther);
-	}
-	//-------------------------------------
-	/**
-	 * \brief Assignment operator.
-	 *
-	 * Assignment operator.
-	 * \param	rOther	Instance to copy from.
-	 * \return			Const reference to self.
-	 */
-	const CXKeyVal & operator = (const CXKeyVal & rOther) {
-		if(this != &rOther)
-			CopyFrom(rOther);
-		return *this;
-	}
+    tKey    m_Key;      ///< oiu
+    tValue  m_Value;    ///< oiu
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXKeyVal() {
+    }
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXKeyVal(const tKey & Key, const tValue & Value) :
+        m_Key(Key),
+        m_Value(Value)
+    {
+    }
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXKeyVal() {
+    }
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * Copy constructor.
+     * \param   rOther  Instance to copy from.
+     */
+    CXKeyVal(const CXKeyVal &rOther) {
+        CopyFrom(rOther);
+    }
+    //-------------------------------------
+    /**
+     * \brief Assignment operator.
+     *
+     * Assignment operator.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
+     */
+    const CXKeyVal & operator = (const CXKeyVal & rOther) {
+        if(this != &rOther)
+            CopyFrom(rOther);
+        return *this;
+    }
 };
 
 #endif // __CXKEYVAL_HPP__

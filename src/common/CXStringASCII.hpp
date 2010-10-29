@@ -33,7 +33,7 @@
  */
 class  CXStringASCII : public tCBuffer {
 private:
-    mutable char	*m_pcstr;
+    mutable char    *m_pcstr;
     //-------------------------------------
     /**
      * \brief oiu.
@@ -55,7 +55,7 @@ public:
      * \brief Copy constructor.
      *
      * Copy constructor.
-     * \param	rOther	Instance to copy from.
+     * \param   rOther  Instance to copy from.
      */
     CXStringASCII(const CXStringASCII &rOther);
     //-------------------------------------
@@ -63,7 +63,7 @@ public:
      * \brief Constructor.
      *
      * Constructor.
-     * \param	rOther	Buffer to copy from.
+     * \param   rOther  Buffer to copy from.
      */
     CXStringASCII(const tCBuffer &rOther);
     //-------------------------------------
@@ -90,8 +90,8 @@ public:
      * \brief Assignment operator.
      *
      * Assignment operator.
-     * \param	rOther	Instance to copy from.
-     * \return			Const reference to self.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
      */
     const CXStringASCII & operator = (const CXStringASCII &rOther);
     //-------------------------------------
@@ -99,8 +99,8 @@ public:
      * \brief Assignment operator.
      *
      * Assignment operator.
-     * \param	rOther	Instance to copy from.
-     * \return			Const reference to self.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
      */
     const CXStringASCII & operator = (const tCBuffer &rOther);
     //-------------------------------------
@@ -108,8 +108,8 @@ public:
      * \brief Comparison operator.
      *
      * Compares this instance with other instance.
-     * \param	rOther	Instance to compare with.
-     * \return			True if equal.
+     * \param   rOther  Instance to compare with.
+     * \return          True if equal.
      */
     bool operator == (const CXStringASCII &rOther) const;
     //-------------------------------------
@@ -117,8 +117,8 @@ public:
      * \brief Comparison operator.
      *
      * Compares this instance with other instance.
-     * \param	rOther	Instance to compare with.
-     * \return			True if not equal.
+     * \param   rOther  Instance to compare with.
+     * \return          True if not equal.
      */
     bool operator != (const CXStringASCII &rOther) const;
     //-------------------------------------
@@ -138,8 +138,8 @@ public:
      * \brief Comparison operator.
      *
      * Compares this instance with other instance.
-     * \param	rOther	Instance to compare with.
-     * \return			True if this instance < other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if this instance < other instance.
      */
     bool operator < (const CXStringASCII &rOther) const;
     //-------------------------------------
@@ -147,8 +147,8 @@ public:
      * \brief Comparison operator.
      *
      * Compares this instance with other instance.
-     * \param	rOther	Instance to compare with.
-     * \return			True if this instance > other instance.
+     * \param   rOther  Instance to compare with.
+     * \return          True if this instance > other instance.
      */
     bool operator > (const CXStringASCII &rOther) const;
     //-------------------------------------

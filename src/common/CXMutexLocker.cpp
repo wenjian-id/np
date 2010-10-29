@@ -25,18 +25,18 @@
 
 //-------------------------------------
 CXMutexLocker::CXMutexLocker(CXMutex *pMutex) :
-	m_pMutex(pMutex)
+    m_pMutex(pMutex)
 {
-	// lock mutex
-	if(m_pMutex != NULL)
-		m_pMutex->Lock();
+    // lock mutex
+    if(m_pMutex != NULL)
+        m_pMutex->Lock();
 }
 
 
 //-------------------------------------
 CXMutexLocker::~CXMutexLocker() {
-	// unlock mutex
-	if(m_pMutex != NULL)
-		m_pMutex->Unlock();
-	m_pMutex = NULL;
+    // unlock mutex
+    if(m_pMutex != NULL)
+        m_pMutex->Unlock();
+    m_pMutex = NULL;
 }

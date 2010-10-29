@@ -40,51 +40,51 @@
  */
 class CXPOWMMap {
 private:
-	static CXPOWMMap						*m_pInstance;			///< oiu
-	CXMapLoaderThread						*m_pMapLoaderThread;	///< oiu
-	//-------------------------------------
-	CXPOWMMap(const CXPOWMMap &);						///< Not used.
-	const CXPOWMMap & operator = (const CXPOWMMap &);	///< Not used.
+    static CXPOWMMap                        *m_pInstance;           ///< oiu
+    CXMapLoaderThread                       *m_pMapLoaderThread;    ///< oiu
+    //-------------------------------------
+    CXPOWMMap(const CXPOWMMap &);                       ///< Not used.
+    const CXPOWMMap & operator = (const CXPOWMMap &);   ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXPOWMMap();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXPOWMMap();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	static CXPOWMMap *Instance();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	TMapSectionPtrArray GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	TMapSectionPtrArray GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr);
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXPOWMMap();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXPOWMMap();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    static CXPOWMMap *Instance();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    TMapSectionPtrArray GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    TMapSectionPtrArray GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr);
 };
 
 #endif // __CXPOWMMAP_HPP__

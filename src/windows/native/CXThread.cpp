@@ -25,77 +25,77 @@
 
 //-------------------------------------
 CXThread::CXThread() :
-	m_Handle(NULL),
-	m_ThreadID(0)
+    m_Handle(NULL),
+    m_ThreadID(0)
 {
 }
 
 
 //-------------------------------------
 CXThread::~CXThread() {
-	/// \todo check !IsRunning()
+    /// \todo check !IsRunning()
 }
 
 
 //-------------------------------------
 DWORD WINAPI CXThread::thrfunc(LPVOID lpParameter) {
-	if(lpParameter == NULL)
-		return ~(0UL);
-	CXThread *pThr = (CXThread *)lpParameter;
-	return pThr->ThreadFunc();
+    if(lpParameter == NULL)
+        return ~(0UL);
+    CXThread *pThr = (CXThread *)lpParameter;
+    return pThr->ThreadFunc();
 }
 
 //-------------------------------------
 bool CXThread::CreateThread() {
-	CXMutexLocker L(&m_Mutex);
-	/// \todo check !IsRunning()
-	/// \todo check m_Handle == NULL;
-	m_Handle = ::CreateThread(	NULL,
-								0,
-								CXThread::thrfunc,
-								this,
-								0,
-								&m_ThreadID
-							);
-	/// \todo check m_Handle != NULL ?
-	return m_Handle != NULL;
+    CXMutexLocker L(&m_Mutex);
+    /// \todo check !IsRunning()
+    /// \todo check m_Handle == NULL;
+    m_Handle = ::CreateThread(  NULL,
+                                0,
+                                CXThread::thrfunc,
+                                this,
+                                0,
+                                &m_ThreadID
+                            );
+    /// \todo check m_Handle != NULL ?
+    return m_Handle != NULL;
 }
 
 //-------------------------------------
 void CXThread::KillThread() {
-	::TerminateThread(GetHandle(), 0);
-	::CloseHandle(GetHandle());
-	SetHandle(NULL);
+    ::TerminateThread(GetHandle(), 0);
+    ::CloseHandle(GetHandle());
+    SetHandle(NULL);
 }
 
 //-------------------------------------
 void CXThread::SetHandle(HANDLE NewHandle) {
-	CXMutexLocker L(&m_Mutex);
-	m_Handle = NewHandle;
+    CXMutexLocker L(&m_Mutex);
+    m_Handle = NewHandle;
 }
 
 
 //-------------------------------------
 HANDLE CXThread::GetHandle() const {
-	CXMutexLocker L(&m_Mutex);
-	return m_Handle;
+    CXMutexLocker L(&m_Mutex);
+    return m_Handle;
 }
 
 //-------------------------------------
 bool CXThread::WaitForThreadExit(size_t dwMilliSeconds) {
-	HANDLE ThreadHandle = GetHandle();
-	// get m_Handle in a safe way
-	if(ThreadHandle != NULL) {
-		// wait for thread termination
-		WaitForSingleObject(ThreadHandle, dwMilliSeconds);
-	}
-	::CloseHandle(ThreadHandle);
-	SetHandle(NULL);
-	return true;
+    HANDLE ThreadHandle = GetHandle();
+    // get m_Handle in a safe way
+    if(ThreadHandle != NULL) {
+        // wait for thread termination
+        WaitForSingleObject(ThreadHandle, dwMilliSeconds);
+    }
+    ::CloseHandle(ThreadHandle);
+    SetHandle(NULL);
+    return true;
 }
 
 //-------------------------------------
 void CXThread::DoSleep(size_t dwMilliseconds) {
-	MsgWaitForMultipleObjects(0, NULL, FALSE, dwMilliseconds, QS_ALLEVENTS);
+    MsgWaitForMultipleObjects(0, NULL, FALSE, dwMilliseconds, QS_ALLEVENTS);
 }
 

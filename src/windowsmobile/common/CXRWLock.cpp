@@ -24,7 +24,7 @@
 
 //-------------------------------------
 CXRWLock::CXRWLock() :
-	m_Semaphore(32)
+    m_Semaphore(32)
 {
 }
 
@@ -34,24 +34,24 @@ CXRWLock::~CXRWLock() {
 
 //-------------------------------------
 void CXRWLock::LockRead() {
-	m_Semaphore.Lock();
+    m_Semaphore.Lock();
 }
 
 //-------------------------------------
 void CXRWLock::LockWrite() {
-	m_Mutex.Lock();
-	for(size_t i=0; i<m_Semaphore.GetMaxCount(); i++)
-		m_Semaphore.Lock();
-	m_Mutex.Unlock();
+    m_Mutex.Lock();
+    for(size_t i=0; i<m_Semaphore.GetMaxCount(); i++)
+        m_Semaphore.Lock();
+    m_Mutex.Unlock();
 }
 
 //-------------------------------------
 void CXRWLock::UnlockRead() {
-	m_Semaphore.Unlock();
+    m_Semaphore.Unlock();
 }
 
 //-------------------------------------
 void CXRWLock::UnlockWrite() {
-	for(size_t i=0; i<m_Semaphore.GetMaxCount(); i++)
-		m_Semaphore.Unlock();
+    for(size_t i=0; i<m_Semaphore.GetMaxCount(); i++)
+        m_Semaphore.Unlock();
 }

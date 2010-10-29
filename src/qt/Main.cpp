@@ -29,49 +29,49 @@
 #include <qmessagebox.h>
 
 int main( int argc, char ** argv ) {
-	QApplication a(argc, argv);
-	a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
-	int result = 0;
+    QApplication a(argc, argv);
+    a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
+    int result = 0;
 
-	// set locale for numeric conversions
-	setlocale(LC_NUMERIC, "C");
+    // set locale for numeric conversions
+    setlocale(LC_NUMERIC, "C");
 
-	try{
-		char * p = argv[0];
-		CXStringASCII Path(p);
-		int idx = Path.ReverseFind(PATHDELIMITER);
-		if(idx >= 0)
-			Path = Path.Left(idx+1);
-		CXOptions::Instance()->SetStartPath(Path);
-	
-		// read configuration file
-		CXStringASCII IniFileName = Path;
-		IniFileName += "navipowm.ini";
-		if(!CXOptions::Instance()->ReadFromFile(IniFileName.c_str())) {
-			CXStringASCII ErrorMsg("Error reading from file: ");
-			ErrorMsg += IniFileName;
-			DoOutputErrorMessage(ErrorMsg.c_str());
-		}
-		
-		CXMainWindow *pMainWnd = new CXMainWindow();
-		pMainWnd->Init();
-		pMainWnd->StartThreads();
-		pMainWnd->setWindowTitle("NaviPOWM");
+    try{
+        char * p = argv[0];
+        CXStringASCII Path(p);
+        int idx = Path.ReverseFind(PATHDELIMITER);
+        if(idx >= 0)
+            Path = Path.Left(idx+1);
+        CXOptions::Instance()->SetStartPath(Path);
+    
+        // read configuration file
+        CXStringASCII IniFileName = Path;
+        IniFileName += "navipowm.ini";
+        if(!CXOptions::Instance()->ReadFromFile(IniFileName.c_str())) {
+            CXStringASCII ErrorMsg("Error reading from file: ");
+            ErrorMsg += IniFileName;
+            DoOutputErrorMessage(ErrorMsg.c_str());
+        }
+        
+        CXMainWindow *pMainWnd = new CXMainWindow();
+        pMainWnd->Init();
+        pMainWnd->StartThreads();
+        pMainWnd->setWindowTitle("NaviPOWM");
 
-		// check if we must show it full screen
-		if(CXOptions::Instance()->IsFullScreen()) {
-			pMainWnd->ShowFullScreen();
-		} else {
-			pMainWnd->ShowNormal();
-		}
-	
-		result = a.exec();
-		pMainWnd->StopThreads();
-		delete pMainWnd;
-	
-	} catch(std::exception & e) {
-		QMessageBox::warning(NULL, "ERROR", e.what(), QMessageBox::Ok, QMessageBox::Ok); 
-	}
-	
-	return result;
+        // check if we must show it full screen
+        if(CXOptions::Instance()->IsFullScreen()) {
+            pMainWnd->ShowFullScreen();
+        } else {
+            pMainWnd->ShowNormal();
+        }
+    
+        result = a.exec();
+        pMainWnd->StopThreads();
+        delete pMainWnd;
+    
+    } catch(std::exception & e) {
+        QMessageBox::warning(NULL, "ERROR", e.what(), QMessageBox::Ok, QMessageBox::Ok); 
+    }
+    
+    return result;
 }

@@ -29,134 +29,134 @@
 
 //-------------------------------------
 CXMapPainterThread::CXMapPainterThread() :
-	m_pMapPainter(NULL),
-	m_pNaviPOWM(NULL),
-	m_oIgnoreRepaintRequests(false),
-	m_oIgnoreRepaintRequestsChanged(false)
+    m_pMapPainter(NULL),
+    m_pNaviPOWM(NULL),
+    m_oIgnoreRepaintRequests(false),
+    m_oIgnoreRepaintRequestsChanged(false)
 {
-	m_pMapPainter = new CXMapPainter2D();
-//	m_pMapPainter = new CXMapPainterTest();
+    m_pMapPainter = new CXMapPainter2D();
+//  m_pMapPainter = new CXMapPainterTest();
 }
 
 //-------------------------------------
 CXMapPainterThread::~CXMapPainterThread() {
-	delete m_pMapPainter;
-	m_pMapPainter = NULL;
+    delete m_pMapPainter;
+    m_pMapPainter = NULL;
 }
 
 //-------------------------------------
 void CXMapPainterThread::SetNaviPOWM(CXNaviPOWM *pNaviPOWM) {
-	CXWriteLocker WL(&m_RWLock);
-	m_pNaviPOWM = pNaviPOWM;
+    CXWriteLocker WL(&m_RWLock);
+    m_pNaviPOWM = pNaviPOWM;
 }
 
 
 //-------------------------------------
 void CXMapPainterThread::PositionChanged(const CXNaviData &NewNaviData) {
-	if(m_pMapPainter != NULL)
-		m_pMapPainter->PositionChanged(NewNaviData);
-	RequestWork();
+    if(m_pMapPainter != NULL)
+        m_pMapPainter->PositionChanged(NewNaviData);
+    RequestWork();
 }
 
 //-------------------------------------
 void CXMapPainterThread::ZoomIn() {
-	if(m_pMapPainter == NULL)
-		return;
-	if(m_pMapPainter->ZoomIn())
-		RequestWork();
+    if(m_pMapPainter == NULL)
+        return;
+    if(m_pMapPainter->ZoomIn())
+        RequestWork();
 }
 
 //-------------------------------------
 void CXMapPainterThread::ZoomOut() {
-	if(m_pMapPainter == NULL)
-		return;
-	if(m_pMapPainter->ZoomOut())
-		RequestWork();
+    if(m_pMapPainter == NULL)
+        return;
+    if(m_pMapPainter->ZoomOut())
+        RequestWork();
 }
 
 //-------------------------------------
 void CXMapPainterThread::RequestRepaint() {
-	if(m_pMapPainter == NULL)
-		return;
-	m_pMapPainter->SetMustRepaint(true);
+    if(m_pMapPainter == NULL)
+        return;
+    m_pMapPainter->SetMustRepaint(true);
 }
 
 //-------------------------------------
 void CXMapPainterThread::RedrawMap() {
-	if(m_pMapPainter == NULL)
-		return;
-	RequestWork();
+    if(m_pMapPainter == NULL)
+        return;
+    RequestWork();
 }
 
 //-------------------------------------
 void CXMapPainterThread::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
-	if(m_pMapPainter != NULL)
-		m_pMapPainter->Paint(pDC, OffsetX, OffsetY);
+    if(m_pMapPainter != NULL)
+        m_pMapPainter->Paint(pDC, OffsetX, OffsetY);
 }
 
 //-------------------------------------
 void CXMapPainterThread::Resize(int Width, int Height) {
-	if(m_pMapPainter != NULL)
-		m_pMapPainter->Resize(Width, Height);
-	RequestWork();
+    if(m_pMapPainter != NULL)
+        m_pMapPainter->Resize(Width, Height);
+    RequestWork();
 }
 
 //-------------------------------------
 bool CXMapPainterThread::MustIgnoreRepaints() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oIgnoreRepaintRequests;
+    CXReadLocker RL(&m_RWLock);
+    return m_oIgnoreRepaintRequests;
 }
 
 //-------------------------------------
 void CXMapPainterThread::SetMustIgnoreRepaints(bool Value) {
-	CXWriteLocker WL(&m_RWLock);
-	if(m_oIgnoreRepaintRequests != Value)
-		m_oIgnoreRepaintRequestsChanged = true;
-	m_oIgnoreRepaintRequests = Value;
+    CXWriteLocker WL(&m_RWLock);
+    if(m_oIgnoreRepaintRequests != Value)
+        m_oIgnoreRepaintRequestsChanged = true;
+    m_oIgnoreRepaintRequests = Value;
 }
 
 //-------------------------------------
 bool CXMapPainterThread::MustIgnoreRepaintsChanged() const {
-	CXReadLocker RL(&m_RWLock);
-	return m_oIgnoreRepaintRequestsChanged;
+    CXReadLocker RL(&m_RWLock);
+    return m_oIgnoreRepaintRequestsChanged;
 }
 
 //-------------------------------------
 void CXMapPainterThread::ResetMustIgnoreRepaintsChanged() {
-	CXWriteLocker WL(&m_RWLock);
-	m_oIgnoreRepaintRequestsChanged = false;
+    CXWriteLocker WL(&m_RWLock);
+    m_oIgnoreRepaintRequestsChanged = false;
 }
 
 //-------------------------------------
 void CXMapPainterThread::OnThreadStarted() {
-	// nothing to do
+    // nothing to do
 }
 
 //-------------------------------------
 void CXMapPainterThread::OnThreadStopped() {
-	// nothing to do
+    // nothing to do
 }
 
 //-------------------------------------
 void CXMapPainterThread::OnWorkFunc() {
-	if(m_pMapPainter == NULL)
-		return;
-	if(m_pNaviPOWM == NULL)
-		return;
-	// check if we must do some work
-	if(!MustIgnoreRepaints()) {
-		// do work
-		m_pMapPainter->DoWork();
-		// check if paint allowed.
-		if(m_pMapPainter->MustRepaint()) {
-			// if MustIgnoreRepaintsChanged returns true here,
-			// the time spent moving the map was shorter than drawing the map,
-			// so we ignore it to avoid flickering around
-			if(!MustIgnoreRepaintsChanged()) {
-				m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
-			}
-		}
-		ResetMustIgnoreRepaintsChanged();
-	}
+    if(m_pMapPainter == NULL)
+        return;
+    if(m_pNaviPOWM == NULL)
+        return;
+    // check if we must do some work
+    if(!MustIgnoreRepaints()) {
+        // do work
+        m_pMapPainter->DoWork();
+        // check if paint allowed.
+        if(m_pMapPainter->MustRepaint()) {
+            // if MustIgnoreRepaintsChanged returns true here,
+            // the time spent moving the map was shorter than drawing the map,
+            // so we ignore it to avoid flickering around
+            if(!MustIgnoreRepaintsChanged()) {
+                m_pNaviPOWM->RequestRepaint(CXNaviPOWM::e_ModeMap);
+            }
+        }
+        ResetMustIgnoreRepaintsChanged();
+    }
 }
 

@@ -33,69 +33,69 @@
  */
 class CXWindow : public IWindow {
 private:
-	HWND					m_hWnd;
-	//-------------------------------------
-	CXWindow(const CXWindow &);							///< Not used.
-	//-------------------------------------
-	const CXWindow & operator = (const CXWindow &);		///< Not used.
+    HWND                    m_hWnd;
+    //-------------------------------------
+    CXWindow(const CXWindow &);                         ///< Not used.
+    //-------------------------------------
+    const CXWindow & operator = (const CXWindow &);     ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXWindow();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXWindow();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetHWND(HWND hWnd);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	HWND GetHWND() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowMaximized();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowNormal();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowFullScreen();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void ShowMinimized();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void RequestRepaint();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXWindow();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXWindow();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetHWND(HWND hWnd);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    HWND GetHWND() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowMaximized();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowNormal();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowFullScreen();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void ShowMinimized();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void RequestRepaint();
 };
 
 

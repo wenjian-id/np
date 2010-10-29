@@ -24,24 +24,24 @@
 
 //-------------------------------------
 CXGPSCourseInfo::CXGPSCourseInfo() :
-	m_oFix(false),
-	m_dSpeed(0.0),
-	m_dCourse(0.0)
+    m_oFix(false),
+    m_dSpeed(0.0),
+    m_dCourse(0.0)
 {
 }
 
 //-------------------------------------
 CXGPSCourseInfo::CXGPSCourseInfo(const CXStringASCII &UTC, bool oFix, double dSpeed, double dCourse) :
-	m_UTC(UTC),
-	m_oFix(oFix),
-	m_dSpeed(dSpeed),
-	m_dCourse(dCourse)
+    m_UTC(UTC),
+    m_oFix(oFix),
+    m_dSpeed(dSpeed),
+    m_dCourse(dCourse)
 {
 }
 
 //-------------------------------------
 CXGPSCourseInfo::CXGPSCourseInfo(const CXGPSCourseInfo & rOther) {
-	CopyFrom(rOther);
+    CopyFrom(rOther);
 }
 
 //-------------------------------------
@@ -50,55 +50,55 @@ CXGPSCourseInfo::~CXGPSCourseInfo() {
 
 //-------------------------------------
 const CXGPSCourseInfo & CXGPSCourseInfo::operator = (const CXGPSCourseInfo & rOther) {
-	if(this != &rOther)
-		CopyFrom(rOther);
-	return *this;
+    if(this != &rOther)
+        CopyFrom(rOther);
+    return *this;
 }
 
 //-------------------------------------
 void CXGPSCourseInfo::CopyFrom(const CXGPSCourseInfo &rOther) {
-	m_UTC = rOther.m_UTC;
-	m_oFix = rOther.m_oFix;
-	m_dSpeed = rOther.m_dSpeed;
-	m_dCourse = rOther.m_dCourse;
+    m_UTC = rOther.m_UTC;
+    m_oFix = rOther.m_oFix;
+    m_dSpeed = rOther.m_dSpeed;
+    m_dCourse = rOther.m_dCourse;
 }
 
 //-------------------------------------
 CXUTCTime CXGPSCourseInfo::GetUTC() const {
-	return m_UTC;
+    return m_UTC;
 }
 
 //-------------------------------------
 void CXGPSCourseInfo::SetUTC(const CXUTCTime &NewValue) {
-	m_UTC = NewValue;
+    m_UTC = NewValue;
 }
 
 //-------------------------------------
 bool CXGPSCourseInfo::HasFix() const {
-	return m_oFix;
+    return m_oFix;
 }
 
 //-------------------------------------
 void CXGPSCourseInfo::SetFix(bool NewValue) {
-	m_oFix = NewValue;
+    m_oFix = NewValue;
 }
 
 //-------------------------------------
 double CXGPSCourseInfo::GetSpeed() const {
-	return m_dSpeed;
+    return m_dSpeed;
 }
 
 //-------------------------------------
 void CXGPSCourseInfo::SetSpeed(double NewValue) {
-	m_dSpeed = NewValue;
+    m_dSpeed = NewValue;
 }
 
 //-------------------------------------
 double CXGPSCourseInfo::GetCourse() const {
-	return m_dCourse;
+    return m_dCourse;
 }
 
 //-------------------------------------
 void CXGPSCourseInfo::SetCourse(double NewValue) {
-	m_dCourse = NewValue;
+    m_dCourse = NewValue;
 }

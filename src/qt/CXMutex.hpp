@@ -34,39 +34,39 @@
  */
 class CXMutex : public IMutex {
 private:
-	QMutex	m_Mutex;	///< Synchronization object.
-	//-------------------------------------
-	CXMutex(const CXMutex &);							///< Not used.
-	//-------------------------------------
-	const CXMutex & operator = (const CXMutex &);		///< Not used.
+    QMutex  m_Mutex;    ///< Synchronization object.
+    //-------------------------------------
+    CXMutex(const CXMutex &);                           ///< Not used.
+    //-------------------------------------
+    const CXMutex & operator = (const CXMutex &);       ///< Not used.
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMutex();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMutex();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Lock();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Unlock();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMutex();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMutex();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Lock();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Unlock();
 };
 
 #endif // __CXMUTEX_HPP__

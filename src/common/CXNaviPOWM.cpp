@@ -113,7 +113,7 @@ CXNaviPOWM::CXNaviPOWM() :
 //-------------------------------------
 CXNaviPOWM::~CXNaviPOWM() {
     // clean up
-    delete 	m_pGPSRecvThread;
+    delete  m_pGPSRecvThread;
     m_pGPSRecvThread = NULL;
     delete m_pLocatorThread;
     m_pLocatorThread = NULL;
@@ -292,7 +292,7 @@ void CXNaviPOWM::Paint(CXDeviceContext *pDC) {
         }
         m_pMapPainterThread->Paint(pDC, OffsetX, OffsetY);
     } else if (eDisplayMode == e_ModeSatInfo) {
-        CXSatellites::Paint(	pDC, 0, m_InfoBarTopPos.GetBottom(),
+        CXSatellites::Paint(    pDC, 0, m_InfoBarTopPos.GetBottom(),
                                 GetWidth(), GetHeight() - m_InfoBarTopPos.GetHeight()  - m_InfoBarBottomPos.GetHeight());
     }
     m_pInfoBarBottom->Paint(pDC, m_InfoBarBottomPos.GetLeft(), m_InfoBarBottomPos.GetTop());
@@ -542,9 +542,9 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
         SetDisplayMode(e_ModeMap);
     eDisplayMode = GetDisplayMode();
     switch(Cmd) {
-        case e_CmdQuit:				m_pLocatorThread->SaveLastReceivedGPSCoordinate(); m_pMainWindow->RequestTermination(); break;
-        case e_CmdMinimize:			m_pMainWindow->ShowMinimized(); break;
-        case e_CmdInfo:				{
+        case e_CmdQuit:             m_pLocatorThread->SaveLastReceivedGPSCoordinate(); m_pMainWindow->RequestTermination(); break;
+        case e_CmdMinimize:         m_pMainWindow->ShowMinimized(); break;
+        case e_CmdInfo:             {
                                         StopMapMove();
                                         if(eDisplayMode == e_ModeInfo)
                                             // switch back top map mode
@@ -555,7 +555,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
                                         DoRequestRepaint();
                                         break;
                                     }
-        case e_CmdSat:				{
+        case e_CmdSat:              {
                                         StopMapMove();
                                         if(eDisplayMode == e_ModeSatInfo)
                                             // switch back top map mode
@@ -566,24 +566,24 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
                                         DoRequestRepaint();
                                         break;
                                     }
-        case e_CmdSave:				CXOptions::Instance()->ToggleSaving(); DoRequestRepaint(); break;
-        case e_CmdZoomIn:			{
+        case e_CmdSave:             CXOptions::Instance()->ToggleSaving(); DoRequestRepaint(); break;
+        case e_CmdZoomIn:           {
                                         if(m_pMapPainterThread != NULL)
                                             m_pMapPainterThread->ZoomIn();
                                         break;
                                     }
-        case e_CmdZoomOut:			{
+        case e_CmdZoomOut:          {
                                         if(m_pMapPainterThread != NULL)
                                             m_pMapPainterThread->ZoomOut();
                                         break;
                                     }
-        case e_CmdAutoZoom:			{
+        case e_CmdAutoZoom:         {
                                         // switch automatic zoom
                                         CXOptions::Instance()->SetAutomaticZoomFlag(!CXOptions::Instance()->AutomaticZoom());
                                         DoRequestRepaint();
                                         break;
                                     }
-        case e_CmdMapMoveManually:	{
+        case e_CmdMapMoveManually:  {
                                         // switch map moving
                                         CXOptions::Instance()->SetMapMovingManually(!CXOptions::Instance()->IsMapMovingManually());
                                         if(!CXOptions::Instance()->IsMapMovingManually())
@@ -594,8 +594,8 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
                                         DoRequestRepaint();
                                         break;
                                     }
-        case e_CmdClock:			CXOptions::Instance()->ToggleShowCurrentTime(); DoRequestRepaint(); break;
-        default:					{
+        case e_CmdClock:            CXOptions::Instance()->ToggleShowCurrentTime(); DoRequestRepaint(); break;
+        default:                    {
                                         if(CXOptions::Instance()->IsMapMovingManually()) {
                                             if(m_MapPos.Contains(X, Y))
                                                 m_oMouseDown = true;

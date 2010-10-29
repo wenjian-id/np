@@ -24,8 +24,8 @@
 
 //-------------------------------------
 CXSemaphore::CXSemaphore(size_t MaxCount) :
-	ISemaphore(MaxCount),
-	m_Semaphore(MaxCount)
+    ISemaphore(MaxCount),
+    m_Semaphore(MaxCount)
 {
 }
 
@@ -35,13 +35,13 @@ CXSemaphore::~CXSemaphore() {
 
 //-------------------------------------
 void CXSemaphore::Lock() {
-	// acquire semaphore
-	m_Semaphore.acquire(1);
+    // acquire semaphore
+    m_Semaphore.acquire(1);
 }
 
 //-------------------------------------
 void CXSemaphore::Unlock() {
-	// release semaphore
-	m_Semaphore.release(1);
+    // release semaphore
+    m_Semaphore.release(1);
 }
 

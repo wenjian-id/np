@@ -33,102 +33,102 @@
  */
 class IThread {
 private:
-	bool				m_oRunning;		///< Flag indicating if thread is running
-	bool				m_oStopThread;	///< Flag indicating that thread must stop ASAP
-	mutable CXRWLock	m_RWLock;		///< Synchronization object.
-	//-------------------------------------
-	IThread(const IThread&);						///< Not used.
-	const IThread & operator = (const IThread&);	///< Not used.
+    bool                m_oRunning;     ///< Flag indicating if thread is running
+    bool                m_oStopThread;  ///< Flag indicating that thread must stop ASAP
+    mutable CXRWLock    m_RWLock;       ///< Synchronization object.
+    //-------------------------------------
+    IThread(const IThread&);                        ///< Not used.
+    const IThread & operator = (const IThread&);    ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief Check if thread has to be stopped.
-	 *
-	 * Check if thread has to be stopped.
-	 * \return	true if thread must stop.
-	 */
-	bool MustStopThread() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual int OnThreadFunc() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void DoSleep(size_t dwMilliSeconds) = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	int ThreadFunc();
+    //-------------------------------------
+    /**
+     * \brief Check if thread has to be stopped.
+     *
+     * Check if thread has to be stopped.
+     * \return  true if thread must stop.
+     */
+    bool MustStopThread() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStarted() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual int OnThreadFunc() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStopped() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void DoSleep(size_t dwMilliSeconds) = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    int ThreadFunc();
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	IThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~IThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void StopThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool CreateThread() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void KillThread() = 0;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool IsRunning() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void SetRunning(bool NewValue);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual bool WaitForThreadExit(size_t dwMilliSeconds) = 0;
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    IThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~IThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void StopThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool CreateThread() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void KillThread() = 0;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool IsRunning() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void SetRunning(bool NewValue);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual bool WaitForThreadExit(size_t dwMilliSeconds) = 0;
 };
 
 

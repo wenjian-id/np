@@ -38,116 +38,116 @@ class CXDeviceContext;
  */
 class CXMapPainterThread : public CXWorkRequestThread {
 private:
-	CXMapPainter		*m_pMapPainter;						///< oiu
-	CXNaviPOWM			*m_pNaviPOWM;						///< oiu
-	bool				m_oIgnoreRepaintRequests;			///< oiu
-	bool				m_oIgnoreRepaintRequestsChanged;	///< oiu
-	mutable CXRWLock	m_RWLock;							///< Synchronization object.
-	//-------------------------------------
-	CXMapPainterThread(const CXMapPainterThread &);						///< Not used.
-	const CXMapPainterThread & operator = (const CXMapPainterThread &);	///< Not used.
-	//-------------------------------------
-	virtual void OnWorkFunc();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool MustIgnoreRepaintsChanged() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ResetMustIgnoreRepaintsChanged();
+    CXMapPainter        *m_pMapPainter;                     ///< oiu
+    CXNaviPOWM          *m_pNaviPOWM;                       ///< oiu
+    bool                m_oIgnoreRepaintRequests;           ///< oiu
+    bool                m_oIgnoreRepaintRequestsChanged;    ///< oiu
+    mutable CXRWLock    m_RWLock;                           ///< Synchronization object.
+    //-------------------------------------
+    CXMapPainterThread(const CXMapPainterThread &);                     ///< Not used.
+    const CXMapPainterThread & operator = (const CXMapPainterThread &); ///< Not used.
+    //-------------------------------------
+    virtual void OnWorkFunc();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool MustIgnoreRepaintsChanged() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void ResetMustIgnoreRepaintsChanged();
 protected:
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * Default constructor.
-	 */
-	CXMapPainterThread();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * Destructor.
-	 */
-	virtual ~CXMapPainterThread();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void PositionChanged(const CXNaviData &NewNaviData);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void Resize(int Width, int Height);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	bool MustIgnoreRepaints() const;
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void SetMustIgnoreRepaints(bool Value);
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ZoomIn();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void ZoomOut();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void RequestRepaint();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	void RedrawMap();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStarted();
-	//-------------------------------------
-	/**
-	 * \brief oiu
-	 *
-	 */
-	virtual void OnThreadStopped();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * Default constructor.
+     */
+    CXMapPainterThread();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * Destructor.
+     */
+    virtual ~CXMapPainterThread();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetNaviPOWM(CXNaviPOWM *pNaviPOWM);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void PositionChanged(const CXNaviData &NewNaviData);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void Resize(int Width, int Height);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    bool MustIgnoreRepaints() const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void SetMustIgnoreRepaints(bool Value);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void ZoomIn();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void ZoomOut();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void RequestRepaint();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void RedrawMap();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStarted();
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    virtual void OnThreadStopped();
 };
 
 #endif // __CXMAPPAINTERTHREAD_HPP__

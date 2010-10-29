@@ -24,29 +24,29 @@
 
 //-------------------------------------
 CXSemaphore::CXSemaphore(size_t MaxCount) :
-	ISemaphore(MaxCount),
-	m_hSemaphore(NULL)
+    ISemaphore(MaxCount),
+    m_hSemaphore(NULL)
 {
-	/// \todo implement error checking
-	m_hSemaphore = CreateSemaphore(NULL, MaxCount, MaxCount, NULL);
+    /// \todo implement error checking
+    m_hSemaphore = CreateSemaphore(NULL, MaxCount, MaxCount, NULL);
 }
 
 //-------------------------------------
 CXSemaphore::~CXSemaphore() {
-	/// \todo implement error checking
-	::CloseHandle(m_hSemaphore);
+    /// \todo implement error checking
+    ::CloseHandle(m_hSemaphore);
     m_hSemaphore = NULL;
 }
 
 //-------------------------------------
 void CXSemaphore::Lock() {
-	/// \todo implement error checking
-	::WaitForSingleObject(m_hSemaphore, INFINITE);
+    /// \todo implement error checking
+    ::WaitForSingleObject(m_hSemaphore, INFINITE);
 }
 
 //-------------------------------------
 void CXSemaphore::Unlock() {
-	/// \todo implement error checking
-	ReleaseSemaphore(m_hSemaphore, 1, NULL);
+    /// \todo implement error checking
+    ReleaseSemaphore(m_hSemaphore, 1, NULL);
 }
 

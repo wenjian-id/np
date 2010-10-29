@@ -31,12 +31,12 @@ CXTrackLog *CXTrackLog::m_pInstance = NULL;
 
 //-------------------------------------
 CXTrackLog::CXTrackLog() :
-	m_MaxSize(0),
-	m_MinDistance(0),
-	m_iCurrentZone(UTMZoneNone)
+    m_MaxSize(0),
+    m_MinDistance(0),
+    m_iCurrentZone(UTMZoneNone)
 {
-	SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
-	SetMinDistance(CXOptions::Instance()->GetTrackLogMinDist());
+    SetMaxSize(CXOptions::Instance()->GetTrackLogSize());
+    SetMinDistance(CXOptions::Instance()->GetTrackLogMinDist());
 }
 
 //-------------------------------------
@@ -45,85 +45,85 @@ CXTrackLog::~CXTrackLog() {
 
 //-------------------------------------
 CXTrackLog *CXTrackLog::Instance() {
-	if(m_pInstance == NULL)
-		m_pInstance = new CXTrackLog();
-	return m_pInstance;
+    if(m_pInstance == NULL)
+        m_pInstance = new CXTrackLog();
+    return m_pInstance;
 }
 
 
 //-------------------------------------
 void CXTrackLog::DeleteSuperfluous() {
-	if(m_MaxSize != 0) {
-		// check if some data has to be deleted
-		if(m_Coordinates.GetSize() > m_MaxSize) {
-			size_t Diff = m_Coordinates.GetSize() - m_MaxSize;
-			// delete first "Diff" elements
-			for(size_t i=0; i<Diff; i++) {
-				delete m_Coordinates[i];
-				m_Coordinates[i] = NULL;
-			}
-			m_Coordinates.DeleteFirst(Diff);
-		}
-	}
+    if(m_MaxSize != 0) {
+        // check if some data has to be deleted
+        if(m_Coordinates.GetSize() > m_MaxSize) {
+            size_t Diff = m_Coordinates.GetSize() - m_MaxSize;
+            // delete first "Diff" elements
+            for(size_t i=0; i<Diff; i++) {
+                delete m_Coordinates[i];
+                m_Coordinates[i] = NULL;
+            }
+            m_Coordinates.DeleteFirst(Diff);
+        }
+    }
 }
 
 //-------------------------------------
 void CXTrackLog::SetMaxSize(size_t MaxSize) {
-	CXWriteLocker WL(&m_RWLock);
-	m_MaxSize = MaxSize;
-	DeleteSuperfluous();
+    CXWriteLocker WL(&m_RWLock);
+    m_MaxSize = MaxSize;
+    DeleteSuperfluous();
 }
 
 //-------------------------------------
 void CXTrackLog::SetMinDistance(unsigned int MinDistance) {
-	CXWriteLocker WL(&m_RWLock);
-	m_MinDistance = MinDistance;
+    CXWriteLocker WL(&m_RWLock);
+    m_MinDistance = MinDistance;
 }
 
 //-------------------------------------
 void CXTrackLog::RelocateUTM(int NewUTMZone) {
-	CXWriteLocker WL(&m_RWLock);
-	if(m_iCurrentZone != NewUTMZone) {
-		m_iCurrentZone = NewUTMZone;
-		size_t Size = m_Coordinates.GetSize();
-		for(size_t i=0; i<Size; i++) {
-			CXCoor *pCoor = m_Coordinates[i];
-			if(pCoor != NULL)
-				pCoor->RelocateUTM(NewUTMZone);
-		}
-	}
+    CXWriteLocker WL(&m_RWLock);
+    if(m_iCurrentZone != NewUTMZone) {
+        m_iCurrentZone = NewUTMZone;
+        size_t Size = m_Coordinates.GetSize();
+        for(size_t i=0; i<Size; i++) {
+            CXCoor *pCoor = m_Coordinates[i];
+            if(pCoor != NULL)
+                pCoor->RelocateUTM(NewUTMZone);
+        }
+    }
 }
 
 //-------------------------------------
 const TCoorBuffer & CXTrackLog::GetCoordinates() const {
-	return m_Coordinates;
+    return m_Coordinates;
 }
 
 //-------------------------------------
 CXRWLock & CXTrackLog::GetRWLock() {
-	return m_RWLock;
+    return m_RWLock;
 }
 
 //-------------------------------------
 void CXTrackLog::AddCoordinate(double dLon, double dLat) {
-	CXWriteLocker WL(&m_RWLock);
-	CXCoor *pCoor = new CXCoor(dLon, dLat);
-	pCoor->RelocateUTM(m_iCurrentZone);
-	// check for m_MinDistance
-	bool MustAppend = false;
-	if(m_Coordinates.GetSize() > 0) {
-		// get last coordinate
-		CXCoor *pCoorLast = m_Coordinates[m_Coordinates.GetSize()-1];
-		double Dist = CalcDistance(*pCoorLast, *pCoor);
-		MustAppend = Dist > m_MinDistance;
-	} else {
-		// will be first coordinate in array
-		MustAppend = true;
-	}
-	if(MustAppend) {
-		m_Coordinates.Append(pCoor);
-	} else {
-		delete pCoor;
-	}
-	DeleteSuperfluous();
+    CXWriteLocker WL(&m_RWLock);
+    CXCoor *pCoor = new CXCoor(dLon, dLat);
+    pCoor->RelocateUTM(m_iCurrentZone);
+    // check for m_MinDistance
+    bool MustAppend = false;
+    if(m_Coordinates.GetSize() > 0) {
+        // get last coordinate
+        CXCoor *pCoorLast = m_Coordinates[m_Coordinates.GetSize()-1];
+        double Dist = CalcDistance(*pCoorLast, *pCoor);
+        MustAppend = Dist > m_MinDistance;
+    } else {
+        // will be first coordinate in array
+        MustAppend = true;
+    }
+    if(MustAppend) {
+        m_Coordinates.Append(pCoor);
+    } else {
+        delete pCoor;
+    }
+    DeleteSuperfluous();
 }

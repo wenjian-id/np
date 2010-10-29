@@ -38,71 +38,71 @@
  */
 class CXGPSDClient : public CXGPSDClientBase {
 private:
-	gps_data_t		*m_pGPSData;	///< oiu
-	//-------------------------------------
-	CXGPSDClient(const CXGPSDClient &);						///< Not used.
-	const CXGPSDClient & operator = (const CXGPSDClient &);	///< Not used.
+    gps_data_t      *m_pGPSData;    ///< oiu
+    //-------------------------------------
+    CXGPSDClient(const CXGPSDClient &);                     ///< Not used.
+    const CXGPSDClient & operator = (const CXGPSDClient &); ///< Not used.
 protected:
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP);
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual void ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual void ReadDOP(gps_data_t *pGPSData, double &rHDOP, double &rVDOP);
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual void ReadSatelliteData(gps_data_t *pGPSData, CXBuffer<CXSatelliteInfo *> & rSatInfos, CXBuffer<int> & rActiveSats);
 public:
-	//-------------------------------------
-	/**
-	 * \brief Default constructor.
-	 *
-	 * The default constructor.
-	 */
-	CXGPSDClient();
-	//-------------------------------------
-	/**
-	 * \brief Destructor.
-	 *
-	 * The destructor.
-	 */
-	virtual ~CXGPSDClient();
-	//-------------------------------------
-	/**
-	 * \brief Open connection to gpsd.
-	 *
-	 * Open the connection to gpsd. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool Open();
-	//-------------------------------------
-	/**
-	 * \brief Close connection to gpsd.
-	 *
-	 * Close the connection to gpsd. Has to be implemented in derived classes.
-	 * \return		true on success.
-	 */
-	virtual bool Close();
-	//-------------------------------------
-	/**
-	 * \brief Check if connection is open.
-	 *
-	 * Check if the connection is open. Has to be implemented in derived classes.
-	 * \return		true if open.
-	 */
-	virtual bool IsOpen();
-	//-------------------------------------
-	/**
-	 * \brief oiu.
-	 *
-	 * oiu.
-	 */
-	virtual void Read();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     *
+     * The default constructor.
+     */
+    CXGPSDClient();
+    //-------------------------------------
+    /**
+     * \brief Destructor.
+     *
+     * The destructor.
+     */
+    virtual ~CXGPSDClient();
+    //-------------------------------------
+    /**
+     * \brief Open connection to gpsd.
+     *
+     * Open the connection to gpsd. Has to be implemented in derived classes.
+     * \return      true on success.
+     */
+    virtual bool Open();
+    //-------------------------------------
+    /**
+     * \brief Close connection to gpsd.
+     *
+     * Close the connection to gpsd. Has to be implemented in derived classes.
+     * \return      true on success.
+     */
+    virtual bool Close();
+    //-------------------------------------
+    /**
+     * \brief Check if connection is open.
+     *
+     * Check if the connection is open. Has to be implemented in derived classes.
+     * \return      true if open.
+     */
+    virtual bool IsOpen();
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    virtual void Read();
 };
 
 

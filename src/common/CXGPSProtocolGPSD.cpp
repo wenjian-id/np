@@ -25,7 +25,7 @@
 
 //-------------------------------------
 CXGPSProtocolGPSD::CXGPSProtocolGPSD():
-	CXGPSProtocol()
+    CXGPSProtocol()
 {
 }
 
@@ -35,41 +35,41 @@ CXGPSProtocolGPSD::~CXGPSProtocolGPSD() {
 
 //-------------------------------------
 bool CXGPSProtocolGPSD::AfterOpen() {
-	// nothing to do
-	return true;
+    // nothing to do
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSProtocolGPSD::BeforeClose() {
-	// nothing to do
-	return true;
+    // nothing to do
+    return true;
 }
 
 //-------------------------------------
 bool CXGPSProtocolGPSD::OnReadAndProcessData() {
-	CXGPSPosInfo GPSPosInfo;
-	bool oGPSPosInfoChanged = false;
-	CXGPSCourseInfo GPSCourseInfo;
-	bool oGPSCourseInfoChanged = false;
-	CXGPSQualityInfo GPSQualityInfo;
-	bool oGPSQualityInfoChanged = false;
-	// check if new data received
-	if(m_pInputChannel->Read(GPSPosInfo, oGPSPosInfoChanged, GPSCourseInfo, oGPSCourseInfoChanged, GPSQualityInfo, oGPSQualityInfoChanged)) {
-		CXSatellites::Instance()->SetGPSDDataReceived();
-		if(oGPSPosInfoChanged) {
-			SetGPSPosInfo(GPSPosInfo);
-			// save gpx data
-			if(GPSPosInfo.HasFix()) {
-				SaveGPXData(GPSPosInfo.GetLon(), GPSPosInfo.GetLat(), GPSPosInfo.GetHeight());
-			}
-		}
-		if(oGPSCourseInfoChanged) {
-			SetGPSCourseInfo(GPSCourseInfo);
-		}
-		if(oGPSQualityInfoChanged) {
-			SetGPSQualityInfo(GPSQualityInfo);
-		}
-		return true;
-	}
-	return false;
+    CXGPSPosInfo GPSPosInfo;
+    bool oGPSPosInfoChanged = false;
+    CXGPSCourseInfo GPSCourseInfo;
+    bool oGPSCourseInfoChanged = false;
+    CXGPSQualityInfo GPSQualityInfo;
+    bool oGPSQualityInfoChanged = false;
+    // check if new data received
+    if(m_pInputChannel->Read(GPSPosInfo, oGPSPosInfoChanged, GPSCourseInfo, oGPSCourseInfoChanged, GPSQualityInfo, oGPSQualityInfoChanged)) {
+        CXSatellites::Instance()->SetGPSDDataReceived();
+        if(oGPSPosInfoChanged) {
+            SetGPSPosInfo(GPSPosInfo);
+            // save gpx data
+            if(GPSPosInfo.HasFix()) {
+                SaveGPXData(GPSPosInfo.GetLon(), GPSPosInfo.GetLat(), GPSPosInfo.GetHeight());
+            }
+        }
+        if(oGPSCourseInfoChanged) {
+            SetGPSCourseInfo(GPSCourseInfo);
+        }
+        if(oGPSQualityInfoChanged) {
+            SetGPSQualityInfo(GPSQualityInfo);
+        }
+        return true;
+    }
+    return false;
 }
