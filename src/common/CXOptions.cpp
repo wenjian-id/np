@@ -31,6 +31,7 @@
 #include "CXPOWMMap.hpp"
 
 #include  <stdlib.h>
+#include  <iostream>
 
 CXOptions * CXOptions::m_pInstance = NULL;
 
@@ -150,7 +151,8 @@ CXOptions::CXOptions() :
     m_POIDisplaySize(20),
     m_ePOIBGType(e_BG_AREA),
     m_eCityBGType(e_BG_AREA),
-    m_oTargetSet(false)
+    m_oTargetSet(false),
+    m_ActiveTarget(CXMapHashSimple<int, CXTarget>::NPOS)
 {
 }
 
@@ -414,17 +416,34 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
     m_POIVisibilityDescriptor.SetShowChurches(F.Get("POIShowChurches", "off").ToUpper() == "ON");
     m_POIVisibilityDescriptor.SetShowOther(F.Get("POIShowOther", "off").ToUpper() == "ON");
     // Routing
-    CXStringASCII TargetStr = F.Get("Target", "none").ToUpper();
+    CXStringASCII TargetStr = F.Get("ActiveTarget", "none").ToUpper();
     SetTarget(false);
     if(TargetStr == "NONE") {
         // no target
     } else {
+        int ActiveTarget = TargetStr.ToInt();
         // extract target coordinates
-        CXCoor Coor;
-        if(InterpretCoordinates(TargetStr, Coor)){
-            SetTarget(true);
-            SetTargetCoor(Coor);
+        CXArray<CXStringASCII> Keys = F.GetKeysStartingWith("Target.");
+        for(size_t i=0; i<Keys.GetSize(); i++) {
+            CXStringASCII CompleteKey = Keys[i];
+            ExtractFirstToken(CompleteKey, '.');
+            int Key = ExtractFirstToken(CompleteKey, '.').ToInt();
+            CXTarget Target;
+            m_Targets.Lookup(Key, Target);
+            if(CompleteKey == "NAME") {
+                Target.SetName(F.Get(Keys[i], "").c_str());
+                m_Targets.SetAt(Key, Target);
+            } else if(CompleteKey == "COOR") {
+                CXCoor Coor;
+                if(InterpretCoordinates(F.Get(Keys[i], ""), Coor)) {
+                    Target.SetCoor(Coor);
+                    m_Targets.SetAt(Key, Target);
+                }
+            }
         }
+        // now set active target
+        m_ActiveTarget = m_Targets.GetPos(ActiveTarget);
+        SetTarget(true);
     }
     return true;
 }
@@ -1441,13 +1460,30 @@ void CXOptions::SetTarget(bool NewValue) {
 }
 
 //-------------------------------------
-CXCoor CXOptions::GetTargetCoor() const {
+CXTarget CXOptions::GetActiveTarget() const {
     CXReadLocker RL(&m_RWLock);
-    return m_TargetCoor;
+    CXTarget Result = m_Targets.GetValue(m_ActiveTarget);
+    return Result;
 }
 
 //-------------------------------------
-void CXOptions::SetTargetCoor(const CXCoor &NewValue) {
+void CXOptions::SwitchToNextTarget() {
     CXWriteLocker WL(&m_RWLock);
-    m_TargetCoor = NewValue;
+    CXTarget Dummy;
+    m_Targets.GetNext(m_ActiveTarget, Dummy);
+    if(m_ActiveTarget == CXMapHashSimple<int, CXTarget>::NPOS) {
+        // we reached the end. start from beginning.
+        m_ActiveTarget = m_Targets.GetStart();
+        m_Targets.GetNext(m_ActiveTarget, Dummy);
+    }
+}
+
+//-------------------------------------
+void CXOptions::AddTarget(int Key, const CXTarget &NewValue) {
+    m_Targets.SetAt(Key, NewValue);
+}
+
+//-------------------------------------
+void CXOptions::SetActiveTarget(int Key) {
+    m_Targets.GetPos(Key);
 }

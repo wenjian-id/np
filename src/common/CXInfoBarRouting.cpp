@@ -44,6 +44,14 @@ CXInfoBarRouting::~CXInfoBarRouting() {
 }
 
 //-------------------------------------
+E_COMMAND CXInfoBarRouting::OnInternalMouseDown(int X, int Y) {
+    tIRect Rect(0,0,GetWidth(),GetHeight());
+    if(Rect.Contains(X, Y))
+        return e_CmdNextTarget;
+    return e_CmdNone;
+}
+
+//-------------------------------------
 void CXInfoBarRouting::PositionChanged(const CXNaviData & NewData) {
     // remember new position
     m_NaviData = NewData;
@@ -54,7 +62,9 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
     int Width = GetWidth();
     int Height = GetHeight();
     CXOptions *pOpt = CXOptions::Instance();
-    CXCoor TargetCoor = pOpt->GetTargetCoor();
+    CXTarget Target = pOpt->GetActiveTarget();
+    CXCoor TargetCoor = Target.GetCoor();
+    CXStringUTF8 TargetName = Target.GetName();
     CXCoor CurrentCoor;
     if(pOpt->MustSnapToWay()) {
         // get coordinates from locator
@@ -89,6 +99,13 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
 
         if(pOpt->IsTargetSet()) {
+            // name string up right aligned
+            CXStringUTF8 NameStr = Target.GetName();
+            Bmp.SetFont(m_TextHeightDist, false);
+            tIRect NameRect = Bmp.CalcTextRectUTF8(NameStr, 4, 0);
+            NameRect.OffsetRect(Width - NameRect.GetWidth(), 0);
+            Bmp.DrawTextUTF8(NameStr, NameRect, FGCOLOR, BGCOLOR);
+
             // draw distance
             char buf[100];
             if(dDist < 10) {
@@ -105,12 +122,12 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
                 snprintf(buf, sizeof(buf), "%0.0f km", dDist/1000); // resolution 1km
             }
             Bmp.SetFont(m_TextHeightDist, false);
-            CXStringUTF8 DistStr(buf);
             // position string bottom right adjusted
+            CXStringUTF8 DistStr(buf);
             tIRect DistRect = Bmp.CalcTextRectUTF8(DistStr, 4, 0);
             DistRect.OffsetRect(Width - DistRect.GetWidth(), Height - DistRect.GetHeight());
             Bmp.DrawTextUTF8(DistStr, DistRect, FGCOLOR, BGCOLOR);
-    
+
             // now draw arrow
             CXTransformationMatrix2D TM;
             // rotate to target. compensate move direction
@@ -119,11 +136,11 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
             // y upwards down
             TM.Scale(1, -1);
             // position to center
-            TM.Translate(Width/2, (Height-DistRect.GetHeight())/2);
+            TM.Translate(Width/2, NameRect.GetHeight() + (Height-DistRect.GetHeight()-NameRect.GetHeight())/2);
             CXCoorVector v;
             int X[4];
             int Y[4];
-            double R = 0.8*Min(Width, Height-DistRect.GetHeight())/2;
+            double R = 0.8*Min(Width, Height-DistRect.GetHeight()-NameRect.GetHeight())/2;
             v = TM*CXCoorVector(0, R);
             X[0] = v.GetIntX();
             Y[0] = v.GetIntY();

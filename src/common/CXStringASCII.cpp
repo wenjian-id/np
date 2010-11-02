@@ -127,6 +127,11 @@ size_t CXStringASCII::Find(const char *pcFind) const {
 }
 
 //-------------------------------------
+size_t CXStringASCII::Find(const CXStringASCII &FindString) const {
+    return Find(FindString.c_str());
+}
+
+//-------------------------------------
 size_t CXStringASCII::Find(char cFind) const {
     return tCBuffer::Find(cFind);
 }

@@ -181,6 +181,8 @@ src/common/CXStringASCII.cpp -text
 src/common/CXStringASCII.hpp -text
 src/common/CXStringUTF8.cpp -text
 src/common/CXStringUTF8.hpp -text
+src/common/CXTarget.cpp -text
+src/common/CXTarget.hpp -text
 src/common/CXTimeStampData.hpp -text
 src/common/CXTrackLog.cpp -text
 src/common/CXTrackLog.hpp -text

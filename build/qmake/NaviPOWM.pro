@@ -1,4 +1,4 @@
-TEMPLATE = app 
+TEMPLATE = app
 TARGET = bin/NaviPOWM
 CONFIG += warn_on \
           qt \

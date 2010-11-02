@@ -398,7 +398,7 @@ void CXMapPainter2D::DrawOneways(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eW
                     // skip if too close
                     /// \todo why NodeCount - 1 ?
                     /// \todo 900 configurable
-                    
+
                     if( (((x-prev_x)*(x-prev_x) + (y-prev_y)*(y-prev_y)) > 30*30) &&
                         ((j < NodeCount - 1) || (((x-x1)*(x-x1) + (y-y1)*(y-y1)) > 30*30)))
                     {
@@ -444,7 +444,7 @@ void CXMapPainter2D::DrawOneways(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eW
 void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType) {
     if(pAreas == NULL)
         return;
-    
+
     CXRGB Color = m_AreaColorHolder.GetColor(eAreaType);
     size_t cnt = pAreas->GetSize();
     if(cnt == 0)
@@ -781,7 +781,7 @@ void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
 
     CXExactTime StartTime;
-    
+
     // get copy of navigation data
     CXNaviData NaviData = GetPosition();
     CXOptions *pOpt = CXOptions::Instance();
@@ -1098,7 +1098,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
             pMapSection->Unlock();
         }
     }
-    
+
     // draw TrackLog if neccessary
     if(pOpt->MustShowTrackLog()) {
         DrawTrackLog(pBMP, TMMap);
@@ -1118,7 +1118,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
     StopScale.SetNow();
 
     if(pOpt->IsTargetSet()){
-        CXCoor TargetCoor = pOpt->GetTargetCoor();
+        CXCoor TargetCoor = pOpt->GetActiveTarget().GetCoor();
         TargetCoor.RelocateUTM(UTMZoneCurrent);
         CXCoorVector v = TMMap*CXCoorVector(TargetCoor.GetUTMEasting(), TargetCoor.GetUTMNorthing());
         // draw target if neccessary
@@ -1163,30 +1163,30 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
         tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, pOpt->GetCompassSize() + 20);
         int bottom = TextRect.GetBottom();
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
+        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
         snprintf(buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
         ttt = buf;
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
+        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
         bottom = TextRect.GetBottom();
         snprintf(buf, sizeof(buf), "Zoom: %d", pOpt->GetZoomLevel());
         ttt = buf;
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
+        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
         bottom = TextRect.GetBottom();
         snprintf(buf, sizeof(buf), "m/pixel: %0.2f", m_MeterPerPixel);
         ttt = buf;
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
+        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
         bottom = TextRect.GetBottom();
         snprintf(buf, sizeof(buf), "MB: %0.2f", 1.0*GetFreeMem()/1024/1024);
         ttt = buf;
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR); 
+        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
     }
 
     StopDrawTime.SetNow();

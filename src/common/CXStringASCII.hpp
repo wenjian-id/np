@@ -162,6 +162,12 @@ public:
      * \brief oiu
      *
      */
+    size_t Find(const CXStringASCII &FindString) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     size_t ReverseFind(char cFind) const;
     //-------------------------------------
     /**

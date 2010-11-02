@@ -26,6 +26,7 @@
 #include "CXFile.hpp"
 #include "CXStringASCII.hpp"
 #include "CXMapSimple.hpp"
+#include "CXArray.hpp"
 
 //----------------------------------------------------------------------------
 /**
@@ -72,6 +73,12 @@ public:
      *
      */
     CXStringASCII Get(const CXStringASCII & Key, const CXStringASCII & Default);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXArray<CXStringASCII> GetKeysStartingWith(const CXStringASCII & Key);
 };
 
 #endif // __CXFILEINI_HPP__

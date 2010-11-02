@@ -111,7 +111,7 @@ public:
      * \param   rOther  Instance to compare with.
      * \return          True if equal.
      */
-    bool operator == (const CXPOSMapHashSimple & rOther) {
+    bool operator == (const CXPOSMapHashSimple & rOther) const {
         return (idx == rOther.idx) && (pos == rOther.pos);
     }
     //-------------------------------------
@@ -122,7 +122,7 @@ public:
      * \param   rOther  Instance to compare with.
      * \return          True if not equal.
      */
-    bool operator != (const CXPOSMapHashSimple & rOther) {
+    bool operator != (const CXPOSMapHashSimple & rOther) const {
         return ! operator ==(rOther);
     }
 };
@@ -194,6 +194,12 @@ public:
      * \brief oiu
      *
      */
+    CXPOSMapHashSimple<tKey> GetPos(const tKey &Key) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     CXPOSMapHashSimple<tKey> GetStart() const;
     //-------------------------------------
     /**
@@ -201,6 +207,12 @@ public:
      *
      */
     CXPOSMapHashSimple<tKey> GetNext(CXPOSMapHashSimple<tKey> & Pos, tValue &rValue) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tValue GetValue(const CXPOSMapHashSimple<tKey> & Pos) const;
 };
 
 template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::NPOS = CXPOSMapHashSimple<tKey>(0xffff, tPos<tKey>(~(size_t(0))));
@@ -234,7 +246,8 @@ template<class tKey, class tValue> void CXMapHashSimple<tKey, tValue> ::RemoveAl
 //-------------------------------------
 template<class tKey, class tValue> CXKeyVal<tKey, tValue> * CXMapHashSimple<tKey, tValue> ::Find(const tKey & Key) const {
     unsigned char idx = Hash(Key);
-    return m_pData[idx]->Find(Key);
+    size_t Dummy = 0;
+    return m_pData[idx]->Find(Key, Dummy);
 }
 
 //-------------------------------------
@@ -256,6 +269,17 @@ template<class tKey, class tValue> bool CXMapHashSimple<tKey, tValue> ::Lookup(c
     // check if exists
     unsigned char idx = Hash(Key);
     return m_pData[idx]->Lookup(Key, Result);
+}
+
+//-------------------------------------
+template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey, tValue> ::GetPos(const tKey &Key) const {
+    CXPOSMapHashSimple<tKey> Result = NPOS;
+    tValue Dummy;
+    if(Lookup(Key, Dummy)) {
+        Result.idx = Hash(Key);
+        Result.pos = m_pData[Result.idx]->GetPos(Key);
+    }
+    return Result;
 }
 
 //-------------------------------------
@@ -290,5 +314,14 @@ template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey
     }
     return Pos;
 }
+
+//-------------------------------------
+template<class tKey, class tValue> tValue CXMapHashSimple<tKey, tValue> ::GetValue(const CXPOSMapHashSimple<tKey> & Pos) const {
+    tValue Result;
+    if(Pos != NPOS)
+        Result = m_pData[Pos.idx]->GetValue(Pos.pos);
+    return Result;
+}
+
 
 #endif //__CXMAPHASHSIMPLE_HPP__

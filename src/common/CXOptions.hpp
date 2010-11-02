@@ -30,6 +30,8 @@
 #include "ISerial.hpp"
 #include "IGPSDClient.hpp"
 #include "Utils.hpp"
+#include "CXMapHashSimple.hpp"
+#include "CXTarget.hpp"
 
 //---------------------------------------------------------------------
 /**
@@ -42,34 +44,36 @@ private:
     int             m_iTimeout;     ///< oiu
     //-------------------------------------
     /**
-     * \brief oiu
+     * \brief Copy from other instance.
      *
+     * \param   rOther  Instance to copy from.
      */
     void CopyFrom(const CXFileConfig & rOther);
 protected:
 public:
     //-------------------------------------
     /**
-     * \brief oiu
-     *
+     * \brief Default constructor.
      */
     CXFileConfig();
     //-------------------------------------
     /**
-     * \brief oiu
+     * \brief Copy constructor.
      *
+     * \param   rOther  Instance to copy from.
      */
     CXFileConfig(const CXFileConfig &rOther);
     //-------------------------------------
     /**
-     * \brief oiu
-     *
+     * \brief Destructor.
      */
     virtual ~CXFileConfig();
     //-------------------------------------
     /**
-     * \brief oiu
+     * \brief Assignment operator.
      *
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
      */
     const CXFileConfig & operator = (const CXFileConfig &rOther);
     //-------------------------------------
@@ -176,91 +180,92 @@ public:
         e_InputChannel_GPSD,        ///< oiu
     };
 private:
-    static CXOptions            *m_pInstance;                   ///< oiu
-    CXStringASCII               m_StartPath;                    ///< oiu
-    E_GPS_PROTOCOL_TYPE         m_eGPSProtocolType;             ///< oiu
-    E_INPUT_CHANNEL_TYPE        m_eGPSInputChannelType;         ///< oiu
-    CXSerialPortConfig          m_SerialPortConfig;             ///< oiu
-    CXFileConfig                m_FileConfig;                   ///< oiu
-    CXGPSDConfig                m_GPSDConfig;                   ///< oiu
-    bool                        m_oNorthing;                    ///< oiu
-    bool                        m_oFullScreen;                  ///< oiu
-    bool                        m_oShowLogo;                    ///< Show logo.
-    bool                        m_oSaving;                      ///< oiu
-    bool                        m_oSaveRaw;                     ///< oiu
-    bool                        m_oSaveGPX;                     ///< oiu
-    bool                        m_oShowZoomButtons;             ///< oiu
-    int                         m_ZoomButtonSize;               ///< oiu
-    bool                        m_oAutomaticZoom;               ///< oiu
-    CXStringASCII               m_AutomaticZoomString;          ///< oiu
-    double                      m_HystMaxOffsetAbs;             ///< oiu
-    double                      m_HystMaxOffsetRel;             ///< oiu
-    bool                        m_oShowMaxSpeed;                ///< oiu
-    bool                        m_oShowCompass;                 ///< oiu
-    bool                        m_oShowTrackLog;                ///< oiu
-    bool                        m_oShowScale;                   ///< oiu
-    bool                        m_oShowMinimizeButton;          ///< oiu
-    bool                        m_oShowPOIs;                    ///< Show some POIs.
-    bool                        m_oShowCities;                  ///< Show Cities.
-    bool                        m_oSnapToWay;                   ///< oiu
-    bool                        m_oShowCurrentTime;             ///< oiu
-    bool                        m_oShowOneways;                 ///< oiu
-    E_START_WITH_LAST_POS       m_eStartWithLastPosition;       ///< oiu
-    CXCoor                      m_StartPosition;                ///< oiu
-    bool                        m_oMapMovingManually;           ///< oiu
-    int                         m_WatchdogTimeout;              ///< oiu
-    int                         m_GPSReconnectTimeout;          ///< oiu
-    t_uint64                    m_OSMVali;                      ///< oiu
-    t_uint64                    m_DebugInfo;                    ///< Holder for debug info flags.
-    int                         m_InfoBarBottomHeight;          ///< oiu
-    int                         m_InfoBarTopHeight;             ///< oiu
-    bool                        m_oShowInfoBarCommon;           ///< oiu
-    int                         m_InfoBarCommonWidth;           ///< oiu
-    int                         m_InfoBarCommonHeight;          ///< oiu
-    bool                        m_oShowInfoBarRouting;          ///< oiu
-    int                         m_InfoBarRoutingWidth;          ///< oiu
-    int                         m_InfoBarRoutingHeight;         ///< oiu
-    int                         m_MaxSpeedSize;                 ///< oiu
-    int                         m_CompassSize;                  ///< oiu
-    size_t                      m_TrackLogSize;                 ///< oiu
-    int                         m_TrackLogMinDist;              ///< oiu
-    int                         m_ScaleWidth;                   ///< oiu
-    int                         m_ScaleHeight;                  ///< oiu
-    E_MODE                      m_eMode;                        ///< oiu
-    CXStringASCII               m_DirectoryMaps;                ///< oiu
-    CXStringASCII               m_DirectorySave;                ///< oiu
-    CXStringASCII               m_DirectoryIcons;               ///< oiu
-    unsigned long               m_LogoTime;                     ///< oiu
-    CXStringASCII               m_LogoFileName;                 ///< oiu
-    CXStringASCII               m_InfoFileName;                 ///< oiu
-    CXStringASCII               m_QuitFileName;                 ///< oiu
-    CXStringASCII               m_MinimizeFileName;             ///< oiu
-    CXStringASCII               m_SavingOnFileName;             ///< oiu
-    CXStringASCII               m_SavingOffFileName;            ///< oiu
-    CXStringASCII               m_ZoomInFileName;               ///< oiu
-    CXStringASCII               m_ZoomOutFileName;              ///< oiu
-    CXStringASCII               m_MoveFileName;                 ///< oiu
-    CXStringASCII               m_CurrentPosFileName;           ///< oiu
-    double                      m_SpeedThresholdCar;            ///< oiu
-    double                      m_SpeedThresholdBike;           ///< oiu
-    double                      m_SpeedThresholdPedestrian;     ///< oiu
-    double                      m_SpeedThresholdCaching;        ///< oiu
-    double                      m_SpeedThresholdMapping;        ///< oiu
-    int                         m_GPSReceiverLag;               ///< oiu
-    E_ZOOM_LEVEL                m_ZoomLevel;                    ///< oiu
-    int                         m_POIFontSize;                  ///< oiu
-    int                         m_ScaleFontSize;                ///< oiu
-    int                         m_DebugFontSize;                ///< oiu
-    int                         m_CitySmallFontSize;            ///< oiu
-    int                         m_CityMediumFontSize;           ///< oiu
-    int                         m_CityLargeFontSize;            ///< oiu
-    int                         m_POIDisplaySize;               ///< oiu
-    E_BACKGROUND_TYPE           m_ePOIBGType;                   ///< oiu
-    E_BACKGROUND_TYPE           m_eCityBGType;                  ///< oiu
-    CXPOIVisibilityDescriptor   m_POIVisibilityDescriptor;      ///< oiu
-    bool                        m_oTargetSet;                   ///< oiu
-    CXCoor                      m_TargetCoor;                   ///< oiu
-    mutable CXRWLock            m_RWLock;                       ///< Synchronization object.
+    static CXOptions                *m_pInstance;                   ///< oiu
+    CXStringASCII                   m_StartPath;                    ///< oiu
+    E_GPS_PROTOCOL_TYPE             m_eGPSProtocolType;             ///< oiu
+    E_INPUT_CHANNEL_TYPE            m_eGPSInputChannelType;         ///< oiu
+    CXSerialPortConfig              m_SerialPortConfig;             ///< oiu
+    CXFileConfig                    m_FileConfig;                   ///< oiu
+    CXGPSDConfig                    m_GPSDConfig;                   ///< oiu
+    bool                            m_oNorthing;                    ///< oiu
+    bool                            m_oFullScreen;                  ///< oiu
+    bool                            m_oShowLogo;                    ///< Show logo.
+    bool                            m_oSaving;                      ///< oiu
+    bool                            m_oSaveRaw;                     ///< oiu
+    bool                            m_oSaveGPX;                     ///< oiu
+    bool                            m_oShowZoomButtons;             ///< oiu
+    int                             m_ZoomButtonSize;               ///< oiu
+    bool                            m_oAutomaticZoom;               ///< oiu
+    CXStringASCII                   m_AutomaticZoomString;          ///< oiu
+    double                          m_HystMaxOffsetAbs;             ///< oiu
+    double                          m_HystMaxOffsetRel;             ///< oiu
+    bool                            m_oShowMaxSpeed;                ///< oiu
+    bool                            m_oShowCompass;                 ///< oiu
+    bool                            m_oShowTrackLog;                ///< oiu
+    bool                            m_oShowScale;                   ///< oiu
+    bool                            m_oShowMinimizeButton;          ///< oiu
+    bool                            m_oShowPOIs;                    ///< Show some POIs.
+    bool                            m_oShowCities;                  ///< Show Cities.
+    bool                            m_oSnapToWay;                   ///< oiu
+    bool                            m_oShowCurrentTime;             ///< oiu
+    bool                            m_oShowOneways;                 ///< oiu
+    E_START_WITH_LAST_POS           m_eStartWithLastPosition;       ///< oiu
+    CXCoor                          m_StartPosition;                ///< oiu
+    bool                            m_oMapMovingManually;           ///< oiu
+    int                             m_WatchdogTimeout;              ///< oiu
+    int                             m_GPSReconnectTimeout;          ///< oiu
+    t_uint64                        m_OSMVali;                      ///< oiu
+    t_uint64                        m_DebugInfo;                    ///< Holder for debug info flags.
+    int                             m_InfoBarBottomHeight;          ///< oiu
+    int                             m_InfoBarTopHeight;             ///< oiu
+    bool                            m_oShowInfoBarCommon;           ///< oiu
+    int                             m_InfoBarCommonWidth;           ///< oiu
+    int                             m_InfoBarCommonHeight;          ///< oiu
+    bool                            m_oShowInfoBarRouting;          ///< oiu
+    int                             m_InfoBarRoutingWidth;          ///< oiu
+    int                             m_InfoBarRoutingHeight;         ///< oiu
+    int                             m_MaxSpeedSize;                 ///< oiu
+    int                             m_CompassSize;                  ///< oiu
+    size_t                          m_TrackLogSize;                 ///< oiu
+    int                             m_TrackLogMinDist;              ///< oiu
+    int                             m_ScaleWidth;                   ///< oiu
+    int                             m_ScaleHeight;                  ///< oiu
+    E_MODE                          m_eMode;                        ///< oiu
+    CXStringASCII                   m_DirectoryMaps;                ///< oiu
+    CXStringASCII                   m_DirectorySave;                ///< oiu
+    CXStringASCII                   m_DirectoryIcons;               ///< oiu
+    unsigned long                   m_LogoTime;                     ///< oiu
+    CXStringASCII                   m_LogoFileName;                 ///< oiu
+    CXStringASCII                   m_InfoFileName;                 ///< oiu
+    CXStringASCII                   m_QuitFileName;                 ///< oiu
+    CXStringASCII                   m_MinimizeFileName;             ///< oiu
+    CXStringASCII                   m_SavingOnFileName;             ///< oiu
+    CXStringASCII                   m_SavingOffFileName;            ///< oiu
+    CXStringASCII                   m_ZoomInFileName;               ///< oiu
+    CXStringASCII                   m_ZoomOutFileName;              ///< oiu
+    CXStringASCII                   m_MoveFileName;                 ///< oiu
+    CXStringASCII                   m_CurrentPosFileName;           ///< oiu
+    double                          m_SpeedThresholdCar;            ///< oiu
+    double                          m_SpeedThresholdBike;           ///< oiu
+    double                          m_SpeedThresholdPedestrian;     ///< oiu
+    double                          m_SpeedThresholdCaching;        ///< oiu
+    double                          m_SpeedThresholdMapping;        ///< oiu
+    int                             m_GPSReceiverLag;               ///< oiu
+    E_ZOOM_LEVEL                    m_ZoomLevel;                    ///< oiu
+    int                             m_POIFontSize;                  ///< oiu
+    int                             m_ScaleFontSize;                ///< oiu
+    int                             m_DebugFontSize;                ///< oiu
+    int                             m_CitySmallFontSize;            ///< oiu
+    int                             m_CityMediumFontSize;           ///< oiu
+    int                             m_CityLargeFontSize;            ///< oiu
+    int                             m_POIDisplaySize;               ///< oiu
+    E_BACKGROUND_TYPE               m_ePOIBGType;                   ///< oiu
+    E_BACKGROUND_TYPE               m_eCityBGType;                  ///< oiu
+    CXPOIVisibilityDescriptor       m_POIVisibilityDescriptor;      ///< oiu
+    bool                            m_oTargetSet;                   ///< oiu
+    CXMapHashSimple<int, CXTarget>  m_Targets;                      ///< All known targets.
+    CXPOSMapHashSimple<int>         m_ActiveTarget;                 ///< Currently active target.
+    mutable CXRWLock                m_RWLock;                       ///< Synchronization object.
     //-------------------------------------
     CXOptions(const CXOptions &);                       ///< Not used.
     const CXOptions & operator = (const CXOptions &);   ///< Not used.
@@ -1288,7 +1293,7 @@ public:
      * \brief oiu
      *
      */
-    CXPOIVisibilityDescriptor & GetPOIVisibilityDescriptorByRef(); 
+    CXPOIVisibilityDescriptor & GetPOIVisibilityDescriptorByRef();
     //-------------------------------------
     /**
      * \brief oiu
@@ -1303,16 +1308,36 @@ public:
     void SetTarget(bool NewValue);
     //-------------------------------------
     /**
-     * \brief oiu
+     * \brief Get current target
      *
+     * \return          The acive target.
      */
-    CXCoor GetTargetCoor() const;
+    CXTarget GetActiveTarget() const;
     //-------------------------------------
     /**
-     * \brief oiu
+     * \brief Get current target
+     *
+     * \return          The target.
+     */
+    void SwitchToNextTarget();
+    //-------------------------------------
+    /**
+     * \brief Add a new target to list of known targets.
+     *
+     * \param   Key         The key.
+     * \param   NewValue    The target.
+     */
+    void AddTarget(int Key, const CXTarget &NewValue);
+    //-------------------------------------
+    /**
+     * \brief Set active target.
+     *
+     * If key not valid, the first target is set active.
+     *
+     * \param   Key     The key.
      *
      */
-    void SetTargetCoor(const CXCoor &NewValue);
+    void SetActiveTarget(int Key);
 };
 
 #endif // __CXOPTIONS_HPP__

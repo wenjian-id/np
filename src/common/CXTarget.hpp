@@ -20,69 +20,87 @@
  *   http://www.fsf.org/about/contact.html                                 *
  ***************************************************************************/
 
-#ifndef __CXINFOBARROUTING_HPP__
-#define __CXINFOBARROUTING_HPP__
+#ifndef __CXTARGET_HPP__
+#define __CXTARGET_HPP__
 
-#include "CXInfoBar.hpp"
-#include "CXNaviData.hpp"
-#include "CXRect.hpp"
+#include "CXStringUTF8.hpp"
+#include "CXCoor.hpp"
 
-class CXBitmap;
-class CXStringUTF8;
-
-//----------------------------------------------------------------------------
+//---------------------------------------------------------------------
 /**
- * \brief Information bar for routing information.
- *
- * This class encapsulates the functionality for displaying routing information.
+ * \brief Class encapsulating a target.
  */
-class CXInfoBarRouting : public CXInfoBar {
+class CXTarget {
 private:
-    CXNaviData          m_NaviData;         ///< Navigation data.
-    int                 m_TextHeightDist;   ///< oiu
-    //-------------------------------------
-    CXInfoBarRouting(const CXInfoBarRouting &);                     ///< Not used.
-    const CXInfoBarRouting & operator = (const CXInfoBarRouting &); ///< Not used.
+    CXStringUTF8    m_Name;     ///< Name of target.
+    CXCoor          m_Coor;     ///< Coordinate of target.
     //-------------------------------------
     /**
-     * \brief Paint.
+     * \brief Copy from other instance.
      *
-     * Paint position and speed data to a bitmap.
-     * \param   pDC         Pointer to a device context.
-     * \param   OffsetX     Offset for painting (X).
-     * \param   OffsetY     Offset for painting (Y).
+     * \param   rOther  Instance to copy from.
      */
-    virtual void OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY);
+    void CopyFrom(const CXTarget & rOther);
 protected:
-    //-------------------------------------
-    /**
-     * \brief oiu
-     *
-     */
-    virtual E_COMMAND OnInternalMouseDown(int X, int Y);
 public:
     //-------------------------------------
     /**
      * \brief Default constructor.
-     *
-     * The default constructor.
      */
-    CXInfoBarRouting();
+    CXTarget();
+    //-------------------------------------
+    /**
+     * \brief Default constructor.
+     */
+    CXTarget(const CXStringUTF8 & Name, const CXCoor & Coor);
+    //-------------------------------------
+    /**
+     * \brief Copy constructor.
+     *
+     * \param   rOther  Instance to copy from.
+     */
+    CXTarget(const CXTarget &rOther);
     //-------------------------------------
     /**
      * \brief Destructor.
-     *
-     * The destructor.
      */
-    virtual ~CXInfoBarRouting();
+    virtual ~CXTarget();
     //-------------------------------------
     /**
-     * \brief Position has changed.
+     * \brief Assignment operator.
      *
-     * The position has changed.
-     * \param   Newdata     New position.
+     * \param   rOther  Instance to copy from.
+     * \return          Const reference to self.
      */
-    void PositionChanged(const CXNaviData & NewData);
+    const CXTarget & operator = (const CXTarget &rOther);
+    //-------------------------------------
+    /**
+     * \brief Get name of target.
+     *
+     * \return  The name.
+     */
+    CXStringUTF8 GetName() const;
+    //-------------------------------------
+    /**
+     * \brief Get coordinates of target.
+     *
+     * \return  The coordinates.
+     */
+    CXCoor GetCoor() const;
+    //-------------------------------------
+    /**
+     * \brief Set name of target.
+     *
+     * \param   Name    The name.
+     */
+    void SetName(const CXStringUTF8 & Name);
+    //-------------------------------------
+    /**
+     * \brief Set coordinates of target.
+     *
+     * \param   Coor    The coordinates.
+     */
+    void SetCoor(const CXCoor &Coor);
 };
 
-#endif // __CXINFOBARROUTING_HPP__
+#endif // __CXTARGET_HPP__

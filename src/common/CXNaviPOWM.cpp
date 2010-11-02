@@ -529,6 +529,10 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
     // check Info bar buttons
     Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
     // check for zoom buttons
+    if(CXOptions::Instance()->IsTargetSet() && (Cmd == e_CmdNone)) {
+        Cmd = m_pInfoBarRouting->OnMouseDown(X - m_InfoBarRoutingPos.GetLeft(), Y - m_InfoBarRoutingPos.GetTop());
+    }
+    // check for zoom buttons
     if((eDisplayMode == e_ModeMap) && CXOptions::Instance()->MustShowZoomButtons() && !CXOptions::Instance()->AutomaticZoom() && (Cmd == e_CmdNone)) {
         Cmd = m_ZoomInBtn.OnMouseDown(X - m_ZoomInPos.GetLeft(), Y - m_ZoomInPos.GetTop());
         if(Cmd == e_CmdNone)
@@ -595,6 +599,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
                                         break;
                                     }
         case e_CmdClock:            CXOptions::Instance()->ToggleShowCurrentTime(); DoRequestRepaint(); break;
+        case e_CmdNextTarget:       CXOptions::Instance()->SwitchToNextTarget(); DoRequestRepaint(); break;
         default:                    {
                                         if(CXOptions::Instance()->IsMapMovingManually()) {
                                             if(m_MapPos.Contains(X, Y))

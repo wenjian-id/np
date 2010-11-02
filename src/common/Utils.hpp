@@ -111,12 +111,13 @@ enum E_COMMAND {
     e_CmdAutoZoom,          ///< Auto zoom.
     e_CmdMapMoveManually,   ///< Move map around.
     e_CmdClock,             ///< Switch clock display.
+    e_CmdNextTarget,        ///< Switch to next target.
 };
 
 
 //-------------------------------------
 /**
- * \brief Loading status. 
+ * \brief Loading status.
  *
  * Loading status for map container and map section.
  */
@@ -223,7 +224,7 @@ CXStringASCII CreateAbsoluteFileName(const CXStringASCII &StartPath, const CXStr
  * \brief Read one ASCII line from a file.
  *
  * Read a line consisting of ASCII characters from a file.
- * Both Unix and Windows line end styles should be recognised and 
+ * Both Unix and Windows line end styles should be recognised and
  * hadled properly. The end line character(s) are not part of the
  * result.
  * \param   rInFile     The file to read from.
@@ -313,7 +314,7 @@ bool ReadUI64(CXFile & rInFile, t_uint64 & rValue);
 /**
  * \brief Read one UTF8 encoded string from a file.
  *
- * Read one UTF8 encoded string from a file. Strings have to 
+ * Read one UTF8 encoded string from a file. Strings have to
  * terminated with a 0 character.
  * \param   rInFile     The file to read from.
  * \param   rValue      UTF8 String to read into.
@@ -326,7 +327,7 @@ bool ReadStringUTF8(CXFile & rInFile, CXStringUTF8 & rValue);
  * \brief Check if CRC of NMEA packet is correct.
  *
  * Check if CRC of NMEA packet is correct.
- * \param   NMEAPacket      String containing the NMEA packet including CR LF 
+ * \param   NMEAPacket      String containing the NMEA packet including CR LF
  * \return                  true if CRC s OK.
  */
 bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
@@ -337,7 +338,7 @@ bool CheckNMEACRC(const CXStringASCII &NMEAPacket);
  *
  * Extract information from a GGA packet. The information extracted
  * consists of longitude, latitude and number of satellites.
- * \param   NMEAPacket  String containing the NMEA packet including CR LF 
+ * \param   NMEAPacket  String containing the NMEA packet including CR LF
  * \param   rGGAPacket  Extracted data.
  * \return              true if successfull.
  */
@@ -349,7 +350,7 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket);
  *
  * Extract information from a RMC packet. The information extracted
  * consists of longitude, latitude and speed and course.
- * \param   NMEAPacket  String containing the NMEA packet including CR LF 
+ * \param   NMEAPacket  String containing the NMEA packet including CR LF
  * \param   rRMCPacket  Extracted data.
  * \return              true if successfull.
  */
@@ -361,7 +362,7 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket);
  *
  * Extract information from a GSA packet. The information extracted
  * consists of an array of the PRN of active satellites.
- * \param   NMEAPacket      String containing the NMEA packet including CR LF 
+ * \param   NMEAPacket      String containing the NMEA packet including CR LF
  * \param   rGSAPacket      Extracted data.
  * \return                  true if successfull.
  */
@@ -372,8 +373,8 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket);
  * \brief Extract information from a GSV packet.
  *
  * Extract information from a GSV packet. The information extracted
- * consists of 
- * \param   NMEAPacket          String containing the NMEA packet including CR LF 
+ * consists of
+ * \param   NMEAPacket          String containing the NMEA packet including CR LF
  * \param   rNTelegrams         Number of GSV telegrams
  * \param   rNCurrentTelegram   Number of current telegram
  * \param   rNSat               Number of visible staellites
@@ -384,8 +385,8 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket);
  * \param   rInfo4              Satellite info 4
  * \return                      true if successfull.
  */
-bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram, 
-                    int &rNSat, int &rNInfos, 
+bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNCurrentTelegram,
+                    int &rNSat, int &rNInfos,
                     CXSatelliteInfo &rInfo1, CXSatelliteInfo &rInfo2,
                     CXSatelliteInfo &rInfo3, CXSatelliteInfo &rInfo4);
 
@@ -397,7 +398,7 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
  * between the first character (including it) and the first occurence of the
  * token delimiter (not including it). If the token delimiter is not found, the whole string
  * is returned. The returned string (plus token delimiter) is deleted from the string.
- * \param   rString     The string to 
+ * \param   rString     The string to
  * \param   cTokenChar  Token delimiter.
  * \return              The first extracted token.
  */

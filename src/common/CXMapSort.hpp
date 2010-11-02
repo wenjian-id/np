@@ -98,7 +98,7 @@ public:
      * \param   rOther  Instance to compare with.
      * \return          True if equal.
      */
-    bool operator == (const CXPOSMapSort & rOther) {
+    bool operator == (const CXPOSMapSort & rOther) const {
         return m_pos == rOther.m_pos;
     }
     //-------------------------------------
@@ -109,7 +109,7 @@ public:
      * \param   rOther  Instance to compare with.
      * \return          True if not equal.
      */
-    bool operator != (const CXPOSMapSort & rOther) {
+    bool operator != (const CXPOSMapSort & rOther) const {
         return ! operator ==(rOther);
     }
 };
@@ -193,6 +193,18 @@ public:
      *
      */
     CXPOSMapSort<tKey> GetNext(CXPOSMapSort<tKey> & Pos, tValue &rValue) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    tValue GetValue(const CXPOSMapSort<tKey> & Pos) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXPOSMapSort<tKey> GetPos(const tKey &Key) const;
 };
 
 template<class tKey, class tValue> const CXPOSMapSort<tKey> CXMapSort<tKey, tValue>::NPOS =  CXPOSMapSort<tKey>(~(size_t(0)));
@@ -397,6 +409,22 @@ template<class tKey, class tValue> CXPOSMapSort<tKey> CXMapSort<tKey, tValue> ::
     rValue = m_Data[Pos.m_pos]->m_Value;
     Pos.m_key = m_Data[Pos.m_pos]->m_Key;
     return Pos;
+}
+
+//-------------------------------------
+template<class tKey, class tValue> tValue CXMapSort<tKey, tValue> ::GetValue(const CXPOSMapSort<tKey> & Pos) const {
+    return m_Data[Pos.m_pos]->m_Value;
+}
+
+//-------------------------------------
+template<class tKey, class tValue> CXPOSMapSort<tKey> CXMapSort<tKey, tValue> ::GetPos(const tKey &Key) const {
+    CXPOSMapSort<tKey> Result = NPOS;
+    size_t Idx = 0;
+    if(Find(Key, Idx)) {
+        Result.m_key = Key;
+        Result.m_pos = Idx;
+    }
+    return Result;
 }
 
 #endif //__CXMAPSORT_HPP__

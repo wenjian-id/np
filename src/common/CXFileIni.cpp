@@ -86,3 +86,16 @@ CXStringASCII CXFileIni::Get(const CXStringASCII & Key, const CXStringASCII & De
         return Result;
     return Default;
 }
+
+//-------------------------------------
+CXArray<CXStringASCII> CXFileIni::GetKeysStartingWith(const CXStringASCII & Key) {
+    CXArray<CXStringASCII> Result;
+    CXStringASCII UpperKey = Key.ToUpper();
+    CXPOSMapSimple<CXStringASCII> Pos = m_Content.GetStart();
+    CXStringASCII Value;
+    while(m_Content.GetNext(Pos, Value) != m_Content.NPOS) {
+        if(Pos.m_key.Find(UpperKey) != CXStringASCII::NPOS)
+            Result.Append(Pos.m_key);
+    }
+    return Result;
+}
