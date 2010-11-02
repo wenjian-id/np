@@ -109,6 +109,7 @@ set (HDR_FILES
   ../../src/common/CXSaverGPX.hpp
   ../../src/common/CXInfoBarRouting.hpp
   ../../src/common/IGPSDClient.hpp
+  ../../src/common/CXTarget.hpp
   ../../src/qt/CXRWLock.hpp
   ../../src/qt/CXMainWindow.hpp
   ../../src/qt/TargetIncludes.hpp
@@ -202,6 +203,7 @@ set(SRC_FILES
   ../../src/common/CXSaverGPX.cpp
   ../../src/common/CXInfoBarRouting.cpp
   ../../src/common/IGPSDClient.cpp
+  ../../src/common/CXTarget.cpp
   ../../src/qt/CXMutex.cpp
   ../../src/qt/TargetIncludes.cpp
   ../../src/qt/CXDeviceContext.cpp
