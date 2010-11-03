@@ -166,6 +166,7 @@ extraResourceOptions=
 84=..\..\src\windows\native\Main.cpp
 85=..\..\src\windows\native\TargetIncludes.cpp
 86=..\..\src\common\IGPSDClient.cpp
+87=..\..\src\common\CXTarget.cpp
 [Header]
 1=..\..\src\common\CXArea.hpp
 2=..\..\src\common\CXAreaColorHolder.hpp
@@ -270,6 +271,7 @@ extraResourceOptions=
 101=..\..\src\windows\native\CXWindow.hpp
 102=..\..\src\windows\native\CXWorkRequestThread.hpp
 103=..\..\src\windows\native\TargetIncludes.hpp
+104=..\..\src\common\CXTarget.hpp
 [Resource]
 1=NaviPOWM.rc
 [Other]

@@ -2514,6 +2514,10 @@ SOURCE=..\..\src\common\CXStringUTF8.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\common\CXTarget.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\common\CXTimeStampData.hpp
 # End Source File
 # Begin Source File
@@ -15363,6 +15367,117 @@ DEP_CPP_CXSTRI=\
 DEP_CPP_CXSTRI=\
 	"..\..\src\common\CXBuffer.hpp"\
 	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\common\CXTarget.cpp
+
+!IF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Release"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE emulator) Debug"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Release"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4) Debug"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Release"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE MIPS16) Debug"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Release"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
+	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
+	
+
+!ELSEIF  "$(CFG)" == "NaviPOWM - Win32 (WCE ARMV4T) Debug"
+
+DEP_CPP_CXTAR=\
+	"..\..\src\common\CoordConstants.h"\
+	"..\..\src\common\CoordConversion.h"\
+	"..\..\src\common\CXBuffer.hpp"\
+	"..\..\src\common\CXCoor.hpp"\
+	"..\..\src\common\CXStringUTF8.hpp"\
+	"..\..\src\common\CXTarget.hpp"\
+	"..\..\src\common\CXUTMCoor.hpp"\
 	"..\..\src\windowsmobile\common\TargetIncludes.hpp"\
 	
 

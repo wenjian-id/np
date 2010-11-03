@@ -482,6 +482,10 @@ SOURCE=..\..\src\common\CXStringUTF8.hpp
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\common\CXTarget.hpp
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\common\CXTimeStampData.hpp
 # End Source File
 # Begin Source File
@@ -791,6 +795,10 @@ SOURCE=..\..\src\common\CXStringASCII.cpp
 # Begin Source File
 
 SOURCE=..\..\src\common\CXStringUTF8.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\common\CXTarget.cpp
 # End Source File
 # Begin Source File
 
