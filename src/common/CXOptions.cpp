@@ -31,7 +31,6 @@
 #include "CXPOWMMap.hpp"
 
 #include  <stdlib.h>
-#include  <iostream>
 
 CXOptions * CXOptions::m_pInstance = NULL;
 
