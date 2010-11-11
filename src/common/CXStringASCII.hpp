@@ -180,6 +180,12 @@ public:
      * \brief oiu
      *
      */
+    size_t Count(char cFind) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     void TrimLeft();
     //-------------------------------------
     /**

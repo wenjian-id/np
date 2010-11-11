@@ -70,8 +70,8 @@ public:
      *
      */
     CXTOCMapSection(t_uint64 UID, E_ZOOM_LEVEL  m_ZoomLevel,
-                    double dLonMin, double dLonMax, 
-                    double dLatMin, double dLatMax, 
+                    double dLonMin, double dLonMax,
+                    double dLatMin, double dLatMax,
                     const CXStringASCII & FileName, t_uint32 Offset);
     //-------------------------------------
     /**
@@ -177,15 +177,6 @@ private:
     const CXMapSection & operator = (const CXMapSection &);     ///< Not used.
     //-------------------------------------
     /**
-     * \brief Load map version 0.1.1
-     *
-     *  Load map version 0.1.1
-     *  \param  InFile      File with map data.
-     *  \return             true on success
-     */
-    bool LoadMap_0_1_1(CXFile & InFile);
-    //-------------------------------------
-    /**
      * \brief Load map version 0.1.2
      *
      *  Load map version 0.1.2
@@ -193,6 +184,15 @@ private:
      *  \return             true on success
      */
     bool LoadMap_0_1_2(CXFile & InFile);
+    //-------------------------------------
+    /**
+     * \brief Load map version 0.1.3
+     *
+     *  Load map version 0.1.3
+     *  \param  InFile      File with map data.
+     *  \return             true on success
+     */
+    bool LoadMap_0_1_3(CXFile & InFile);
     //-------------------------------------
     /**
      * \brief Load map current version

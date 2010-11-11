@@ -326,9 +326,9 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
         oFix = false;
 
     // quality
-    int quality = atoi(ExtractFirstToken(s, ',').c_str());
+    int quality = ExtractFirstToken(s, ',').ToInt();
     // nr satellites
-    int NSat = atoi(ExtractFirstToken(s, ',').c_str());
+    int NSat = ExtractFirstToken(s, ',').ToInt();
     rGGAPacket.SetNSat(NSat);
     // HDOP
     CXStringASCII SHDOP = ExtractFirstToken(s, ',');
@@ -486,7 +486,7 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket) {
     for(size_t j=0; j<12; j++) {
         CXStringASCII SPRN = ExtractFirstToken(s, ',');
         if(!SPRN.IsEmpty())
-            rGSAPacket.AddSatellite(atoi(SPRN.c_str()));
+            rGSAPacket.AddSatellite(SPRN.ToInt());
     }
     // PDOP
     ExtractFirstToken(s, ',');
@@ -530,11 +530,11 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
     // remove $GSA
     ExtractFirstToken(s, ',');
     // number of GSV telegram
-    rNTelegrams = atoi(ExtractFirstToken(s, ',').c_str());
+    rNTelegrams = ExtractFirstToken(s, ',').ToInt();
     // current GSV telegram
-    rNCurrentTelegram = atoi(ExtractFirstToken(s, ',').c_str());
+    rNCurrentTelegram = ExtractFirstToken(s, ',').ToInt();
     // number of visible satellites
-    rNSat = atoi(ExtractFirstToken(s, ',').c_str());
+    rNSat = ExtractFirstToken(s, ',').ToInt();
 
     // remove until '*'
     s = ExtractFirstToken(s, '*');
@@ -550,10 +550,10 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
             case 4 : pInfo = &rInfo4; break;
         }
         // read an set data
-        pInfo->SetPRN(atoi(ExtractFirstToken(s, ',').c_str()));
-        pInfo->SetElevation(atoi(ExtractFirstToken(s, ',').c_str()));
-        pInfo->SetAzimuth(atoi(ExtractFirstToken(s, ',').c_str()));
-        pInfo->SetSNR(atoi(ExtractFirstToken(s, ',').c_str()));
+        pInfo->SetPRN(ExtractFirstToken(s, ',').ToInt());
+        pInfo->SetElevation(ExtractFirstToken(s, ',').ToInt());
+        pInfo->SetAzimuth(ExtractFirstToken(s, ',').ToInt());
+        pInfo->SetSNR(ExtractFirstToken(s, ',').ToInt());
     }
     return true;
 }
@@ -705,6 +705,35 @@ E_WAY_TYPE WayType012ToCurrentWayType(E_WAY_TYPE_0_1_2 Value) {
         case e_Way_Railway_Thin_0_1_2:      Result = e_Way_Railway_Thin; break;
         case e_Way_Water_Thick_0_1_2:       Result = e_Way_Water_Thick; break;
         case e_Way_Water_Thin_0_1_2:        Result = e_Way_Water_Thin; break;
+    }
+    return Result;
+}
+
+//-------------------------------------
+double StringToCoor(const CXStringASCII &CoorString) {
+    double Result = 0;
+    if(CoorString.Count('.') == 1) {
+        // g.dddd
+        Result = CoorString.ToDouble();
+    } else if(CoorString.Count('.') == 2) {
+        // g.mm.dddd
+        CXStringASCII Tmp = CoorString;
+        int degrees = ExtractFirstToken(Tmp, '.').ToInt();
+        double minutes = Tmp.ToDouble();
+        bool oNeg = degrees < 0;
+        Result = 1.0*abs(degrees) + minutes/60.0;
+        if(oNeg)
+            Result = -Result;
+    } else if(CoorString.Count('.') == 3) {
+        // g.mm.ss.dddd
+        CXStringASCII Tmp = CoorString;
+        int degrees = ExtractFirstToken(Tmp, '.').ToInt();
+        int minutes = ExtractFirstToken(Tmp, '.').ToInt();
+        double seconds = Tmp.ToDouble();
+        bool oNeg = degrees < 0;
+        Result = 1.0*abs(degrees) + minutes/60.0 + seconds/3600.0;
+        if(oNeg)
+            Result = -Result;
     }
     return Result;
 }

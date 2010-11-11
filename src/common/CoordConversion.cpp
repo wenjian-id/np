@@ -33,8 +33,8 @@
 #include "CoordConversion.h"
 
 void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const int ForceZoneNumber, int &ZoneNumber, char & UTMLetter, double &UTMEasting, double &UTMNorthing) {
-    //converts lat/long to UTM coords.  Equations from USGS Bulletin 1532 
-    //East Longitudes are positive, West longitudes are negative. 
+    //converts lat/long to UTM coords.  Equations from USGS Bulletin 1532
+    //East Longitudes are positive, West longitudes are negative.
     //North latitudes are positive, South latitudes are negative
     //dLat and dLon are in decimal degrees
     //Written by Chuck Gantz- chuck.gantz@globalstar.com
@@ -55,7 +55,7 @@ void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const
     double LongOriginRad=0;
 
     ZoneNumber = int((LongTemp + 180)/6) + 1;
-  
+
     if( dLat >= 56.0 && dLat < 64.0 && LongTemp >= 3.0 && LongTemp < 12.0 )
         ZoneNumber = 32;
 
@@ -86,9 +86,9 @@ void LLtoUTM(int ReferenceEllipsoid, const double dLon, const double dLat, const
     C = eccPrimeSquared*cos(LatRad)*cos(LatRad);
     A = cos(LatRad)*(LongRad-LongOriginRad);
 
-    M = a*((1- eccSquared/4- 3*eccSquared*eccSquared/64- 5*eccSquared*eccSquared*eccSquared/256)*LatRad 
+    M = a*((1- eccSquared/4- 3*eccSquared*eccSquared/64- 5*eccSquared*eccSquared*eccSquared/256)*LatRad
     - (3*eccSquared/8+ 3*eccSquared*eccSquared/32+ 45*eccSquared*eccSquared*eccSquared/1024)*sin(2*LatRad)
-    + (15*eccSquared*eccSquared/256 + 45*eccSquared*eccSquared*eccSquared/1024)*sin(4*LatRad) 
+    + (15*eccSquared*eccSquared/256 + 45*eccSquared*eccSquared*eccSquared/1024)*sin(4*LatRad)
     - (35*eccSquared*eccSquared*eccSquared/3072)*sin(6*LatRad));
 
     UTMEasting = (double)(k0*N*(A+(1-T+C)*A*A*A/6
@@ -154,10 +154,10 @@ char UTMLetterDesignator(double dLat)
 
 
 void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNorthing, const int ZoneNumber, const char UTMLetter, double& rdLon,  double& rdLat) {
-    //converts UTM coords to lat/long.  Equations from USGS Bulletin 1532 
-    //East Longitudes are positive, West longitudes are negative. 
+    //converts UTM coords to lat/long.  Equations from USGS Bulletin 1532
+    //East Longitudes are positive, West longitudes are negative.
     //North latitudes are positive, South latitudes are negative
-    //rdLat and rdLon are in decimal degrees. 
+    //rdLat and rdLon are in decimal degrees.
     //Written by Chuck Gantz- chuck.gantz@globalstar.com
 
     double k0 = 0.9996;
@@ -180,7 +180,7 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
     M = y / k0;
     mu = M/(a*(1-eccSquared/4-3*eccSquared*eccSquared/64-5*eccSquared*eccSquared*eccSquared/256));
 
-    phi1Rad = mu+ (3*e1/2-27*e1*e1*e1/32)*sin(2*mu) 
+    phi1Rad = mu+ (3*e1/2-27*e1*e1*e1/32)*sin(2*mu)
     + (21*e1*e1/16-55*e1*e1*e1*e1/32)*sin(4*mu)
     +(151*e1*e1*e1/96)*sin(6*mu);
 

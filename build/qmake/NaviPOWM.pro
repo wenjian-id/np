@@ -15,8 +15,8 @@ DEPENDPATH += ../../src/common \
                ../../src/linux
 
 OBJECTS_DIR = obj
-CONFIG -= release
-CONFIG += debug
+CONFIG += release
+CONFIG -= debug
 
 SOURCES =   ../../src/common/*.cpp \
             ../../src/qt/*.cpp \

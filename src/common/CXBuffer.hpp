@@ -49,7 +49,7 @@ private:
     /**
      * \brief Grow internal buffer to a new size.
      *
-     * Grow internal buffer to a new size. Memory is reallocated 
+     * Grow internal buffer to a new size. Memory is reallocated
      * and content copied.
      * \param   ulNewSize   New number of entries.
      */
@@ -58,7 +58,7 @@ private:
     /**
      * \brief Grow internal buffer to a new size.
      *
-     * Grow internal buffer to a new size. Memory is reallocated 
+     * Grow internal buffer to a new size. Memory is reallocated
      * and content copied.
      * \param   ulNewSize   New number of entries.
      */
@@ -243,6 +243,12 @@ public:
      *
      */
     size_t ReverseFind(const tClass & c) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    size_t Count(const tClass & c) const;
     //-------------------------------------
     /**
      * \brief oiu
@@ -518,6 +524,15 @@ template<class tClass> size_t CXBuffer<tClass> ::ReverseFind(const tClass & c) c
         if(m_pBuffer[i] == c)
             Found = i;
     return Found;
+}
+
+//-------------------------------------
+template<class tClass> size_t CXBuffer<tClass> ::Count(const tClass & c) const {
+    size_t Result = 0;
+    for(size_t i = 0; i<m_ulBufferSize; i++)
+        if(m_pBuffer[i] == c)
+            Result++;
+    return Result;
 }
 
 //-------------------------------------

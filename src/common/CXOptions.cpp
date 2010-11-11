@@ -190,9 +190,9 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
         // Port
         SPC.SetPort(ExtractFirstToken(PCStr, ';'));
         // Baudrate
-        SPC.SetBaudrate(atoi(ExtractFirstToken(PCStr, ';').c_str()));
+        SPC.SetBaudrate(ExtractFirstToken(PCStr, ';').ToInt());
         // data bits
-        SPC.SetDataBits(atoi(ExtractFirstToken(PCStr, ';').c_str()));
+        SPC.SetDataBits(ExtractFirstToken(PCStr, ';').ToInt());
         // parity
         SPC.SetParity(ExtractFirstToken(PCStr, ';'));
         // stop bits
@@ -209,11 +209,11 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
         size_t PosMS = TimeoutStr.Find("ms");
         if(PosMS == CXStringASCII::NPOS) {
             // timeout is given in seconds
-            Timeout = 1000*atoi(TimeoutStr.c_str());
+            Timeout = 1000*TimeoutStr.ToInt();
         } else {
             // timeout is given in milliseconds
             TimeoutStr = TimeoutStr.Left(PosMS);
-            Timeout = atoi(TimeoutStr.c_str());
+            Timeout = TimeoutStr.ToInt();
         }
         FC.SetTimeout(Timeout);
         SetFileConfig(FC);
@@ -231,46 +231,46 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
     SetFullScreen(F.Get("FullScreen", "off").ToUpper() == "ON");
     // showzoom
     SetShowZoomButtonsFlag(F.Get("ShowZoomButtons", "off").ToUpper() == "ON");
-    SetZoomButtonSize(atoi(F.Get("ZoomButtonSize", "40").c_str()));
+    SetZoomButtonSize(F.Get("ZoomButtonSize", "40").ToInt());
     SetAutomaticZoomString(F.Get("AutoZoom", "off").ToUpper());
-    SetHystMaxOffsetRel(atof(F.Get("HystMaxOffsetRel", "10").c_str())/10);
-    SetHystMaxOffsetAbs(atof(F.Get("HystMaxOffsetAbs", "0.7").c_str()));
+    SetHystMaxOffsetRel(F.Get("HystMaxOffsetRel", "10").ToDouble()/10);
+    SetHystMaxOffsetAbs(F.Get("HystMaxOffsetAbs", "0.7").ToDouble());
     // InfoBar Bottom Height
-    SetInfoBarBottomHeight(atoi(F.Get("InfoBarBottomHeight", "20").c_str()));
+    SetInfoBarBottomHeight(F.Get("InfoBarBottomHeight", "20").ToInt());
     // InfoBar Top Height
-    SetInfoBarTopHeight(atoi(F.Get("InfoBarTopHeight", "20").c_str()));
+    SetInfoBarTopHeight(F.Get("InfoBarTopHeight", "20").ToInt());
     // Info bar visibility
     SetShowInfoBarCommonFlag(F.Get("ShowInfoBarCommon", "on").ToUpper() == "ON");
     // InfoBar Common Width
-    SetInfoBarCommonWidth(atoi(F.Get("InfoBarCommonWidth", "65").c_str()));
+    SetInfoBarCommonWidth(F.Get("InfoBarCommonWidth", "65").ToInt());
     // InfoBar Common Height
-    SetInfoBarCommonHeight(atoi(F.Get("InfoBarCommonHeight", "60").c_str()));
+    SetInfoBarCommonHeight(F.Get("InfoBarCommonHeight", "60").ToInt());
     // Routing bar visibility
     SetShowInfoBarRoutingFlag(F.Get("ShowInfoBarRouting", "on").ToUpper() == "ON");
     // InfoBar Routing Width
-    SetInfoBarRoutingWidth(atoi(F.Get("InfoBarRoutingWidth", "65").c_str()));
+    SetInfoBarRoutingWidth(F.Get("InfoBarRoutingWidth", "65").ToInt());
     // InfoBar Routing Height
-    SetInfoBarRoutingHeight(atoi(F.Get("InfoBarRoutingHeight", "60").c_str()));
+    SetInfoBarRoutingHeight(F.Get("InfoBarRoutingHeight", "60").ToInt());
     // MaxSpeed
     SetShowMaxSpeedFlag(F.Get("ShowMaxSpeed", "on").ToUpper() == "ON");
     // MaxSpeed size
-    SetMaxSpeedSize(atoi(F.Get("MaxSpeedSize", "61").c_str()));
+    SetMaxSpeedSize(F.Get("MaxSpeedSize", "61").ToInt());
     // Compass
     SetShowCompassFlag(F.Get("ShowCompass", "on").ToUpper() == "ON");
     // Compass size
-    SetCompassSize(atoi(F.Get("CompassSize", "50").c_str()));
+    SetCompassSize(F.Get("CompassSize", "50").ToInt());
     // Scale
     SetShowScaleFlag(F.Get("ShowScale", "on").ToUpper() == "ON");
     // Scale width
-    SetScaleWidth(atoi(F.Get("ScaleWidth", "100").c_str()));
+    SetScaleWidth(F.Get("ScaleWidth", "100").ToInt());
     // Scale height
-    SetScaleHeight(atoi(F.Get("ScaleHeight", "5").c_str()));
+    SetScaleHeight(F.Get("ScaleHeight", "5").ToInt());
     // TrackLog
     SetShowTrackLogFlag(F.Get("ShowTrackLog", "off").ToUpper() == "ON");
     // TrackLogSize
-    SetTrackLogSize(static_cast<size_t>(Max(0, atoi(F.Get("TrackLogSize", "0").c_str()))));
+    SetTrackLogSize(static_cast<size_t>(Max(0, F.Get("TrackLogSize", "0").ToInt())));
     // TrackLogMinDist
-    SetTrackLogMinDist(static_cast<unsigned int>(Max(0, atoi(F.Get("TrackLogMinDist", "10").c_str()))));
+    SetTrackLogMinDist(static_cast<unsigned int>(Max(0, F.Get("TrackLogMinDist", "10").ToInt())));
     // OSMVali name
     if(F.Get("OSMValiName", "off").ToUpper() == "ON")
         SetOSMValiFlag(e_OSMValiName);
@@ -315,7 +315,7 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
     CXStringASCII Logo=DirIcons;
     Logo+=F.Get("LogoName", "logo.bmp");
     SetLogoFileName(Logo);
-    SetLogoTime(atoi(F.Get("LogoTime", "5000").c_str()));
+    SetLogoTime(F.Get("LogoTime", "5000").ToInt());
     // info bmp
     CXStringASCII Info=DirIcons;
     Info+=F.Get("InfoName", "info.bmp");
@@ -375,30 +375,30 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
             SetStartPosition(Coor);
         }
     }
-    // Saving
+    // SavingToInt()
     SetSaveRaw(F.Get("SaveRaw", "off").ToUpper() == "ON");
     SetSaveGPX(F.Get("SaveGPX", "off").ToUpper() == "ON");
     // Speed thresholds
-    SetSpeedThresholdCar(atof(F.Get("SpeedThresholdCar", "2").c_str()));
-    SetSpeedThresholdBike(atof(F.Get("SpeedThresholdBike", "1.5").c_str()));
-    SetSpeedThresholdPedestrian(atof(F.Get("SpeedThresholdPedestrian", "1").c_str()));
-    SetSpeedThresholdCaching(atof(F.Get("SpeedThresholdCaching", "1").c_str()));
-    SetSpeedThresholdMapping(atof(F.Get("SpeedThresholdMapping", "1").c_str()));
+    SetSpeedThresholdCar(F.Get("SpeedThresholdCar", "2").ToDouble());
+    SetSpeedThresholdBike(F.Get("SpeedThresholdBike", "1.5").ToDouble());
+    SetSpeedThresholdPedestrian(F.Get("SpeedThresholdPedestrian", "1").ToDouble());
+    SetSpeedThresholdCaching(F.Get("SpeedThresholdCaching", "1").ToDouble());
+    SetSpeedThresholdMapping(F.Get("SpeedThresholdMapping", "1").ToDouble());
     // GPS receiver lag
-    SetGPSReceiverLag(atoi(F.Get("GPSReceiverLag", "0").c_str()));
+    SetGPSReceiverLag(F.Get("GPSReceiverLag", "0").ToInt());
     // Watchdog
-    SetWatchdogTimeout(Max(0, 1000*atoi(F.Get("WatchdogTimeout", "0").c_str())));
+    SetWatchdogTimeout(Max(0, 1000*F.Get("WatchdogTimeout", "0").ToInt()));
     // GPSReconnectTimeout
-    SetGPSReconnectTimeout(Max(0, atoi(F.Get("GPSReconnectTimeout", "1000").c_str())));
+    SetGPSReconnectTimeout(Max(0, F.Get("GPSReconnectTimeout", "1000").ToInt()));
     // Font Sizes
-    SetPOIFontSize(atoi(F.Get("POIFontSize", "16").c_str()));
-    SetScaleFontSize(atoi(F.Get("ScaleFontSize", "16").c_str()));
-    SetDebugFontSize(atoi(F.Get("DebugFontSize", "16").c_str()));
-    SetCitySmallFontSize(atoi(F.Get("CitySmallFontSize", "16").c_str()));
-    SetCityMediumFontSize(atoi(F.Get("CityMediumFontSize", "18").c_str()));
-    SetCityLargeFontSize(atoi(F.Get("CityLargeFontSize", "20").c_str()));
+    SetPOIFontSize(F.Get("POIFontSize", "16").ToInt());
+    SetScaleFontSize(F.Get("ScaleFontSize", "16").ToInt());
+    SetDebugFontSize(F.Get("DebugFontSize", "16").ToInt());
+    SetCitySmallFontSize(F.Get("CitySmallFontSize", "16").ToInt());
+    SetCityMediumFontSize(F.Get("CityMediumFontSize", "18").ToInt());
+    SetCityLargeFontSize(F.Get("CityLargeFontSize", "20").ToInt());
     // POI display size
-    SetPOIDisplaySize(atoi(F.Get("POIDisplaySize", "20").c_str()));
+    SetPOIDisplaySize(F.Get("POIDisplaySize", "20").ToInt());
     // Background
     SetPOIBGType(Str2BGType(F.Get("POIBackgroundType", "Area")));
     SetCityBGType(Str2BGType(F.Get("CityBackgroundType", "Area")));
@@ -455,9 +455,8 @@ bool CXOptions::InterpretCoordinates(CXStringASCII CoorString, CXCoor &Coor) {
     CXStringASCII LatStr = ExtractFirstToken(CoorString, ';');
     if(LatStr.IsEmpty())
         return false;
-    /// \todo check for deg mode
-    double dLon = atof(LonStr.c_str());
-    double dLat = atof(LatStr.c_str());
+    double dLon = StringToCoor(LonStr);
+    double dLat = StringToCoor(LatStr);
     Coor = CXCoor(dLon, dLat);
     return true;
 }

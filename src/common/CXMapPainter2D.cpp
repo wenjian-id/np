@@ -75,6 +75,7 @@ E_WAY_TYPE WayOrder[e_Way_EnumCount] = {
     e_Way_BorderThick,
     e_Way_BorderMedium,
     e_Way_BorderThin,
+    e_Way_Path,
 };
 
 E_AREA_TYPE AreaOrder[e_Area_EnumCount] = {
@@ -105,8 +106,8 @@ CXMapPainter2D::CXMapPainter2D() :
     double HystMaxOffsetRel = CXOptions::Instance()->GetHystMaxOffsetRel();
     bool oAutoZoom = ExtractFirstToken(AutoZoomString, ';') == "ON";
     while(!AutoZoomString.IsEmpty()) {
-        double dSpeed = atof(ExtractFirstToken(AutoZoomString, ';').c_str());
-        double dMeterPerPixel = atof(ExtractFirstToken(AutoZoomString, ';').c_str());
+        double dSpeed = ExtractFirstToken(AutoZoomString, ';').ToDouble();
+        double dMeterPerPixel = ExtractFirstToken(AutoZoomString, ';').ToDouble();
         // compute delta
         double delta = Min(HystMaxOffsetAbs, HystMaxOffsetRel*dSpeed);
         m_AutoZoomLevels.AddInterval(dSpeed-delta, dSpeed+delta, dMeterPerPixel);

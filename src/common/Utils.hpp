@@ -43,7 +43,7 @@ class CXBitmap;
 // Versions
 const unsigned int MAPVERSION   = 0x00020000; // 0.2.0
 const unsigned int ZOOMVERSION  = 0x00010000; // 0.1.0
-const unsigned int SECTVERSION  = 0x00010300; // 0.1.3
+const unsigned int SECTVERSION  = 0x00010401; // 0.1.4 dev 1
 
 const unsigned int SCALE_FACTOR_UI32 = 1000000;     ///< oiu
 const char MINLAYER = -10;                          ///< Minimum value or layer.
@@ -550,6 +550,8 @@ enum E_POI_TYPE {       // must fit the values in the map file!!!
     e_POI_Shelter               = 0x002A,   ///< Shelter.
     e_POI_College               = 0x002B,   ///< College.
     e_POI_University            = 0x002C,   ///< University.
+    e_POI_Bench                 = 0x002D,   ///< Bench.
+    e_POI_WasteBasket           = 0x002E,   ///< Waste basket.
 
 /*
     e_POI_Recycling             = 0x0006,   ///< Recycling facilities.
@@ -654,7 +656,8 @@ enum E_WAY_TYPE {   // must fit the values in the map file!!!
     e_Way_BorderThick       = 0x18,     ///< oiu
     e_Way_BorderMedium      = 0x19,     ///< oiu
     e_Way_BorderThin        = 0x1A,     ///< oiu
-    e_Way_EnumCount         = 0x1B,     ///< oiu
+    e_Way_Path              = 0x1B,     ///< oiu
+    e_Way_EnumCount         = 0x1C,     ///< oiu
 };
 
 //-------------------------------------
@@ -687,5 +690,16 @@ enum E_AREA_TYPE {  // must fit the values in NaviPOWM!!!
  *  \param  rCol        Computed column.
  */
 void ComputePOIBMP(E_POI_TYPE ePOIType, size_t & BMPIdx, size_t & rRow, size_t & rCol);
+
+//-------------------------------------
+/**
+ * \brief Convert from coordinate string to coordinate
+ *
+ * Supported:
+ * g.dddd
+ * g.mm.ddd
+ * g.mm.ss.dddd
+ */
+double StringToCoor(const CXStringASCII &CoorString);
 
 #endif // __UTILS_HPP__

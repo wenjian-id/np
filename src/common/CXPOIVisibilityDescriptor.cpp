@@ -100,7 +100,9 @@ bool CXPOIVisibilityDescriptor::MustShowPOIType(E_POI_TYPE ePOIType) const {
         case e_POI_Telephone:
         case e_POI_PostBox:
         case e_POI_Toilets:
-        case e_POI_Shelter:                 oVisible = m_oShowAmenities; break;
+        case e_POI_Shelter:
+        case e_POI_Bench:
+        case e_POI_WasteBasket:             oVisible = m_oShowAmenities; break;
         // schools
         case e_POI_School:
         case e_POI_College:

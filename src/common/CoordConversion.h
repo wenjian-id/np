@@ -85,7 +85,7 @@ public:
      */
     Ellipsoid(int Id, const char* name, double radius, double ecc) {
         id = Id;
-        ellipsoidName = name; 
+        ellipsoidName = name;
         EquatorialRadius = radius;
         eccentricitySquared = ecc;
     }

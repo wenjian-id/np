@@ -41,7 +41,7 @@ void CXPenHolder::CreatePens() {
     for(size_t i=0; i<e_Way_EnumCount; i++) {
         m_Pens.Append(new CXPens());
     }
-        
+
     CXPens *pPens = NULL;
 
     // now create pens
@@ -113,11 +113,11 @@ void CXPenHolder::CreatePens() {
 
     pPens = m_Pens[e_Way_Footway];
     pPens->m_pBg        = NULL;
-    pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 1, CXRGB(0xD7, 0x93, 0x31));
+    pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 3, CXRGB(0xD7, 0x93, 0x31));
 
     pPens = m_Pens[e_Way_Pedestrian];
     /// \todo implement
-    pPens->m_pBg        = new CXPen(CXPen::e_Solid, 1, CXRGB(0x00, 0x00, 0x00));
+    pPens->m_pBg        = new CXPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0x00));
     pPens->m_pSegm      = NULL;
 
     pPens = m_Pens[e_Way_Steps];
@@ -128,35 +128,39 @@ void CXPenHolder::CreatePens() {
     pPens = m_Pens[e_Way_LivingStreet];
     pPens->m_pBg        = new CXPen(CXPen::e_Solid, 5, CXRGB(0xAA, 0xAA, 0xAA));
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 3, CXRGB(0xD0, 0xD0, 0xD0));
-    
+
     pPens = m_Pens[e_Way_Railway_Thick];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 4, CXRGB(0x50, 0x50, 0x50));
-    
+
     pPens = m_Pens[e_Way_Railway_Thin];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 2, CXRGB(0x50, 0x50, 0x50));
-    
+
     pPens = m_Pens[e_Way_Water_Thick];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 4, CXRGB(0x00, 0x00, 0xD0));
-    
+
     pPens = m_Pens[e_Way_Water_Thin];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 2, CXRGB(0x00, 0x00, 0xD0));
-    
+
     pPens = m_Pens[e_Way_BorderThick];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 5, CXRGB(0xDD, 0x00, 0x00));
-    
+
     pPens = m_Pens[e_Way_BorderMedium];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 3, CXRGB(0xDD, 0x00, 0x00));
-    
+
     pPens = m_Pens[e_Way_BorderThin];
     pPens->m_pBg        = NULL;
     pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 1, CXRGB(0xDD, 0x00, 0x00));
-    
+
+    pPens = m_Pens[e_Way_Path];
+    pPens->m_pBg        = NULL;
+    pPens->m_pSegm      = new CXPen(CXPen::e_Solid, 1, CXRGB(0xD7, 0x93, 0x31));
+
     for(size_t j=0; j<e_Way_EnumCount; j++) {
         m_ScaledPens.Append(new CXPens(*m_Pens[j]));
     }

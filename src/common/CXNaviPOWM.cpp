@@ -529,7 +529,7 @@ void CXNaviPOWM::OnMouseDown(int X, int Y) {
     // check Info bar buttons
     Cmd = m_pInfoBarTop->OnMouseDown(X - m_InfoBarTopPos.GetLeft(), Y - m_InfoBarTopPos.GetTop());
     // check for zoom buttons
-    if(CXOptions::Instance()->IsTargetSet() && (Cmd == e_CmdNone)) {
+    if(!CXOptions::Instance()->IsMapMovingManually() && (eDisplayMode == e_ModeMap) && CXOptions::Instance()->MustShowInfoBarRouting() && CXOptions::Instance()->IsTargetSet() && (Cmd == e_CmdNone)) {
         Cmd = m_pInfoBarRouting->OnMouseDown(X - m_InfoBarRoutingPos.GetLeft(), Y - m_InfoBarRoutingPos.GetTop());
     }
     // check for zoom buttons

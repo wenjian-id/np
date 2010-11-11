@@ -137,6 +137,11 @@ size_t CXStringASCII::Find(char cFind) const {
 }
 
 //-------------------------------------
+size_t CXStringASCII::Count(char cFind) const {
+    return tCBuffer::Count(cFind);
+}
+
+//-------------------------------------
 size_t CXStringASCII::ReverseFind(char cFind) const {
     return tCBuffer::ReverseFind(cFind);
 }
