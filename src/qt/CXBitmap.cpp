@@ -63,7 +63,7 @@ bool CXBitmap::IsNull() {
 }
 
 //-------------------------------------
-bool CXBitmap::Create(IDeviceContext *pDC, int Width, int Height) {
+bool CXBitmap::Create(IDeviceContext */*pDC*/, int Width, int Height) {
     Destroy();
     // create new image and new painter
     SetWidth(Width);
@@ -87,7 +87,7 @@ void CXBitmap::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXR
     // get old pen and brush
     QPen OldPen = m_pPainter->pen();
     QBrush OldBrush = m_pPainter->brush();
-    
+
     // create new pen
     QPen NewPen(Qt::SolidLine);
     NewPen.setWidth(1);
@@ -95,7 +95,7 @@ void CXBitmap::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXR
 
     // create new brush
     QBrush NewBrush(CXRGB2QColor(BrushColor), Qt::SolidPattern);
-    
+
     // select new pen and brush
     m_pPainter->setBrush(NewBrush);
     m_pPainter->setPen(NewPen);
@@ -129,11 +129,11 @@ void CXBitmap::DrawTextQString(const QString & Text, const tIRect & TheRect, con
 
     // draw background
     DrawRect(TheRect, BgColor, BgColor);
-    
+
     // get old pen and brush
     QPen OldPen = m_pPainter->pen();
     QBrush OldBrush = m_pPainter->brush();
-    
+
     // create new pen
     QPen NewPen(Qt::SolidLine);
     NewPen.setWidth(1);
@@ -155,7 +155,7 @@ void CXBitmap::DrawTextQString(const QString & Text, const tIRect & TheRect, con
     m_pPainter->setPen(NewPen);
     // draw text
     m_pPainter->drawText(Rect, Qt::AlignHCenter | Qt::AlignVCenter | Qt::TextSingleLine, Text, NULL);
-    
+
     // restore old pen and brush
     m_pPainter->setPen(OldPen);
     m_pPainter->setBrush(OldBrush);
@@ -251,7 +251,7 @@ void CXBitmap::DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRec
     TmpPainter.setPen(TmpPen);
     // draw rectangle
     TmpPainter.drawRect(Rect);
-    
+
     // draw text in glow color on temporary QImage
     TmpPen.setColor(CXRGB2QColor(GlowColor));
     TmpPainter.setPen(TmpPen);
@@ -321,7 +321,7 @@ bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRG
     // get old pen and brush
     QPen OldPen = m_pPainter->pen();
     QBrush OldBrush = m_pPainter->brush();
-    
+
     // create new pen
     QPen NewPen(Qt::SolidLine);
     NewPen.setWidth(1);
@@ -329,7 +329,7 @@ bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRG
 
     // create new brush
     QBrush NewBrush(CXRGB2QColor(FillColor), Qt::SolidPattern);
-    
+
     // select new pen and brush
     m_pPainter->setBrush(NewBrush);
     m_pPainter->setPen(NewPen);
@@ -357,7 +357,7 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
     // get old pen and brush
     QPen OldPen = m_pPainter->pen();
     QBrush OldBrush = m_pPainter->brush();
-    
+
     // create new pen
     QPen NewPen(Qt::SolidLine);
     NewPen.setWidth(1);
@@ -365,7 +365,7 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
 
     // create new brush
     QBrush NewBrush(CXRGB2QColor(FillColor), Qt::SolidPattern);
-    
+
     // select new pen and brush
     m_pPainter->setBrush(NewBrush);
     m_pPainter->setPen(NewPen);

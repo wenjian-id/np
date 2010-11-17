@@ -106,7 +106,7 @@ public:
     //-------------------------------------
     /**
      * \brief Relocate UTM coordinates to new UTM zone.
-     * 
+     *
      * Relocate UTM coordinates to new UTM zone.
      * \param   NewUTMZone  New UTM Zone.
      */
@@ -297,6 +297,12 @@ public:
      * \brief oiu
      *
      */
+    void InsertNode(size_t Index, CXNode *pNode);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     size_t GetNodeCount() const;
     //-------------------------------------
     /**
@@ -304,6 +310,21 @@ public:
      *
      */
     CXNode *GetNode(size_t Index) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    void RemoveNode(size_t Index);
+    //-------------------------------------
+    /**
+     * \brief Clone instance.
+     *
+     * Every node is cloned also!
+     *
+     * \return  The new node list.
+     */
+    CXOrderedNodeList *Clone() const;
 };
 
 typedef CXBuffer<CXOrderedNodeList *>   TNodeListBuffer;        ///< oiu

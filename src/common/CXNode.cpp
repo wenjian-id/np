@@ -176,6 +176,11 @@ void CXOrderedNodeList::AddNode(CXNode *pNode) {
 }
 
 //-------------------------------------
+void CXOrderedNodeList::InsertNode(size_t Index, CXNode *pNode) {
+    m_Nodes.InsertAt(Index, pNode);
+}
+
+//-------------------------------------
 size_t CXOrderedNodeList::GetNodeCount() const {
     return m_Nodes.GetSize();
 }
@@ -185,3 +190,17 @@ CXNode *CXOrderedNodeList::GetNode(size_t Index) const {
     return m_Nodes[Index];
 }
 
+//-------------------------------------
+void CXOrderedNodeList::RemoveNode(size_t Index) {
+    m_Nodes.RemoveAt(Index);
+}
+
+//-------------------------------------
+CXOrderedNodeList *CXOrderedNodeList::Clone() const {
+    CXOrderedNodeList *pResult = new CXOrderedNodeList();
+    pResult->m_Nodes.Resize(m_Nodes.GetSize());
+    for(size_t i=0; i<m_Nodes.GetSize(); i++) {
+        pResult->m_Nodes[i] = new CXNode(*(m_Nodes[i]));
+    }
+    return pResult;
+}

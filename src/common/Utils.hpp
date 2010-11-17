@@ -37,7 +37,8 @@ class CXRMCPacket;
 class CXGSAPacket;
 class CXSatelliteInfo;
 class CXBitmap;
-
+class CXArea;
+class CXOrderedNodeList;
 
 
 // Versions
@@ -705,5 +706,65 @@ void ComputePOIBMP(E_POI_TYPE ePOIType, size_t & BMPIdx, size_t & rRow, size_t &
  * \return              Coordinte. 0 on error.
  */
 double StringToCoor(const CXStringASCII &CoorString);
+
+//-------------------------------------
+/**
+ * \brief Delete ordered node list including all nodes.
+ *
+ * \param   pNodeList   Node list to delete.
+ */
+void DeleteOrderedNodeList(CXOrderedNodeList *pNodeList);
+
+//-------------------------------------
+/**
+ * \brief Delete area including all node lists and nodes.
+ *
+ * \param   pArea   Area to delete.
+ */
+void DeleteArea(CXArea *pArea);
+
+//-------------------------------------
+/**
+ * \brief Crop ordered node list on a specific X or Y axis.
+ *
+ * \todo comment
+ *
+ * \param   pOrderedNodeList    Node list to crop.
+ * \param   oHorizontal         true if horizontal line.
+ * \param   XY                  Crop limit.
+ * \param   oDeleteGreater      Delete nodes with coordinate greater than crop limit.
+ */
+void CropOrderedNodeListXY(CXOrderedNodeList *pOrderedNodeList, bool oHorizontal, int XY, bool oDeleteGreater);
+
+//-------------------------------------
+/**
+ * \brief Crop ordered node list to a specific rectangle.
+ *
+ * A new ordered node list is returned. If completely outside, NULL is returned!
+ * It has to be deleted after this call, including its nodes!!!
+ *
+ * \param   pOrderedNodeList    Node list to crop.
+ * \param   XMin                Min X coordinate.
+ * \param   YMin                Min Y coordinate.
+ * \param   XMax                Max X coordinate.
+ * \param   YMax                Max Y coordinate.
+ * \return                      New ordered node list. Has to be deleted after this call including its nodes.
+ */
+CXOrderedNodeList *CropOrderedNodeList(CXOrderedNodeList *pOrderedNodeList, int XMin, int YMin, int XMax, int YMax);
+
+//-------------------------------------
+/**
+ * \brief Crop area to a specific rectangle.
+ *
+ * A new area is returned. It has to be deleted after this call
+ *
+ * \param   pArea   Area to crop.
+ * \param   XMin    Min X coordinate.
+ * \param   YMin    Min Y coordinate.
+ * \param   XMax    Max X coordinate.
+ * \param   YMax    Max Y coordinate.
+ * \return          New area. Has to be deleted after this call.
+ */
+CXArea *CropArea(CXArea *pArea, int XMin, int YMin, int XMax, int YMax);
 
 #endif // __UTILS_HPP__

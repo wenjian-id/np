@@ -55,13 +55,13 @@ void CXMapPainterTest::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 
 
 //-------------------------------------
-void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width, int Height) {
+void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, IBitmap */*pTmpBMP*/, int Width, int Height) {
     // get copy of navigation data
     CXNaviData Data = GetPosition();
 
     PaintPackground(pBMP, Width, Height);
 
-/*  
+/*
     CXRGB C0(128, 42, 42);
 
     char buf[100];
@@ -74,7 +74,7 @@ void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Widt
     tIRect R2(0, 50, 200, 90);
     sprintf(buf, "%.2f %.2f %d %c", Data.GetCoor().GetUTMEasting(), Data.GetCoor().GetUTMNorthing(), Data.GetCoor().GetUTMZone(), Data.GetCoor().GetUTMLetter());
     pBMP->DrawTextASCII(buf, R2, C1, C2);
-    
+
     tIRect R3(0, 100, 200, 140);
     sprintf(buf, "%.2f %.2f %.2f", Data.GetUTMSpeed().GetSpeed(), Data.GetUTMSpeed().GetCos(), Data.GetUTMSpeed().GetSin());
     pBMP->DrawTextASCII(buf, R3, C1, C2);

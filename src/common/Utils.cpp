@@ -24,6 +24,7 @@
 #include "CXCoor.hpp"
 #include "CXSatelliteData.hpp"
 #include "CXBitmap.hpp"
+#include "CXArea.hpp"
 #include "OSSpecific.hpp"
 
 #include  <stdlib.h>
@@ -736,4 +737,148 @@ double StringToCoor(const CXStringASCII &CoorString) {
             Result = -Result;
     }
     return Result;
+}
+
+//-------------------------------------
+void DeleteOrderedNodeList(CXOrderedNodeList *pNodeList) {
+    size_t NodeCount = pNodeList->GetNodeCount();
+    for(size_t j=0; j<NodeCount; j++) {
+        CXNode *pNode = pNodeList->GetNode(j);
+        delete pNode;
+    }
+    delete pNodeList;
+}
+
+//-------------------------------------
+void DeleteArea(CXArea *pArea) {
+    // delete outer node list and its nodes
+    CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
+    DeleteOrderedNodeList(pOuterNodeList);
+    // delete holes and their nodes
+    for(size_t h=0; h<pArea->GetHoleCount(); h++) {
+        CXOrderedNodeList *pHole = pArea->GetHole(h);
+        DeleteOrderedNodeList(pHole);
+    }
+    // delete area;
+    delete pArea;
+}
+
+//-------------------------------------
+void CropOrderedNodeListXY(CXOrderedNodeList *pOrderedNodeList, bool oHorizontal, int XY, bool oDeleteGreater) {
+    if(pOrderedNodeList->GetNodeCount() == 0)
+        return;
+    bool oFirst = true;
+    bool oLastOutside = false;
+    size_t idx = 0;
+    CXBuffer<bool> OutsideList;
+    OutsideList.Resize(pOrderedNodeList->GetNodeCount());
+    while(idx <= pOrderedNodeList->GetNodeCount()) {
+        CXNode *pNode = pOrderedNodeList->GetNode(idx % pOrderedNodeList->GetNodeCount());
+        int x = pNode->GetDisplayX();
+        int y = pNode->GetDisplayY();
+        bool oOutside = false;
+        if(oHorizontal) {
+            if(oDeleteGreater && (y > XY))
+                oOutside = true;
+            if(!oDeleteGreater && (y < XY))
+                oOutside = true;
+        } else {
+            if(oDeleteGreater && (x > XY))
+                oOutside = true;
+            if(!oDeleteGreater && (x < XY))
+                oOutside = true;
+        }
+        OutsideList[idx % pOrderedNodeList->GetNodeCount()] = oOutside;
+        if(!oFirst) {
+            if(oOutside ^ oLastOutside) {
+                // last outside and this inside or other way
+                // compute intersection, insert it and go to next
+                CXNode *pNodeLast = pOrderedNodeList->GetNode(idx-1);
+                int x0 = pNodeLast->GetDisplayX();
+                int y0 = pNodeLast->GetDisplayY();
+                int x1 = 0;
+                int y1 = 0;
+                if(oHorizontal) {
+                    x1 = static_cast<int>(x0+1.0*(XY-y0)/(y-y0)*(x-x0));
+                    y1 = XY;
+                } else {
+                    x1 = XY;
+                    y1 = static_cast<int>(y0+1.0*(XY-x0)/(x-x0)*(y-y0));
+                }
+                CXNode *pNewNode = new CXNode(0,0);
+                pNewNode->SetDisplayX(x1);
+                pNewNode->SetDisplayY(y1);
+                if(idx == pOrderedNodeList->GetNodeCount()) {
+                    pOrderedNodeList->AddNode(pNewNode);
+                    OutsideList.Append(false);
+                } else {
+                    pOrderedNodeList->InsertNode(idx, pNewNode);
+                    OutsideList.InsertAt(idx, false);
+                }
+                idx++;
+            } else {
+                // last and this both inside or outside. go to next
+            }
+        }
+        // go to next
+        oLastOutside = oOutside;
+        oFirst = false;
+        idx++;
+    }
+    // now cleanup list.
+    idx = 0;
+    while(idx < pOrderedNodeList->GetNodeCount()) {
+        if(OutsideList[idx]) {
+            CXNode *pNode = pOrderedNodeList->GetNode(idx);
+            delete pNode;
+            pOrderedNodeList->RemoveNode(idx);
+            OutsideList.RemoveAt(idx);
+        } else {
+            // go to next
+            idx++;
+        }
+    }
+}
+
+//-------------------------------------
+CXOrderedNodeList *CropOrderedNodeList(CXOrderedNodeList *pOrderedNodeList, int XMin, int YMin, int XMax, int YMax) {
+    CXOrderedNodeList *pResult = pOrderedNodeList->Clone();
+    CropOrderedNodeListXY(pResult, false, XMin, false);
+    CropOrderedNodeListXY(pResult, true, YMin, false);
+    CropOrderedNodeListXY(pResult, false, XMax, true);
+    CropOrderedNodeListXY(pResult, true, YMax, true);
+    // check if enaugh points remained
+    if(pResult->GetNodeCount() < 3) {
+        // no
+        DeleteOrderedNodeList(pResult);
+        pResult = NULL;
+    }
+    return pResult;
+}
+
+//-------------------------------------
+CXArea *CropArea(CXArea *pArea, int XMin, int YMin, int XMax, int YMax) {
+    CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
+    // create outer node list
+    CXOrderedNodeList *pNewOuterNodeList = CropOrderedNodeList(pOuterNodeList, XMin, YMin, XMax, YMax);
+    if(pNewOuterNodeList == NULL) {
+        //completely outside!
+        return NULL;
+    }
+    // now create new area
+    CXArea *pNewArea = new CXArea(pArea->GetAreaType());
+    // set layer
+    pNewArea->SetLayer(pArea->GetLayer());
+    // set outer node list
+    pNewArea->SetOuterNodeList(pNewOuterNodeList);
+    // set holes
+    for(size_t h=0; h<pArea->GetHoleCount(); h++) {
+        CXOrderedNodeList *pHole = pArea->GetHole(h);
+        CXOrderedNodeList *pNewHole = CropOrderedNodeList(pHole, XMin, YMin, XMax, YMax);
+        if(pNewHole != NULL) {
+            // add hole
+            pNewArea->AddHole(pNewHole);
+        }
+    }
+    return pNewArea;
 }

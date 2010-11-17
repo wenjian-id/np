@@ -465,8 +465,8 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, IBitmap *pTmpBMP, TAreaBuffer *pAr
     int xMax = 0;
     int yMin = 0;
     int yMax = 0;
-	int Width = pBMP->GetWidth();
-	int Height = pBMP->GetHeight();
+    int Width = pBMP->GetWidth();
+    int Height = pBMP->GetHeight();
     bool oFirst = true;
     IBitmap *pDrawBMP = pBMP;
     if(oHolesPresent) {
@@ -477,49 +477,56 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, IBitmap *pTmpBMP, TAreaBuffer *pAr
     }
     // now iterate through Areas
     for(size_t i=0; i<cnt; i++) {
-        CXArea *pArea = (*pAreas)[i];
-        CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
-        size_t NodeCount = pOuterNodeList->GetNodeCount();
-        for(size_t j=0; j<NodeCount; j++) {
-            CXNode *pNode = pOuterNodeList->GetNode(j);
-            int x = pNode->GetDisplayX();
-            int y = pNode->GetDisplayY();
-            pX[j] = x;
-            pY[j] = y;
-            if(oFirst) {
-                xMin = x;
-                xMax = x;
-                yMin = y;
-                yMax = y;
-                oFirst = false;
-            } else {
-                xMin = Min(xMin, x);
-                xMax = Max(xMax, x);
-                yMin = Min(yMin, y);
-                yMax = Max(yMax, y);
+        CXArea *pArea = CropArea((*pAreas)[i], -1, -1, pDrawBMP->GetWidth()+1, pDrawBMP->GetHeight()+1);
+        // check if an area to draw exists
+        if(pArea != NULL) {
+            CXOrderedNodeList *pOuterNodeList = pArea->GetOuterNodeList();
+            size_t NodeCount = pOuterNodeList->GetNodeCount();
+            for(size_t j=0; j<NodeCount; j++) {
+                CXNode *pNode = pOuterNodeList->GetNode(j);
+                int x = pNode->GetDisplayX();
+                int y = pNode->GetDisplayY();
+                pX[j] = x;
+                pY[j] = y;
+                if(oFirst) {
+                    xMin = x;
+                    xMax = x;
+                    yMin = y;
+                    yMax = y;
+                    oFirst = false;
+                } else {
+                    xMin = Min(xMin, x);
+                    xMax = Max(xMax, x);
+                    yMin = Min(yMin, y);
+                    yMax = Max(yMax, y);
+                }
             }
-        }
-        pDrawBMP->Polygon(pX, pY, NodeCount, Color, Color);
-        for(size_t h=0; h<pArea->GetHoleCount(); h++) {
-            CXOrderedNodeList *pHole = pArea->GetHole(h);
-            size_t HoleNodeCount = pHole->GetNodeCount();
-            for(size_t j=0; j<HoleNodeCount; j++) {
-                CXNode *pNode = pHole->GetNode(j);
-                pX[j] = pNode->GetDisplayX();
-                pY[j] = pNode->GetDisplayY();
+            pDrawBMP->Polygon(pX, pY, NodeCount, Color, Color);
+            for(size_t h=0; h<pArea->GetHoleCount(); h++) {
+                CXOrderedNodeList *pHole = pArea->GetHole(h);
+                size_t HoleNodeCount = pHole->GetNodeCount();
+                for(size_t j=0; j<HoleNodeCount; j++) {
+                    CXNode *pNode = pHole->GetNode(j);
+                    pX[j] = pNode->GetDisplayX();
+                    pY[j] = pNode->GetDisplayY();
+                }
+                pDrawBMP->Polygon(pX, pY, HoleNodeCount, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
             }
-            pDrawBMP->Polygon(pX, pY, HoleNodeCount, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
+            // delete cropped area including all elements
+            DeleteArea(pArea);
         }
     }
     if(oHolesPresent) {
-        // DrawTransparent only for modified region
-		// make sure we do not exceed width and height, or on windows XP and mobile
-		// we won't see anything!
-		xMin = Max(0, Min(xMin, Width-1));
-		yMin = Max(0, Min(yMin, Height-1));
-		xMax = Max(0, Min(xMax, Width-1));
-		yMax = Max(0, Min(yMax, Height-1));
-        pBMP->DrawTransparent(pDrawBMP, xMin, yMin, xMin, yMin, xMax-xMin+1, yMax-yMin+1, COLOR_TRANSPARENT);
+        if((xMin != xMax) && (yMin != yMax)) {
+            // DrawTransparent only for modified region
+            // make sure we do not exceed width and height, or on windows XP and mobile
+            // we won't see anything!
+            xMin = Max(0, Min(xMin, Width-1));
+            yMin = Max(0, Min(yMin, Height-1));
+            xMax = Max(0, Min(xMax, Width-1));
+            yMax = Max(0, Min(yMax, Height-1));
+            pBMP->DrawTransparent(pDrawBMP, xMin, yMin, xMin, yMin, xMax-xMin+1, yMax-yMin+1, COLOR_TRANSPARENT);
+        }
     }
 }
 
