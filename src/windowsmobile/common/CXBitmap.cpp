@@ -58,7 +58,6 @@ bool CXBitmap::Create(IDeviceContext *pDC, int Width, int Height) {
         return false;
     if(m_hDC != NULL)
         return true;
-    SetDeviceContext(pDC);
     // unfortunately dynamic_cast is not supported by the embedded Visual C++ compiler
     CXDeviceContext *pDeviceContext = (CXDeviceContext *)(pDC);
     SetWidth(Width);

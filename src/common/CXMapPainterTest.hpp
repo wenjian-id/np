@@ -41,7 +41,7 @@ protected:
      * \brief oiu
      *
      */
-    virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height);
+    virtual void OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width, int Height);
     //-------------------------------------
     /**
      * \brief oiu

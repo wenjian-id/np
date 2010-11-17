@@ -442,7 +442,7 @@ void CXMapPainter2D::DrawOneways(IBitmap *pBMP, TWayBuffer *pWays, E_WAY_TYPE eW
 }
 
 //-------------------------------------
-void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType) {
+void CXMapPainter2D::DrawAreas(IBitmap *pBMP, IBitmap *pTmpBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType) {
     if(pAreas == NULL)
         return;
 
@@ -465,12 +465,13 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
     int xMax = 0;
     int yMin = 0;
     int yMax = 0;
+	int Width = pBMP->GetWidth();
+	int Height = pBMP->GetHeight();
     bool oFirst = true;
     IBitmap *pDrawBMP = pBMP;
     if(oHolesPresent) {
-        pDrawBMP = new CXBitmap();
-        pDrawBMP->Create(pBMP->GetDeviceContext(), pBMP->GetWidth(), pBMP->GetHeight());
-        tIRect ClientRect(0,0,pDrawBMP->GetWidth(),pDrawBMP->GetHeight());
+        pDrawBMP = pTmpBMP;
+        tIRect ClientRect(0,0,Width,Height);
         // draw backgound
         pDrawBMP->DrawRect(ClientRect, COLOR_TRANSPARENT, COLOR_TRANSPARENT);
     }
@@ -512,8 +513,13 @@ void CXMapPainter2D::DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE e
     }
     if(oHolesPresent) {
         // DrawTransparent only for modified region
+		// make sure we do not exceed width and height, or on windows XP and mobile
+		// we won't see anything!
+		xMin = Max(0, Min(xMin, Width-1));
+		yMin = Max(0, Min(yMin, Height-1));
+		xMax = Max(0, Min(xMax, Width-1));
+		yMax = Max(0, Min(yMax, Height-1));
         pBMP->DrawTransparent(pDrawBMP, xMin, yMin, xMin, yMin, xMax-xMin+1, yMax-yMin+1, COLOR_TRANSPARENT);
-        delete pDrawBMP;
     }
 }
 
@@ -779,7 +785,7 @@ void CXMapPainter2D::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 }
 
 //-------------------------------------
-void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
+void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width, int Height) {
 
     CXExactTime StartTime;
 
@@ -998,7 +1004,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, int Width, int Height) {
         size_t i=0;
         // draw areas
         for(i=0; i< e_Area_EnumCount; i++) {
-            DrawAreas(pBMP, m_DrawAreas[AreaOrder[i]], AreaOrder[i]);
+            DrawAreas(pBMP, pTmpBMP, m_DrawAreas[AreaOrder[i]], AreaOrder[i]);
         }
         // now draw way bg
         for(i=0; i< e_Way_EnumCount; i++) {

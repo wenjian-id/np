@@ -101,7 +101,7 @@ private:
      * \brief oiu
      *
      */
-    void DrawAreas(IBitmap *pBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType);
+    void DrawAreas(IBitmap *pBMP, IBitmap *pTmpBMP, TAreaBuffer *pAreas, E_AREA_TYPE eAreaType);
     //-------------------------------------
     /**
      * \brief Draw map scale.
@@ -184,7 +184,7 @@ protected:
      * \brief oiu
      *
      */
-    virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height);
+    virtual void OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width, int Height);
     //-------------------------------------
     /**
      * \brief oiu

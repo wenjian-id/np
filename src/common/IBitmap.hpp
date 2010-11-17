@@ -38,7 +38,6 @@ class CXPen;
  */
 class IBitmap {
 private:
-    IDeviceContext  *m_pDeviceContext;  ///< oiu
     int             m_Width;            ///< oiu
     int             m_Height;           ///< oiu
     CXStringASCII   m_FileName;         ///< oiu
@@ -46,12 +45,6 @@ private:
     IBitmap(const IBitmap &);                           ///< Not used.
     const IBitmap & operator = (const IBitmap &);       ///< Not used.
 protected:
-    //-------------------------------------
-    /**
-     * \brief oiu
-     *
-     */
-    void SetDeviceContext(IDeviceContext *NewValue);
     //-------------------------------------
     /**
      * \brief oiu
@@ -85,12 +78,6 @@ public:
      * Destructor.
      */
     virtual ~IBitmap();
-    //-------------------------------------
-    /**
-     * \brief oiu
-     *
-     */
-    IDeviceContext *GetDeviceContext() const;
     //-------------------------------------
     /**
      * \brief oiu

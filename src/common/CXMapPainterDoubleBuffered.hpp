@@ -42,6 +42,7 @@ private:
     CXBitmap            m_Bitmap2;              ///< oiu
     CXBitmap            *m_pDrawBitmap;         ///< oiu
     CXBitmap            *m_pFinishedBitmap;     ///< oiu
+	CXBitmap			m_TmpBMP;				///< oiu
     int                 m_iSwitchFlag;          ///< oiu
     mutable CXRWLock    m_RWLock;               ///< Synchronization object.
     //-------------------------------------
@@ -65,7 +66,7 @@ protected:
      * \brief oiu
      *
      */
-    virtual void OnInternalPaint(IBitmap *pBMP, int Width, int Height) = 0;
+    virtual void OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width, int Height) = 0;
     //-------------------------------------
     /**
      * \brief oiu

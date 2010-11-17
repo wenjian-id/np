@@ -25,7 +25,6 @@
 
 //-------------------------------------
 IBitmap::IBitmap() :
-    m_pDeviceContext(NULL),
     m_Width(0),
     m_Height(0)
 {
@@ -33,11 +32,6 @@ IBitmap::IBitmap() :
 
 //-------------------------------------
 IBitmap::~IBitmap() {
-}
-
-//-------------------------------------
-void IBitmap::SetDeviceContext(IDeviceContext *NewValue) {
-    m_pDeviceContext = NewValue;
 }
 
 //-------------------------------------
@@ -53,11 +47,6 @@ void IBitmap::SetHeight(int NewValue) {
 //-------------------------------------
 void IBitmap::SetFileName(const CXStringASCII & FileName) {
     m_FileName = FileName;
-}
-
-//-------------------------------------
-IDeviceContext *IBitmap::GetDeviceContext() const {
-    return m_pDeviceContext;
 }
 
 //-------------------------------------

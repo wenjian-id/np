@@ -66,7 +66,6 @@ bool CXBitmap::IsNull() {
 bool CXBitmap::Create(IDeviceContext *pDC, int Width, int Height) {
     Destroy();
     // create new image and new painter
-    SetDeviceContext(pDC);
     SetWidth(Width);
     SetHeight(Height);
     m_pImage =new QImage(GetWidth(), GetHeight(), QImage::Format_RGB32);
