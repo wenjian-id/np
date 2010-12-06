@@ -30,7 +30,6 @@
 #include "CXRGB.hpp"
 #include "CXDirection.hpp"
 
-
 class CXCoor;
 class CXGGAPacket;
 class CXRMCPacket;
@@ -766,5 +765,48 @@ CXOrderedNodeList *CropOrderedNodeList(CXOrderedNodeList *pOrderedNodeList, int 
  * \return          New area. Has to be deleted after this call.
  */
 CXArea *CropArea(CXArea *pArea, int XMin, int YMin, int XMax, int YMax);
+
+//-------------------------------------
+/**
+ * \brief Convert from integer value to string.
+ *
+ * \param   Value   Value to convert.
+ * \return          Converted value.
+ */
+template<class tData> tData IToA(int Value, size_t MinLength = 1) {
+    tData Result;
+    // check if negative number
+    bool oNegative = false;
+    if(Value < 0) {
+        oNegative = true;
+        Value = -Value;
+    }
+    // create string from end to start
+    while(Value != 0) {
+        int Rest = Value % 10;
+        Value = Value / 10;
+        if(Result.GetSize() == 0) {
+            // first character, so append
+            Result.Append('0'+Rest);
+        } else {
+            // insert character
+            Result.InsertAt(0, '0'+Rest);
+        }
+    }
+    // check if empty string
+    while(Result.GetSize() < MinLength) {
+        if(Result.GetSize() == 0) {
+            // first character, so append
+            Result.Append('0');
+        } else {
+            // insert
+            Result.InsertAt(0, '0');
+        }
+    }
+    // check if negative number
+    if(oNegative)
+        Result.InsertAt(0, '-');
+    return Result;
+}
 
 #endif // __UTILS_HPP__

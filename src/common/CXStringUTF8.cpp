@@ -118,9 +118,16 @@ void CXStringUTF8::operator += (const CXStringUTF8 &rOther) {
 }
 
 //-------------------------------------
+CXStringUTF8 CXStringUTF8::operator + (const char *pcString) {
+    CXStringUTF8 Result(*this);
+    Result.Append(reinterpret_cast<const unsigned char *>(pcString), strlen(pcString));
+    return Result;
+}
+
+//-------------------------------------
 void CXStringUTF8::Empty() {
     Clear();
-    ClearSTRBuffers();  
+    ClearSTRBuffers();
 }
 
 #define     MASKBITS        0x3F
@@ -132,12 +139,12 @@ void CXStringUTF8::Empty() {
 wchar_t *CXStringUTF8::w_str() const {
     if(m_wbuf == NULL) {
         CXBuffer<wchar_t> tmp;
-    
+
         const unsigned char *pBuf = GetBuffer();
-    
+
         for(size_t i=0; i < GetSize();) {
             wchar_t wt = 0;
-    
+
             // 1110xxxx 10xxxxxx 10xxxxxx
             if((pBuf[i] & MASK3BYTES) == MASK3BYTES) {
                 wt = ((pBuf[i] & 0x0F) << 12) | ((pBuf[i+1] & MASKBITS) << 6) | (pBuf[i+2] & MASKBITS);
@@ -156,10 +163,10 @@ wchar_t *CXStringUTF8::w_str() const {
             else {
                 continue;
             }
-    
+
             tmp.Append(wt);
         }
-    
+
         // convert to wchar_t.
         size_t Size = tmp.GetSize() + 1;
         m_wbuf = new wchar_t[Size];

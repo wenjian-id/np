@@ -110,6 +110,20 @@ void CXStringASCII::operator += (const CXStringASCII &rOther) {
 }
 
 //-------------------------------------
+CXStringASCII CXStringASCII::operator + (const char *pcString) {
+    CXStringASCII Result(*this);
+    Result.Append(pcString, strlen(pcString));
+    return Result;
+}
+
+//-------------------------------------
+CXStringASCII CXStringASCII::operator + (const CXStringASCII &rOther) {
+    CXStringASCII Result(*this);
+    Result.Append(rOther.GetBuffer(), rOther.GetSize());
+    return Result;
+}
+
+//-------------------------------------
 bool CXStringASCII::operator < (const CXStringASCII &rOther) const {
     return tCBuffer::operator < (rOther);
 }

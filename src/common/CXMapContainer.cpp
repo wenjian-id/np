@@ -124,20 +124,16 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLe
             // not supported version
             CXStringASCII ErrorMsg(FileName);
             ErrorMsg += " has wrong Version: ";
-            char buf[100];
             if((Version & 0xff) == 0) {
-                snprintf(   buf, sizeof(buf), "%d.%d.%d", 
-                            static_cast<unsigned char>((Version & 0xff000000) >> 24),
-                            static_cast<unsigned char>((Version & 0xff0000) >> 16),
-                            static_cast<unsigned char>((Version & 0xff00) >> 8));
+                ErrorMsg += IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff000000) >> 24)) + "." +
+                            IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff0000) >> 16)) + "." +
+                            IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff00) >> 8));
             } else {
-                snprintf(   buf, sizeof(buf), "%d.%d.%d-dev%d", 
-                            static_cast<unsigned char>((Version & 0xff000000) >> 24),
-                            static_cast<unsigned char>((Version & 0xff0000) >> 16),
-                            static_cast<unsigned char>((Version & 0xff00) >> 8),
-                            static_cast<unsigned char>((Version & 0xff)));
+                ErrorMsg += IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff000000) >> 24)) + "." +
+                            IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff0000) >> 16)) + "." +
+                            IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff00) >> 8)) +
+                            "-dev" + IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff)));
             }
-            ErrorMsg += buf;
     //      DoOutputErrorMessage(ErrorMsg.c_str());
             Result = false;
         } else {
@@ -190,20 +186,16 @@ bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL Z
         // not supported version
         CXStringASCII ErrorMsg;
         ErrorMsg += " has wrong Version: ";
-        char buf[100];
         if((Version & 0xff) == 0) {
-            snprintf(   buf, sizeof(buf), "%d.%d.%d", 
-                        static_cast<unsigned char>((Version & 0xff000000) >> 24),
-                        static_cast<unsigned char>((Version & 0xff0000) >> 16),
-                        static_cast<unsigned char>((Version & 0xff00) >> 8));
+            ErrorMsg += IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff000000) >> 24)) + "." +
+                        IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff0000) >> 16)) + "." +
+                        IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff00) >> 8));
         } else {
-            snprintf(   buf, sizeof(buf), "%d.%d.%d-dev%d", 
-                        static_cast<unsigned char>((Version & 0xff000000) >> 24),
-                        static_cast<unsigned char>((Version & 0xff0000) >> 16),
-                        static_cast<unsigned char>((Version & 0xff00) >> 8),
-                        static_cast<unsigned char>((Version & 0xff)));
+            ErrorMsg += IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff000000) >> 24)) + "." +
+                        IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff0000) >> 16)) + "." +
+                        IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff00) >> 8)) +
+                        "-dev" + IToA<CXStringASCII>(static_cast<unsigned char>((Version & 0xff)));
         }
-        ErrorMsg += buf;
 //      DoOutputErrorMessage(ErrorMsg.c_str());
         return false;
     } else {
@@ -280,7 +272,6 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key,
 //-------------------------------------
 void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSection *> & rResult) {
     CXReadLocker RL(&m_RWLock);
-    CXExactTime Start;
     if((m_Width != 0) && (m_Height != 0) && (m_pTOCSections != NULL)) {
         double dLonMin = Rect.GetLeft();
         double dLonMax = Rect.GetRight();
@@ -315,9 +306,4 @@ void CXTOCMapContainer::GetMapSections(const tDRect &Rect, CXBuffer<CXTOCMapSect
             }
         }
     }
-    CXExactTime Stop;
-    int diff = Stop - Start;
-    char buf[100];
-    snprintf(buf, sizeof(buf), "%d\n", diff);
-//  DoOutputDebugString(buf);
 }

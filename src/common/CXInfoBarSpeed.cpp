@@ -117,17 +117,16 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         Bmp.Create(pDC, Width, Height);
         Bmp.Draw(&m_CircleBmp, 0, 0);
         int MaxSpeed = static_cast<int>(m_NaviData.GetMaxSpeed());
-        char buf[10];
-        sprintf(buf, "%d", MaxSpeed);
+        CXStringASCII SpeedStr = IToA<CXStringASCII>(MaxSpeed);
         if(MaxSpeed < 10) {
             Bmp.SetFont(m_FontSize1, true);
-            Bmp.DrawTextASCII(buf, m_TextRect1, CXRGB(0x00, 0x00, 0x00));
+            Bmp.DrawTextASCII(SpeedStr, m_TextRect1, CXRGB(0x00, 0x00, 0x00));
         } else if(MaxSpeed < 100) {
             Bmp.SetFont(m_FontSize2, true);
-            Bmp.DrawTextASCII(buf, m_TextRect2, CXRGB(0x00, 0x00, 0x00));
+            Bmp.DrawTextASCII(SpeedStr, m_TextRect2, CXRGB(0x00, 0x00, 0x00));
         } else {
             Bmp.SetFont(m_FontSize3, true);
-            Bmp.DrawTextASCII(buf, m_TextRect3, CXRGB(0x00, 0x00, 0x00));
+            Bmp.DrawTextASCII(SpeedStr, m_TextRect3, CXRGB(0x00, 0x00, 0x00));
         }
         pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
     }

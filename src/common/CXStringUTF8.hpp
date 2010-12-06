@@ -125,6 +125,12 @@ public:
      * \brief oiu
      *
      */
+    CXStringUTF8 operator + (const char *pcString);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
     void Empty();
     //-------------------------------------
     /**

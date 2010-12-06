@@ -205,10 +205,12 @@ CXStringASCII CXMapLoaderThread::GetFileNameFromCoor(double dLon, double dLat) {
     char NS = 'N';
     if(dLat < 0 )
         NS = 'S';
-    char buf[100];
-    snprintf(buf, sizeof(buf), "%c%03d%c%02d.map", EW, NameLon, NS, NameLat);
     CXStringASCII Result=CXOptions::Instance()->GetDirectoryMaps();
-    Result+=buf;
+    Result += EW;
+    Result += IToA<CXStringASCII>(NameLon, 3);
+    Result += NS;
+    Result += IToA<CXStringASCII>(NameLat, 2);
+    Result +=".map";
     return Result;
 }
 
@@ -223,7 +225,7 @@ TMapSectionPtrArray CXMapLoaderThread::GetMapSectionsXYZ(const CXVisibleMapSecti
     double dLatMax = Descr.GetLatMax();
     // increment cache counters
     m_TOCCache.IncrementCounters();
-    // load all TOCMapContainer between 
+    // load all TOCMapContainer between
     CXBuffer<CXTOCMapSection*> MapSectionTOCs;
     for(double dLon = dLonMin; dLon < dLonMax+1; dLon++) {
         for(double dLat = dLatMin; dLat < dLatMax+1; dLat++) {

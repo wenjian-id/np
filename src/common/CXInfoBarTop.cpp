@@ -129,13 +129,10 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
     }
 
     if(!CXOptions::Instance()->MustShowLogo()) {
-
-        char buf[10];
         if(m_NaviData.IsConnected()) {
             // draw satellite count
             int NSat = CXSatellites::Instance()->GetNrSat();
-            snprintf(buf, 10, "%d", NSat);
-            CXStringASCII StrNSat(buf);
+            CXStringASCII StrNSat = IToA<CXStringASCII>(NSat);
             // compute color
             CXRGB NSatColor;
             if(NSat <= 5) {
@@ -189,8 +186,8 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         if(CXOptions::Instance()->MustShowCurrentTime()) {
             // get current time
             CXExactTime Now;
-            snprintf(buf, 10, "%02d:%02d", Now.GetHour(), Now.GetMinute());
-            StrTime = buf;
+            StrTime = IToA<CXStringASCII>(Now.GetHour(), 2) + ":" +
+                      IToA<CXStringASCII>(Now.GetMinute(), 2);
         } else {
             // set other color
             ClockColor = CXRGB(0xff, 0xff, 0xff);
@@ -205,8 +202,8 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
                 // minutes
                 Chunk = Tmp.Left(2);
                 int Minute = Chunk.ToInt();
-                snprintf(buf, 10, "%02d:%02d", Hour, Minute);
-                StrTime = buf;
+                StrTime = IToA<CXStringASCII>(Hour, 2) + ":" +
+                          IToA<CXStringASCII>(Minute, 2);
             }
         }
 

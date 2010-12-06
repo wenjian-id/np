@@ -427,8 +427,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
             // get satellite name
             CXSatelliteInfo *pSatInfo = SatInfo[i];
             int PRN = pSatInfo->GetPRN();
-            char buf[10];
-            snprintf(buf, sizeof(buf), "%d", PRN);
+            CXStringASCII PRNString = IToA<CXStringASCII>(PRN);
             // check if satellite is active
             bool Active = false;
             for(size_t j=0; j<ActiveSatellites.GetSize(); j++) {
@@ -448,11 +447,11 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
             SatRect.SetTop(SatBgRect.GetBottom() - pSatInfo->GetSNR()*SatBgRect.GetHeight()/100);
             Bmp.DrawRect(SatRect, SatColor, SatColor);
             // draw sat bar name
-            tIRect SatNameRect = Bmp.CalcTextRectASCII(buf, 2, 2);
+            tIRect SatNameRect = Bmp.CalcTextRectASCII(PRNString, 2, 2);
             tIRect Dest = SatNameRect;
             Dest.OffsetRect(SatRect.GetLeft() + SatRect.GetWidth()/2 - Dest.GetWidth()/2,
                             SatBgRect.GetTop());
-            Bmp.DrawTextASCII(buf, Dest, LineColor, SatBgColor);
+            Bmp.DrawTextASCII(PRNString, Dest, LineColor, SatBgColor);
             // draw satellite
             double alpha = (90 - pSatInfo->GetAzimuth())*deg2rad;
             double r = (1 - pSatInfo->GetElevation()/90.0)*Radius;
@@ -462,7 +461,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
             // draw satellite name
             Dest = SatNameRect;
             Dest.OffsetRect(XSat - SatNameRect.GetWidth() / 2, YSat + SatRadius + 2);
-            Bmp.DrawTextASCII(buf, Dest, SatColor, BgColor);
+            Bmp.DrawTextASCII(PRNString, Dest, SatColor, BgColor);
             x += dx;
             x += SatWidth;
         }

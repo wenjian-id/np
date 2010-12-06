@@ -51,11 +51,12 @@ bool CXSaver::PrepareSaving() {
 
             // get current time
             CXExactTime Now;
-            char buf[100];
             for(int i=0; i<100; i++) {
-                snprintf(buf, 100, "%04d%02d%02d%02d.%s", Now.GetYear(), Now.GetMonth(), Now.GetDay(), i, m_Suffix.c_str());
                 CXStringASCII FileName(CXOptions::Instance()->GetDirectorySave());
-                FileName+=buf;
+                FileName += IToA<CXStringASCII>(Now.GetYear(), 4) +
+                            IToA<CXStringASCII>(Now.GetMonth(), 2) +
+                            IToA<CXStringASCII>(Now.GetDay(), 2) +
+                            IToA<CXStringASCII>(i, 2) + "." + m_Suffix;
 
                 // check if file already exists
                 if(m_File.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
@@ -86,6 +87,6 @@ bool CXSaver::Close() {
     if(m_File.IsOpen()) {
         BeforeClose();
         m_File.Close();
-    }   
+    }
     return true;
 }

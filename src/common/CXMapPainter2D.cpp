@@ -738,19 +738,19 @@ void CXMapPainter2D::DrawScale(IBitmap *pBMP, int ScreenWidth, int ScreenHeight)
     YellowRect.OffsetRect(ScaleXPixel/2, 0);
     pBMP->DrawRect(YellowRect, CXRGB(0x00, 0x00, 0x00), CXRGB(0xff, 0xff, 0x00));
     // draw scale description
-    char buf[100];
+    CXStringASCII ScaleStr;
     if(exp < 1000) {
-        sprintf(buf, "%d m", ScaleX*exp);
+        ScaleStr = IToA<CXStringASCII>(ScaleX*exp) + " m";
     } else {
-        sprintf(buf, "%d km", ScaleX*(exp/1000));
+        ScaleStr = IToA<CXStringASCII>(ScaleX*(exp/1000)) + " km";
     }
     // calculate size of text
-    tIRect TextRect = pBMP->CalcTextRectASCII(buf, 2, 2);
+    tIRect TextRect = pBMP->CalcTextRectASCII(ScaleStr, 2, 2);
     // position it
     TextRect.OffsetRect(    ScreenWidth/2 - TextRect.GetWidth()/2,
                             BlackRect.GetTop() - TextRect.GetHeight() - 1);
     // and draw it
-    pBMP->DrawTextASCII(buf, TextRect, CXRGB(0x00, 0x00, 0x00), MAPBGCOLOR);
+    pBMP->DrawTextASCII(ScaleStr, TextRect, CXRGB(0x00, 0x00, 0x00), MAPBGCOLOR);
 }
 
 
@@ -1170,28 +1170,17 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width,
         // set font
         pBMP->SetFont(pOpt->GetDebugFontSize(), false);
         char buf[200];
-        snprintf(   buf, sizeof(buf), "W:%ld (%d), A: (%d)  TL:%ld",
-                    StopDrawWays-StartTime, WayCount, AreaCount,
-                    StopTrackLog-StopDrawWays);
-        CXStringASCII ttt = buf;
+        CXStringASCII ttt;
+        ttt += CXStringASCII("W: ") + IToA<CXStringASCII>(StopDrawWays-StartTime) + " ("+
+               IToA<CXStringASCII>(WayCount) + ") A: " +
+               IToA<CXStringASCII>(AreaCount) + " TL: "+
+               IToA<CXStringASCII>(StopTrackLog-StopDrawWays);
         tIRect TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, pOpt->GetCompassSize() + 20);
         int bottom = TextRect.GetBottom();
         pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
-        snprintf(buf, sizeof(buf), "LocatorTime: %d", CXDebugInfo::Instance()->GetLocatorTime());
-        ttt = buf;
-        TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-        TextRect.OffsetRect(0, bottom);
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
-        bottom = TextRect.GetBottom();
-        snprintf(buf, sizeof(buf), "Zoom: %d", pOpt->GetZoomLevel());
-        ttt = buf;
-        TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
-        TextRect.OffsetRect(0, bottom);
-        pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
-        bottom = TextRect.GetBottom();
-        snprintf(buf, sizeof(buf), "m/pixel: %0.2f", m_MeterPerPixel);
-        ttt = buf;
+        ttt = "LocatorTime: ";
+        ttt += IToA<CXStringASCII>(CXDebugInfo::Instance()->GetLocatorTime());
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
         pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);

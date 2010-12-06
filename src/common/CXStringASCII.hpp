@@ -135,6 +135,18 @@ public:
     void operator += (const CXStringASCII &rOther);
     //-------------------------------------
     /**
+     * \brief oiu
+     *
+     */
+    CXStringASCII operator + (const char *pcString);
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringASCII operator + (const CXStringASCII &rOther);
+    //-------------------------------------
+    /**
      * \brief Comparison operator.
      *
      * Compares this instance with other instance.

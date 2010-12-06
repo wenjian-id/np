@@ -102,8 +102,7 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         CXStringUTF8 StrHeight = buf;
         CXUTMSpeed UTMSpeed = m_NaviData.GetUTMSpeed();
         int Speed = static_cast<int>(floor(3.6*UTMSpeed.GetSpeed()));
-        snprintf(buf, sizeof(buf), "%d kmh", Speed);
-        CXStringUTF8 StrSpeed = buf;
+        CXStringUTF8 StrSpeed = IToA<CXStringUTF8>(Speed) + " kmh";
 
         Bmp.SetFont(m_TextHeightCoor, false);
 
