@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 #include "CXUTCTime.hpp"
+#include "Utils.hpp"
 
 #include  <stdio.h>
 
@@ -99,9 +100,7 @@ void CXUTCTime::FromString(const CXStringASCII &Value) {
 //-------------------------------------
 void CXUTCTime::FromDouble(double Value) {
     m_UTCTimeDouble = Value;
-    char buf[100];
-    snprintf(buf, sizeof(buf), "%010.3f", Value);
-    m_UTCTimeString = buf;
+    m_UTCTimeString = FToA<CXStringASCII>(Value, 10, 3);
 }
 
 //-------------------------------------

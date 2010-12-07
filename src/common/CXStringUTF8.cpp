@@ -118,9 +118,16 @@ void CXStringUTF8::operator += (const CXStringUTF8 &rOther) {
 }
 
 //-------------------------------------
-CXStringUTF8 CXStringUTF8::operator + (const char *pcString) {
+CXStringUTF8 CXStringUTF8::operator + (const char *pcString) const {
     CXStringUTF8 Result(*this);
     Result.Append(reinterpret_cast<const unsigned char *>(pcString), strlen(pcString));
+    return Result;
+}
+
+//-------------------------------------
+CXStringUTF8 CXStringUTF8::operator + (const CXStringUTF8 &rOther) const {
+    CXStringUTF8 Result(*this);
+    Result.Append(rOther.GetBuffer(), rOther.GetSize());
     return Result;
 }
 

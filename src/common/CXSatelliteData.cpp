@@ -472,12 +472,12 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
     tIRect GSARect = Bmp.CalcTextRectUTF8("GPGSA", 2, 2);
     tIRect GSVRect = Bmp.CalcTextRectUTF8("GPGSV", 2, 2);
     tIRect GPSDRect = Bmp.CalcTextRectUTF8("GPSD", 2, 2);
-    char HDOPbuf[25];
-    snprintf(HDOPbuf, sizeof(HDOPbuf), "HDOP: %0.2f", SatData.GetHDOP());
-    tIRect HDOPRect = Bmp.CalcTextRectASCII(HDOPbuf, 2, 2);
-    char VDOPbuf[25];
-    snprintf(VDOPbuf, sizeof(VDOPbuf), "VDOP: %0.2f", SatData.GetVDOP());
-    tIRect VDOPRect = Bmp.CalcTextRectASCII(VDOPbuf, 2, 2);
+    CXStringASCII HDOPStr = CXStringASCII("HDOP: ") +
+                            FToA<CXStringASCII>(SatData.GetHDOP(), 1, 2);
+    tIRect HDOPRect = Bmp.CalcTextRectASCII(HDOPStr, 2, 2);
+    CXStringASCII VDOPStr = CXStringASCII("VDOP: ") +
+                            FToA<CXStringASCII>(SatData.GetVDOP(), 1, 2);
+    tIRect VDOPRect = Bmp.CalcTextRectASCII(VDOPStr, 2, 2);
     int DOPWidth = Max(HDOPRect.GetWidth(), VDOPRect.GetWidth());
     // move rectangles
     GGARect.OffsetRect(0, RMCRect.GetHeight());
@@ -494,14 +494,14 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8("GPRMC", RMCRect, TextColor, BgColor);
+    Bmp.DrawTextASCII("GPRMC", RMCRect, TextColor, BgColor);
     if(SatData.WasGGADataReceived()) {
         TextColor = TelegramReceivedColor;
     } else {
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8("GPGGA", GGARect, TextColor, BgColor);
+    Bmp.DrawTextASCII("GPGGA", GGARect, TextColor, BgColor);
 
     if(SatData.WasGSADataReceived()) {
         TextColor = TelegramReceivedColor;
@@ -509,7 +509,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8("GPGSA", GSARect, TextColor, BgColor);
+    Bmp.DrawTextASCII("GPGSA", GSARect, TextColor, BgColor);
 
     if(SatData.WasGSVDataReceived()) {
         TextColor = TelegramReceivedColor;
@@ -517,7 +517,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8("GPGSV", GSVRect, TextColor, BgColor);
+    Bmp.DrawTextASCII("GPGSV", GSVRect, TextColor, BgColor);
 
     if(SatData.WasGPSDDataReceived()) {
         TextColor = TelegramReceivedColor;
@@ -525,7 +525,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8("GPSD", GPSDRect, TextColor, BgColor);
+    Bmp.DrawTextASCII("GPSD", GPSDRect, TextColor, BgColor);
 
     if(SatData.WasHDOPReceived()) {
         TextColor = TelegramReceivedColor;
@@ -533,14 +533,14 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8(HDOPbuf, HDOPRect, TextColor, BgColor);
+    Bmp.DrawTextASCII(HDOPStr, HDOPRect, TextColor, BgColor);
     if(SatData.WasVDOPReceived()) {
         TextColor = TelegramReceivedColor;
     } else {
         TextColor = TelegramNotReceivedColor;
     }
     // draw
-    Bmp.DrawTextUTF8(VDOPbuf, VDOPRect, TextColor, BgColor);
+    Bmp.DrawTextASCII(VDOPStr, VDOPRect, TextColor, BgColor);
     pDC->Draw(&Bmp, OffsetX, OffsetY);
 }
 

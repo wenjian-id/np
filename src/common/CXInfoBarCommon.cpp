@@ -90,16 +90,12 @@ void CXInfoBarCommon::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         // draw backgound
         Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
 
-        char buf[100];
         CXCoor Coor = m_NaviData.GetGPSCoor();
-        snprintf(buf, sizeof(buf), "%0.5f", Coor.GetLon());
-        CXStringUTF8 StrLon = buf;
+        CXStringUTF8 StrLon = FToA<CXStringUTF8>(Coor.GetLon(), 1, 5);
         StrLon.Append(DegUTF8, sizeof(DegUTF8));
-        snprintf(buf, sizeof(buf), "%0.5f", Coor.GetLat());
-        CXStringUTF8 StrLat = buf;
+        CXStringUTF8 StrLat = FToA<CXStringUTF8>(Coor.GetLat(), 1, 5);
         StrLat.Append(DegUTF8, sizeof(DegUTF8));
-        snprintf(buf, sizeof(buf), "%0.0f m", m_NaviData.GetHeight());
-        CXStringUTF8 StrHeight = buf;
+        CXStringUTF8 StrHeight = FToA<CXStringUTF8>(m_NaviData.GetHeight(), 1, 0) + " m";
         CXUTMSpeed UTMSpeed = m_NaviData.GetUTMSpeed();
         int Speed = static_cast<int>(floor(3.6*UTMSpeed.GetSpeed()));
         CXStringUTF8 StrSpeed = IToA<CXStringUTF8>(Speed) + " kmh";

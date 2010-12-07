@@ -107,23 +107,22 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
             Bmp.DrawTextUTF8(NameStr, NameRect, FGCOLOR, BGCOLOR);
 
             // draw distance
-            char buf[100];
+            CXStringUTF8 DistStr;
             if(dDist < 10) {
-                snprintf(buf, sizeof(buf), "%0.2f m", dDist); // resolution 1cm
+                DistStr = FToA<CXStringUTF8>(dDist, 1, 2) + " m"; // resolution 1cm
             } else if (dDist < 100) {
-                snprintf(buf, sizeof(buf), "%0.1f m", dDist); // resolution 10cm
+                DistStr = FToA<CXStringUTF8>(dDist, 1, 1) + " m"; // resolution 10cm
             } else if (dDist < 1000) {
-                snprintf(buf, sizeof(buf), "%0.0f m", dDist); // resolution 1m
+                DistStr = FToA<CXStringUTF8>(dDist, 1, 0) + " m"; // resolution 1m
             } else if (dDist < 10000) {
-                snprintf(buf, sizeof(buf), "%0.2f km", dDist/1000); // resolution 10m
+                DistStr = FToA<CXStringUTF8>(dDist/1000, 1, 2) + " km"; // resolution 10m
             } else if (dDist < 100000) {
-                snprintf(buf, sizeof(buf), "%0.1f km", dDist/1000); // resolution 100m
+                DistStr = FToA<CXStringUTF8>(dDist/1000, 1, 1) + " km"; // resolution 100m
             } else {
-                snprintf(buf, sizeof(buf), "%0.0f km", dDist/1000); // resolution 1km
+                DistStr = FToA<CXStringUTF8>(dDist/1000, 1, 0) + " km"; // resolution 1km
             }
             Bmp.SetFont(m_TextHeightDist, false);
             // position string bottom right adjusted
-            CXStringUTF8 DistStr(buf);
             tIRect DistRect = Bmp.CalcTextRectUTF8(DistStr, 4, 0);
             DistRect.OffsetRect(Width - DistRect.GetWidth(), Height - DistRect.GetHeight());
             Bmp.DrawTextUTF8(DistStr, DistRect, FGCOLOR, BGCOLOR);

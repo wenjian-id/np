@@ -138,13 +138,13 @@ public:
      * \brief oiu
      *
      */
-    CXStringASCII operator + (const char *pcString);
+    CXStringASCII operator + (const char *pcString) const;
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    CXStringASCII operator + (const CXStringASCII &rOther);
+    CXStringASCII operator + (const CXStringASCII &rOther) const;
     //-------------------------------------
     /**
      * \brief Comparison operator.

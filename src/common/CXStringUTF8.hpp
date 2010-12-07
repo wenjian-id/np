@@ -125,7 +125,13 @@ public:
      * \brief oiu
      *
      */
-    CXStringUTF8 operator + (const char *pcString);
+    CXStringUTF8 operator + (const CXStringUTF8 &rOther) const;
+    //-------------------------------------
+    /**
+     * \brief oiu
+     *
+     */
+    CXStringUTF8 operator + (const char *pcString) const;
     //-------------------------------------
     /**
      * \brief oiu

@@ -22,6 +22,7 @@
 
 #include "CXSaverGPX.hpp"
 #include "CXExactTime.hpp"
+#include "Utils.hpp"
 
 //-------------------------------------
 CXSaverGPX::CXSaverGPX():
@@ -33,7 +34,7 @@ CXSaverGPX::CXSaverGPX():
     m_GPXHeader += "   xmlns=\"http://www.topografix.com/GPX/1/1\"\r\n";
     m_GPXHeader += "   xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">\r\n";
     m_GPXHeader += "<trk>\r\n<trkseg>\r\n";
-    
+
     m_GPXFooter += "</trkseg>\r\n</trk>\r\n</gpx>\r\n";
 }
 
@@ -66,10 +67,17 @@ bool CXSaverGPX::Write(double dLon, double dLat, double dHeight) {
     // now save data
     // save trkpt
     CXExactTime Now;
-    char buf[256];
-    int len = snprintf(buf, sizeof(buf), "<trkpt lon=\"%0.6f\" lat=\"%0.6f\"> <ele>%0.2f</ele> <time>%04d-%02d-%02dT%02d:%02d:%02dZ</time></trkpt>\r\n",
-                       dLon, dLat, dHeight, Now.GetYear(), Now.GetMonth(), Now.GetDay(), Now.GetHour(), Now.GetMinute(), Now.GetSecond());
-    if(m_File.Write((const unsigned char *)buf, len, Written) != CXFile::E_OK)
+    CXStringASCII Buf = CXStringASCII("<trkpt lon=\"") +
+                        FToA<CXStringASCII>(dLon, 1, 6) +  "\" lat=\"" +
+                        FToA<CXStringASCII>(dLat, 1, 6) +  "\"> <ele>" +
+                        FToA<CXStringASCII>(dHeight, 1, 2) +  "</ele> <time>" +
+                        IToA<CXStringASCII>(Now.GetYear(), 4) + "-" +
+                        IToA<CXStringASCII>(Now.GetMonth(), 2) + "-" +
+                        IToA<CXStringASCII>(Now.GetDay(), 2) + "T" +
+                        IToA<CXStringASCII>(Now.GetHour(), 2) + ":" +
+                        IToA<CXStringASCII>(Now.GetMinute(), 2) + ":" +
+                        IToA<CXStringASCII>(Now.GetSecond(), 2) + "Z</time></trkpt>\r\n";
+    if(m_File.Write((const unsigned char *)Buf.c_str(), Buf.GetSize(), Written) != CXFile::E_OK)
         return false;
     return true;
 }

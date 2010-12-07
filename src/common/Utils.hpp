@@ -30,6 +30,8 @@
 #include "CXRGB.hpp"
 #include "CXDirection.hpp"
 
+#include <math.h>
+
 class CXCoor;
 class CXGGAPacket;
 class CXRMCPacket;
@@ -802,6 +804,40 @@ template<class tData> tData IToA(int Value, size_t MinLength = 1) {
             // insert
             Result.InsertAt(0, '0');
         }
+    }
+    // check if negative number
+    if(oNegative)
+        Result.InsertAt(0, '-');
+    return Result;
+}
+
+//-------------------------------------
+/**
+ * \brief Convert from double value to string.
+ *
+ * \param   Value   Value to convert.
+ * \return          Converted value.
+ */
+template<class tData> tData FToA(double Value, size_t MinLength = 1, size_t MinDecimalLength = 1) {
+    // check if negative number
+    bool oNegative = false;
+    if(Value < 0) {
+        oNegative = true;
+        Value = -Value;
+    }
+    int Int = static_cast<int>(floor(Value));
+    double dRest = Value - Int;
+    for(size_t i=0; i<MinDecimalLength; i++) {
+        dRest = dRest*10;
+    }
+    int Rest = static_cast<int>(floor(dRest));
+    // convert Int
+    tData Result = IToA<tData>(Int, MinLength);
+    // convert Rest
+    tData ResultRest = IToA<tData>(Rest, MinDecimalLength);
+    // Append if necessary
+    if(MinDecimalLength != 0) {
+        Result = Result + "." + ResultRest;
     }
     // check if negative number
     if(oNegative)

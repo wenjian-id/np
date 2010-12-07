@@ -110,14 +110,14 @@ void CXStringASCII::operator += (const CXStringASCII &rOther) {
 }
 
 //-------------------------------------
-CXStringASCII CXStringASCII::operator + (const char *pcString) {
+CXStringASCII CXStringASCII::operator + (const char *pcString) const {
     CXStringASCII Result(*this);
     Result.Append(pcString, strlen(pcString));
     return Result;
 }
 
 //-------------------------------------
-CXStringASCII CXStringASCII::operator + (const CXStringASCII &rOther) {
+CXStringASCII CXStringASCII::operator + (const CXStringASCII &rOther) const {
     CXStringASCII Result(*this);
     Result.Append(rOther.GetBuffer(), rOther.GetSize());
     return Result;

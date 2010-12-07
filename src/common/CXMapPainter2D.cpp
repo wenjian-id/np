@@ -1169,7 +1169,6 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width,
     if(pOpt->IsDebugInfoFlagSet(CXOptions::e_DBGDrawTimes)) {
         // set font
         pBMP->SetFont(pOpt->GetDebugFontSize(), false);
-        char buf[200];
         CXStringASCII ttt;
         ttt += CXStringASCII("W: ") + IToA<CXStringASCII>(StopDrawWays-StartTime) + " ("+
                IToA<CXStringASCII>(WayCount) + ") A: " +
@@ -1185,8 +1184,7 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width,
         TextRect.OffsetRect(0, bottom);
         pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
         bottom = TextRect.GetBottom();
-        snprintf(buf, sizeof(buf), "MB: %0.2f", 1.0*GetFreeMem()/1024/1024);
-        ttt = buf;
+        ttt = CXStringASCII("MB: ") + FToA<CXStringASCII>(1.0*GetFreeMem()/1024/1024, 1, 2);
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
         pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
