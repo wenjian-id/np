@@ -55,7 +55,7 @@ void CXMapPainterTest::PaintPackground(IBitmap *pBMP, int Width, int Height) {
 
 
 //-------------------------------------
-void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, IBitmap */*pTmpBMP*/, int Width, int Height) {
+void CXMapPainterTest::OnInternalPaint(IBitmap *pBMP, IBitmap * /*pTmpBMP*/, int Width, int Height) {
     // get copy of navigation data
     CXNaviData Data = GetPosition();
 
