@@ -27,8 +27,8 @@
 #include "CXArea.hpp"
 #include "OSSpecific.hpp"
 
-#include  <stdlib.h>
-#include  <math.h>
+#include <stdlib.h>
+#include <math.h>
 
 static const char *pcGGABEGIN           = "$GPGGA";
 static const char *pcRMCBEGIN           = "$GPRMC";
@@ -311,6 +311,8 @@ bool ExtractGGAData(const CXStringASCII &NMEAPacket, CXGGAPacket & rGGAPacket) {
     CXStringASCII s = NMEAPacket;
     // remove $GGA
     ExtractFirstToken(s, ',');
+    // remove until '*'
+    s = ExtractFirstToken(s, '*');
     // UTC
     rGGAPacket.SetUTC(ExtractFirstToken(s, ','));
     // read latitude
@@ -401,6 +403,8 @@ bool ExtractRMCData(const CXStringASCII &NMEAPacket, CXRMCPacket & rRMCPacket) {
     CXStringASCII s = NMEAPacket;
     // remove $GGA
     ExtractFirstToken(s, ',');
+    // remove until '*'
+    s = ExtractFirstToken(s, '*');
     // UTC
     rRMCPacket.SetUTC(ExtractFirstToken(s, ','));
     // fix status
@@ -477,6 +481,8 @@ bool ExtractGSAData(const CXStringASCII &NMEAPacket, CXGSAPacket & rGSAPacket) {
     CXStringASCII s = NMEAPacket;
     // remove $GSA
     ExtractFirstToken(s, ',');
+    // remove until '*'
+    s = ExtractFirstToken(s, '*');
 
     // selection mode
     ExtractFirstToken(s, ',');
@@ -528,17 +534,16 @@ bool ExtractGSVData(const CXStringASCII &NMEAPacket, int &rNTelegrams, int & rNC
     // OK, GSV-Paket seems to be complete
     // now extract data
     CXStringASCII s = NMEAPacket;
-    // remove $GSA
+    // remove $GSV
     ExtractFirstToken(s, ',');
+    // remove until '*'
+    s = ExtractFirstToken(s, '*');
     // number of GSV telegram
     rNTelegrams = ExtractFirstToken(s, ',').ToInt();
     // current GSV telegram
     rNCurrentTelegram = ExtractFirstToken(s, ',').ToInt();
     // number of visible satellites
     rNSat = ExtractFirstToken(s, ',').ToInt();
-
-    // remove until '*'
-    s = ExtractFirstToken(s, '*');
 
     // now extract satellite infos
     while(!s.IsEmpty()) {
