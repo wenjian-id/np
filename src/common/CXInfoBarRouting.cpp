@@ -67,8 +67,12 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
     CXStringUTF8 TargetName = Target.GetName();
     CXCoor CurrentCoor;
     if(pOpt->MustSnapToWay()) {
-        // get coordinates from locator
-        CurrentCoor = m_NaviData.GetLocatedCoor();
+        // get coordinates from locator or corrected GPS coordinates
+        if(m_NaviData.HasFix()) {
+            CurrentCoor = m_NaviData.GetLocatedCoor();
+        } else {
+            CurrentCoor = m_NaviData.GetCorrectedGPSCoor();
+        }
     } else {
         // get corrected gps coordinates
         CurrentCoor = m_NaviData.GetCorrectedGPSCoor();

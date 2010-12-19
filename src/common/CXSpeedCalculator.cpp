@@ -154,8 +154,12 @@ void CXSpeedCalculator::SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCo
         } else {
             // moving. Set direction.
             // compute direction
-            // 0 is east, so use dx and dy
-            m_Speed.SetDirection(CXDirection(dx / dUnnormedSpeed, dy / dUnnormedSpeed));
+            // 0 is east, so use dx and dy, if they are correct
+            if((dx != 0) && (dy != 0)) {
+                m_Speed.SetDirection(CXDirection(dx / dUnnormedSpeed, dy / dUnnormedSpeed));
+            } else {
+                // something went wrong. Do not touch direction
+            }
         }
 
         m_LastValidSpeed = m_Speed;

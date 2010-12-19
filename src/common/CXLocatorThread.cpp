@@ -252,6 +252,7 @@ void CXLocatorThread::OnThreadLoop() {
                 if(m_oStartCoordinatesValid) {
                     // use start cordinates
                     m_NaviData.SetGPSCoor(m_StartCoordinates);
+                    m_NaviData.SetCorrectedGPSCoor(m_StartCoordinates);
                 } else {
                     // could not load start coordinates
                 }
@@ -318,7 +319,7 @@ void CXLocatorThread::OnThreadLoop() {
                 CXTrackLog::Instance()->AddCoordinate(dLon, dLat);
             }
         }
-        // locate 
+        // locate
         Locate();
         if(m_pNaviPOWM != NULL)
             m_pNaviPOWM->PositionChanged(m_NaviData);
@@ -371,7 +372,7 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
         FileName += pcLastCoorFileName;
         if(InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK) {
             // read data
-            t_uint32 ulLon = 0; 
+            t_uint32 ulLon = 0;
             t_uint32 ulLat = 0;
             if(ReadUI32(InFile, ulLon) && ReadUI32(InFile, ulLat)) {
                 // compute lon
@@ -559,7 +560,7 @@ void CXLocatorThread::Locate() {
 
                                     // max distance from endpoints to current position is 1000 m
                                     double dMax = 1000;
-                                    if( (fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) && 
+                                    if( (fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) &&
                                         (fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
                                     {
                                         // compute square segment length
