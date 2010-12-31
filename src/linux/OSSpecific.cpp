@@ -36,6 +36,6 @@ size_t GetFreeMem() {
     int res = sysinfo(&SINFO); 
     if(res < 0)
         return 0;
-    int FreeMem = SINFO.freeram + SINFO.sharedram + SINFO.bufferram;
+    size_t FreeMem = (size_t)SINFO.freeram + (size_t)SINFO.sharedram + (size_t)SINFO.bufferram;
     return FreeMem;
 }
