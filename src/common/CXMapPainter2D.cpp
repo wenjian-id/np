@@ -1184,7 +1184,8 @@ void CXMapPainter2D::OnInternalPaint(IBitmap *pBMP, IBitmap *pTmpBMP, int Width,
         TextRect.OffsetRect(0, bottom);
         pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);
         bottom = TextRect.GetBottom();
-        ttt = CXStringASCII("MB: ") + FToA<CXStringASCII>(1.0*GetFreeMem()/1024/1024, 1, 2);
+        int FreeMemMB = GetFreeMem()/1024/1024;
+        ttt = CXStringASCII("MB: ") + IToA<CXStringASCII>(FreeMemMB, 1);
         TextRect = pBMP->CalcTextRectASCII(ttt, 2, 2);
         TextRect.OffsetRect(0, bottom);
         pBMP->DrawTextASCII(ttt, TextRect, MAPFGCOLOR, MAPBGCOLOR);

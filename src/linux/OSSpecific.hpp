@@ -41,6 +41,6 @@ void TriggerWatchdog();
  * \brief oiu
  *
  */
-size_t GetFreeMem();
+t_uint64 GetFreeMem();
 
 #endif // __OSSPECIFIC_HPP__

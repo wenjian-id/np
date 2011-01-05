@@ -30,7 +30,7 @@ void TriggerWatchdog() {
 }
 
 //-------------------------------------
-size_t GetFreeMem() {
+t_uint64 GetFreeMem() {
     MEMORYSTATUS MS;
     GlobalMemoryStatus(&MS);
     return MS.dwAvailPhys;

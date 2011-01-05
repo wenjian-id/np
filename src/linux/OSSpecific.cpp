@@ -30,12 +30,12 @@ void TriggerWatchdog() {
 }
 
 //-------------------------------------
-size_t GetFreeMem() {
+t_uint64 GetFreeMem() {
     struct sysinfo SINFO;
     memset(&SINFO, 0, sizeof(SINFO));
     int res = sysinfo(&SINFO); 
     if(res < 0)
         return 0;
-    size_t FreeMem = (size_t)SINFO.freeram + (size_t)SINFO.sharedram + (size_t)SINFO.bufferram;
+    t_uint64 FreeMem = static_cast<t_uint64>(SINFO.freeram) + static_cast<t_uint64>(SINFO.sharedram) + static_cast<t_uint64>(SINFO.bufferram);
     return FreeMem;
 }
