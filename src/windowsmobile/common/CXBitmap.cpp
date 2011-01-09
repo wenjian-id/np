@@ -309,9 +309,10 @@ void CXBitmap::DrawLine(size_t Count, const int *pX, const int *pY) {
 }
 
 //-------------------------------------
-bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
-    if(IsNull())
-        return false;
+void CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) {
+    if(IsNull()) {
+        return;
+    }
     // get old colors
     COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(PenColor));
     COLORREF OldBkColor = ::SetBkColor(m_hDC, CXRGB2COLORREF(FillColor));
@@ -338,20 +339,22 @@ bool CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRG
     // restore old colors
     SetBkColor(m_hDC, OldBkColor);
     SetTextColor(m_hDC, OldTextColor);
-
-    return true;
 }
 
 //-------------------------------------
 bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) {
-    if(IsNull())
-        return false;
-    if(pX == NULL)
-        return false;
-    if(pY == NULL)
-        return false;
-    if(Count == 0)
-        return false;
+    if(IsNull()) {
+        return;
+    }
+    if(pX == NULL) {
+        return;
+    }
+    if(pY == NULL) {
+        return;
+    }
+    if(Count == 0) {
+        return;
+    }
 
     // get old colors
     COLORREF OldTextColor = ::SetTextColor(m_hDC, CXRGB2COLORREF(PenColor));
@@ -387,8 +390,6 @@ bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, co
     // restore old colors
     SetBkColor(m_hDC, OldBkColor);
     SetTextColor(m_hDC, OldTextColor);
-
-    return true;
 }
 
 //-------------------------------------

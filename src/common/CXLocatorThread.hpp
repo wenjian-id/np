@@ -142,7 +142,7 @@ private:
      * \brief oiu
      *
      */
-    bool LoadStartGPSCoordinates();
+    void LoadStartGPSCoordinates();
 protected:
     //-------------------------------------
     /**

@@ -23,19 +23,12 @@
 #include "Utils.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXMutexLocker.hpp"
-#include "CXStringASCII.hpp"
-#include "CXCoor.hpp"
-#include "CXUTMSpeed.hpp"
 #include "CXNaviPOWM.hpp"
 #include "CXPOWMMap.hpp"
 #include "CXOptions.hpp"
 #include "CXSatelliteData.hpp"
 #include "CXDebugInfo.hpp"
-#include "TargetIncludes.hpp"
-#include "CoordConstants.h"
 #include "CXTrackLog.hpp"
-
-#include <math.h>
 
 const int TIMEOUT_RECEIVE = 5; // seconds
 static const int SQUARE_MIN_SEGMENTSIZE = 25; // 5*5m
@@ -56,12 +49,13 @@ CXLocatorThread::CXLocatorThread() :
     m_oStartCoordinatesValid(false),
     m_pNaviPOWM(NULL)
 {
-    // load last received coordinates
+    // try to load last received coordinates
     LoadStartGPSCoordinates();
 }
 
 //-------------------------------------
 CXLocatorThread::~CXLocatorThread() {
+    m_pNaviPOWM = NULL;
 }
 
 //-------------------------------------
@@ -355,8 +349,12 @@ void CXLocatorThread::SaveLastReceivedGPSCoordinate() {
         FileName += pcLastCoorFileName;
         if(OutFile.Open(FileName.c_str(), CXFile::E_WRITE) == CXFile::E_OK) {
             // write data
-            WriteUI32(OutFile, ulLon);
-            WriteUI32(OutFile, ulLat);
+            if(!WriteUI32(OutFile, ulLon)) {
+                return;
+            }
+            if(!WriteUI32(OutFile, ulLat)) {
+                return;
+            }
         } else {
             // open error
         }
@@ -364,7 +362,7 @@ void CXLocatorThread::SaveLastReceivedGPSCoordinate() {
 }
 
 //-------------------------------------
-bool CXLocatorThread::LoadStartGPSCoordinates() {
+void CXLocatorThread::LoadStartGPSCoordinates() {
     m_oStartCoordinatesValid = false;
     if(CXOptions::Instance()->GetStartWithLastPosition() == CXOptions::e_SWLP_LastPos) {
         CXFile InFile;
@@ -394,7 +392,6 @@ bool CXLocatorThread::LoadStartGPSCoordinates() {
         m_StartCoordinates = CXOptions::Instance()->GetStartPosition();
         m_oStartCoordinatesValid = true;
     }
-    return m_oStartCoordinatesValid;
 }
 
 
@@ -409,8 +406,8 @@ void CXLocatorThread::Locate() {
         return;
 
     // A segment defined by two nodes Node1(Node1x, Node1y) and Node2(Node2x, Node2y)
-    // The received coordinate is defined by P(x0, y0).
-    // The nearest point to P(x0,y0) lying on the segment PS(PSx, PSy)
+    // The received coordinate is defined by P(X0, Y0).
+    // The nearest point to P(X0,Y0) lying on the segment PS(PSx, PSy)
 
     double PSx = 0;
     double PSy = 0;
@@ -426,7 +423,7 @@ void CXLocatorThread::Locate() {
     double Node2x = 0;
     double Node2y = 0;
     double SqSegLen = 0;        // square length of segment
-    double dSquareDist = 0;     // distance from x0,y0 to segment
+    double dSquareDist = 0;     // distance from X0,Y0 to segment
 
     double dLon = m_NaviData.GetCorrectedGPSCoor().GetLon();
     double dLat = m_NaviData.GetCorrectedGPSCoor().GetLat();
@@ -437,10 +434,10 @@ void CXLocatorThread::Locate() {
 
     // compute UTM coordinates
     char UTMLetterCurrent = 0;
-    double x0 = 0;
-    double y0 = 0;
+    double X0 = 0;
+    double Y0 = 0;
     int UTMZoneCurrent = UTMZoneNone;
-    LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, x0, y0);
+    LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, UTMZoneCurrent, UTMLetterCurrent, X0, Y0);
 
     // now get map sections for locator thread
     CXVisibleMapSectionDescr Descr(dLonMin, dLatMin, dLonMax, dLatMax, e_ZoomLevel_0);
@@ -471,9 +468,9 @@ void CXLocatorThread::Locate() {
     bool oForward = true;
     MapSectionSize = MapSections.GetSize();
     for(char Layer = MINLAYER; Layer <= MAXLAYER; Layer++) {
-        for(size_t idx=0; idx<MapSectionSize; idx++) {
-            if(LockedMapSections[idx]) {
-                CXMapSection *pMapSection = MapSections[idx].GetPtr();
+        for(size_t idx1=0; idx1<MapSectionSize; idx1++) {
+            if(LockedMapSections[idx1]) {
+                CXMapSection *pMapSection = MapSections[idx1].GetPtr();
                 if(pMapSection != NULL) {
                     // prepare locator
                     TWayBuffer *pWayBuffer = pMapSection->GetWayBuffer(Layer);
@@ -560,15 +557,15 @@ void CXLocatorThread::Locate() {
 
                                     // max distance from endpoints to current position is 1000 m
                                     double dMax = 1000;
-                                    if( (fabs(Node1x - x0) < dMax) && (fabs(Node1y - y0) < dMax) &&
-                                        (fabs(Node2x - x0) < dMax) && (fabs(Node2y - y0) < dMax))
+                                    if( (fabs(Node1x - X0) < dMax) && (fabs(Node1y - Y0) < dMax) &&
+                                        (fabs(Node2x - X0) < dMax) && (fabs(Node2y - Y0) < dMax))
                                     {
                                         // compute square segment length
                                         SqSegLen = (Node2x-Node1x)*(Node2x-Node1x)+(Node2y-Node1y)*(Node2y-Node1y);
                                         // only compute segments with at least SQUARE_MIN_SEGMENTSIZE length
                                         if(SqSegLen > SQUARE_MIN_SEGMENTSIZE) {
                                             // compute factor (Node1->PS)/SegLen = PS.Segment/(SegLen*SegLen)
-                                            double dFactor = ((x0-Node1x)*(Node2x-Node1x)+(y0-Node1y)*(Node2y-Node1y))/SqSegLen;
+                                            double dFactor = ((X0-Node1x)*(Node2x-Node1x)+(Y0-Node1y)*(Node2y-Node1y))/SqSegLen;
                                             if(dFactor<0) {
                                                 // projection of P on segment lies before Node1 so take Node1
                                                 PSx = Node1x;
@@ -588,7 +585,7 @@ void CXLocatorThread::Locate() {
                                             PSy = Node1y;
                                         }
                                         // compute square distance between P and PS
-                                        dSquareDist = (x0-PSx)*(x0-PSx) + (y0-PSy)*(y0-PSy);
+                                        dSquareDist = (X0-PSx)*(X0-PSx) + (Y0-PSy)*(Y0-PSy);
                                         if(dSquareDist <= MAXDIST*MAXDIST) {
                                             double dDist = sqrt(dSquareDist);
                                             // compute cos of angle between move vector and segment

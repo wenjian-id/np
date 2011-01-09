@@ -23,12 +23,8 @@
 #include "CXInfoBarSpeed.hpp"
 #include "CXDeviceContext.hpp"
 #include "CXOptions.hpp"
-#include "CXStringASCII.hpp"
-#include "CXStringUTF8.hpp"
 
 #include "CXPen.hpp"
-
-#include <math.h>
 
 //-------------------------------------
 CXInfoBarSpeed::CXInfoBarSpeed() :
@@ -55,7 +51,9 @@ void CXInfoBarSpeed::CreateBitmaps(CXDeviceContext *pDC) {
     int Width = GetWidth();
     int Height = GetHeight();
     // create bitmap
-    m_CircleBmp.Create(pDC, Width, Height);
+    if(!m_CircleBmp.Create(pDC, Width, Height)) {
+        return;
+    }
 
     // get client rect
     tIRect ClientRect(0,0,Width,Height);
@@ -114,20 +112,21 @@ void CXInfoBarSpeed::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
     if(!CXOptions::Instance()->MustShowLogo() && (m_NaviData.GetMaxSpeed() != 0) && !CXOptions::Instance()->IsMapMovingManually()) {
         // draw data
         CXBitmap Bmp;
-        Bmp.Create(pDC, Width, Height);
-        Bmp.Draw(&m_CircleBmp, 0, 0);
-        int MaxSpeed = static_cast<int>(m_NaviData.GetMaxSpeed());
-        CXStringASCII SpeedStr = IToA<CXStringASCII>(MaxSpeed);
-        if(MaxSpeed < 10) {
-            Bmp.SetFont(m_FontSize1, true);
-            Bmp.DrawTextASCII(SpeedStr, m_TextRect1, CXRGB(0x00, 0x00, 0x00));
-        } else if(MaxSpeed < 100) {
-            Bmp.SetFont(m_FontSize2, true);
-            Bmp.DrawTextASCII(SpeedStr, m_TextRect2, CXRGB(0x00, 0x00, 0x00));
-        } else {
-            Bmp.SetFont(m_FontSize3, true);
-            Bmp.DrawTextASCII(SpeedStr, m_TextRect3, CXRGB(0x00, 0x00, 0x00));
+        if(Bmp.Create(pDC, Width, Height)) {
+            Bmp.Draw(&m_CircleBmp, 0, 0);
+            int MaxSpeed = static_cast<int>(m_NaviData.GetMaxSpeed());
+            CXStringASCII SpeedStr = IToA<CXStringASCII>(MaxSpeed);
+            if(MaxSpeed < 10) {
+                Bmp.SetFont(m_FontSize1, true);
+                Bmp.DrawTextASCII(SpeedStr, m_TextRect1, CXRGB(0x00, 0x00, 0x00));
+            } else if(MaxSpeed < 100) {
+                Bmp.SetFont(m_FontSize2, true);
+                Bmp.DrawTextASCII(SpeedStr, m_TextRect2, CXRGB(0x00, 0x00, 0x00));
+            } else {
+                Bmp.SetFont(m_FontSize3, true);
+                Bmp.DrawTextASCII(SpeedStr, m_TextRect3, CXRGB(0x00, 0x00, 0x00));
+            }
+            pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
         }
-        pDC->DrawTransparent(&Bmp, OffsetX, OffsetY, COLOR_TRANSPARENT);
     }
 }

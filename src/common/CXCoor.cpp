@@ -39,7 +39,10 @@ CXCoor::CXCoor(double dLon, double dLat) :
 }
 
 //-------------------------------------
-CXCoor::CXCoor(const CXCoor &rOther) {
+CXCoor::CXCoor(const CXCoor &rOther) :
+    m_dLon(0),
+    m_dLat(0)
+{
     CopyFrom(rOther);
 }
 

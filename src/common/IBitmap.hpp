@@ -185,13 +185,13 @@ public:
      * \brief oiu
      *
      */
-    virtual bool DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) = 0;
+    virtual void DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRGB &FillColor) = 0;
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual bool Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) = 0;
+    virtual void Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) = 0;
     //-------------------------------------
     /**
      * \brief oiu

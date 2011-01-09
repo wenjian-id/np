@@ -27,8 +27,6 @@
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 
-#include <stdio.h>
-
 //-------------------------------------
 CXMapPainterDoubleBuffered::CXMapPainterDoubleBuffered() :
     m_Width(1),
@@ -41,6 +39,8 @@ CXMapPainterDoubleBuffered::CXMapPainterDoubleBuffered() :
 
 //-------------------------------------
 CXMapPainterDoubleBuffered::~CXMapPainterDoubleBuffered() {
+    m_pDrawBitmap = NULL;
+    m_pFinishedBitmap = NULL;
 }
 
 //-------------------------------------
@@ -50,7 +50,7 @@ void CXMapPainterDoubleBuffered::Resize(int Width, int Height) {
     m_Height = Height;
     m_Bitmap1.Destroy();
     m_Bitmap2.Destroy();
-	m_TmpBMP.Destroy();
+    m_TmpBMP.Destroy();
 }
 
 
@@ -100,10 +100,10 @@ void CXMapPainterDoubleBuffered::OnBuffersCreated(CXDeviceContext * /*pDC*/, int
 void CXMapPainterDoubleBuffered::CreateBuffers(CXDeviceContext *pDC, int Width, int Height) {
     m_Bitmap1.Destroy();
     m_Bitmap2.Destroy();
-	m_TmpBMP.Destroy();
+    m_TmpBMP.Destroy();
     m_Bitmap1.Create(pDC, Width, Height);
     m_Bitmap2.Create(pDC, Width, Height);
-	m_TmpBMP.Create(pDC, Width, Height);
+    m_TmpBMP.Create(pDC, Width, Height);
     OnBuffersCreated(pDC, Width, Height);
 }
 

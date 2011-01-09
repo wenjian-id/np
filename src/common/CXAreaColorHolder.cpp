@@ -35,22 +35,22 @@ CXAreaColorHolder::~CXAreaColorHolder() {
 //-------------------------------------
 void CXAreaColorHolder::CreateColors() {
 
-    for(size_t i=0; i<e_Way_EnumCount; i++) {
+    for(size_t i=0; i<static_cast<size_t>(e_Way_EnumCount); i++) {
         m_Colors.Append(new CXRGB());
     }
 
     // now create colors
     // area none
-    *m_Colors[e_Area_None]      = CXRGB(0x00, 0x00, 0x00);
+    *m_Colors[static_cast<size_t>(e_Area_None)]      = CXRGB(0x00, 0x00, 0x00);
     // water
-    *m_Colors[e_Area_Water]     = CXRGB(0x00, 0x00, 0xD0);
+    *m_Colors[static_cast<size_t>(e_Area_Water)]     = CXRGB(0x00, 0x00, 0xD0);
     // wood
-    *m_Colors[e_Area_Wood]      = CXRGB(0x00, 0xFF, 0x00);
+    *m_Colors[static_cast<size_t>(e_Area_Wood)]      = CXRGB(0x00, 0xFF, 0x00);
 }
 
 //-------------------------------------
 void CXAreaColorHolder::DestroyColors() {
-    for(size_t i=0; i<e_Way_EnumCount; i++) {
+    for(size_t i=0; i<static_cast<size_t>(e_Way_EnumCount); i++) {
         delete m_Colors[i];
     }
     m_Colors.Clear();
@@ -58,5 +58,5 @@ void CXAreaColorHolder::DestroyColors() {
 
 //-------------------------------------
 CXRGB CXAreaColorHolder::GetColor(E_AREA_TYPE eAreaType) const {
-    return *m_Colors[eAreaType];
+    return *m_Colors[static_cast<size_t>(eAreaType)];
 }

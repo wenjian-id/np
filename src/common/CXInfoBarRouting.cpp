@@ -24,10 +24,7 @@
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
 #include "CXOptions.hpp"
-#include "CXStringUTF8.hpp"
 #include "CXTransformationMatrix.hpp"
-
-#include <math.h>
 
 static const CXRGB BGCOLOR(0x00, 0x00, 0x00);
 static const CXRGB FGCOLOR(0xff, 0xff, 0x00);
@@ -87,7 +84,9 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         // create bitmap
         tIRect ClientRect(0,0,Width,Height);
         CXBitmap Bmp;
-        Bmp.Create(pDC, ClientRect.GetWidth(), ClientRect.GetHeight());
+        if(!Bmp.Create(pDC, ClientRect.GetWidth(), ClientRect.GetHeight())) {
+            return;
+        }
         CXStringUTF8 StrDist = "99999 km";
         m_TextHeightDist = CalcFontHeight(Bmp, StrDist, ClientRect);
     }
@@ -97,7 +96,9 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         // create bitmap
         tIRect ClientRect(0,0,Width,Height);
         CXBitmap Bmp;
-        Bmp.Create(pDC, ClientRect.GetWidth(), ClientRect.GetHeight());
+        if(!Bmp.Create(pDC, ClientRect.GetWidth(), ClientRect.GetHeight())) {
+            return;
+        }
 
         // draw backgound
         Bmp.DrawRect(ClientRect, BGCOLOR, BGCOLOR);
@@ -139,7 +140,7 @@ void CXInfoBarRouting::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
             // y upwards down
             TM.Scale(1, -1);
             // position to center
-            TM.Translate(Width/2, NameRect.GetHeight() + (Height-DistRect.GetHeight()-NameRect.GetHeight())/2);
+            TM.Translate(Width/2.0, NameRect.GetHeight() + (Height-DistRect.GetHeight()-NameRect.GetHeight())/2.0);
             CXCoorVector v;
             int X[4];
             int Y[4];
