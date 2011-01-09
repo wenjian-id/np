@@ -32,6 +32,8 @@ CXArea::CXArea(E_AREA_TYPE eAreaType):
 
 //-------------------------------------
 CXArea::~CXArea() {
+    // reset m_pOuterNodeList
+    m_pOuterNodeList = NULL;
 }
 
 //-------------------------------------

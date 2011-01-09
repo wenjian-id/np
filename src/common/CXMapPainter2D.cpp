@@ -25,11 +25,6 @@
 #include "CXWriteLocker.hpp"
 #include "CXExactTime.hpp"
 #include "CXOptions.hpp"
-#include "CoordConstants.h"
-#include "CXStringASCII.hpp"
-#include "CXPen.hpp"
-#include "CXTransformationMatrix.hpp"
-#include "TargetIncludes.hpp"
 #include "CXTrackLog.hpp"
 #include "CXReadLocker.hpp"
 #include "CXDebugInfo.hpp"
@@ -93,10 +88,10 @@ CXMapPainter2D::CXMapPainter2D() :
     m_pTargetBMP(NULL)
 {
     size_t i=0;
-    for(i=0; i<e_Way_EnumCount; i++) {
+    for(i=0; i<static_cast<size_t>(e_Way_EnumCount); i++) {
         m_DrawWays.Append(new TWayBuffer());
     }
-    for(i=0; i<e_Area_EnumCount; i++) {
+    for(i=0; i<static_cast<size_t>(e_Area_EnumCount); i++) {
         m_DrawAreas.Append(new TAreaBuffer());
     }
     UpdateZoomLevel();
@@ -569,7 +564,7 @@ void CXMapPainter2D::DrawCompass(IBitmap *pBMP, const CXTransformationMatrix2D &
 //-------------------------------------
 void CXMapPainter2D::DrawPOIs(IBitmap *pBMP, const TPOINodeBuffer &POINodes, int ScreenWidth, int ScreenHeight) {
     CXOptions *pOptions = CXOptions::Instance();
-    CXPOIVisibilityDescriptor POIVisDescr = pOptions->GetPOIVisibilityDescriptorByRef();
+    const CXPOIVisibilityDescriptor &POIVisDescr = pOptions->GetPOIVisibilityDescriptorByRef();
     int POIDisplaySize = pOptions->GetPOIDisplaySize();
     // iterate through POIs
     for(size_t n=0; n<POINodes.GetSize(); n++) {

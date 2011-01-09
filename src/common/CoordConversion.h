@@ -69,31 +69,4 @@ void UTMtoLL(int ReferenceEllipsoid, const double UTMEasting, const double UTMNo
  */
 char UTMLetterDesignator(double dLat);
 
-//-------------------------------------
-/**
- * \brief Class describing ellipsoids.
- *
- * Class describing ellipsoids.
- */
-class Ellipsoid {
-public:
-    //-------------------------------------
-    /**
-     * \brief oiu.
-     *
-     * oiu.
-     */
-    Ellipsoid(int Id, const char* name, double radius, double ecc) {
-        id = Id;
-        ellipsoidName = name;
-        EquatorialRadius = radius;
-        eccentricitySquared = ecc;
-    }
-    int id;                         ///< oiu
-    const char* ellipsoidName;      ///< oiu
-    double EquatorialRadius;        ///< oiu
-    double eccentricitySquared;     ///< oiu
-};
-
-
 #endif

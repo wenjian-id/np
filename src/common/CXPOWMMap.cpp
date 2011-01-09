@@ -22,9 +22,7 @@
 
 #include "CXPOWMMap.hpp"
 #include "CXOptions.hpp"
-#include "CXExactTime.hpp"
 #include "CXDebugInfo.hpp"
-#include "CXTransformationMatrix.hpp"
 
 
 //----------------------------------------------------------------------------
@@ -38,6 +36,7 @@ CXPOWMMap::CXPOWMMap() :
 
 //-------------------------------------
 CXPOWMMap::~CXPOWMMap() {
+    m_pMapLoaderThread = NULL;
 }
 
 //-------------------------------------
@@ -54,10 +53,16 @@ void CXPOWMMap::SetMapLoaderThread(CXMapLoaderThread *pMapLoaderThread) {
 
 //-------------------------------------
 TMapSectionPtrArray CXPOWMMap::GetMapSectionsDisplay(const CXVisibleMapSectionDescr &Descr) {
+    if(m_pMapLoaderThread == NULL) {
+        return TMapSectionPtrArray();
+    }
     return m_pMapLoaderThread->GetMapSectionsDisplay(Descr);
 }
 
 //-------------------------------------
 TMapSectionPtrArray CXPOWMMap::GetMapSectionsLocator(const CXVisibleMapSectionDescr &Descr) {
+    if(m_pMapLoaderThread == NULL) {
+        return TMapSectionPtrArray();
+    }
     return m_pMapLoaderThread->GetMapSectionsLocator(Descr);
 }

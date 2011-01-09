@@ -35,6 +35,7 @@ CXGPSProtocol::CXGPSProtocol() :
 
 //-------------------------------------
 CXGPSProtocol::~CXGPSProtocol() {
+    m_pInputChannel = NULL;
 }
 
 //-------------------------------------
@@ -52,7 +53,7 @@ unsigned char CXGPSProtocol::GetReceivedDataTypes() const {
 //-------------------------------------
 void CXGPSProtocol::ClearReceivedDataType(E_RECEIVED_DATA_TYPE eDataType) {
     CXMutexLocker ML(&m_Mutex);
-    m_ReceivedDataTypes &= ~eDataType;
+    m_ReceivedDataTypes &= ~static_cast<unsigned char>(eDataType);
 }
 
 //-------------------------------------
@@ -130,6 +131,9 @@ void CXGPSProtocol::FlushInput() {
 
 //-------------------------------------
 void CXGPSProtocol::SetGPSPosInfo(const CXGPSPosInfo &GPSPosInfo) {
+    // check if inputchannel exists
+    if(m_pInputChannel == NULL)
+        return;
     // check if UTC changed and timeout specified
     if((m_pInputChannel->GetForcedTimeout() > 0) && (m_LastReceivedUTC != GPSPosInfo.GetUTC())) {
         // new UTC. switch to timeout mode
@@ -153,11 +157,13 @@ void CXGPSProtocol::ProcessGPSPosInfo(const CXGPSPosInfo &GPSPosInfo) {
     // adjust UTC
     m_LastReceivedUTC = GPSPosInfo.GetUTC();
     // adjust flags
-    m_ReceivedDataTypes |= e_RcvPosInfo;
+    m_ReceivedDataTypes |= static_cast<unsigned char>(e_RcvPosInfo);
 }
 
 //-------------------------------------
 void CXGPSProtocol::SetGPSCourseInfo(const CXGPSCourseInfo &GPSCourseInfo) {
+    if(m_pInputChannel == NULL)
+        return;
     // check if UTC changed and timeout specified
     if((m_pInputChannel->GetForcedTimeout() > 0) && (m_LastReceivedUTC != GPSCourseInfo.GetUTC())) {
         // new UTC. switch to timeout mode
@@ -181,7 +187,7 @@ void CXGPSProtocol::ProcessGPSCourseInfo(const CXGPSCourseInfo &GPSCourseInfo) {
     // adjust UTC
     m_LastReceivedUTC = GPSCourseInfo.GetUTC();
     // adjust flags
-    m_ReceivedDataTypes |= e_RcvCourseInfo;
+    m_ReceivedDataTypes |= static_cast<unsigned char>(e_RcvCourseInfo);
 }
 
 //-------------------------------------
@@ -197,7 +203,7 @@ void CXGPSProtocol::ProcessGPSQualityInfo(const CXGPSQualityInfo &GPSQualityInfo
     // adjust time stamp
     m_GPSQualityInfo.SetNow();
     // adjust flags
-    m_ReceivedDataTypes |= e_RcvQualityInfo;
+    m_ReceivedDataTypes |= static_cast<unsigned char>(e_RcvQualityInfo);
 }
 
 //-------------------------------------

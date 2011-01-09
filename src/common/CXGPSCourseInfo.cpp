@@ -40,7 +40,11 @@ CXGPSCourseInfo::CXGPSCourseInfo(const CXStringASCII &UTC, bool oFix, double dSp
 }
 
 //-------------------------------------
-CXGPSCourseInfo::CXGPSCourseInfo(const CXGPSCourseInfo & rOther) {
+CXGPSCourseInfo::CXGPSCourseInfo(const CXGPSCourseInfo & rOther) :
+    m_oFix(false),
+    m_dSpeed(0.0),
+    m_dCourse(0.0)
+{
     CopyFrom(rOther);
 }
 

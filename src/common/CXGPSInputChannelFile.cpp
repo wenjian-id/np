@@ -68,15 +68,20 @@ bool CXGPSInputChannelFile::Read(unsigned char *pbBuffer, size_t Size, size_t &R
     if(!IsOpen())
         return false;
     // read data
-    if(!m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK)
+    if(m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK) {
         // read succeeded
-        return false;
+        return true;
+    }
     if(ReadSize != 0) {
         return true;
     }
     // read failure. reopen file
-    Close();
-    Open();
+    if(!Close()) {
+        return false;
+    }
+    if(!Open()) {
+        return false;
+    }
     // read again
     return m_File.Read(pbBuffer, Size, ReadSize) == CXFile::E_OK;
 }

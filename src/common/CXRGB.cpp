@@ -39,7 +39,11 @@ CXRGB::CXRGB(unsigned char R, unsigned char G, unsigned char B) :
 }
 
 //-------------------------------------
-CXRGB::CXRGB(const CXRGB &rOther) {
+CXRGB::CXRGB(const CXRGB &rOther) :
+    m_R(0),
+    m_G(0),
+    m_B(0)
+{
     CopyFrom(rOther);
 }
 

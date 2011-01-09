@@ -22,7 +22,6 @@
 
 #include "CXGPSProtocolNMEA.hpp"
 #include "CXSatelliteData.hpp"
-#include "CXNMEA.hpp"
 
 //-------------------------------------
 CXGPSProtocolNMEA::CXGPSProtocolNMEA():

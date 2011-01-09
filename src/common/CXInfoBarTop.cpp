@@ -23,7 +23,6 @@
 #include "CXInfoBarTop.hpp"
 #include "CXPen.hpp"
 #include "CXDeviceContext.hpp"
-#include "CXStringUTF8.hpp"
 #include "CXExactTime.hpp"
 #include "CXSatelliteData.hpp"
 #include "CXOptions.hpp"
@@ -57,7 +56,10 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
     int Height = GetHeight();
 
     // create bitmap
-    Bmp.Create(pDC, Width, Height);
+    if(!Bmp.Create(pDC, Width, Height)) {
+        return;
+    }
+
     CXRGB BgColor(0x00, 0x00, 0x00);
 
     // set new font size
@@ -107,24 +109,38 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         m_SaveRect.SetBottom(Height);
 
         // create new info bmp
-        m_InfoBmp.Create(pDC, m_InfoRect.GetWidth(), m_InfoRect.GetHeight());
+        if(!m_InfoBmp.Create(pDC, m_InfoRect.GetWidth(), m_InfoRect.GetHeight())) {
+            return;
+        }
         m_InfoBmp.LoadFromFile(CXOptions::Instance()->GetInfoFileName());
         // create new quit bmp
-        m_QuitBmp.Create(pDC, m_QuitRect.GetWidth(), m_QuitRect.GetHeight());
+        if(!m_QuitBmp.Create(pDC, m_QuitRect.GetWidth(), m_QuitRect.GetHeight())) {
+            return;
+        }
         m_QuitBmp.LoadFromFile(CXOptions::Instance()->GetQuitFileName());
         // create new minimize bmp
-        m_MinimizeBmp.Create(pDC, m_MinimizeRect.GetWidth(), m_MinimizeRect.GetHeight());
+        if(!m_MinimizeBmp.Create(pDC, m_MinimizeRect.GetWidth(), m_MinimizeRect.GetHeight())) {
+            return;
+        }
         m_MinimizeBmp.LoadFromFile(CXOptions::Instance()->GetMinimizeFileName());
         // create new save bmps
-        m_SaveOnBmp.Create(pDC, m_SaveRect.GetWidth(), m_SaveRect.GetHeight());
+        if(!m_SaveOnBmp.Create(pDC, m_SaveRect.GetWidth(), m_SaveRect.GetHeight())) {
+            return;
+        }
         m_SaveOnBmp.LoadFromFile(CXOptions::Instance()->GetSaveOnFileName());
-        m_SaveOffBmp.Create(pDC, m_SaveRect.GetWidth(), m_SaveRect.GetHeight());
+        if(!m_SaveOffBmp.Create(pDC, m_SaveRect.GetWidth(), m_SaveRect.GetHeight())) {
+            return;
+        }
         m_SaveOffBmp.LoadFromFile(CXOptions::Instance()->GetSaveOffFileName());
         // create new move bmp
-        m_MoveBmp.Create(pDC, m_MoveRect.GetWidth(), m_MoveRect.GetHeight());
+        if(!m_MoveBmp.Create(pDC, m_MoveRect.GetWidth(), m_MoveRect.GetHeight())){
+            return;
+        }
         m_MoveBmp.LoadFromFile(CXOptions::Instance()->GetMoveFileName());
         // create new move bmp
-        m_CurrentPosBmp.Create(pDC, m_MoveRect.GetWidth(), m_MoveRect.GetHeight());
+        if(!m_CurrentPosBmp.Create(pDC, m_MoveRect.GetWidth(), m_MoveRect.GetHeight())) {
+            return;
+        }
         m_CurrentPosBmp.LoadFromFile(CXOptions::Instance()->GetCurrentPosFileName());
     }
 
@@ -149,20 +165,21 @@ void CXInfoBarTop::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
 
         // draw zoom level
         int RectWidth = m_ZoomRect.GetWidth();
-        int dx = (RectWidth - (e_ZoomLevel_Count-1)) / e_ZoomLevel_Count;
+        int ZLC = static_cast<int>(e_ZoomLevel_Count);
+        int dx = (RectWidth - (ZLC-1)) / ZLC;
         int BarWidth = Max(0, dx-1);
-        int LeftOffset = (RectWidth - (e_ZoomLevel_Count*dx+(e_ZoomLevel_Count-1)))/2;
+        int LeftOffset = (RectWidth - (ZLC*dx+(ZLC-1)))/2;
         // start with rightmost bar
-        int StartOffset = LeftOffset + (e_ZoomLevel_Count-1)*dx;
+        int StartOffset = LeftOffset + (ZLC-1)*dx;
         int BorderY = 2;
         int MaxBarHeight = Height - BorderY;
         tIRect r(m_ZoomRect.GetLeft() + StartOffset, 0, BarWidth, MaxBarHeight);
-        int ZoomLevel = CXOptions::Instance()->GetZoomLevel();
+        int ZoomLevel = static_cast<int>(CXOptions::Instance()->GetZoomLevel());
         CXRGB BarOnColor(0x00, 0xFF, 0x00);
         CXRGB BarOffColor(0x00, 0x7F, 0x00);
         CXRGB AutomaticColor(0xFF, 0xFF, 0x00);
-        for(int i=0; i<e_ZoomLevel_Count; i++) {
-            int BarHeight = (e_ZoomLevel_Count-i)*(MaxBarHeight/e_ZoomLevel_Count);
+        for(int i=0; i<ZLC; i++) {
+            int BarHeight = (ZLC-i)*(MaxBarHeight/ZLC);
             r.SetTop(r.GetBottom() - BarHeight);
             if(i >= ZoomLevel) {
                 Bmp.DrawRect(r, BarOnColor, BarOnColor);

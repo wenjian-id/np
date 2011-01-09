@@ -22,7 +22,6 @@
 
 #include "CXSaver.hpp"
 #include "CXOptions.hpp"
-#include "CXExactTime.hpp"
 
 //-------------------------------------
 CXSaver::CXSaver(const char *pcSuffix):
@@ -83,10 +82,9 @@ bool CXSaver::PrepareSaving() {
 }
 
 //-------------------------------------
-bool CXSaver::Close() {
+void CXSaver::Close() {
     if(m_File.IsOpen()) {
         BeforeClose();
         m_File.Close();
     }
-    return true;
 }

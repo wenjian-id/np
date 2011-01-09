@@ -23,7 +23,7 @@
 #include "CXDirection.hpp"
 
 //-------------------------------------
-CXDirection::CXDirection(): 
+CXDirection::CXDirection():
     m_dCos(1),
     m_dSin(0)
 {
@@ -37,7 +37,10 @@ CXDirection::CXDirection(double dCos, double dSin):
 }
 
 //-------------------------------------
-CXDirection::CXDirection(const CXDirection &rOther) {
+CXDirection::CXDirection(const CXDirection &rOther) :
+    m_dCos(0),
+    m_dSin(0)
+{
     CopyFrom(rOther);
 }
 

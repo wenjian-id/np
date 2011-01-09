@@ -29,8 +29,6 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include "CoordConversion.h"
-
 const double UTMPI = 3.14159265;        ///< PI
 const double FOURTHPI = UTMPI / 4;      ///< PI/4
 const double deg2rad = UTMPI / 180;     ///< Conversion factor for deg -> rad
@@ -42,11 +40,37 @@ const int WGS84 = 23;                   ///< Used ellipsoid
 
 //-------------------------------------
 /**
+ * \brief Class describing ellipsoids.
+ *
+ * Class describing ellipsoids.
+ */
+class Ellipsoid {
+public:
+    //-------------------------------------
+    /**
+     * \brief oiu.
+     *
+     * oiu.
+     */
+    Ellipsoid(int Id, const char* name, double radius, double ecc) {
+        id = Id;
+        ellipsoidName = name;
+        EquatorialRadius = radius;
+        eccentricitySquared = ecc;
+    }
+    int id;                         ///< oiu
+    const char* ellipsoidName;      ///< oiu
+    double EquatorialRadius;        ///< oiu
+    double eccentricitySquared;     ///< oiu
+};
+
+//-------------------------------------
+/**
  * \brief Possible ellipsoids.
  *
  *  Possible ellipsoids.
  */
-static Ellipsoid ellipsoid[] = {//  id, Ellipsoid name, Equatorial Radius, square of eccentricity
+const Ellipsoid ellipsoid[] = {//  id, Ellipsoid name, Equatorial Radius, square of eccentricity
     Ellipsoid( -1, "Placeholder", 0, 0),//placeholder only, To allow array indices to match id numbers
     Ellipsoid( 1, "Airy", 6377563, 0.00667054),
     Ellipsoid( 2, "Australian National", 6378160, 0.006694542),

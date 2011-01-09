@@ -23,8 +23,6 @@
 #include "CXSpeedCalculator.hpp"
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
-#include "CoordConversion.h"
-#include "TargetIncludes.hpp"
 #include "Utils.hpp"
 
 #include <stdio.h>
@@ -100,7 +98,7 @@ void CXSpeedCalculator::SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCo
             count++;
     if(count > 1) {
         // compute speed
-        double x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+        double X1 = 0, X2 = 0, Y1 = 0, Y2 = 0;
         size_t dt1 = 0, dt2 = 0;
         double dUTCt1 = 0, dUTCt2 = 0;
         // take care, when more than one second between measurements
@@ -108,29 +106,29 @@ void CXSpeedCalculator::SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCo
         CXUTCTime UTCStartTime = m_pBuffer[count-1]->UTCTime();
         for(size_t i=0; i<count; i++) {
             if(i != count-1) {
-                x1 = x1 + m_pBuffer[i]->Data().GetUTMEasting();
-                y1 = y1 + m_pBuffer[i]->Data().GetUTMNorthing();
+                X1 = X1 + m_pBuffer[i]->Data().GetUTMEasting();
+                Y1 = Y1 + m_pBuffer[i]->Data().GetUTMNorthing();
                 dt1 = dt1 + (m_pBuffer[i]->TimeStamp()-StartTime);
                 dUTCt1 = dUTCt1 + (m_pBuffer[i]->UTCTime()-UTCStartTime).GetUTCTimeAsDouble();
             }
             if(i != 0) {
-                x2 = x2 + m_pBuffer[i]->Data().GetUTMEasting();
-                y2 = y2 + m_pBuffer[i]->Data().GetUTMNorthing();
+                X2 = X2 + m_pBuffer[i]->Data().GetUTMEasting();
+                Y2 = Y2 + m_pBuffer[i]->Data().GetUTMNorthing();
                 dt2 = dt2 + (m_pBuffer[i]->TimeStamp()-StartTime);
                 dUTCt2 = dUTCt2 + (m_pBuffer[i]->UTCTime()-UTCStartTime).GetUTCTimeAsDouble();
             }
         }
-        x1 = x1/(count-1);
-        y1 = y1/(count-1);
+        X1 = X1/(count-1);
+        Y1 = Y1/(count-1);
         dt1 = dt1/(count-1);
         dUTCt1 = dUTCt1/(count-1);
-        x2 = x2/(count-1);
-        y2 = y2/(count-1);
+        X2 = X2/(count-1);
+        Y2 = Y2/(count-1);
         dt2 = dt2/(count-1);
         dUTCt2 = dUTCt2/(count-1);
         // OK we have x,y, and time
-        double dx = x1 - x2;
-        double dy = y1 - y2;
+        double dx = X1 - X2;
+        double dy = Y1 - Y2;
         double dUTCt = dUTCt1 - dUTCt2;
         // convert to seconds
         dUTCt = dUTCt*24*60*60;
@@ -155,7 +153,7 @@ void CXSpeedCalculator::SetData(const CXUTCTime &UTC, const CXTimeStampData<CXCo
             // moving. Set direction.
             // compute direction
             // 0 is east, so use dx and dy, if they are correct
-            if((dx != 0) && (dy != 0)) {
+            if((dx != 0) && (dy != 0) && (fabs(dUnnormedSpeed) > EPSILON)) {
                 m_Speed.SetDirection(CXDirection(dx / dUnnormedSpeed, dy / dUnnormedSpeed));
             } else {
                 // something went wrong. Do not touch direction

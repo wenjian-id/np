@@ -24,8 +24,6 @@
 #include "CXDeviceContext.hpp"
 #include "CXBitmap.hpp"
 #include "CXOptions.hpp"
-#include "CXStringASCII.hpp"
-#include "CXStringUTF8.hpp"
 
 
 //-------------------------------------
@@ -48,7 +46,9 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
     int Height = GetHeight();
 
     // create bitmap
-    Bmp.Create(pDC, Width, Height);
+    if(!Bmp.Create(pDC, Width, Height)) {
+        return;
+    }
     CXRGB BgColor(0x00, 0x00, 0x00);
 
     // set new font size
@@ -65,11 +65,12 @@ void CXInfoBarBottom::OnPaint(CXDeviceContext *pDC, int OffsetX, int OffsetY) {
         CXStringUTF8 IntRef = m_NaviData.GetIntRef();
         CXStringUTF8 CombinedRef = Ref;
         if(!IntRef.IsEmpty()) {
-            if(Ref.IsEmpty())
+            if(Ref.IsEmpty()) {
                 CombinedRef = IntRef;
-            else
+            } else {
                 CombinedRef += CXStringUTF8(" / ");
                 CombinedRef += IntRef;
+            }
         }
         // draw combined ref
         tIRect RefRect = Bmp.CalcTextRectUTF8(CombinedRef, 4, 0);

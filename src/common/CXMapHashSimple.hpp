@@ -127,7 +127,7 @@ public:
     }
 };
 
-static const size_t DataSize = 256; ///< oiu
+#define CXMapHashSimple_DataSize 256
 
 //----------------------------------------------------------------------------
 /**
@@ -139,7 +139,7 @@ public:
     static CXPOSMapHashSimple<tKey>     NPOS;       ///< oiu
     static CXPOSMapHashSimple<tKey>     START;      ///< oiu
 private:
-    tMap<tKey, tValue>  *m_pData[DataSize]; ///< oiu
+    tMap<tKey, tValue>  *m_pData[CXMapHashSimple_DataSize]; ///< oiu
     //-------------------------------------
     CXMapHashSimple(const CXMapHashSimple &);                       ///< Not used.
     const CXMapHashSimple & operator = (const CXMapHashSimple &);   ///< Not used.
@@ -221,7 +221,7 @@ template<class tKey, class tValue> CXPOSMapHashSimple<tKey> CXMapHashSimple<tKey
 
 //-------------------------------------
 template<class tKey, class tValue> CXMapHashSimple<tKey, tValue> ::CXMapHashSimple() {
-    for(size_t i=0; i<DataSize; i++) {
+    for(size_t i=0; i<CXMapHashSimple_DataSize; i++) {
         m_pData[i] = new tMap<tKey, tValue>();
     }
 }
@@ -229,7 +229,7 @@ template<class tKey, class tValue> CXMapHashSimple<tKey, tValue> ::CXMapHashSimp
 //-------------------------------------
 template<class tKey, class tValue> CXMapHashSimple<tKey, tValue> ::~CXMapHashSimple() {
     RemoveAll();
-    for(size_t i=0; i<DataSize; i++) {
+    for(size_t i=0; i<CXMapHashSimple_DataSize; i++) {
         delete m_pData[i];
         m_pData[i] = NULL;
     }
@@ -238,7 +238,7 @@ template<class tKey, class tValue> CXMapHashSimple<tKey, tValue> ::~CXMapHashSim
 //-------------------------------------
 template<class tKey, class tValue> void CXMapHashSimple<tKey, tValue> ::RemoveAll() {
     // delete all elements
-    for(size_t i=0; i<DataSize; i++) {
+    for(size_t i=0; i<CXMapHashSimple_DataSize; i++) {
         m_pData[i]->RemoveAll();
     }
 }

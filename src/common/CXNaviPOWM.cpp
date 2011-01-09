@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "CXNaviPOWM.hpp"
-#include "Utils.hpp"
 #include "CXGPSRecvThread.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXMapPainterThread.hpp"
@@ -33,7 +32,6 @@
 #include "CXInfoBarCommon.hpp"
 #include "CXInfoBarRouting.hpp"
 #include "CXSatelliteData.hpp"
-#include "CXMutexLocker.hpp"
 #include "IMainWindow.hpp"
 #include "CXOptions.hpp"
 #include "CXDeviceContext.hpp"

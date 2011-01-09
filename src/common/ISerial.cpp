@@ -42,7 +42,12 @@ CXSerialPortConfig::CXSerialPortConfig(const CXStringASCII &SerialPort, unsigned
 }
 
 //-------------------------------------
-CXSerialPortConfig::CXSerialPortConfig(const CXSerialPortConfig &rOther) {
+CXSerialPortConfig::CXSerialPortConfig(const CXSerialPortConfig &rOther) :
+    m_ulBaudrate(4800),
+    m_ucDataBits(8),
+    m_eParity(SCP_NONE),
+    m_eStopBits(SCS_ONE)
+{
     CopyFrom(rOther);
 }
 

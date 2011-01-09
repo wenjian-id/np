@@ -39,6 +39,7 @@ CXWay::CXWay(E_WAY_TYPE eWayType, const CXStringUTF8 & Name, const CXStringUTF8 
 
 //-------------------------------------
 CXWay::~CXWay() {
+    m_pNodeList = NULL;
 }
 
 //-------------------------------------

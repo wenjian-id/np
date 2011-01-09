@@ -177,15 +177,6 @@ private:
     const CXMapSection & operator = (const CXMapSection &);     ///< Not used.
     //-------------------------------------
     /**
-     * \brief Load map version 0.1.2
-     *
-     *  Load map version 0.1.2
-     *  \param  InFile      File with map data.
-     *  \return             true on success
-     */
-    bool LoadMap_0_1_2(CXFile & InFile);
-    //-------------------------------------
-    /**
      * \brief Load map version 0.1.3
      *
      *  Load map version 0.1.3

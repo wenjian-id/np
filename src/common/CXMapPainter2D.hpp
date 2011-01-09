@@ -202,7 +202,7 @@ protected:
      * \brief oiu
      *
      */
-    virtual void UpdateZoomLevel();
+    void UpdateZoomLevel();
 public:
     //-------------------------------------
     /**

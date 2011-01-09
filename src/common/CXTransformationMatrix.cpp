@@ -38,7 +38,9 @@ CXCoorVector::CXCoorVector(double x, double y) :
 }
 
 //-------------------------------------
-CXCoorVector::CXCoorVector(const CXCoorVector & rOther) {
+CXCoorVector::CXCoorVector(const CXCoorVector & rOther) :
+    m_x(0), m_y(0)
+{
     CopyFrom(rOther);
 }
 
@@ -90,8 +92,8 @@ CXTransformationMatrix2D::CXTransformationMatrix2D() :
 }
 
 //-------------------------------------
-CXTransformationMatrix2D::CXTransformationMatrix2D( double a11, double a12, double a13, 
-                                                    double a21, double a22, double a23, 
+CXTransformationMatrix2D::CXTransformationMatrix2D( double a11, double a12, double a13,
+                                                    double a21, double a22, double a23,
                                                     double a31, double a32, double a33) :
     m_a11(a11), m_a12(a12), m_a13(a13),
     m_a21(a21), m_a22(a22), m_a23(a23),
@@ -100,7 +102,11 @@ CXTransformationMatrix2D::CXTransformationMatrix2D( double a11, double a12, doub
 }
 
 //-------------------------------------
-CXTransformationMatrix2D::CXTransformationMatrix2D(const CXTransformationMatrix2D &rOther) {
+CXTransformationMatrix2D::CXTransformationMatrix2D(const CXTransformationMatrix2D &rOther) :
+    m_a11(0), m_a12(0), m_a13(0),
+    m_a21(0), m_a22(0), m_a23(0),
+    m_a31(0), m_a32(0), m_a33(0)
+{
     CopyFrom(rOther);
 }
 

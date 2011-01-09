@@ -23,12 +23,16 @@
 #include "CXUTMSpeed.hpp"
 
 //-------------------------------------
-CXUTMSpeed::CXUTMSpeed() {
+CXUTMSpeed::CXUTMSpeed() :
+    m_dSpeed(0)
+{
     Reset();
 }
 
 //-------------------------------------
-CXUTMSpeed::CXUTMSpeed(const CXUTMSpeed &rOther) {
+CXUTMSpeed::CXUTMSpeed(const CXUTMSpeed &rOther) :
+    m_dSpeed(0)
+{
     CopyFrom(rOther);
 }
 

@@ -31,7 +31,10 @@ CXPen::CXPen(E_STYLE eStyle, int Width, const CXRGB & Color) :
 }
 
 //-------------------------------------
-CXPen::CXPen(const CXPen&rOther) {
+CXPen::CXPen(const CXPen&rOther) :
+    m_eStyle(e_Solid),
+    m_iWidth(1)
+{
     CopyFrom(rOther);
 }
 

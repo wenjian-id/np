@@ -37,7 +37,10 @@ CXGPSQualityInfo::CXGPSQualityInfo(double dHDOP, double dVDOP) :
 }
 
 //-------------------------------------
-CXGPSQualityInfo::CXGPSQualityInfo(const CXGPSQualityInfo & rOther) {
+CXGPSQualityInfo::CXGPSQualityInfo(const CXGPSQualityInfo & rOther) :
+    m_dHDOP(0.0),
+    m_dVDOP(0.0)
+{
     CopyFrom(rOther);
 }
 

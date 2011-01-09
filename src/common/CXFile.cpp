@@ -119,11 +119,16 @@ bool CXFile::IsOpen() const {
 //-------------------------------------
 CXFile::E_RESULTCODE CXFile::Read(unsigned char *pbBuffer, size_t Size, size_t &ReadSize) {
     // check already open
-    if(!IsOpen())
+    if(!IsOpen()) {
         return E_FILE_NOT_OPEN;
+    }
     // check argument
-    if(pbBuffer == NULL)
+    if(pbBuffer == NULL) {
         return E_INVALID_ARG;
+    }
+    if(m_pBuffer == NULL) {
+        return E_FILE_NOT_OPEN;
+    }
     ReadSize = 0;
     size_t BufferOffset = 0;
     // read and copy data
@@ -150,11 +155,11 @@ CXFile::E_RESULTCODE CXFile::Read(unsigned char *pbBuffer, size_t Size, size_t &
             // more data to copy, so try to read from file to buffer
             size_t ToRead = m_ReadAheadSize;
             /// \todo error handling
-            size_t Read = fread(m_pBuffer, sizeof(unsigned char), ToRead, m_File);
+            size_t DataRead = fread(m_pBuffer, sizeof(unsigned char), ToRead, m_File);
             // adjust offsets
             m_BufferOffset = 0;
-            m_BufferedSize = Read;
-            if(Read == 0)
+            m_BufferedSize = DataRead;
+            if(DataRead == 0)
                 // exit loop
                 Loop = false;
         }
@@ -167,11 +172,13 @@ CXFile::E_RESULTCODE CXFile::Read(unsigned char *pbBuffer, size_t Size, size_t &
 //-------------------------------------
 CXFile::E_RESULTCODE CXFile::Write(const unsigned char *pbBuffer, size_t Size, size_t &WriteSize) {
     // check already open
-    if(!IsOpen())
+    if(!IsOpen()) {
         return E_FILE_NOT_OPEN;
+    }
     // check argument
-    if(pbBuffer == NULL)
+    if(pbBuffer == NULL) {
         return E_INVALID_ARG;
+    }
     /// \todo error handling
     WriteSize = fwrite(pbBuffer, sizeof(unsigned char), Size, m_File);
     return E_OK;

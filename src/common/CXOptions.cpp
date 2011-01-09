@@ -21,12 +21,10 @@
  ***************************************************************************/
 
 #include "CXOptions.hpp"
-#include "Utils.hpp"
 #include "CXFileIni.hpp"
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 #include <OSSpecific.hpp>
-
 
 #include "CXPOWMMap.hpp"
 
@@ -44,7 +42,9 @@ CXFileConfig::CXFileConfig() :
 }
 
 //-------------------------------------
-CXFileConfig::CXFileConfig(const CXFileConfig &rOther) {
+CXFileConfig::CXFileConfig(const CXFileConfig &rOther) :
+    m_iTimeout(0)
+{
     CopyFrom(rOther);
 }
 
@@ -425,18 +425,19 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
         CXArray<CXStringASCII> Keys = F.GetKeysStartingWith("Target.");
         for(size_t i=0; i<Keys.GetSize(); i++) {
             CXStringASCII CompleteKey = Keys[i];
-            ExtractFirstToken(CompleteKey, '.');
+            DeleteFirstToken(CompleteKey, '.');
             int Key = ExtractFirstToken(CompleteKey, '.').ToInt();
             CXTarget Target;
-            m_Targets.Lookup(Key, Target);
-            if(CompleteKey == "NAME") {
-                Target.SetName(F.Get(Keys[i], "").c_str());
-                m_Targets.SetAt(Key, Target);
-            } else if(CompleteKey == "COOR") {
-                CXCoor Coor;
-                if(InterpretCoordinates(F.Get(Keys[i], ""), Coor)) {
-                    Target.SetCoor(Coor);
+            if(m_Targets.Lookup(Key, Target)) {
+                if(CompleteKey == "NAME") {
+                    Target.SetName(F.Get(Keys[i], "").c_str());
                     m_Targets.SetAt(Key, Target);
+                } else if(CompleteKey == "COOR") {
+                    CXCoor Coor;
+                    if(InterpretCoordinates(F.Get(Keys[i], ""), Coor)) {
+                        Target.SetCoor(Coor);
+                        m_Targets.SetAt(Key, Target);
+                    }
                 }
             }
         }
@@ -1214,37 +1215,37 @@ t_uint64 CXOptions::GetOSMValiFlags() const {
 //-------------------------------------
 bool CXOptions::IsOSMValiFlagSet(E_OSM_VALI eFlag) const {
     CXReadLocker RL(&m_RWLock);
-    return (m_OSMVali & eFlag) != 0;
+    return (m_OSMVali & static_cast<t_uint64>(eFlag)) != 0;
 }
 
 //-------------------------------------
 void CXOptions::SetOSMValiFlag(E_OSM_VALI eFlag) {
     CXWriteLocker WL(&m_RWLock);
-    m_OSMVali |= eFlag;
+    m_OSMVali |= static_cast<t_uint64>(eFlag);
 }
 
 //-------------------------------------
 void CXOptions::ClearOSMValiFlag(E_OSM_VALI eFlag) {
     CXWriteLocker WL(&m_RWLock);
-    m_OSMVali &= ~eFlag;
+    m_OSMVali &= ~static_cast<t_uint64>(eFlag);
 }
 
 //-------------------------------------
 bool CXOptions::IsDebugInfoFlagSet(E_DEBUGINFO eFlag) const {
     CXReadLocker RL(&m_RWLock);
-    return (m_DebugInfo & eFlag) != 0;
+    return (m_DebugInfo & static_cast<t_uint64>(eFlag)) != 0;
 }
 
 //-------------------------------------
 void CXOptions::SetDebugInfoFlag(E_DEBUGINFO eFlag) {
     CXWriteLocker WL(&m_RWLock);
-    m_DebugInfo |= eFlag;
+    m_DebugInfo |= static_cast<t_uint64>(eFlag);
 }
 
 //-------------------------------------
 void CXOptions::ClearDebugInfoFlag(E_DEBUGINFO eFlag) {
     CXWriteLocker WL(&m_RWLock);
-    m_DebugInfo &= ~eFlag;
+    m_DebugInfo &= ~static_cast<t_uint64>(eFlag);
 }
 
 //-------------------------------------
@@ -1440,7 +1441,7 @@ void CXOptions::SetCityBGType(E_BACKGROUND_TYPE NewValue) {
 }
 
 //-------------------------------------
-CXPOIVisibilityDescriptor & CXOptions::GetPOIVisibilityDescriptorByRef() {
+const CXPOIVisibilityDescriptor & CXOptions::GetPOIVisibilityDescriptorByRef() const {
     CXWriteLocker WL(&m_RWLock);
     return m_POIVisibilityDescriptor;
 }
@@ -1468,8 +1469,7 @@ CXTarget CXOptions::GetActiveTarget() const {
 void CXOptions::SwitchToNextTarget() {
     CXWriteLocker WL(&m_RWLock);
     CXTarget Dummy;
-    m_Targets.GetNext(m_ActiveTarget, Dummy);
-    if(m_ActiveTarget == CXMapHashSimple<int, CXTarget>::NPOS) {
+    if(m_Targets.GetNext(m_ActiveTarget, Dummy) == CXMapHashSimple<int, CXTarget>::NPOS) {
         // we reached the end. start from beginning.
         m_ActiveTarget = m_Targets.GetStart();
         m_Targets.GetNext(m_ActiveTarget, Dummy);
@@ -1479,9 +1479,4 @@ void CXOptions::SwitchToNextTarget() {
 //-------------------------------------
 void CXOptions::AddTarget(int Key, const CXTarget &NewValue) {
     m_Targets.SetAt(Key, NewValue);
-}
-
-//-------------------------------------
-void CXOptions::SetActiveTarget(int Key) {
-    m_Targets.GetPos(Key);
 }

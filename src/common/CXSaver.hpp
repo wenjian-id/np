@@ -67,7 +67,7 @@ protected:
      *
      * oiu
      */
-    bool Close();
+    void Close();
 public:
     //-------------------------------------
     /**

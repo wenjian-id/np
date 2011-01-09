@@ -24,7 +24,6 @@
 #include "CXReadLocker.hpp"
 #include "CXWriteLocker.hpp"
 #include "CXExactTime.hpp"
-#include "Utils.hpp"
 
 //----------------------------------------------------------------------------
 //-------------------------------------
@@ -94,7 +93,9 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLe
     bool Result = true;
     CXFile InFile;
     // reduce read ahead size to 100 bytes
-    InFile.SetReadAheadSize(100);
+    if(InFile.SetReadAheadSize(100) != CXFile::E_OK) {
+        return false;
+    }
     Result = (InFile.Open(FileName.c_str(), CXFile::E_READ) == CXFile::E_OK);
 
     t_uint32 MagicCode = 0;
@@ -111,15 +112,6 @@ bool CXTOCMapContainer::Load(const CXStringASCII & FileName, E_ZOOM_LEVEL ZoomLe
     // decide which load function to call
     // first of all check older versions
     if(Result) {
-/*
-    if(Version == 0x00000100) {
-        // v 0.1.1
-        Result = LoadMap0_1_1(InFile, FileName);
-    } else if(Version == 0x00010200) {
-        // v 0.1.2
-        Result = LoadMap0_1_2(InFile, FileName);
-    } else if(Version != ReqVersion) {
-*/
         if(Version != ReqVersion) {
             // not supported version
             CXStringASCII ErrorMsg(FileName);
@@ -173,15 +165,6 @@ bool CXTOCMapContainer::LoadTOCZoom(CXFile & rFile, t_uint32 Key, E_ZOOM_LEVEL Z
     bool Result = false;
     // decide which load function to call
     // first of all check older versions
-/*
-    if(Version == 0x00000100) {
-        // v 0.1.1
-        Result = LoadMap0_1_1(rFile, FileName);
-    } else if(Version == 0x00010200) {
-        // v 0.1.2
-        Result = LoadMap0_1_2(rFile, FileName);
-    } else if(Version != ReqVersion) {
-*/
     if(Version != ReqVersion) {
         // not supported version
         CXStringASCII ErrorMsg;
@@ -255,8 +238,9 @@ bool CXTOCMapContainer::LoadTOCZoom_CurrentVersion(CXFile & rFile, t_uint32 Key,
                 return false;
 
             // create key
-            t_uint64 Key64 = Key;
-            Key64 = (Key64 << 32) + (i<<16) + j;
+            t_uint64 Key64 = (static_cast<t_uint64>(Key) << 32) +
+                             (static_cast<t_uint64>(i) << 16) +
+                             j;
 
             double dLonMin = m_dBaseLon + 1.0*i/TOCSectionWidth;
             double dLatMin = m_dBaseLat + 1.0*j/TOCSectionHeight;

@@ -1293,7 +1293,7 @@ public:
      * \brief oiu
      *
      */
-    CXPOIVisibilityDescriptor & GetPOIVisibilityDescriptorByRef();
+    const CXPOIVisibilityDescriptor & GetPOIVisibilityDescriptorByRef() const;
     //-------------------------------------
     /**
      * \brief oiu
@@ -1328,16 +1328,6 @@ public:
      * \param   NewValue    The target.
      */
     void AddTarget(int Key, const CXTarget &NewValue);
-    //-------------------------------------
-    /**
-     * \brief Set active target.
-     *
-     * If key not valid, the first target is set active.
-     *
-     * \param   Key     The key.
-     *
-     */
-    void SetActiveTarget(int Key);
 };
 
 #endif // __CXOPTIONS_HPP__

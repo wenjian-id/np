@@ -33,17 +33,23 @@ CXUTCTime::CXUTCTime():
 }
 
 //-------------------------------------
-CXUTCTime::CXUTCTime(double UTCTime) {
-    FromDouble(UTCTime);
+CXUTCTime::CXUTCTime(double UTCTime) :
+    m_UTCTimeDouble(UTCTime)
+{
+    FromDouble(m_UTCTimeDouble);
 }
 
 //-------------------------------------
-CXUTCTime::CXUTCTime(const CXStringASCII & UTCTime) {
+CXUTCTime::CXUTCTime(const CXStringASCII & UTCTime) :
+    m_UTCTimeDouble(0)
+{
     FromString(UTCTime);
 }
 
 //-------------------------------------
-CXUTCTime::CXUTCTime(const CXUTCTime &rOther) {
+CXUTCTime::CXUTCTime(const CXUTCTime &rOther) :
+    m_UTCTimeDouble(0)
+{
     CopyFrom(rOther);
 }
 
