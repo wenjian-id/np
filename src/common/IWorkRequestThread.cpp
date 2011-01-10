@@ -33,12 +33,6 @@ IWorkRequestThread::IWorkRequestThread() :
 
 //-------------------------------------
 IWorkRequestThread::~IWorkRequestThread() {
-    // check if it is running
-    if(IsRunning()) {
-        StopThread();
-        // wait for thread exit
-        WaitForThreadExit(WAIT_INFINITE);
-    }
 }
 
 //-------------------------------------

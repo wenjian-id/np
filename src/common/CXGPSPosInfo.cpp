@@ -44,7 +44,13 @@ CXGPSPosInfo::CXGPSPosInfo(const CXUTCTime &UTC, bool oFix, double dLon, double 
 }
 
 //-------------------------------------
-CXGPSPosInfo::CXGPSPosInfo(const CXGPSPosInfo & rOther) {
+CXGPSPosInfo::CXGPSPosInfo(const CXGPSPosInfo & rOther) :
+    m_oFix(false),
+    m_dLon(0.0),
+    m_dLat(0.0),
+    m_dHeight(0.0),
+    m_NSat(0)
+{
     CopyFrom(rOther);
 }
 

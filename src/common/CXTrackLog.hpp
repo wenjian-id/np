@@ -59,7 +59,7 @@ public:
     //-------------------------------------
     /**
      * \brief Default constructor.
-     * 
+     *
      * Default constructor.
      */
     CXTrackLog();
@@ -73,7 +73,7 @@ public:
     //-------------------------------------
     /**
      * \brief Set max size of coordinates.
-     * 
+     *
      * Set max size of coordinates.
      * \param   MaxSize     Max size of coordinates.
      */
@@ -81,7 +81,7 @@ public:
     //-------------------------------------
     /**
      * \brief Set MinDistance.
-     * 
+     *
      * Set MinDistance. A new coordinate must be at least MinDistance away
      * from last coordinate to be added.
      * \param   MaxSize     Max size of coordinates.
@@ -90,7 +90,7 @@ public:
     //-------------------------------------
     /**
      * \brief Relocate coordinates to new UTM zone.
-     * 
+     *
      * Relocate coordinates to new UTM zone.
      * \param   NewUTMZone  New UTM Zone.
      */

@@ -33,12 +33,6 @@ CXLoopThread::CXLoopThread() :
 
 //-------------------------------------
 CXLoopThread::~CXLoopThread() {
-    // check if it is runnning
-    if(IsRunning()) {
-        StopThread();
-        // wait for thread exit
-        WaitForThreadExit(WAIT_INFINITE);
-    }
 }
 
 //-------------------------------------

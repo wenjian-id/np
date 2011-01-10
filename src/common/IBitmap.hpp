@@ -119,12 +119,6 @@ public:
      * \brief oiu
      *
      */
-    virtual void Resize(IDeviceContext *pDC, int Width, int Height);
-    //-------------------------------------
-    /**
-     * \brief oiu
-     *
-     */
     virtual void DrawRect(const tIRect &TheRect, const CXRGB & PenColor, const CXRGB & BrushColor) = 0;
     //-------------------------------------
     /**

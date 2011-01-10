@@ -28,7 +28,6 @@
 #include "CXBitmap.hpp"
 #include "CXPen.hpp"
 #include "CoordConstants.h"
-#include "math.h"
 
 
 CXSatellitesData * CXSatellites::m_pInstance = NULL;
@@ -45,7 +44,12 @@ CXSatelliteInfo::CXSatelliteInfo() :
 }
 
 //-------------------------------------
-CXSatelliteInfo::CXSatelliteInfo(const CXSatelliteInfo &rOther) {
+CXSatelliteInfo::CXSatelliteInfo(const CXSatelliteInfo &rOther) :
+    m_PRN(0),
+    m_Elevation(0),
+    m_Azimuth(0),
+    m_SNR(0)
+{
     CopyFrom(rOther);
 }
 
@@ -268,7 +272,7 @@ void CXSatellitesData::SetVDOP(double NewValue) {
 }
 
 //-------------------------------------
-const CXBuffer<int> &CXSatellitesData::ActiveSatellites() const {
+const CXBuffer<int> &CXSatellitesData::GetActiveSatellites() const {
     return m_ActiveSatellites;
 }
 
@@ -352,7 +356,9 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
     // create bitmap
     CXBitmap Bmp;
     tIRect rect(0, 0, Width, Height);
-    Bmp.Create(pDC, rect.GetWidth(), rect.GetHeight());
+    if(!Bmp.Create(pDC, rect.GetWidth(), rect.GetHeight())) {
+        return;
+    }
     Bmp.DrawRect(rect, BgColor, BgColor);
 
     // draw satellites
@@ -411,7 +417,7 @@ void CXSatellites::Paint(CXDeviceContext *pDC, int OffsetX, int OffsetY, int Wid
 
     // now draw satellites
     const CXBuffer<CXSatelliteInfo *> &SatInfo = SatData.SatInfo();
-    const CXBuffer<int> &ActiveSatellites = SatData.ActiveSatellites();
+    const CXBuffer<int> &ActiveSatellites = SatData.GetActiveSatellites();
     size_t SatCount = SatInfo.GetSize();
     if(SatCount != 0) {
         // compute width for one satellite

@@ -277,7 +277,7 @@ public:
      * \brief oiu
      *
      */
-    const CXBuffer<int> &ActiveSatellites() const;
+    const CXBuffer<int> &GetActiveSatellites() const;
     //-------------------------------------
     /**
      * \brief oiu

@@ -63,15 +63,3 @@ int IBitmap::GetHeight() const {
 CXStringASCII IBitmap::GetFileName() const {
     return m_FileName;
 }
-
-//-------------------------------------
-void IBitmap::Resize(IDeviceContext *pDC, int Width, int Height) {
-    // destroy old bitmap
-    Destroy();
-    if(pDC == NULL)
-        return;
-    m_Width = Width;
-    m_Height = Height;
-    // create new bitmap
-    Create(pDC, Width, Height);
-}

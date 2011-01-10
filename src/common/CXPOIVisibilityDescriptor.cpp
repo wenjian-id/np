@@ -39,7 +39,19 @@ CXPOIVisibilityDescriptor::CXPOIVisibilityDescriptor() :
 }
 
 //-------------------------------------
-CXPOIVisibilityDescriptor::CXPOIVisibilityDescriptor(const CXPOIVisibilityDescriptor &rOther) {
+CXPOIVisibilityDescriptor::CXPOIVisibilityDescriptor(const CXPOIVisibilityDescriptor &rOther) :
+    m_oShowAll(false),
+    m_oShowParking(false),
+    m_oShowFuel(false),
+    m_oShowTrafficSignals(false),
+    m_oShowAmenities(false),
+    m_oShowSchools(false),
+    m_oShowPublicTransport(false),
+    m_oShowFoodDrink(false),
+    m_oShowAccomodation(false),
+    m_oShowChurches(false),
+    m_oShowOther(false)
+{
     CopyFrom(rOther);
 }
 

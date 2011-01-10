@@ -34,7 +34,7 @@ CXSerial::CXSerial() :
 
 //-------------------------------------
 CXSerial::~CXSerial() {
-    Close();
+    CXSerial::Close();
 }
 
 //-------------------------------------
@@ -48,7 +48,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     if(m_iComm < 0) {
         return RC_CHANNEL_OPEN_ERROR;
     }
-    
+
     struct termios t;
     // return immediately even if no char reveived
     t.c_cc[VMIN]  = 0;
@@ -57,7 +57,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
     t.c_oflag = 0;
     t.c_lflag = 0;
     t.c_cflag = CLOCAL | CREAD | HUPCL;
-    
+
     // set data bits
     unsigned char ucDataBits = Config.GetDataBits();
     if(ucDataBits == 7) {
@@ -113,7 +113,7 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
         case CXSerialPortConfig::SCS_TWO:       t.c_cflag |= CSTOPB; break;
         default:                                Close(); return RC_WRONG_ARGUMENT;
     }
-        
+
     if(cfsetispeed(&t, SerSpeed) == -1) {
         Close();
         return RC_CHANNEL_OPEN_ERROR;
@@ -122,13 +122,13 @@ CXSerial::E_RESULTCODE CXSerial::Open(const CXSerialPortConfig & Config) {
         Close();
         return RC_CHANNEL_OPEN_ERROR;
     }
-    
+
     // flush
     if(tcflush(m_iComm, TCIFLUSH) == -1 ) {
         Close();
         return RC_CHANNEL_OPEN_ERROR;
     }
-    
+
     // Now set the terminal port attributes
     if(tcsetattr(m_iComm, TCSANOW, &t) == -1) {
         Close();
@@ -151,12 +151,12 @@ CXSerial::E_RESULTCODE CXSerial::Close() {
 //-------------------------------------
 CXSerial::E_RESULTCODE CXSerial::Receive(unsigned long  ulDataSize, unsigned char *  pbData, unsigned long &  ulReceived) {
     ulReceived = 0;
-    
+
     if(m_iComm == -1)
         return RC_NO_CHANNEL_OPEN;
-    
+
     E_RESULTCODE eResult = RC_OK;
-    
+
     int iReceived = read(m_iComm, pbData, ulDataSize);
     if(iReceived < 0)
         eResult = RC_RECEIVE_ERROR;
@@ -171,16 +171,16 @@ CXSerial::E_RESULTCODE CXSerial::Receive(unsigned long  ulDataSize, unsigned cha
 //-------------------------------------
 CXSerial::E_RESULTCODE CXSerial::Transmit(unsigned long  ulDataSize, const unsigned char *  pbData, unsigned long &  ulTransmitted) {
     ulTransmitted = 0;
-    
+
     // if no data to send return RC_OK
     if(ulDataSize == 0)
         return RC_OK;
-    
+
     if(m_iComm == -1)
         return RC_NO_CHANNEL_OPEN;
-    
+
     E_RESULTCODE eResult = RC_OK;
-    
+
     int iWritten = write(m_iComm, pbData, ulDataSize);
     if(iWritten < 0 ) {
         eResult = RC_TRANSMIT_ERROR;
@@ -190,7 +190,7 @@ CXSerial::E_RESULTCODE CXSerial::Transmit(unsigned long  ulDataSize, const unsig
     } else {
         ulTransmitted = iWritten;
     }
-    
+
     return eResult;
 }
 

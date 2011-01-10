@@ -40,7 +40,13 @@ CXNaviData::~CXNaviData() {
 }
 
 //-------------------------------------
-CXNaviData::CXNaviData(const CXNaviData &rOther) {
+CXNaviData::CXNaviData(const CXNaviData &rOther) :
+    m_oConnected(false),
+    m_oFix(false),
+    m_dHeight(0.0),
+    m_MaxSpeed(0),
+    m_oLocated(false)
+{
     CopyFrom(rOther);
 }
 

@@ -21,7 +21,6 @@
  ***************************************************************************/
 
 #include "CXGPSRecvThread.hpp"
-#include "Utils.hpp"
 #include "CXMutexLocker.hpp"
 #include "CXLocatorThread.hpp"
 #include "CXOptions.hpp"
@@ -73,10 +72,11 @@ void CXGPSRecvThread::CreateGPSProtocol() {
     }
     if(m_pGPSInputChannel != NULL) {
         // read configuration of input channel
-        m_pGPSInputChannel->ReadConfiguration();
-        if(m_pGPSProtocol != NULL) {
-            // set input channel in protocol
-            m_pGPSProtocol->SetInputChannel(m_pGPSInputChannel);
+        if(m_pGPSInputChannel->ReadConfiguration()) {
+            if(m_pGPSProtocol != NULL) {
+                // set input channel in protocol
+                m_pGPSProtocol->SetInputChannel(m_pGPSInputChannel);
+            }
         }
     }
 }
@@ -119,8 +119,12 @@ void CXGPSRecvThread::OnThreadStarted() {
 //-------------------------------------
 void CXGPSRecvThread::OnThreadLoop() {
     CXMutexLocker L(&m_Mutex);
-    if(m_pGPSProtocol == NULL)
+    if(m_pGPSProtocol == NULL) {
         return;
+    }
+    if(m_pLocator == NULL) {
+        return;
+    }
     if(!m_pGPSProtocol->IsOpen()) {
         // channel not open
         CXExactTime Now;

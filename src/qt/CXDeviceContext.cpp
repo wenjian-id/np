@@ -34,6 +34,7 @@ CXDeviceContext::CXDeviceContext(QPainter *pPainter) :
 
 //-------------------------------------
 CXDeviceContext::~CXDeviceContext() {
+    m_pPainter = NULL;
 }
 
 //-------------------------------------
@@ -55,7 +56,7 @@ void CXDeviceContext::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, co
     // get old pen and brush
     QPen OldPen = m_pPainter->pen();
     QBrush OldBrush = m_pPainter->brush();
-    
+
     // create new pen
     QPen NewPen(Qt::SolidLine);
     NewPen.setWidth(1);
@@ -63,7 +64,7 @@ void CXDeviceContext::DrawRect(const tIRect &TheRect, const CXRGB & PenColor, co
 
     // create new brush
     QBrush NewBrush(CXRGB2QColor(BrushColor), Qt::SolidPattern);
-    
+
     // select new pen and brush
     m_pPainter->setBrush(NewBrush);
     m_pPainter->setPen(NewPen);

@@ -44,43 +44,43 @@ protected:
      * \brief oiu
      *
      */
-    virtual void paintEvent(QPaintEvent *event);
+    virtual void paintEvent(QPaintEvent *pEvent);
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual void resizeEvent(QResizeEvent *event);
+    virtual void resizeEvent(QResizeEvent *pEvent);
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual void keyPressEvent(QKeyEvent * event);
+    virtual void keyPressEvent(QKeyEvent * pEvent);
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual void keyReleaseEvent(QKeyEvent * event);
+    virtual void keyReleaseEvent(QKeyEvent * pEvent);
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual void mousePressEvent(QMouseEvent * event);
+    virtual void mousePressEvent(QMouseEvent * pEvent);
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual void mouseReleaseEvent(QMouseEvent * event);
+    virtual void mouseReleaseEvent(QMouseEvent * pEvent);
     //-------------------------------------
     /**
      * \brief oiu
      *
      */
-    virtual void mouseMoveEvent(QMouseEvent * event);
+    virtual void mouseMoveEvent(QMouseEvent * pEvent);
 public:
     //-------------------------------------
     /**

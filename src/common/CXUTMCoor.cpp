@@ -41,13 +41,22 @@ CXUTMCoor::CXUTMCoor(int UTMZone, char UTMLetter, double UTMEasting, double UTMN
 }
 
 //-------------------------------------
-CXUTMCoor::CXUTMCoor(double dLon, double dLat) {
-    m_UTMZone = UTMZoneNone;
+CXUTMCoor::CXUTMCoor(double dLon, double dLat) :
+    m_UTMZone(UTMZoneNone),
+    m_UTMLetter(UTMLetterNone),
+    m_UTMEasting(0),
+    m_UTMNorthing(0)
+{
     LLtoUTM(WGS84, dLon, dLat, UTMZoneNone, m_UTMZone, m_UTMLetter, m_UTMEasting, m_UTMNorthing);
 }
 
 //-------------------------------------
-CXUTMCoor::CXUTMCoor(const CXUTMCoor &rOther) {
+CXUTMCoor::CXUTMCoor(const CXUTMCoor &rOther) :
+    m_UTMZone(UTMZoneNone),
+    m_UTMLetter(UTMLetterNone),
+    m_UTMEasting(0),
+    m_UTMNorthing(0)
+{
     CopyFrom(rOther);
 }
 
@@ -72,7 +81,7 @@ void CXUTMCoor::CopyFrom(const CXUTMCoor &rOther) {
 
 //-------------------------------------
 bool CXUTMCoor::operator == (const CXUTMCoor &rOther) {
-    return (    
+    return (
             (m_UTMZone == rOther.m_UTMZone) &&
             (m_UTMLetter == rOther.m_UTMLetter) &&
             (m_UTMEasting == rOther.m_UTMEasting) &&

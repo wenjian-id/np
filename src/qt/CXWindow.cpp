@@ -22,7 +22,6 @@
 
 #include "CXWindow.hpp"
 #include "CXDeviceContext.hpp"
-#include "TargetIncludes.hpp"
 #include <qpainter.h>
 
 
@@ -43,44 +42,44 @@ void CXWindow::RequestRepaint() {
 }
 
 //-------------------------------------
-void CXWindow::paintEvent(QPaintEvent * /*event*/) {
+void CXWindow::paintEvent(QPaintEvent * /*pEvent*/) {
     OnPaint();
 }
 
 //-------------------------------------
-void CXWindow::resizeEvent(QResizeEvent *event) {
-    QWidget::resizeEvent(event);
-    OnResize(event->size().width(), event->size().height());
+void CXWindow::resizeEvent(QResizeEvent *pEvent) {
+    QWidget::resizeEvent(pEvent);
+    OnResize(pEvent->size().width(), pEvent->size().height());
 }
 
 //-------------------------------------
-void CXWindow::keyPressEvent(QKeyEvent * event) {
-    QWidget::keyPressEvent(event);
-    OnKeyDown(event->key());
+void CXWindow::keyPressEvent(QKeyEvent * pEvent) {
+    QWidget::keyPressEvent(pEvent);
+    OnKeyDown(pEvent->key());
 }
 
 //-------------------------------------
-void CXWindow::keyReleaseEvent(QKeyEvent * event) {
-    QWidget::keyReleaseEvent(event);
-    OnKeyUp(event->key());
+void CXWindow::keyReleaseEvent(QKeyEvent * pEvent) {
+    QWidget::keyReleaseEvent(pEvent);
+    OnKeyUp(pEvent->key());
 }
 
 //-------------------------------------
-void CXWindow::mousePressEvent(QMouseEvent * event) {
-    QWidget::mousePressEvent(event);
-    OnMouseDown(event->x(), event->y());
+void CXWindow::mousePressEvent(QMouseEvent * pEvent) {
+    QWidget::mousePressEvent(pEvent);
+    OnMouseDown(pEvent->x(), pEvent->y());
 }
 
 //-------------------------------------
-void CXWindow::mouseReleaseEvent(QMouseEvent * event) {
-    QWidget::mouseReleaseEvent(event);
-    OnMouseUp(event->x(), event->y());
+void CXWindow::mouseReleaseEvent(QMouseEvent * pEvent) {
+    QWidget::mouseReleaseEvent(pEvent);
+    OnMouseUp(pEvent->x(), pEvent->y());
 }
 
 //-------------------------------------
-void CXWindow::mouseMoveEvent(QMouseEvent * event) {
-    QWidget::mouseMoveEvent(event);
-    OnMouseMove(event->x(), event->y());
+void CXWindow::mouseMoveEvent(QMouseEvent * pEvent) {
+    QWidget::mouseMoveEvent(pEvent);
+    OnMouseMove(pEvent->x(), pEvent->y());
 }
 
 //-------------------------------------

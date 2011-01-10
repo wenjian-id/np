@@ -30,6 +30,7 @@ CXThread::CXThreadHelper::CXThreadHelper(CXThread *pThread) :
 
 //-------------------------------------
 CXThread::CXThreadHelper::~CXThreadHelper() {
+    m_pThread = NULL;
 }
 
 //-------------------------------------

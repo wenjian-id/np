@@ -21,11 +21,8 @@
  ***************************************************************************/
 
 #include "CXMapLoaderThread.hpp"
-#include "CXMutexLocker.hpp"
 #include "CXOptions.hpp"
 #include "OSSpecific.hpp"
-
-#include <math.h>
 
 
 static const size_t TOCCACHEPURGEAGE        = 20;       ///< oiu

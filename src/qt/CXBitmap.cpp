@@ -23,7 +23,6 @@
 #include "CXBitmap.hpp"
 #include "CXDeviceContext.hpp"
 #include "CXPen.hpp"
-#include "TargetIncludes.hpp"
 #include "Utils.hpp"
 
 #include <qcolor.h>
@@ -41,7 +40,7 @@ CXBitmap::CXBitmap() :
 
 //-------------------------------------
 CXBitmap::~CXBitmap() {
-    Destroy();
+    CXBitmap::Destroy();
     delete [] m_pLinePoints;
     m_pLinePoints = NULL;
     m_LinePointsSize = 0;
@@ -63,7 +62,7 @@ bool CXBitmap::IsNull() {
 }
 
 //-------------------------------------
-bool CXBitmap::Create(IDeviceContext */*pDC*/, int Width, int Height) {
+bool CXBitmap::Create(IDeviceContext * /*pDC*/, int Width, int Height) {
     Destroy();
     // create new image and new painter
     SetWidth(Width);
@@ -283,11 +282,11 @@ void CXBitmap::DrawGlowTextUTF8(const CXStringUTF8 & Text, const tIRect & TheRec
 }
 
 //-------------------------------------
-void CXBitmap::DrawLine(int x0, int y0, int x1, int y1) {
+void CXBitmap::DrawLine(int X0, int Y0, int X1, int Y1) {
     if(IsNull())
         return;
 
-    m_pPainter->drawLine(x0, y0, x1, y1);
+    m_pPainter->drawLine(X0, Y0, X1, Y1);
 }
 
 //-------------------------------------
