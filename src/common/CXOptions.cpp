@@ -429,15 +429,16 @@ bool CXOptions::ReadFromFile(const char *pcFileName) {
             int Key = ExtractFirstToken(CompleteKey, '.').ToInt();
             CXTarget Target;
             if(m_Targets.Lookup(Key, Target)) {
-                if(CompleteKey == "NAME") {
-                    Target.SetName(F.Get(Keys[i], "").c_str());
+                // target already found. Will be overridden
+            }
+            if(CompleteKey == "NAME") {
+                Target.SetName(F.Get(Keys[i], "").c_str());
+                m_Targets.SetAt(Key, Target);
+            } else if(CompleteKey == "COOR") {
+                CXCoor Coor;
+                if(InterpretCoordinates(F.Get(Keys[i], ""), Coor)) {
+                    Target.SetCoor(Coor);
                     m_Targets.SetAt(Key, Target);
-                } else if(CompleteKey == "COOR") {
-                    CXCoor Coor;
-                    if(InterpretCoordinates(F.Get(Keys[i], ""), Coor)) {
-                        Target.SetCoor(Coor);
-                        m_Targets.SetAt(Key, Target);
-                    }
                 }
             }
         }
