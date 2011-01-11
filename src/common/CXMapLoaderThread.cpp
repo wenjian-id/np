@@ -102,7 +102,7 @@ void CXMapLoaderThread::OnThreadStopped() {
 //-------------------------------------
 void CXMapLoaderThread::OnWorkFunc() {
     // check if enaugh memory left
-    int Mem = GetFreeMem()/1024/1024;
+    int Mem = static_cast<int>(GetFreeMem()/1024/1024);
     if((Mem > 0) && (Mem < 10)) {
         // purge caches
         m_TOCCache.Purge();

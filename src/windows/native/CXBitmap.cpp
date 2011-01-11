@@ -342,7 +342,7 @@ void CXBitmap::DrawCircle(int x, int y, int r, const CXRGB &PenColor, const CXRG
 }
 
 //-------------------------------------
-bool CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) {
+void CXBitmap::Polygon(int *pX, int *pY, size_t Count, const CXRGB &PenColor, const CXRGB &FillColor) {
     if(IsNull()) {
         return;
     }
