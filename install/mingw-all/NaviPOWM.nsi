@@ -11,15 +11,15 @@ Name "NaviPOWM"
 
 !define Version "0.2.6"                                             ; version string
 !ifdef USE_QT
-    !define QtVersion "4.7.2"                                       ; version of Qt
+    !define QtVersion "4.7.3"                                       ; version of Qt
     !define QtDLLPath "C:\Qt\${QtVersion}\bin\"                     ; path for Qt DLLs
 !endif
 
 !define MainPath "..\..\"                                           ; main path 
 !ifdef USE_QT
-    !define ExePath "${MainPath}\build\mingw\Release\"                 ; path where the executable lies
+    !define ExePath "${MainPath}\build\mingw\Release\"              ; path where the executable lies
 !else
-    !define ExePath "${MainPath}\build\mingw-qt\Release\"            ; path where the executable lies
+    !define ExePath "${MainPath}\build\mingw-qt\Release\"           ; path where the executable lies
 !endif
 !define ImagePath "${MainPath}\common\Images\"                      ; path with images
 !define ConfigPath "${MainPath}\common\Config\"                     ; path with config files
