@@ -1,8 +1,10 @@
 Version 0.2.6:
  - fixed bugs:
+   - 2963285: Fehlermeldung bei Rauszoom (-)
    - crash under Windows XP when displaying areas with holes
    - areas with holes not drawn properly on Windows mobile
  - implemented feature requests:
+   - 2013859: Support for gpsd
  - other:
    - more POI types
    - more way types
