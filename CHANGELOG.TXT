@@ -1,3 +1,8 @@
+Version 0.2.7:
+ - fixed bugs:
+ - implemented feature requests:
+ - other:
+
 Version 0.2.6:
  - fixed bugs:
    - 2963285: Fehlermeldung bei Rauszoom (-)
