@@ -5,7 +5,7 @@ CONFIG += warn_on \
           thread \
           rtti \
 QMAKE_CXXFLAGS += -Wall
-QMAKE_LFLAGS += -lgps
+LIBS += -lgps
 
 INCLUDEPATH += ../../src/common \
                ../../src/qt \
